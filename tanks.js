@@ -1,4 +1,9 @@
+eo3 = {};
+eo3.addVelocity = function (a,b,c){return"undefined"==typeof b&&(b=60),
 
+	c=c||new d.Point,c.setTo(Math.cos(c.x+game.math.degToRad(a))*b,c.y+Math.sin(game.math.degToRad(a))*b)};
+
+// ----8<----- my shity additions are above
 EnemyTank = function (index, game, player, bullets) {
 
     var x = game.world.randomX;
@@ -24,7 +29,8 @@ EnemyTank = function (index, game, player, bullets) {
     this.tank.body.immovable = true;
     this.tank.body.collideWorldBounds = true;
     this.tank.body.bounce.setTo(1, 1);
-
+    this.tank.body.maxAngular = 1500; //turn rate
+    this.tank.body.angularDrag=3200;
     this.tank.angle = game.rnd.angle();
 
     game.physics.velocityFromRotation(this.tank.rotation, 100, this.tank.body.velocity);
@@ -86,13 +92,13 @@ function preload () {
     game.load.atlas('enemy', 'assets/games/tanks/enemy-tanks.png', 'assets/games/tanks/tanks.json');
     game.load.image('logo', 'assets/games/tanks/logo.png');
     game.load.image('bullet', 'assets/games/tanks/bullet.png');
-    game.load.image('earth', 'assets/games/tanks/scorched_earth.png');
+    game.load.image('cyber', 'cyberglow.png');
     game.load.spritesheet('kaboom', 'assets/games/tanks/explosion.png', 64, 64, 23);
     
 }
 
 var land;
-
+var filter;
 var shadow;
 var tank;
 var turret;
@@ -116,7 +122,14 @@ function create () {
     game.world.setBounds(-1000, -1000, 2000, 2000);
 
     //  Our tiled scrolling background
-    land = game.add.tileSprite(0, 0, 800, 600, 'earth');
+    land = game.add.sprite(0, 0, 'earth');
+    land.width = 800;
+    land.height=600;
+
+    filter = game.add.filter('Tunnel',800,600, land.texture);
+    filter.origin = 1.0;
+
+    land.filters = [filter];
     land.fixedToCamera = true;
 
     //  The base of our tank
@@ -195,7 +208,12 @@ function removeLogo () {
 
 function update () {
 
+    filter.update();
+    filter.origin = filter.origin + 0.0001;
+
     game.physics.collide(enemyBullets, tank, bulletHitPlayer, null, this);
+
+	tank.body.angularAcceleration = 0;
 
     for (var i = 0; i < enemies.length; i++)
     {
@@ -209,34 +227,30 @@ function update () {
 
     if (cursors.left.isDown)
     {
-        tank.angle -= 1;
+	    tank.angle-=1;
+    //    tank.body.angularAcceleration -= 3200;
     }
     else if (cursors.right.isDown)
     {
-        tank.angle += 1;
+	    tank.angle+=1;
+    //    tank.body.angularAcceleration += 3200;
     }
 
     if (cursors.up.isDown)
     {
         //  The speed we'll travel at
-        currentSpeed = 300;
+        currentSpeed = 50;
     }
-    else
-    {
-	
-        if (currentSpeed > 0)
-        {
-            currentSpeed -= 4;
-        }
-    }
-
     if (currentSpeed > 0)
     {
-        game.physics.velocityFromRotation(tank.rotation, currentSpeed, tank.body.velocity);
+	    
+        eo3.addVelocity(tank.rotation, currentSpeed, tank.body.velocity);
+	currentSpeed=0;
     }
 
-    land.tilePosition.x = -game.camera.x;
-    land.tilePosition.y = -game.camera.y;
+
+//    land.tilePosition.x = -game.camera.x;
+ //   land.tilePosition.y = -game.camera.y;
 
     //  Position all the parts and align rotations
     shadow.x = tank.x;
