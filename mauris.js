@@ -94,6 +94,7 @@ function preload () {
 	game.load.image('logo', 'assets/games/tanks/logo.png');
 	game.load.image('bullet', 'assets/games/tanks/bullet.png');
 	game.load.image('draconis', 'assets/draconis.png');
+	game.load.image('turret', 'assets/turret.png');
 	game.load.image('starfield', 'starfield.png');
 	game.load.spritesheet('kaboom', 'assets/games/tanks/explosion.png', 64, 64, 23);
 	game.load.spritesheet('thrust', 'thrust.png',4,4,4);
@@ -144,7 +145,7 @@ function create () {
 	actor.body.collideWorldBounds = true; 
 
 	//  Finally the turret that we place on-top of the actor body
-	turret = game.add.sprite(0, 0, 'tank', 'turret');
+	turret = game.add.sprite(0, 0, 'turret');
 	turret.anchor.setTo(0.3, 0.5);
 
 	//  The enemies bullet group
@@ -320,7 +321,7 @@ function fire () {
 
 		var bullet = bullets.getFirstDead();
 
-		bullet.reset(turret.x, turret.y);
+		bullet.reset(turret.x + (Math.cos(turret.rotation)*(actor.width)*0.5), turret.y + (Math.sin(turret.rotation)*(actor.width)*0.5));
 
 		bullet.rotation = game.physics.moveToPointer(bullet, 350);
 	}
