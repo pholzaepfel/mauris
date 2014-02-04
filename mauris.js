@@ -154,7 +154,7 @@ function create () {
 	enemyBullets.createMultiple(100, 'bullet');
 	enemyBullets.setAll('anchor.x', 0.5);
 	enemyBullets.setAll('anchor.y', 0.5);
-	enemyBullets.setAll('mass', 0);
+	enemyBullets.setAll('mass', 0); //TODO this doesn't work
 	enemyBullets.setAll('outOfBoundsKill', true);
 
 	//  Create some baddies to waste :)
