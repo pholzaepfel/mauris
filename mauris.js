@@ -135,7 +135,7 @@ function create () {
 	//actor.play('move');
 	//basic stats
 	actor.turnrate=0.5;
-	actor.acceleration=0.9;
+	actor.acceleration=1.3;
 	actor.body.maxVelocity.setTo(165, 165);
 
 
