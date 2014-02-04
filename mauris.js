@@ -93,6 +93,7 @@ function preload () {
 	game.load.atlas('enemy', 'assets/games/tanks/enemy-tanks.png', 'assets/games/tanks/tanks.json');
 	game.load.image('logo', 'assets/games/tanks/logo.png');
 	game.load.image('bullet', 'assets/games/tanks/bullet.png');
+	game.load.image('draconis', 'assets/draconis.png');
 	game.load.image('starfield', 'starfield.png');
 	game.load.spritesheet('kaboom', 'assets/games/tanks/explosion.png', 64, 64, 23);
 	game.load.spritesheet('thrust', 'thrust.png',4,4,4);
@@ -121,15 +122,14 @@ function create () {
 
 	game.world.setBounds(-1000, -1000, 3000, 3000);
 
-	//  Our tiled scrolling background
 	land = game.add.tileSprite(0, 0, 1280, 720, 'starfield');
 
 	land.fixedToCamera = true;
 
 	//  The base of our actor
-	actor = game.add.sprite(0, 0, 'tank', 'tank1');
+	actor = game.add.sprite(0, 0, 'draconis');
 	actor.anchor.setTo(0.5, 0.5);
-	actor.animations.add('move', ['tank1', 'tank2', 'tank3', 'tank4', 'tank5', 'tank6'], 20, true);
+//	actor.animations.add('move', ['tank1', 'tank2', 'tank3', 'tank4', 'tank5', 'tank6'], 20, true);
 
 	//actor.play('move');
 	//basic stats
@@ -164,7 +164,7 @@ function create () {
 	}
 
 	//  A shadow below our actor
-	shadow = game.add.sprite(0, 0, 'actor', 'shadow');
+	shadow = game.add.sprite(0, 0, 'tank', 'shadow');
 	shadow.anchor.setTo(0.5, 0.5);
 
 	thrust = game.add.emitter(0,0,200);
@@ -264,7 +264,7 @@ function update () {
 		eo3.addVelocity(actor.rotation, currentSpeed, actor.body.velocity);
 		currentSpeed=0;
 	}
-	//
+	// scrolling
 	land.tilePosition.x = -game.camera.x;
 	land.tilePosition.y = -game.camera.y;
 
