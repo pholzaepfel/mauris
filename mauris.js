@@ -2,7 +2,7 @@ eo3 = {};
 eo3.addVelocity = function (a,b,c){return"undefined"==typeof b&&(b=60),
 
 	c=c||new d.Point,c.setTo(c.x+Math.cos(a)*b,c.y+Math.sin(a)*b)};
-
+eo3.randomRange = function(a,b){var c,d; if(a>b){c=a;d=b;}else{d=a;c=b};return (Math.random()*(c-d))+d};
 eo3.addVelocityTest = function (a,b,c){return '' +  c.x + ' - ' + Math.cos((game.math.degToRad(a))*b) + ' : ' + c.y+' - '+(Math.sin(game.math.degToRad(a))*b)};
 // ----8<----- my shity additions are above
 EnemyTank = function (index, game, player, bullets) {
@@ -116,7 +116,7 @@ var currentSpeed = 0;
 var cursors;
 
 var bullets;
-var fireRate = 1000;
+var fireRate = eo3.randomRange(200,1500);
 var nextFire = 0;
 
 function create () {
@@ -134,9 +134,10 @@ function create () {
 
 	//actor.play('move');
 	//basic stats
-	actor.turnrate=0.5;
-	actor.acceleration=1.3;
-	actor.body.maxVelocity.setTo(165, 165);
+	actor.turnrate=eo3.randomRange(0.4,0.8);
+	actor.acceleration=eo3.randomRange(0.9,2.3);
+	var t = eo3.randomRange(130,290);
+	actor.body.maxVelocity.setTo(t, t);
 
 
 
@@ -183,7 +184,7 @@ function create () {
 	bullets.setAll('anchor.x', 0.5);
 	bullets.setAll('anchor.y', 0.5);
 	bullets.setAll('outOfBoundsKill', true);
-	bullets.setAll('damage',6);
+	bullets.setAll('damage',Math.floor(eo3.randomRange(1,6)));
 	//  Explosion pool
 	explosions = game.add.group();
 
