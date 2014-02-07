@@ -1,10 +1,8 @@
 eo3 = {};
-eo3.addVelocity = function (a,b,c){return"undefined"==typeof b&&(b=60),
-
-	c=c||new d.Point,c.setTo(c.x+Math.cos(a)*b,c.y+Math.sin(a)*b)};
+eo3.addVelocity = function (a,b,c){return"undefined"==typeof b&&(b=60),	c=c||new d.Point,c.setTo(c.x+Math.cos(a)*b,c.y+Math.sin(a)*b)};
 eo3.randomRange = function(a,b){var c,d; if(a>b){c=a;d=b;}else{d=a;c=b};return (Math.random()*(c-d))+d};
 eo3.addVelocityTest = function (a,b,c){return '' +  c.x + ' - ' + Math.cos((game.math.degToRad(a))*b) + ' : ' + c.y+' - '+(Math.sin(game.math.degToRad(a))*b)};
-// ----8<----- my shity additions are above
+// ----8<----- my shitty additions are above
 EnemyTank = function (index, game, player, bullets) {
 
 	var x = game.world.randomX;
@@ -84,20 +82,18 @@ EnemyTank.prototype.update = function() {
 };
 
 var game = new Phaser.Game(1280, 720, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update, render: render });
-//        var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update, render: render });
-// var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create, update: update, render: render });
 
 function preload () {
 
-	game.load.atlas('tank', 'assets/games/tanks/tanks.png', 'assets/games/tanks/tanks.json');
-	game.load.atlas('enemy', 'assets/games/tanks/enemy-tanks.png', 'assets/games/tanks/tanks.json');
-	game.load.image('logo', 'assets/games/tanks/logo.png');
-	game.load.image('bullet', 'assets/games/tanks/bullet.png');
+	game.load.atlas('tank', 'assets/tanks.png', 'assets/tanks.json');
+	game.load.atlas('enemy', 'assets/enemy-tanks.png', 'assets/tanks.json');
+	game.load.image('logo', 'assets/logo.png');
+	game.load.image('bullet', 'assets/bullet.png');
 	game.load.image('draconis', 'assets/draconis.png');
 	game.load.image('turret', 'assets/turret.png');
-	game.load.image('starfield', 'starfield.png');
-	game.load.spritesheet('kaboom', 'assets/games/tanks/explosion.png', 64, 64, 23);
-	game.load.spritesheet('thrust', 'thrust.png',4,4,4);
+	game.load.image('starfield', 'assets/starfield.png');
+	game.load.spritesheet('kaboom', 'assets/explosion.png', 64, 64, 23);
+	game.load.spritesheet('thrust', 'assets/thrust.png',4,4,4);
 }
 
 var land;
