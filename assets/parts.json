@@ -1,0 +1,20 @@
+{"frames": [
+
+{
+	"filename": "part1",
+	"frame": {"x":0,"y":0,"w":8,"h":8},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":8,"h":8},
+	"sourceSize": {"w":8,"h":8}
+},
+{
+	"filename": "part2",
+	"frame": {"x":8,"y":0,"w":8,"h":8},
+	"rotated": false,
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":8,"y":0,"w":8,"h":8},
+	"sourceSize": {"w":8,"h":8}
+}]
+}
