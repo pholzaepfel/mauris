@@ -1,10 +1,12 @@
-var xbound = 16;
-var ybound = 24;
+var xbound = 32;
+var ybound = 48;
+var xsize = 16;
+var ysize = 16;
 var s = '';
 
-for(var x=0;x<xbound/8;x++){
-	for(var y=0;y<ybound/8;y++){
-		s+='{"filename": "'+x+'-'+y+'","frame": {"x":'+(x*8)+',"y":'+(y*8)+',"w":8,"h":8},"rotated": false,"trimmed": false,"spriteSourceSize": {"x":'+(x*8)+',"y":'+(y*8)+',"w":8,"h":8},"sourceSize": {"w":8,"h":8}},'
+for(var x=0;x<xbound/xsize;x++){
+	for(var y=0;y<ybound/ysize;y++){
+		s+='{"filename": "'+x+'-'+y+'","frame": {"x":'+(x*xsize)+',"y":'+(y*ysize)+',"w":'+xsize+',"h":'+ysize+'},"rotated": false,"trimmed": false,"spriteSourceSize": {"x":'+(x*xsize)+',"y":'+(y*ysize)+',"w":'+xsize+',"h":'+ysize+'},"sourceSize": {"w":'+xsize+',"h":'+ysize+'}},'
 	}
 }
 

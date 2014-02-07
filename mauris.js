@@ -86,8 +86,8 @@ var game = new Phaser.Game(1280, 720, Phaser.AUTO, 'phaser-example', { preload: 
 function preload () {
 
 	game.load.atlas('tank', 'assets/tanks.png', 'assets/tanks.json');
+	game.load.atlas('parts', 'assets/parts.png', 'assets/parts.json');
 	game.load.atlas('enemy', 'assets/enemy-tanks.png', 'assets/tanks.json');
-	game.load.image('logo', 'assets/logo.png');
 	game.load.image('bullet', 'assets/bullet.png');
 	game.load.image('draconis', 'assets/draconis.png');
 	game.load.image('turret', 'assets/turret.png');
@@ -101,7 +101,7 @@ var filter;
 var shadow;
 var actor;
 var turret;
-var numBaddies = 40;
+var numBaddies = 0;
 var enemies;
 var enemyBullets;
 var explosions;
@@ -115,6 +115,9 @@ var bullets;
 var fireRate = eo3.randomRange(200,1500);
 var nextFire = 0;
 
+var partShip;
+var parts=[];
+
 function create () {
 
 	game.world.setBounds(-1000, -1000, 3000, 3000);
@@ -123,10 +126,18 @@ function create () {
 
 	land.fixedToCamera = true;
 
+	partShip = game.add.group();
+	for(var ix=0;ix<3;ix++){
+		for(var iy=0;iy<3;iy++){
+				parts.push(partShip.create(ix*16,iy*16,'parts',Math.floor(eo3.randomRange(0,2)) + '-' + Math.floor(eo3.randomRange(0,3))));
+
+		}
+	}
+
 	//  The base of our actor
-	actor = game.add.sprite(0, 0, 'draconis');
+	actor = game.add.sprite(-30, -30, 'draconis');
 	actor.anchor.setTo(0.5, 0.5);
-//	actor.animations.add('move', ['tank1', 'tank2', 'tank3', 'tank4', 'tank5', 'tank6'], 20, true);
+	//	actor.animations.add('move', ['tank1', 'tank2', 'tank3', 'tank4', 'tank5', 'tank6'], 20, true);
 
 	//actor.play('move');
 	//basic stats
@@ -195,10 +206,10 @@ function create () {
 	//TODO restore a turret one day - turret.bringToTop();
 
 	/*logo = game.add.sprite(0, 200, 'logo');
-	logo.fixedToCamera = true;
+	  logo.fixedToCamera = true;
 
-	game.input.onDown.add(removeLogo, this);
-	*/
+	  game.input.onDown.add(removeLogo, this);
+	  */
 
 	game.camera.follow(actor);
 	game.camera.deadzone = new Phaser.Rectangle(150, 150, 500, 300);
