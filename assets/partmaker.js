@@ -1,5 +1,5 @@
-var xbound = 32;
-var ybound = 48;
+var xbound = 96;
+var ybound = 80;
 var xsize = 16;
 var ysize = 16;
 var s = '';

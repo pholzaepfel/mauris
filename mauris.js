@@ -3,6 +3,20 @@ eo3.addVelocity = function (a,b,c){return"undefined"==typeof b&&(b=60),	c=c||new
 eo3.randomRange = function(a,b){var c,d; if(a>b){c=a;d=b;}else{d=a;c=b};return (Math.random()*(c-d))+d};
 eo3.addVelocityTest = function (a,b,c){return '' +  c.x + ' - ' + Math.cos((game.math.degToRad(a))*b) + ' : ' + c.y+' - '+(Math.sin(game.math.degToRad(a))*b)};
 // ----8<----- my shitty additions are above
+
+dragPart = function(x,y,sheet,index)
+{
+	this.game = game;
+	this.alive = true;
+	this.actor = game.add.sprite(x,y,sheet,index);
+	this.actor.inputEnabled=true;
+	this.actor.input.enableDrag(false,true);
+};
+dragPart.prototype.update = function(){
+	this.actor.x -= this.actor.x % 16;
+	this.actor.y -= this.actor.y % 16;
+};
+
 EnemyTank = function (index, game, player, bullets) {
 
 	var x = game.world.randomX;
@@ -126,11 +140,12 @@ function create () {
 
 	land.fixedToCamera = true;
 
-	partShip = game.add.group();
-	for(var ix=0;ix<3;ix++){
-		for(var iy=0;iy<3;iy++){
-				parts.push(partShip.create(ix*16,iy*16,'parts',Math.floor(eo3.randomRange(0,2)) + '-' + Math.floor(eo3.randomRange(0,3))));
-
+	for(var ix=0;ix<6;ix++){
+		for(var iy=0;iy<5;iy++){
+				parts.push(new dragPart(ix*32,iy*32,'parts',(ix) + '-' + (iy)));
+				parts.push(new dragPart(16+(ix*32),16+(iy*32),'parts',(ix) + '-' + (iy)));
+				parts.push(new dragPart((ix*32),16+(iy*32),'parts',(ix) + '-' + (iy)));
+				parts.push(new dragPart(16+(ix*32),iy*32,'parts',(ix) + '-' + (iy)));
 		}
 	}
 
@@ -243,6 +258,11 @@ function update () {
 		}
 	}
 
+	for (var i = 0; i < parts.length; i++)
+	{
+		parts[i].update();
+	}
+
 	if (cursors.left.isDown)
 	{
 		actor.angle-=actor.turnrate;
@@ -292,7 +312,7 @@ function update () {
 	if (game.input.activePointer.isDown)
 	{
 		//  Boom!
-		fire();
+		//fire();
 	}
 
 }
