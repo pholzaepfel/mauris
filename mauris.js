@@ -154,7 +154,7 @@ var nextFire = 0;
 var partShip;
 var parts=[];
 
-var defaultShipParts=[14,1,2,6,7,8,13,12,26];
+var defaultShipParts=[14,1,2,6,7,8,-1,26,-1];
 
 function createParts() {
 
@@ -182,7 +182,9 @@ function createShip(shipParts, player){
 		return [];
 	};
 	for (var i=0; i<shipParts.length;i++){
-		myParts.push(new shipPart(((n-1)*-8)+((i%n)*16),((n-1)*-8)+(Math.floor(i/n)*16),'parts',shipParts[i],player));
+		if(shipParts[i]>-1){
+			myParts.push(new shipPart(((n-1)*-8)+((i%n)*16),((n-1)*-8)+(Math.floor(i/n)*16),'parts',shipParts[i],player));
+		}
 	}
 	return myParts; 
 }
