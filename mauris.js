@@ -26,7 +26,7 @@ shipPart = function(x,y,sheet,index,player)
 	this.alive = true;
 	this.actor = game.add.sprite(x,y,sheet,index);
 	this.actor.anchor.setTo(0.5,0.5);
-//	this.actor.bringToTop();
+	this.actor.bringToTop();
 };
 shipPart.prototype.update = function(){
 this.actor.angle = this.player.angle;
@@ -154,7 +154,8 @@ var nextFire = 0;
 var partShip;
 var parts=[];
 
-var defaultShipParts=[14,1,2,6,7,8,-1,26,-1];
+//var defaultShipParts=[14,1,2,6,7,8,-1,26,-1];
+var defaultShipParts=[-1,3,5,-1,-1,-1,25,-1,-1,-1,9,16,16,10,1,-1,25,-1,-1,-1,-1,3,5,-1,-1];
 
 function createParts() {
 
