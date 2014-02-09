@@ -147,8 +147,9 @@ var nextFire = 0;
 var partShip;
 var parts=[];
 
-//var defaultShipParts=[14,1,2,6,7,8,-1,26,-1];
-var defaultShipParts=[-1,3,5,-1,-1,-1,25,-1,-1,-1,9,16,16,10,11,-1,25,-1,-1,-1,-1,3,5,-1,-1];
+var ships=[];
+ships.push([14,1,2,6,7,8,-1,26,-1]);
+ships.push([-1,3,5,-1,-1,-1,25,-1,-1,-1,9,16,16,10,11,-1,25,-1,-1,-1,-1,3,5,-1,-1]);
 
 function createParts() {
 
@@ -185,7 +186,7 @@ function createShip(shipParts, player){
 
 function create () {
 
-	game.world.setBounds(-1000, -1000, 3000, 3000);
+	game.world.setBounds(-2000, -2000, 4000, 4000);
 
 	backdrop1 = game.add.tileSprite(0, 0, 1280, 720, 'starfield2');
 
@@ -223,10 +224,12 @@ function create () {
 	actor.body.bounce.setTo(0, 0);
 	actor.body.collideWorldBounds = true; 
 
-	//  Finally the turret that we place on-top of the actor body
-	parts = createShip(defaultShipParts, actor);
-	actor.height=Math.sqrt(defaultShipParts.length)*16; 
-	actor.width=Math.sqrt(defaultShipParts.length)*16;
+	//  Finally the turret that we place on-top of the actori body
+	var playerShip = ships[Math.floor(eo3.randomRange(0,ships.length))];
+
+	parts = createShip(playerShip, actor);
+	actor.height=Math.sqrt(playerShip.length)*16; 
+	actor.width=Math.sqrt(playerShip.length)*16;
 	//TODO some condition where the turret comes back?
 	//turret = game.add.sprite(0, 0, 'turret');
 	//turret.anchor.setTo(0.3, 0.5);
@@ -282,7 +285,7 @@ function create () {
 	  */
 
 	game.camera.follow(actor);
-	game.camera.deadzone = new Phaser.Rectangle(150, 150, 500, 300);
+	game.camera.deadzone = new Phaser.Rectangle(500, 220, 130, 130);
 	game.camera.focusOnXY(0, 0);
 
 	cursors = game.input.keyboard.createCursorKeys();
@@ -347,8 +350,8 @@ function update () {
 		{
 			thrust.x=actor.x-(Math.cos(actor.rotation)*(actor.width)*0.5);
 			thrust.y=actor.y-(Math.sin(actor.rotation)*(actor.width)*0.5);
-			thrust.minParticleSpeed.setTo(-1*Math.cos(actor.rotation)*actor.acceleration,-1*Math.sin(actor.rotation)*actor.acceleration);
-			thrust.maxParticleSpeed.setTo(-1*Math.cos(actor.rotation)*actor.acceleration*4,-1*Math.sin(actor.rotation)*actor.acceleration*4);
+			thrust.minParticleSpeed.setTo(0,0);
+			thrust.maxParticleSpeed.setTo(0,0);
 			thrust.start(true, 1000, null, 1);
 			actor.nextThrust = game.time.now + 100; 
 		}
