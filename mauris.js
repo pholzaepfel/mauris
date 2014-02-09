@@ -100,7 +100,7 @@ var game = new Phaser.Game(1280, 720, Phaser.AUTO, 'phaser-example', { preload: 
 function preload () {
 
 	game.load.atlas('tank', 'assets/tanks.png', 'assets/tanks.json');
-	game.load.atlas('parts', 'assets/parts.png', 'assets/parts.json');
+	game.load.spritesheet('parts', 'assets/parts.png', 16, 16);
 	game.load.atlas('enemy', 'assets/enemy-tanks.png', 'assets/tanks.json');
 	game.load.image('bullet', 'assets/bullet.png');
 	game.load.image('draconis', 'assets/draconis.png');
@@ -139,13 +139,14 @@ function create () {
 	land = game.add.tileSprite(0, 0, 1280, 720, 'starfield');
 
 	land.fixedToCamera = true;
-
-	for(var ix=0;ix<6;ix++){
-		for(var iy=0;iy<5;iy++){
-				parts.push(new dragPart(ix*32,iy*32,'parts',(ix) + '-' + (iy)));
-				parts.push(new dragPart(16+(ix*32),16+(iy*32),'parts',(ix) + '-' + (iy)));
-				parts.push(new dragPart((ix*32),16+(iy*32),'parts',(ix) + '-' + (iy)));
-				parts.push(new dragPart(16+(ix*32),iy*32,'parts',(ix) + '-' + (iy)));
+	var n=0;
+	for(var iy=0;iy<5;iy++){
+		for(var ix=0;ix<6;ix++){
+			parts.push(new dragPart(ix*32,iy*32,'parts',n));
+			parts.push(new dragPart(16+(ix*32),16+(iy*32),'parts',n));
+			parts.push(new dragPart((ix*32),16+(iy*32),'parts',n));
+			parts.push(new dragPart(16+(ix*32),iy*32,'parts',n));
+			n++;
 		}
 	}
 
