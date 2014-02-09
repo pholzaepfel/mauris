@@ -126,15 +126,13 @@ function preload () {
 	game.load.spritesheet('thrust', 'assets/thrust.png',4,4,4);
 }
 
-var backdrop1, backdrop2;
-var filter;
-var actor;
+var backdrop1, backdrop2,backdrop3;
 var turret;
 var numBaddies = 200;
 var enemies;
 var enemyBullets;
 var explosions;
-
+var player = {};
 var logo;
 
 var currentSpeed = 0;
@@ -207,30 +205,30 @@ function create () {
 	
 	//createParts();	
 	//  The base of our actor
-	actor = game.add.sprite(0, 0, 'parts');
-	actor.visible=false;
-	actor.anchor.setTo(0.5, 0.5);
+	player.actor = game.add.sprite(0, 0, 'parts');
+	player.actor.visible=false;
+	player.actor.anchor.setTo(0.5, 0.5);
 	//	actor.animations.add('move', ['tank1', 'tank2', 'tank3', 'tank4', 'tank5', 'tank6'], 20, true);
 
 	//actor.play('move');
 	//basic stats
-	actor.turnrate=eo3.randomRange(0.4,0.8);
-	actor.acceleration=eo3.randomRange(0.9,2.3);
+	player.actor.turnrate=eo3.randomRange(0.4,0.8);
+	player.actor.acceleration=eo3.randomRange(0.9,2.3);
 	var t = eo3.randomRange(130,290);
-	actor.body.maxVelocity.setTo(t, t);
+	player.actor.body.maxVelocity.setTo(t, t);
 
 
 	
-	actor.body.drag.setTo(0, 0);
-	actor.body.bounce.setTo(0, 0);
-	actor.body.collideWorldBounds = true; 
+	player.actor.body.drag.setTo(0, 0);
+	player.actor.body.bounce.setTo(0, 0);
+	player.actor.body.collideWorldBounds = true; 
 
 	//  Finally the turret that we place on-top of the actori body
 	var playerShip = ships[Math.floor(eo3.randomRange(0,ships.length))];
 
-	parts = createShip(playerShip, actor);
-	actor.height=Math.sqrt(playerShip.length)*16; 
-	actor.width=Math.sqrt(playerShip.length)*16;
+	parts = createShip(playerShip, player.actor);
+	player.actor.height=Math.sqrt(playerShip.length)*16; 
+	player.actor.width=Math.sqrt(playerShip.length)*16;
 	//TODO some condition where the turret comes back?
 	//turret = game.add.sprite(0, 0, 'turret');
 	//turret.anchor.setTo(0.3, 0.5);
@@ -248,7 +246,7 @@ function create () {
 
 	for (var i = 0; i < numBaddies; i++)
 	{
-		enemies.push(new EnemyTank(i, game, actor, enemyBullets));
+		enemies.push(new EnemyTank(i, game, player.actor, enemyBullets));
 	}
 
 	thrust = game.add.emitter(0,0,200);
@@ -285,7 +283,7 @@ function create () {
 	  game.input.onDown.add(removeLogo, this);
 	  */
 
-	game.camera.follow(actor);
+	game.camera.follow(player.actor);
 	game.camera.focusOnXY(0, 0);
 
 	cursors = game.input.keyboard.createCursorKeys();
@@ -301,14 +299,13 @@ function removeLogo () {
 
 function update () {
 
-	game.debug.renderText(Math.sin(game.math.degToRad(actor.angle)) + ';' + Math.cos(game.math.degToRad(actor.angle)),100,100);
+	game.debug.renderText(Math.sin(game.math.degToRad(player.actor.angle)) + ';' + Math.cos(game.math.degToRad(player.actor.angle)),100,100);
 	if(enemyBullets.getFirstAlive() != null) {
 
 		for (var i = 0; i < parts.length; i++) {
 			game.physics.collide(enemyBullets, parts[i].actor, bulletHitPlayer, null, this);
 		}
 	}
-	actor.body.angularAcceleration = 0;
 
 	for (var i = 0; i < enemies.length; i++)
 	{
@@ -329,33 +326,33 @@ function update () {
 
 	if (cursors.left.isDown)
 	{
-		actor.angle-=actor.turnrate;
+		player.actor.angle-=player.actor.turnrate;
 		//    actor.body.angularAcceleration -= 3200;
 	}
 	else if (cursors.right.isDown)
 	{
-		actor.angle+=actor.turnrate;
+		player.actor.angle+=player.actor.turnrate;
 		//    actor.body.angularAcceleration += 3200;
 	}
 
 	if (cursors.up.isDown)
 	{
 		//  The speed we'll travel at
-		currentSpeed = actor.acceleration;
+		currentSpeed = player.actor.acceleration;
 	}
 	//
 	if (currentSpeed > 0)
 	{
-		if(game.time.now>(actor.nextThrust||0))
+		if(game.time.now>(player.actor.nextThrust||0))
 		{
-			thrust.x=actor.x-(Math.cos(actor.rotation)*(actor.width)*0.5);
-			thrust.y=actor.y-(Math.sin(actor.rotation)*(actor.width)*0.5);
+			thrust.x=player.actor.x-(Math.cos(player.actor.rotation)*(player.actor.width)*0.5);
+			thrust.y=player.actor.y-(Math.sin(player.actor.rotation)*(player.actor.width)*0.5);
 			thrust.minParticleSpeed.setTo(0,0);
 			thrust.maxParticleSpeed.setTo(0,0);
 			thrust.start(true, 1000, null, 1);
-			actor.nextThrust = game.time.now + 100; 
+			player.actor.nextThrust = game.time.now + 100; 
 		}
-		eo3.addVelocity(actor.rotation, currentSpeed, actor.body.velocity);
+		eo3.addVelocity(player.actor.rotation, currentSpeed, player.actor.body.velocity);
 		currentSpeed=0;
 	}
 	// scrolling
@@ -369,8 +366,8 @@ function update () {
 	//  Position all the parts and align rotations
 
 	//TODO restore the turret one day
-	//turret.x = actor.x;
-	//turret.y = actor.y;
+	//turret.x = player.actor.x;
+	//turret.y = player.actor.y;
 
 	//turret.rotation = game.physics.angleToPointer(turret);
 
@@ -417,7 +414,7 @@ function turretFire () {
 
 		var bullet = bullets.getFirstDead();
 
-		bullet.reset(turret.x + (Math.cos(turret.rotation)*(actor.width)*0.5), turret.y + (Math.sin(turret.rotation)*(actor.width)*0.5));
+		bullet.reset(turret.x + (Math.cos(turret.rotation)*(player.actor.width)*0.5), turret.y + (Math.sin(turret.rotation)*(player.actor.width)*0.5));
 
 		bullet.rotation = game.physics.moveToPointer(bullet, 350);
 	}
@@ -432,9 +429,9 @@ function fire () {
 
 		var bullet = bullets.getFirstDead();
 
-		bullet.reset(actor.x + (Math.cos(actor.rotation)*(actor.width)*0.75), actor.y + (Math.sin(actor.rotation)*(actor.width)*0.75));
-		bullet.rotation = actor.rotation;
-		game.physics.velocityFromRotation(actor.rotation, 350, bullet.body.velocity);
+		bullet.reset(player.actor.x + (Math.cos(player.actor.rotation)*(player.actor.width)*0.75), player.actor.y + (Math.sin(player.actor.rotation)*(player.actor.width)*0.75));
+		bullet.rotation = player.actor.rotation;
+		game.physics.velocityFromRotation(player.actor.rotation, 350, bullet.body.velocity);
 
 	}
 
