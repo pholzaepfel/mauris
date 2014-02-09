@@ -176,10 +176,9 @@ function createParts() {
 function createShip(shipParts, player){
 	var myParts = [];
 
-	var n=0;
-	while (n*n<shipParts.length){n++};
+	var n=Math.sqrt(shipParts.length);
 
-	if (n*n>shipParts.length){
+	if (n!=Math.floor(n)){
 		return [];
 	};
 	for (var i=0; i<shipParts.length;i++){
@@ -215,8 +214,6 @@ function create () {
 	//  The base of our actor
 	actor = game.add.sprite(0, 0, 'parts');
 	actor.visible=false;
-	actor.height=48; //TODO unhardcode
-	actor.width=48;
 	actor.anchor.setTo(0.5, 0.5);
 	//	actor.animations.add('move', ['tank1', 'tank2', 'tank3', 'tank4', 'tank5', 'tank6'], 20, true);
 
@@ -235,6 +232,8 @@ function create () {
 
 	//  Finally the turret that we place on-top of the actor body
 	parts = createShip(defaultShipParts, actor);
+	actor.height=Math.sqrt(defaultShipParts.length)*16; 
+	actor.width=Math.sqrt(defaultShipParts.length)*16;
 	//TODO some condition where the turret comes back?
 	//turret = game.add.sprite(0, 0, 'turret');
 	//turret.anchor.setTo(0.3, 0.5);
