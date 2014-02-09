@@ -17,6 +17,26 @@ dragPart.prototype.update = function(){
 	this.actor.y -= this.actor.y % 16;
 };
 
+shipPart = function(x,y,sheet,index,player)
+{
+	this.offsetx = x;
+	this.offsety = y;
+	this.game = game;
+	this.player = player;
+	this.alive = true;
+	this.actor = game.add.sprite(x,y,sheet,index);
+	this.actor.anchor.setTo(0.5,0.5);
+//	this.actor.bringToTop();
+};
+shipPart.prototype.update = function(){
+this.actor.angle = this.player.angle;
+this.actor.x = this.player.x + (this.offsetx * Math.cos(game.math.degToRad(this.player.angle)));
+this.actor.y = this.player.y + (this.offsety * Math.cos(game.math.degToRad(this.player.angle)));
+this.actor.x -= (this.offsety * Math.sin(game.math.degToRad(this.player.angle)));
+this.actor.y += (this.offsetx * Math.sin(game.math.degToRad(this.player.angle)));
+//this.actor.x = this.player.x + (this.offsety * (1-Math.sin(game.math.degToRad(this.player.angle))));
+};
+
 EnemyTank = function (index, game, player, bullets) {
 
 	var x = game.world.randomX;
@@ -30,11 +50,11 @@ EnemyTank = function (index, game, player, bullets) {
 	this.nextFire = 0;
 	this.alive = true;
 
-	this.shadow = game.add.sprite(x, y, 'enemy', 'shadow');
+	//this.shadow = game.add.sprite(x, y, 'enemy', 'shadow');
 	this.actor = game.add.sprite(x, y, 'enemy', 'tank1');
 	this.turret = game.add.sprite(x, y, 'enemy', 'turret');
 
-	this.shadow.anchor.setTo(0.5, 0.5);
+	//this.shadow.anchor.setTo(0.5, 0.5);
 	this.actor.anchor.setTo(0.5, 0.5);
 	this.turret.anchor.setTo(0.3, 0.5);
 
@@ -105,12 +125,14 @@ function preload () {
 	game.load.image('bullet', 'assets/bullet.png');
 	game.load.image('draconis', 'assets/draconis.png');
 	game.load.image('turret', 'assets/turret.png');
-	game.load.image('starfield', 'assets/starfield.png');
+	game.load.image('starfield2', 'assets/starfield2.png');
+	game.load.image('starfield3', 'assets/starfield3.png');
+	game.load.image('starfield4', 'assets/starfield4.png');
 	game.load.spritesheet('kaboom', 'assets/explosion.png', 64, 64, 23);
 	game.load.spritesheet('thrust', 'assets/thrust.png',4,4,4);
 }
 
-var land;
+var backdrop1, backdrop2;
 var filter;
 var shadow;
 var actor;
@@ -132,13 +154,10 @@ var nextFire = 0;
 var partShip;
 var parts=[];
 
-function create () {
+var defaultShipParts=[14,1,2,6,7,8,13,12,26];
 
-	game.world.setBounds(-1000, -1000, 3000, 3000);
+function createParts() {
 
-	land = game.add.tileSprite(0, 0, 1280, 720, 'starfield');
-
-	land.fixedToCamera = true;
 	var n=0;
 	for(var iy=0;iy<5;iy++){
 		for(var ix=0;ix<6;ix++){
@@ -150,8 +169,51 @@ function create () {
 		}
 	}
 
+}
+// assumes that the incoming parts list is a square
+// if not there will be anarchy
+function createShip(shipParts, player){
+	var myParts = [];
+
+	var n=0;
+	while (n*n<shipParts.length){n++};
+
+	if (n*n>shipParts.length){
+		return [];
+	};
+	for (var i=0; i<shipParts.length;i++){
+		myParts.push(new shipPart(((n-1)*-8)+((i%n)*16),((n-1)*-8)+(Math.floor(i/n)*16),'parts',shipParts[i],player));
+	}
+	return myParts; 
+}
+
+
+function create () {
+
+	game.world.setBounds(-1000, -1000, 3000, 3000);
+
+	backdrop1 = game.add.tileSprite(0, 0, 1280, 720, 'starfield2');
+
+	backdrop1.fixedToCamera = true;
+	backdrop1.scale.x=2;
+	backdrop1.scale.y=2;	
+	
+	
+	backdrop2 = game.add.tileSprite(0, 0, 1280, 720, 'starfield3');
+	backdrop2.fixedToCamera = true;
+	backdrop2.scale.x=2;
+	backdrop2.scale.y=2;	
+
+	backdrop3 = game.add.tileSprite(0, 0, 1280, 720, 'starfield4');
+	backdrop3.fixedToCamera = true;
+	backdrop3.scale.x=2;
+	backdrop3.scale.y=2;	
+	//createParts();	
 	//  The base of our actor
-	actor = game.add.sprite(-30, -30, 'draconis');
+	actor = game.add.sprite(0, 0, 'parts');
+	actor.visible=false;
+	actor.height=48; //TODO unhardcode
+	actor.width=48;
 	actor.anchor.setTo(0.5, 0.5);
 	//	actor.animations.add('move', ['tank1', 'tank2', 'tank3', 'tank4', 'tank5', 'tank6'], 20, true);
 
@@ -169,6 +231,7 @@ function create () {
 	actor.body.collideWorldBounds = true; 
 
 	//  Finally the turret that we place on-top of the actor body
+	parts = createShip(defaultShipParts, actor);
 	//TODO some condition where the turret comes back?
 	//turret = game.add.sprite(0, 0, 'turret');
 	//turret.anchor.setTo(0.3, 0.5);
@@ -190,8 +253,8 @@ function create () {
 	}
 
 	//  A shadow below our actor
-	shadow = game.add.sprite(0, 0, 'tank', 'shadow');
-	shadow.anchor.setTo(0.5, 0.5);
+	//shadow = game.add.sprite(0, 0, 'tank', 'shadow');
+	//shadow.anchor.setTo(0.5, 0.5);
 
 	thrust = game.add.emitter(0,0,200);
 	thrust.makeParticles('thrust');
@@ -218,7 +281,7 @@ function create () {
 		explosionAnimation.animations.add('kaboom');
 	}
 
-	actor.bringToTop();
+	//actor.bringToTop();
 	//TODO restore a turret one day - turret.bringToTop();
 
 	/*logo = game.add.sprite(0, 200, 'logo');
@@ -244,7 +307,7 @@ function removeLogo () {
 
 function update () {
 
-
+	game.debug.renderText(Math.sin(game.math.degToRad(actor.angle)) + ';' + Math.cos(game.math.degToRad(actor.angle)),100,100);
 	game.physics.collide(enemyBullets, actor, bulletHitPlayer, null, this);
 
 	actor.body.angularAcceleration = 0;
@@ -296,13 +359,17 @@ function update () {
 		currentSpeed=0;
 	}
 	// scrolling
-	land.tilePosition.x = -game.camera.x;
-	land.tilePosition.y = -game.camera.y;
+	backdrop1.tilePosition.x = -0.25*game.camera.x;
+	backdrop1.tilePosition.y = -0.25*game.camera.y;
+	backdrop2.tilePosition.x = -0.40*game.camera.x;
+	backdrop2.tilePosition.y = -0.40*game.camera.y;
+	backdrop3.tilePosition.x = -0.6*game.camera.x;
+	backdrop3.tilePosition.y = -0.6*game.camera.y;
 
 	//  Position all the parts and align rotations
-	shadow.x = actor.x;
-	shadow.y = actor.y;
-	shadow.rotation = actor.rotation;
+	//shadow.x = actor.x;
+	//shadow.y = actor.y;
+	//shadow.rotation = actor.rotation;
 
 	//TODO restore the turret one day
 	//turret.x = actor.x;
