@@ -39,8 +39,8 @@ shipPart.prototype.update = function(){
 
 EnemyTank = function (index, game, player, bullets) {
 
-	var x = game.world.randomX;
-	var y = game.world.randomY;
+	var x = eo3.randomRange(-2000,2000);
+	var y =  eo3.randomRange(-2000,2000);
 
 	this.game = game;
 	this.health = 3;
@@ -130,7 +130,7 @@ var backdrop1, backdrop2;
 var filter;
 var actor;
 var turret;
-var numBaddies = 40;
+var numBaddies = 200;
 var enemies;
 var enemyBullets;
 var explosions;
@@ -150,7 +150,8 @@ var parts=[];
 var ships=[];
 ships.push([14,1,2,6,7,8,-1,26,-1]);
 ships.push([-1,3,5,-1,-1,-1,25,-1,-1,-1,9,16,16,10,11,-1,25,-1,-1,-1,-1,3,5,-1,-1]);
-
+ships.push([9,3,27,11]);
+ships.push([-1,-1,-1,-1,9,3,27,11,-1,-1,-1,-1,-1,-1,-1,-1]);
 function createParts() {
 
 	var n=0;
@@ -186,8 +187,7 @@ function createShip(shipParts, player){
 
 function create () {
 
-	game.world.setBounds(-2000, -2000, 4000, 4000);
-
+	game.world.setBounds(-100000, -100000, 200000, 200000);
 	backdrop1 = game.add.tileSprite(0, 0, 1280, 720, 'starfield2');
 
 	backdrop1.fixedToCamera = true;
@@ -204,6 +204,7 @@ function create () {
 	backdrop3.fixedToCamera = true;
 	backdrop3.scale.x=2;
 	backdrop3.scale.y=2;	
+	
 	//createParts();	
 	//  The base of our actor
 	actor = game.add.sprite(0, 0, 'parts');
@@ -219,7 +220,7 @@ function create () {
 	actor.body.maxVelocity.setTo(t, t);
 
 
-
+	
 	actor.body.drag.setTo(0, 0);
 	actor.body.bounce.setTo(0, 0);
 	actor.body.collideWorldBounds = true; 
@@ -285,7 +286,6 @@ function create () {
 	  */
 
 	game.camera.follow(actor);
-	game.camera.deadzone = new Phaser.Rectangle(500, 220, 130, 130);
 	game.camera.focusOnXY(0, 0);
 
 	cursors = game.input.keyboard.createCursorKeys();
