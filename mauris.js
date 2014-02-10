@@ -2,6 +2,7 @@ eo3 = {};
 eo3.addVelocity = function (a,b,c){return"undefined"==typeof b&&(b=60),	c=c||new d.Point,c.setTo(c.x+Math.cos(a)*b,c.y+Math.sin(a)*b)};
 eo3.randomRange = function(a,b){var c,d; if(a>b){c=a;d=b;}else{d=a;c=b};return (Math.random()*(c-d))+d};
 eo3.addVelocityTest = function (a,b,c){return '' +  c.x + ' - ' + Math.cos((game.math.degToRad(a))*b) + ' : ' + c.y+' - '+(Math.sin(game.math.degToRad(a))*b)};
+
 // ----8<----- my shitty additions are above
 
 dragPart = function(x,y,sheet,index)
@@ -187,6 +188,17 @@ luser.prototype.up = function(){
 };
 luser.prototype.fire = function(){
 
+	if (!bullets.countDead())
+	{
+		// clean up bullets FIXME
+		var bc = bullets.countLiving();
+
+		for(var i=0; i<bc; i++){
+			if(bullets.getAt(i).lifespan < 0){
+				bullets.getAt(i).kill();
+			}
+		}
+	}	
 	if (game.time.now > this.nextFire && bullets.countDead() > 0 && this.energy > this.fireEnergy)
 	{
 		this.nextFire = game.time.now + this.fireRate;
@@ -253,12 +265,9 @@ var ships=[];
 function createParts() {
 
 	var n=0;
-	for(var iy=0;iy<5;iy++){
-		for(var ix=0;ix<6;ix++){
-			player.parts.push(new dragPart(ix*32,iy*32,'parts',n));
-			player.parts.push(new dragPart(16+(ix*32),16+(iy*32),'parts',n));
-			player.parts.push(new dragPart((ix*32),16+(iy*32),'parts',n));
-			player.parts.push(new dragPart(16+(ix*32),iy*32,'parts',n));
+	for(var iy=0;iy<32;iy++){
+		for(var ix=0;ix<32;ix++){
+			player.parts.push(new dragPart(ix*16,iy*16,'parts',n));
 			n++;
 		}
 	}
