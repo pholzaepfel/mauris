@@ -17,12 +17,12 @@ dragPart.prototype.update = function(){
 	this.actor.y -= this.actor.y % 16;
 };
 
-shipPart = function(x,y,sheet,index,player)
+shipPart = function(x,y,sheet,index,targetSprite)
 {
 	this.offsetx = x;
 	this.offsety = y;
 	this.game = game;
-	this.player = player;
+	this.player = targetSprite;
 	this.alive = true;
 	this.actor = game.add.sprite(x,y,sheet,index);
 	this.actor.anchor.setTo(0.5,0.5);
@@ -37,14 +37,14 @@ shipPart.prototype.update = function(){
 	this.actor.body.velocity = this.player.body.velocity;
 };
 
-enemyShip = function (index, game, player, bullets) {
+enemyShip = function (index, game, targetSprite, bullets) {
 
-	var x = eo3.randomRange(-1000,1000);
-	var y =  eo3.randomRange(-11000,1000);
+	var x = targetSprite.x + eo3.randomRange(-500,500);
+	var y = targetSprite.y + eo3.randomRange(-500,500);
 
 	this.game = game;
 	this.health = 3;
-	this.player = player;
+	this.player = targetSprite;
 	this.bullets = bullets;
 	this.fireRate = 1000;
 	this.nextFire = 0;
@@ -53,6 +53,12 @@ enemyShip = function (index, game, player, bullets) {
 	this.actor = game.add.sprite(x, y, 'parts', 0);
 	this.actor.visible = true;
 	this.actor.anchor.setTo(0.5, 0.5);
+
+	var newShip = ships[Math.floor(eo3.randomRange(0,ships.length))];
+
+	this.actor.body.setSize(Math.sqrt(newShip.length)*16,Math.sqrt(newShip.length)*16,0,0);
+
+	this.parts = createShip(newShip,this.actor);
 
 	this.actor.name = index.toString();
 	//	this.actor.body.immovable = true;
@@ -72,12 +78,12 @@ enemyShip.prototype.damage = function(dmg) {
 	{
 		this.alive = false;
 
-			for (var j = 0; j < this.parts.length; j++) {
+		for (var j = 0; j < this.parts.length; j++) {
 
-				this.parts[j].actor.kill();
+			this.parts[j].actor.kill();
 
-			}	
-			
+		}	
+
 
 		this.actor.kill();
 
@@ -125,13 +131,50 @@ function preload () {
 	game.load.spritesheet('sparks', 'assets/sparks.png',8,8);
 }
 
+var luser = function() {
+	this.acceleration=1;
+	this.turnrate=0.6;
+	this.health=10;
+	this.mass=1;
+	this.bulletSprite=''; //todo
+	this.bulletBehavior={};
+	this.parts=[];
+
+	this.actor = game.add.sprite(0, 0, 'parts');
+	this.actor.visible=true;
+	this.actor.anchor.setTo(0.5, 0.5);
+	this.acceleration=eo3.randomRange(0.9,2.3);
+	var t = eo3.randomRange(130,290);
+	this.actor.body.maxVelocity.setTo(t, t);
+
+
+
+	this.actor.body.drag.setTo(0, 0);
+	this.actor.body.bounce.setTo(0, 0);
+	this.actor.body.collideWorldBounds = true; 
+
+	var playerShip = ships[Math.floor(eo3.randomRange(0,ships.length))];
+
+	this.parts = createShip(playerShip, this.actor);
+
+	this.actor.body.setSize(Math.sqrt(playerShip.length)*16,Math.sqrt(playerShip.length)*16,0,0);
+}
+luser.prototype.left = function(){};
+luser.prototype.right = function(){};
+luser.prototype.up = function(){};
+luser.prototype.fire = function(){};
+luser.prototype.alt = function(){};
+
+var player;
+
+// global
 var backdrop1, backdrop2,backdrop3;
-var numBaddies = 50;
+var numBaddies = 10;
 var enemies;
 var enemyBullets;
 var explosions;
-var player = {};
 var logo;
+var nextSpawn=0;
 
 var currentSpeed = 0;
 var cursors;
@@ -141,23 +184,18 @@ var fireRate = eo3.randomRange(200,1500);
 var nextFire = 0;
 
 var partShip;
-var parts=[];
 
 var ships=[];
-ships.push([66, 1, 2, 32, 33, 34, -1, 130, -1]);
-ships.push([-1, 3, 5, -1, -1, -1, 129, -1, -1, -1, 35, 68, 68, 36, 37, -1, 129, -1, -1, -1, -1, 3, 5, -1, -1]);
-ships.push([35, 3, 131, 37]);
-ships.push([-1, -1, -1, -1, 35, 3, 131, 37, -1, -1, -1, -1, -1, -1, -1, -1]);
 
 function createParts() {
 
 	var n=0;
 	for(var iy=0;iy<5;iy++){
 		for(var ix=0;ix<6;ix++){
-			parts.push(new dragPart(ix*32,iy*32,'parts',n));
-			parts.push(new dragPart(16+(ix*32),16+(iy*32),'parts',n));
-			parts.push(new dragPart((ix*32),16+(iy*32),'parts',n));
-			parts.push(new dragPart(16+(ix*32),iy*32,'parts',n));
+			player.parts.push(new dragPart(ix*32,iy*32,'parts',n));
+			player.parts.push(new dragPart(16+(ix*32),16+(iy*32),'parts',n));
+			player.parts.push(new dragPart((ix*32),16+(iy*32),'parts',n));
+			player.parts.push(new dragPart(16+(ix*32),iy*32,'parts',n));
 			n++;
 		}
 	}
@@ -165,7 +203,7 @@ function createParts() {
 }
 // assumes that the incoming parts list is a square
 // if not there will be anarchy
-function createShip(shipParts, player){
+function createShip(shipParts, targetActor){
 	var myParts = [];
 
 	var n=Math.sqrt(shipParts.length);
@@ -175,9 +213,9 @@ function createShip(shipParts, player){
 	};
 	for (var i=0; i<shipParts.length;i++){
 		if(shipParts[i]>-1){
-			myParts.push(new shipPart(((n-1)*-8)+((i%n)*16),((n-1)*-8)+(Math.floor(i/n)*16),'parts',shipParts[i],player));
+			myParts.push(new shipPart(((n-1)*-8)+((i%n)*16),((n-1)*-8)+(Math.floor(i/n)*16),'parts',shipParts[i],targetActor));
 		}
-	}
+	i}
 	return myParts; 
 }
 
@@ -202,31 +240,13 @@ function create () {
 	backdrop3.scale.x=2;
 	backdrop3.scale.y=2;	
 
-	//createParts();	
-	//  The base of our actor
-	player.actor = game.add.sprite(0, 0, 'parts');
-	player.actor.visible=true;
-	player.actor.anchor.setTo(0.5, 0.5);
-	//	actor.animations.add('move', ['tank1', 'tank2', 'tank3', 'tank4', 'tank5', 'tank6'], 20, true);
+	
+	ships.push([66, 1, 2, 32, 33, 34, -1, 130, -1]);
+	ships.push([-1, 3, 5, -1, -1, -1, 129, -1, -1, -1, 35, 68, 68, 36, 37, -1, 129, -1, -1, -1, -1, 3, 5, -1, -1]);
+	ships.push([35, 3, 131, 37]);
+	ships.push([-1, -1, -1, -1, 35, 3, 131, 37, -1, -1, -1, -1, -1, -1, -1, -1]);
 
-	//actor.play('move');
-	//basic stats
-	player.actor.turnrate=eo3.randomRange(0.4,0.8);
-	player.actor.acceleration=eo3.randomRange(0.9,2.3);
-	var t = eo3.randomRange(130,290);
-	player.actor.body.maxVelocity.setTo(t, t);
-
-
-
-	player.actor.body.drag.setTo(0, 0);
-	player.actor.body.bounce.setTo(0, 0);
-	player.actor.body.collideWorldBounds = true; 
-
-	var playerShip = ships[Math.floor(eo3.randomRange(0,ships.length))];
-
-	parts = createShip(playerShip, player.actor);
-
-	player.actor.body.setSize(Math.sqrt(playerShip.length)*16,Math.sqrt(playerShip.length)*16,0,0);
+	player = new luser();
 
 	//  The enemies bullet group
 	enemyBullets = game.add.group();
@@ -242,11 +262,6 @@ function create () {
 	for (var i = 0; i < numBaddies; i++)
 	{
 		enemies.push(new enemyShip(i, game, player.actor, enemyBullets));
-		var newShip = ships[Math.floor(eo3.randomRange(0,ships.length))];
-
-		enemies[i].actor.body.setSize(Math.sqrt(newShip.length)*16,Math.sqrt(newShip.length)*16,0,0);
-
-		enemies[i].parts = createShip(newShip,enemies[i].actor);
 	}
 
 	thrust = game.add.emitter(0,0,200);
@@ -298,11 +313,22 @@ function removeLogo () {
 
 function update () {
 
+	if(nextSpawn<game.time.now||nextSpawn==0)
+	{
+		for(var i = 0; i < enemies.length ; i++) {
+			if (enemies[i].alive==false){
+				enemies.splice(i,1); // I know this defeats the purpose. FIXME
+				enemies.push(new enemyShip(i, game, player.actor, enemyBullets));
+			};
+		}
+		nextSpawn=game.time.now+eo3.randomRange(5000,10000);
+	}	
+
 	game.debug.renderText(Math.sin(game.math.degToRad(player.actor.angle)) + ';' + Math.cos(game.math.degToRad(player.actor.angle)),100,100);
 	if(enemyBullets.getFirstAlive() != null) {
 
-		for (var i = 0; i < parts.length; i++) {
-			game.physics.collide(enemyBullets, parts[i].actor, bulletHitPlayer, null, this);
+		for (var i = 0; i < player.parts.length; i++) {
+			game.physics.collide(enemyBullets, player.parts[i].actor, bulletHitPlayer, null, this);
 		}
 	}
 
@@ -311,8 +337,8 @@ function update () {
 		if (enemies[i].alive)
 		{
 			enemies[i].update();
-			for (var j = 0; j < parts.length; j++) {
-				game.physics.collide(enemies[i].actor, parts[j].actor);
+			for (var j = 0; j < player.parts.length; j++) {
+				game.physics.collide(enemies[i].actor, player.parts[j].actor);
 			}
 			game.physics.collide(bullets, enemies[i].actor, bulletHitEnemy, null, this);
 
@@ -325,27 +351,30 @@ function update () {
 		}
 	}
 
-	for (var i = 0; i < parts.length; i++)
+	for (var i = 0; i < player.parts.length; i++)
 	{
-		parts[i].update();
+		player.parts[i].update();
 	};
 
 
 	if (cursors.left.isDown)
 	{
-		player.actor.angle-=player.actor.turnrate;
+		player.left();
+		player.actor.angle-=player.turnrate;
 		//    actor.body.angularAcceleration -= 3200;
 	}
 	else if (cursors.right.isDown)
 	{
-		player.actor.angle+=player.actor.turnrate;
+		player.right()
+		player.actor.angle+=player.turnrate;
 		//    actor.body.angularAcceleration += 3200;
 	}
 
 	if (cursors.up.isDown)
 	{
+		player.up();
 		//  The speed we'll travel at
-		currentSpeed = player.actor.acceleration;
+		currentSpeed = player.acceleration;
 	}
 	//
 	if (currentSpeed > 0)
