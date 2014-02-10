@@ -60,7 +60,7 @@ enemyShip = function (index, game, targetSprite, bullets) {
 
 	this.parts = createShip(newShip,this.actor);
 
-	this.actor.name = index.toString();
+	this.actor.name = index.toString(); 
 	//	this.actor.body.immovable = true;
 	this.actor.body.collideWorldBounds = true;
 	this.actor.body.bounce.setTo(1, 1);
@@ -77,7 +77,6 @@ enemyShip.prototype.damage = function(dmg) {
 	if (this.health <= 0)
 	{
 		this.alive = false;
-
 		for (var j = 0; j < this.parts.length; j++) {
 
 			this.parts[j].actor.kill();
@@ -108,7 +107,6 @@ enemyShip.prototype.update = function() {
 			var bullet = this.bullets.getFirstDead();
 
 			bullet.reset(this.actor.x, this.actor.y);
-
 			bullet.rotation = this.game.physics.moveToObject(bullet, this.player, 500);
 		}
 	}
@@ -140,15 +138,23 @@ var luser = function() {
 	this.turnRate=0.6;
 	this.health=10;
 	this.alive=true;
-	this.mass=1;
 	this.bulletSprite=''; //todo
 	this.bulletBehavior={};
 	this.parts=[];
 	this.speed = 0; //current
-	this.fireRate = 1000;
+	this.fireRate = 250;
 	this.damage = 1;
 	this.range = 2000;
+	this.energy=10;
+	this.energyMax=10;
+	this.energyRate=1000;
+	this.energyAmount=2;
+	
+	this.fireEnergy = 1;
+
+	this.nextEnergy = 0;
 	this.nextFire = 0;
+	
 	this.actor = game.add.sprite(0, 0, 'parts');
 	this.actor.visible=true;
 	this.actor.anchor.setTo(0.5, 0.5);
@@ -181,18 +187,19 @@ luser.prototype.up = function(){
 };
 luser.prototype.fire = function(){
 
-	if (game.time.now > this.nextFire && bullets.countDead() > 0)
+	if (game.time.now > this.nextFire && bullets.countDead() > 0 && this.energy > this.fireEnergy)
 	{
 		this.nextFire = game.time.now + this.fireRate;
-
+		this.energy -= this.fireEnergy;
 		var bullet = bullets.getFirstDead();
 		bullet.damage = this.damage;
 		bullet.lifetime = this.range;
+		console.log(bullet.lifetime);
 		bullet.reset(this.actor.x + (Math.cos(this.actor.rotation)*(this.actor.body.width)*0.75), this.actor.y + (Math.sin(this.actor.rotation)*(this.actor.body.width)*0.75));
 		bullet.rotation = this.actor.rotation;
 		game.physics.velocityFromRotation(this.actor.rotation, 350, bullet.body.velocity);
-
 	}
+
 
 };
 luser.prototype.alt = function(){};
@@ -212,6 +219,15 @@ luser.prototype.update = function(){
 		this.speed=0;
 	}
 
+	if (game.time.now > this.nextEnergy)
+	{
+		if(this.energy+this.energyAmount>this.energyMax){
+			this.energy=this.energyMax;	
+		}else{
+			this.energy+=this.energyAmount;
+		}
+		this.nextEnergy = game.time.now + this.energyRate;
+	}
 };
 
 var player;
@@ -347,6 +363,8 @@ function create () {
 
 	cursors = game.input.keyboard.createCursorKeys();
 
+    	var t = game.add.text(game.world.centerX-300, 0, text, style);
+	t.bringToTop();
 }
 
 function removeLogo () {
@@ -362,8 +380,7 @@ function update () {
 	{
 		for(var i = 0; i < enemies.length ; i++) {
 			if (enemies[i].alive==false){
-				enemies.splice(i,1); // I know this defeats the purpose. FIXME
-				enemies.push(new enemyShip(i--, game, player.actor, enemyBullets));
+				enemies[i]=new enemyShip(i, game, player.actor, enemyBullets); //FIXME recycle correctly
 			};
 		}
 		nextSpawn=game.time.now+eo3.randomRange(5000,10000);
@@ -449,11 +466,13 @@ function bulletHitEnemy (actor, bullet) {
 
 	pew.x=bullet.x;
 	pew.y=bullet.y;
+	pew.rotation=bullet.rotation;
 	bullet.kill();
-	pew.minParticleSpeed.setTo(-1500,-1500);
-	pew.maxParticleSpeed.setTo(1500,1500);
-	pew.particleDrag.setTo(-500,1000);
-	pew.start(true,125,0, 50);
+
+	pew.minParticleSpeed.setTo(150,150);
+	pew.maxParticleSpeed.setTo(450,450);
+	pew.particleDrag.setTo(0,0);
+	pew.start(true,200,null, 50);
 	var destroyed = enemies[actor.name].damage(bullet.damage);
 
 	if (destroyed)
