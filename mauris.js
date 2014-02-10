@@ -39,8 +39,8 @@ shipPart.prototype.update = function(){
 
 enemyShip = function (index, game, player, bullets) {
 
-	var x = eo3.randomRange(-500,500);
-	var y =  eo3.randomRange(-500,500);
+	var x = eo3.randomRange(-1000,1000);
+	var y =  eo3.randomRange(-1000,1000);
 
 	this.game = game;
 	this.health = 3;
@@ -51,7 +51,7 @@ enemyShip = function (index, game, player, bullets) {
 	this.alive = true;
 	this.parts = [];
 	this.actor = game.add.sprite(x, y, 'parts', 0);
-	this.actor.visible = false;
+	this.actor.visible = true;
 	this.actor.anchor.setTo(0.5, 0.5);
 
 	this.actor.name = index.toString();
@@ -72,7 +72,12 @@ enemyShip.prototype.damage = function(dmg) {
 	{
 		this.alive = false;
 
+			for (var j = 0; j < this.parts.length; j++) {
 
+				this.parts[j].actor.kill();
+
+			}	
+			
 
 		this.actor.kill();
 
@@ -121,7 +126,7 @@ function preload () {
 }
 
 var backdrop1, backdrop2,backdrop3;
-var numBaddies = 15;
+var numBaddies = 50;
 var enemies;
 var enemyBullets;
 var explosions;
@@ -199,7 +204,7 @@ function create () {
 	//createParts();	
 	//  The base of our actor
 	player.actor = game.add.sprite(0, 0, 'parts');
-	player.actor.visible=false;
+	player.actor.visible=true;
 	player.actor.anchor.setTo(0.5, 0.5);
 	//	actor.animations.add('move', ['tank1', 'tank2', 'tank3', 'tank4', 'tank5', 'tank6'], 20, true);
 
@@ -244,7 +249,7 @@ function create () {
 	}
 
 	thrust = game.add.emitter(0,0,200);
-	thrust.makeParticles('sparks');
+	thrust.makeParticles('sparks',[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]);
 	thrust.gravity=0;
 
 	pew = game.add.emitter(0,0,200);
@@ -419,8 +424,6 @@ function fire () {
 }
 
 function render () {
-
-	// game.debug.renderText('Active Bullets: ' + bullets.countLiving() + ' / ' + bullets.total, 32, 32);
 
 }
 
