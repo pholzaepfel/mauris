@@ -113,9 +113,9 @@ enemyShip.prototype.update = function() {
 		}
 	}
 
-	if (this.game.physics.distanceBetween(this.actor, this.player) > 3000)
+	if (this.game.physics.distanceBetween(this.actor, this.player) > 2000)
 	{
-		this.actor.kill(); //out of sight, out of mind
+		this.damage(9999); //out of sight, out of mind
 	}
 };
 
@@ -126,7 +126,7 @@ function preload () {
 	game.load.atlas('tank', 'assets/tanks.png', 'assets/tanks.json');
 	game.load.spritesheet('parts', 'assets/parts.png', 16, 16);
 	game.load.atlas('enemy', 'assets/enemy-tanks.png', 'assets/tanks.json');
-	game.load.image('bullet', 'assets/bullet.png');
+	game.load.spritesheet('bullet', 'assets/bullets.png',16,16);
 	game.load.image('draconis', 'assets/draconis.png');
 	game.load.image('starfield2', 'assets/starfield2.png');
 	game.load.image('starfield3', 'assets/starfield3.png');
@@ -301,6 +301,7 @@ function create () {
 	enemyBullets.setAll('anchor.x', 0.5);
 	enemyBullets.setAll('anchor.y', 0.5);
 	enemyBullets.setAll('mass', 0); //TODO this doesn't work
+	enemyBullets.setAll('lifespan',5000);
 	enemyBullets.setAll('outOfBoundsKill', true);
 
 	//  Create some baddies to waste :)
@@ -362,7 +363,7 @@ function update () {
 		for(var i = 0; i < enemies.length ; i++) {
 			if (enemies[i].alive==false){
 				enemies.splice(i,1); // I know this defeats the purpose. FIXME
-				enemies.push(new enemyShip(i, game, player.actor, enemyBullets));
+				enemies.push(new enemyShip(i--, game, player.actor, enemyBullets));
 			};
 		}
 		nextSpawn=game.time.now+eo3.randomRange(5000,10000);
