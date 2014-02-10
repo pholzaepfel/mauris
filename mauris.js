@@ -37,7 +37,7 @@ shipPart.prototype.update = function(){
 	this.actor.body.velocity = this.player.body.velocity;
 };
 
-EnemyTank = function (index, game, player, bullets) {
+enemyShip = function (index, game, player, bullets) {
 
 	var x = eo3.randomRange(-500,500);
 	var y =  eo3.randomRange(-500,500);
@@ -64,7 +64,7 @@ EnemyTank = function (index, game, player, bullets) {
 
 };
 
-EnemyTank.prototype.damage = function(dmg) {
+enemyShip.prototype.damage = function(dmg) {
 
 	this.health -= dmg;
 
@@ -83,7 +83,7 @@ EnemyTank.prototype.damage = function(dmg) {
 
 }
 
-EnemyTank.prototype.update = function() {
+enemyShip.prototype.update = function() {
 
 
 	this.actor.rotation = this.game.physics.angleBetween(this.actor, this.player);
@@ -235,13 +235,12 @@ function create () {
 
 	for (var i = 0; i < numBaddies; i++)
 	{
-		enemies.push(new EnemyTank(i, game, player.actor, enemyBullets));
+		enemies.push(new enemyShip(i, game, player.actor, enemyBullets));
 		var newShip = ships[Math.floor(eo3.randomRange(0,ships.length))];
 
 		enemies[i].actor.body.setSize(Math.sqrt(newShip.length)*16,Math.sqrt(newShip.length)*16,0,0);
 
-		enemies[i].parts.push(createShip(newShip,enemies[i].actor));
-
+		enemies[i].parts = createShip(newShip,enemies[i].actor);
 	}
 
 	thrust = game.add.emitter(0,0,200);
