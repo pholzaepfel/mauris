@@ -40,7 +40,7 @@ shipPart.prototype.update = function(){
 enemyShip = function (index, game, player, bullets) {
 
 	var x = eo3.randomRange(-1000,1000);
-	var y =  eo3.randomRange(-1000,1000);
+	var y =  eo3.randomRange(-11000,1000);
 
 	this.game = game;
 	this.health = 3;
@@ -126,7 +126,7 @@ function preload () {
 }
 
 var backdrop1, backdrop2,backdrop3;
-var numBaddies = 50;
+var numBaddies = 0;
 var enemies;
 var enemyBullets;
 var explosions;
@@ -144,10 +144,11 @@ var partShip;
 var parts=[];
 
 var ships=[];
-ships.push([14,1,2,6,7,8,-1,26,-1]);
-ships.push([-1,3,5,-1,-1,-1,25,-1,-1,-1,9,16,16,10,11,-1,25,-1,-1,-1,-1,3,5,-1,-1]);
-ships.push([9,3,27,11]);
-ships.push([-1,-1,-1,-1,9,3,27,11,-1,-1,-1,-1,-1,-1,-1,-1]);
+ships.push([66, 1, 2, 32, 33, 34, -1, 130, -1]);
+ships.push([-1, 3, 5, -1, -1, -1, 129, -1, -1, -1, 35, 68, 68, 36, 37, -1, 129, -1, -1, -1, -1, 3, 5, -1, -1]);
+ships.push([35, 3, 131, 37]);
+ships.push([-1, -1, -1, -1, 35, 3, 131, 37, -1, -1, -1, -1, -1, -1, -1, -1]);
+
 function createParts() {
 
 	var n=0;
