@@ -49,7 +49,7 @@ EnemyTank = function (index, game, player, bullets) {
 	this.fireRate = 1000;
 	this.nextFire = 0;
 	this.alive = true;
-
+	this.parts = [];
 	this.actor = game.add.sprite(x, y, 'parts', 0);
 	this.actor.visible = false;
 	this.actor.anchor.setTo(0.5, 0.5);
@@ -71,6 +71,8 @@ EnemyTank.prototype.damage = function(dmg) {
 	if (this.health <= 0)
 	{
 		this.alive = false;
+
+
 
 		this.actor.kill();
 
@@ -135,7 +137,6 @@ var nextFire = 0;
 
 var partShip;
 var parts=[];
-var enemyParts=[];
 
 var ships=[];
 ships.push([14,1,2,6,7,8,-1,26,-1]);
@@ -194,7 +195,7 @@ function create () {
 	backdrop3.fixedToCamera = true;
 	backdrop3.scale.x=2;
 	backdrop3.scale.y=2;	
-	
+
 	//createParts();	
 	//  The base of our actor
 	player.actor = game.add.sprite(0, 0, 'parts');
@@ -210,7 +211,7 @@ function create () {
 	player.actor.body.maxVelocity.setTo(t, t);
 
 
-	
+
 	player.actor.body.drag.setTo(0, 0);
 	player.actor.body.bounce.setTo(0, 0);
 	player.actor.body.collideWorldBounds = true; 
@@ -218,7 +219,7 @@ function create () {
 	var playerShip = ships[Math.floor(eo3.randomRange(0,ships.length))];
 
 	parts = createShip(playerShip, player.actor);
-		
+
 	player.actor.body.setSize(Math.sqrt(playerShip.length)*16,Math.sqrt(playerShip.length)*16,0,0);
 
 	//  The enemies bullet group
@@ -231,15 +232,15 @@ function create () {
 
 	//  Create some baddies to waste :)
 	enemies = [];
-	
+
 	for (var i = 0; i < numBaddies; i++)
 	{
 		enemies.push(new EnemyTank(i, game, player.actor, enemyBullets));
 		var newShip = ships[Math.floor(eo3.randomRange(0,ships.length))];
-		
+
 		enemies[i].actor.body.setSize(Math.sqrt(newShip.length)*16,Math.sqrt(newShip.length)*16,0,0);
 
-		enemyParts.push(createShip(newShip,enemies[i].actor));
+		enemies[i].parts.push(createShip(newShip,enemies[i].actor));
 
 	}
 
@@ -309,13 +310,13 @@ function update () {
 				game.physics.collide(enemies[i].actor, parts[j].actor);
 			}
 			game.physics.collide(bullets, enemies[i].actor, bulletHitEnemy, null, this);
-		
-		for (var j = 0; j < enemyParts[i].length; j++) {
 
-			enemyParts[i][j].update();
-		
-		}	
-		
+			for (var j = 0; j < enemies[i].parts.length; j++) {
+
+				enemies[i].parts[j].update();
+
+			}	
+
 		}
 	}
 
@@ -323,7 +324,7 @@ function update () {
 	{
 		parts[i].update();
 	};
-	
+
 
 	if (cursors.left.isDown)
 	{
