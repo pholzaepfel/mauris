@@ -371,9 +371,6 @@ function create () {
 	game.camera.focusOnXY(0, 0);
 
 	cursors = game.input.keyboard.createCursorKeys();
-
-    	var t = game.add.text(game.world.centerX-300, 0, text, style);
-	t.bringToTop();
 }
 
 function removeLogo () {
