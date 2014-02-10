@@ -126,7 +126,7 @@ function preload () {
 }
 
 var backdrop1, backdrop2,backdrop3;
-var numBaddies = 0;
+var numBaddies = 50;
 var enemies;
 var enemyBullets;
 var explosions;
