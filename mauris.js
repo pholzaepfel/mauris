@@ -46,12 +46,12 @@ shipPart = function(x,y,sheet,index,targetSprite)
 };
 shipPart.prototype.update = function(){
 	if (this.player.alive) {
-	this.actor.angle = this.player.angle;
-	this.actor.x = this.player.x + (this.offsetx * Math.cos(game.math.degToRad(this.player.angle)));
-	this.actor.y = this.player.y + (this.offsety * Math.cos(game.math.degToRad(this.player.angle)));
-	this.actor.x -= (this.offsety * Math.sin(game.math.degToRad(this.player.angle)));
-	this.actor.y += (this.offsetx * Math.sin(game.math.degToRad(this.player.angle)));
-	this.actor.body.velocity = this.player.body.velocity;
+		this.actor.angle = this.player.angle;
+		this.actor.x = this.player.x + (this.offsetx * Math.cos(game.math.degToRad(this.player.angle)));
+		this.actor.y = this.player.y + (this.offsety * Math.cos(game.math.degToRad(this.player.angle)));
+		this.actor.x -= (this.offsety * Math.sin(game.math.degToRad(this.player.angle)));
+		this.actor.y += (this.offsetx * Math.sin(game.math.degToRad(this.player.angle)));
+		this.actor.body.velocity = this.player.body.velocity;
 	}
 };
 
@@ -79,7 +79,7 @@ enemyShip = function (index, game, targetSprite, bullets) {
 	this.parts = createShip(this.ship,this.actor);
 
 	this.actor.name = index.toString(); 
-	//	this.actor.body.immovable = true;
+	
 	this.actor.body.collideWorldBounds = true;
 	this.actor.body.bounce.setTo(1, 1);
 	this.actor.angle = game.rnd.angle();
@@ -96,12 +96,13 @@ enemyShip.prototype.damage = function(dmg) {
 	{
 		this.alive = false;
 		for (var j = 0; j < this.parts.length; j++) {
-			
-			this.parts[j].actor.lifespan = eo3.randomRange(500,2500);
-			this.parts[j].actor.body.velocity = game.physics.velocityFromRotation(this.game.physics.angleBetween(this.actor, this.parts[j].actor), 200 + (-100 * this.health));
-			this.parts[j].actor.body.angularVelocity=(this.parts[j].offsetx+this.parts[j].offsety)*3;	
-			if (dmg = 31337){
-				this.parts[j].actor.lifespan = 0;
+
+			if (dmg != 31337){
+				this.parts[j].actor.lifespan = eo3.randomRange(500,2500);
+				this.parts[j].actor.body.velocity = game.physics.velocityFromRotation(this.game.physics.angleBetween(this.actor, this.parts[j].actor), 200 + (-100 * this.health));
+				this.parts[j].actor.body.angularVelocity=(this.parts[j].offsetx+this.parts[j].offsety)*3;	
+			}else{
+				this.parts[j].actor.kill();
 			}
 		}	
 
