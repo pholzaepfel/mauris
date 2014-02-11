@@ -154,8 +154,8 @@ function preload () {
 }
 
 var luser = function() {
-	this.acceleration=2;
-	this.turnRate=0.6;
+	this.acceleration=5;
+	this.turnRate=2;
 	this.health=10;
 	this.alive=true;
 	this.bulletSprite=''; //todo
