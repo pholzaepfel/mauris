@@ -76,6 +76,7 @@ enemyShip = function (index, game, targetSprite, bullets) {
 
 	this.actor.body.setSize(Math.sqrt(this.ship.length)*16,Math.sqrt(this.ship.length)*16,0,0);
 
+	this.actor.body.mass = eo3.shipWithoutVoid(this.ship).length*10000
 	this.parts = createShip(this.ship,this.actor);
 
 	this.actor.name = index.toString(); 
@@ -100,7 +101,7 @@ enemyShip.prototype.damage = function(dmg) {
 			if (dmg != 31337){
 				this.parts[j].actor.lifespan = eo3.randomRange(500,2500);
 				this.parts[j].actor.body.velocity = game.physics.velocityFromRotation(this.game.physics.angleBetween(this.actor, this.parts[j].actor), eo3.randomRange(200,400));
-				this.parts[j].actor.body.angularVelocity=(this.parts[j].offsetx+this.parts[j].offsety)*3;	
+				this.parts[j].actor.body.angularVelocity=(this.parts[j].offsetx+this.parts[j].offsety+1)*eo3.randomRange(3,7);	
 			}else{
 				this.parts[j].actor.kill();
 			}
@@ -162,6 +163,7 @@ var luser = function() {
 	this.parts=[];
 	this.speed = 0; //current
 	this.fireRate = 250;
+	this.fireSpeed = 350;
 	this.fireDamage = 3;
 	this.fireRange = 1000;
 	this.fireMass = 0.1;
@@ -194,7 +196,7 @@ var luser = function() {
 	this.parts = createShip(this.ship, this.actor);
 
 	this.actor.body.setSize(Math.sqrt(this.ship.length)*16,Math.sqrt(this.ship.length)*16,0,0);
-	this.actor.body.mass=10000000000;
+	this.actor.body.mass = eo3.shipWithoutVoid(this.ship).length*10000
 }
 luser.prototype.left = function(){
 	this.actor.angle-=this.turnRate;
@@ -220,7 +222,7 @@ luser.prototype.fire = function(){
 		bullet.body.mass = this.fireMass;
 		bullet.reset(this.actor.x + (Math.cos(this.actor.rotation)*(this.actor.body.width)*0.75), this.actor.y + (Math.sin(this.actor.rotation)*(this.actor.body.width)*0.75));
 		bullet.rotation = this.actor.rotation;
-		game.physics.velocityFromRotation(this.actor.rotation, 350, bullet.body.velocity);
+		game.physics.velocityFromRotation(this.actor.rotation, this.fireSpeed, bullet.body.velocity);
 	}
 
 
