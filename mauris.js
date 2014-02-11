@@ -2,9 +2,14 @@ eo3 = {};
 eo3.addVelocity = function (a,b,c){return"undefined"==typeof b&&(b=60),	c=c||new d.Point,c.setTo(c.x+Math.cos(a)*b,c.y+Math.sin(a)*b)};
 eo3.randomRange = function(a,b){var c,d; if(a>b){c=a;d=b;}else{d=a;c=b};return (Math.random()*(c-d))+d};
 eo3.addVelocityTest = function (a,b,c){return '' +  c.x + ' - ' + Math.cos((game.math.degToRad(a))*b) + ' : ' + c.y+' - '+(Math.sin(game.math.degToRad(a))*b)};
-
-// ----8<----- my shitty additions are above
-
+//////
+//
+//	There is so much wrong in this.
+//		But it's such a pleasure
+//			just to hack this out
+//				and not worry about it.
+//
+//////
 dragPart = function(x,y,sheet,index)
 {
 	this.game = game;
@@ -55,11 +60,11 @@ enemyShip = function (index, game, targetSprite, bullets) {
 	this.actor.visible = true;
 	this.actor.anchor.setTo(0.5, 0.5);
 
-	var newShip = ships[Math.floor(eo3.randomRange(0,ships.length))];
+	this.ship = ships[Math.floor(eo3.randomRange(0,ships.length))];
 
-	this.actor.body.setSize(Math.sqrt(newShip.length)*16,Math.sqrt(newShip.length)*16,0,0);
+	this.actor.body.setSize(Math.sqrt(this.ship.length)*16,Math.sqrt(this.ship.length)*16,0,0);
 
-	this.parts = createShip(newShip,this.actor);
+	this.parts = createShip(this.ship,this.actor);
 
 	this.actor.name = index.toString(); 
 	//	this.actor.body.immovable = true;
@@ -83,7 +88,6 @@ enemyShip.prototype.damage = function(dmg) {
 			this.parts[j].actor.kill();
 
 		}	
-
 
 		this.actor.kill();
 
@@ -122,11 +126,8 @@ var game = new Phaser.Game(1280, 720, Phaser.AUTO, 'phaser-example', { preload: 
 
 function preload () {
 
-	game.load.atlas('tank', 'assets/tanks.png', 'assets/tanks.json');
 	game.load.spritesheet('parts', 'assets/parts.png', 16, 16);
-	game.load.atlas('enemy', 'assets/enemy-tanks.png', 'assets/tanks.json');
 	game.load.spritesheet('bullet', 'assets/bullets.png',16,16);
-	game.load.image('draconis', 'assets/draconis.png');
 	game.load.image('starfield2', 'assets/starfield2.png');
 	game.load.image('starfield3', 'assets/starfield3.png');
 	game.load.image('starfield4', 'assets/starfield4.png');
@@ -144,18 +145,19 @@ var luser = function() {
 	this.parts=[];
 	this.speed = 0; //current
 	this.fireRate = 250;
-	this.damage = 9;
-	this.range = 2000;
+	this.fireDamage = 9;
+	this.fireRange = 1000;
+	this.fireEnergy = 1;
+
 	this.energy=10;
 	this.energyMax=10;
 	this.energyRate=1000;
 	this.energyAmount=2;
-	
-	this.fireEnergy = 1;
+
 
 	this.nextEnergy = 0;
 	this.nextFire = 0;
-	
+
 	this.actor = game.add.sprite(0, 0, 'parts');
 	this.actor.visible=true;
 	this.actor.anchor.setTo(0.5, 0.5);
@@ -183,19 +185,19 @@ luser.prototype.right = function(){
 };
 luser.prototype.up = function(){
 
- this.speed = this.acceleration;
+	this.speed = this.acceleration;
 
 };
 luser.prototype.fire = function(){
 
-		
+
 	if (game.time.now > this.nextFire && bullets.countDead() > 0 && this.energy > this.fireEnergy)
 	{
 		this.nextFire = game.time.now + this.fireRate;
 		this.energy -= this.fireEnergy;
 		var bullet = bullets.getFirstDead();
-		bullet.damage = this.damage;
-		bullet.lifespan = this.range;
+		bullet.damage = this.fireDamage;
+		bullet.lifespan = this.fireRange;
 		bullet.reset(this.actor.x + (Math.cos(this.actor.rotation)*(this.actor.body.width)*0.75), this.actor.y + (Math.sin(this.actor.rotation)*(this.actor.body.width)*0.75));
 		bullet.rotation = this.actor.rotation;
 		game.physics.velocityFromRotation(this.actor.rotation, 350, bullet.body.velocity);
@@ -274,9 +276,12 @@ function createShip(shipParts, targetActor){
 	};
 	for (var i=0; i<shipParts.length;i++){
 		if(shipParts[i]>-1){
+			//that godawful barf there is a terse calculation for the coordinates of the part
+			//assuming an array of 'parts' (sprite ids) - array should have a length
+			//with an int square root
 			myParts.push(new shipPart(((n-1)*-8)+((i%n)*16),((n-1)*-8)+(Math.floor(i/n)*16),'parts',shipParts[i],targetActor));
 		}
-	i}
+		i}
 	return myParts; 
 }
 
@@ -301,7 +306,7 @@ function create () {
 	backdrop3.scale.x=2;
 	backdrop3.scale.y=2;	
 
-	
+
 	ships.push([66, 1, 2, 32, 33, 34, -1, 130, -1]);
 	ships.push([-1, 3, 5, -1, -1, -1, 129, -1, -1, -1, 35, 68, 68, 36, 37, -1, 129, -1, -1, -1, -1, 3, 5, -1, -1]);
 	ships.push([35, 3, 131, 37]);
@@ -326,11 +331,13 @@ function create () {
 		enemies.push(new enemyShip(i, game, player.actor, enemyBullets));
 	}
 
-	
+
 	pew = game.add.emitter(0,0,200);
 	pew.makeParticles('sparks');
 	pew.gravity=0;
 
+	pewParts = game.add.emitter(0,0,200);
+	pewParts.gravity=0;
 	//  Our bullet group
 	bullets = game.add.group();
 	bullets.createMultiple(30, 'bullet');
@@ -380,7 +387,7 @@ function update () {
 		}
 		nextSpawn=game.time.now+eo3.randomRange(5000,10000);
 	}	
-	
+
 	game.debug.renderText(Math.sin(game.math.degToRad(player.actor.angle)) + ';' + Math.cos(game.math.degToRad(player.actor.angle)),100,100);
 	if(enemyBullets.getFirstAlive() != null) {
 
@@ -422,7 +429,7 @@ function update () {
 	else if (cursors.right.isDown)
 	{
 		player.right()
-		//    actor.body.angularAcceleration += 3200;
+			//    actor.body.angularAcceleration += 3200;
 	}
 
 	if (cursors.up.isDown)
@@ -459,24 +466,36 @@ function bulletHitPlayer (actor, bullet) {
 
 function bulletHitEnemy (actor, bullet) {
 
-	pew.x=bullet.x;
-	pew.y=bullet.y;
-	pew.rotation=bullet.rotation;
 	bullet.kill();
 
-	pew.minParticleSpeed.setTo(150,150);
-	pew.maxParticleSpeed.setTo(450,450);
-	pew.particleDrag.setTo(0,0);
-	pew.start(true,200,null, 50);
 	var destroyed = enemies[actor.name].damage(bullet.damage);
-
 	if (destroyed)
 	{
-		var explosionAnimation = explosions.getFirstDead();
-		explosionAnimation.reset(actor.x, actor.y);
-		explosionAnimation.play('kaboom', 30, false, true);
+		var trimmedShip = shipWithoutVoid(enemies[actor.name].ship);
+		pewParts.makeParticles('parts',trimmedShip);
+		pew.x=actor.x;
+		pewParts.x=actor.x;
+		pew.y=actor.y;
+		pewParts.y=actor.y;
+		pew.minParticleSpeed.setTo(-300,-300);
+		pewParts.minParticleSpeed.setTo(-300,-300);
+		pew.maxParticleSpeed.setTo(300,300);
+		pewParts.maxParticleSpeed.setTo(300,300);
+		pew.particleDrag.setTo(200,200);
+		pewParts.start(true,2000, null, trimmedShip.length);
+		pew.start(true,200,null, 67);
 	}
 
+}
+
+function shipWithoutVoid (ship) {
+	var shipOut=[];
+	for (var i=0;i<ship.length;i++){
+		if (ship[i]!=-1){
+			shipOut.push(ship[i]);
+		}
+	}
+	return shipOut;
 }
 
 
