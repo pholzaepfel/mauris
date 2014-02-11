@@ -2,6 +2,16 @@ eo3 = {};
 eo3.addVelocity = function (a,b,c){return"undefined"==typeof b&&(b=60),	c=c||new d.Point,c.setTo(c.x+Math.cos(a)*b,c.y+Math.sin(a)*b)};
 eo3.randomRange = function(a,b){var c,d; if(a>b){c=a;d=b;}else{d=a;c=b};return (Math.random()*(c-d))+d};
 eo3.addVelocityTest = function (a,b,c){return '' +  c.x + ' - ' + Math.cos((game.math.degToRad(a))*b) + ' : ' + c.y+' - '+(Math.sin(game.math.degToRad(a))*b)};
+eo3.shipWithoutVoid = function (ship) {
+	var shipOut=[];
+	for (var i=0;i<ship.length;i++){
+		if (ship[i]!=-1){
+			shipOut.push(ship[i]);
+		}
+	}
+	return shipOut;
+};
+
 //////
 //
 //	There is so much wrong in this.
@@ -35,12 +45,14 @@ shipPart = function(x,y,sheet,index,targetSprite)
 	this.actor.bringToTop();
 };
 shipPart.prototype.update = function(){
+	if (this.player.alive) {
 	this.actor.angle = this.player.angle;
 	this.actor.x = this.player.x + (this.offsetx * Math.cos(game.math.degToRad(this.player.angle)));
 	this.actor.y = this.player.y + (this.offsety * Math.cos(game.math.degToRad(this.player.angle)));
 	this.actor.x -= (this.offsety * Math.sin(game.math.degToRad(this.player.angle)));
 	this.actor.y += (this.offsetx * Math.sin(game.math.degToRad(this.player.angle)));
 	this.actor.body.velocity = this.player.body.velocity;
+	}
 };
 
 enemyShip = function (index, game, targetSprite, bullets) {
@@ -84,9 +96,13 @@ enemyShip.prototype.damage = function(dmg) {
 	{
 		this.alive = false;
 		for (var j = 0; j < this.parts.length; j++) {
-
-			this.parts[j].actor.kill();
-
+			
+			this.parts[j].actor.lifespan = eo3.randomRange(500,2500);
+			this.parts[j].actor.body.velocity = game.physics.velocityFromRotation(this.game.physics.angleBetween(this.actor, this.parts[j].actor), 200 + (-100 * this.health));
+			this.parts[j].actor.body.angularVelocity=(this.parts[j].offsetx+this.parts[j].offsety)*3;	
+			if (dmg = 31337){
+				this.parts[j].actor.lifespan = 0;
+			}
 		}	
 
 		this.actor.kill();
@@ -118,7 +134,7 @@ enemyShip.prototype.update = function() {
 
 	if (this.game.physics.distanceBetween(this.actor, this.player) > 2000)
 	{
-		this.damage(9999); //out of sight, out of mind
+		this.damage(31337); //magic damage value that kills without parts 
 	}
 };
 
@@ -145,7 +161,7 @@ var luser = function() {
 	this.parts=[];
 	this.speed = 0; //current
 	this.fireRate = 250;
-	this.fireDamage = 9;
+	this.fireDamage = 3;
 	this.fireRange = 1000;
 	this.fireEnergy = 1;
 
@@ -336,8 +352,6 @@ function create () {
 	pew.makeParticles('sparks');
 	pew.gravity=0;
 
-	pewParts = game.add.emitter(0,0,200);
-	pewParts.gravity=0;
 	//  Our bullet group
 	bullets = game.add.group();
 	bullets.createMultiple(30, 'bullet');
@@ -471,32 +485,17 @@ function bulletHitEnemy (actor, bullet) {
 	var destroyed = enemies[actor.name].damage(bullet.damage);
 	if (destroyed)
 	{
-		var trimmedShip = shipWithoutVoid(enemies[actor.name].ship);
-		pewParts.makeParticles('parts',trimmedShip);
+		var trimmedShip = eo3.shipWithoutVoid(enemies[actor.name].ship);
 		pew.x=actor.x;
-		pewParts.x=actor.x;
 		pew.y=actor.y;
-		pewParts.y=actor.y;
 		pew.minParticleSpeed.setTo(-300,-300);
-		pewParts.minParticleSpeed.setTo(-300,-300);
 		pew.maxParticleSpeed.setTo(300,300);
-		pewParts.maxParticleSpeed.setTo(300,300);
 		pew.particleDrag.setTo(200,200);
-		pewParts.start(true,2000, null, trimmedShip.length);
 		pew.start(true,200,null, 67);
 	}
 
 }
 
-function shipWithoutVoid (ship) {
-	var shipOut=[];
-	for (var i=0;i<ship.length;i++){
-		if (ship[i]!=-1){
-			shipOut.push(ship[i]);
-		}
-	}
-	return shipOut;
-}
 
 
 function render () {
