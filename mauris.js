@@ -188,25 +188,14 @@ luser.prototype.up = function(){
 };
 luser.prototype.fire = function(){
 
-	if (!bullets.countDead())
-	{
-		// clean up bullets FIXME
-		var bc = bullets.countLiving();
-
-		for(var i=0; i<bc; i++){
-			if(bullets.getAt(i).lifespan < 0){
-				bullets.getAt(i).kill();
-			}
-		}
-	}	
+		
 	if (game.time.now > this.nextFire && bullets.countDead() > 0 && this.energy > this.fireEnergy)
 	{
 		this.nextFire = game.time.now + this.fireRate;
 		this.energy -= this.fireEnergy;
 		var bullet = bullets.getFirstDead();
 		bullet.damage = this.damage;
-		bullet.lifetime = this.range;
-		console.log(bullet.lifetime);
+		bullet.lifespan = this.range;
 		bullet.reset(this.actor.x + (Math.cos(this.actor.rotation)*(this.actor.body.width)*0.75), this.actor.y + (Math.sin(this.actor.rotation)*(this.actor.body.width)*0.75));
 		bullet.rotation = this.actor.rotation;
 		game.physics.velocityFromRotation(this.actor.rotation, 350, bullet.body.velocity);
@@ -391,7 +380,7 @@ function update () {
 		}
 		nextSpawn=game.time.now+eo3.randomRange(5000,10000);
 	}	
-
+	
 	game.debug.renderText(Math.sin(game.math.degToRad(player.actor.angle)) + ';' + Math.cos(game.math.degToRad(player.actor.angle)),100,100);
 	if(enemyBullets.getFirstAlive() != null) {
 
