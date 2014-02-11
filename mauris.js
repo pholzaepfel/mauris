@@ -99,7 +99,7 @@ enemyShip.prototype.damage = function(dmg) {
 
 			if (dmg != 31337){
 				this.parts[j].actor.lifespan = eo3.randomRange(500,2500);
-				this.parts[j].actor.body.velocity = game.physics.velocityFromRotation(this.game.physics.angleBetween(this.actor, this.parts[j].actor), 200 + (-100 * this.health));
+				this.parts[j].actor.body.velocity = game.physics.velocityFromRotation(this.game.physics.angleBetween(this.actor, this.parts[j].actor), eo3.randomRange(200,400));
 				this.parts[j].actor.body.angularVelocity=(this.parts[j].offsetx+this.parts[j].offsety)*3;	
 			}else{
 				this.parts[j].actor.kill();
@@ -164,6 +164,7 @@ var luser = function() {
 	this.fireRate = 250;
 	this.fireDamage = 3;
 	this.fireRange = 1000;
+	this.fireMass = 0.1;
 	this.fireEnergy = 1;
 
 	this.energy=10;
@@ -193,6 +194,7 @@ var luser = function() {
 	this.parts = createShip(this.ship, this.actor);
 
 	this.actor.body.setSize(Math.sqrt(this.ship.length)*16,Math.sqrt(this.ship.length)*16,0,0);
+	this.actor.body.mass=10000000000;
 }
 luser.prototype.left = function(){
 	this.actor.angle-=this.turnRate;
@@ -215,6 +217,7 @@ luser.prototype.fire = function(){
 		var bullet = bullets.getFirstDead();
 		bullet.damage = this.fireDamage;
 		bullet.lifespan = this.fireRange;
+		bullet.body.mass = this.fireMass;
 		bullet.reset(this.actor.x + (Math.cos(this.actor.rotation)*(this.actor.body.width)*0.75), this.actor.y + (Math.sin(this.actor.rotation)*(this.actor.body.width)*0.75));
 		bullet.rotation = this.actor.rotation;
 		game.physics.velocityFromRotation(this.actor.rotation, 350, bullet.body.velocity);
@@ -336,8 +339,8 @@ function create () {
 	enemyBullets.createMultiple(100, 'bullet');
 	enemyBullets.setAll('anchor.x', 0.5);
 	enemyBullets.setAll('anchor.y', 0.5);
-	enemyBullets.setAll('mass', 0); //TODO this doesn't work
-	enemyBullets.setAll('lifespan',5000);
+	enemyBullets.setAll('body.mass', 0.1);
+	enemyBullets.setAll('lifespan',5000)
 	enemyBullets.setAll('outOfBoundsKill', true);
 
 	//  Create some baddies to waste :)
@@ -382,6 +385,11 @@ function create () {
 	game.camera.focusOnXY(0, 0);
 
 	cursors = game.input.keyboard.createCursorKeys();
+
+	
+    var key1 = game.input.keyboard.addKey(Phaser.Keyboard.W);
+    key1.onDown.add(player.up, this);	
+
 }
 
 function removeLogo () {
@@ -439,18 +447,17 @@ function update () {
 	if (cursors.left.isDown)
 	{
 		player.left();
-		//    actor.body.angularAcceleration -= 3200;
 	}
 	else if (cursors.right.isDown)
 	{
 		player.right()
-			//    actor.body.angularAcceleration += 3200;
 	}
 
+
+	
 	if (cursors.up.isDown)
 	{
 		player.up();
-		//  The speed we'll travel at
 	}
 	player.update();
 	// scrolling
@@ -461,7 +468,6 @@ function update () {
 	backdrop3.tilePosition.x = -0.6*game.camera.x;
 	backdrop3.tilePosition.y = -0.6*game.camera.y;
 
-	//  Position all the parts and align rotations
 
 
 
@@ -492,7 +498,7 @@ function bulletHitEnemy (actor, bullet) {
 		pew.minParticleSpeed.setTo(-300,-300);
 		pew.maxParticleSpeed.setTo(300,300);
 		pew.particleDrag.setTo(200,200);
-		pew.start(true,200,null, 67);
+		pew.start(true,600,null, 200);
 	}
 
 }
