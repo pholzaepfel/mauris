@@ -24,6 +24,8 @@ dragPart = function(x,y,sheet,index)
 {
 	this.game = game;
 	this.alive = true;
+	this.originalx = x;
+	this.originaly = y;
 	this.actor = game.add.sprite(x,y,sheet,index);
 	this.actor.inputEnabled=true;
 	this.actor.input.enableDrag(false,true);
