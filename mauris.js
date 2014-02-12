@@ -24,17 +24,19 @@ dragPart = function(x,y,sheet,index)
 {
 	this.game = game;
 	this.alive = true;
-	this.originalx = x;
-	this.originaly = y;
 	this.actor = game.add.sprite(x,y,sheet,index);
+	this.index = index;
 	this.actor.inputEnabled=true;
-	this.actor.input.enableDrag(false,true);
+	this.actor.input.enableDrag(true,true);
+	this.actor.input.snapOnRelease=true;
+	this.actor.input.snapX=16;
+	this.actor.input.snapY=16;
 };
 dragPart.prototype.update = function(){
-	this.actor.x -= this.actor.x % 16;
-	this.actor.y -= this.actor.y % 16;
-};
-
+	if(this.actor.x > 900) {
+		this.actor.kill()
+	}	
+}
 shipPart = function(x,y,sheet,index,targetSprite)
 {
 	this.offsetx = x;
@@ -79,10 +81,10 @@ enemyShip = function (index, game, targetSprite, bullets) {
 	this.actor.body.setSize(Math.sqrt(this.ship.length)*16,Math.sqrt(this.ship.length)*16,0,0);
 
 	this.actor.body.mass = eo3.shipWithoutVoid(this.ship).length*10000
-	this.parts = createShip(this.ship,this.actor);
+		this.parts = createShip(this.ship,this.actor);
 
 	this.actor.name = index.toString(); 
-	
+
 	this.actor.body.collideWorldBounds = true;
 	this.actor.body.bounce.setTo(1, 1);
 	this.actor.angle = game.rnd.angle();
@@ -146,6 +148,7 @@ var game = new Phaser.Game(1280, 720, Phaser.AUTO, 'phaser-example', { preload: 
 
 function preload () {
 
+	game.load.image('allparts', 'assets/parts.png');
 	game.load.spritesheet('parts', 'assets/parts.png', 16, 16);
 	game.load.spritesheet('bullet', 'assets/bullets.png',16,16);
 	game.load.image('starfield2', 'assets/starfield2.png');
@@ -156,8 +159,8 @@ function preload () {
 }
 
 var luser = function() {
-	this.acceleration=2;
-	this.turnRate=0.6;
+	this.acceleration=5;
+	this.turnRate=2;
 	this.health=10;
 	this.alive=true;
 	this.bulletSprite=''; //todo
@@ -276,17 +279,62 @@ var nextFire = 0;
 var partShip;
 
 var ships=[];
+var ui;
+var gameUI = function () {
+	this.parts = [];
 
-function createParts() {
+}
+gameUI.prototype.partsUI = function () {
+	this.partsSelector = game.add.sprite('0','0','allparts');
+	this.partsSelector.inputEnabled = true;
+	this.partsSelector.events.onInputDown.add(createPart);
+}
+gameUI.prototype.partsArray = function () {
 
-	var n=0;
-	for(var iy=0;iy<32;iy++){
-		for(var ix=0;ix<32;ix++){
-			player.parts.push(new dragPart(ix*16,iy*16,'parts',n));
-			n++;
+	var minx = 0;
+	var miny = 0;
+	var maxx = 0;
+	var maxy = 0;
+	var shipSize = 0;
+	for(var i=0;i<this.parts.length;i++){
+		if(this.parts[i].actor.x < minx){
+			minx = this.parts[i].actor.x;
+		}
+		if(this.parts[i].actor.y < miny){
+			miny = this.parts[i].actor.y;
+		}
+		if(this.parts[i].actor.x > maxx){
+			maxx = this.parts[i].actor.x;
+		}
+		if(this.parts[i].actor.y > maxy){
+			maxy = this.parts[i].actor.y;
 		}
 	}
-
+	if (maxx-minx > maxy-miny) {
+		shipSize = (maxx-minx)/16;
+	} else {
+		shipSize = (maxy-miny)/16;
+	}
+	var outArray = [];
+	for (var i=0;i<shipSize*shipSize;i++){
+		outArray.push(-1);
+	}
+	for (var i=0;i<this.parts.length;i++){
+		if(this.parts[i].actor.alive){
+			var n=0;
+			n = (this.parts[i].actor.x - minx)/16;
+			n+= (this.parts[i].actor.y - miny)
+			outArray[n] = this.parts[i].index;
+		}
+	}
+	return outArray;
+}
+function createPart() {
+	var n =0;
+	n=Math.floor(ui.partsSelector.input.pointerX()/16);
+	n+=32*Math.floor(ui.partsSelector.input.pointerY()/16);
+	console.log(n);
+	ui.parts.push(new dragPart(400,400,'parts',n));
 }
 // assumes that the incoming parts list is a square
 // if not there will be anarchy
@@ -312,175 +360,183 @@ function createShip(shipParts, targetActor){
 
 function create () {
 
-	game.world.setBounds(-100000, -100000, 200000, 200000);
-	backdrop1 = game.add.tileSprite(0, 0, 1280, 720, 'starfield2');
-
-	backdrop1.fixedToCamera = true;
-	backdrop1.scale.x=2;
-	backdrop1.scale.y=2;	
-
-
-	backdrop2 = game.add.tileSprite(0, 0, 1280, 720, 'starfield3');
-	backdrop2.fixedToCamera = true;
-	backdrop2.scale.x=2;
-	backdrop2.scale.y=2;	
-
-	backdrop3 = game.add.tileSprite(0, 0, 1280, 720, 'starfield4');
-	backdrop3.fixedToCamera = true;
-	backdrop3.scale.x=2;
-	backdrop3.scale.y=2;	
-
-
-	ships.push([66, 1, 2, 32, 33, 34, -1, 130, -1]);
-	ships.push([-1, 3, 5, -1, -1, -1, 129, -1, -1, -1, 35, 68, 68, 36, 37, -1, 129, -1, -1, -1, -1, 3, 5, -1, -1]);
-	ships.push([35, 3, 131, 37]);
-	ships.push([-1, -1, -1, -1, 35, 3, 131, 37, -1, -1, -1, -1, -1, -1, -1, -1]);
-
-	player = new luser();
-
-	//  The enemies bullet group
-	enemyBullets = game.add.group();
-	enemyBullets.createMultiple(100, 'bullet');
-	enemyBullets.setAll('anchor.x', 0.5);
-	enemyBullets.setAll('anchor.y', 0.5);
-	enemyBullets.setAll('body.mass', 0.1);
-	enemyBullets.setAll('lifespan',5000)
-	enemyBullets.setAll('outOfBoundsKill', true);
-
-	//  Create some baddies to waste :)
-	enemies = [];
-
-	for (var i = 0; i < numBaddies; i++)
+	ui = new gameUI();
+	gamemode = 'peaceful';
+	if (gamemode == 'peaceful')
 	{
-		enemies.push(new enemyShip(i, game, player.actor, enemyBullets));
+		ui.partsUI();
+	}
+	if (gamemode == 'war')
+	{
+
+		game.world.setBounds(-100000, -100000, 200000, 200000);
+		backdrop1 = game.add.tileSprite(0, 0, 1280, 720, 'starfield2');
+
+		backdrop1.fixedToCamera = true;
+		backdrop1.scale.x=2;
+		backdrop1.scale.y=2;	
+
+
+		backdrop2 = game.add.tileSprite(0, 0, 1280, 720, 'starfield3');
+		backdrop2.fixedToCamera = true;
+		backdrop2.scale.x=2;
+		backdrop2.scale.y=2;	
+
+		backdrop3 = game.add.tileSprite(0, 0, 1280, 720, 'starfield4');
+		backdrop3.fixedToCamera = true;
+		backdrop3.scale.x=2;
+		backdrop3.scale.y=2;	
+
+
+		ships.push([66, 1, 2, 32, 33, 34, -1, 130, -1]);
+		ships.push([-1, 3, 5, -1, -1, -1, 129, -1, -1, -1, 35, 68, 68, 36, 37, -1, 129, -1, -1, -1, -1, 3, 5, -1, -1]);
+		ships.push([35, 3, 131, 37]);
+		ships.push([-1, -1, -1, -1, 35, 3, 131, 37, -1, -1, -1, -1, -1, -1, -1, -1]);
+
+		player = new luser();
+
+		//  The enemies bullet group
+		enemyBullets = game.add.group();
+		enemyBullets.createMultiple(100, 'bullet');
+		enemyBullets.setAll('anchor.x', 0.5);
+		enemyBullets.setAll('anchor.y', 0.5);
+		enemyBullets.setAll('body.mass', 0.1);
+		enemyBullets.setAll('lifespan',5000)
+			enemyBullets.setAll('outOfBoundsKill', true);
+
+		//  Create some baddies to waste :)
+		enemies = [];
+
+		for (var i = 0; i < numBaddies; i++)
+		{
+			enemies.push(new enemyShip(i, game, player.actor, enemyBullets));
+		}
+
+
+		pew = game.add.emitter(0,0,200);
+		pew.makeParticles('sparks');
+		pew.gravity=0;
+
+		//  Our bullet group
+		bullets = game.add.group();
+		bullets.createMultiple(30, 'bullet');
+		bullets.setAll('anchor.x', 0.5);
+		bullets.setAll('anchor.y', 0.5);
+		bullets.setAll('outOfBoundsKill', true);
+		bullets.setAll('lifespan', 1000);
+		//  Explosion pool
+		explosions = game.add.group();
+
+		for (var i = 0; i < 10; i++)
+		{
+			var explosionAnimation = explosions.create(0, 0, 'kaboom', [0], false);
+			explosionAnimation.anchor.setTo(0.5, 0.5);
+			explosionAnimation.animations.add('kaboom');
+		}
+
+		game.camera.follow(player.actor);
+		game.camera.focusOnXY(0, 0);
+
+
+
 	}
 
-
-	pew = game.add.emitter(0,0,200);
-	pew.makeParticles('sparks');
-	pew.gravity=0;
-
-	//  Our bullet group
-	bullets = game.add.group();
-	bullets.createMultiple(30, 'bullet');
-	bullets.setAll('anchor.x', 0.5);
-	bullets.setAll('anchor.y', 0.5);
-	bullets.setAll('outOfBoundsKill', true);
-	bullets.setAll('lifespan', 1000);
-	//  Explosion pool
-	explosions = game.add.group();
-
-	for (var i = 0; i < 10; i++)
-	{
-		var explosionAnimation = explosions.create(0, 0, 'kaboom', [0], false);
-		explosionAnimation.anchor.setTo(0.5, 0.5);
-		explosionAnimation.animations.add('kaboom');
-	}
-
-	//actor.bringToTop();
-
-	/*logo = game.add.sprite(0, 200, 'logo');
-	  logo.fixedToCamera = true;
-
-	  game.input.onDown.add(removeLogo, this);
-	  */
-
-	game.camera.follow(player.actor);
-	game.camera.focusOnXY(0, 0);
-
-	cursors = game.input.keyboard.createCursorKeys();
-
-	
-    var key1 = game.input.keyboard.addKey(Phaser.Keyboard.W);
-    key1.onDown.add(player.up, this);	
-
-}
-
-function removeLogo () {
-
-	game.input.onDown.remove(removeLogo, this);
-	logo.kill();
-
+		cursors = game.input.keyboard.createCursorKeys();
 }
 
 function update () {
-
-	if(nextSpawn<game.time.now||nextSpawn==0)
+	if(gamemode=='peaceful')
 	{
-		for(var i = 0; i < enemies.length ; i++) {
-			if (enemies[i].alive==false){
-				enemies[i]=new enemyShip(i, game, player.actor, enemyBullets); //FIXME recycle correctly
-			};
-		}
-		nextSpawn=game.time.now+eo3.randomRange(5000,10000);
-	}	
-
-	game.debug.renderText(Math.sin(game.math.degToRad(player.actor.angle)) + ';' + Math.cos(game.math.degToRad(player.actor.angle)),100,100);
-	if(enemyBullets.getFirstAlive() != null) {
-
-		for (var i = 0; i < player.parts.length; i++) {
-			game.physics.collide(enemyBullets, player.parts[i].actor, bulletHitPlayer, null, this);
-		}
-	}
-
-	for (var i = 0; i < enemies.length; i++)
-	{
-		if (enemies[i].alive)
+		if (cursors.left.isDown)
 		{
-			enemies[i].update();
-			for (var j = 0; j < player.parts.length; j++) {
-				game.physics.collide(enemies[i].actor, player.parts[j].actor);
-			}
-			game.physics.collide(bullets, enemies[i].actor, bulletHitEnemy, null, this);
+			console.log(ui.partsArray());
+		}
 
-			for (var j = 0; j < enemies[i].parts.length; j++) {
 
-				enemies[i].parts[j].update();
-
-			}	
-
+		for (var i = 0; i < ui.parts.length; i++)
+		{
+			ui.parts[i].update();
 		}
 	}
-
-	for (var i = 0; i < player.parts.length; i++)
-	{
-		player.parts[i].update();
-	};
+	if(gamemode=='war'){
 
 
-	if (cursors.left.isDown)
-	{
-		player.left();
-	}
-	else if (cursors.right.isDown)
-	{
-		player.right()
-	}
+		if(nextSpawn<game.time.now||nextSpawn==0)
+		{
+			for(var i = 0; i < enemies.length ; i++) {
+				if (enemies[i].alive==false){
+					enemies[i]=new enemyShip(i, game, player.actor, enemyBullets); //FIXME recycle correctly
+				};
+			}
+			nextSpawn=game.time.now+eo3.randomRange(5000,10000);
+		}	
+
+		game.debug.renderText(Math.sin(game.math.degToRad(player.actor.angle)) + ';' + Math.cos(game.math.degToRad(player.actor.angle)),100,100);
+		if(enemyBullets.getFirstAlive() != null) {
+
+			for (var i = 0; i < player.parts.length; i++) {
+				game.physics.collide(enemyBullets, player.parts[i].actor, bulletHitPlayer, null, this);
+			}
+		}
+
+		for (var i = 0; i < enemies.length; i++)
+		{
+			if (enemies[i].alive)
+			{
+				enemies[i].update();
+				for (var j = 0; j < player.parts.length; j++) {
+					game.physics.collide(enemies[i].actor, player.parts[j].actor);
+				}
+				game.physics.collide(bullets, enemies[i].actor, bulletHitEnemy, null, this);
+
+				for (var j = 0; j < enemies[i].parts.length; j++) {
+
+					enemies[i].parts[j].update();
+
+				}	
+
+			}
+		}
+
+		for (var i = 0; i < player.parts.length; i++)
+		{
+			player.parts[i].update();
+		};
 
 
-	
-	if (cursors.up.isDown)
-	{
-		player.up();
-	}
-	player.update();
-	// scrolling
-	backdrop1.tilePosition.x = -0.25*game.camera.x;
-	backdrop1.tilePosition.y = -0.25*game.camera.y;
-	backdrop2.tilePosition.x = -0.40*game.camera.x;
-	backdrop2.tilePosition.y = -0.40*game.camera.y;
-	backdrop3.tilePosition.x = -0.6*game.camera.x;
-	backdrop3.tilePosition.y = -0.6*game.camera.y;
+		if (cursors.left.isDown)
+		{
+			player.left();
+		}
+		else if (cursors.right.isDown)
+		{
+			player.right()
+		}
+
+
+
+		if (cursors.up.isDown)
+		{
+			player.up();
+		}
+		player.update();
+		// scrolling
+		backdrop1.tilePosition.x = -0.25*game.camera.x;
+		backdrop1.tilePosition.y = -0.25*game.camera.y;
+		backdrop2.tilePosition.x = -0.40*game.camera.x;
+		backdrop2.tilePosition.y = -0.40*game.camera.y;
+		backdrop3.tilePosition.x = -0.6*game.camera.x;
+		backdrop3.tilePosition.y = -0.6*game.camera.y;
 
 
 
 
-	if (game.input.activePointer.isDown)
-	{
-		//  Boom!
-		player.fire();
-	}
-
+		if (game.input.activePointer.isDown)
+		{
+			//  Boom!
+			player.fire();
+		}
+	}	
 }
 
 function bulletHitPlayer (actor, bullet) {
