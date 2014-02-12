@@ -1,6 +1,7 @@
 eo3 = {};
 eo3.addVelocity = function (a,b,c){return"undefined"==typeof b&&(b=60),	c=c||new d.Point,c.setTo(c.x+Math.cos(a)*b,c.y+Math.sin(a)*b)};
 eo3.randomRange = function(a,b){var c,d; if(a>b){c=a;d=b;}else{d=a;c=b};return (Math.random()*(c-d))+d};
+eo3.randomSign = function(){return Math.random()>.5?1:-1};
 eo3.addVelocityTest = function (a,b,c){return '' +  c.x + ' - ' + Math.cos((game.math.degToRad(a))*b) + ' : ' + c.y+' - '+(Math.sin(game.math.degToRad(a))*b)};
 eo3.shipWithoutVoid = function (ship) {
 	var shipOut=[];
@@ -24,7 +25,7 @@ dragPart = function(x,y,sheet,index)
 {
 	this.game = game;
 	this.alive = true;
-	this.actor = game.add.sprite(x,y,sheet,index);
+	this.actor = game.add.sprite(x-x%16,y-y%16,sheet,index);
 	this.index = index;
 	this.actor.inputEnabled=true;
 	this.actor.input.enableDrag(true,true);
@@ -61,9 +62,9 @@ shipPart.prototype.update = function(){
 
 enemyShip = function (index, game, targetSprite, bullets) {
 
-	var x = targetSprite.x + eo3.randomRange(-500,500);
-	var y = targetSprite.y + eo3.randomRange(-500,500);
-
+	var x = targetSprite.x + (eo3.randomSign() * eo3.randomRange(400,1000));
+	var y = targetSprite.y + (eo3.randomSign() * eo3.randomRange(400,1000));
+	
 	this.game = game;
 	this.health = 3;
 	this.player = targetSprite;
@@ -287,33 +288,36 @@ var gameUI = function () {
 gameUI.prototype.partsUI = function () {
 	this.partsSelector = game.add.sprite('0','0','allparts');
 	this.partsSelector.inputEnabled = true;
+	this.partsSelector.pixelPerfect=true; //prevent grabbing empty squares
 	this.partsSelector.events.onInputDown.add(createPart);
 }
 gameUI.prototype.partsArray = function () {
-
-	var minx = 0;
-	var miny = 0;
-	var maxx = 0;
-	var maxy = 0;
+	var minx = this.parts[0].actor.x;
+	var miny = this.parts[0].actor.y;
+	var maxx = this.parts[0].actor.x;
+	var maxy = this.parts[0].actor.y;
 	var shipSize = 0;
 	for(var i=0;i<this.parts.length;i++){
-		if(this.parts[i].actor.x < minx){
-			minx = this.parts[i].actor.x;
-		}
-		if(this.parts[i].actor.y < miny){
-			miny = this.parts[i].actor.y;
-		}
-		if(this.parts[i].actor.x > maxx){
-			maxx = this.parts[i].actor.x;
-		}
-		if(this.parts[i].actor.y > maxy){
-			maxy = this.parts[i].actor.y;
+		if(this.parts[i].actor.alive){
+			if(this.parts[i].actor.x < minx){
+				minx = this.parts[i].actor.x;
+			}
+			if(this.parts[i].actor.y < miny){
+				miny = this.parts[i].actor.y;
+			}
+			if(this.parts[i].actor.x > maxx){
+				maxx = this.parts[i].actor.x;
+			}
+			if(this.parts[i].actor.y > maxy){
+				maxy = this.parts[i].actor.y;
+			}
 		}
 	}
-	if (maxx-minx > maxy-miny) {
-		shipSize = (maxx-minx)/16;
+
+	if (16+maxx-minx > 16+maxy-miny) {
+		shipSize = (16+maxx-minx)/16;
 	} else {
-		shipSize = (maxy-miny)/16;
+		shipSize = (16+maxy-miny)/16;
 	}
 	var outArray = [];
 	for (var i=0;i<shipSize*shipSize;i++){
@@ -323,18 +327,21 @@ gameUI.prototype.partsArray = function () {
 		if(this.parts[i].actor.alive){
 			var n=0;
 			n = (this.parts[i].actor.x - minx)/16;
-			n+= (this.parts[i].actor.y - miny)
+			n+= ((this.parts[i].actor.y - miny)/16)*shipSize;
 			outArray[n] = this.parts[i].index;
 		}
 	}
 	return outArray;
 }
 function createPart() {
-	var n =0;
-	n=Math.floor(ui.partsSelector.input.pointerX()/16);
-	n+=32*Math.floor(ui.partsSelector.input.pointerY()/16);
-	console.log(n);
-	ui.parts.push(new dragPart(400,400,'parts',n));
+	if(ui.partsSelector.input.pointerOver())
+	{
+		var n =0;
+		n=Math.floor(ui.partsSelector.input.pointerX()/16);
+		n+=32*Math.floor(ui.partsSelector.input.pointerY()/16);
+		console.log(n);
+		ui.parts.push(new dragPart(eo3.randomRange(400,600),eo3.randomRange(400,600),'parts',n));
+	}
 }
 // assumes that the incoming parts list is a square
 // if not there will be anarchy
@@ -361,8 +368,9 @@ function createShip(shipParts, targetActor){
 function create () {
 
 	ui = new gameUI();
-	gamemode = 'peaceful';
-	if (gamemode == 'peaceful')
+	gamemode = location.search||'war';
+	
+	if (gamemode == '?build')
 	{
 		ui.partsUI();
 	}
@@ -385,9 +393,12 @@ function create () {
 		backdrop3 = game.add.tileSprite(0, 0, 1280, 720, 'starfield4');
 		backdrop3.fixedToCamera = true;
 		backdrop3.scale.x=2;
-		backdrop3.scale.y=2;	
-
-
+		backdrop3.scale.y=2;
+		ships.push([-1, -1, -1, 33, 2, -1, -1, -1, -1, -1, 129, -1, -1, -1, 66, 160, 128, 129, -1, -1, -1, 32, 32, 32, 65, 34, -1, -1, 66, 160, 128, 129, -1, -1, -1, -1, -1, -1, 129, -1, -1, -1, -1, -1, -1, 33, 2, -1, -1]);
+		ships.push([69, 128, 65, 33, 69, 128, 65, 96, -1, 128, 65, 33, 32, 64, 32, 32]);		
+		ships.push([96, 3, 4, -1, 99, 67, -1, -1, 99, 100, -1, -1, 133, 5, 5, -1]);
+		ships.push([-1, -1, 98, -1, -1, 69, 35, 36, 68, 37, -1, 100, 67, -1, -1, -1, 132, 132, -1, -1, 32, 64, 68, 5, 5]);
+		ships.push([32, 65, 96, 98, 32, 65, 64, 128, -1, -1, 129, -1, -1, 66, 34, -1]);
 		ships.push([66, 1, 2, 32, 33, 34, -1, 130, -1]);
 		ships.push([-1, 3, 5, -1, -1, -1, 129, -1, -1, -1, 35, 68, 68, 36, 37, -1, 129, -1, -1, -1, -1, 3, 5, -1, -1]);
 		ships.push([35, 3, 131, 37]);
@@ -441,11 +452,11 @@ function create () {
 
 	}
 
-		cursors = game.input.keyboard.createCursorKeys();
+	cursors = game.input.keyboard.createCursorKeys();
 }
 
 function update () {
-	if(gamemode=='peaceful')
+	if(gamemode=='?build')
 	{
 		if (cursors.left.isDown)
 		{
