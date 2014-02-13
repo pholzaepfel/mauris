@@ -133,7 +133,6 @@ enemyShip.prototype.update = function() {
 			this.nextFire = this.game.time.now + this.fireRate;
 
 			var bullet = this.bullets.getFirstDead();
-
 			bullet.reset(this.actor.x, this.actor.y);
 			bullet.rotation = this.game.physics.moveToObject(bullet, this.player, 500);
 		}
@@ -394,6 +393,10 @@ function create () {
 		backdrop3.fixedToCamera = true;
 		backdrop3.scale.x=2;
 		backdrop3.scale.y=2;
+		ships.push([35, 36, 37, -1, 132, -1, 35, 36, 37]);	
+		ships.push([160, 160, 160, 128, 64, -1, 32, 34, -1]);
+		ships.push([98, -1, 64, 34]);
+		ships.push([66, 33, -1, 130]);
 		ships.push([-1, -1, -1, 33, 2, -1, -1, -1, -1, -1, 129, -1, -1, -1, 66, 160, 128, 129, -1, -1, -1, 32, 32, 32, 65, 34, -1, -1, 66, 160, 128, 129, -1, -1, -1, -1, -1, -1, 129, -1, -1, -1, -1, -1, -1, 33, 2, -1, -1]);
 		ships.push([69, 128, 65, 33, 69, 128, 65, 96, -1, 128, 65, 33, 32, 64, 32, 32]);		
 		ships.push([96, 3, 4, -1, 99, 67, -1, -1, 99, 100, -1, -1, 133, 5, 5, -1]);
