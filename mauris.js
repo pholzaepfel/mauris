@@ -66,6 +66,9 @@ enemyShip = function (index, game, targetSprite, bullets) {
 	var y = targetSprite.y + (eo3.randomSign() * eo3.randomRange(400,1000));
 	
 	this.game = game;
+	this.actor = game.add.sprite(x, y, 'parts', 0);
+	this.ship = ships[Math.floor(eo3.randomRange(0,ships.length))];
+	
 	this.health = 3;
 	this.player = targetSprite;
 	this.bullets = bullets;
@@ -73,16 +76,14 @@ enemyShip = function (index, game, targetSprite, bullets) {
 	this.nextFire = 0;
 	this.alive = true;
 	this.parts = [];
-	this.actor = game.add.sprite(x, y, 'parts', 0);
 	this.actor.visible = true;
 	this.actor.anchor.setTo(0.5, 0.5);
-
-	this.ship = ships[Math.floor(eo3.randomRange(0,ships.length))];
+	this.bulletSprite = 0;
+	this.parts = createShip(this.ship,this.actor);
 
 	this.actor.body.setSize(Math.sqrt(this.ship.length)*16,Math.sqrt(this.ship.length)*16,0,0);
 
 	this.actor.body.mass = eo3.shipWithoutVoid(this.ship).length*10000
-		this.parts = createShip(this.ship,this.actor);
 
 	this.actor.name = index.toString(); 
 
@@ -135,6 +136,7 @@ enemyShip.prototype.update = function() {
 			var bullet = this.bullets.getFirstDead();
 			bullet.reset(this.actor.x, this.actor.y);
 			bullet.rotation = this.game.physics.moveToObject(bullet, this.player, 500);
+			bullet.loadTexture('bullet', this.bulletSprite);
 		}
 	}
 
@@ -154,25 +156,24 @@ function preload () {
 	game.load.image('starfield2', 'assets/starfield2.png');
 	game.load.image('starfield3', 'assets/starfield3.png');
 	game.load.image('starfield4', 'assets/starfield4.png');
-	game.load.spritesheet('kaboom', 'assets/explosion.png', 64, 64, 23);
 	game.load.spritesheet('sparks', 'assets/sparks.png',8,8);
 }
 
 var luser = function() {
-	this.acceleration=5;
-	this.turnRate=2;
-	this.health=10;
+	this.acceleration=1;
+	this.turnRate=0.5;
+	this.health=8;
 	this.alive=true;
-	this.bulletSprite=''; //todo
+	this.bulletSprite=1;
 	this.bulletBehavior={};
 	this.parts=[];
 	this.speed = 0; //current
-	this.fireRate = 250;
-	this.fireSpeed = 350;
-	this.fireDamage = 3;
+	this.fireRate = 300;
+	this.fireSpeed = 400;
+	this.fireDamage = 2;
 	this.fireRange = 1000;
 	this.fireMass = 0.1;
-	this.fireEnergy = 1;
+	this.fireEnergy = 2;
 
 	this.energy=10;
 	this.energyMax=10;
@@ -201,7 +202,20 @@ var luser = function() {
 	this.parts = createShip(this.ship, this.actor);
 
 	this.actor.body.setSize(Math.sqrt(this.ship.length)*16,Math.sqrt(this.ship.length)*16,0,0);
-	this.actor.body.mass = eo3.shipWithoutVoid(this.ship).length*10000
+
+	//apply bonuses!
+	for(var i=0;i<this.ship.length;i++)
+	{
+		if (this.ship[i]!=-1){
+			console.log(this.ship[i]);
+			components[this.ship[i]].bonus(this);
+			this.mass+=10000;
+			this.acceleration-=0.1;
+			this.turnRate-=0.1;
+		}
+	}	
+
+
 }
 luser.prototype.left = function(){
 	this.actor.angle-=this.turnRate;
@@ -222,12 +236,16 @@ luser.prototype.fire = function(){
 		this.nextFire = game.time.now + this.fireRate;
 		this.energy -= this.fireEnergy;
 		var bullet = bullets.getFirstDead();
+		bullet.loadTexture('bullet', this.bulletSprite);
 		bullet.damage = this.fireDamage;
 		bullet.lifespan = this.fireRange;
 		bullet.body.mass = this.fireMass;
 		bullet.reset(this.actor.x + (Math.cos(this.actor.rotation)*(this.actor.body.width)*0.75), this.actor.y + (Math.sin(this.actor.rotation)*(this.actor.body.width)*0.75));
 		bullet.rotation = this.actor.rotation;
 		game.physics.velocityFromRotation(this.actor.rotation, this.fireSpeed, bullet.body.velocity);
+		bullet.body.velocity.x+=this.actor.body.velocity.x;
+		bullet.body.velocity.y+=this.actor.body.velocity.y;
+
 	}
 
 
