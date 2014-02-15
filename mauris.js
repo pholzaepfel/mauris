@@ -206,9 +206,8 @@ enemyShip.prototype.update = function() {
 		}
 	}
 };
-
-var resolutionX=1600;
-var resolutionY=900;
+var resolutionX=Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+var resolutionY=Math.max(document.documentElement.clientHeight, window.innerHeight || 0)-66;
 var game = new Phaser.Game(resolutionX, resolutionY, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update, render: render });
 
 function preload () {
