@@ -601,7 +601,7 @@ function update () {
 			}
 			for(var i = 0; i < enemies.length ; i++) {
 				if (enemies[i].alive==false){
-					enemies[i].initEnemyShip();
+					enemies[i] = new enemyShip(i, game, player.actor, enemyBullets,pew);
 				};
 			}
 			nextSpawn=game.time.now+eo3.randomRange(5000,10000);
@@ -676,8 +676,8 @@ function update () {
 }
 
 function sparks(emitter, actor){
-	emitter.x=actor.x+eo3.randomRange(-1*actor.body.width,actor.body.width);
-	emitter.y=actor.y+eo3.randomRange(-1*actor.body.width,actor.body.width);;
+	emitter.x=actor.x+eo3.randomRange(-.7*actor.body.width,actor.body.width);
+	emitter.y=actor.y+eo3.randomRange(-.7*actor.body.width,actor.body.width);;
 	emitter.minParticleSpeed.setTo(-200,-200);
 	emitter.maxParticleSpeed.setTo(200,200);
 	emitter.particleDrag.setTo(50,50);
