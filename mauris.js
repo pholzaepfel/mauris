@@ -387,7 +387,6 @@ var backdrop1, backdrop2,backdrop3;
 var numBaddies = 10;
 var enemies;
 var enemyBullets;
-var explosions;
 var logo;
 var nextSpawn=0;
 var damageCoef=0.3; //global damage tuner
@@ -559,15 +558,6 @@ function create () {
 		bullets.setAll('anchor.y', 0.5);
 		bullets.setAll('outOfBoundsKill', true);
 		bullets.setAll('lifespan', 1000);
-		//  Explosion pool
-		explosions = game.add.group();
-
-		for (var i = 0; i < 10; i++)
-		{
-			var explosionAnimation = explosions.create(0, 0, 'kaboom', [0], false);
-			explosionAnimation.anchor.setTo(0.5, 0.5);
-			explosionAnimation.animations.add('kaboom');
-		}
 
 		game.camera.follow(player.actor);
 		game.camera.focusOnXY(0, 0);
