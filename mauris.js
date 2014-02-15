@@ -64,11 +64,11 @@ enemyShip = function (index, game, targetSprite, bullets) {
 
 	var x = targetSprite.x + (eo3.randomSign() * eo3.randomRange(400,1000));
 	var y = targetSprite.y + (eo3.randomSign() * eo3.randomRange(400,1000));
-	
+
 	this.game = game;
 	this.actor = game.add.sprite(x, y, 'parts', 0);
 	this.ship = ships[Math.floor(eo3.randomRange(0,ships.length))];
-	
+
 	this.health = 3;
 	this.player = targetSprite;
 	this.bullets = bullets;
@@ -85,7 +85,7 @@ enemyShip = function (index, game, targetSprite, bullets) {
 
 	this.actor.body.mass = eo3.shipWithoutVoid(this.ship).length*10000
 
-	this.actor.name = index.toString(); 
+		this.actor.name = index.toString(); 
 
 	this.actor.body.collideWorldBounds = true;
 	this.actor.body.bounce.setTo(1, 1);
@@ -210,8 +210,8 @@ var luser = function() {
 			console.log(this.ship[i]);
 			components[this.ship[i]].bonus(this);
 			this.mass+=10000;
-			this.acceleration-=0.1;
-			this.turnRate-=0.1;
+			this.actor.body.maxVelocity.x-=10;
+			this.actor.body.maxVelocity.y-=10;
 		}
 	}	
 
@@ -243,8 +243,8 @@ luser.prototype.fire = function(){
 		bullet.reset(this.actor.x + (Math.cos(this.actor.rotation)*(this.actor.body.width)*0.75), this.actor.y + (Math.sin(this.actor.rotation)*(this.actor.body.width)*0.75));
 		bullet.rotation = this.actor.rotation;
 		game.physics.velocityFromRotation(this.actor.rotation, this.fireSpeed, bullet.body.velocity);
-		bullet.body.velocity.x+=this.actor.body.velocity.x;
-		bullet.body.velocity.y+=this.actor.body.velocity.y;
+		//bullet.body.velocity.x+=this.actor.body.velocity.x;
+		//bullet.body.velocity.y+=this.actor.body.velocity.y;
 
 	}
 
@@ -386,7 +386,7 @@ function create () {
 
 	ui = new gameUI();
 	gamemode = location.search||'war';
-	
+
 	if (gamemode == '?build')
 	{
 		ui.partsUI();
