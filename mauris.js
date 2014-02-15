@@ -162,7 +162,7 @@ enemyShip.prototype.damage = function(dmg) {
 enemyShip.prototype.update = function() {
 
 
-	if(this.alive){
+	if(this.alive && this.player.alive){
 		this.actor.rotation = this.game.physics.angleBetween(this.actor, this.player);
 
 		if (this.game.physics.distanceBetween(this.actor, this.player) < this.fireRange * 0.5 ||
