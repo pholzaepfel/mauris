@@ -10,7 +10,7 @@ var cmp = [
 	'id':2,
 	'name':'Ancient Railgun',
 	'bonus':function(target){
-		target.bulletSprite=3;target.fireEnergy+=1;target.fireRange+=1000;target.fireDamage+=1;target.fireRate-=200;
+		target.bulletSprite=3;target.fireEnergy+=1;target.fireRange+=1000;target.fireDamage+=1;target.fireRate+=200;
 	}
 },
 {
@@ -31,7 +31,7 @@ var cmp = [
 	'id':5,
 	'name':'Overpowered Burst Laser',
 	'bonus':function(target){
-		target.fireSpeed+=200;target.fireRate*=0.25;target.BulletSprite=3
+		target.fireSpeed+=200;target.fireRate*=0.25;target.bulletSprite=3;
 	}
 },
 {
@@ -45,7 +45,7 @@ var cmp = [
 	'id':33,
 	'name':'Derelict Crewpod',
 	'bonus':function(target){
-		target.health+=2;target.energyRate-=200;;target.acceleration+=0.1;
+		target.health+=2;target.energyRate*=0.8;target.acceleration+=0.1;
 	}
 },
 {
@@ -59,7 +59,7 @@ var cmp = [
 	'id':35,
 	'name':'Fusion Thrust',
 	'bonus':function(target){
-		target.acceleration+=0.7;target.turnRate-=0.1;target.actor.body.maxVelocity.x+=20;target.actor.body.maxVelocity.y+=20;target.health+=1;
+		target.acceleration+=0.7;target.actor.body.maxVelocity.x+=20;target.actor.body.maxVelocity.y+=20;target.health+=1;
 	}
 },
 {
@@ -87,14 +87,14 @@ var cmp = [
 	'id':65,
 	'name':'Worn Armor Plating',
 	'bonus':function(target){
-		target.health+=8;target.acceleration-=0.3;target.turnRate=-0.1;
+		target.health+=8;target.acceleration*=0.8;target.turnRate*=0.8;
 	}
 },
 {
 	'id':66,
 	'name':'Discount Attitude Jet',
 	'bonus':function(target){
-		target.turnRate+=0.7;target.acceleration+=0.3
+		target.turnRate+=0.7;target.acceleration+=0.3;
 	}
 },
 {
@@ -108,7 +108,7 @@ var cmp = [
 	'id':68,
 	'name':'Durasteel Plating',
 	'bonus':function(target){
-		target.health+=12;target.acceleration-=0.5;target.turnRate-=0.3;
+		target.health+=12;target.acceleration*=0.7;target.turnRate*=0.7;
 	}
 },
 {
@@ -122,7 +122,7 @@ var cmp = [
 	'id':96,
 	'name':'Pirate CPU',
 	'bonus':function(target){
-		target.fireRate-=200;target.energyRate-=200;
+		target.fireRate*=0.8;target.energyRate*=0.8;
 	}
 },
 {
@@ -143,21 +143,21 @@ var cmp = [
 	'id':99,
 	'name':'Advanced Processor',
 	'bonus':function(target){
-		target.fireRate-=100;target.turnRate+=0.3;target.health+=2;
+		target.fireRate*=0.8;target.turnRate+=0.3;target.health+=2;
 	}
 },
 {
 	'id':100,
 	'name':'Weapon Rotator',
 	'bonus':function(target){
-		target.fireRate-=200;target.fireDamage+=1;
+		target.fireRate*=0.7;target.fireDamage+=1;
 	}
 },
 {
 	'id':128,
-	'name':'Unreliable Missiles',
+	'name':'Rear-firing Missiles',
 	'bonus':function(target){
-		target.bulletSprite=2;target.fireSpeed-=50;target.fireRange+=500;target.fireDamage+=3;
+		target.bulletSprite=2;target.fireSpeed=Math.abs(target.fireSpeed)*-1;target.fireRange+=500;target.fireDamage+=3;
 	}
 },
 {
@@ -171,7 +171,7 @@ var cmp = [
 	'id':130,
 	'name':'Aftermarket Gatling',
 	'bonus':function(target){
-		target.bulletSprite=1;target.fireRate-=300;target.fireRange-=300;target.fireDamage-=1;target.fireEnergy-=1;
+		target.bulletSprite=1;target.fireRate*=0.7;target.fireRange*=0.7;target.fireDamage*=0.7;target.fireEnergy*=0.7;
 	}
 },
 {
@@ -192,14 +192,14 @@ var cmp = [
 	'id':133,
 	'name':'Gleaming Autocannon',
 	'bonus':function(target){
-		target.bulletSprite=1;target.fireRate-=200;target.fireRange-=200
+		target.bulletSprite=1;target.fireRate*=0.8;target.fireDamage+=1;target.fireEnergy+=1;
 	}
 },
 {
 	'id':160,
 	'name':'Illegal Cargo',
 	'bonus':function(target){
-		target.energyMax+=5;
+		target.energyMax+=6;
 	}
 }];
 var components=[];
