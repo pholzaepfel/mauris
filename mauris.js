@@ -119,7 +119,12 @@ enemyShip.prototype.initEnemyShip = function() {
 	for(var i=0;i<this.ship.length;i++)
 	{
 		if (this.ship[i]!=-1){
+			try{
 			components[this.ship[i]].bonus(this);
+			}
+			catch(e){
+				console.log(e.message); //FIXME remove one day
+			}
 			this.mass+=10000;
 			this.actor.body.maxVelocity.x-=10;
 			this.actor.body.maxVelocity.y-=10;
@@ -144,7 +149,7 @@ enemyShip.prototype.damage = function(dmg) {
 			if (dmg != 31337){
 				this.parts[j].actor.lifespan = eo3.randomRange(500,2500);
 				this.parts[j].actor.body.velocity = game.physics.velocityFromRotation(this.game.physics.angleBetween(this.actor, this.parts[j].actor), eo3.randomRange(200,400));
-				this.parts[j].actor.body.angularVelocity=(this.parts[j].offsetx+this.parts[j].offsety+1)*eo3.randomRange(3,7);	
+				this.parts[j].actor.body.angularVelocity=eo3.randomRange(dmg*16,dmg*64);	
 			}else{
 				this.parts[j].actor.kill();
 			}
@@ -208,7 +213,7 @@ enemyShip.prototype.update = function() {
 };
 var resolutionX=Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
 var resolutionY=Math.max(document.documentElement.clientHeight, window.innerHeight || 0)-66;
-var game = new Phaser.Game(resolutionX, resolutionY, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update, render: render });
+var game = new Phaser.Game(resolutionX, resolutionY, Phaser.WEBGL, 'phaser-example', { preload: preload, create: create, update: update, render: render });
 
 function preload () {
 
@@ -304,6 +309,7 @@ luser.prototype.damage = function(dmg) {
 
 		this.actor.kill();
 
+		nextSpawn = game.time.now+5000;
 		return true;
 	}
 
@@ -512,6 +518,11 @@ function create () {
 		backdrop3.fixedToCamera = true;
 		backdrop3.scale.x=2;
 		backdrop3.scale.y=2;
+				ships.push([-1, 5, 5, 5, 101, 35, 3, 3, 4, 36, -1, 132, 35, 132, -1, 35, 3, 3, 4, 36, -1, 133, 133, 133, 101]);	
+		ships.push([98, 128, 2, 129, 65, 33, 32, 3, 64]);	
+		ships.push([65, 65, 98, -1, 96, 65, 160, 98, 160, 96, 160, 1, 32, 160, 33, 130]);
+		ships.push([4, 5, 5, 101, 35, 99, 3, 36, -1, -1, 133, -1, -1, -1, -1, -1]);
+
 		ships.push([4, -1, -1, -1, 35, 5, 5, 37, 4, -1, -1, -1, -1, -1, -1, -1]);
 		ships.push([35, 36, 37, -1, 132, -1, 35, 36, 37]);	
 		ships.push([160, 160, 160, 128, 64, -1, 32, 34, -1]);

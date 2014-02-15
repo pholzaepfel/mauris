@@ -187,6 +187,13 @@ var cmp = [
 },
 {
 	'id':100,
+	'name':'Special Device',
+	'bonus':function(target){
+		target.TODO=1;
+	}
+},
+{
+	'id':101,
 	'name':'Weapon Rotator',
 	'bonus':function(target){
 		target.fireRate*=0.7;
