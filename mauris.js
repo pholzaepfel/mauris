@@ -512,6 +512,7 @@ function create () {
 		backdrop3.fixedToCamera = true;
 		backdrop3.scale.x=2;
 		backdrop3.scale.y=2;
+		ships.push([4, -1, -1, -1, 35, 5, 5, 37, 4, -1, -1, -1, -1, -1, -1, -1]);
 		ships.push([35, 36, 37, -1, 132, -1, 35, 36, 37]);	
 		ships.push([160, 160, 160, 128, 64, -1, 32, 34, -1]);
 		ships.push([98, -1, 64, 34]);
