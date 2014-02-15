@@ -48,6 +48,7 @@ shipPart = function(x,y,sheet,index,targetSprite)
 	this.actor = game.add.sprite(x,y,sheet,index);
 	this.actor.anchor.setTo(0.5,0.5);
 	this.actor.bringToTop();
+	this.actor.body.exchangeVelocity=false;
 };
 shipPart.prototype.update = function(){
 	if (this.player.alive) {
@@ -69,8 +70,7 @@ enemyShip = function (index, game, targetSprite, bullets) {
 	this.actor = game.add.sprite(x, y, 'parts', 0);
 	this.player = targetSprite;
 	this.bullets = bullets;
-	this.actor.name = index.toString(); 
-
+	this.actor.name = index;
 	this.initEnemyShip();
 
 
@@ -179,6 +179,7 @@ enemyShip.prototype.update = function() {
 				bullet.rotation = this.game.physics.moveToObject(bullet, this.player, 500);
 				bullet.lifespan = this.fireRange; 
 				bullet.loadTexture('bullet', this.bulletSprite);
+				bullet.body.exchangeVelocity = false;
 				this.bulletBehavior(bullet);
 			}
 		}
@@ -336,6 +337,7 @@ luser.prototype.fire = function(){
 		bullet.body.mass = this.fireMass;
 		bullet.reset(this.actor.x + (Math.cos(this.actor.rotation)*(this.actor.body.width)*0.75), this.actor.y + (Math.sin(this.actor.rotation)*(this.actor.body.width)*0.75));
 		bullet.rotation = this.actor.rotation;
+		bullet.body.exchangeVelocity = false;
 		game.physics.velocityFromRotation(this.actor.rotation, this.fireVelocity, bullet.body.velocity);
 		//bullet.body.velocity.x+=this.actor.body.velocity.x;
 		//bullet.body.velocity.y+=this.actor.body.velocity.y;
@@ -534,9 +536,9 @@ function create () {
 		enemyBullets.createMultiple(200, 'bullet');
 		enemyBullets.setAll('anchor.x', 0.5);
 		enemyBullets.setAll('anchor.y', 0.5);
-		enemyBullets.setAll('body.mass', 0.1);
 		enemyBullets.setAll('lifespan',5000)
-			enemyBullets.setAll('outOfBoundsKill', true);
+			enemyBullets.setAll('body.immovable', 1);
+		enemyBullets.setAll('outOfBoundsKill', true);
 
 		//  Create some baddies to waste :)
 		enemies = [];
