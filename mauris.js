@@ -131,7 +131,7 @@ enemyShip.prototype.initEnemyShip = function() {
 	{
 		if (this.ship[i]!=-1){
 			try{
-			components[this.ship[i]].bonus(this);
+				components[this.ship[i]].bonus(this);
 			}
 			catch(e){
 				console.log(e.message); //FIXME remove one day
@@ -149,12 +149,21 @@ enemyShip.prototype.initEnemyShip = function() {
 	this.healthMax = this.health; //FIXME
 }
 
-enemyShip.prototype.damage = function(dmg) {
+enemyShip.prototype.damage = function(dmg, aggro) {
 
 	this.health -= dmg;
 
+	if(typeof(aggro)!='undefined'){
+		this.player = aggro;
+	}
 	if (this.health <= 0)
 	{
+		if(typeof(aggro)!='undefined'){
+			if(typeof(enemies[aggro.name])!='undefined'){
+				enemies[aggro.name].player=player;		
+			}
+		}
+
 		this.alive = false;
 		for (var j = 0; j < this.parts.length; j++) {
 
@@ -187,35 +196,44 @@ enemyShip.prototype.up = function(){
 	this.speed = this.acceleration;
 
 };
+enemyShip.prototype.fire = function () {
+	if (this.game.time.now > this.nextFire && this.bullets.countDead() > 0 &&
+			this.energy>=this.fireEnergy)
+	{
+		this.nextFire = this.game.time.now + this.fireRate;
+		this.energy-=this.fireEnergy;
+		var bullet = this.bullets.getFirstDead();
+		bullet.rotation=this.actor.rotation;
+		bullet.damage=this.fireDamage;
+		bullet.reset(this.actor.x + (Math.cos(this.actor.rotation)*(this.actor.body.width)), this.actor.y + (Math.sin(this.actor.rotation)*(this.actor.body.width)));
+		bullet.lifespan = this.fireRange; 
+		bullet.loadTexture('bullet', this.bulletSprite);
+		bullet.body.exchangeVelocity = false;
+		bullet.fireVelocity=this.fireVelocity;
+		bullet.owner=this.actor;
+		game.physics.velocityFromRotation(bullet.rotation, bullet.fireVelocity, bullet.body.velocity);
+		bullet.target=player;
+		for (var i = 0; i < this.bulletBehavior.length; i++) {
+			this.bulletBehavior[i](bullet);
+		}
+	}
+
+}
 enemyShip.prototype.update = function() {
 
 
 	if(this.alive && this.player.alive){
 
 		if(this.ai==0){
-		this.actor.rotation = this.game.physics.angleBetween(this.actor, this.player);
+			this.actor.rotation = this.game.physics.angleBetween(this.actor, this.player);
 
-		if (this.game.physics.distanceBetween(this.actor, this.player) < this.fireRange * 0.75 &&
-				this.game.physics.distanceBetween(this.actor, this.player) < this.player.profile)
-		{
-			if (this.game.time.now > this.nextFire && this.bullets.countDead() > 0 &&
-					this.energy>=this.fireEnergy)
+			if (this.game.physics.distanceBetween(this.actor, this.player) < this.fireRange * 0.75 &&
+					this.game.physics.distanceBetween(this.actor, this.player) < this.player.profile || 1000)
 			{
-				this.nextFire = this.game.time.now + this.fireRate;
-				this.energy-=this.fireEnergy;
-				var bullet = this.bullets.getFirstDead();
-				bullet.damage=this.fireDamage;
-				bullet.reset(this.actor.x, this.actor.y);
-				bullet.rotation = this.game.physics.moveToObject(bullet, this.player, 500);
-				bullet.lifespan = this.fireRange; 
-				bullet.loadTexture('bullet', this.bulletSprite);
-				bullet.body.exchangeVelocity = false;
-				bullet.fireVelocity=this.fireVelocity;
-				for (var i = 0; i < this.bulletBehavior.length; i++) {
-				this.bulletBehavior[i](bullet);
-				}
+				this.fire();
+
+
 			}
-		}
 		} else if (this.ai == 1) {
 
 		}
@@ -276,6 +294,7 @@ var luser = function() {
 }
 luser.prototype.initLuser = function () {
 
+	this.player={};
 	this.acceleration=1;
 	this.actor.reset(0,0);
 	this.turnRate=0.5;
@@ -333,7 +352,7 @@ luser.prototype.initLuser = function () {
 	this.fireDamage *= damageCoef;
 	this.healthMax = this.health;
 }
-luser.prototype.damage = function(dmg) {
+luser.prototype.damage = function(dmg, aggro) {
 
 	this.health -= dmg;
 
@@ -387,12 +406,13 @@ luser.prototype.fire = function(){
 		bullet.reset(this.actor.x + (Math.cos(this.actor.rotation)*(this.actor.body.width)*0.75), this.actor.y + (Math.sin(this.actor.rotation)*(this.actor.body.width)*0.75));
 		bullet.rotation = this.actor.rotation;
 		bullet.body.exchangeVelocity = false;
+		bullet.owner=this.actor;
 		bullet.fireVelocity = this.fireVelocity; //mostly useless but want this to be accessible for bulletBehaviors
 		game.physics.velocityFromRotation(bullet.rotation, bullet.fireVelocity, bullet.body.velocity);
-						
+
 		for (var i = 0; i < this.bulletBehavior.length; i++) {
-				this.bulletBehavior[i](bullet);
-				}
+			this.bulletBehavior[i](bullet);
+		}
 
 	}
 
@@ -465,46 +485,46 @@ gameUI.prototype.partsUI = function () {
 }
 gameUI.prototype.partsArray = function () {
 	if(typeof(this.parts[0])!='undefined'){
-	var minx = this.parts[0].actor.x;
-	var miny = this.parts[0].actor.y;
-	var maxx = this.parts[0].actor.x;
-	var maxy = this.parts[0].actor.y;
-	var shipSize = 0;
-	for(var i=0;i<this.parts.length;i++){
-		if(this.parts[i].actor.alive){
-			if(this.parts[i].actor.x < minx){
-				minx = this.parts[i].actor.x;
-			}
-			if(this.parts[i].actor.y < miny){
-				miny = this.parts[i].actor.y;
-			}
-			if(this.parts[i].actor.x > maxx){
-				maxx = this.parts[i].actor.x;
-			}
-			if(this.parts[i].actor.y > maxy){
-				maxy = this.parts[i].actor.y;
+		var minx = this.parts[0].actor.x;
+		var miny = this.parts[0].actor.y;
+		var maxx = this.parts[0].actor.x;
+		var maxy = this.parts[0].actor.y;
+		var shipSize = 0;
+		for(var i=0;i<this.parts.length;i++){
+			if(this.parts[i].actor.alive){
+				if(this.parts[i].actor.x < minx){
+					minx = this.parts[i].actor.x;
+				}
+				if(this.parts[i].actor.y < miny){
+					miny = this.parts[i].actor.y;
+				}
+				if(this.parts[i].actor.x > maxx){
+					maxx = this.parts[i].actor.x;
+				}
+				if(this.parts[i].actor.y > maxy){
+					maxy = this.parts[i].actor.y;
+				}
 			}
 		}
-	}
 
-	if (16+maxx-minx > 16+maxy-miny) {
-		shipSize = (16+maxx-minx)/16;
-	} else {
-		shipSize = (16+maxy-miny)/16;
-	}
-	var outArray = [];
-	for (var i=0;i<shipSize*shipSize;i++){
-		outArray.push(-1);
-	}
-	for (var i=0;i<this.parts.length;i++){
-		if(this.parts[i].actor.alive){
-			var n=0;
-			n = (this.parts[i].actor.x - minx)/16;
-			n+= ((this.parts[i].actor.y - miny)/16)*shipSize;
-			outArray[n] = this.parts[i].index;
+		if (16+maxx-minx > 16+maxy-miny) {
+			shipSize = (16+maxx-minx)/16;
+		} else {
+			shipSize = (16+maxy-miny)/16;
 		}
-	}
-	return outArray;
+		var outArray = [];
+		for (var i=0;i<shipSize*shipSize;i++){
+			outArray.push(-1);
+		}
+		for (var i=0;i<this.parts.length;i++){
+			if(this.parts[i].actor.alive){
+				var n=0;
+				n = (this.parts[i].actor.x - minx)/16;
+				n+= ((this.parts[i].actor.y - miny)/16)*shipSize;
+				outArray[n] = this.parts[i].index;
+			}
+		}
+		return outArray;
 	}
 }
 function createPart() {
@@ -515,7 +535,7 @@ function createPart() {
 		n+=32*Math.floor(ui.partsSelector.input.pointerY()/16);
 		console.log(n);
 		if(typeof(components[n])!='undefined'){
-		ui.parts.push(new dragPart(eo3.randomRange(400,600),eo3.randomRange(400,600),'parts',n));
+			ui.parts.push(new dragPart(eo3.randomRange(400,600),eo3.randomRange(400,600),'parts',n));
 		}
 	}
 }
@@ -577,7 +597,7 @@ function create () {
 		ships.push([-1, 70, 72, 70, -1, 74, 107, 96, 106, 75, 68, 104, 104, 104, 128, 106, 75, 96, 74, 107, -1, 102, 72, 102, -1]);
 		ships.push([10, 75, -1, 106, 70, 71, -1, 40, 103]);
 		ships.push([-1, -1, -1, -1, -1, 74, 72, 41, 72, 11, 5, 73, 3, 73, 5, 106, 72, 41, 72, 43, -1, -1, -1, -1, -1])
-		ships.push([70, 71, 73, -1, 104, 70, 71, 11, 104, 102, 103, 105, 102, 103, 73, -1]);
+			ships.push([70, 71, 73, -1, 104, 70, 71, 11, 104, 102, 103, 105, 102, 103, 73, -1]);
 		ships.push([69, 74, 73, 35, 36, 37, 69, 42, 73]);
 		ships.push([74, 5, 32, 105]);
 		ships.push([74, 75, -1, -1, 104, 104, 34, -1, 102, 102, 103, 73, 2, 2, 2, 130]);
@@ -689,6 +709,9 @@ function update () {
 			for (var i = 0; i < player.parts.length; i++) {
 				game.physics.collide(enemyBullets, player.parts[i].actor, bulletHitPlayer, null, this);
 			}
+			for (var i = 0; i < enemies.length; i++) {
+				game.physics.collide(enemyBullets, enemies[i].actor, bulletHitEnemy, null, this);
+			}
 		}
 
 		for (var i = 0; i < enemies.length; i++)
@@ -771,7 +794,7 @@ function sparkExplosion(emitter, actor){
 function bulletHitPlayer (actor, bullet) {
 	bullet.kill();
 
-	var destroyed = player.damage(bullet.damage);
+	var destroyed = player.damage(bullet.damage, bullet.owner);
 	if (destroyed)
 	{
 		sparkExplosion(pew, actor);	
@@ -782,7 +805,7 @@ function bulletHitEnemy (actor, bullet) {
 
 	bullet.kill();
 
-	var destroyed = enemies[actor.name].damage(bullet.damage);
+	var destroyed = enemies[actor.name].damage(bullet.damage, bullet.owner);
 	if (destroyed)
 	{
 		sparkExplosion(pew, actor);	
