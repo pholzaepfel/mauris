@@ -134,7 +134,7 @@ enemyShip.prototype.initEnemyShip = function() {
 			this.mass+=10000;
 			this.actor.body.maxVelocity.x-=10;
 			this.actor.body.maxVelocity.y-=10;
-			this.actor.profile+=50;
+			this.actor.profile+=25;
 		}
 	}
 	this.actor.body.velocity.x*=.3+Math.random()*0.7;
@@ -143,6 +143,7 @@ enemyShip.prototype.initEnemyShip = function() {
 	this.fireDamage *= damageCoef;
 	this.health*=enemyHealthCoef;
 	this.healthMax = this.health; //FIXME
+	this.actor.profileMax=this.actor.profile; //FIXME2
 }
 
 enemyShip.prototype.damage = function(dmg, aggro) {
@@ -312,7 +313,7 @@ luser.prototype.initLuser = function () {
 	this.energyRate=1000;
 	this.energyAmount=2;
 
-
+	this.nextProfileDecay =0;
 	this.nextEnergy = 0;
 	this.nextFire = 0;
 
@@ -349,6 +350,7 @@ luser.prototype.initLuser = function () {
 
 	this.fireDamage *= damageCoef;
 	this.healthMax = this.health;
+	this.actor.profileMax=this.actor.profile; //FIXME2
 }
 luser.prototype.damage = function(dmg, aggro) {
 
@@ -394,6 +396,7 @@ luser.prototype.fire = function(){
 
 	if (game.time.now > this.nextFire && bullets.countDead() > 0 && this.energy > this.fireEnergy && this.alive)
 	{
+		this.actor.profile+=Math.floor(this.fireDamage*40);
 		this.nextFire = game.time.now + this.fireRate;
 		this.energy -= this.fireEnergy;
 		var bullet = bullets.getFirstDead();
@@ -419,6 +422,16 @@ luser.prototype.fire = function(){
 luser.prototype.alt = function(){};
 luser.prototype.update = function(){
 	if(this.alive){
+		if(game.time.now>this.nextProfileDecay)
+		{
+		if (this.actor.profile > this.actor.profileMax){
+			this.actor.profile-=10;
+		}else if (this.actor.profile<this.actor.profileMax){
+			this.actor.profile+=10;
+		}
+		this.nextProfileDecay=game.time.now+1000;
+		}
+
 		if (this.speed > 0)
 		{
 			if(game.time.now>(this.nextThrust||0))
