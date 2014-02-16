@@ -90,7 +90,7 @@ enemyShip = function (index, game, targetSprite, bullets) {
 enemyShip.prototype.initEnemyShip = function() {
 
 	this.ship = ships[Math.floor(eo3.randomRange(0,ships.length))];
-	this.actor.profile = 1000;
+	this.actor.profile = 300;
 	this.health = 3;
 	this.bulletBehavior=[];
 	this.ai = 0;
@@ -108,7 +108,7 @@ enemyShip.prototype.initEnemyShip = function() {
 
 
 	this.nextEnergy = 0;
-	this.nextFire = 0;
+	this.nextFire = game.time.now+eo3.randomRange(1000,8000);
 	this.alive = true;
 	this.parts = [];
 	this.actor.visible = true;
@@ -130,15 +130,11 @@ enemyShip.prototype.initEnemyShip = function() {
 	for(var i=0;i<this.ship.length;i++)
 	{
 		if (this.ship[i]!=-1){
-			try{
-				components[this.ship[i]].bonus(this);
-			}
-			catch(e){
-				console.log(e.message); //FIXME remove one day
-			}
+			components[this.ship[i]].bonus(this);
 			this.mass+=10000;
 			this.actor.body.maxVelocity.x-=10;
 			this.actor.body.maxVelocity.y-=10;
+			this.actor.profile+=50;
 		}
 	}
 	this.actor.body.velocity.x*=.3+Math.random()*0.7;
@@ -160,7 +156,9 @@ enemyShip.prototype.damage = function(dmg, aggro) {
 	{
 		if(typeof(aggro)!='undefined'){
 			if(typeof(enemies[aggro.name])!='undefined'){
-				enemies[aggro.name].player=player;		
+				if(aggro.profile/((2*this.player.profile)+aggro.profile)>Math.random()){					
+					enemies[aggro.name].player=player;		
+				}
 			}
 		}
 
@@ -228,10 +226,9 @@ enemyShip.prototype.update = function() {
 			this.actor.rotation = this.game.physics.angleBetween(this.actor, this.player);
 
 			if (this.game.physics.distanceBetween(this.actor, this.player) < this.fireRange * 0.75 &&
-					this.game.physics.distanceBetween(this.actor, this.player) < this.player.profile || 1000)
+					this.game.physics.distanceBetween(this.actor, this.player) < this.player.profile)
 			{
-				this.fire();
-
+				this.fire(); 
 
 			}
 		} else if (this.ai == 1) {
@@ -322,7 +319,7 @@ luser.prototype.initLuser = function () {
 	this.actor.visible=true;
 	this.actor.anchor.setTo(0.5, 0.5);
 	this.actor.body.maxVelocity.setTo(300,300);
-	this.actor.profile=1300;	//max range at which opponents will attack
+	this.actor.profile=300;	//max range at which opponents will attack
 	this.thrust = game.add.emitter(0,0,200);
 	this.thrust.makeParticles('sparks',[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]);
 	this.thrust.gravity=0;
@@ -346,6 +343,7 @@ luser.prototype.initLuser = function () {
 			this.mass+=10000;
 			this.actor.body.maxVelocity.x-=10;
 			this.actor.body.maxVelocity.y-=10;
+			this.actor.profile+=50;
 		}
 	}	
 
