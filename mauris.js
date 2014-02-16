@@ -79,6 +79,9 @@ enemyShip = function (index, game, targetSprite, bullets) {
 	this.player = targetSprite;
 	this.bullets = bullets;
 	this.actor.name = index;
+	this.thrust = game.add.emitter(0,0,20);
+	this.thrust.makeParticles('sparks',[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]);
+	this.thrust.gravity=0;
 	this.initEnemyShip();
 
 
@@ -90,7 +93,7 @@ enemyShip.prototype.initEnemyShip = function() {
 	this.actor.profile = 1000;
 	this.health = 3;
 	this.bulletBehavior=[];
-
+	this.ai = 0;
 	this.fireRate = 300;
 	this.fireVelocity = 400;
 	this.fireDamage = 2;
@@ -173,10 +176,23 @@ enemyShip.prototype.damage = function(dmg) {
 
 }
 
+enemyShip.prototype.left = function(){
+	this.actor.angle-=this.turnRate;
+};
+enemyShip.prototype.right = function(){
+	this.actor.angle+=this.turnRate;
+};
+enemyShip.prototype.up = function(){
+
+	this.speed = this.acceleration;
+
+};
 enemyShip.prototype.update = function() {
 
 
 	if(this.alive && this.player.alive){
+
+		if(this.ai==0){
 		this.actor.rotation = this.game.physics.angleBetween(this.actor, this.player);
 
 		if (this.game.physics.distanceBetween(this.actor, this.player) < this.fireRange * 0.75 &&
@@ -200,9 +216,25 @@ enemyShip.prototype.update = function() {
 				}
 			}
 		}
+		} else if (this.ai == 1) {
+
+		}
 
 
-
+		if (this.speed > 0)
+		{
+			if(game.time.now>(this.nextThrust||0))
+			{
+				this.thrust.x=this.actor.x-(Math.cos(this.actor.rotation)*(this.actor.body.width)*0.5);
+				this.thrust.y=this.actor.y-(Math.sin(this.actor.rotation)*(this.actor.body.width)*0.5);
+				this.thrust.minParticleSpeed.setTo(0,0);
+				this.thrust.maxParticleSpeed.setTo(0,0);
+				this.thrust.start(true, 1000, null, 1);
+				this.nextThrust = game.time.now + 100; 
+			}
+			eo3.addVelocity(this.actor.rotation, this.speed, this.actor.body.velocity);
+			this.speed=0;
+		}
 		if (this.game.physics.distanceBetween(this.actor, this.player) > 2000)
 		{
 			this.damage(31337); //magic damage value that kills without parts 
