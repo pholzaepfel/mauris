@@ -89,7 +89,7 @@ enemyShip = function (index, game, targetSprite, bullets) {
 
 enemyShip.prototype.initEnemyShip = function() {
 
-	this.ship = ships[Math.floor(eo3.randomRange(0,ships.length)*Math.random())];
+	this.ship = ships[Math.floor(eo3.randomRange(0,ships.length))];
 	this.actor.profile = 1000;
 	this.health = 3;
 	this.bulletBehavior=[];
