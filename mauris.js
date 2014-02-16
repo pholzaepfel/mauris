@@ -12,7 +12,15 @@ eo3.shipWithoutVoid = function (ship) {
 	}
 	return shipOut;
 };
-
+function lengthSort(a, b) {
+	if(a.length>b.length){
+		return 1;
+	}else if(a.length<b.length){
+		return -1;
+	} else{
+		return 0;
+	}
+}
 //////
 //
 //	There is so much wrong in this.
@@ -78,7 +86,7 @@ enemyShip = function (index, game, targetSprite, bullets) {
 
 enemyShip.prototype.initEnemyShip = function() {
 
-	this.ship = ships[Math.floor(eo3.randomRange(0,ships.length))];
+	this.ship = ships[Math.floor(eo3.randomRange(0,ships.length)*Math.random())];
 	this.actor.profile = 1000;
 	this.health = 3;
 	this.bulletBehavior=[];
@@ -560,7 +568,7 @@ function create () {
 		ships.push([-1, 3, 5, -1, -1, -1, 129, -1, -1, -1, 35, 68, 68, 36, 37, -1, 129, -1, -1, -1, -1, 3, 5, -1, -1]);
 		ships.push([35, 3, 131, 37]);
 		ships.push([-1, -1, -1, -1, 35, 3, 131, 37, -1, -1, -1, -1, -1, -1, -1, -1]);
-
+		ships.sort(lengthSort);
 		player = new luser();
 
 		//  The enemies bullet group
