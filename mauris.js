@@ -79,9 +79,9 @@ enemyShip = function (index, game, targetSprite, bullets) {
 enemyShip.prototype.initEnemyShip = function() {
 
 	this.ship = ships[Math.floor(eo3.randomRange(0,ships.length))];
-
+	this.actor.profile = 1000;
 	this.health = 3;
-	this.bulletBehavior=function(bullet){};
+	this.bulletBehavior=[];
 
 	this.fireRate = 300;
 	this.fireVelocity = 400;
@@ -134,6 +134,7 @@ enemyShip.prototype.initEnemyShip = function() {
 	this.actor.body.velocity.y*=.3+Math.random()*0.7;
 	game.physics.velocityFromRotation(this.actor.rotation, 100, this.actor.body.velocity);
 	this.fireDamage *= damageCoef;
+	this.health*=enemyHealthCoef;
 	this.healthMax = this.health; //FIXME
 }
 
@@ -170,8 +171,8 @@ enemyShip.prototype.update = function() {
 	if(this.alive && this.player.alive){
 		this.actor.rotation = this.game.physics.angleBetween(this.actor, this.player);
 
-		if (this.game.physics.distanceBetween(this.actor, this.player) < this.fireRange * 0.5 ||
-				this.game.physics.distanceBetween(this.actor, this.player) < 666)
+		if (this.game.physics.distanceBetween(this.actor, this.player) < this.fireRange * 0.75 &&
+				this.game.physics.distanceBetween(this.actor, this.player) < this.player.profile)
 		{
 			if (this.game.time.now > this.nextFire && this.bullets.countDead() > 0 &&
 					this.energy>=this.fireEnergy)
@@ -185,7 +186,10 @@ enemyShip.prototype.update = function() {
 				bullet.lifespan = this.fireRange; 
 				bullet.loadTexture('bullet', this.bulletSprite);
 				bullet.body.exchangeVelocity = false;
-				this.bulletBehavior(bullet);
+				bullet.fireVelocity=this.fireVelocity;
+				for (var i = 0; i < this.bulletBehavior.length; i++) {
+				this.bulletBehavior[i](bullet);
+				}
 			}
 		}
 
@@ -238,7 +242,7 @@ luser.prototype.initLuser = function () {
 	this.health=8;
 	this.alive=true;
 	this.bulletSprite=0;
-	this.bulletBehavior=function(bullet){};
+	this.bulletBehavior=[];
 	this.parts=[];
 	this.speed = 0; //current
 	this.fireRate = 300;
@@ -247,7 +251,6 @@ luser.prototype.initLuser = function () {
 	this.fireRange = 1000;
 	this.fireMass = 0.1;
 	this.fireEnergy = 2;
-
 	this.energy=10;
 	this.energyMax=10;
 	this.energyRate=1000;
@@ -260,6 +263,7 @@ luser.prototype.initLuser = function () {
 	this.actor.visible=true;
 	this.actor.anchor.setTo(0.5, 0.5);
 	this.actor.body.maxVelocity.setTo(300,300);
+	this.actor.profile=1300;	//max range at which opponents will attack
 	this.thrust = game.add.emitter(0,0,200);
 	this.thrust.makeParticles('sparks',[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]);
 	this.thrust.gravity=0;
@@ -343,10 +347,13 @@ luser.prototype.fire = function(){
 		bullet.reset(this.actor.x + (Math.cos(this.actor.rotation)*(this.actor.body.width)*0.75), this.actor.y + (Math.sin(this.actor.rotation)*(this.actor.body.width)*0.75));
 		bullet.rotation = this.actor.rotation;
 		bullet.body.exchangeVelocity = false;
-		game.physics.velocityFromRotation(this.actor.rotation, this.fireVelocity, bullet.body.velocity);
-		//bullet.body.velocity.x+=this.actor.body.velocity.x;
-		//bullet.body.velocity.y+=this.actor.body.velocity.y;
-		this.bulletBehavior(bullet);
+		bullet.fireVelocity = this.fireVelocity; //mostly useless but want this to be accessible for bulletBehaviors
+		game.physics.velocityFromRotation(bullet.rotation, bullet.fireVelocity, bullet.body.velocity);
+						
+		for (var i = 0; i < this.bulletBehavior.length; i++) {
+				this.bulletBehavior[i](bullet);
+				}
+
 	}
 
 
@@ -396,6 +403,7 @@ var enemyBullets;
 var logo;
 var nextSpawn=0;
 var damageCoef=0.3; //global damage tuner
+var enemyHealthCoef=0.7; 
 var cursors;
 var pew;
 var bullets;
@@ -416,6 +424,7 @@ gameUI.prototype.partsUI = function () {
 	this.partsSelector.events.onInputDown.add(createPart);
 }
 gameUI.prototype.partsArray = function () {
+	if(typeof(this.parts[0])!='undefined'){
 	var minx = this.parts[0].actor.x;
 	var miny = this.parts[0].actor.y;
 	var maxx = this.parts[0].actor.x;
@@ -456,6 +465,7 @@ gameUI.prototype.partsArray = function () {
 		}
 	}
 	return outArray;
+	}
 }
 function createPart() {
 	if(ui.partsSelector.input.pointerOver())
@@ -464,7 +474,9 @@ function createPart() {
 		n=Math.floor(ui.partsSelector.input.pointerX()/16);
 		n+=32*Math.floor(ui.partsSelector.input.pointerY()/16);
 		console.log(n);
+		if(typeof(components[n])!='undefined'){
 		ui.parts.push(new dragPart(eo3.randomRange(400,600),eo3.randomRange(400,600),'parts',n));
+		}
 	}
 }
 // assumes that the incoming parts list is a square
@@ -518,7 +530,18 @@ function create () {
 		backdrop3.fixedToCamera = true;
 		backdrop3.scale.x=2;
 		backdrop3.scale.y=2;
-				ships.push([-1, 5, 5, 5, 101, 35, 3, 3, 4, 36, -1, 132, 35, 132, -1, 35, 3, 3, 4, 36, -1, 133, 133, 133, 101]);	
+
+		ships.push([-1, 71, 70, 7, 10, 33, 128, 39, 106, 33, 128, 7, -1, 103, 102, 39]);
+		ships.push([70, 73, 5, 71, -1, 10, 72, 3, 70, 75, 35, 35, 35, 104, 37, 42, 72, 3, 102, 107, 102, 73, 5, 103, -1]);
+		ships.push([74, 75, 71, 9, -1, -1, 106, 107, 65, 65, 65, 8, -1, 129, 96, 99, 96, 73, -1, 74, 75, 72, 41, 40, -1, 106, 107, 104, 10, 11, 32, 104, 105, 103, 42, 43]);
+		ships.push([-1, 131, 71, 71, 35, 41, 104, 105, 40, 131, 103, 103, -1, 73, -1, -1]);
+		ships.push([-1, -1, -1, -1, -1, -1, -1,-1, -1, -1, -1, -1, -1, -1,-1, 70, 70, 70, 70, 70, -1, 32, 160, 64, 104, 41, 5, 37, -1, 102, 102, 102, 102, 102,   -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
+		ships.push([74, 70, 11, 41, 160, 33, 106, 102, 43]);
+		ships.push([8, 9, 40, 41]);
+		ships.push([70, 71, 102, 103]);
+		ships.push([74, 6, 7, 106, 107, 39, 32, 73, -1]);
+		ships.push([10, 11, 9, 41, 42, 43, 104, 105, 8, 104, 74, 75, 73, 40, 106, 107]);	
+		ships.push([-1, 5, 5, 5, 101, 35, 3, 3, 4, 36, -1, 132, 35, 132, -1, 35, 3, 3, 4, 36, -1, 133, 133, 133, 101]);	
 		ships.push([98, 128, 2, 129, 65, 33, 32, 3, 64]);	
 		ships.push([65, 65, 98, -1, 96, 65, 160, 98, 160, 96, 160, 1, 32, 160, 33, 130]);
 		ships.push([4, 5, 5, 101, 35, 99, 3, 36, -1, -1, 133, -1, -1, -1, -1, -1]);
