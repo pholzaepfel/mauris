@@ -91,6 +91,7 @@ enemyShip.prototype.initEnemyShip = function() {
 
 	this.ship = ships[Math.floor(eo3.randomRange(0,ships.length))];
 	this.actor.profile = 300;
+	this.aggroList = [];
 	this.health = 3;
 	this.bulletBehavior=[];
 	this.ai = 0;
@@ -151,17 +152,13 @@ enemyShip.prototype.damage = function(dmg, aggro) {
 	this.health -= dmg;
 
 	if(typeof(aggro)!='undefined'){
-		this.player = aggro;
+		if((aggro.profile*2)/((this.player.profile)+(aggro.profile*2))>Math.random()){					
+			this.aggroList.push(aggro);
+			this.player = aggro;
+		}
 	}
 	if (this.health <= 0)
 	{
-		if(typeof(aggro)!='undefined'){
-			if(typeof(enemies[aggro.name])!='undefined'){
-				if(aggro.profile/((2*this.player.profile)+aggro.profile)>Math.random()){					
-					enemies[aggro.name].player=player;		
-				}
-			}
-		}
 
 		this.alive = false;
 		for (var j = 0; j < this.parts.length; j++) {
@@ -220,6 +217,17 @@ enemyShip.prototype.fire = function () {
 }
 enemyShip.prototype.update = function() {
 
+	if(!this.player.alive){
+		for(var i=0;i<this.aggroList.length;i++){
+			if(this.aggroList[i].alive){
+				this.player=this.aggroList[i]; // I believe this may cause a 'feature' where grudges are kept beyond the grave. 
+				break;
+			}
+		}
+		if(i>=this.aggroList.length){
+			this.player=player.actor;
+		}
+	}
 
 	if(this.alive && this.player.alive){
 
@@ -424,12 +432,12 @@ luser.prototype.update = function(){
 	if(this.alive){
 		if(game.time.now>this.nextProfileDecay)
 		{
-		if (this.actor.profile > this.actor.profileMax){
-			this.actor.profile-=10;
-		}else if (this.actor.profile<this.actor.profileMax){
-			this.actor.profile+=10;
-		}
-		this.nextProfileDecay=game.time.now+1000;
+			if (this.actor.profile > this.actor.profileMax){
+				this.actor.profile-=10;
+			}else if (this.actor.profile<this.actor.profileMax){
+				this.actor.profile+=10;
+			}
+			this.nextProfileDecay=game.time.now+1000;
 		}
 
 		if (this.speed > 0)
