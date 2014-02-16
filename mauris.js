@@ -90,7 +90,7 @@ enemyShip = function (index, game, targetSprite, bullets) {
 enemyShip.prototype.initEnemyShip = function() {
 
 	this.ship = ships[Math.floor(eo3.randomRange(0,ships.length))];
-	this.actor.profile = 300;
+	this.actor.profile = 100;
 	this.aggroList = [];
 	this.health = 3;
 	this.bulletBehavior=[];
@@ -328,7 +328,7 @@ luser.prototype.initLuser = function () {
 	this.actor.visible=true;
 	this.actor.anchor.setTo(0.5, 0.5);
 	this.actor.body.maxVelocity.setTo(300,300);
-	this.actor.profile=300;	//max range at which opponents will attack
+	this.actor.profile=100;	//max range at which opponents will attack. this will change dynamically
 	this.thrust = game.add.emitter(0,0,200);
 	this.thrust.makeParticles('sparks',[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]);
 	this.thrust.gravity=0;
