@@ -432,10 +432,10 @@ luser.prototype.update = function(){
 	if(this.alive){
 		if(game.time.now>this.nextProfileDecay)
 		{
-			if (this.actor.profile > this.actor.profileMax){
-				this.actor.profile-=10;
-			}else if (this.actor.profile<this.actor.profileMax){
-				this.actor.profile+=10;
+			if (this.actor.profile-40 > this.actor.profileMax){
+				this.actor.profile-=40;
+			}else if (this.actor.profile+40<this.actor.profileMax){
+				this.actor.profile+=40;
 			}
 			this.nextProfileDecay=game.time.now+1000;
 		}
