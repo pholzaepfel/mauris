@@ -100,7 +100,7 @@ enemyShip.prototype.initEnemyShip = function() {
 	this.ai = 1;
 	this.behavior='neutral';
 	if(Math.random()<0.2){
-		this.behavior='hunting';
+		this.behavior='chasing';
 	}
 	this.turnRate=0.5;
 	this.fireRate = 300;
@@ -263,9 +263,31 @@ enemyShip.prototype.update = function() {
 
 			}
 		} else if (this.ai == 1) {
-			var playerAngle = this.game.physics.angleBetween(this.actor, this.player); 
-			var playerDistance = this.game.physics.distanceBetween(this.actor, this.player);
+			var playerLocation = {
+				x:this.player.x,
+				y:this.player.y
+			};
 
+			
+			var playerDistance = this.game.physics.distanceBetween(this.actor, this.player);
+			var playerAngle = this.game.physics.angleBetween(this.actor, this.player); 
+			
+			if(this.behavior=='strafing'){
+				if(playerDistance > this.fireRange){
+					this.behavior='chasing';
+				}
+			}
+			if(this.behavior=='chasing'){
+				if(playerDistance < 0.75 * this.fireRange){
+					this.behavior='strafing';
+				}
+				playerLocation.x += this.player.body.velocity.x;			
+				playerLocation.y += this.player.body.velocity.y;
+			var playerDistance = this.game.math.distance(this.actor.x, this.actor.y, playerLocation.x, playerLocation.y);
+			var playerAngle = this.game.math.angleBetween(this.actor.x, this.actor.y, playerLocation.x, playerLocation.y);
+			}
+
+			
 			if (game.math.radToDeg(Math.abs(this.actor.rotation-playerAngle))>this.turnRate){
 
 				if(this.actor.rotation-playerAngle>0){
@@ -283,15 +305,19 @@ enemyShip.prototype.update = function() {
 				}
 
 				if (playerDistance < this.player.profile) {
-					this.behavior='hunting';
+					if(this.behavior=='neutral'){
+					this.behavior='chasing';
+					}
 					for(var i=0;i<enemies.length;i++){
 						if(this.game.physics.distanceBetween(this.actor, enemies[i].actor) < this.player.profile){
-							enemies[i].behavior='hunting';
+							if(enemies[i].behavior=='neutral'){
+							enemies[i].behavior='chasing';
+							}
 						}
 					}
 				}
 
-				if (this.player!= player.actor || (playerDistance < this.player.profile*10 && this.behavior=='hunting')){
+				if (this.player!= player.actor || (playerDistance < this.player.profile*10 && this.behavior!='neutral')){
 					if(Math.abs(playerAngle-this.actor.rotation)<0.2 ||
 							Math.abs(playerAngle-this.actor.rotation)>Math.PI-0.2){
 						this.up();
@@ -304,7 +330,10 @@ enemyShip.prototype.update = function() {
 			if (playerDistance < this.fireRange * 0.75 &&
 					playerDistance < this.player.profile)
 			{
-				this.fire(); 
+					if(Math.abs(playerAngle-this.actor.rotation)<0.2 ||
+							Math.abs(playerAngle-this.actor.rotation)>Math.PI-0.2){
+						this.fire(); 
+					}
 
 			}
 
