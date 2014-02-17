@@ -350,7 +350,7 @@ var luser = function() {
 	this.actor = game.add.sprite(0, 0, 'parts');
 	this.initLuser();
 }
-luser.prototype.initLuser = function () {
+luser.prototype.initLuser = function (ship) {
 
 	this.player={};
 	this.ai=-1; //natural intelligence
@@ -391,8 +391,11 @@ luser.prototype.initLuser = function () {
 	this.actor.body.bounce.setTo(0, 0);
 	this.actor.body.collideWorldBounds = true; 
 
+	if(typeof(ship)=='undefined'){
 	this.ship = ships[Math.floor(eo3.randomRange(0,ships.length))];
-
+	}else{
+	this.ship = ship;
+	}
 	this.parts = createShip(this.ship, this.actor); //TODO not do this
 
 	this.actor.body.setSize(Math.sqrt(this.ship.length)*16,Math.sqrt(this.ship.length)*16,0,0);
@@ -662,6 +665,7 @@ function create () {
 		backdrop3.scale.x=2;
 		backdrop3.scale.y=2;
 
+		ships.push([70, 12, 12, 104, 2, 5, 102, 40, 40]);
 		ships.push([10, 33, 13, 101, 32, 65, 65, 75, 32, 72, 72, 107, 66, 40, 104, 105]);
 		ships.push([12, 41, 44, 130]);
 		ships.push([10, 11, -1, -1, -1, 74, 75, -1, -1, 42, 43, 12, -1, 13, 106, 107, -1, -1, -1, 1, 129, -1, 129, -1, -1, -1, -1, -1, -1, 74, 32, 75, -1, -1, -1, -1, 128, 32, 65, 109, 65, 73, -1, -1, -1, -1, -1, 106, 32, 107, -1, -1, -1, -1, -1, 1, 129, -1, 129, -1, -1, -1, -1, 74, 75, 44, -1, 45, 10, 11, -1, -1, 106, 107, -1, -1, -1, 42, 43, -1, -1]);	
