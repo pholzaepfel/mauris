@@ -117,7 +117,7 @@ var cmp = [
 	'id':13,
 	'name':'Fusion Bolt Cannon',
 	'bonus':function(target){
-		target.bulletSprite=4; //TODO
+		target.bulletSprite=0; //TODO
 		target.fireEnergy*=2;
 		if(target.energyMax<target.fireEnergy){
 			target.energyMax=target.fireEnergy;
