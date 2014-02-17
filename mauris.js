@@ -57,7 +57,7 @@ shipPart = function(x,y,sheet,index,targetSprite)
 	this.actor = game.add.sprite(x,y,sheet,index);
 	this.actor.anchor.setTo(0.5,0.5);
 	this.actor.bringToTop();
-	this.actor.body.exchangeVelocity=false;
+	this.actor.body.immovable=true;
 };
 shipPart.prototype.update = function(){
 	if (this.player.alive) {
@@ -211,7 +211,7 @@ enemyShip.prototype.fire = function () {
 		bullet.reset(this.actor.x + (Math.cos(this.actor.rotation)*(this.actor.body.width)), this.actor.y + (Math.sin(this.actor.rotation)*(this.actor.body.width)));
 		bullet.lifespan = this.fireRange; 
 		bullet.loadTexture('bullet', this.bulletSprite);
-		bullet.body.exchangeVelocity = false;
+		bullet.body.immovable = true;
 		bullet.fireVelocity=this.fireVelocity;
 		bullet.owner=this.actor;
 		game.physics.velocityFromRotation(bullet.rotation, bullet.fireVelocity, bullet.body.velocity);
@@ -469,7 +469,7 @@ luser.prototype.fire = function(){
 		bullet.body.mass = this.fireMass;
 		bullet.reset(this.actor.x + (Math.cos(this.actor.rotation)*(this.actor.body.width)*0.75), this.actor.y + (Math.sin(this.actor.rotation)*(this.actor.body.width)*0.75));
 		bullet.rotation = this.actor.rotation;
-		bullet.body.exchangeVelocity = false;
+		bullet.body.immovable = true;
 		bullet.owner=this.actor;
 		bullet.fireVelocity = this.fireVelocity; //mostly useless but want this to be accessible for bulletBehaviors
 		game.physics.velocityFromRotation(bullet.rotation, bullet.fireVelocity, bullet.body.velocity);
@@ -725,7 +725,6 @@ function create () {
 		enemyBullets.setAll('anchor.x', 0.5);
 		enemyBullets.setAll('anchor.y', 0.5);
 		enemyBullets.setAll('lifespan',5000)
-			enemyBullets.setAll('body.immovable', 1);
 		enemyBullets.setAll('outOfBoundsKill', true);
 
 		//override the player obj in demo mode

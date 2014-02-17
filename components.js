@@ -1048,10 +1048,10 @@ var cmp = [
 	'bonus':function(target){
 		target.bulletSprite=2;
 		target.fireDamage+=4;
-		target.bulletBehavior.push(function(bullet){bullet.body.velocity.x*=.5+Math.random()*.5;
-			bullet.body.velocity.y*=.5+Math.random()*.5});
-		target.fireVelocity+=150;
-		target.fireEnergy+=2;
+		target.bulletBehavior.push(function(bullet){bullet.body.velocity.x*=.75+Math.random()*.5;
+			bullet.body.velocity.y*=.75+Math.random()*.5});
+		target.fireVelocity+=100;
+		target.fireEnergy+=1;
 		target.actor.profile+=25;
 	}
 },
