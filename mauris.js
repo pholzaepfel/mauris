@@ -57,7 +57,7 @@ shipPart = function(x,y,sheet,index,targetSprite)
 	this.actor = game.add.sprite(x,y,sheet,index);
 	this.actor.anchor.setTo(0.5,0.5);
 	this.actor.bringToTop();
-	this.actor.body.immovable=true;
+	this.actor.body.exchangeVelocity=false;
 };
 shipPart.prototype.update = function(){
 	if (this.player.alive) {
@@ -92,6 +92,7 @@ enemyShip.prototype.initEnemyShip = function() {
 
 	this.ship = ships[Math.floor(eo3.randomRange(0,ships.length))];
 	this.actor.profile = 1000;
+	this.actor.exchangeVelocity=false;
 	this.aggroList = [];
 	this.holdThrust=0;
 	this.acceleration=1;
@@ -100,7 +101,7 @@ enemyShip.prototype.initEnemyShip = function() {
 	this.ai = 1;
 	this.behavior='neutral';
 	if(Math.random()<0.2){
-		this.behavior='hunting';
+		this.behavior='chasing';
 	}
 	this.turnRate=0.5;
 	this.fireRate = 300;
@@ -211,7 +212,7 @@ enemyShip.prototype.fire = function () {
 		bullet.reset(this.actor.x + (Math.cos(this.actor.rotation)*(this.actor.body.width)), this.actor.y + (Math.sin(this.actor.rotation)*(this.actor.body.width)));
 		bullet.lifespan = this.fireRange; 
 		bullet.loadTexture('bullet', this.bulletSprite);
-		bullet.body.immovable = true;
+		bullet.body.exchangeVelocity=false;
 		bullet.fireVelocity=this.fireVelocity;
 		bullet.owner=this.actor;
 		game.physics.velocityFromRotation(bullet.rotation, bullet.fireVelocity, bullet.body.velocity);
@@ -263,8 +264,21 @@ enemyShip.prototype.update = function() {
 
 			}
 		} else if (this.ai == 1) {
-			var playerAngle = this.game.physics.angleBetween(this.actor, this.player); 
+			
+			var playerLocation = {
+				x:this.player.actor.x,
+				y:this.player.actor.y
+			};
+
+			
 			var playerDistance = this.game.physics.distanceBetween(this.actor, this.player);
+			var playerAngle = this.game.physics.angleBetween(this.actor, this.player); 
+			if(this.behavior=='chasing'){
+				playerLocation.x += player.actor.body.velocity.x * (playerDistance / this.actor.body.maxVelocity.x);			
+				playerLocation.y += player.actor.body.velocity.y * (playerDistance / this.actor.body.maxVelocity.y);
+			var playerDistance = this.game.math.distance(this.actor.x, this.actor.y, this.playerLocation.x, this.playerLocation.y);
+			var playerAngle = this.game.math.angleBetween(this.actor.x, this.actor.y, this.playerLocation.x, this.playerLocation.y);
+			}
 
 			if (game.math.radToDeg(Math.abs(this.actor.rotation-playerAngle))>this.turnRate){
 
@@ -283,15 +297,15 @@ enemyShip.prototype.update = function() {
 				}
 
 				if (playerDistance < this.player.profile) {
-					this.behavior='hunting';
+					this.behavior='chasing';
 					for(var i=0;i<enemies.length;i++){
 						if(this.game.physics.distanceBetween(this.actor, enemies[i].actor) < this.player.profile){
-							enemies[i].behavior='hunting';
+							enemies[i].behavior='chasing';
 						}
 					}
 				}
 
-				if (this.player!= player.actor || (playerDistance < this.player.profile*10 && this.behavior=='hunting')){
+				if (this.player!= player.actor || (playerDistance < this.player.profile*10 && this.behavior=='chasing')){
 					if(Math.abs(playerAngle-this.actor.rotation)<0.2 ||
 							Math.abs(playerAngle-this.actor.rotation)>Math.PI-0.2){
 						this.up();
@@ -469,7 +483,7 @@ luser.prototype.fire = function(){
 		bullet.body.mass = this.fireMass;
 		bullet.reset(this.actor.x + (Math.cos(this.actor.rotation)*(this.actor.body.width)*0.75), this.actor.y + (Math.sin(this.actor.rotation)*(this.actor.body.width)*0.75));
 		bullet.rotation = this.actor.rotation;
-		bullet.body.immovable = true;
+		bullet.body.exchangeVelocity=false;
 		bullet.owner=this.actor;
 		bullet.fireVelocity = this.fireVelocity; //mostly useless but want this to be accessible for bulletBehaviors
 		game.physics.velocityFromRotation(bullet.rotation, bullet.fireVelocity, bullet.body.velocity);
