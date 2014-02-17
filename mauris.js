@@ -1,4 +1,5 @@
 var gamemode;
+var defaultBehavior='neutral';
 eo3 = {};
 eo3.addVelocity = function (a,b,c){return"undefined"==typeof b&&(b=60),	c=c||new d.Point,c.setTo(c.x+Math.cos(a)*b,c.y+Math.sin(a)*b)};
 eo3.randomRange = function(a,b){var c,d; if(a>b){c=a;d=b;}else{d=a;c=b};return (Math.random()*(c-d))+d};
@@ -98,7 +99,7 @@ enemyShip.prototype.initEnemyShip = function() {
 	this.health = 3;
 	this.bulletBehavior=[];
 	this.ai = 1;
-	this.behavior='neutral';
+	this.behavior=defaultBehavior;
 	if(Math.random()<0.2){
 		this.behavior='chasing';
 	}
@@ -162,6 +163,11 @@ enemyShip.prototype.damage = function(dmg, aggro) {
 		if((aggro.profile*2)/((this.player.profile)+(aggro.profile*2))>Math.random()){					
 			this.aggroList.push(aggro);
 			this.player = aggro;
+		}
+		if(gamemode=='?attract')
+		{
+			this.aggroList.push(aggro);
+			this.player = aggro;		
 		}
 	}
 	if (this.health <= 0)
@@ -233,6 +239,13 @@ enemyShip.prototype.update = function() {
 		}
 		if(i>=this.aggroList.length){
 			this.player=player.actor;
+			if(gamemode=='?attract'){
+				for(var i=0;i<enemies.length;i++){
+					if(enemies[i].alive && i != this.index){
+						this.player=enemies[i].actor;
+					}
+				}
+			}
 		}
 	}
 
@@ -318,8 +331,8 @@ enemyShip.prototype.update = function() {
 				}
 
 				if (this.player!= player.actor || (playerDistance < this.player.profile*10 && this.behavior!='neutral')){
-					if(Math.abs(playerAngle-this.actor.rotation)<0.2 ||
-							Math.abs(playerAngle-this.actor.rotation)>Math.PI-0.2){
+					if(Math.abs(playerAngle-this.actor.rotation)<0.6 ||
+							Math.abs(playerAngle-this.actor.rotation)>Math.PI-0.6){
 						this.up();
 					}
 				}
@@ -411,6 +424,9 @@ luser.prototype.initLuser = function (ship) {
 	this.actor.anchor.setTo(0.5, 0.5);
 	this.actor.body.maxVelocity.setTo(300,300);
 	this.actor.profile=100;	//max range at which opponents will attack. this will change dynamically
+	if(gamemode=='?attract'){
+		this.actor.profile=999999; //chaos
+	}
 	this.thrust = game.add.emitter(0,0,200);
 	this.thrust.makeParticles('sparks',[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]);
 	this.thrust.gravity=0;
@@ -565,6 +581,7 @@ var enemies;
 var enemyBullets;
 var logo;
 var nextSpawn=0;
+var nextCamera=0; //attract
 var damageCoef=0.3; //global damage tuner
 var enemyHealthCoef=0.7; 
 var cursors;
@@ -675,7 +692,10 @@ function create () {
 	}
 	if (gamemode == 'war' | gamemode == '?attract')
 	{
-
+		if(gamemode=='?attract'){
+			numBaddies=30;
+			defaultBehavior='chasing';
+		}
 		game.world.setBounds(-100000, -100000, 200000, 200000);
 		backdrop1 = game.add.tileSprite(0, 0, resolutionX, resolutionY, 'starfield2');
 
@@ -759,7 +779,9 @@ function create () {
 
 		//override the player obj in demo mode
 		if(gamemode == '?attract'){
-			player.damage(31337);
+			for(var i=0;i<player.parts.length;i++){
+				player.parts[i].actor.visible=false;
+		}
 		}
 		//  Create some baddies to waste :)
 		enemies = [];
@@ -769,12 +791,6 @@ function create () {
 			enemies.push(new enemyShip(i, game, player.actor, enemyBullets,pew));
 		}
 
-		if(gamemode == '?attract'){
-			for (var i = 0; i < numBaddies; i++){
-				enemies[i].player = enemies[(i+9)%10].actor;
-			}
-			player.player = enemies[0].actor;
-		}
 		pew = game.add.emitter(0,0,200);
 		pew.makeParticles('sparks');
 		pew.gravity=0;
@@ -788,9 +804,6 @@ function create () {
 		bullets.setAll('lifespan', 1000);
 
 		game.camera.follow(player.actor);
-		if(gamemode=='?attract'){
-			game.camera.follow(enemies[0].actor)
-		};
 		game.camera.focusOnXY(0, 0);
 
 
@@ -817,7 +830,7 @@ function update () {
 	if(gamemode=='war' || gamemode=='?attract'){
 
 
-		if(nextSpawn<game.time.now||nextSpawn==0)
+		if(nextSpawn<game.time.now||nextSpawn==0||gamemode=='?attract')
 		{
 			if(!player.alive){
 				player.initLuser();
@@ -829,6 +842,17 @@ function update () {
 			}
 			nextSpawn=game.time.now+eo3.randomRange(5000,10000);
 		}	
+		if(nextCamera<game.time.now&&gamemode=='?attract'){
+			for(var i = 0; i<enemies.length;i++){
+				if(enemies[i].alive && enemies[i].player!=player.actor)
+				{
+					
+		game.camera.follow(enemies[i].actor);
+		nextCamera=game.time.now+eo3.randomRange(5000,15000);
+		break;
+				}
+			}
+		}
 
 		game.debug.renderText(Math.sin(game.math.degToRad(player.actor.angle)) + ';' + Math.cos(game.math.degToRad(player.actor.angle)),100,100);
 		if(enemyBullets.getFirstAlive() != null) {
