@@ -289,7 +289,7 @@ enemyShip.prototype.update = function() {
 					}
 				}
 
-				if (playerDistance < this.player.profile*10 && this.behavior=='hunting'){
+				if (this.player!= player.actor || (playerDistance < this.player.profile*10 && this.behavior=='hunting')){
 					if(Math.abs(playerAngle-this.actor.rotation)<0.2 ||
 							Math.abs(playerAngle-this.actor.rotation)>Math.PI-0.2){
 						this.up();
@@ -309,7 +309,7 @@ enemyShip.prototype.update = function() {
 		}
 
 
-		if (this.game.physics.distanceBetween(this.actor, player) > 3000)
+		if (this.game.physics.distanceBetween(this.actor, player) > 2500)
 		{
 			this.damage(31337); //magic damage value that kills without parts 
 		}
@@ -351,6 +351,7 @@ var luser = function() {
 luser.prototype.initLuser = function () {
 
 	this.player={};
+	this.ai=-1; //natural intelligence
 	this.acceleration=1;
 	this.actor.reset(0,0);
 	this.turnRate=0.5;
@@ -526,7 +527,7 @@ var player;
 
 // global
 var backdrop1, backdrop2,backdrop3;
-var numBaddies = 10;
+var numBaddies = 13;
 var enemies;
 var enemyBullets;
 var logo;
