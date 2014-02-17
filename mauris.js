@@ -1,3 +1,4 @@
+var gamemode;
 eo3 = {};
 eo3.addVelocity = function (a,b,c){return"undefined"==typeof b&&(b=60),	c=c||new d.Point,c.setTo(c.x+Math.cos(a)*b,c.y+Math.sin(a)*b)};
 eo3.randomRange = function(a,b){var c,d; if(a>b){c=a;d=b;}else{d=a;c=b};return (Math.random()*(c-d))+d};
@@ -90,18 +91,20 @@ enemyShip = function (index, game, targetSprite, bullets) {
 enemyShip.prototype.initEnemyShip = function() {
 
 	this.ship = ships[Math.floor(eo3.randomRange(0,ships.length))];
-	this.actor.profile = 100;
+	this.actor.profile = 1000;
 	this.aggroList = [];
+	this.acceleration=1;
 	this.health = 3;
 	this.bulletBehavior=[];
-	this.ai = 0;
+	this.ai = 1;
+	this.turnRate=0.5;
 	this.fireRate = 300;
 	this.fireVelocity = 400;
 	this.fireDamage = 2;
 	this.fireRange = 1000;
 	this.fireMass = 0.1;
 	this.fireEnergy = 2;
-
+	this.speed = 0;
 	this.energy=10;
 	this.energyMax=10;
 	this.energyRate=1000;
@@ -231,20 +234,6 @@ enemyShip.prototype.update = function() {
 
 	if(this.alive && this.player.alive){
 
-		if(this.ai==0){
-			this.actor.rotation = this.game.physics.angleBetween(this.actor, this.player);
-
-			if (this.game.physics.distanceBetween(this.actor, this.player) < this.fireRange * 0.75 &&
-					this.game.physics.distanceBetween(this.actor, this.player) < this.player.profile)
-			{
-				this.fire(); 
-
-			}
-		} else if (this.ai == 1) {
-
-		}
-
-
 		if (this.speed > 0)
 		{
 			if(game.time.now>(this.nextThrust||0))
@@ -259,6 +248,47 @@ enemyShip.prototype.update = function() {
 			eo3.addVelocity(this.actor.rotation, this.speed, this.actor.body.velocity);
 			this.speed=0;
 		}
+
+		if(this.ai==0){
+			this.actor.rotation = this.game.physics.angleBetween(this.actor, this.player);
+
+			if (this.game.physics.distanceBetween(this.actor, this.player) < this.fireRange * 0.75 &&
+					this.game.physics.distanceBetween(this.actor, this.player) < this.player.profile)
+			{
+				this.fire(); 
+
+			}
+		} else if (this.ai == 1) {
+			var playerAngle = this.game.physics.angleBetween(this.actor, this.player); 
+			if (game.math.radToDeg(Math.abs(this.actor.rotation-playerAngle))>this.turnRate){
+				if(this.actor.rotation-playerAngle>0){
+					if(game.math.radToDeg(Math.abs(this.actor.rotation-playerAngle))<180){	
+						this.left();
+					}else{
+						this.right();
+					}
+				}else{
+					if(game.math.radToDeg(Math.abs(this.actor.rotation-playerAngle))<180){	
+						this.right();
+					}else{
+						this.left();
+					}
+				}
+				var playerDistance = this.game.physics.distanceBetween(this.actor, this.player);
+				if (playerDistance < this.player.profile*10 && playerDistance > this.fireRange*0.5){
+					this.up();
+				}
+			}
+			if (this.game.physics.distanceBetween(this.actor, this.player) < this.fireRange * 0.75 &&
+					this.game.physics.distanceBetween(this.actor, this.player) < this.player.profile)
+			{
+				this.fire(); 
+
+			}
+
+		}
+
+
 		if (this.game.physics.distanceBetween(this.actor, this.player) > 2000)
 		{
 			this.damage(31337); //magic damage value that kills without parts 
@@ -281,7 +311,7 @@ enemyShip.prototype.update = function() {
 };
 var resolutionX=Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
 var resolutionY=Math.max(document.documentElement.clientHeight, window.innerHeight || 0)-66;
-var game = new Phaser.Game(resolutionX, resolutionY, Phaser.WEBGL, 'phaser-example', { preload: preload, create: create, update: update, render: render });
+var game = new Phaser.Game(resolutionX, resolutionY, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update, render: render });
 
 function preload () {
 
@@ -589,7 +619,7 @@ function create () {
 	{
 		ui.partsUI();
 	}
-	if (gamemode == 'war')
+	if (gamemode == 'war' | gamemode == '?attract')
 	{
 
 		game.world.setBounds(-100000, -100000, 200000, 200000);
@@ -650,8 +680,12 @@ function create () {
 		ships.push([35, 3, 131, 37]);
 		ships.push([-1, -1, -1, -1, 35, 3, 131, 37, -1, -1, -1, -1, -1, -1, -1, -1]);
 		ships.sort(lengthSort);
-		player = new luser();
 
+		var temp = game.add.sprite(0,0,'parts');
+		temp.visible = false;
+		
+
+		player = new luser();
 		//  The enemies bullet group
 		enemyBullets = game.add.group();
 		enemyBullets.createMultiple(200, 'bullet');
@@ -661,6 +695,10 @@ function create () {
 			enemyBullets.setAll('body.immovable', 1);
 		enemyBullets.setAll('outOfBoundsKill', true);
 
+		//override the player obj in demo mode
+		if(gamemode == '?attract'){
+			player.damage(31337);
+		}
 		//  Create some baddies to waste :)
 		enemies = [];
 
@@ -669,7 +707,12 @@ function create () {
 			enemies.push(new enemyShip(i, game, player.actor, enemyBullets,pew));
 		}
 
-
+		if(gamemode == '?attract'){
+			for (var i = 0; i < numBaddies; i++){
+				enemies[i].player = enemies[(i+9)%10].actor;
+			}
+			player.player = enemies[0].actor;
+		}
 		pew = game.add.emitter(0,0,200);
 		pew.makeParticles('sparks');
 		pew.gravity=0;
@@ -683,6 +726,9 @@ function create () {
 		bullets.setAll('lifespan', 1000);
 
 		game.camera.follow(player.actor);
+		if(gamemode=='?attract'){
+			game.camera.follow(enemies[0].actor)
+		};
 		game.camera.focusOnXY(0, 0);
 
 
@@ -706,7 +752,7 @@ function update () {
 			ui.parts[i].update();
 		}
 	}
-	if(gamemode=='war'){
+	if(gamemode=='war' || gamemode=='?attract'){
 
 
 		if(nextSpawn<game.time.now||nextSpawn==0)
