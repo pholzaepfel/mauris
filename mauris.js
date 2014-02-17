@@ -779,9 +779,7 @@ function create () {
 
 		//override the player obj in demo mode
 		if(gamemode == '?attract'){
-			for(var i=0;i<player.parts.length;i++){
-				player.parts[i].actor.visible=false;
-		}
+			player.kill();
 		}
 		//  Create some baddies to waste :)
 		enemies = [];
@@ -844,6 +842,7 @@ function update () {
 		}	
 		if(nextCamera<game.time.now&&gamemode=='?attract'){
 			for(var i = 0; i<enemies.length;i++){
+				
 				if(enemies[i].alive && enemies[i].player!=player.actor)
 				{
 					
