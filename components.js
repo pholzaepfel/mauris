@@ -106,16 +106,26 @@ var cmp = [
 },
 {
 	'id':12,
-	'name':'Component12',
+	'name':'Xenoform Reactor',
 	'bonus':function(target){
-
+		target.energyRate*=0.5;
+		target.actor.profile+=100;
+		target.fireDamage*=1.2;
 	}
 },
 {
 	'id':13,
-	'name':'Component13',
+	'name':'Fusion Bolt Cannon',
 	'bonus':function(target){
-
+		target.bulletSprite=4; //TODO
+		target.fireEnergy*=2;
+		if(target.energyMax<target.fireEnergy){
+			target.energyMax=target.fireEnergy;
+		}
+		target.fireDamage*=2;
+		target.fireRate*=1.5;
+		target.fireVelocity*=2;
+		target.actor.profile+=200;
 	}
 },
 {
@@ -370,16 +380,21 @@ var cmp = [
 },
 {
 	'id':44,
-	'name':'Component44',
+	'name':'Thrust Package',
 	'bonus':function(target){
-
+		target.fireDamage+=1;
+		target.acceleration+=0.6;
+		target.actor.profile+=50;
 	}
 },
 {
 	'id':45,
-	'name':'Component45',
+	'name':'Secure Dormitory',
 	'bonus':function(target){
-
+		target.health+=10;
+		target.energyRate*=1.2;
+		target.fireDamage+=1;
+		target.acceleration-=0.2;
 	}
 },
 {
@@ -627,16 +642,18 @@ var cmp = [
 },
 {
 	'id':76,
-	'name':'Component76',
+	'name':'AWSM',
 	'bonus':function(target){
-
+		target.TODO=1;
 	}
 },
 {
 	'id':77,
-	'name':'Component77',
+	'name':'Decorative Skull',
 	'bonus':function(target){
-
+		target.profile+=50;
+		target.fireDamage+=2;
+		target.fireRate*=0.9;
 	}
 },
 {
@@ -884,16 +901,19 @@ var cmp = [
 },
 {
 	'id':108,
-	'name':'Component108',
+	'name':'Vidscreen Ad <BurgerJoint>',
 	'bonus':function(target){
-
+		target.profile+=25;
+		target.cashFlow+=10;
+		
 	}
 },
 {
 	'id':109,
-	'name':'Component109',
+	'name':'Vidscreen Ad <Cola>',
 	'bonus':function(target){
-
+		target.profile+=25;
+		target.cashFlow+=10; //TODO
 	}
 },
 {
