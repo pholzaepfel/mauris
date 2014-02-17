@@ -19,7 +19,7 @@ var cmp = [
 		target.fireRange+=1000;
 		target.fireDamage+=1;
 		target.fireRate+=200;
-		target.profile+=25;
+		target.actor.profile+=25;
 	}
 },
 {
@@ -45,7 +45,7 @@ var cmp = [
 		target.fireVelocity+=200;
 		target.fireRate*=0.25;
 		target.bulletSprite=3;
-		target.profile+=50;
+		target.actor.profile+=50;
 	}
 },
 {
@@ -54,7 +54,7 @@ var cmp = [
 	'bonus':function(target){
 		target.fireDamage+=1;
 		target.energyMax+=2;
-		target.profile+=10;
+		target.actor.profile+=10;
 	}
 },
 {
@@ -63,7 +63,7 @@ var cmp = [
 	'bonus':function(target){
 		target.fireDamage+=1;
 		target.energyMax+=2;
-		target.profile+=10;
+		target.actor.profile+=10;
 	}
 },
 {
@@ -272,7 +272,7 @@ var cmp = [
 		target.health+=2;
 		target.energyRate*=0.8;
 		target.acceleration+=0.1;
-		target.profile+=10;
+		target.actor.profile+=10;
 	}
 },
 {
@@ -301,7 +301,7 @@ var cmp = [
 		target.health+=3;
 		target.energyAmount+1;
 		target.energyMax+=4;
-		target.profile+=20;
+		target.actor.profile+=20;
 	}
 },
 {
@@ -319,7 +319,7 @@ var cmp = [
 	'bonus':function(target){
 		target.fireDamage+=1;
 		target.energyMax+=2;
-		target.profile+=10;
+		target.actor.profile+=10;
 	}
 },
 {
@@ -328,7 +328,7 @@ var cmp = [
 	'bonus':function(target){
 		target.fireDamage+=1;
 		target.energyMax+=2;
-		target.profile+=10;
+		target.actor.profile+=10;
 	}
 },
 {
@@ -351,7 +351,7 @@ var cmp = [
 		});
 		target.fireRate*=0.7;
 		target.fireEnergy*=0.8;
-		target.profile+=40;
+		target.actor.profile+=40;
 	}
 },
 {
@@ -538,7 +538,7 @@ var cmp = [
 		target.health+=8;
 		target.acceleration*=0.8;
 		target.turnRate*=0.8;
-		target.profile+=10;
+		target.actor.profile+=10;
 	}
 },
 {
@@ -564,7 +564,7 @@ var cmp = [
 		target.health+=12;
 		target.acceleration*=0.7;
 		target.turnRate*=0.7;
-		target.profile+=10;	
+		target.actor.profile+=10;	
 	}
 },
 {
@@ -596,7 +596,7 @@ var cmp = [
 		target.acceleration+=0.1;
 		target.energyRate*=0.9;
 		target.energyMax+=4;
-		target.profile+=20;	
+		target.actor.profile+=20;	
 	}
 },
 {
@@ -606,7 +606,7 @@ var cmp = [
 		target.health+=6;
 		target.energyMax-=2;
 		target.energyRate*=0.95;
-		target.profile+=10;	
+		target.actor.profile+=10;	
 	}
 },
 {
@@ -616,7 +616,7 @@ var cmp = [
 		target.fireDamage+=2;
 		target.fireRate+=100;
 	
-		target.profile+=20;	
+		target.actor.profile+=20;	
 	}
 },
 {
@@ -651,7 +651,7 @@ var cmp = [
 	'id':77,
 	'name':'Decorative Skull',
 	'bonus':function(target){
-		target.profile+=50;
+		target.actor.profile+=50;
 		target.fireDamage+=2;
 		target.fireRate*=0.9;
 	}
@@ -789,7 +789,7 @@ var cmp = [
 		target.fireRate*=0.8;
 		target.energyRate*=0.7;
 	
-		target.profile+=20;	
+		target.actor.profile+=20;	
 	}
 },
 {
@@ -800,7 +800,7 @@ var cmp = [
 		target.energyRate+=1000;
 		target.energyAmount+=1;
 	
-		target.profile-=20;	
+		target.actor.profile-=20;	
 	}
 },
 {
@@ -818,7 +818,7 @@ var cmp = [
 		target.fireRate*=0.8;
 		target.turnRate+=0.3;
 		target.health+=2;
-		target.profile+=10;
+		target.actor.profile+=10;
 	}
 },
 {
@@ -834,7 +834,7 @@ var cmp = [
 	'bonus':function(target){
 		target.fireRate*=0.7;
 		target.fireDamage+=1;
-		target.profile+=30;
+		target.actor.profile+=30;
 	}
 },
 {
@@ -903,7 +903,7 @@ var cmp = [
 	'id':108,
 	'name':'Vidscreen Ad <BurgerJoint>',
 	'bonus':function(target){
-		target.profile+=25;
+		target.actor.profile+=25;
 		target.cashFlow+=10;
 		
 	}
@@ -912,7 +912,7 @@ var cmp = [
 	'id':109,
 	'name':'Vidscreen Ad <Cola>',
 	'bonus':function(target){
-		target.profile+=25;
+		target.actor.profile+=25;
 		target.cashFlow+=10; //TODO
 	}
 },
@@ -1052,7 +1052,7 @@ var cmp = [
 			bullet.body.velocity.y*=.5+Math.random()*.5});
 		target.fireVelocity+=150;
 		target.fireEnergy+=2;
-		target.profile+=25;
+		target.actor.profile+=25;
 	}
 },
 {
@@ -1075,7 +1075,7 @@ var cmp = [
 		target.fireRange*=0.7;
 		target.fireDamage*=0.7;
 		target.fireEnergy*=0.7;
-		target.profile+=20;
+		target.actor.profile+=20;
 	}
 },
 {
@@ -1085,7 +1085,7 @@ var cmp = [
 		target.bulletSprite=2;
 		target.fireDamage+=2;
 		target.fireEnergy+=2;
-		target.profile+=15;
+		target.actor.profile+=15;
 	}
 },
 {
@@ -1105,7 +1105,7 @@ var cmp = [
 		target.bulletSprite=1;
 		target.fireRate*=0.7;
 		target.fireDamage+=1;
-		target.profile+=150;
+		target.actor.profile+=150;
 	}
 },
 {
@@ -1297,7 +1297,7 @@ var cmp = [
 		target.energyMax+=6;
 		target.energyRate*=.75;
 		target.energyAmount+=1;
-		target.profile+=100;
+		target.actor.profile+=100;
 	}
 },
 {
