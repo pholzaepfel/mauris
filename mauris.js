@@ -99,6 +99,9 @@ enemyShip.prototype.initEnemyShip = function() {
 	this.bulletBehavior=[];
 	this.ai = 1;
 	this.behavior='neutral';
+	if(Math.random()<0.2){
+		this.behavior='hunting';
+	}
 	this.turnRate=0.5;
 	this.fireRate = 300;
 	this.fireVelocity = 400;
@@ -146,7 +149,6 @@ enemyShip.prototype.initEnemyShip = function() {
 	this.actor.body.velocity.x*=.3+Math.random()*0.7;
 	this.actor.body.velocity.y*=.3+Math.random()*0.7;
 	game.physics.velocityFromRotation(this.actor.rotation, 100, this.actor.body.velocity);
-	this.fireDamage *= damageCoef;
 	this.health*=enemyHealthCoef;
 	this.healthMax = this.health; //FIXME
 	this.actor.profileMax=this.actor.profile; //FIXME2
@@ -154,7 +156,7 @@ enemyShip.prototype.initEnemyShip = function() {
 
 enemyShip.prototype.damage = function(dmg, aggro) {
 
-	this.health -= dmg;
+	this.health -= damageCoef * dmg;
 
 	if(typeof(aggro)!='undefined'){
 		if((aggro.profile*2)/((this.player.profile)+(aggro.profile*2))>Math.random()){					
@@ -407,13 +409,12 @@ luser.prototype.initLuser = function () {
 		}
 	}	
 
-	this.fireDamage *= damageCoef;
 	this.healthMax = this.health;
 	this.actor.profileMax=this.actor.profile; //FIXME2
 }
 luser.prototype.damage = function(dmg, aggro) {
 
-	this.health -= dmg;
+	this.health -= damageCoef * dmg;
 
 	if (this.health <= 0)
 	{
