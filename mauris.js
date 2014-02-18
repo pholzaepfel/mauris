@@ -1,5 +1,16 @@
 var gamemode;
 var defaultBehavior='neutral';
+
+function repeat(pattern, count) { //http://stackoverflow.com/questions/202605/repeat-string-javascript - elegant!
+    if (count < 1) return '';
+    var result = '';
+    while (count > 0) {
+        if (count & 1) result += pattern;
+        count >>= 1, pattern += pattern;
+    }
+    return result;
+}
+
 eo3 = {};
 eo3.addVelocity = function (a,b,c){return"undefined"==typeof b&&(b=60),	c=c||new d.Point,c.setTo(c.x+Math.cos(a)*b,c.y+Math.sin(a)*b)};
 eo3.randomRange = function(a,b){var c,d; if(a>b){c=a;d=b;}else{d=a;c=b};return (Math.random()*(c-d))+d};
@@ -602,8 +613,29 @@ var ships=[];
 var ui;
 var gameUI = function () {
 	this.parts = [];
+	}
+
+gameUI.prototype.initCombatUi = function() {
+	this.healthLine = game.add.text(200,100, '',{ font:'8px monospace', fill: '#cceeee', align: 'left' });
+	this.energyLine = game.add.text(200,100, '',{ font:'8px monospace', fill: '#cceeee', align: 'left' });
+}
+gameUI.prototype.bar = function (targetText, offset, numerator, denominator) {
+	targetText.x = player.actor.x;
+	targetText.y = player.actor.y+offset;
+	var s='[';
+	var n=Math.floor((numerator/denominator)*8);
+	if(n<0){n=0;}
+	s+=repeat('*',n);
+	s+=repeat(' ',8-n);
+	s+=']';
+	targetText.setText(s);
+}
+gameUI.prototype.update = function() {
+	this.bar(this.healthLine, 50, player.health, player.healthMax);
+	this.bar(this.energyLine, 60, player.energy, player.energyMax);
 
 }
+
 gameUI.prototype.partsUI = function () {
 	this.partsSelector = game.add.sprite('0','0','allparts');
 	this.partsSelector.inputEnabled = true;
@@ -720,7 +752,7 @@ function create () {
 		backdrop3.fixedToCamera = true;
 		backdrop3.scale.x=2;
 		backdrop3.scale.y=2;
-
+		
 		ships.push([70, 12, 12, 104, 2, 5, 102, 40, 40]);
 		ships.push([10, 33, 13, 101, 32, 65, 65, 75, 32, 72, 72, 107, 66, 40, 104, 105]);
 		ships.push([12, 41, 44, 130]);
@@ -818,6 +850,8 @@ function create () {
 	}
 
 	cursors = game.input.keyboard.createCursorKeys();
+			
+	ui.initCombatUi();
 }
 
 function update () {
@@ -924,12 +958,16 @@ function update () {
 
 
 
-
 		if (game.input.activePointer.isDown)
 		{
 			//  Boom!
 			player.fire();
 		}
+
+		if (gamemode == 'war') {
+			ui.update();
+		}
+
 	}	
 }
 
