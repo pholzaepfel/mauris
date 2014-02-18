@@ -169,8 +169,8 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 		if (this.ship[i]!=-1){
 			components[this.ship[i]].bonus(this);
 			this.mass+=10000;
-			this.actor.body.maxVelocity.x-=10;
-			this.actor.body.maxVelocity.y-=10;
+			this.actor.body.maxVelocity.x-=5;
+			this.actor.body.maxVelocity.y-=5;
 			this.actor.profile+=25;
 		}
 	}
@@ -480,8 +480,8 @@ luser.prototype.initLuser = function (ship) {
 		if (this.ship[i]!=-1){
 			components[this.ship[i]].bonus(this);
 			this.mass+=10000;
-			this.actor.body.maxVelocity.x-=10;
-			this.actor.body.maxVelocity.y-=10;
+			this.actor.body.maxVelocity.x-=5;
+			this.actor.body.maxVelocity.y-=5;
 			this.actor.profile+=50;
 		}
 	}	

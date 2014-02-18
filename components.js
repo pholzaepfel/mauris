@@ -4,8 +4,6 @@ var cmp = [
 	'name':'Rusted Wing',
 	'bonus':function(target){
 		target.turnRate+=0.9;
-		target.actor.body.maxVelocity.x+=50;
-		target.actor.body.maxVelocity.y+=50;
 		target.acceleration+=0.6;
 		target.energyRate+=100;
 	}
@@ -87,8 +85,6 @@ var cmp = [
 	'bonus':function(target){
 		target.energyMax+=2;
 		target.energyRate*=0.9;
-		target.actor.body.maxVelocity.x+=20;
-		target.actor.body.maxVelocity.y+=20;
 		target.acceleration+=0.2;
 		target.turnRate+=0.1;
 	}
@@ -99,8 +95,6 @@ var cmp = [
 	'bonus':function(target){
 		target.energyMax+=2;
 		target.energyRate*=0.9;
-		target.actor.body.maxVelocity.x+=20;
-		target.actor.body.maxVelocity.y+=20;
 		target.acceleration+=0.2;
 		target.turnRate+=0.1;
 	}
@@ -261,8 +255,6 @@ var cmp = [
 	'bonus':function(target){
 		target.acceleration+=1;
 		target.turnRate+=0.2;
-		target.actor.body.maxVelocity.x+=30;
-		target.actor.body.maxVelocity.y+=30;
 		target.health-=1;
 	}
 },
@@ -290,8 +282,6 @@ var cmp = [
 	'name':'Fusion Thrust',
 	'bonus':function(target){
 		target.acceleration+=0.7;
-		target.actor.body.maxVelocity.x+=20;
-		target.actor.body.maxVelocity.y+=20;
 		target.health+=1;
 	}
 },
@@ -361,8 +351,6 @@ var cmp = [
 	'bonus':function(target){
 		target.energyMax+=2;
 		target.energyRate*=0.9;
-		target.actor.body.maxVelocity.x+=20;
-		target.actor.body.maxVelocity.y+=20;
 		target.acceleration+=0.2;
 		target.turnRate+=0.1;
 	}
@@ -373,8 +361,6 @@ var cmp = [
 	'bonus':function(target){
 		target.energyMax+=2;
 		target.energyRate*=0.9;
-		target.actor.body.maxVelocity.x+=20;
-		target.actor.body.maxVelocity.y+=20;
 		target.acceleration+=0.2;
 		target.turnRate+=0.1;
 	}
@@ -580,8 +566,6 @@ var cmp = [
 	'bonus':function(target){
 		target.actor.profile-=25;//refund standard profile cost
 		target.actor.profile*=0.9;
-		target.actor.body.maxVelocity.x+=20;
-		target.actor.body.maxVelocity.y+=20;
 		target.acceleration+=0.3;
 		target.turnRate+=0.2;
 
@@ -862,8 +846,6 @@ var cmp = [
 	'name':'Inline Warp Thrust',
 	'bonus':function(target){
 		target.acceleration+=0.8;
-		target.actor.body.maxVelocity.x+=20;
-		target.actor.body.maxVelocity.y+=20;
 		target.energyRate*=0.9;
 	}
 },
@@ -1062,8 +1044,6 @@ var cmp = [
 		target.acceleration+=1;
 		target.turnrate+=0.1;
 		target.health+=1;
-		target.actor.body.maxVelocity.x+=70;
-		target.actor.body.maxVelocity.y+=70;
 	}
 },
 {
@@ -1094,8 +1074,6 @@ var cmp = [
 	'bonus':function(target){
 		target.health+=2;
 		target.acceleration+=0.5;
-		target.actor.body.maxVelocity.x+=50;
-		target.actor.body.maxVelocity.y+=50;
 	}
 },
 {
