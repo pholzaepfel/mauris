@@ -221,6 +221,8 @@ enemyShip.prototype.fire = function () {
 		bullet.fireVelocity=this.fireVelocity;
 		bullet.owner=this.actor;
 		game.physics.velocityFromRotation(bullet.rotation, bullet.fireVelocity, bullet.body.velocity);
+		bullet.body.velocity.x += 0.5 * this.actor.body.velocity.x;
+		bullet.body.velocity.y += 0.5 * this.actor.body.velocity.y;
 		bullet.target=player;
 		for (var i = 0; i < this.bulletBehavior.length; i++) {
 			this.bulletBehavior[i](bullet);
@@ -521,6 +523,8 @@ luser.prototype.fire = function(){
 		bullet.owner=this.actor;
 		bullet.fireVelocity = this.fireVelocity; //mostly useless but want this to be accessible for bulletBehaviors
 		game.physics.velocityFromRotation(bullet.rotation, bullet.fireVelocity, bullet.body.velocity);
+		bullet.body.velocity.x += 0.5 * this.actor.body.velocity.x;
+		bullet.body.velocity.y += 0.5 * this.actor.body.velocity.y;
 
 		for (var i = 0; i < this.bulletBehavior.length; i++) {
 			this.bulletBehavior[i](bullet);
