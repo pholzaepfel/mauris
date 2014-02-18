@@ -19,6 +19,7 @@ var cmp = [
 		target.fireRange+=1000;
 		target.fireDamage+=1;
 		target.fireRate+=200;
+		target.fireVelocity+=500;
 		target.actor.profile+=25;
 	}
 },

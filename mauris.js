@@ -73,8 +73,8 @@ shipPart.prototype.update = function(){
 
 enemyShip = function (index, game, targetSprite, bullets) {
 
-	var x = targetSprite.x + (eo3.randomSign() * eo3.randomRange(1000,2000));
-	var y = targetSprite.y + (eo3.randomSign() * eo3.randomRange(1000,2000));
+	var x = targetSprite.x + (eo3.randomSign() * eo3.randomRange(750,2000));
+	var y = targetSprite.y + (eo3.randomSign() * eo3.randomRange(750,2000));
 
 	this.game = game;
 	this.actor = game.add.sprite(x, y, 'parts', 0);
@@ -89,7 +89,7 @@ enemyShip = function (index, game, targetSprite, bullets) {
 
 };
 
-enemyShip.prototype.initEnemyShip = function() {
+enemyShip.prototype.initEnemyShip = function(ship) {
 
 	this.ship = ships[Math.floor(eo3.randomRange(0,ships.length))];
 	this.actor.profile = 1000;
@@ -237,9 +237,11 @@ enemyShip.prototype.update = function() {
 				break;
 			}
 		}
-		if(i>=this.aggroList.length){
+		if(i>=this.aggroList.length){			
 			this.player=player.actor;
-			if(gamemode=='?attract'){
+			if(gamemode!='?attract' && game.physics.distanceBetween(this.actor, this.player) > this.player.profile) {
+				this.behavior='neutral';
+			}else if(gamemode=='?attract'){
 				for(var i=0;i<enemies.length;i++){
 					if(Math.random() > 0.1 && enemies[i].alive && i != this.index){
 						this.player=enemies[i].actor;
@@ -353,7 +355,7 @@ enemyShip.prototype.update = function() {
 		}
 
 
-		if (this.game.physics.distanceBetween(this.actor, player) > 2500)
+		if (this.game.physics.distanceBetween(this.actor, player) > 3000)
 		{
 			this.damage(31337); //magic damage value that kills without parts 
 		}
@@ -411,6 +413,7 @@ luser.prototype.initLuser = function (ship) {
 	this.fireRange = 1000;
 	this.fireMass = 0.1;
 	this.fireEnergy = 2;
+	this.profileDecay = 100;
 	this.energy=10;
 	this.energyMax=10;
 	this.energyRate=1000;
@@ -532,10 +535,10 @@ luser.prototype.update = function(){
 	if(this.alive){
 		if(game.time.now>this.nextProfileDecay)
 		{
-			if (this.actor.profile-40 > this.actor.profileMax){
-				this.actor.profile-=40;
-			}else if (this.actor.profile+40<this.actor.profileMax){
-				this.actor.profile+=40;
+			if (this.actor.profile-this.profileDecay > this.actor.profileMax){
+				this.actor.profile-=this.profileDecay;
+			}else if (this.actor.profile+this.profileDecay<this.actor.profileMax){
+				this.actor.profile+=this.profileDecay;
 			}
 			this.nextProfileDecay=game.time.now+1000;
 		}
@@ -576,7 +579,7 @@ var player;
 
 // global
 var backdrop1, backdrop2,backdrop3;
-var numBaddies = 13;
+var numBaddies = 14;
 var enemies;
 var enemyBullets;
 var logo;
