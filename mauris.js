@@ -73,8 +73,8 @@ shipPart.prototype.update = function(){
 
 enemyShip = function (index, game, targetSprite, bullets) {
 
-	var x = targetSprite.x + (eo3.randomSign() * eo3.randomRange(400,1000));
-	var y = targetSprite.y + (eo3.randomSign() * eo3.randomRange(400,1000));
+	var x = targetSprite.x + (eo3.randomSign() * eo3.randomRange(1000,2000));
+	var y = targetSprite.y + (eo3.randomSign() * eo3.randomRange(1000,2000));
 
 	this.game = game;
 	this.actor = game.add.sprite(x, y, 'parts', 0);
@@ -230,7 +230,7 @@ enemyShip.prototype.fire = function () {
 }
 enemyShip.prototype.update = function() {
 
-	if(!this.player.alive){
+	if(!this.player.alive || (this.player == player.actor && gamemode == '?attract')){
 		for(var i=0;i<this.aggroList.length;i++){
 			if(this.aggroList[i].alive){
 				this.player=this.aggroList[i]; // I believe this may cause a 'feature' where grudges are kept beyond the grave. 
@@ -241,7 +241,7 @@ enemyShip.prototype.update = function() {
 			this.player=player.actor;
 			if(gamemode=='?attract'){
 				for(var i=0;i<enemies.length;i++){
-					if(enemies[i].alive && i != this.index){
+					if(Math.random() > 0.1 && enemies[i].alive && i != this.index){
 						this.player=enemies[i].actor;
 					}
 				}
@@ -280,11 +280,11 @@ enemyShip.prototype.update = function() {
 				x:this.player.x,
 				y:this.player.y
 			};
+			//TODO add some kind of fleeing behavior
 
-			
 			var playerDistance = this.game.physics.distanceBetween(this.actor, this.player);
 			var playerAngle = this.game.physics.angleBetween(this.actor, this.player); 
-			
+
 			if(this.behavior=='strafing'){
 				if(playerDistance > this.fireRange){
 					this.behavior='chasing';
@@ -296,12 +296,12 @@ enemyShip.prototype.update = function() {
 				}
 				playerLocation.x += this.player.body.velocity.x;			
 				playerLocation.y += this.player.body.velocity.y;
-			var playerDistance = this.game.math.distance(this.actor.x, this.actor.y, playerLocation.x, playerLocation.y);
-			var playerAngle = this.game.math.angleBetween(this.actor.x, this.actor.y, playerLocation.x, playerLocation.y);
+				var playerDistance = this.game.math.distance(this.actor.x, this.actor.y, playerLocation.x, playerLocation.y);
+				var playerAngle = this.game.math.angleBetween(this.actor.x, this.actor.y, playerLocation.x, playerLocation.y);
 			}
 
-			
-			if (game.math.radToDeg(Math.abs(this.actor.rotation-playerAngle))>this.turnRate){
+
+			if (game.math.radToDeg(Math.abs(this.actor.rotation-playerAngle))>this.behavior=='neutral'?this.turnRate*30:this.turnRate){
 
 				if(this.actor.rotation-playerAngle>0){
 					if(game.math.radToDeg(Math.abs(this.actor.rotation-playerAngle))<180){	
@@ -319,34 +319,34 @@ enemyShip.prototype.update = function() {
 
 				if (playerDistance < this.player.profile) {
 					if(this.behavior=='neutral'){
-					this.behavior='chasing';
+						this.behavior='chasing';
 					}
 					for(var i=0;i<enemies.length;i++){
 						if(this.game.physics.distanceBetween(this.actor, enemies[i].actor) < this.player.profile){
 							if(enemies[i].behavior=='neutral'){
-							enemies[i].behavior='chasing';
+								enemies[i].behavior='chasing';
 							}
 						}
 					}
 				}
 
-				if (this.player!= player.actor || (playerDistance < this.player.profile*10 && this.behavior!='neutral')){
-					if(Math.abs(playerAngle-this.actor.rotation)<0.6 ||
-							Math.abs(playerAngle-this.actor.rotation)>Math.PI-0.6){
-						this.up();
-					}
-				}
 
 
 
 			}
+			if (this.player!= player.actor || (playerDistance < this.player.profile*10 && this.behavior!='neutral')){
+				if(Math.abs(playerAngle-this.actor.rotation)<0.6 ||
+						Math.abs(this.actor.rotation-playerAngle)<0.6){
+							this.up();
+						}
+			}
 			if (playerDistance < this.fireRange * 0.75 &&
 					playerDistance < this.player.profile)
 			{
-					if(Math.abs(playerAngle-this.actor.rotation)<0.2 ||
-							Math.abs(playerAngle-this.actor.rotation)>Math.PI-0.2){
-						this.fire(); 
-					}
+				if(Math.abs(playerAngle-this.actor.rotation)<0.2 ||
+						Math.abs(playerAngle-this.actor.rotation)>Math.PI-0.2){
+							this.fire(); 
+						}
 
 			}
 
@@ -437,9 +437,9 @@ luser.prototype.initLuser = function (ship) {
 	this.actor.body.collideWorldBounds = true; 
 
 	if(typeof(ship)=='undefined'){
-	this.ship = ships[Math.floor(eo3.randomRange(0,ships.length))];
+		this.ship = ships[Math.floor(eo3.randomRange(0,ships.length))];
 	}else{
-	this.ship = ship;
+		this.ship = ship;
 	}
 	this.parts = createShip(this.ship, this.actor); //TODO not do this
 
@@ -781,7 +781,7 @@ function create () {
 		if(gamemode == '?attract'){
 			for(var i=0;i<player.parts.length;i++){
 				player.parts[i].actor.visible=false;
-		}
+			}
 		}
 		//  Create some baddies to waste :)
 		enemies = [];
@@ -844,13 +844,13 @@ function update () {
 		}	
 		if(nextCamera<game.time.now&&gamemode=='?attract'){
 			for(var i = 0; i<enemies.length;i++){
-				
+
 				if(enemies[i].alive && enemies[i].player!=player.actor)
 				{
-					
-		game.camera.follow(enemies[i].actor);
-		nextCamera=game.time.now+eo3.randomRange(5000,15000);
-		break;
+
+					game.camera.follow(enemies[i].actor);
+					nextCamera=game.time.now+eo3.randomRange(5000,15000);
+					break;
 				}
 			}
 		}
