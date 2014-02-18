@@ -2,13 +2,13 @@ var gamemode;
 var defaultBehavior='neutral';
 
 function repeat(pattern, count) { //http://stackoverflow.com/questions/202605/repeat-string-javascript - elegant!
-    if (count < 1) return '';
-    var result = '';
-    while (count > 0) {
-        if (count & 1) result += pattern;
-        count >>= 1, pattern += pattern;
-    }
-    return result;
+	if (count < 1) return '';
+	var result = '';
+	while (count > 0) {
+		if (count & 1) result += pattern;
+		count >>= 1, pattern += pattern;
+	}
+	return result;
 }
 
 eo3 = {};
@@ -33,6 +33,22 @@ function lengthSort(a, b) {
 	} else{
 		return 0;
 	}
+}
+function threatSort(a, b) {
+	if(!a.alive && !b.alive){
+		return 0;
+	}else if (!a.alive){
+		return 1;
+	}else if (!b.alive){
+		return -1;
+	}
+
+	if(a.actor.profile/game.physics.distanceBetween(a.actor,player.actor)>
+			b.actor.profile/game.physics.distanceBetween(b.actor,player.actor)){
+				return -1;
+			}else{
+				return 1;
+			}
 }
 //////
 //
@@ -103,7 +119,7 @@ enemyShip = function (index, game, targetSprite, bullets) {
 enemyShip.prototype.initEnemyShip = function(ship) {
 
 	this.ship = ships[Math.floor(eo3.randomRange(0,ships.length))];
-	this.actor.profile = 1000;
+	this.actor.profile = 100;
 	this.aggroList = [];
 	this.holdThrust=0;
 	this.acceleration=1;
@@ -613,15 +629,20 @@ var ships=[];
 var ui;
 var gameUI = function () {
 	this.parts = [];
-	}
+}
 
 gameUI.prototype.initCombatUi = function() {
 	this.healthLine = game.add.text(200,100, '',{ font:'8px monospace', fill: '#cceeee', align: 'left' });
 	this.energyLine = game.add.text(200,100, '',{ font:'8px monospace', fill: '#cceeee', align: 'left' });
+	this.radar = [];
+		for (var i = 0; i < 4; i++){
+			this.radar.push(game.add.text(200,100, '*',{ font:'8px monospace', fill: '#ff9999', align: 'center' }));
+		}
 }
+
 gameUI.prototype.bar = function (targetText, offset, numerator, denominator) {
-	targetText.x = player.actor.x;
-	targetText.y = player.actor.y+offset;
+	targetText.x = player.actor.body.x+70;
+	targetText.y = player.actor.body.y+offset;
 	var s='[';
 	var n=Math.floor((numerator/denominator)*8);
 	if(n<0){n=0;}
@@ -630,10 +651,28 @@ gameUI.prototype.bar = function (targetText, offset, numerator, denominator) {
 	s+=']';
 	targetText.setText(s);
 }
+gameUI.prototype.radarPing = function() {
+	for(var i=0;i<this.radar.length;i++){
+	var targetAngle=game.physics.angleBetween(player.actor, enemies[i].actor);
+	var offset=Math.sqrt(game.physics.distanceBetween(player.actor, enemies[i].actor));
+	if(enemies[i].actor.profile>player.actor.profileMax*2){
+		this.radar[i].setText('!!!@!!!');
+	}else if(enemies[i].actor.profile>player.actor.profileMax){
+		this.radar[i].setText('!!@!!');
+	}else if(enemies[i].actor.profile>player.actor.profileMax*0.5){
+		this.radar[i].setText('!@!');
+	}else{
+		this.radar[i].setText('@');
+	}
+	this.radar[i].x = player.actor.body.x + Math.cos(targetAngle) * 180;
+	this.radar[i].y = player.actor.body.y + Math.sin(targetAngle) * 180;	
+	}
+}
 gameUI.prototype.update = function() {
-	this.bar(this.healthLine, 50, player.health, player.healthMax);
-	this.bar(this.energyLine, 60, player.energy, player.energyMax);
-
+	this.bar(this.healthLine, 100, player.health, player.healthMax);
+	this.bar(this.energyLine, 110, player.energy, player.energyMax);
+	enemies.sort(threatSort);
+	this.radarPing();
 }
 
 gameUI.prototype.partsUI = function () {
@@ -752,7 +791,7 @@ function create () {
 		backdrop3.fixedToCamera = true;
 		backdrop3.scale.x=2;
 		backdrop3.scale.y=2;
-		
+
 		ships.push([70, 12, 12, 104, 2, 5, 102, 40, 40]);
 		ships.push([10, 33, 13, 101, 32, 65, 65, 75, 32, 72, 72, 107, 66, 40, 104, 105]);
 		ships.push([12, 41, 44, 130]);
@@ -850,7 +889,7 @@ function create () {
 	}
 
 	cursors = game.input.keyboard.createCursorKeys();
-			
+
 	ui.initCombatUi();
 }
 
