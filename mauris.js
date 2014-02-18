@@ -629,13 +629,25 @@ var gameUI = function () {
 	this.parts = [];
 }
 
+
+gameUI.prototype.resetRadar = function() {
+if(this.radar.length!=player.radarTargets){
+	for (var i = 0; i < this.radar.length; i++){
+		this.radar[i].destroy();	
+	}
+	if(this.radar.length){
+		this.radar=[];
+	}
+	for (var i = 0; i < player.radarTargets; i++){
+		this.radar.push(game.add.text(200,100, '*',{ font:'8px monospace', fill: '#ff9999', align: 'center' }));
+	}
+	}
+}
 gameUI.prototype.initCombatUi = function() {
 	this.healthLine = game.add.text(200,100, '',{ font:'8px monospace', fill: '#cceeee', align: 'left' });
 	this.energyLine = game.add.text(200,100, '',{ font:'8px monospace', fill: '#cceeee', align: 'left' });
 	this.radar = [];
-	for (var i = 0; i < player.radarTargets; i++){
-		this.radar.push(game.add.text(200,100, '*',{ font:'8px monospace', fill: '#ff9999', align: 'center' }));
-	}
+	this.resetRadar();
 	this.statsLine = game.add.text(200,100, '',{ font:'8px monospace', fill: '#cceeee', align: 'left' });
 }
 
@@ -687,6 +699,7 @@ gameUI.prototype.statsPing = function() {
 	this.statsLine.setText(s);
 }
 gameUI.prototype.radarPing = function() {
+	this.resetRadar();
 	for(var i=0;i<this.radar.length;i++){
 		var targetAngle=game.physics.angleBetween(player.actor, this.enemies[i].actor);
 		var targetDistance=game.physics.distanceBetween(player.actor, this.enemies[i].actor);
