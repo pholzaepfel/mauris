@@ -383,7 +383,7 @@ enemyShip.prototype.update = function() {
 		}
 
 
-		if (this.game.physics.distanceBetween(this.actor, player) > 3000)
+		if (this.game.physics.distanceBetween(this.actor, player.actor) > 5000)
 		{
 			this.damage(31337); //magic damage value that kills without parts 
 		}
@@ -426,6 +426,7 @@ luser.prototype.initLuser = function (ship) {
 
 	this.player={};
 	this.ai=-1; //natural intelligence
+	this.radarTargets=1;
 	this.acceleration=1;
 	this.actor.reset(0,0);
 	this.turnRate=0.5;
@@ -632,7 +633,7 @@ gameUI.prototype.initCombatUi = function() {
 	this.healthLine = game.add.text(200,100, '',{ font:'8px monospace', fill: '#cceeee', align: 'left' });
 	this.energyLine = game.add.text(200,100, '',{ font:'8px monospace', fill: '#cceeee', align: 'left' });
 	this.radar = [];
-	for (var i = 0; i < 4; i++){
+	for (var i = 0; i < player.radarTargets; i++){
 		this.radar.push(game.add.text(200,100, '*',{ font:'8px monospace', fill: '#ff9999', align: 'center' }));
 	}
 	this.statsLine = game.add.text(200,100, '',{ font:'8px monospace', fill: '#cceeee', align: 'left' });
@@ -662,6 +663,8 @@ gameUI.prototype.statsPing = function() {
 	s+='energyRate: ' + player.energyRate.toFixed(1) + '\n';
 	s+='energyAmount: ' + player.energyAmount.toFixed(1) + '\n';
 
+	s+='\n';
+	s+='radarTargets: ' + player.radarTargets.toFixed(1) + '\n';
 	s+='\n';
 	s+='acceleration: ' + player.acceleration.toFixed(1) + '\n';
 	s+='turnRate: ' + player.turnRate.toFixed(1) + '\n';

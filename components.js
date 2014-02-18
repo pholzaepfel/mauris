@@ -526,10 +526,9 @@ var cmp = [
 },
 {
 	'id':64,
-	'name':'Cloaking Device',
+	'name':'Long Range Sensor',
 	'bonus':function(target){
-		target.TODO=1;
-
+		target.radarTargets+=2;
 	}
 },
 {
@@ -554,7 +553,7 @@ var cmp = [
 	'id':67,
 	'name':'Long Range Sensor',
 	'bonus':function(target){
-		target.TODO=1;
+		target.radarTargets+=2;
 
 	}
 },
