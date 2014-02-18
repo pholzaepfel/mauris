@@ -199,13 +199,12 @@ enemyShip.prototype.damage = function(dmg, aggro) {
 	}
 	if (this.health <= 0)
 	{
-
 		this.alive = false;
 		for (var j = 0; j < this.parts.length; j++) {
 
 			if (dmg != 31337){
 				this.parts[j].actor.lifespan = eo3.randomRange(500,2500);
-				this.parts[j].actor.body.velocity = game.physics.velocityFromRotation(this.game.physics.angleBetween(this.actor, this.parts[j].actor), eo3.randomRange(200,400));
+				this.parts[j].actor.body.velocity = game.physics.velocityFromRotation(this.game.physics.angleBetween(this.actor, this.parts[j].actor), 200+eo3.randomRange(0,10*dmg));
 				this.parts[j].actor.body.angularVelocity=eo3.randomRange(dmg*16,dmg*64);	
 			}else{
 				this.parts[j].actor.kill();
@@ -456,9 +455,6 @@ luser.prototype.initLuser = function (ship) {
 	this.actor.anchor.setTo(0.5, 0.5);
 	this.actor.body.maxVelocity.setTo(300,300);
 	this.actor.profile=100;	//max range at which opponents will attack. this will change dynamically
-	if(gamemode=='?attract'){
-		this.actor.profile=999999; //chaos
-	}
 	this.thrust = game.add.emitter(0,0,200);
 	this.thrust.makeParticles('sparks',[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]);
 	this.thrust.gravity=0;
@@ -617,7 +613,7 @@ var logo;
 var nextSpawn=0;
 var nextCamera=0; //attract
 var damageCoef=0.3; //global damage tuner
-var playerDamageCoef=2; //not so global damage tuner
+var playerDamageCoef=5; //not so global damage tuner
 var enemyHealthCoef=0.7; 
 var cursors;
 var pew;
@@ -658,18 +654,18 @@ gameUI.prototype.statsPing = function() {
 	var s='';
 	s+='health: ' + Math.floor(player.health).toFixed(1) + '\n';
 	s+='healthMax: ' + player.healthMax.toFixed(1) + '\n'
-	s+='\n';
+		s+='\n';
 	s+='energy: ' + player.energy.toFixed(1) + '\n';
 	s+='energyMax: ' + player.energyMax.toFixed(1) + '\n';
-	
+
 	s+='\n';
 	s+='energyRate: ' + player.energyRate.toFixed(1) + '\n';
 	s+='energyAmount: ' + player.energyAmount.toFixed(1) + '\n';
-	
+
 	s+='\n';
 	s+='acceleration: ' + player.acceleration.toFixed(1) + '\n';
 	s+='turnRate: ' + player.turnRate.toFixed(1) + '\n';
-	
+
 	s+='\n';
 	s+='fireRate: ' + player.fireRate.toFixed(1) + '\n';
 	s+='fireDamage: ' + player.fireDamage.toFixed(1) + '\n';
@@ -677,29 +673,33 @@ gameUI.prototype.statsPing = function() {
 	s+='fireRange: ' + player.fireRange.toFixed(1) + '\n';
 	s+='fireMass: ' + player.fireMass.toFixed(1) + '\n';
 	s+='fireEnergy: ' + player.fireEnergy.toFixed(1) + '\n';
-	
+
 	s+='\n';
 	s+='profile: ' + player.actor.profile.toFixed(1) + '\n';
 	s+='profileMax: ' + player.actor.profileMax.toFixed(1) + '\n';
 	s+='profileDecay: ' + player.profileDecay.toFixed(1) + '\n';
-	
+
 	this.statsLine.x = player.actor.body.x-resolutionX*0.5+this.statsLine.width*0.6;
 	this.statsLine.y = player.actor.body.y+resolutionY*0.5-this.statsLine.height;
 	this.statsLine.setText(s);
 }
 gameUI.prototype.radarPing = function() {
 	for(var i=0;i<this.radar.length;i++){
-		var targetAngle=game.physics.angleBetween(player.actor, enemies[i].actor);
-		var offset=Math.sqrt(game.physics.distanceBetween(player.actor, enemies[i].actor));
-		if(enemies[i].actor.profile>player.actor.profileMax*2){
-			this.radar[i].setText('!!!@!!!');
-		}else if(enemies[i].actor.profile>player.actor.profileMax){
-			this.radar[i].setText('!!@!!');
-		}else if(enemies[i].actor.profile>player.actor.profileMax*0.5){
-			this.radar[i].setText('!@!');
+		var targetAngle=game.physics.angleBetween(player.actor, this.enemies[i].actor);
+		var targetDistance=game.physics.distanceBetween(player.actor, this.enemies[i].actor);
+		if(this.enemies[i].actor.profile>player.actor.profileMax*2){
+			s='!!!@!!!';
+		}else if(this.enemies[i].actor.profile>player.actor.profileMax){
+			s='!!@!!';
+		}else if(this.enemies[i].actor.profile>player.actor.profileMax*0.5){
+			s='!@!';
 		}else{
-			this.radar[i].setText('@');
+			s='@';
 		}
+		if (targetDistance < 1000 && game.time.now % 1000 > 500)  {
+			s='['+s+']';
+		}
+		this.radar[i].setText(s);
 		this.radar[i].x = player.actor.body.x + Math.cos(targetAngle) * 180;
 		this.radar[i].y = player.actor.body.y + Math.sin(targetAngle) * 180;	
 	}
@@ -707,7 +707,8 @@ gameUI.prototype.radarPing = function() {
 gameUI.prototype.update = function() {
 	this.bar(this.healthLine, 0, player.health, player.healthMax);
 	this.bar(this.energyLine, 10, player.energy, player.energyMax);
-	enemies.sort(threatSort);
+	this.enemies=enemies.slice(0);
+	this.enemies.sort(threatSort);
 	this.radarPing();
 	this.statsPing();
 }
