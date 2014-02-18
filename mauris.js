@@ -541,7 +541,7 @@ luser.prototype.fire = function(){
 		this.energy -= this.fireEnergy;
 		var bullet = bullets.getFirstDead();
 		bullet.loadTexture('bullet', this.bulletSprite);
-		bullet.damage = this.fireDamage;
+		bullet.damage = this.fireDamage * playerDamageCoef;
 		bullet.lifespan = this.fireRange;
 		bullet.body.mass = this.fireMass;
 		bullet.reset(this.actor.x + (Math.cos(this.actor.rotation)*(this.actor.body.width)*0.75), this.actor.y + (Math.sin(this.actor.rotation)*(this.actor.body.width)*0.75));
@@ -617,6 +617,7 @@ var logo;
 var nextSpawn=0;
 var nextCamera=0; //attract
 var damageCoef=0.3; //global damage tuner
+var playerDamageCoef=2; //not so global damage tuner
 var enemyHealthCoef=0.7; 
 var cursors;
 var pew;
@@ -635,14 +636,15 @@ gameUI.prototype.initCombatUi = function() {
 	this.healthLine = game.add.text(200,100, '',{ font:'8px monospace', fill: '#cceeee', align: 'left' });
 	this.energyLine = game.add.text(200,100, '',{ font:'8px monospace', fill: '#cceeee', align: 'left' });
 	this.radar = [];
-		for (var i = 0; i < 4; i++){
-			this.radar.push(game.add.text(200,100, '*',{ font:'8px monospace', fill: '#ff9999', align: 'center' }));
-		}
+	for (var i = 0; i < 4; i++){
+		this.radar.push(game.add.text(200,100, '*',{ font:'8px monospace', fill: '#ff9999', align: 'center' }));
+	}
+	this.statsLine = game.add.text(200,100, '',{ font:'8px monospace', fill: '#cceeee', align: 'left' });
 }
 
 gameUI.prototype.bar = function (targetText, offset, numerator, denominator) {
-	targetText.x = player.actor.body.x+70;
-	targetText.y = player.actor.body.y+offset;
+	targetText.x = player.actor.body.x+(player.actor.body.width/2);
+	targetText.y = player.actor.body.y+player.actor.body.height+30+offset;
 	var s='[';
 	var n=Math.floor((numerator/denominator)*8);
 	if(n<0){n=0;}
@@ -651,28 +653,63 @@ gameUI.prototype.bar = function (targetText, offset, numerator, denominator) {
 	s+=']';
 	targetText.setText(s);
 }
+
+gameUI.prototype.statsPing = function() {
+	var s='';
+	s+='health: ' + Math.floor(player.health).toFixed(1) + '\n';
+	s+='healthMax: ' + player.healthMax.toFixed(1) + '\n'
+	s+='\n';
+	s+='energy: ' + player.energy.toFixed(1) + '\n';
+	s+='energyMax: ' + player.energyMax.toFixed(1) + '\n';
+	
+	s+='\n';
+	s+='energyRate: ' + player.energyRate.toFixed(1) + '\n';
+	s+='energyAmount: ' + player.energyAmount.toFixed(1) + '\n';
+	
+	s+='\n';
+	s+='acceleration: ' + player.acceleration.toFixed(1) + '\n';
+	s+='turnRate: ' + player.turnRate.toFixed(1) + '\n';
+	
+	s+='\n';
+	s+='fireRate: ' + player.fireRate.toFixed(1) + '\n';
+	s+='fireDamage: ' + player.fireDamage.toFixed(1) + '\n';
+	s+='fireVelocity: ' + player.fireVelocity.toFixed(1) + '\n';
+	s+='fireRange: ' + player.fireRange.toFixed(1) + '\n';
+	s+='fireMass: ' + player.fireMass.toFixed(1) + '\n';
+	s+='fireEnergy: ' + player.fireEnergy.toFixed(1) + '\n';
+	
+	s+='\n';
+	s+='profile: ' + player.actor.profile.toFixed(1) + '\n';
+	s+='profileMax: ' + player.actor.profileMax.toFixed(1) + '\n';
+	s+='profileDecay: ' + player.profileDecay.toFixed(1) + '\n';
+	
+	this.statsLine.x = player.actor.body.x-resolutionX*0.5+this.statsLine.width*0.6;
+	this.statsLine.y = player.actor.body.y+resolutionY*0.5-this.statsLine.height;
+	this.statsLine.setText(s);
+}
 gameUI.prototype.radarPing = function() {
 	for(var i=0;i<this.radar.length;i++){
-	var targetAngle=game.physics.angleBetween(player.actor, enemies[i].actor);
-	var offset=Math.sqrt(game.physics.distanceBetween(player.actor, enemies[i].actor));
-	if(enemies[i].actor.profile>player.actor.profileMax*2){
-		this.radar[i].setText('!!!@!!!');
-	}else if(enemies[i].actor.profile>player.actor.profileMax){
-		this.radar[i].setText('!!@!!');
-	}else if(enemies[i].actor.profile>player.actor.profileMax*0.5){
-		this.radar[i].setText('!@!');
-	}else{
-		this.radar[i].setText('@');
-	}
-	this.radar[i].x = player.actor.body.x + Math.cos(targetAngle) * 180;
-	this.radar[i].y = player.actor.body.y + Math.sin(targetAngle) * 180;	
+		var targetAngle=game.physics.angleBetween(player.actor, enemies[i].actor);
+		var offset=Math.sqrt(game.physics.distanceBetween(player.actor, enemies[i].actor));
+		if(enemies[i].actor.profile>player.actor.profileMax*2){
+			this.radar[i].setText('!!!@!!!');
+		}else if(enemies[i].actor.profile>player.actor.profileMax){
+			this.radar[i].setText('!!@!!');
+		}else if(enemies[i].actor.profile>player.actor.profileMax*0.5){
+			this.radar[i].setText('!@!');
+		}else{
+			this.radar[i].setText('@');
+		}
+		this.radar[i].x = player.actor.body.x + Math.cos(targetAngle) * 180;
+		this.radar[i].y = player.actor.body.y + Math.sin(targetAngle) * 180;	
 	}
 }
 gameUI.prototype.update = function() {
-	this.bar(this.healthLine, 100, player.health, player.healthMax);
-	this.bar(this.energyLine, 110, player.energy, player.energyMax);
+	this.bar(this.healthLine, 0, player.health, player.healthMax);
+	this.bar(this.energyLine, 10, player.energy, player.energyMax);
 	enemies.sort(threatSort);
 	this.radarPing();
+	this.statsPing();
 }
 
 gameUI.prototype.partsUI = function () {
