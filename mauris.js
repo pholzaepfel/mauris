@@ -347,23 +347,25 @@ enemyShip.prototype.update = function() {
 					}
 				}
 
-				if (playerDistance < this.player.profile) {
-					if(this.behavior=='neutral'){
-						this.behavior='chasing';
-					}
-					for(var i=0;i<enemies.length;i++){
-						if(this.game.physics.distanceBetween(this.actor, enemies[i].actor) < this.player.profile){
-							if(enemies[i].behavior=='neutral'){
-								enemies[i].behavior='chasing';
-							}
-						}
-					}
-				}
 
 
 
 
 			}
+
+			if (playerDistance < this.player.profile) {
+				if(this.behavior=='neutral'){
+					this.behavior='chasing';
+				}
+				for(var i=0;i<enemies.length;i++){
+					if(this.game.physics.distanceBetween(this.actor, enemies[i].actor) < this.player.profile){
+						if(enemies[i].behavior=='neutral'){
+							enemies[i].behavior='chasing';
+						}
+					}
+				}
+			}
+
 			if (this.player!= player.actor || (playerDistance < this.player.profile*10 && this.behavior!='neutral')){
 				if(Math.abs(playerAngle-this.actor.rotation)<0.6 ||
 						Math.abs(this.actor.rotation-playerAngle)<0.6){
@@ -631,16 +633,16 @@ var gameUI = function () {
 
 
 gameUI.prototype.resetRadar = function() {
-if(this.radar.length!=player.radarTargets){
-	for (var i = 0; i < this.radar.length; i++){
-		this.radar[i].destroy();	
-	}
-	if(this.radar.length){
-		this.radar=[];
-	}
-	for (var i = 0; i < player.radarTargets; i++){
-		this.radar.push(game.add.text(200,100, '*',{ font:'8px monospace', fill: '#ff9999', align: 'center' }));
-	}
+	if(this.radar.length!=player.radarTargets){
+		for (var i = 0; i < this.radar.length; i++){
+			this.radar[i].destroy();	
+		}
+		if(this.radar.length){
+			this.radar=[];
+		}
+		for (var i = 0; i < player.radarTargets; i++){
+			this.radar.push(game.add.text(200,100, '*',{ font:'8px monospace', fill: '#ff9999', align: 'center' }));
+		}
 	}
 }
 gameUI.prototype.initCombatUi = function() {
@@ -716,7 +718,7 @@ gameUI.prototype.radarPing = function() {
 			s='['+s+']';
 		}
 		this.radar[i].setText(s);
-		this.radar[i].x = player.actor.body.x + Math.cos(targetAngle) * 180;
+		this.radar[i].x = player.actor.body.x + Math.cos(targetAngle) * 180 - 0.5 * this.radar[i].width;
 		this.radar[i].y = player.actor.body.y + Math.sin(targetAngle) * 180;	
 	}
 }
