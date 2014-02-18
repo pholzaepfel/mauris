@@ -76,9 +76,9 @@ var cmp = [
 },
 {
 	'id':9,
-	'name':'Point Defense Unit',
+	'name':'Hyperwave Caster',
 	'bonus':function(target){
-		target.TODO=1;
+		target.radarTargets+=2;
 	}
 },
 {
