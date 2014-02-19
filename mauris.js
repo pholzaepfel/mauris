@@ -1,6 +1,11 @@
 var gamemode;
 var defaultBehavior='neutral';
 
+window.oncontextmenu = function ()
+{
+    return false;     // cancel default menu
+}
+
 function repeat(pattern, count) { //http://stackoverflow.com/questions/202605/repeat-string-javascript - elegant!
 	if (count < 1) return '';
 	var result = '';
@@ -84,9 +89,11 @@ function threatSort(a, b) {
 
 function refreshStats() {
 
-	player.initLuser([0]);
-	player.ship = ui.partsArray();;
-	applyBonuses(player);
+	ui.shadowPlayer = new luser([0]);
+        ui.shadowPlayer.actor.reset(game.camera.x+0.5*resolutionX,game.camera.y+0.5*resolutionY);	
+	ui.shadowPlayer.ship = ui.partsArray();
+	applyBonuses(ui.shadowPlayer);
+	ui.statsPing(ui.shadowPlayer);
 }
 dragPart = function(x,y,sheet,index)
 {
@@ -111,7 +118,7 @@ shipPart = function(x,y,sheet,index,targetSprite)
 	this.offsetx = x;
 	this.offsety = y;
 	this.game = game;
-	this.player = targetSprite;
+	this.target = targetSprite;
 	this.alive = true;
 	this.actor = game.add.sprite(x,y,sheet,index);
 	this.actor.anchor.setTo(0.5,0.5);
@@ -119,13 +126,13 @@ shipPart = function(x,y,sheet,index,targetSprite)
 	this.actor.body.exchangeVelocity=false;
 };
 shipPart.prototype.update = function(){
-	if (this.player.alive) {
-		this.actor.angle = this.player.angle;
-		this.actor.x = this.player.x + (this.offsetx * Math.cos(game.math.degToRad(this.player.angle)));
-		this.actor.y = this.player.y + (this.offsety * Math.cos(game.math.degToRad(this.player.angle)));
-		this.actor.x -= (this.offsety * Math.sin(game.math.degToRad(this.player.angle)));
-		this.actor.y += (this.offsetx * Math.sin(game.math.degToRad(this.player.angle)));
-		this.actor.body.velocity = this.player.body.velocity;
+	if (this.target.alive) {
+		this.actor.angle = this.target.angle;
+		this.actor.x = this.target.x + (this.offsetx * Math.cos(game.math.degToRad(this.target.angle)));
+		this.actor.y = this.target.y + (this.offsety * Math.cos(game.math.degToRad(this.target.angle)));
+		this.actor.x -= (this.offsety * Math.sin(game.math.degToRad(this.target.angle)));
+		this.actor.y += (this.offsetx * Math.sin(game.math.degToRad(this.target.angle)));
+		this.actor.body.velocity = this.target.body.velocity;
 	}
 };
 
@@ -136,7 +143,7 @@ enemyShip = function (index, game, targetSprite, bullets) {
 
 	this.game = game;
 	this.actor = game.add.sprite(x, y, 'parts', 0);
-	this.player = targetSprite;
+	this.target = targetSprite;
 	this.bullets = bullets;
 	this.actor.name = index;
 	this.thrust = game.add.emitter(0,0,20);
@@ -218,14 +225,14 @@ enemyShip.prototype.damage = function(dmg, aggro) {
 	this.health -= damageCoef * dmg;
 
 	if(typeof(aggro)!='undefined'){
-		if((aggro.profile*2)/((this.player.profile)+(aggro.profile*2))>Math.random()){					
+		if((aggro.profile*2)/((this.target.profile)+(aggro.profile*2))>Math.random()){					
 			this.aggroList.push(aggro);
-			this.player = aggro;
+			this.target = aggro;
 		}
 		if(gamemode=='?attract')
 		{
 			this.aggroList.push(aggro);
-			this.player = aggro;		
+			this.target = aggro;		
 		}
 	}
 	if (this.health <= 0)
@@ -289,33 +296,33 @@ enemyShip.prototype.fire = function () {
 }
 enemyShip.prototype.update = function() {
 
-	if(!this.player.alive || (this.player == player.actor && gamemode == '?attract')){
+	if(!this.target.alive || (this.target == player.actor && gamemode == '?attract')){
 		for(var i=0;i<this.aggroList.length;i++){
 			if(this.aggroList[i].alive){
-				this.player=this.aggroList[i]; // I believe this may cause a 'feature' where grudges are kept beyond the grave. 
+				this.target=this.aggroList[i]; // I believe this may cause a 'feature' where grudges are kept beyond the grave. 
 				break;
 			}
 		}
 		if(i>=this.aggroList.length){			
-			this.player=player.actor;
-			if(gamemode!='?attract' && game.physics.distanceBetween(this.actor, this.player) > this.player.profile) {
+			this.target=player.actor;
+			if(gamemode!='?attract' && game.physics.distanceBetween(this.actor, this.target) > this.target.profile) {
 				this.behavior='neutral';
 			}else if(gamemode=='?attract'){
 				var minDistance=99999;
 				var targetIndex;
 				for(var i=0;i<enemies.length;i++){
-					if(game.physics.distanceBetween(this.actor, enemies[i].actor) < minDistance){
-						minDistance = game.physics.distanceBetween(this.actor, this.player);
+					if(enemies[i].actor.alive && game.physics.distanceBetween(this.actor, enemies[i].actor) < minDistance){
+						minDistance = game.physics.distanceBetween(this.actor, this.target);
 						targetIndex = i;
 					}
 				}
 
-				this.player=enemies[targetIndex].actor;
+				this.target=enemies[targetIndex].actor;
 			}
 		}
 	}
 
-	if(this.alive && this.player.alive){
+	if(this.alive && this.target.alive){
 
 		if (this.speed > 0)
 		{
@@ -333,50 +340,50 @@ enemyShip.prototype.update = function() {
 		}
 
 		if(this.ai==0){
-			this.actor.rotation = this.game.physics.angleBetween(this.actor, this.player);
+			this.actor.rotation = this.game.physics.angleBetween(this.actor, this.target);
 
-			if (this.game.physics.distanceBetween(this.actor, this.player) < this.fireRange * 0.75 &&
-					this.game.physics.distanceBetween(this.actor, this.player) < this.player.profile)
+			if (this.game.physics.distanceBetween(this.actor, this.target) < this.fireRange * 0.75 &&
+					this.game.physics.distanceBetween(this.actor, this.target) < this.target.profile)
 			{
 				this.fire(); 
 
 			}
 		} else if (this.ai == 1) {
-			var playerLocation = {
-				x:this.player.x,
-				y:this.player.y
+			var targetLocation = {
+				x:this.target.x,
+				y:this.target.y
 			};
 			//TODO add some kind of fleeing behavior
 
-			var playerDistance = this.game.physics.distanceBetween(this.actor, this.player);
-			var playerAngle = this.game.physics.angleBetween(this.actor, this.player); 
+			var targetDistance = this.game.physics.distanceBetween(this.actor, this.target);
+			var targetAngle = this.game.physics.angleBetween(this.actor, this.target); 
 
 			if(this.behavior=='strafing'){
-				if(playerDistance > this.fireRange){
+				if(targetDistance > this.fireRange){
 					this.behavior='chasing';
 				}
 			}
 			if(this.behavior=='chasing'){
-				if(playerDistance < 0.75 * this.fireRange){
+				if(targetDistance < 0.75 * this.fireRange){
 					this.behavior='strafing';
 				}
-				playerLocation.x += this.player.body.velocity.x;			
-				playerLocation.y += this.player.body.velocity.y;
-				var playerDistance = this.game.math.distance(this.actor.x, this.actor.y, playerLocation.x, playerLocation.y);
-				var playerAngle = this.game.math.angleBetween(this.actor.x, this.actor.y, playerLocation.x, playerLocation.y);
+				targetLocation.x += this.target.body.velocity.x;//hardmode! * Math.abs(targetDistance/this.actor.body.velocity.x);			
+				targetLocation.y += this.target.body.velocity.y;//hardmode! * Math.abs(targetDistance/this.actor.body.velocity.x);			
+				var targetDistance = this.game.math.distance(this.actor.x, this.actor.y, targetLocation.x, targetLocation.y);
+				var targetAngle = this.game.math.angleBetween(this.actor.x, this.actor.y, targetLocation.x, targetLocation.y);
 			}
 
 
-			if (game.math.radToDeg(Math.abs(this.actor.rotation-playerAngle))>this.behavior=='neutral'?this.turnRate*30:this.turnRate){
+			if (game.math.radToDeg(Math.abs(this.actor.rotation-targetAngle))>this.behavior=='neutral'?this.turnRate*30:this.turnRate){
 
-				if(this.actor.rotation-playerAngle>0){
-					if(game.math.radToDeg(Math.abs(this.actor.rotation-playerAngle))<180){	
+				if(this.actor.rotation-targetAngle>0){
+					if(game.math.radToDeg(Math.abs(this.actor.rotation-targetAngle))<180){	
 						this.left();
 					}else{
 						this.right();
 					}
 				}else{
-					if(game.math.radToDeg(Math.abs(this.actor.rotation-playerAngle))<180){	
+					if(game.math.radToDeg(Math.abs(this.actor.rotation-targetAngle))<180){	
 						this.right();
 					}else{
 						this.left();
@@ -389,12 +396,12 @@ enemyShip.prototype.update = function() {
 
 			}
 
-			if (playerDistance < this.player.profile) {
+			if (targetDistance < this.target.profile) {
 				if(this.behavior=='neutral'){
 					this.behavior='chasing';
 				}
 				for(var i=0;i<enemies.length;i++){
-					if(this.game.physics.distanceBetween(this.actor, enemies[i].actor) < this.player.profile){
+					if(this.game.physics.distanceBetween(this.actor, enemies[i].actor) < this.target.profile){
 						if(enemies[i].behavior=='neutral'){
 							enemies[i].behavior='chasing';
 						}
@@ -402,17 +409,17 @@ enemyShip.prototype.update = function() {
 				}
 			}
 
-			if (this.player!= player.actor || (playerDistance < this.player.profile*10 && this.behavior!='neutral')){
-				if(Math.abs(playerAngle-this.actor.rotation)<0.6 ||
-						Math.abs(this.actor.rotation-playerAngle)<0.6){
+			if (this.target!= player.actor || (targetDistance < this.target.profile*10 && this.behavior!='neutral')){
+				if(Math.abs(targetAngle-this.actor.rotation)<0.6 ||
+						Math.abs(this.actor.rotation-targetAngle)<0.6){
 							this.up();
 						}
 			}
-			if (playerDistance < this.fireRange * 0.75 &&
-					playerDistance < this.player.profile)
+			if (targetDistance < this.fireRange * 0.75 &&
+					targetDistance < this.target.profile)
 			{
-				if(Math.abs(playerAngle-this.actor.rotation)<0.2 ||
-						Math.abs(playerAngle-this.actor.rotation)>Math.PI-0.2){
+				if(Math.abs(targetAngle-this.actor.rotation)<0.2 ||
+						Math.abs(targetAngle-this.actor.rotation)>Math.PI-0.2){
 							this.fire(); 
 						}
 
@@ -462,15 +469,16 @@ var luser = function(ship) {
 	this.initLuser(ship);
 }
 luser.prototype.destroyParts = function() {
+	console.log(this.parts);
 	if(typeof(this.parts)!='undefined'){
 		for (var i = 0; i < this.parts.length; i++) {
-			this.parts[i].actor.destroy();
+			this.parts[i].actor.kill();
 		}
 	}
 }
 luser.prototype.initLuser = function (ship) {
 
-	this.player={};
+	this.target={};
 	this.ai=-1; //natural intelligence
 	this.radarTargets=1;
 	this.radarShowInRange=false;
@@ -510,11 +518,12 @@ luser.prototype.initLuser = function (ship) {
 	this.thrust.makeParticles('sparks',[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]);
 	this.thrust.gravity=0;
 
-
 	this.actor.body.drag.setTo(0, 0);
 	this.actor.body.bounce.setTo(0, 0);
 	this.actor.body.collideWorldBounds = true; 
-
+	this.alt = function(){
+		sparks(pew,this.actor);
+	}
 	if(typeof(ship)=='undefined'){
 		this.ship = ships[Math.floor(eo3.randomRange(0,ships.length))];
 	}else{
@@ -578,7 +587,7 @@ luser.prototype.fire = function(){
 		this.energy -= this.fireEnergy;
 		var bullet = bullets.getFirstDead();
 		bullet.loadTexture('bullet', this.bulletSprite);
-		bullet.damage = this.fireDamage * playerDamageCoef;
+		bullet.damage = this.fireDamage * targetDamageCoef;
 		bullet.lifespan = this.fireRange;
 		bullet.body.mass = this.fireMass;
 		bullet.reset(this.actor.x + (Math.cos(this.actor.rotation)*(this.actor.body.width)*0.75), this.actor.y + (Math.sin(this.actor.rotation)*(this.actor.body.width)*0.75));
@@ -654,7 +663,7 @@ var logo;
 var nextSpawn=0;
 var nextCamera=0; //attract
 var damageCoef=0.3; //global damage tuner
-var playerDamageCoef=5; //not so global damage tuner
+var targetDamageCoef=5; //not so global damage tuner
 var enemyHealthCoef=0.7; 
 var cursors;
 var pew;
@@ -718,44 +727,39 @@ gameUI.prototype.bar = function (targetText, offset, numerator, denominator) {
 	targetText.setText(s);
 }
 
-gameUI.prototype.statsPing = function() {
+gameUI.prototype.statsPing = function(target) {
 	var s='';
-	s+='health: ' + Math.floor(player.health).toFixed(1) + '\n';
-	s+='healthMax: ' + player.healthMax.toFixed(1) + '\n'
+	s+='health: ' + Math.floor(target.health).toFixed(1) + '\n';
+	s+='healthMax: ' + target.healthMax.toFixed(1) + '\n'
 		s+='\n';
-	s+='energy: ' + player.energy.toFixed(1) + '\n';
-	s+='energyMax: ' + player.energyMax.toFixed(1) + '\n';
+	s+='energy: ' + target.energy.toFixed(1) + '\n';
+	s+='energyMax: ' + target.energyMax.toFixed(1) + '\n';
 
 	s+='\n';
-	s+='energyRate: ' + player.energyRate.toFixed(1) + '\n';
-	s+='energyAmount: ' + player.energyAmount.toFixed(1) + '\n';
+	s+='energyRate: ' + target.energyRate.toFixed(1) + '\n';
+	s+='energyAmount: ' + target.energyAmount.toFixed(1) + '\n';
 
 	s+='\n';
-	s+='radarTargets: ' + player.radarTargets.toFixed(1) + '\n';
+	s+='radarTargets: ' + target.radarTargets.toFixed(1) + '\n';
 	s+='\n';
-	s+='acceleration: ' + player.acceleration.toFixed(1) + '\n';
-	s+='turnRate: ' + player.turnRate.toFixed(1) + '\n';
+	s+='acceleration: ' + target.acceleration.toFixed(1) + '\n';
+	s+='turnRate: ' + target.turnRate.toFixed(1) + '\n';
 
 	s+='\n';
-	s+='fireRate: ' + player.fireRate.toFixed(1) + '\n';
-	s+='fireDamage: ' + player.fireDamage.toFixed(1) + '\n';
-	s+='fireVelocity: ' + player.fireVelocity.toFixed(1) + '\n';
-	s+='fireRange: ' + player.fireRange.toFixed(1) + '\n';
-	s+='fireMass: ' + player.fireMass.toFixed(1) + '\n';
-	s+='fireEnergy: ' + player.fireEnergy.toFixed(1) + '\n';
+	s+='fireRate: ' + target.fireRate.toFixed(1) + '\n';
+	s+='fireDamage: ' + target.fireDamage.toFixed(1) + '\n';
+	s+='fireVelocity: ' + target.fireVelocity.toFixed(1) + '\n';
+	s+='fireRange: ' + target.fireRange.toFixed(1) + '\n';
+	s+='fireMass: ' + target.fireMass.toFixed(1) + '\n';
+	s+='fireEnergy: ' + target.fireEnergy.toFixed(1) + '\n';
 
 	s+='\n';
-	s+='profile: ' + player.actor.profile.toFixed(1) + '\n';
-	s+='profileMax: ' + player.actor.profileMax.toFixed(1) + '\n';
-	s+='profileDecay: ' + player.profileDecay.toFixed(1) + '\n';
+	s+='profile: ' + target.actor.profile.toFixed(1) + '\n';
+	s+='profileMax: ' + target.actor.profileMax.toFixed(1) + '\n';
+	s+='profileDecay: ' + target.profileDecay.toFixed(1) + '\n';
 
-	if(gamemode == 'war'){
-		this.statsLine.x = player.actor.body.x-resolutionX*0.5+this.statsLine.width*0.6;
-		this.statsLine.y = player.actor.body.y+resolutionY*0.5-this.statsLine.height;
-	}else if(gamemode == '?build'){
-		this.statsLine.x = 0;
-		this.statsLine.y = 0 + this.partsSelector.height;
-	}
+		this.statsLine.x = game.camera.x+20; 
+		this.statsLine.y = game.camera.y+resolutionY*0.5;
 	this.statsLine.setText(s);
 }
 gameUI.prototype.radarPing = function() {
@@ -795,10 +799,7 @@ gameUI.prototype.update = function() {
 		this.enemies=enemies.slice(0);
 		this.enemies.sort(threatSort);
 		this.radarPing();
-	}
-	if (gamemode == 'war' || gamemode == '?build')
-	{
-		this.statsPing();
+		this.statsPing(player);
 		this.wordsPing();
 	}
 }
@@ -815,10 +816,23 @@ gameUI.prototype.partsUI = function (ship) {
 	}
 	this.partsSelector = game.add.sprite(game.camera.x+ 20,game.camera.y+20,'allparts');
 	this.partsSelector.inputEnabled = true;
+	this.partsSelector.pixelPerfect=true;
+	this.partsSelector.lockToCamera = true;
 	this.partsSelector.events.onInputDown.add(selectPart);
 	if(typeof(ship)!='undefined'){
-		createBuildParts(ship,player.actor.x,player.actor.y);
+		this.parts = createBuildParts(ship,player.actor.x,player.actor.y);
 	}
+}
+gameUI.prototype.endPartsUI = function () {
+	this.partsSelector.kill();
+	var ship = this.partsArray();
+	for(var i=0; i<this.parts.length;i++){
+		this.parts[i].actor.kill();
+	}
+	this.parts=[];
+	this.graphics.clear();
+	player.initLuser(ship);
+	gamemode = 'war';
 }
 gameUI.prototype.partsArray = function () {
 	this.graphics.clear();
@@ -871,7 +885,7 @@ gameUI.prototype.partsArray = function () {
 function selectPart() {
 	if(ui.partsSelector.input.pointerOver())
 	{
-		alert(ui.partsSelector.input.pointerX());
+		alert(ui.partsSelector.input.pointerX()+ui.partsSelector.x);
 		var n =0;
 		n=Math.floor((ui.partsSelector.input.pointerX()+ui.partsSelector.x-16)/16);
 		n+=32*Math.floor((ui.partsSelector.input.pointerY()+ui.partsSelector.y-16)/16);
@@ -1086,20 +1100,12 @@ function update () {
 			}
 			nextSpawn=game.time.now+eo3.randomRange(5000,10000);
 		}	
+		
 		if(nextCamera<game.time.now&&gamemode=='?attract'){
-			for(var i = 0; i<enemies.length;i++){
-
-				if(enemies[i].alive && enemies[i].player!=player.actor)
-				{
-
-					game.camera.follow(enemies[i].actor);
+					game.camera.follow(enemies[Math.floor(Math.random()*enemies.length)].actor);
 					nextCamera=game.time.now+eo3.randomRange(5000,15000);
-					break;
-				}
-			}
 		}
 
-		game.debug.renderText(Math.sin(game.math.degToRad(player.actor.angle)) + ';' + Math.cos(game.math.degToRad(player.actor.angle)),100,100);
 		if(enemyBullets.getFirstAlive() != null) {
 
 			for (var i = 0; i < player.parts.length; i++) {
