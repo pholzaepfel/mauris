@@ -296,7 +296,8 @@ enemyShip.prototype.fire = function () {
 }
 enemyShip.prototype.update = function() {
 
-	if(!this.target.alive || (this.target == player.actor && gamemode == '?attract')){
+	if(!this.target.alive || (this.target == player.actor && gamemode == '?attract') || 
+			(targetDistance > this.target.profile * 2 && this.behavior=='chasing' && gamemode != '?attract')){
 		for(var i=0;i<this.aggroList.length;i++){
 			if(this.aggroList[i].alive){
 				this.target=this.aggroList[i]; // I believe this may cause a 'feature' where grudges are kept beyond the grave. 
@@ -395,7 +396,7 @@ enemyShip.prototype.update = function() {
 
 
 			}
-
+			
 			if (targetDistance < this.target.profile) {
 				if(this.behavior=='neutral'){
 					this.behavior='chasing';
@@ -612,11 +613,15 @@ luser.prototype.update = function(){
 	if(this.alive){
 		if(game.time.now>this.nextProfileDecay)
 		{
-			if (this.actor.profile-this.profileDecay > this.actor.profileMax){
+			if (Math.abs(this.actor.profile-this.profileDecay) < this.profileDecay)	{	
+				this.actor.profile=this.actor.profileMax;
+			}
+			if (this.actor.profile > this.actor.profileMax){
 				this.actor.profile-=this.profileDecay;
-			}else if (this.actor.profile+this.profileDecay<this.actor.profileMax){
+			}else if (this.actor.profile < this.actor.profileMax){
 				this.actor.profile+=this.profileDecay;
 			}
+
 			this.nextProfileDecay=game.time.now+1000;
 		}
 
