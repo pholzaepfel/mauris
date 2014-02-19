@@ -613,7 +613,7 @@ luser.prototype.update = function(){
 	if(this.alive){
 		if(game.time.now>this.nextProfileDecay)
 		{
-			if (Math.abs(this.actor.profile-this.profileDecay) < this.profileDecay)	{	
+			if (Math.abs(this.actor.profile-this.actor.profileMax) < this.profileDecay)	{	
 				this.actor.profile=this.actor.profileMax;
 			}
 			if (this.actor.profile > this.actor.profileMax){
