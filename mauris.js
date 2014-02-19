@@ -297,9 +297,9 @@ enemyShip.prototype.fire = function () {
 enemyShip.prototype.update = function() {
 
 	if(!this.target.alive || (this.target == player.actor && gamemode == '?attract') || 
-			(targetDistance > this.target.profile * 2 && this.behavior=='chasing' && gamemode != '?attract')){
+			(game.physics.distanceBetween(this.actor,this.target) > this.target.profile * 2 && this.behavior=='chasing' && gamemode != '?attract')){
 		for(var i=0;i<this.aggroList.length;i++){
-			if(this.aggroList[i].alive){
+			if(this.aggroList[i].alive){		//this will cause the enemy to keep chasing the player if they were fired upon.
 				this.target=this.aggroList[i]; // I believe this may cause a 'feature' where grudges are kept beyond the grave. 
 				break;
 			}
