@@ -11,6 +11,15 @@ function repeat(pattern, count) { //http://stackoverflow.com/questions/202605/re
 	return result;
 }
 
+
+function destroyIfExists(sprite){
+	if (typeof(sprite)!='undefined'){
+		if (typeof(sprite.destroy)!='undefined'){
+			sprite.destroy();
+		}
+	}
+}
+
 function applyBonuses(target){
 
 	for(var i=0;i<target.ship.length;i++)
@@ -72,6 +81,13 @@ function threatSort(a, b) {
 //				and not worry about it.
 //
 //////
+
+function refreshStats() {
+
+	player.initLuser([0]);
+	player.ship = ui.partsArray();;
+	applyBonuses(player);
+}
 dragPart = function(x,y,sheet,index)
 {
 	this.game = game;
@@ -83,10 +99,11 @@ dragPart = function(x,y,sheet,index)
 	this.actor.input.snapOnRelease=true;
 	this.actor.input.snapX=16;
 	this.actor.input.snapY=16;
+	this.actor.events.onDragStop.add(refreshStats);
 };
 dragPart.prototype.update = function(){
 	if(this.actor.x > 900) {
-		this.actor.kill()
+		this.actor.kill();
 	}	
 }
 shipPart = function(x,y,sheet,index,targetSprite)
@@ -438,15 +455,18 @@ function preload () {
 	game.load.spritesheet('sparks', 'assets/sparks.png',8,8);
 }
 
-var luser = function() {
+var luser = function(ship) {
 	this.actor = game.add.sprite(0, 0, 'parts');
-	this.initLuser();
+	this.initLuser(ship);
 }
 luser.prototype.initLuser = function (ship) {
 
 	this.player={};
 	this.ai=-1; //natural intelligence
 	this.radarTargets=1;
+	this.radarShowInRange=false;
+	this.radarShowInEnemyRange=false;
+	this.radarShowOre=false;
 	this.acceleration=1;
 	this.actor.reset(0,0);
 	this.turnRate=0.5;
@@ -649,16 +669,29 @@ gameUI.prototype.resetRadar = function() {
 			this.radar=[];
 		}
 		for (var i = 0; i < player.radarTargets; i++){
-			this.radar.push(game.add.text(200,100, '*',{ font:'8px monospace', fill: '#ff9999', align: 'center' }));
+			this.radar.push(game.add.text(200,100, '*',{ font:'8px monospace', fill: 'rgb(255,160,160)', align: 'center' }));
 		}
 	}
 }
 gameUI.prototype.initCombatUi = function() {
-	this.healthLine = game.add.text(200,100, '',{ font:'8px monospace', fill: '#cceeee', align: 'left' });
-	this.energyLine = game.add.text(200,100, '',{ font:'8px monospace', fill: '#cceeee', align: 'left' });
+
+	destroyIfExists(this.healthLine);
+	this.healthLine = game.add.text(200,100, '',{ font:'8px monospace', fill: 'rgb(200,240,240)', align: 'left' });
+
+	destroyIfExists(this.energyLine);
+	this.energyLine = game.add.text(200,100, '',{ font:'8px monospace', fill: 'rgb(200,240,240)', align: 'left' });
+
+	destroyIfExists(this.statsLine);
+	this.statsLine = game.add.text(200,100, '',{ font:'1em monospace', fill: 'rgb(240,240,240)', align: 'left' });
+
+	destroyIfExists(this.graphics);
+	this.graphics = game.add.graphics(0,0);
+
+	destroyIfExists(this.hint);
+	this.hint = game.add.text(0,0,'',{font:'1.5em monospace', fill: 'rgb(255,255,255)', align: 'left'});
+
 	this.radar = [];
 	this.resetRadar();
-	this.statsLine = game.add.text(200,100, '',{ font:'8px monospace', fill: '#cceeee', align: 'left' });
 }
 
 gameUI.prototype.bar = function (targetText, offset, numerator, denominator) {
@@ -704,8 +737,13 @@ gameUI.prototype.statsPing = function() {
 	s+='profileMax: ' + player.actor.profileMax.toFixed(1) + '\n';
 	s+='profileDecay: ' + player.profileDecay.toFixed(1) + '\n';
 
-	this.statsLine.x = player.actor.body.x-resolutionX*0.5+this.statsLine.width*0.6;
-	this.statsLine.y = player.actor.body.y+resolutionY*0.5-this.statsLine.height;
+	if(gamemode == 'war'){
+		this.statsLine.x = player.actor.body.x-resolutionX*0.5+this.statsLine.width*0.6;
+		this.statsLine.y = player.actor.body.y+resolutionY*0.5-this.statsLine.height;
+	}else if(gamemode == '?build'){
+		this.statsLine.x = 0;
+		this.statsLine.y = 0 + this.partsSelector.height;
+	}
 	this.statsLine.setText(s);
 }
 gameUI.prototype.radarPing = function() {
@@ -724,33 +762,49 @@ gameUI.prototype.radarPing = function() {
 		}
 		if (targetDistance < 1000 && game.time.now % 1000 > 500)  {
 			s='['+s+']';
+		} else if (targetDistance < 1000) {
+			s=' '+s+' ';
 		}
+
 		this.radar[i].setText(s);
 		this.radar[i].x = player.actor.body.x + Math.cos(targetAngle) * 180 - 0.5 * this.radar[i].width;
 		this.radar[i].y = player.actor.body.y + Math.sin(targetAngle) * 180;	
 	}
 }
+gameUI.prototype.hintPing = function() {
+	this.hint.x = game.input.x;
+	this.hint.y = game.input.y+30;
+}
 gameUI.prototype.update = function() {
-	this.bar(this.healthLine, 0, player.health, player.healthMax);
-	this.bar(this.energyLine, 10, player.energy, player.energyMax);
-	this.enemies=enemies.slice(0);
-	this.enemies.sort(threatSort);
-	this.radarPing();
-	this.statsPing();
+	if (gamemode == 'war')
+	{
+		this.bar(this.healthLine, 0, player.health, player.healthMax);
+		this.bar(this.energyLine, 10, player.energy, player.energyMax);
+		this.enemies=enemies.slice(0);
+		this.enemies.sort(threatSort);
+		this.radarPing();
+	}
+	if (gamemode == 'war' || gamemode == '?build')
+	{
+		this.statsPing();
+		this.hintPing();
+	}
 }
 
-gameUI.prototype.partsUI = function () {
+gameUI.prototype.partsUI = function (ship) {
 	this.partsSelector = game.add.sprite('0','0','allparts');
 	this.partsSelector.inputEnabled = true;
 	this.partsSelector.pixelPerfect=true; //prevent grabbing empty squares
 	this.partsSelector.events.onInputDown.add(createPart);
 }
 gameUI.prototype.partsArray = function () {
+	this.graphics.clear();
+	var outArray = [];
 	if(typeof(this.parts[0])!='undefined'){
-		var minx = this.parts[0].actor.x;
-		var miny = this.parts[0].actor.y;
-		var maxx = this.parts[0].actor.x;
-		var maxy = this.parts[0].actor.y;
+		var minx = resolutionX;
+		var miny = resolutionY;
+		var maxx = 0;
+		var maxy = 0;
 		var shipSize = 0;
 		for(var i=0;i<this.parts.length;i++){
 			if(this.parts[i].actor.alive){
@@ -774,7 +828,6 @@ gameUI.prototype.partsArray = function () {
 		} else {
 			shipSize = (16+maxy-miny)/16;
 		}
-		var outArray = [];
 		for (var i=0;i<shipSize*shipSize;i++){
 			outArray.push(-1);
 		}
@@ -786,8 +839,11 @@ gameUI.prototype.partsArray = function () {
 				outArray[n] = this.parts[i].index;
 			}
 		}
-		return outArray;
+
+		this.graphics.lineStyle(1, 0x6666FF,1);
+		this.graphics.drawRect(minx,miny,16+maxx-minx,16+maxy-miny);
 	}
+	return outArray;
 }
 function createPart() {
 	if(ui.partsSelector.input.pointerOver())
@@ -796,8 +852,11 @@ function createPart() {
 		n=Math.floor(ui.partsSelector.input.pointerX()/16);
 		n+=32*Math.floor(ui.partsSelector.input.pointerY()/16);
 		console.log(n);
-		if(!components[n].name.match(/Component/)){
-			ui.parts.push(new dragPart(eo3.randomRange(400,600),eo3.randomRange(400,600),'parts',n));
+		if(typeof(components[n])!='undefined'){
+			if(!components[n].name.match(/Component/)){
+				ui.parts.push(new dragPart(eo3.randomRange(400,600),eo3.randomRange(400,600),'parts',n));
+				refreshStats();
+			}
 		}
 	}
 }
@@ -818,7 +877,25 @@ function createShip(shipParts, targetActor){
 			//with an int square root
 			myParts.push(new shipPart(((n-1)*-8)+((i%n)*16),((n-1)*-8)+(Math.floor(i/n)*16),'parts',shipParts[i],targetActor));
 		}
-		i}
+		}
+	return myParts; 
+}
+function createBuildParts(ship, targetActor){
+	var myParts = [];
+
+	var n=Math.sqrt(ship.length);
+
+	if (n!=Math.floor(n)){
+		return [];
+	};
+	for (var i=0; i<ship.length;i++){
+		if(ship[i]>-1){
+			//that godawful barf there is a terse calculation for the coordinates of the part
+			//assuming an array of 'parts' (sprite ids) - array should have a length
+			//with an int square root
+			myParts.push(new dragPart(((n-1)*-8)+((i%n)*16),((n-1)*-8)+(Math.floor(i/n)*16),'parts',ship[i]));
+		}
+		}
 	return myParts; 
 }
 
@@ -828,10 +905,6 @@ function create () {
 	ui = new gameUI();
 	gamemode = location.search||'war';
 
-	if (gamemode == '?build')
-	{
-		ui.partsUI();
-	}
 	if (gamemode == 'war' | gamemode == '?attract')
 	{
 		if(gamemode=='?attract'){
@@ -954,17 +1027,17 @@ function create () {
 
 	cursors = game.input.keyboard.createCursorKeys();
 
+	if (gamemode == '?build')
+	{
+		ui.partsUI();
+		player = new luser([0]);
+	}
 	ui.initCombatUi();
 }
 
 function update () {
 	if(gamemode=='?build')
 	{
-		if (cursors.left.isDown)
-		{
-			console.log(ui.partsArray());
-		}
-
 
 		for (var i = 0; i < ui.parts.length; i++)
 		{
@@ -1067,11 +1140,11 @@ function update () {
 			player.fire();
 		}
 
-		if (gamemode == 'war') {
-			ui.update();
-		}
-
 	}	
+	ui.update();
+	if (gamemode == '?build' && !game.input.activePointer.isDown) {
+
+	}
 }
 
 function sparks(emitter, actor){

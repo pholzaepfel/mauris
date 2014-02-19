@@ -1,4 +1,9 @@
 var cmp = [
+{	
+	'id':0, 
+	'name':'Component0',
+	'bonus':function(target){}
+},
 {
 	'id':1,
 	'name':'Rusted Wing',
@@ -74,9 +79,10 @@ var cmp = [
 },
 {
 	'id':9,
-	'name':'Hyperwave Caster',
+	'name':'Mineral Scanner',
 	'bonus':function(target){
 		target.radarTargets+=2;
+		target.radarShowOre=true; //TODO
 	}
 },
 {
@@ -512,9 +518,10 @@ var cmp = [
 },
 {
 	'id':64,
-	'name':'Long Range Sensor',
+	'name':'Targeting System',
 	'bonus':function(target){
 		target.radarTargets+=2;
+		target.radarShowInEnemyRange=true;
 	}
 },
 {
@@ -540,7 +547,7 @@ var cmp = [
 	'name':'Long Range Sensor',
 	'bonus':function(target){
 		target.radarTargets+=2;
-
+		target.radarShowInRange=true;
 	}
 },
 {
