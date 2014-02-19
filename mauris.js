@@ -11,6 +11,20 @@ function repeat(pattern, count) { //http://stackoverflow.com/questions/202605/re
 	return result;
 }
 
+function applyBonuses(target){
+
+	for(var i=0;i<target.ship.length;i++)
+	{
+		if (target.ship[i]!=-1){
+			components[target.ship[i]].bonus(target);
+			target.mass+=10000;
+			target.actor.body.maxVelocity.x-=5;
+			target.actor.body.maxVelocity.y-=5;
+			target.actor.profile+=25;
+		}
+	}
+}
+
 eo3 = {};
 eo3.addVelocity = function (a,b,c){return"undefined"==typeof b&&(b=60),	c=c||new d.Point,c.setTo(c.x+Math.cos(a)*b,c.y+Math.sin(a)*b)};
 eo3.randomRange = function(a,b){var c,d; if(a>b){c=a;d=b;}else{d=a;c=b};return (Math.random()*(c-d))+d};
@@ -163,23 +177,21 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 	this.actor.angle = game.rnd.angle();
 
 	this.actor.body.maxVelocity.setTo(300,300);
-	//apply bonuses!
-	for(var i=0;i<this.ship.length;i++)
-	{
-		if (this.ship[i]!=-1){
-			components[this.ship[i]].bonus(this);
-			this.mass+=10000;
-			this.actor.body.maxVelocity.x-=5;
-			this.actor.body.maxVelocity.y-=5;
-			this.actor.profile+=25;
-		}
-	}
+
+	applyBonuses(this);
+
 	this.actor.body.velocity.x*=.3+Math.random()*0.7;
 	this.actor.body.velocity.y*=.3+Math.random()*0.7;
 	game.physics.velocityFromRotation(this.actor.rotation, 100, this.actor.body.velocity);
 	this.health*=enemyHealthCoef;
 	this.healthMax = this.health; //FIXME
 	this.actor.profileMax=this.actor.profile; //FIXME2
+}
+
+enemyShip.prototype.destroyParts = function() {
+	for (var i = 0; i < this.parts.length; i++) {
+		this.parts[i].length.destroy();
+	}
 }
 
 enemyShip.prototype.damage = function(dmg, aggro) {
@@ -270,11 +282,16 @@ enemyShip.prototype.update = function() {
 			if(gamemode!='?attract' && game.physics.distanceBetween(this.actor, this.player) > this.player.profile) {
 				this.behavior='neutral';
 			}else if(gamemode=='?attract'){
+				var minDistance=99999;
+				var targetIndex;
 				for(var i=0;i<enemies.length;i++){
-					if(Math.random() > 0.1 && enemies[i].alive && i != this.index){
-						this.player=enemies[i].actor;
+					if(game.physics.distanceBetween(this.actor, enemies[i].actor) < minDistance){
+						minDistance = game.physics.distanceBetween(this.actor, this.player);
+						targetIndex = i;
 					}
 				}
+
+				this.player=enemies[targetIndex].actor;
 			}
 		}
 	}
@@ -385,7 +402,7 @@ enemyShip.prototype.update = function() {
 		}
 
 
-		if (this.game.physics.distanceBetween(this.actor, player.actor) > 5000)
+		if (this.game.physics.distanceBetween(this.actor, player.actor) > 5000 && gamemode != '?attract')
 		{
 			this.damage(31337); //magic damage value that kills without parts 
 		}
@@ -404,7 +421,8 @@ enemyShip.prototype.update = function() {
 			}
 		}
 	}
-};
+}
+;
 var resolutionX=Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
 var resolutionY=Math.max(document.documentElement.clientHeight, window.innerHeight || 0)-66;
 var game = new Phaser.Game(resolutionX, resolutionY, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update, render: render });
@@ -476,17 +494,7 @@ luser.prototype.initLuser = function (ship) {
 
 	this.actor.body.setSize(Math.sqrt(this.ship.length)*16,Math.sqrt(this.ship.length)*16,0,0);
 
-	//apply bonuses!
-	for(var i=0;i<this.ship.length;i++)
-	{
-		if (this.ship[i]!=-1){
-			components[this.ship[i]].bonus(this);
-			this.mass+=10000;
-			this.actor.body.maxVelocity.x-=5;
-			this.actor.body.maxVelocity.y-=5;
-			this.actor.profile+=50;
-		}
-	}	
+	applyBonuses(this);
 
 	this.healthMax = this.health;
 	this.actor.profileMax=this.actor.profile; //FIXME2
