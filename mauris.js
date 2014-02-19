@@ -3,7 +3,7 @@ var defaultBehavior='neutral';
 
 window.oncontextmenu = function ()
 {
-    return false;     // cancel default menu
+	return false;     // cancel default menu
 }
 
 function repeat(pattern, count) { //http://stackoverflow.com/questions/202605/repeat-string-javascript - elegant!
@@ -90,7 +90,7 @@ function threatSort(a, b) {
 function refreshStats() {
 
 	ui.shadowPlayer = new luser([0]);
-        ui.shadowPlayer.actor.reset(game.camera.x+0.5*resolutionX,game.camera.y+0.5*resolutionY);	
+	ui.shadowPlayer.actor.reset(game.camera.x+0.5*resolutionX,game.camera.y+0.5*resolutionY);	
 	ui.shadowPlayer.ship = ui.partsArray();
 	applyBonuses(ui.shadowPlayer);
 	ui.statsPing(ui.shadowPlayer);
@@ -298,30 +298,30 @@ enemyShip.prototype.update = function() {
 
 	if(!this.target.alive || (this.target == player.actor && gamemode == '?attract') || 
 			(game.physics.distanceBetween(this.actor,this.target) > this.target.profile * 2 && this.behavior=='chasing' && gamemode != '?attract')){
-		for(var i=0;i<this.aggroList.length;i++){
-			if(this.aggroList[i].alive){		//this will cause the enemy to keep chasing the player if they were fired upon.
-				this.target=this.aggroList[i]; // I believe this may cause a 'feature' where grudges are kept beyond the grave. 
-				break;
-			}
-		}
-		if(i>=this.aggroList.length){			
-			this.target=player.actor;
-			if(gamemode!='?attract' && game.physics.distanceBetween(this.actor, this.target) > this.target.profile) {
-				this.behavior='neutral';
-			}else if(gamemode=='?attract'){
-				var minDistance=99999;
-				var targetIndex;
-				for(var i=0;i<enemies.length;i++){
-					if(enemies[i].actor.alive && game.physics.distanceBetween(this.actor, enemies[i].actor) < minDistance){
-						minDistance = game.physics.distanceBetween(this.actor, this.target);
-						targetIndex = i;
+				for(var i=0;i<this.aggroList.length;i++){
+					if(this.aggroList[i].alive){		//this will cause the enemy to keep chasing the player if they were fired upon.
+						this.target=this.aggroList[i]; // I believe this may cause a 'feature' where grudges are kept beyond the grave. 
+						break;
 					}
 				}
+				if(i>=this.aggroList.length){			
+					this.target=player.actor;
+					if(gamemode!='?attract' && game.physics.distanceBetween(this.actor, this.target) > this.target.profile) {
+						this.behavior='neutral';
+					}else if(gamemode=='?attract'){
+						var minDistance=99999;
+						var targetIndex;
+						for(var i=0;i<enemies.length;i++){
+							if(enemies[i].actor.alive && game.physics.distanceBetween(this.actor, enemies[i].actor) < minDistance){
+								minDistance = game.physics.distanceBetween(this.actor, this.target);
+								targetIndex = i;
+							}
+						}
 
-				this.target=enemies[targetIndex].actor;
+						this.target=enemies[targetIndex].actor;
+					}
+				}
 			}
-		}
-	}
 
 	if(this.alive && this.target.alive){
 
@@ -396,7 +396,7 @@ enemyShip.prototype.update = function() {
 
 
 			}
-			
+
 			if (targetDistance < this.target.profile) {
 				if(this.behavior=='neutral'){
 					this.behavior='chasing';
@@ -763,8 +763,8 @@ gameUI.prototype.statsPing = function(target) {
 	s+='profileMax: ' + target.actor.profileMax.toFixed(1) + '\n';
 	s+='profileDecay: ' + target.profileDecay.toFixed(1) + '\n';
 
-		this.statsLine.x = game.camera.x+20; 
-		this.statsLine.y = game.camera.y+resolutionY*0.5;
+	this.statsLine.x = game.camera.x+20; 
+	this.statsLine.y = game.camera.y+resolutionY*0.5;
 	this.statsLine.setText(s);
 }
 gameUI.prototype.radarPing = function() {
@@ -1071,7 +1071,17 @@ function create () {
 
 	}
 
-	cursors = game.input.keyboard.createCursorKeys();
+	cursors =	{
+		up: game.input.keyboard.addKey(Phaser.Keyboard.UP),
+		down: game.input.keyboard.addKey(Phaser.Keyboard.DOWN),
+		left: game.input.keyboard.addKey(Phaser.Keyboard.LEFT),
+		right: game.input.keyboard.addKey(Phaser.Keyboard.RIGHT),
+		up2: game.input.keyboard.addKey(Phaser.Keyboard.W),
+		down2: game.input.keyboard.addKey(Phaser.Keyboard.S),
+		left2: game.input.keyboard.addKey(Phaser.Keyboard.A),
+		right2: game.input.keyboard.addKey(Phaser.Keyboard.D)
+	}
+
 
 	if (gamemode == '?build')
 	{
@@ -1105,10 +1115,10 @@ function update () {
 			}
 			nextSpawn=game.time.now+eo3.randomRange(5000,10000);
 		}	
-		
+
 		if(nextCamera<game.time.now&&gamemode=='?attract'){
-					game.camera.follow(enemies[Math.floor(Math.random()*enemies.length)].actor);
-					nextCamera=game.time.now+eo3.randomRange(5000,15000);
+			game.camera.follow(enemies[Math.floor(Math.random()*enemies.length)].actor);
+			nextCamera=game.time.now+eo3.randomRange(5000,15000);
 		}
 
 		if(enemyBullets.getFirstAlive() != null) {
@@ -1146,18 +1156,18 @@ function update () {
 		};
 
 
-		if (cursors.left.isDown)
+		if (cursors.left.isDown || cursors.left2.isDown)
 		{
 			player.left();
 		}
-		else if (cursors.right.isDown)
+		else if (cursors.right.isDown || cursors.right2.isDown)
 		{
 			player.right()
 		}
 
 
 
-		if (cursors.up.isDown)
+		if (cursors.up.isDown || cursors.up2.isDown)
 		{
 			player.up();
 		}
