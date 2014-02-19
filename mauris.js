@@ -206,8 +206,10 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 }
 
 enemyShip.prototype.destroyParts = function() {
-	for (var i = 0; i < this.parts.length; i++) {
-		this.parts[i].length.destroy();
+	if(typeof(this.parts)!='undefined'){
+		for (var i = 0; i < this.parts.length; i++) {
+			this.parts[i].actor.destroy();
+		}
 	}
 }
 
@@ -234,7 +236,7 @@ enemyShip.prototype.damage = function(dmg, aggro) {
 			if (dmg != 31337){
 				this.parts[j].actor.lifespan = eo3.randomRange(500,2500);
 				this.parts[j].actor.body.velocity = game.physics.velocityFromRotation(this.game.physics.angleBetween(this.actor, this.parts[j].actor), 200+eo3.randomRange(0,10*dmg));
-				this.parts[j].actor.body.angularVelocity=eo3.randomRange(dmg*16,dmg*64);	
+				this.parts[j].actor.body.angularVelocity=eo3.randomRange((dmg+2*14),(dmg+2)*62);	
 			}else{
 				this.parts[j].actor.kill();
 			}
@@ -459,6 +461,13 @@ var luser = function(ship) {
 	this.actor = game.add.sprite(0, 0, 'parts');
 	this.initLuser(ship);
 }
+luser.prototype.destroyParts = function() {
+	if(typeof(this.parts)!='undefined'){
+		for (var i = 0; i < this.parts.length; i++) {
+			this.parts[i].actor.destroy();
+		}
+	}
+}
 luser.prototype.initLuser = function (ship) {
 
 	this.player={};
@@ -474,6 +483,7 @@ luser.prototype.initLuser = function (ship) {
 	this.alive=true;
 	this.bulletSprite=0;
 	this.bulletBehavior=[];
+	this.destroyParts();
 	this.parts=[];
 	this.speed = 0; //current
 	this.fireRate = 300;
@@ -677,9 +687,11 @@ gameUI.prototype.initCombatUi = function() {
 
 	destroyIfExists(this.healthLine);
 	this.healthLine = game.add.text(200,100, '',{ font:'8px monospace', fill: 'rgb(200,240,240)', align: 'left' });
+	this.healthLine.flash = 0;
 
 	destroyIfExists(this.energyLine);
 	this.energyLine = game.add.text(200,100, '',{ font:'8px monospace', fill: 'rgb(200,240,240)', align: 'left' });
+	this.energyLine.flash = 0;
 
 	destroyIfExists(this.statsLine);
 	this.statsLine = game.add.text(200,100, '',{ font:'1em monospace', fill: 'rgb(240,240,240)', align: 'left' });
@@ -687,8 +699,8 @@ gameUI.prototype.initCombatUi = function() {
 	destroyIfExists(this.graphics);
 	this.graphics = game.add.graphics(0,0);
 
-	destroyIfExists(this.hint);
-	this.hint = game.add.text(0,0,'',{font:'1.5em monospace', fill: 'rgb(255,255,255)', align: 'left'});
+	destroyIfExists(this.words);
+	this.words = game.add.text(0,0,'',{font:'1.5em monospace', fill: 'rgb(255,255,255)', align: 'left'});
 
 	this.radar = [];
 	this.resetRadar();
@@ -771,9 +783,9 @@ gameUI.prototype.radarPing = function() {
 		this.radar[i].y = player.actor.body.y + Math.sin(targetAngle) * 180;	
 	}
 }
-gameUI.prototype.hintPing = function() {
-	this.hint.x = game.input.x;
-	this.hint.y = game.input.y+30;
+gameUI.prototype.wordsPing = function() {
+	this.words.x = player.actor.body.x;
+	this.words.y = player.actor.body.y + 200;
 }
 gameUI.prototype.update = function() {
 	if (gamemode == 'war')
@@ -787,15 +799,26 @@ gameUI.prototype.update = function() {
 	if (gamemode == 'war' || gamemode == '?build')
 	{
 		this.statsPing();
-		this.hintPing();
+		this.wordsPing();
 	}
 }
 
 gameUI.prototype.partsUI = function (ship) {
-	this.partsSelector = game.add.sprite('0','0','allparts');
+	game.camera.follow=null;
+	if(gamemode != '?build'){
+		gamemode = '?build';
+	}
+	if(typeof(player)!='undefined'){
+		player.destroyParts();
+		player.actor.body.velocity.x=0;
+		player.actor.body.velocity.y=0;
+	}
+	this.partsSelector = game.add.sprite(game.camera.x+ 20,game.camera.y+20,'allparts');
 	this.partsSelector.inputEnabled = true;
-	this.partsSelector.pixelPerfect=true; //prevent grabbing empty squares
-	this.partsSelector.events.onInputDown.add(createPart);
+	this.partsSelector.events.onInputDown.add(selectPart);
+	if(typeof(ship)!='undefined'){
+		createBuildParts(ship,player.actor.x,player.actor.y);
+	}
 }
 gameUI.prototype.partsArray = function () {
 	this.graphics.clear();
@@ -845,22 +868,25 @@ gameUI.prototype.partsArray = function () {
 	}
 	return outArray;
 }
-function createPart() {
+function selectPart() {
 	if(ui.partsSelector.input.pointerOver())
 	{
+		alert(ui.partsSelector.input.pointerX());
 		var n =0;
-		n=Math.floor(ui.partsSelector.input.pointerX()/16);
-		n+=32*Math.floor(ui.partsSelector.input.pointerY()/16);
-		console.log(n);
-		if(typeof(components[n])!='undefined'){
-			if(!components[n].name.match(/Component/)){
-				ui.parts.push(new dragPart(eo3.randomRange(400,600),eo3.randomRange(400,600),'parts',n));
-				refreshStats();
-			}
-		}
+		n=Math.floor((ui.partsSelector.input.pointerX()+ui.partsSelector.x-16)/16);
+		n+=32*Math.floor((ui.partsSelector.input.pointerY()+ui.partsSelector.y-16)/16);
+		createPart(n);	
 	}
 }
-// assumes that the incoming parts list is a square
+
+function createPart(n){
+	if(typeof(components[n])!='undefined'){
+		if(!components[n].name.match(/Component/)){
+			ui.parts.push(new dragPart(x,128),game.camera.y+0.4*resolutionY + eo3.randomRange(16,128),'parts',n);
+			refreshStats();
+		}
+	}
+}// assumes that the incoming parts list is a square
 // if not there will be anarchy
 function createShip(shipParts, targetActor){
 	var myParts = [];
@@ -877,12 +903,13 @@ function createShip(shipParts, targetActor){
 			//with an int square root
 			myParts.push(new shipPart(((n-1)*-8)+((i%n)*16),((n-1)*-8)+(Math.floor(i/n)*16),'parts',shipParts[i],targetActor));
 		}
-		}
+	}
 	return myParts; 
 }
-function createBuildParts(ship, targetActor){
+function createBuildParts(ship,x,y){
 	var myParts = [];
-
+	x-=x%32;
+	y-=y%32;
 	var n=Math.sqrt(ship.length);
 
 	if (n!=Math.floor(n)){
@@ -893,9 +920,9 @@ function createBuildParts(ship, targetActor){
 			//that godawful barf there is a terse calculation for the coordinates of the part
 			//assuming an array of 'parts' (sprite ids) - array should have a length
 			//with an int square root
-			myParts.push(new dragPart(((n-1)*-8)+((i%n)*16),((n-1)*-8)+(Math.floor(i/n)*16),'parts',ship[i]));
+			myParts.push(new dragPart(x+(16*(i%n)),y+(16*Math.floor(i/n)),'parts',ship[i]));
 		}
-		}
+	}
 	return myParts; 
 }
 
