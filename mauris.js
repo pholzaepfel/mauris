@@ -283,7 +283,7 @@ enemyShip.prototype.damage = function(dmg, aggro) {
 		}	
 
 		this.actor.kill();
-
+		playerStats.kills+=1;
 		return true;
 	}
 
