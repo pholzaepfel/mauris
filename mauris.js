@@ -881,7 +881,7 @@ gameUI.prototype.updatePart = function () {
 			this.partText.setText('Drag a component to the X to store it in your inventory.')
 	}
 	this.partText.x = player.actor.body.x - (0.5 * this.partText.width);
-	this.partText.y = player.actor.body.y + player.actor.height * 16;
+	this.partText.y = player.actor.body.y + player.actor.height * 12;
 
 }
 
@@ -915,7 +915,7 @@ gameUI.prototype.partsUI = function (ship) {
 	this.healthLine.setText('');
 	this.energyLine.setText('');
 	this.clearRadar();
-	this.partsSelector = game.add.sprite(player.actor.x,player.actor.y-300,'parts',0);
+	this.partsSelector = game.add.sprite(player.actor.x-300,player.actor.y-100,'parts',0);
 	this.updatePart();
 	this.partsSelector.scale.setTo(4,4);
 	this.partsSelector.inputEnabled = true;
@@ -1081,6 +1081,7 @@ function create () {
 		backdrop3.scale.x=2;
 		backdrop3.scale.y=2;
 
+		ships.push([66, 34, -1, -1]) //default player ship? 
 		ships.push([70, 12, 12, 104, 2, 5, 102, 40, 40]);
 		ships.push([10, 33, 13, 101, 32, 65, 65, 75, 32, 72, 72, 107, 66, 40, 104, 105]);
 		ships.push([12, 41, 44, 130]);
