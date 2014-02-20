@@ -277,7 +277,7 @@ enemyShip.prototype.damage = function(dmg, aggro) {
 				this.parts[j].actor.body.velocity = game.physics.velocityFromRotation(this.game.physics.angleBetween(this.actor, this.parts[j].actor), 200+eo3.randomRange(0,10*dmg));
 				this.parts[j].actor.body.angularVelocity=eo3.randomRange((dmg+2*14),(dmg+2)*62);	
 			}else{
-				this.parts[j].actor.kill();
+				this.parts[j].actor.destroy();
 			}
 		}	
 
@@ -573,7 +573,7 @@ playerShip.prototype.damage = function(dmg, aggro) {
 			if (dmg != 31337){
 				this.parts[j].actor.lifespan = eo3.randomRange(1500,3000);
 				this.parts[j].actor.body.velocity = game.physics.velocityFromRotation(game.physics.angleBetween(this.actor, this.parts[j].actor), eo3.randomRange(200,400));
-				this.parts[j].actor.body.angularVelocity=(this.parts[j].offsetx+this.parts[j].offsety+1)*eo3.randomRange(3,7);	
+				this.parts[j].actor.body.angularVelocity=eo3.randomRange((dmg+2*14),(dmg+2)*62);	
 			}else{
 				this.parts[j].actor.kill();
 			}
