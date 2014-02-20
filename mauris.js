@@ -374,7 +374,7 @@ enemyShip.prototype.update = function() {
 			this.actor.rotation = this.game.physics.angleBetween(this.actor, this.target);
 
 			if (this.game.physics.distanceBetween(this.actor, this.target) < this.fireRange * 0.75 &&
-					this.game.physics.distanceBetween(this.actor, this.target) < this.target.profile){
+					this.game.physics.distanceBetween(this.actor, this.target) < this.behavior=='neutral'? this.target.profile : this.target.profile*2){
 						this.fire(); 
 
 					}
@@ -1054,7 +1054,7 @@ function create () {
 
 	ui = new gameUI();
 	gamemode = location.search||'war';
-	if (gamemode = '?cheat'){
+	if (gamemode == '?cheat'){
 		gamemode = 'war';
 		cheatmode = 1;
 	}
