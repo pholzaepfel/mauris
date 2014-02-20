@@ -857,8 +857,6 @@ gameUI.prototype.radarPing = function() {
 		this.radar[i].y = player.actor.body.y + Math.sin(targetAngle) * 180;	
 	}
 }
-gameUI.prototype.partTextPing = function() {
-}
 gameUI.prototype.wordsPing = function() {
 	this.words.x = player.actor.body.x;
 	this.words.y = player.actor.body.y + 200;
@@ -884,7 +882,7 @@ gameUI.prototype.updatePart = function () {
 			this.partText.setText('Drag a component to the X to store it in your inventory.')
 	}
 	this.partText.x = player.actor.body.x - (0.5 * this.partText.width);
-	this.partText.y = player.actor.body.y + player.actor.height;
+	this.partText.y = player.actor.body.y + player.actor.height * 16;
 
 }
 
