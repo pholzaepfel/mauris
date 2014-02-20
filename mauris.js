@@ -997,7 +997,9 @@ gameUI.prototype.partsArray = function () {
 }
 function selectPart() {
 	createPart(playerStats.inventory[ui.currentPart]);	
-	playerStats.inventory.splice(ui.currentPart,1);
+	if(!cheatmode){
+		playerStats.inventory.splice(ui.currentPart,1);
+	}
 	ui.previousPart();
 }
 
