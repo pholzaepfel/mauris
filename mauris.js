@@ -997,8 +997,8 @@ function selectPart() {
 	createPart(playerStats.inventory[ui.currentPart]);	
 	if(!cheatmode){
 		playerStats.inventory.splice(ui.currentPart,1);
+		ui.previousPart();
 	}
-	ui.previousPart();
 }
 
 
