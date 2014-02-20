@@ -928,7 +928,7 @@ gameUI.prototype.endPartsUI = function () {
 	this.partsSelector.kill();
 	var ship = this.partsArray();
 	for(var i=0; i<this.parts.length;i++){
-		this.parts[i].actor.kill();
+		this.parts[i].actor.destroy();
 	}
 	this.parts=[];
 	this.graphics.clear();
