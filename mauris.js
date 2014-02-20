@@ -1,8 +1,23 @@
 var gamemode;
 var defaultBehavior='neutral';
+var cheatmode = 1;
+// container for stuff that might persist between games
+var playerMeta = function () {
+	this.credits=0;
+	this.inventory=[];
+	if(cheatmode){
+		for(var i=0; i<components.length; i++){
+			if(!components[i].name.match(/Component/)){
+				this.inventory.push(i);
+			}
+		}
+	}
+	this.kills=0;
+	this.deaths=0;
+};
 
-window.oncontextmenu = function ()
-{
+
+window.oncontextmenu = function (){
 	return false;     // cancel default menu
 }
 
@@ -27,8 +42,7 @@ function destroyIfExists(sprite){
 
 function applyBonuses(target){
 
-	for(var i=0;i<target.ship.length;i++)
-	{
+	for(var i=0;i<target.ship.length;i++){
 		if (target.ship[i]!=-1){
 			components[target.ship[i]].bonus(target);
 			target.mass+=10000;
@@ -89,14 +103,13 @@ function threatSort(a, b) {
 
 function refreshStats() {
 
-	ui.shadowPlayer = new luser([0]);
+	ui.shadowPlayer = new playerShip([1023]);
 	ui.shadowPlayer.actor.reset(game.camera.x+0.5*resolutionX,game.camera.y+0.5*resolutionY);	
 	ui.shadowPlayer.ship = ui.partsArray();
 	applyBonuses(ui.shadowPlayer);
 	ui.statsPing(ui.shadowPlayer);
 }
-dragPart = function(x,y,sheet,index)
-{
+dragPart = function(x,y,sheet,index){
 	this.game = game;
 	this.alive = true;
 	this.actor = game.add.sprite(x-x%16,y-y%16,sheet,index);
@@ -109,12 +122,33 @@ dragPart = function(x,y,sheet,index)
 	this.actor.events.onDragStop.add(refreshStats);
 };
 dragPart.prototype.update = function(){
-	if(this.actor.x > 900) {
-		this.actor.kill();
-	}	
+	if(!game.input.activePointer.isDown && this.actor.alive){
+		if(this.actor.x >= ui.partsSelector.x &&
+				this.actor.x <= ui.partsSelector.x + ui.partsSelector.width &&	
+				this.actor.y >= ui.partsSelector.y &&
+				this.actor.y <= ui.partsSelector.y + ui.partsSelector.height){
+
+					//prevent player from destroying the last part	
+					for (var i=0;i<ui.parts.length;i++){
+						if(ui.parts[i].actor.alive && i != this.index){
+							break;
+						}
+					}
+					if (i == ui.parts.length){
+						this.actor.y += 300;
+					}else{
+						if (!cheatmode){
+							playerStats.inventory.push(this.index);
+						}
+						this.actor.kill();
+						ui.updatePart();
+						ui.partsArray(); //recalc rectangle
+					}
+				}
+	}
+
 }
-shipPart = function(x,y,sheet,index,targetSprite)
-{
+shipPart = function(x,y,sheet,index,targetSprite){
 	this.offsetx = x;
 	this.offsety = y;
 	this.game = game;
@@ -142,7 +176,7 @@ enemyShip = function (index, game, targetSprite, bullets) {
 	var y = targetSprite.y + (eo3.randomSign() * eo3.randomRange(750,2000));
 
 	this.game = game;
-	this.actor = game.add.sprite(x, y, 'parts', 0);
+	this.actor = game.add.sprite(x, y, 'parts', 1023);
 	this.target = targetSprite;
 	this.bullets = bullets;
 	this.actor.name = index;
@@ -229,19 +263,17 @@ enemyShip.prototype.damage = function(dmg, aggro) {
 			this.aggroList.push(aggro);
 			this.target = aggro;
 		}
-		if(gamemode=='?attract')
-		{
+		if(gamemode=='?attract'){
 			this.aggroList.push(aggro);
 			this.target = aggro;		
 		}
 	}
-	if (this.health <= 0)
-	{
+	if (this.health <= 0){
 		this.alive = false;
 		for (var j = 0; j < this.parts.length; j++) {
 
 			if (dmg != 31337){
-				this.parts[j].actor.lifespan = eo3.randomRange(500,2500);
+				this.parts[j].actor.lifespan = eo3.randomRange(1500,3000);
 				this.parts[j].actor.body.velocity = game.physics.velocityFromRotation(this.game.physics.angleBetween(this.actor, this.parts[j].actor), 200+eo3.randomRange(0,10*dmg));
 				this.parts[j].actor.body.angularVelocity=eo3.randomRange((dmg+2*14),(dmg+2)*62);	
 			}else{
@@ -271,27 +303,26 @@ enemyShip.prototype.up = function(){
 };
 enemyShip.prototype.fire = function () {
 	if (this.game.time.now > this.nextFire && this.bullets.countDead() > 0 &&
-			this.energy>=this.fireEnergy)
-	{
-		this.nextFire = this.game.time.now + this.fireRate;
-		this.energy-=this.fireEnergy;
-		var bullet = this.bullets.getFirstDead();
-		bullet.rotation=this.actor.rotation;
-		bullet.damage=this.fireDamage;
-		bullet.reset(this.actor.x + (Math.cos(this.actor.rotation)*(this.actor.body.width)), this.actor.y + (Math.sin(this.actor.rotation)*(this.actor.body.width)));
-		bullet.lifespan = this.fireRange; 
-		bullet.loadTexture('bullet', this.bulletSprite);
-		bullet.body.exchangeVelocity = false;
-		bullet.fireVelocity=this.fireVelocity;
-		bullet.owner=this.actor;
-		game.physics.velocityFromRotation(bullet.rotation, bullet.fireVelocity, bullet.body.velocity);
-		bullet.body.velocity.x += 0.5 * this.actor.body.velocity.x;
-		bullet.body.velocity.y += 0.5 * this.actor.body.velocity.y;
-		bullet.target=player;
-		for (var i = 0; i < this.bulletBehavior.length; i++) {
-			this.bulletBehavior[i](bullet);
-		}
-	}
+			this.energy>=this.fireEnergy){
+				this.nextFire = this.game.time.now + this.fireRate;
+				this.energy-=this.fireEnergy;
+				var bullet = this.bullets.getFirstDead();
+				bullet.rotation=this.actor.rotation;
+				bullet.damage=this.fireDamage;
+				bullet.reset(this.actor.x + (Math.cos(this.actor.rotation)*(this.actor.body.width)), this.actor.y + (Math.sin(this.actor.rotation)*(this.actor.body.width)));
+				bullet.lifespan = this.fireRange; 
+				bullet.loadTexture('bullet', this.bulletSprite);
+				bullet.body.exchangeVelocity = false;
+				bullet.fireVelocity=this.fireVelocity;
+				bullet.owner=this.actor;
+				game.physics.velocityFromRotation(bullet.rotation, bullet.fireVelocity, bullet.body.velocity);
+				bullet.body.velocity.x += 0.5 * this.actor.body.velocity.x;
+				bullet.body.velocity.y += 0.5 * this.actor.body.velocity.y;
+				bullet.target=player;
+				for (var i = 0; i < this.bulletBehavior.length; i++) {
+					this.bulletBehavior[i](bullet);
+				}
+			}
 
 }
 enemyShip.prototype.update = function() {
@@ -325,10 +356,8 @@ enemyShip.prototype.update = function() {
 
 	if(this.alive && this.target.alive){
 
-		if (this.speed > 0)
-		{
-			if(game.time.now>(this.nextThrust||0))
-			{
+		if (this.speed > 0){
+			if(game.time.now>(this.nextThrust||0)){
 				this.thrust.x=this.actor.x-(Math.cos(this.actor.rotation)*(this.actor.body.width)*0.5);
 				this.thrust.y=this.actor.y-(Math.sin(this.actor.rotation)*(this.actor.body.width)*0.5);
 				this.thrust.minParticleSpeed.setTo(0,0);
@@ -344,11 +373,10 @@ enemyShip.prototype.update = function() {
 			this.actor.rotation = this.game.physics.angleBetween(this.actor, this.target);
 
 			if (this.game.physics.distanceBetween(this.actor, this.target) < this.fireRange * 0.75 &&
-					this.game.physics.distanceBetween(this.actor, this.target) < this.target.profile)
-			{
-				this.fire(); 
+					this.game.physics.distanceBetween(this.actor, this.target) < this.target.profile){
+						this.fire(); 
 
-			}
+					}
 		} else if (this.ai == 1) {
 			var targetLocation = {
 				x:this.target.x,
@@ -417,24 +445,21 @@ enemyShip.prototype.update = function() {
 						}
 			}
 			if (targetDistance < this.fireRange * 0.75 &&
-					targetDistance < this.target.profile)
-			{
-				if(Math.abs(targetAngle-this.actor.rotation)<0.2 ||
-						Math.abs(targetAngle-this.actor.rotation)>Math.PI-0.2){
-							this.fire(); 
-						}
+					targetDistance < this.target.profile){
+						if(Math.abs(targetAngle-this.actor.rotation)<0.2 ||
+								Math.abs(targetAngle-this.actor.rotation)>Math.PI-0.2){
+									this.fire(); 
+								}
 
-			}
+					}
 
 		}
 
 
-		if (this.game.physics.distanceBetween(this.actor, player.actor) > 5000 && gamemode != '?attract')
-		{
+		if (this.game.physics.distanceBetween(this.actor, player.actor) > 5000 && gamemode != '?attract'){
 			this.damage(31337); //magic damage value that kills without parts 
 		}
-		if (game.time.now > this.nextEnergy)
-		{
+		if (game.time.now > this.nextEnergy){
 			if(this.energy+this.energyAmount>this.energyMax){
 				this.energy=this.energyMax;	
 			}else{
@@ -465,19 +490,18 @@ function preload () {
 	game.load.spritesheet('sparks', 'assets/sparks.png',8,8);
 }
 
-var luser = function(ship) {
-	this.actor = game.add.sprite(0, 0, 'parts');
-	this.initLuser(ship);
+var playerShip = function(ship) {
+	this.actor = game.add.sprite(0, 0, 'parts', 1023);
+	this.initPlayerShip(ship);
 }
-luser.prototype.destroyParts = function() {
-	console.log(this.parts);
+playerShip.prototype.destroyParts = function() {
 	if(typeof(this.parts)!='undefined'){
 		for (var i = 0; i < this.parts.length; i++) {
 			this.parts[i].actor.kill();
 		}
 	}
 }
-luser.prototype.initLuser = function (ship) {
+playerShip.prototype.initPlayerShip = function (ship) {
 
 	this.target={};
 	this.ai=-1; //natural intelligence
@@ -539,17 +563,16 @@ luser.prototype.initLuser = function (ship) {
 	this.healthMax = this.health;
 	this.actor.profileMax=this.actor.profile; //FIXME2
 }
-luser.prototype.damage = function(dmg, aggro) {
+playerShip.prototype.damage = function(dmg, aggro) {
 
 	this.health -= damageCoef * dmg;
 
-	if (this.health <= 0)
-	{
+	if (this.health <= 0){
 		this.alive = false;
 		for (var j = 0; j < this.parts.length; j++) {
 
 			if (dmg != 31337){
-				this.parts[j].actor.lifespan = eo3.randomRange(500,2500);
+				this.parts[j].actor.lifespan = eo3.randomRange(1500,3000);
 				this.parts[j].actor.body.velocity = game.physics.velocityFromRotation(game.physics.angleBetween(this.actor, this.parts[j].actor), eo3.randomRange(200,400));
 				this.parts[j].actor.body.angularVelocity=(this.parts[j].offsetx+this.parts[j].offsety+1)*eo3.randomRange(3,7);	
 			}else{
@@ -567,22 +590,21 @@ luser.prototype.damage = function(dmg, aggro) {
 
 }
 
-luser.prototype.left = function(){
+playerShip.prototype.left = function(){
 	this.actor.angle-=this.turnRate;
 };
-luser.prototype.right = function(){
+playerShip.prototype.right = function(){
 	this.actor.angle+=this.turnRate;
 };
-luser.prototype.up = function(){
+playerShip.prototype.up = function(){
 
 	this.speed = this.acceleration;
 
 };
-luser.prototype.fire = function(){
+playerShip.prototype.fire = function(){
 
 
-	if (game.time.now > this.nextFire && bullets.countDead() > 0 && this.energy > this.fireEnergy && this.alive)
-	{
+	if (game.time.now > this.nextFire && bullets.countDead() > 0 && this.energy > this.fireEnergy && this.alive){
 		this.actor.profile+=Math.floor(this.fireDamage*40);
 		this.nextFire = game.time.now + this.fireRate;
 		this.energy -= this.fireEnergy;
@@ -608,11 +630,10 @@ luser.prototype.fire = function(){
 
 
 };
-luser.prototype.alt = function(){};
-luser.prototype.update = function(){
+playerShip.prototype.alt = function(){};
+playerShip.prototype.update = function(){
 	if(this.alive){
-		if(game.time.now>this.nextProfileDecay)
-		{
+		if(game.time.now>this.nextProfileDecay){
 			if (Math.abs(this.actor.profile-this.actor.profileMax) < this.profileDecay)	{	
 				this.actor.profile=this.actor.profileMax;
 			}
@@ -625,10 +646,8 @@ luser.prototype.update = function(){
 			this.nextProfileDecay=game.time.now+1000;
 		}
 
-		if (this.speed > 0)
-		{
-			if(game.time.now>(this.nextThrust||0))
-			{
+		if (this.speed > 0){
+			if(game.time.now>(this.nextThrust||0)){
 				this.thrust.x=this.actor.x-(Math.cos(this.actor.rotation)*(this.actor.body.width)*0.5);
 				this.thrust.y=this.actor.y-(Math.sin(this.actor.rotation)*(this.actor.body.width)*0.5);
 				this.thrust.minParticleSpeed.setTo(0,0);
@@ -640,8 +659,7 @@ luser.prototype.update = function(){
 			this.speed=0;
 		}
 
-		if (game.time.now > this.nextEnergy)
-		{
+		if (game.time.now > this.nextEnergy){
 			if(this.energy+this.energyAmount>this.energyMax){
 				this.energy=this.energyMax;	
 			}else{
@@ -665,6 +683,7 @@ var numBaddies = 14;
 var enemies;
 var enemyBullets;
 var logo;
+var nextUIDelay=0;
 var nextSpawn=0;
 var nextCamera=0; //attract
 var damageCoef=0.3; //global damage tuner
@@ -681,17 +700,60 @@ var ships=[];
 var ui;
 var gameUI = function () {
 	this.parts = [];
+	this.currentPart = 0;
 }
+gameUI.prototype.calculatePartPosition = function() {
 
-
+	var minx = 999999999;
+	var miny = 999999999;
+	var maxx = -999999999;
+	var maxy = -999999999;
+	var shipSize = 0;
+	for(var i=0;i<this.parts.length;i++){
+		if(this.parts[i].actor.alive){
+			if(this.parts[i].actor.x < minx){
+				minx = this.parts[i].actor.x;
+			}
+			if(this.parts[i].actor.y < miny){
+				miny = this.parts[i].actor.y;
+			}
+			if(this.parts[i].actor.x > maxx){
+				maxx = this.parts[i].actor.x;
+			}
+			if(this.parts[i].actor.y > maxy){
+				maxy = this.parts[i].actor.y;
+			}
+		}
+	}
+	var outx = 0;
+	var outy = 0;
+	var choice = Math.floor(eo3.randomRange(0,4));
+	if(choice==0){
+		outx = minx-16;
+		outy = Math.floor(eo3.randomRange(miny, maxy+16));
+	}else if(choice==1){
+		outy = miny-16;
+		outx = Math.floor(eo3.randomRange(minx, maxx+16));
+	}else if(choice==2){
+		outx = maxx+16;
+		outy = Math.floor(eo3.randomRange(miny, maxy+16));
+	}else if(choice==3){
+		outy = maxy+16;
+		outx = Math.floor(eo3.randomRange(minx, maxx+16));
+	}
+	return {'x':outx,'y':outy};
+}
+gameUI.prototype.clearRadar = function() {
+	for (var i = 0; i < this.radar.length; i++){
+		this.radar[i].destroy();	
+	}
+	if(this.radar.length){
+		this.radar=[];
+	}
+}	
 gameUI.prototype.resetRadar = function() {
 	if(this.radar.length!=player.radarTargets){
-		for (var i = 0; i < this.radar.length; i++){
-			this.radar[i].destroy();	
-		}
-		if(this.radar.length){
-			this.radar=[];
-		}
+		this.clearRadar();
 		for (var i = 0; i < player.radarTargets; i++){
 			this.radar.push(game.add.text(200,100, '*',{ font:'8px monospace', fill: 'rgb(255,160,160)', align: 'center' }));
 		}
@@ -715,6 +777,9 @@ gameUI.prototype.initCombatUi = function() {
 
 	destroyIfExists(this.words);
 	this.words = game.add.text(0,0,'',{font:'1.5em monospace', fill: 'rgb(255,255,255)', align: 'left'});
+
+	destroyIfExists(this.partText);
+	this.partText = game.add.text(0,0,'',{font:'1.5em monospace', fill: 'rgb(255,255,255)', align: 'left'});
 
 	this.radar = [];
 	this.resetRadar();
@@ -792,13 +857,14 @@ gameUI.prototype.radarPing = function() {
 		this.radar[i].y = player.actor.body.y + Math.sin(targetAngle) * 180;	
 	}
 }
+gameUI.prototype.partTextPing = function() {
+}
 gameUI.prototype.wordsPing = function() {
 	this.words.x = player.actor.body.x;
 	this.words.y = player.actor.body.y + 200;
 }
 gameUI.prototype.update = function() {
-	if (gamemode == 'war')
-	{
+	if (gamemode == 'war'){
 		this.bar(this.healthLine, 0, player.health, player.healthMax);
 		this.bar(this.energyLine, 10, player.energy, player.energyMax);
 		this.enemies=enemies.slice(0);
@@ -807,6 +873,36 @@ gameUI.prototype.update = function() {
 		this.statsPing(player);
 		this.wordsPing();
 	}
+}
+
+gameUI.prototype.updatePart = function () {
+	if(playerStats.inventory.length){
+		this.partsSelector.loadTexture('parts',playerStats.inventory[this.currentPart]);
+		this.partText.setText(components[playerStats.inventory[this.currentPart]].name);
+	}else{
+		this.partsSelector.loadTexture('parts',0)
+			this.partText.setText('Drag a component to the X to store it in your inventory.')
+	}
+	this.partText.x = player.actor.body.x - (0.5 * this.partText.width);
+	this.partText.y = player.actor.body.y + player.actor.height;
+
+}
+
+gameUI.prototype.previousPart = function () {
+	if(playerStats.inventory.length){
+		this.currentPart = (playerStats.inventory.length + this.currentPart - 1) % playerStats.inventory.length;	
+	}else{
+		this.currentPart = 0;
+	}
+	this.updatePart();
+}
+gameUI.prototype.nextPart = function () {
+	if(playerStats.inventory.length){
+		this.currentPart = (this.currentPart  + 1 ) % playerStats.inventory.length;	
+	}else{
+		this.currentPart = 0;
+	}
+	this.updatePart();
 }
 
 gameUI.prototype.partsUI = function (ship) {
@@ -819,10 +915,13 @@ gameUI.prototype.partsUI = function (ship) {
 		player.actor.body.velocity.x=0;
 		player.actor.body.velocity.y=0;
 	}
-	this.partsSelector = game.add.sprite(game.camera.x+ 20,game.camera.y+20,'allparts');
+	this.healthLine.setText('');
+	this.energyLine.setText('');
+	this.clearRadar();
+	this.partsSelector = game.add.sprite(player.actor.x,player.actor.y-300,'parts',0);
+	this.updatePart();
+	this.partsSelector.scale.setTo(4,4);
 	this.partsSelector.inputEnabled = true;
-	this.partsSelector.pixelPerfect=true;
-	this.partsSelector.lockToCamera = true;
 	this.partsSelector.events.onInputDown.add(selectPart);
 	if(typeof(ship)!='undefined'){
 		this.parts = createBuildParts(ship,player.actor.x,player.actor.y);
@@ -836,17 +935,18 @@ gameUI.prototype.endPartsUI = function () {
 	}
 	this.parts=[];
 	this.graphics.clear();
-	player.initLuser(ship);
+	this.partText.setText('');
+	player.initPlayerShip(ship);
 	gamemode = 'war';
 }
 gameUI.prototype.partsArray = function () {
 	this.graphics.clear();
 	var outArray = [];
 	if(typeof(this.parts[0])!='undefined'){
-		var minx = resolutionX;
-		var miny = resolutionY;
-		var maxx = 0;
-		var maxy = 0;
+		var minx = 999999999;
+		var miny = 999999999;
+		var maxx = -999999999;
+		var maxy = -999999999;
 		var shipSize = 0;
 		for(var i=0;i<this.parts.length;i++){
 			if(this.parts[i].actor.alive){
@@ -865,11 +965,18 @@ gameUI.prototype.partsArray = function () {
 			}
 		}
 
-		if (16+maxx-minx > 16+maxy-miny) {
-			shipSize = (16+maxx-minx)/16;
-		} else {
-			shipSize = (16+maxy-miny)/16;
+		var shipWidth =(16+maxx-minx)/16; 
+		var shipHeight =(16+maxy-miny)/16; 
+
+		shipSize = shipHeight > shipWidth ? shipHeight : shipWidth;
+		var offset = 0;
+		if(shipWidth - shipHeight > 1){
+			offset = Math.floor((shipWidth-shipHeight)/2)*shipWidth;
 		}
+		if(shipHeight - shipWidth > 1){
+			offset = Math.floor((shipHeight-shipWidth)/2);
+		}
+
 		for (var i=0;i<shipSize*shipSize;i++){
 			outArray.push(-1);
 		}
@@ -878,6 +985,7 @@ gameUI.prototype.partsArray = function () {
 				var n=0;
 				n = (this.parts[i].actor.x - minx)/16;
 				n+= ((this.parts[i].actor.y - miny)/16)*shipSize;
+				n+=offset;
 				outArray[n] = this.parts[i].index;
 			}
 		}
@@ -888,24 +996,21 @@ gameUI.prototype.partsArray = function () {
 	return outArray;
 }
 function selectPart() {
-	if(ui.partsSelector.input.pointerOver())
-	{
-		alert(ui.partsSelector.input.pointerX()+ui.partsSelector.x);
-		var n =0;
-		n=Math.floor((ui.partsSelector.input.pointerX()+ui.partsSelector.x-16)/16);
-		n+=32*Math.floor((ui.partsSelector.input.pointerY()+ui.partsSelector.y-16)/16);
-		createPart(n);	
-	}
+	createPart(playerStats.inventory[ui.currentPart]);	
+	playerStats.inventory.splice(ui.currentPart,1);
+	ui.previousPart();
 }
 
+
+
 function createPart(n){
-	if(typeof(components[n])!='undefined'){
-		if(!components[n].name.match(/Component/)){
-			ui.parts.push(new dragPart(x,128),game.camera.y+0.4*resolutionY + eo3.randomRange(16,128),'parts',n);
+
+	var partPosition = ui.calculatePartPosition(); 
+	ui.parts.push(new dragPart(partPosition.x,partPosition.y,'parts',n));
 			refreshStats();
-		}
-	}
-}// assumes that the incoming parts list is a square
+
+}
+// assumes that the incoming parts list is a square
 // if not there will be anarchy
 function createShip(shipParts, targetActor){
 	var myParts = [];
@@ -950,9 +1055,11 @@ function create () {
 
 	ui = new gameUI();
 	gamemode = location.search||'war';
-
-	if (gamemode == 'war' | gamemode == '?attract')
-	{
+	if (gamemode = '?cheat'){
+		gamemode = 'war';
+		cheatmode = 1;
+	}
+	if (gamemode == 'war' | gamemode == '?attract'){
 		if(gamemode=='?attract'){
 			numBaddies=30;
 			defaultBehavior='chasing';
@@ -1028,7 +1135,8 @@ function create () {
 		temp.visible = false;
 
 
-		player = new luser();
+		playerStats = new playerMeta ();
+		player = new playerShip();
 		//  The enemies bullet group
 		enemyBullets = game.add.group();
 		enemyBullets.createMultiple(200, 'bullet');
@@ -1047,8 +1155,7 @@ function create () {
 		//  Create some baddies to waste :)
 		enemies = [];
 
-		for (var i = 0; i < numBaddies; i++)
-		{
+		for (var i = 0; i < numBaddies; i++){
 			enemies.push(new enemyShip(i, game, player.actor, enemyBullets,pew));
 		}
 
@@ -1083,30 +1190,26 @@ function create () {
 	}
 
 
-	if (gamemode == '?build')
-	{
+	if (gamemode == '?build'){
 		ui.partsUI();
-		player = new luser([0]);
+		player = new playerShip([1023]);
 	}
 	ui.initCombatUi();
 }
 
 function update () {
-	if(gamemode=='?build')
-	{
+	if(gamemode=='?build'){
 
-		for (var i = 0; i < ui.parts.length; i++)
-		{
+		for (var i = 0; i < ui.parts.length; i++){
 			ui.parts[i].update();
 		}
 	}
 	if(gamemode=='war' || gamemode=='?attract'){
 
 
-		if(nextSpawn<game.time.now||nextSpawn==0||gamemode=='?attract')
-		{
+		if(nextSpawn<game.time.now||nextSpawn==0||gamemode=='?attract'){
 			if(!player.alive){
-				player.initLuser();
+				player.initPlayerShip();
 			}
 			for(var i = 0; i < enemies.length ; i++) {
 				if (enemies[i].alive==false){
@@ -1131,10 +1234,8 @@ function update () {
 			}
 		}
 
-		for (var i = 0; i < enemies.length; i++)
-		{
-			if (enemies[i].alive)
-			{
+		for (var i = 0; i < enemies.length; i++){
+			if (enemies[i].alive){
 				enemies[i].update();
 				for (var j = 0; j < player.parts.length; j++) {
 					game.physics.collide(enemies[i].actor, player.parts[j].actor);
@@ -1150,26 +1251,23 @@ function update () {
 			}
 		}
 
-		for (var i = 0; i < player.parts.length; i++)
-		{
+		for (var i = 0; i < player.parts.length; i++){
 			player.parts[i].update();
 		};
 
 
-		if (cursors.left.isDown || cursors.left2.isDown)
-		{
+		if (cursors.left.isDown || cursors.left2.isDown){
 			player.left();
 		}
-		else if (cursors.right.isDown || cursors.right2.isDown)
-		{
+		if (cursors.right.isDown || cursors.right2.isDown){
 			player.right()
 		}
-
-
-
-		if (cursors.up.isDown || cursors.up2.isDown)
-		{
+		if (cursors.up.isDown || cursors.up2.isDown){
 			player.up();
+		}
+		if (game.time.now > nextUIDelay + 2000 && (cursors.down.isDown || cursors.down2.isDown)){
+			ui.partsUI(player.ship);
+			nextUIDelay=game.time.now+1000;
 		}
 		player.update();
 		// scrolling
@@ -1182,8 +1280,7 @@ function update () {
 
 
 
-		if (game.input.activePointer.isDown)
-		{
+		if (game.input.activePointer.isDown){
 			//  Boom!
 			player.fire();
 		}
@@ -1191,7 +1288,28 @@ function update () {
 	}	
 	ui.update();
 	if (gamemode == '?build' && !game.input.activePointer.isDown) {
-
+		if (game.time.now > nextUIDelay && (cursors.left.isDown || cursors.left2.isDown)){
+			ui.previousPart();
+			nextUIDelay = game.time.now+1000;
+		}
+		if (game.time.now > nextUIDelay && (cursors.right.isDown || cursors.right2.isDown)){
+			ui.nextPart();	
+			nextUIDelay = game.time.now+1000;
+		}
+		if (game.time.now > nextUIDelay && (cursors.up.isDown || cursors.up2.isDown)){
+			//somethin' clever!
+		}
+		if (game.time.now > nextUIDelay + 2000 && (cursors.down.isDown || cursors.down2.isDown)){
+			ui.endPartsUI();
+			nextUIDelay=game.time.now+1000;
+		}
+		if(!cursors.left.isDown && !cursors.left2.isDown &&
+				!cursors.right.isDown && !cursors.right2.isDown &&
+				!cursors.up.isDown && !cursors.up2.isDown &&
+				!cursors.down.isDown && !cursors.down2.isDown 
+		  ){
+			  nextUIDelay = 0;
+		  }
 	}
 }
 
@@ -1216,8 +1334,7 @@ function bulletHitPlayer (actor, bullet) {
 	bullet.kill();
 
 	var destroyed = player.damage(bullet.damage, bullet.owner);
-	if (destroyed)
-	{
+	if (destroyed){
 		sparkExplosion(pew, actor);	
 	}
 }
@@ -1227,8 +1344,7 @@ function bulletHitEnemy (actor, bullet) {
 	bullet.kill();
 
 	var destroyed = enemies[actor.name].damage(bullet.damage, bullet.owner);
-	if (destroyed)
-	{
+	if (destroyed){
 		sparkExplosion(pew, actor);	
 	}
 
