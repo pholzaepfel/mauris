@@ -481,7 +481,6 @@ var game = new Phaser.Game(resolutionX, resolutionY, Phaser.AUTO, 'phaser-exampl
 
 function preload () {
 
-	game.load.image('allparts', 'assets/parts.png');
 	game.load.spritesheet('parts', 'assets/parts.png', 16, 16);
 	game.load.spritesheet('bullet', 'assets/bullets.png',16,16);
 	game.load.image('starfield2', 'assets/starfield2.png');
