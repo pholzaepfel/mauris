@@ -51,6 +51,9 @@ function applyBonuses(target){
 			target.actor.profile+=25;
 		}
 	}
+	target.acceleration = (target.actor.body.maxVelocity.x * target.acceleration)/ 300;
+	target.healthMax = target.health;
+	target.actor.profileMax=target.actor.profile; 
 }
 
 eo3 = {};
@@ -242,9 +245,7 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 	this.actor.body.velocity.y*=.3+Math.random()*0.7;
 	game.physics.velocityFromRotation(this.actor.rotation, 100, this.actor.body.velocity);
 	this.health*=enemyHealthCoef;
-	this.healthMax = this.health; //FIXME
-	this.actor.profileMax=this.actor.profile; //FIXME2
-}
+	 }
 
 enemyShip.prototype.destroyParts = function() {
 	if(typeof(this.parts)!='undefined'){
@@ -495,9 +496,10 @@ var playerShip = function(ship) {
 }
 playerShip.prototype.destroyParts = function() {
 	if(typeof(this.parts)!='undefined'){
-		for (var i = 0; i < this.parts.length; i++) {
-			this.parts[i].actor.kill();
-		}
+	while(this.parts.length){
+		this.parts[this.parts.length-1].actor.destroy();
+		this.parts.splice(this.parts.length-1,1);
+	}
 	}
 }
 playerShip.prototype.initPlayerShip = function (ship) {
@@ -559,8 +561,6 @@ playerShip.prototype.initPlayerShip = function (ship) {
 
 	applyBonuses(this);
 
-	this.healthMax = this.health;
-	this.actor.profileMax=this.actor.profile; //FIXME2
 }
 playerShip.prototype.damage = function(dmg, aggro) {
 
@@ -1006,7 +1006,7 @@ function createPart(n){
 
 	var partPosition = ui.calculatePartPosition(); 
 	ui.parts.push(new dragPart(partPosition.x,partPosition.y,'parts',n));
-			refreshStats();
+	refreshStats();
 
 }
 // assumes that the incoming parts list is a square
