@@ -51,7 +51,7 @@ function applyBonuses(target){
 			components[target.ship[i]].bonus(target);
 		}
 	}
-	target.acceleration = (target.sprite.body.maxVelocity.x * target.acceleration)/ 300;
+	target.acceleration = (target.sprite.body.maxVelocity.x * target.acceleration)/ 250;
 	target.healthMax = target.health;
 	target.sprite.profileMax=target.sprite.profile; 
 }
@@ -281,7 +281,7 @@ enemyShip.prototype.destroyParts = function() {
 	}
 }
 
-enemyShip.prototype.damage = function(dmg, aggro) {
+enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 
 	this.health -= damageCoef * dmg;
 
@@ -301,12 +301,16 @@ enemyShip.prototype.damage = function(dmg, aggro) {
 
 			if (dmg != 31337){
 				if(Math.random() < globalDropRate){
-					spawnLoots(Math.floor(eo3.randomRange(0,Math.sqrt(this.ship.length))), this.sprite.x, this.sprite.y);
+					spawnLoots(Math.floor(eo3.randomRange(0,4)), this.sprite.x, this.sprite.y);
 					this.parts[j].sprite.destroy();
 				}else{
 					this.parts[j].sprite.lifespan = eo3.randomRange(1500,3000);
 					this.parts[j].sprite.body.velocity = game.physics.velocityFromRotation(this.game.physics.angleBetween(this.sprite, this.parts[j].sprite), 200+eo3.randomRange(0,10*dmg));
 					this.parts[j].sprite.body.angularVelocity=eo3.randomRange((dmg+2*14),(dmg+2)*62);					
+					if(typeof(bulletVelocity)!='undefined'){
+						this.parts[j].sprite.body.velocity.x = this.parts[j].sprite.body.velocity.x + (bulletVelocity.x*.01*dmg);
+						this.parts[j].sprite.body.velocity.y = this.parts[j].sprite.body.velocity.y + (bulletVelocity.y*.01*dmg);
+					}
 				}
 			}else{
 				this.parts[j].sprite.destroy();
@@ -722,8 +726,8 @@ var player;
 
 var globalDropRate = 0.09;
 var backdrop1, backdrop2,backdrop3;
-var numBaddies = 14;
-var numAsteroids = 13;
+var numBaddies = 9;
+var numAsteroids = 19;
 var enemies;
 var loots;
 var enemyBullets;
@@ -1148,6 +1152,7 @@ asteroids.push([-1,18,19,-1,6,25,22,-1,14,20,38,39,15,-1,-1,-1]);
 		asteroids.push([18, 19, -1, -1, 23, 25, 19, -1, 18, 23, 21, -1, 20, 21, -1, -1]);
 		asteroids.push([14, 19, -1, -1, 23, 25, 15, -1, 14, 23, 21, -1, 20, 21, -1, -1]);
 		asteroids.push([-1, 18, 19, -1, 18, 23, 25, 19, 106, 30, 30, 107, -1, 106, 107, -1]);
+		asteroids.sort(lengthSort);
 
 		ships.push([66, 34, -1, -1]) //default player ship? 
 			ships.push([70, 12, 12, 104, 2, 5, 102, 40, 40]);
@@ -1198,7 +1203,7 @@ asteroids.push([-1,18,19,-1,6,25,22,-1,14,20,38,39,15,-1,-1,-1]);
 		ships.push([35, 3, 131, 37]);
 		ships.push([-1, -1, -1, -1, 35, 3, 131, 37, -1, -1, -1, -1, -1, -1, -1, -1]);
 		ships.sort(lengthSort);
-
+		
 		var temp = game.add.sprite(0,0,'parts');
 		temp.visible = false;
 
@@ -1297,7 +1302,7 @@ function update () {
 			}
 			for(var i = 0; i < enemies.length ; i++) {
 				if (enemies[i].alive==false){
-					enemies[i] = new enemyShip(i, game, player.sprite, enemyBullets,enemies[i].shipList);
+					enemies[i] = new enemyShip(i, game, player.sprite, enemyBullets,enemies[i].shipList); //FIXME
 				};
 			}
 			nextSpawn=game.time.now+eo3.randomRange(5000,10000);
@@ -1431,7 +1436,7 @@ function spawnLoots(_count, x, y){
 		var loot = loots.getFirstDead();
 		loot.loadTexture('parts', Math.floor(eo3.randomRange(0,4))+26);
 		loot.lifespan = 60000;
-		loot.angularVelocity = eo3.randomRange(-300,300);
+		loot.body.angularVelocity = eo3.randomRange(-300,300);
 		loot.reset(x + eo3.randomRange(-16,16), y+eo3.randomRange(-16,16));
 		loot.rotation = Math.random()*Math.PI;
 		loot.body.exchangeVelocity = false;
@@ -1456,7 +1461,7 @@ function bulletHitEnemy (sprite, bullet) {
 
 	bullet.kill();
 
-	var destroyed = enemies[sprite.name].damage(bullet.damage, bullet.owner);
+	var destroyed = enemies[sprite.name].damage(bullet.damage, bullet.owner, bullet.body.velocity);
 	if (destroyed && enemies[sprite.name].ai!=3){
 		sparkExplosion(pew, sprite);	
 	}

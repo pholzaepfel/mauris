@@ -9807,9 +9807,11 @@
 		 * @method Phaser.Signal#removeAll
 		 */
 		removeAll: function () {
+			if(typeof(this._bindings.length)!='undefined'){ //FIXME
 			var n = this._bindings.length;
 			while (n--) {
 				this._bindings[n]._destroy();
+			}
 			}
 			this._bindings.length = 0;
 		},
