@@ -199,13 +199,14 @@ lootItem = function(x,y,sheet,index){
 
 enemyShip = function (index, game, targetSprite, bullets, shipList) {
 
-	var x = targetSprite.x + (eo3.randomSign() * eo3.randomRange(750,2000));
-	var y = targetSprite.y + (eo3.randomSign() * eo3.randomRange(750,2000));
+	this.target = targetSprite;
+
+	var x = this.target.x + (eo3.randomSign() * eo3.randomRange(750,2000));
+	var y = this.target.y + (eo3.randomSign() * eo3.randomRange(750,2000));
 
 	this.game = game;
 	this.shipList = shipList;
 	this.sprite = game.add.sprite(x, y, 'parts', 1023);
-	this.target = targetSprite;
 	this.bullets = bullets;
 	this.sprite.name = index;
 	this.thrust = game.add.emitter(0,0,20);
@@ -362,166 +363,171 @@ enemyShip.prototype.fire = function () {
 
 }
 enemyShip.prototype.update = function() {
-	if (this.game.physics.distanceBetween(this.sprite, player.sprite) > 5000 && gamemode != '?attract'){
-		this.damage(31337); //magic damage value that kills without parts 
-	}
-	if (this.game.physics.distanceBetween(this.sprite, player.sprite) > 2000 && this.ai==3){
-		this.damage(31337);
-	}
+	if (this.game.physics.distanceBetween(this.sprite, player.sprite) > 5000 && gamemode != '?attract' ||
+			this.game.physics.distanceBetween(this.sprite, player.sprite) > 2000 && this.ai == 3){
+				var x = this.target.x + (eo3.randomSign() * eo3.randomRange(750,2000));
+				var y = this.target.y + (eo3.randomSign() * eo3.randomRange(750,2000));
+				this.sprite.reset(x,y);
+				if(this.ai==3){
 
-	if(this.ai==2){
-		//init asteroid stuff
-		this.sprite.body.velocity = game.physics.velocityFromRotation(game.physics.angleBetween(this.sprite, player.sprite), eo3.randomRange(25,100));	
-		this.sprite.body.angularVelocity=eo3.randomRange(25,100)*eo3.randomSign();
-		this.sprite.profile=0;
-		this.sprite.profileMax=0;
-		this.ai=3;
-	}
-	if(this.ai!=3){
-		if(!this.target.alive || (this.target == player.sprite && gamemode == '?attract') || 
-				(game.physics.distanceBetween(this.sprite,this.target) > this.target.profile * 1.5 && this.behavior=='chasing' && gamemode != '?attract')){
-					for(var i=0;i<this.aggroList.length;i++){
-						if(this.aggroList[i].alive){		//this will cause the enemy to keep chasing the player if they were fired upon.
-							this.target=this.aggroList[i]; // I believe this may cause a 'feature' where grudges are kept beyond the grave. 
-							break;
+								this.sprite.body.velocity = game.physics.velocityFromRotation(game.physics.angleBetween(this.sprite, player.sprite), eo3.randomRange(25,100));	
+				this.sprite.body.angularVelocity=eo3.randomRange(25,100)*eo3.randomSign();
+}
+			}
+
+			if(this.ai==2){
+				//init asteroid stuff
+				this.sprite.body.velocity = game.physics.velocityFromRotation(game.physics.angleBetween(this.sprite, player.sprite), eo3.randomRange(25,100));	
+				this.sprite.body.angularVelocity=eo3.randomRange(25,100)*eo3.randomSign();
+				this.sprite.profile=0;
+				this.sprite.profileMax=0;
+				this.ai=3;
+			}
+			if(this.ai!=3){
+				if(!this.target.alive || (this.target == player.sprite && gamemode == '?attract') || 
+					(game.physics.distanceBetween(this.sprite,this.target) > this.target.profile * 1.5 && this.behavior=='chasing' && gamemode != '?attract')){
+						for(var i=0;i<this.aggroList.length;i++){
+							if(this.aggroList[i].alive){		//this will cause the enemy to keep chasing the player if they were fired upon.
+								this.target=this.aggroList[i]; // I believe this may cause a 'feature' where grudges are kept beyond the grave. 
+								break;
+							}
+						}
+						if(i>=this.aggroList.length){			
+							this.target=player.sprite;
+							if(gamemode!='?attract' && game.physics.distanceBetween(this.sprite, this.target) > this.target.profile) {
+								this.behavior='neutral';
+							}else if(gamemode=='?attract'){
+								var minDistance=99999;
+								var targetIndex;
+								for(var i=0;i<enemies.length;i++){
+									if(enemies[i].sprite.alive && game.physics.distanceBetween(this.sprite, enemies[i].sprite) < minDistance){
+										minDistance = game.physics.distanceBetween(this.sprite, this.target);
+										targetIndex = i;
+									}
+								}
+
+								this.target=enemies[targetIndex].sprite;
+							}
 						}
 					}
-					if(i>=this.aggroList.length){			
-						this.target=player.sprite;
-						if(gamemode!='?attract' && game.physics.distanceBetween(this.sprite, this.target) > this.target.profile) {
-							this.behavior='neutral';
-						}else if(gamemode=='?attract'){
-							var minDistance=99999;
-							var targetIndex;
-							for(var i=0;i<enemies.length;i++){
-								if(enemies[i].sprite.alive && game.physics.distanceBetween(this.sprite, enemies[i].sprite) < minDistance){
-									minDistance = game.physics.distanceBetween(this.sprite, this.target);
-									targetIndex = i;
+
+				if(this.alive && this.target.alive){
+
+					if (this.speed > 0){
+						if(game.time.now>(this.nextThrust||0)){
+							this.thrust.x=this.sprite.x-(Math.cos(this.sprite.rotation)*(this.sprite.body.width)*0.5);
+							this.thrust.y=this.sprite.y-(Math.sin(this.sprite.rotation)*(this.sprite.body.width)*0.5);
+							this.thrust.minParticleSpeed.setTo(0,0);
+							this.thrust.maxParticleSpeed.setTo(0,0);
+							this.thrust.start(true, 1000, null, 1);
+							this.nextThrust = game.time.now + 100; 
+						}
+						eo3.addVelocity(this.sprite.rotation, this.speed, this.sprite.body.velocity);
+						this.speed=0;
+					}
+
+					if(this.ai==0){
+						this.sprite.rotation = this.game.physics.angleBetween(this.sprite, this.target);
+
+						if (this.game.physics.distanceBetween(this.sprite, this.target) < this.fireRange * 0.75 &&
+								this.game.physics.distanceBetween(this.sprite, this.target) < this.behavior=='neutral'? this.target.profile : this.target.profile*2){
+									this.fire(); 
+
+								}
+					} else if (this.ai == 1) {
+						var targetLocation = {
+							x:this.target.x,
+							y:this.target.y
+						};
+						//TODO add some kind of fleeing behavior
+
+						var targetDistance = this.game.physics.distanceBetween(this.sprite, this.target);
+						var targetAngle = this.game.physics.angleBetween(this.sprite, this.target); 
+
+						if(this.behavior=='strafing'){
+							if(targetDistance > this.fireRange){
+								this.behavior='chasing';
+							}
+						}
+						if(this.behavior=='chasing'){
+							if(targetDistance < 0.75 * this.fireRange){
+								this.behavior='strafing';
+							}
+							targetLocation.x += this.target.body.velocity.x;//hardmode! * Math.abs(targetDistance/this.sprite.body.velocity.x);			
+							targetLocation.y += this.target.body.velocity.y;//hardmode! * Math.abs(targetDistance/this.sprite.body.velocity.x);			
+							var targetDistance = this.game.math.distance(this.sprite.x, this.sprite.y, targetLocation.x, targetLocation.y);
+							var targetAngle = this.game.math.angleBetween(this.sprite.x, this.sprite.y, targetLocation.x, targetLocation.y);
+						}
+
+
+						if (game.math.radToDeg(Math.abs(this.sprite.rotation-targetAngle))>this.behavior=='neutral'?this.turnRate*30:this.turnRate){
+
+							if(this.sprite.rotation-targetAngle>0){
+								if(game.math.radToDeg(Math.abs(this.sprite.rotation-targetAngle))<180){	
+									this.left();
+								}else{
+									this.right();
+								}
+							}else{
+								if(game.math.radToDeg(Math.abs(this.sprite.rotation-targetAngle))<180){	
+									this.right();
+								}else{
+									this.left();
 								}
 							}
 
-							this.target=enemies[targetIndex].sprite;
-						}
-					}
-				}
 
-		if(this.alive && this.target.alive){
 
-			if (this.speed > 0){
-				if(game.time.now>(this.nextThrust||0)){
-					this.thrust.x=this.sprite.x-(Math.cos(this.sprite.rotation)*(this.sprite.body.width)*0.5);
-					this.thrust.y=this.sprite.y-(Math.sin(this.sprite.rotation)*(this.sprite.body.width)*0.5);
-					this.thrust.minParticleSpeed.setTo(0,0);
-					this.thrust.maxParticleSpeed.setTo(0,0);
-					this.thrust.start(true, 1000, null, 1);
-					this.nextThrust = game.time.now + 100; 
-				}
-				eo3.addVelocity(this.sprite.rotation, this.speed, this.sprite.body.velocity);
-				this.speed=0;
-			}
 
-			if(this.ai==0){
-				this.sprite.rotation = this.game.physics.angleBetween(this.sprite, this.target);
-
-				if (this.game.physics.distanceBetween(this.sprite, this.target) < this.fireRange * 0.75 &&
-						this.game.physics.distanceBetween(this.sprite, this.target) < this.behavior=='neutral'? this.target.profile : this.target.profile*2){
-							this.fire(); 
 
 						}
-			} else if (this.ai == 1) {
-				var targetLocation = {
-					x:this.target.x,
-					y:this.target.y
-				};
-				//TODO add some kind of fleeing behavior
 
-				var targetDistance = this.game.physics.distanceBetween(this.sprite, this.target);
-				var targetAngle = this.game.physics.angleBetween(this.sprite, this.target); 
-
-				if(this.behavior=='strafing'){
-					if(targetDistance > this.fireRange){
-						this.behavior='chasing';
-					}
-				}
-				if(this.behavior=='chasing'){
-					if(targetDistance < 0.75 * this.fireRange){
-						this.behavior='strafing';
-					}
-					targetLocation.x += this.target.body.velocity.x;//hardmode! * Math.abs(targetDistance/this.sprite.body.velocity.x);			
-					targetLocation.y += this.target.body.velocity.y;//hardmode! * Math.abs(targetDistance/this.sprite.body.velocity.x);			
-					var targetDistance = this.game.math.distance(this.sprite.x, this.sprite.y, targetLocation.x, targetLocation.y);
-					var targetAngle = this.game.math.angleBetween(this.sprite.x, this.sprite.y, targetLocation.x, targetLocation.y);
-				}
-
-
-				if (game.math.radToDeg(Math.abs(this.sprite.rotation-targetAngle))>this.behavior=='neutral'?this.turnRate*30:this.turnRate){
-
-					if(this.sprite.rotation-targetAngle>0){
-						if(game.math.radToDeg(Math.abs(this.sprite.rotation-targetAngle))<180){	
-							this.left();
-						}else{
-							this.right();
-						}
-					}else{
-						if(game.math.radToDeg(Math.abs(this.sprite.rotation-targetAngle))<180){	
-							this.right();
-						}else{
-							this.left();
-						}
-					}
-
-
-
-
-
-				}
-
-				if (targetDistance < this.target.profile) {
-					if(this.behavior=='neutral'){
-						this.behavior='chasing';
-					}
-					for(var i=0;i<enemies.length;i++){
-						if(this.game.physics.distanceBetween(this.sprite, enemies[i].sprite) < this.target.profile){
-							if(enemies[i].behavior=='neutral'){
-								enemies[i].behavior='chasing';
+						if (targetDistance < this.target.profile) {
+							if(this.behavior=='neutral'){
+								this.behavior='chasing';
 							}
-						}
-					}
-				}
-
-				if (this.target!= player.sprite || (targetDistance < this.target.profile*10 && this.behavior!='neutral')){
-					if(Math.abs(targetAngle-this.sprite.rotation)<0.6 ||
-							Math.abs(this.sprite.rotation-targetAngle)<0.6){
-								this.up();
-							}
-				}
-				if (targetDistance < this.fireRange * 0.75 &&
-						targetDistance < this.target.profile){
-							if(Math.abs(targetAngle-this.sprite.rotation)<0.2 ||
-									Math.abs(targetAngle-this.sprite.rotation)>Math.PI-0.2){
-										this.fire(); 
+							for(var i=0;i<enemies.length;i++){
+								if(this.game.physics.distanceBetween(this.sprite, enemies[i].sprite) < this.target.profile){
+									if(enemies[i].behavior=='neutral'){
+										enemies[i].behavior='chasing';
 									}
-
+								}
+							}
 						}
 
-			}
+						if (this.target!= player.sprite || (targetDistance < this.target.profile*10 && this.behavior!='neutral')){
+							if(Math.abs(targetAngle-this.sprite.rotation)<0.6 ||
+									Math.abs(this.sprite.rotation-targetAngle)<0.6){
+										this.up();
+									}
+						}
+						if (targetDistance < this.fireRange * 0.75 &&
+								targetDistance < this.target.profile){
+									if(Math.abs(targetAngle-this.sprite.rotation)<0.2 ||
+											Math.abs(targetAngle-this.sprite.rotation)>Math.PI-0.2){
+												this.fire(); 
+											}
+
+								}
+
+					}
 
 
-			if (game.time.now > this.nextEnergy){
-				if(this.energy+this.energyAmount>this.energyMax){
-					this.energy=this.energyMax;	
-				}else{
-					this.energy+=this.energyAmount;
+					if (game.time.now > this.nextEnergy){
+						if(this.energy+this.energyAmount>this.energyMax){
+							this.energy=this.energyMax;	
+						}else{
+							this.energy+=this.energyAmount;
+						}
+						this.nextEnergy = game.time.now + this.energyRate;
+					}
+					if(Math.random()>Math.cos((this.health-this.healthMax)/this.healthMax)){
+						if(Math.random()>(this.health/this.healthMax)){
+							sparks(pew,this.sprite);
+						}
+					}
 				}
-				this.nextEnergy = game.time.now + this.energyRate;
 			}
-			if(Math.random()>Math.cos((this.health-this.healthMax)/this.healthMax)){
-				if(Math.random()>(this.health/this.healthMax)){
-					sparks(pew,this.sprite);
-				}
-			}
-		}
-	}
 }
 ;
 var resolutionX=Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
@@ -1137,12 +1143,12 @@ function create () {
 		backdrop3.fixedToCamera = true;
 		backdrop3.scale.x=2;
 		backdrop3.scale.y=2;
-asteroids.push([-1, -1, -1, -1, -1, 18, 19, 18, 25, 15, 16, 22, 24, 14, 17, -1, 16, 23, 21, -1, -1, -1, -1, -1, -1] );
-asteroids.push([18, 19, 18, 21, 20, 22, 24, -1, -1, 20, 23, 21, -1, -1, -1, -1] );
-asteroids.push([-1, -1, -1, -1, -1, -1, -1, -1, 10, 11, 8, -1, -1, -1, 20, 22, 24, 24, 19, 18, 21, -1, 20, 23, 25, 24, 21, -1, -1, -1, 46, 46, 21, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1] )
-		asteroids.push([-1,14,-1,-1,-1,16,15,-1,-1,14,64,-1,-1,16,17,-1]); 
+		asteroids.push([-1, -1, -1, -1, -1, 18, 19, 18, 25, 15, 16, 22, 24, 14, 17, -1, 16, 23, 21, -1, -1, -1, -1, -1, -1] );
+		asteroids.push([18, 19, 18, 21, 20, 22, 24, -1, -1, 20, 23, 21, -1, -1, -1, -1] );
+		asteroids.push([-1, -1, -1, -1, -1, -1, -1, -1, 10, 11, 8, -1, -1, -1, 20, 22, 24, 24, 19, 18, 21, -1, 20, 23, 25, 24, 21, -1, -1, -1, 46, 46, 21, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1] )
+			asteroids.push([-1,14,-1,-1,-1,16,15,-1,-1,14,64,-1,-1,16,17,-1]); 
 		asteroids.push([20,19,-1,-1,35,22,36,37,20,25,21,-1,-1,21,-1,-1]); 
-asteroids.push([-1,18,19,-1,6,25,22,-1,14,20,38,39,15,-1,-1,-1]); 
+		asteroids.push([-1,18,19,-1,6,25,22,-1,14,20,38,39,15,-1,-1,-1]); 
 		asteroids.push([18, 104, 19, 20, 23, 21, -1, -1, -1]);
 		asteroids.push([14, 9, 16, 17]);
 		asteroids.push([14, 15, 16, 17]);
@@ -1203,7 +1209,7 @@ asteroids.push([-1,18,19,-1,6,25,22,-1,14,20,38,39,15,-1,-1,-1]);
 		ships.push([35, 3, 131, 37]);
 		ships.push([-1, -1, -1, -1, 35, 3, 131, 37, -1, -1, -1, -1, -1, -1, -1, -1]);
 		ships.sort(lengthSort);
-		
+
 		var temp = game.add.sprite(0,0,'parts');
 		temp.visible = false;
 
