@@ -270,6 +270,7 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 	this.sprite.body.velocity.y*=.3+Math.random()*0.7;
 	game.physics.velocityFromRotation(this.sprite.rotation, 100, this.sprite.body.velocity);
 	this.health*=enemyHealthCoef;
+	this.healthMax*=enemyHealthCoef;
 }
 
 enemyShip.prototype.destroyParts = function() {
@@ -300,6 +301,7 @@ enemyShip.prototype.damage = function(dmg, aggro) {
 
 			if (dmg != 31337){
 				if(Math.random() < globalDropRate){
+					spawnLoots(Math.floor(eo3.randomRange(0,Math.sqrt(this.ship.length))), this.sprite.x, this.sprite.y);
 					this.parts[j].sprite.destroy();
 				}else{
 					this.parts[j].sprite.lifespan = eo3.randomRange(1500,3000);
@@ -373,7 +375,7 @@ enemyShip.prototype.update = function() {
 	}
 	if(this.ai!=3){
 		if(!this.target.alive || (this.target == player.sprite && gamemode == '?attract') || 
-				(game.physics.distanceBetween(this.sprite,this.target) > this.target.profile * 2 && this.behavior=='chasing' && gamemode != '?attract')){
+				(game.physics.distanceBetween(this.sprite,this.target) > this.target.profile * 1.5 && this.behavior=='chasing' && gamemode != '?attract')){
 					for(var i=0;i<this.aggroList.length;i++){
 						if(this.aggroList[i].alive){		//this will cause the enemy to keep chasing the player if they were fired upon.
 							this.target=this.aggroList[i]; // I believe this may cause a 'feature' where grudges are kept beyond the grave. 
@@ -573,7 +575,7 @@ playerShip.prototype.initPlayerShip = function (ship) {
 	this.energyMax=10;
 	this.energyRate=1000;
 	this.energyAmount=2;
-
+	this.ore=0;
 	this.nextProfileDecay =0;
 	this.nextEnergy = 0;
 	this.nextFire = 0;
@@ -731,10 +733,11 @@ var nextSpawn=0;
 var nextCamera=0; //attract
 var damageCoef=0.3; //global damage tuner
 var targetDamageCoef=5; //not so global damage tuner
-var enemyHealthCoef=0.7; 
+var enemyHealthCoef=1; 
 var cursors;
 var pew;
 var bullets;
+var loots;
 var nextFire = 0;
 
 var partShip;
@@ -789,19 +792,19 @@ gameUI.prototype.calculatePartPosition = function() {
 	}
 	return {'x':outx,'y':outy};
 }
-gameUI.prototype.clearRadar = function(radar) {
-	for (var i = 0; i < radar.length; i++){
-		radar[i].destroy();	
+gameUI.prototype.clearRadar = function() {
+	for (var i = 0; i < this.radar.length; i++){
+		this.radar[i].destroy();	
 	}
-	if(radar.length){
-		radar=[];
+	if(this.radar.length){
+		this.radar=[];
 	}
 }	
-gameUI.prototype.resetRadar = function(radar, targetCount, color) {
-	if(radar.length!=targetCount){
-		this.clearRadar(radar);
-		for (var i = 0; i < targetCount; i++){
-			radar.push(game.add.text(200,100, '*',{ font:'8px monospace', fill: color, align: 'center' }));
+gameUI.prototype.resetRadar = function() {
+	if(this.radar.length!=player.radarTargets){
+		this.clearRadar();
+		for (var i = 0; i < player.radarTargets; i++){
+			this.radar.push(game.add.text(200,100, '*',{ font:'8px monospace', fill: 'rgb(255,160,160)', align: 'center' }));
 		}
 	}
 }
@@ -828,9 +831,7 @@ gameUI.prototype.initCombatUi = function() {
 	this.partText = game.add.text(0,0,'',{font:'1.5em monospace', fill: 'rgb(255,255,255)', align: 'left'});
 
 	this.radar = [];
-	this.resetRadar(this.radar, player.radarTargets,'rgb(255,160,160)');
-	this.oreRadar = [];
-	this.resetRadar(this.oreRadar, player.radarOreTargets,'rgb(160,160,255)');
+	this.resetRadar();
 }
 
 gameUI.prototype.bar = function (targetText, offset, numerator, denominator) {
@@ -882,7 +883,7 @@ gameUI.prototype.statsPing = function(target) {
 }
 gameUI.prototype.radarPing = function() {
 	var s='';
-	this.resetRadar(this.radar, player.radarTargets,'rgb(255,160,160)');
+	this.resetRadar();
 	for(var i=0;i<this.radar.length;i++){
 		var targetAngle=game.physics.angleBetween(player.sprite, this.enemies[i].sprite);
 		var targetDistance=game.physics.distanceBetween(player.sprite, this.enemies[i].sprite);
@@ -906,27 +907,6 @@ gameUI.prototype.radarPing = function() {
 		this.radar[i].y = player.sprite.body.y + Math.sin(targetAngle) * 180;	
 	}
 }
-gameUI.prototype.oreRadarPing = function() {
-	this.resetRadar(this.oreRadar, player.radarOreTargets,'rgb(160,160,255)');
-	for(var i=0;i<this.oreRadar.length;i++){
-		if(this.asteroids[i].sprite.profile){
-			var targetAngle=game.physics.angleBetween(player.sprite, this.asteroids[i].sprite);
-			var targetDistance=game.physics.distanceBetween(player.sprite, this.asteroids[i].sprite);
-			var s ='$';
-			if (targetDistance < 1000 && game.time.now % 1000 > 500)  {
-				s='[$]';
-			}
-
-			this.oreRadar[i].setText(s);
-			this.oreRadar[i].x = player.sprite.body.x + Math.cos(targetAngle) * 180 - 0.5 * this.oreRadar[i].width;
-			this.oreRadar[i].y = player.sprite.body.y + Math.sin(targetAngle) * 180;	
-
-		}else{
-			this.oreRadar[i].setText('');
-		}
-
-	}
-}
 gameUI.prototype.wordsPing = function() {
 	this.words.x = player.sprite.body.x;
 	this.words.y = player.sprite.body.y + 200;
@@ -940,7 +920,6 @@ gameUI.prototype.update = function() {
 		this.asteroids=enemies.slice(0);
 		this.asteroids.sort(asteroidSort);
 		this.radarPing();
-		this.oreRadarPing();
 		this.statsPing(player);
 		this.wordsPing();
 	}
@@ -988,8 +967,7 @@ gameUI.prototype.partsUI = function (ship) {
 	}
 	this.healthLine.setText('');
 	this.energyLine.setText('');
-	this.clearRadar(this.radar);
-	this.clearRadar(this.oreRadar);
+	this.clearRadar();
 	this.partsSelector = game.add.sprite(player.sprite.x-300,player.sprite.y-100,'parts',0);
 	this.updatePart();
 	this.partsSelector.scale.setTo(4,4);
@@ -1155,7 +1133,13 @@ function create () {
 		backdrop3.fixedToCamera = true;
 		backdrop3.scale.x=2;
 		backdrop3.scale.y=2;
-
+asteroids.push([-1, -1, -1, -1, -1, 18, 19, 18, 25, 15, 16, 22, 24, 14, 17, -1, 16, 23, 21, -1, -1, -1, -1, -1, -1] );
+asteroids.push([18, 19, 18, 21, 20, 22, 24, -1, -1, 20, 23, 21, -1, -1, -1, -1] );
+asteroids.push([-1, -1, -1, -1, -1, -1, -1, -1, 10, 11, 8, -1, -1, -1, 20, 22, 24, 24, 19, 18, 21, -1, 20, 23, 25, 24, 21, -1, -1, -1, 46, 46, 21, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1] )
+		asteroids.push([-1,14,-1,-1,-1,16,15,-1,-1,14,64,-1,-1,16,17,-1]); 
+		asteroids.push([20,19,-1,-1,35,22,36,37,20,25,21,-1,-1,21,-1,-1]); 
+asteroids.push([-1,18,19,-1,6,25,22,-1,14,20,38,39,15,-1,-1,-1]); 
+		asteroids.push([18, 104, 19, 20, 23, 21, -1, -1, -1]);
 		asteroids.push([14, 9, 16, 17]);
 		asteroids.push([14, 15, 16, 17]);
 		asteroids.push([-1, 14, 15, 18, 23, 17, 20, 17, -1]);
@@ -1258,6 +1242,12 @@ function create () {
 		bullets.setAll('outOfBoundsKill', true);
 		bullets.setAll('lifespan', 1000);
 
+		loots = game.add.group();
+		loots.createMultiple(30, 'parts');
+		loots.setAll('anchor.x',0.5);
+		loots.setAll('anchor.y', 0.5);
+		loots.setAll('outOfBoundsKill', true);
+		loots.setAll('lifespan', 60000);
 		game.camera.follow(player.sprite);
 		game.camera.focusOnXY(0, 0);
 
@@ -1283,7 +1273,14 @@ function create () {
 	}
 	ui.initCombatUi();
 }
-
+function pullLootToPlayer(s) {
+	s.acceleration+=3;
+	game.physics.accelerateToObject(s,player.sprite.body,s.acceleration);
+	if(s.acceleration>500){
+		var targetAngle = game.physics.angleBetween(s, player.sprite); 
+		game.physics.velocityFromRotation(targetAngle, s.acceleration, s.body.velocity);
+	}
+}
 function update () {
 	if(gamemode=='?build'){
 
@@ -1311,6 +1308,13 @@ function update () {
 			nextCamera=game.time.now+eo3.randomRange(5000,15000);
 		}
 
+		if(loots.getFirstAlive() != null) {
+
+			for (var i = 0; i < player.parts.length; i++) {
+				game.physics.collide(loots, player.parts[i].sprite, playerGotLoot, null, this);
+			}
+			loots.forEachAlive(pullLootToPlayer, this);
+		}
 		if(enemyBullets.getFirstAlive() != null) {
 
 			for (var i = 0; i < player.parts.length; i++) {
@@ -1416,7 +1420,29 @@ function sparkExplosion(emitter, sprite){
 	emitter.particleDrag.setTo(200,200);
 	emitter.start(true,600,null, 200);
 }
+function spawnLoots(_count, x, y){
+	var lootCount = _count;
+	if(loots.countDead() < lootCount){
+		lootCount = loots.countDead();
+	}
 
+	for(var i = 0; i < lootCount; i++)
+	{
+		var loot = loots.getFirstDead();
+		loot.loadTexture('parts', Math.floor(eo3.randomRange(0,4))+26);
+		loot.lifespan = 60000;
+		loot.angularVelocity = eo3.randomRange(-300,300);
+		loot.reset(x + eo3.randomRange(-16,16), y+eo3.randomRange(-16,16));
+		loot.rotation = Math.random()*Math.PI;
+		loot.body.exchangeVelocity = false;
+		loot.acceleration=0;
+		game.physics.velocityFromRotation(loot.rotation, eo3.randomRange(100,300), loot.body.velocity);
+	}
+}
+function playerGotLoot (sprite, loot) {
+	loot.kill();
+	player.ore+=1;
+}
 function bulletHitPlayer (sprite, bullet) {
 	bullet.kill();
 
