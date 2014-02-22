@@ -814,7 +814,7 @@ gameUI.prototype.resetRadar = function() {
 	if(this.radar.length!=player.radarTargets){
 		this.clearRadar();
 		for (var i = 0; i < player.radarTargets; i++){
-			this.radar.push(game.add.text(200,100, '*',{ font:'8px monospace', fill: 'rgb(255,160,160)', align: 'center' }));
+			this.radar.push(game.add.text(200,100, '*',{ font:'12px monospace', fill: 'rgb(255,130,130)', align: 'center' }));
 		}
 	}
 }
@@ -897,6 +897,7 @@ gameUI.prototype.radarPing = function() {
 	for(var i=0;i<this.radar.length;i++){
 		var targetAngle=game.physics.angleBetween(player.sprite, this.enemies[i].sprite);
 		var targetDistance=game.physics.distanceBetween(player.sprite, this.enemies[i].sprite);
+		this.radar[i].style.fill="rgb(230,96,96)";
 		if(this.enemies[i].sprite.profile>player.sprite.profileMax*2){
 			s='!!!@!!!';
 		}else if(this.enemies[i].sprite.profile>player.sprite.profileMax){
@@ -908,6 +909,7 @@ gameUI.prototype.radarPing = function() {
 		}
 		if (targetDistance < 1000 && game.time.now % 1000 > 500)  {
 			s='['+s+']';
+			this.radar[i].style.fill="rgb(255,64,64)";
 		} else if (targetDistance < 1000) {
 			s=' '+s+' ';
 		}
@@ -1290,6 +1292,9 @@ function create () {
 	ui.initCombatUi();
 }
 function pullLootToPlayer(s) {
+	if (!player.alive){
+		s.kill();
+	}
 	s.acceleration+=3;
 	game.physics.accelerateToObject(s,player.sprite.body,s.acceleration);
 	if(s.acceleration>500){
