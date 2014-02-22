@@ -821,13 +821,12 @@ gameUI.prototype.resetRadar = function() {
 gameUI.prototype.initCombatUi = function() {
 
 	destroyIfExists(this.healthLine);
-	this.healthLine = game.add.text(200,100, '',{ font:'8px monospace', fill: 'rgb(96,96,240)', align: 'left' });
+	this.healthLine = game.add.text(200,100, '',{ font:'14px monospace', fill: 'rgb(96,96,240)', align: 'left' });
 	this.healthLine.flash = 0;
 
 	destroyIfExists(this.energyLine);
-	this.energyLine = game.add.text(200,100, '',{ font:'8px monospace', fill: 'rgb(240,64,255)', align: 'left' });
+	this.energyLine = game.add.text(200,100, '',{ font:'14px monospace', fill: 'rgb(240,64,255)', align: 'left' });
 	this.energyLine.flash = 0;
-
 	destroyIfExists(this.statsLine);
 	this.statsLine = game.add.text(200,100, '',{ font:'1em monospace', fill: 'rgb(240,240,240)', align: 'left' });
 
