@@ -9807,7 +9807,7 @@
 		 * @method Phaser.Signal#removeAll
 		 */
 		removeAll: function () {
-			if(typeof(this._bindings.length)!='undefined'){ //FIXME
+			if(typeof(this._bindings)!='undefined'){ //FIXME
 			var n = this._bindings.length;
 			while (n--) {
 				this._bindings[n]._destroy();

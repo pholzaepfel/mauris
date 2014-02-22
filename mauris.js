@@ -852,7 +852,7 @@ s='◼◼◼◼◼◼◼';
 	var n=Math.floor((numerator/denominator)*barSize);
 	if(n<0){n=0;}
 	s+=repeat('◼',n);
-	s+=repeat(' ',barSize-n); //white square
+	s+=repeat('◫',barSize-n); //white square
 	s+='◸';
 	targetText.setText(s);
 }
@@ -1171,6 +1171,8 @@ function create () {
 		asteroids.push([-1, 18, 19, -1, 18, 23, 25, 19, 106, 30, 30, 107, -1, 106, 107, -1]);
 		asteroids.sort(lengthSort);
 
+ships.push([129,128,33,-1,66,130,-1,-1,-1]); 
+		ships.push([12,9,131,71,71,-1,35,1,41,104,105,73,-1,31,131,73,40,77,-1,109,103,1,47,73,-1,-1,-1,108,-1,-1,-1,-1,-1,-1,-1,-1]);  
 		ships.push([66, 34, -1, -1]) //default player ship? 
 			ships.push([70, 12, 12, 104, 2, 5, 102, 40, 40]);
 		ships.push([10, 33, 13, 101, 32, 65, 65, 75, 32, 72, 72, 107, 66, 40, 104, 105]);
