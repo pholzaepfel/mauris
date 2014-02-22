@@ -821,11 +821,11 @@ gameUI.prototype.resetRadar = function() {
 gameUI.prototype.initCombatUi = function() {
 
 	destroyIfExists(this.healthLine);
-	this.healthLine = game.add.text(200,100, '',{ font:'8px monospace', fill: 'rgb(200,240,240)', align: 'left' });
+	this.healthLine = game.add.text(200,100, '',{ font:'8px monospace', fill: 'rgb(96,96,240)', align: 'left' });
 	this.healthLine.flash = 0;
 
 	destroyIfExists(this.energyLine);
-	this.energyLine = game.add.text(200,100, '',{ font:'8px monospace', fill: 'rgb(200,240,240)', align: 'left' });
+	this.energyLine = game.add.text(200,100, '',{ font:'8px monospace', fill: 'rgb(240,64,255)', align: 'left' });
 	this.energyLine.flash = 0;
 
 	destroyIfExists(this.statsLine);
@@ -847,12 +847,14 @@ gameUI.prototype.initCombatUi = function() {
 gameUI.prototype.bar = function (targetText, offset, numerator, denominator) {
 	targetText.x = player.sprite.body.x+(player.sprite.body.width/2);
 	targetText.y = player.sprite.body.y+player.sprite.body.height+30+offset;
-	var s='[';
-	var n=Math.floor((numerator/denominator)*8);
+s='◼◼◼◼◼◼◼';	
+	var barSize=Math.floor(denominator/2);	
+	var s='◿';
+	var n=Math.floor((numerator/denominator)*barSize);
 	if(n<0){n=0;}
-	s+=repeat('*',n);
-	s+=repeat(' ',8-n);
-	s+=']';
+	s+=repeat('◼',n);
+	s+=repeat(' ',barSize-n); //white square
+	s+='◸';
 	targetText.setText(s);
 }
 
@@ -897,19 +899,22 @@ gameUI.prototype.radarPing = function() {
 	for(var i=0;i<this.radar.length;i++){
 		var targetAngle=game.physics.angleBetween(player.sprite, this.enemies[i].sprite);
 		var targetDistance=game.physics.distanceBetween(player.sprite, this.enemies[i].sprite);
-		this.radar[i].style.fill="rgb(230,96,96)";
+		var s='●'; //I cannot believe this circle renders in my terminal
+		var n=Math.floor(255-(targetDistance/2-900));
+		if(n<0){n=0;}if(n>255){n=255};
+		this.radar[i].style.fill="rgb("+n+",96,96)";
 		if(this.enemies[i].sprite.profile>player.sprite.profileMax*2){
-			s='!!!@!!!';
+			this.radar[i].style.font='28px monospace';
 		}else if(this.enemies[i].sprite.profile>player.sprite.profileMax){
-			s='!!@!!';
+			this.radar[i].style.font='22px monospace';
 		}else if(this.enemies[i].sprite.profile>player.sprite.profileMax*0.5){
-			s='!@!';
+			this.radar[i].style.font='16px monospace';
 		}else{
-			s='@';
+			this.radar[i].style.font='12px monospace';
 		}
 		if (targetDistance < 1000 && game.time.now % 1000 > 500)  {
 			s='['+s+']';
-			this.radar[i].style.fill="rgb(255,64,64)";
+			this.radar[i].style.fill="rgb(255,0,0)";
 		} else if (targetDistance < 1000) {
 			s=' '+s+' ';
 		}
