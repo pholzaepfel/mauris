@@ -3,14 +3,14 @@ var cmp = [
 	'id':0, 
 	'drops':false,
 	'name':'Component0',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){}
 },
 {
 	'id':1,
 	'drops':true,
 	'name':'Rusted Wing',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.turnRate+=0.9;
 		target.acceleration+=0.6;
@@ -21,7 +21,7 @@ var cmp = [
 	'id':2,
 	'drops':true,
 	'name':'Ancient Railgun',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.bulletSprite=3;
 		target.fireEnergy+=1;
@@ -36,7 +36,7 @@ var cmp = [
 	'id':3,
 	'drops':true,
 	'name':'Capacitor Unit',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.energyMax+=10;
 		target.energyAmount+=1;
@@ -46,7 +46,7 @@ var cmp = [
 	'id':4,
 	'drops':true,
 	'name':'VariJet',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.turnRate+=0.5;
 		target.acceleration+=0.3;
@@ -56,7 +56,7 @@ var cmp = [
 	'id':5,
 	'drops':true,
 	'name':'Overpowered Burst Laser',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.fireVelocity+=200;
 		target.fireRate*=0.25;
@@ -68,7 +68,7 @@ var cmp = [
 	'id':6,
 	'drops':false,
 	'name':'Alien Pustule',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.fireDamage+=1;
 		target.energyMax+=2;
@@ -79,7 +79,7 @@ var cmp = [
 	'id':7,
 	'drops':false,
 	'name':'Alien Pustule',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.fireDamage+=1;
 		target.energyMax+=2;
@@ -90,7 +90,7 @@ var cmp = [
 	'id':8,
 	'drops':true,
 	'name':'Shield Generator',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.TODO=1;
 	}
@@ -99,7 +99,7 @@ var cmp = [
 	'id':9,
 	'drops':true,
 	'name':'Mineral Scanner',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.radarTargets+=1;
 		target.radarOreTargets+=2; //TODO
@@ -109,7 +109,7 @@ var cmp = [
 	'id':10,
 	'drops':true,
 	'name':'Fusion Core',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.energyMax+=2;
 		target.energyRate*=0.9;
@@ -121,7 +121,7 @@ var cmp = [
 	'id':11,
 	'drops':true,
 	'name':'Fusion Core',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.energyMax+=2;
 		target.energyRate*=0.9;
@@ -133,7 +133,7 @@ var cmp = [
 	'id':12,
 	'drops':true,
 	'name':'Xenoform Resprite',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.energyRate*=0.5;
 		target.sprite.profile+=100;
@@ -144,7 +144,7 @@ var cmp = [
 	'id':13,
 	'drops':true,
 	'name':'Fusion Bolt Cannon',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.bulletSprite=0; //TODO
 		target.fireEnergy*=2;
@@ -161,7 +161,7 @@ var cmp = [
 	'id':14,
 	'drops':false,
 	'name':'Asteroid',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.ai=2;
 	}
@@ -170,7 +170,7 @@ var cmp = [
 	'id':15,
 	'drops':false,
 	'name':'Asteroid',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 		target.ai=2;
@@ -180,7 +180,7 @@ var cmp = [
 	'id':16,
 	'drops':false,
 	'name':'Asteroid',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.ai=2;
 
@@ -190,7 +190,7 @@ var cmp = [
 	'id':17,
 	'drops':false,
 	'name':'Asteroid',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.ai=2;
 
@@ -200,7 +200,7 @@ var cmp = [
 	'id':18,
 	'drops':false,
 	'name':'Asteroid',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.ai=2;
 
@@ -210,7 +210,7 @@ var cmp = [
 	'id':19,
 	'drops':false,
 	'name':'Asteroid',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.ai=2;
 
@@ -220,7 +220,7 @@ var cmp = [
 	'id':20,
 	'drops':false,
 	'name':'Asteroid',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.ai=2;
 
@@ -230,7 +230,7 @@ var cmp = [
 	'id':21,
 	'drops':false,
 	'name':'Asteroid',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.ai=2;
 
@@ -240,7 +240,7 @@ var cmp = [
 	'id':22,
 	'drops':false,
 	'name':'Asteroid',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.ai=2;
 
@@ -250,7 +250,7 @@ var cmp = [
 	'id':23,
 	'drops':false,
 	'name':'Asteroid',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.ai=2;
 
@@ -260,7 +260,7 @@ var cmp = [
 	'id':24,
 	'drops':false,
 	'name':'Asteroid',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.ai=2;
 
@@ -270,7 +270,7 @@ var cmp = [
 	'id':25,
 	'drops':false,
 	'name':'Asteroid',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.ai=2;
 
@@ -280,7 +280,7 @@ var cmp = [
 	'id':26,
 	'drops':false,
 	'name':'Loot',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -289,7 +289,7 @@ var cmp = [
 	'id':27,
 	'drops':false,
 	'name':'Loot',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -298,7 +298,7 @@ var cmp = [
 	'id':28,
 	'drops':false,
 	'name':'Loot',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -307,7 +307,7 @@ var cmp = [
 	'id':29,
 	'drops':false,
 	'name':'Loot',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -316,7 +316,7 @@ var cmp = [
 	'id':30,
 	'drops':true,
 	'name':'Battle-worn Panel',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.health+=6;
 		target.fireDamage+=1;
@@ -327,7 +327,7 @@ var cmp = [
 	'id':31,
 	'drops':true,
 	'name':'Reeunk Afterburner',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.TODO=1;
 	}
@@ -336,7 +336,7 @@ var cmp = [
 	'id':32,
 	'drops':true,
 	'name':'Radioactive Thruster',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.acceleration+=1;
 		target.turnRate+=0.2;
@@ -347,7 +347,7 @@ var cmp = [
 	'id':33,
 	'drops':true,
 	'name':'Derelict Crewpod',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.health+=2;
 		target.energyRate*=0.8;
@@ -359,7 +359,7 @@ var cmp = [
 	'id':34,
 	'drops':true,
 	'name':'Filthy Cockpit',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.turnRate+=0.3;
 		target.acceleration+=0.2;
@@ -370,7 +370,7 @@ var cmp = [
 	'id':35,
 	'drops':true,
 	'name':'Fusion Thrust',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.acceleration+=0.7;
 		target.health+=1;
@@ -380,7 +380,7 @@ var cmp = [
 	'id':36,
 	'drops':true,
 	'name':'Standard Quarters',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.health+=3;
 		target.energyAmount+1;
@@ -392,7 +392,7 @@ var cmp = [
 	'id':37,
 	'drops':true,
 	'name':'Command Center',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.health+=6;
 		target.turnRate+=0.2;
@@ -403,7 +403,7 @@ var cmp = [
 	'id':38,
 	'drops':false,
 	'name':'Alien Pustule',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.fireDamage+=1;
 		target.energyMax+=2;
@@ -414,7 +414,7 @@ var cmp = [
 	'id':39,
 	'drops':false,
 	'name':'Alien Pustule',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.fireDamage+=1;
 		target.energyMax+=2;
@@ -425,7 +425,7 @@ var cmp = [
 	'id':40,
 	'drops':true,
 	'name':'Experimental Navigation System',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.turnSpeed+=0.6;
 		target.fireRate*=0.9;
@@ -437,7 +437,7 @@ var cmp = [
 	'id':41,
 	'drops':true,
 	'name':'Force Multiplier',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.bulletBehavior.push(function(bullet){
 			bullet.rotation+=Math.random()*0.4-0.2;
@@ -452,7 +452,7 @@ var cmp = [
 	'id':42,
 	'drops':true,
 	'name':'Fusion Core',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.energyMax+=2;
 		target.energyRate*=0.9;
@@ -464,7 +464,7 @@ var cmp = [
 	'id':43,
 	'drops':true,
 	'name':'Fusion Core',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.energyMax+=2;
 		target.energyRate*=0.9;
@@ -476,7 +476,7 @@ var cmp = [
 	'id':44,
 	'drops':true,
 	'name':'Thrust Package',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.fireDamage+=1;
 		target.acceleration+=0.6;
@@ -487,7 +487,7 @@ var cmp = [
 	'id':45,
 	'drops':true,
 	'name':'Secure Dormitory',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.health+=10;
 		target.energyRate*=1.2;
@@ -499,7 +499,7 @@ var cmp = [
 	'id':46,
 	'drops':true,
 	'name':'Flexible Grid',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.turnRate+=0.3;
 		target.profileDecay+=20;
@@ -509,7 +509,7 @@ var cmp = [
 	'id':47,
 	'drops':true,
 	'name':'Gargantuan Plasma Thrower',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.bulletBehavior.push(function(bullet){
 			bullet.rotation+=Math.random()*0.5-0.25;
@@ -525,7 +525,7 @@ var cmp = [
 	'id':48,
 	'drops':false,
 	'name':'Component48',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -534,7 +534,7 @@ var cmp = [
 	'id':49,
 	'drops':false,
 	'name':'Component49',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -543,7 +543,7 @@ var cmp = [
 	'id':50,
 	'drops':false,
 	'name':'Component50',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -552,7 +552,7 @@ var cmp = [
 	'id':51,
 	'drops':false,
 	'name':'Component51',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -561,7 +561,7 @@ var cmp = [
 	'id':52,
 	'drops':false,
 	'name':'Component52',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -570,7 +570,7 @@ var cmp = [
 	'id':53,
 	'drops':false,
 	'name':'Component53',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -579,7 +579,7 @@ var cmp = [
 	'id':54,
 	'drops':false,
 	'name':'Component54',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -588,7 +588,7 @@ var cmp = [
 	'id':55,
 	'drops':false,
 	'name':'Component55',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -597,7 +597,7 @@ var cmp = [
 	'id':56,
 	'drops':false,
 	'name':'Component56',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -606,7 +606,7 @@ var cmp = [
 	'id':57,
 	'drops':false,
 	'name':'Component57',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -615,7 +615,7 @@ var cmp = [
 	'id':58,
 	'drops':false,
 	'name':'Component58',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -624,7 +624,7 @@ var cmp = [
 	'id':59,
 	'drops':false,
 	'name':'Component59',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -633,7 +633,7 @@ var cmp = [
 	'id':60,
 	'drops':false,
 	'name':'Component60',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -642,7 +642,7 @@ var cmp = [
 	'id':61,
 	'drops':false,
 	'name':'Component61',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -651,7 +651,7 @@ var cmp = [
 	'id':62,
 	'drops':false,
 	'name':'Component62',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -660,7 +660,7 @@ var cmp = [
 	'id':63,
 	'drops':false,
 	'name':'Component63',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -669,7 +669,7 @@ var cmp = [
 	'id':64,
 	'drops':true,
 	'name':'Targeting System',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.radarTargets+=2;
 		target.radarShowInEnemyRange=true;
@@ -679,7 +679,7 @@ var cmp = [
 	'id':65,
 	'drops':true,
 	'name':'Worn Armor Plating',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.health+=13;
 		target.acceleration*=0.8;
@@ -691,7 +691,7 @@ var cmp = [
 	'id':66,
 	'drops':true,
 	'name':'Discount Attitude Jet',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.turnRate+=0.7;
 		target.acceleration+=0.3;
@@ -701,7 +701,7 @@ var cmp = [
 	'id':67,
 	'drops':true,
 	'name':'Long Range Sensor',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.radarTargets+=2;
 		target.radarShowInRange=true;
@@ -711,7 +711,7 @@ var cmp = [
 	'id':68,
 	'drops':true,
 	'name':'Durasteel Plating',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.health+=18;
 		target.acceleration*=0.7;
@@ -723,7 +723,7 @@ var cmp = [
 	'id':69,
 	'drops':true,
 	'name':'Angular Ion Thrust',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.turnRate+=1
 	}
@@ -732,7 +732,7 @@ var cmp = [
 	'id':70,
 	'drops':true,
 	'name':'Low-Profile Wing',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.sprite.profile-=25;//refund standard profile cost
 		target.sprite.profile*=0.9;
@@ -745,7 +745,7 @@ var cmp = [
 	'id':71,
 	'drops':true,
 	'name':'Command Deck',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.health+=5;
 		target.turnSpeed+=0.1;
@@ -759,7 +759,7 @@ var cmp = [
 	'id':72,
 	'drops':true,
 	'name':'Crew Pod',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.health+=6;
 		target.energyMax-=2;
@@ -771,7 +771,7 @@ var cmp = [
 	'id':73,
 	'drops':true,
 	'name':'Ion-Bolt Gun',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.fireDamage+=2;
 		target.fireRate+=100;
@@ -783,7 +783,7 @@ var cmp = [
 	'id':74,
 	'drops':true,
 	'name':'Azure Plate',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.health+=4;
 		target.acceleration-=0.1;
@@ -795,7 +795,7 @@ var cmp = [
 	'id':75,
 	'drops':true,
 	'name':'Azure Plate',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 		target.health+=4;
@@ -808,7 +808,7 @@ var cmp = [
 	'id':76,
 	'drops':true,
 	'name':'AWSM',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.TODO=1;
 	}
@@ -817,7 +817,7 @@ var cmp = [
 	'id':77,
 	'drops':true,
 	'name':'Decorative Skull',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.sprite.profile+=50;
 		target.fireDamage+=2;
@@ -828,7 +828,7 @@ var cmp = [
 	'id':78,
 	'drops':false,
 	'name':'Component78',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -837,7 +837,7 @@ var cmp = [
 	'id':79,
 	'drops':false,
 	'name':'Component79',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -846,7 +846,7 @@ var cmp = [
 	'id':80,
 	'drops':false,
 	'name':'Component80',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -855,7 +855,7 @@ var cmp = [
 	'id':81,
 	'drops':false,
 	'name':'Component81',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -864,7 +864,7 @@ var cmp = [
 	'id':82,
 	'drops':false,
 	'name':'Component82',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -873,7 +873,7 @@ var cmp = [
 	'id':83,
 	'drops':false,
 	'name':'Component83',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -882,7 +882,7 @@ var cmp = [
 	'id':84,
 	'drops':false,
 	'name':'Component84',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -891,7 +891,7 @@ var cmp = [
 	'id':85,
 	'drops':false,
 	'name':'Component85',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -900,7 +900,7 @@ var cmp = [
 	'id':86,
 	'drops':false,
 	'name':'Component86',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -909,7 +909,7 @@ var cmp = [
 	'id':87,
 	'drops':false,
 	'name':'Component87',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -918,7 +918,7 @@ var cmp = [
 	'id':88,
 	'drops':false,
 	'name':'Component88',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -927,7 +927,7 @@ var cmp = [
 	'id':89,
 	'drops':false,
 	'name':'Component89',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -936,7 +936,7 @@ var cmp = [
 	'id':90,
 	'drops':false,
 	'name':'Component90',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -945,7 +945,7 @@ var cmp = [
 	'id':91,
 	'drops':false,
 	'name':'Component91',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -954,7 +954,7 @@ var cmp = [
 	'id':92,
 	'drops':false,
 	'name':'Component92',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -963,7 +963,7 @@ var cmp = [
 	'id':93,
 	'drops':false,
 	'name':'Component93',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -972,7 +972,7 @@ var cmp = [
 	'id':94,
 	'drops':false,
 	'name':'Component94',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -981,7 +981,7 @@ var cmp = [
 	'id':95,
 	'drops':false,
 	'name':'Component95',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -990,7 +990,7 @@ var cmp = [
 	'id':96,
 	'drops':true,
 	'name':'Pirate CPU',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.fireRate*=0.8;
 		target.energyRate*=0.7;
@@ -1002,7 +1002,7 @@ var cmp = [
 	'id':97,
 	'drops':true,
 	'name':'Faulty Wiring',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.energyMax+=12;
 		target.energyRate+=1000;
@@ -1015,7 +1015,7 @@ var cmp = [
 	'id':98,
 	'drops':true,
 	'name':'Destroyed Airlock',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.health-=1;
 		target.bulletDamage+=3;
@@ -1025,7 +1025,7 @@ var cmp = [
 	'id':99,
 	'drops':true,
 	'name':'Advanced Processor',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.fireRate*=0.8;
 		target.turnRate+=0.3;
@@ -1037,7 +1037,7 @@ var cmp = [
 	'id':100,
 	'drops':true,
 	'name':'Special Device',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.TODO=1;
 	}
@@ -1046,7 +1046,7 @@ var cmp = [
 	'id':101,
 	'drops':true,
 	'name':'Weapon Rotator',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.fireRate*=0.7;
 		target.fireDamage+=1;
@@ -1057,7 +1057,7 @@ var cmp = [
 	'id':102,
 	'drops':true,
 	'name':'Prototype Stabilizer',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.turnRate+=0.6;
 		target.acceleration+=0.2;
@@ -1068,7 +1068,7 @@ var cmp = [
 	'id':103,
 	'drops':true,
 	'name':'Tactical Control Module',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.fireDamage+=1;
 		target.fireRate*=0.9;
@@ -1081,7 +1081,7 @@ var cmp = [
 	'id':104,
 	'drops':true,
 	'name':'Inline Warp Thrust',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.acceleration+=0.8;
 		target.energyRate*=0.9;
@@ -1091,7 +1091,7 @@ var cmp = [
 	'id':105,
 	'drops':true,
 	'name':'Observation Unit',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.health+=3;
 		target.fireRange+=500;
@@ -1103,7 +1103,7 @@ var cmp = [
 	'id':106,
 	'drops':true,
 	'name':'Azure Plate',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 		target.health+=4;
@@ -1116,7 +1116,7 @@ var cmp = [
 	'id':107,
 	'drops':true,
 	'name':'Azure Plate',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 		target.health+=4;
@@ -1129,10 +1129,10 @@ var cmp = [
 	'id':108,
 	'drops':true,
 	'name':'Vidscreen Ad <BurgerJoint>',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.sprite.profile+=25;
-		target.cashFlow+=10;
+		target.cashFlow+=0.1;
 
 	}
 },
@@ -1140,17 +1140,17 @@ var cmp = [
 	'id':109,
 	'drops':true,
 	'name':'Vidscreen Ad <Cola>',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.sprite.profile+=25;
-		target.cashFlow+=10; //TODO
+		target.cashFlow+=0.1; //TODO
 	}
 },
 {
 	'id':110,
 	'drops':false,
 	'name':'Component110',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1159,7 +1159,7 @@ var cmp = [
 	'id':111,
 	'drops':false,
 	'name':'Component111',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1168,7 +1168,7 @@ var cmp = [
 	'id':112,
 	'drops':false,
 	'name':'Component112',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1177,7 +1177,7 @@ var cmp = [
 	'id':113,
 	'drops':false,
 	'name':'Component113',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1186,7 +1186,7 @@ var cmp = [
 	'id':114,
 	'drops':false,
 	'name':'Component114',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1195,7 +1195,7 @@ var cmp = [
 	'id':115,
 	'drops':false,
 	'name':'Component115',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1204,7 +1204,7 @@ var cmp = [
 	'id':116,
 	'drops':false,
 	'name':'Component116',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1213,7 +1213,7 @@ var cmp = [
 	'id':117,
 	'drops':false,
 	'name':'Component117',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1222,7 +1222,7 @@ var cmp = [
 	'id':118,
 	'drops':false,
 	'name':'Component118',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1231,7 +1231,7 @@ var cmp = [
 	'id':119,
 	'drops':false,
 	'name':'Component119',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1240,7 +1240,7 @@ var cmp = [
 	'id':120,
 	'drops':false,
 	'name':'Component120',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1249,7 +1249,7 @@ var cmp = [
 	'id':121,
 	'drops':false,
 	'name':'Component121',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1258,7 +1258,7 @@ var cmp = [
 	'id':122,
 	'drops':false,
 	'name':'Component122',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1267,7 +1267,7 @@ var cmp = [
 	'id':123,
 	'drops':false,
 	'name':'Component123',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1276,7 +1276,7 @@ var cmp = [
 	'id':124,
 	'drops':false,
 	'name':'Component124',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1285,7 +1285,7 @@ var cmp = [
 	'id':125,
 	'drops':false,
 	'name':'Component125',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1294,7 +1294,7 @@ var cmp = [
 	'id':126,
 	'drops':false,
 	'name':'Component126',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1303,7 +1303,7 @@ var cmp = [
 	'id':127,
 	'drops':false,
 	'name':'Component127',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1312,7 +1312,7 @@ var cmp = [
 	'id':128,
 	'drops':true,
 	'name':'Contraband Missiles',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.bulletSprite=2;
 		target.fireDamage+=4;
@@ -1327,7 +1327,7 @@ var cmp = [
 	'id':129,
 	'drops':true,
 	'name':'Scavenged Exoskeleton',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.acceleration+=1;
 		target.turnrate+=0.1;
@@ -1338,7 +1338,7 @@ var cmp = [
 	'id':130,
 	'drops':true,
 	'name':'Aftermarket Gatling',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.bulletSprite=1;
 		target.fireRate*=0.7;
@@ -1352,7 +1352,7 @@ var cmp = [
 	'id':131,
 	'drops':true,
 	'name':'Freedom Missiles',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.bulletSprite=2;
 		target.fireDamage+=2;
@@ -1364,7 +1364,7 @@ var cmp = [
 	'id':132,
 	'drops':true,
 	'name':'Ultralight Wing',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.health+=2;
 		target.acceleration+=0.5;
@@ -1374,7 +1374,7 @@ var cmp = [
 	'id':133,
 	'drops':true,
 	'name':'Gleaming Autocannon',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.bulletSprite=1;
 		target.fireRate*=0.7;
@@ -1386,7 +1386,7 @@ var cmp = [
 	'id':134,
 	'drops':false,
 	'name':'Component134',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1395,7 +1395,7 @@ var cmp = [
 	'id':135,
 	'drops':false,
 	'name':'Component135',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1404,7 +1404,7 @@ var cmp = [
 	'id':136,
 	'drops':false,
 	'name':'Component136',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1413,7 +1413,7 @@ var cmp = [
 	'id':137,
 	'drops':false,
 	'name':'Component137',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1422,7 +1422,7 @@ var cmp = [
 	'id':138,
 	'drops':false,
 	'name':'Component138',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1431,7 +1431,7 @@ var cmp = [
 	'id':139,
 	'drops':false,
 	'name':'Component139',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1440,7 +1440,7 @@ var cmp = [
 	'id':140,
 	'drops':false,
 	'name':'Component140',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1449,7 +1449,7 @@ var cmp = [
 	'id':141,
 	'drops':false,
 	'name':'Component141',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1458,7 +1458,7 @@ var cmp = [
 	'id':142,
 	'drops':false,
 	'name':'Component142',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1467,7 +1467,7 @@ var cmp = [
 	'id':143,
 	'drops':false,
 	'name':'Component143',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1476,7 +1476,7 @@ var cmp = [
 	'id':144,
 	'drops':false,
 	'name':'Component144',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1485,7 +1485,7 @@ var cmp = [
 	'id':145,
 	'drops':false,
 	'name':'Component145',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1494,7 +1494,7 @@ var cmp = [
 	'id':146,
 	'drops':false,
 	'name':'Component146',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1503,7 +1503,7 @@ var cmp = [
 	'id':147,
 	'drops':false,
 	'name':'Component147',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1512,7 +1512,7 @@ var cmp = [
 	'id':148,
 	'drops':false,
 	'name':'Component148',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1521,7 +1521,7 @@ var cmp = [
 	'id':149,
 	'drops':false,
 	'name':'Component149',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1530,7 +1530,7 @@ var cmp = [
 	'id':150,
 	'drops':false,
 	'name':'Component150',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1539,7 +1539,7 @@ var cmp = [
 	'id':151,
 	'drops':false,
 	'name':'Component151',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1548,7 +1548,7 @@ var cmp = [
 	'id':152,
 	'drops':false,
 	'name':'Component152',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1557,7 +1557,7 @@ var cmp = [
 	'id':153,
 	'drops':false,
 	'name':'Component153',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1566,7 +1566,7 @@ var cmp = [
 	'id':154,
 	'drops':false,
 	'name':'Component154',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1575,7 +1575,7 @@ var cmp = [
 	'id':155,
 	'drops':false,
 	'name':'Component155',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1584,7 +1584,7 @@ var cmp = [
 	'id':156,
 	'drops':false,
 	'name':'Component156',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1593,7 +1593,7 @@ var cmp = [
 	'id':157,
 	'drops':false,
 	'name':'Component157',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1602,7 +1602,7 @@ var cmp = [
 	'id':158,
 	'drops':false,
 	'name':'Component158',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1611,7 +1611,7 @@ var cmp = [
 	'id':159,
 	'drops':false,
 	'name':'Component159',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1620,7 +1620,7 @@ var cmp = [
 	'id':160,
 	'drops':true,
 	'name':'Illegal Cargo',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 		target.energyMax+=6;
 		target.energyRate*=.75;
@@ -1632,7 +1632,7 @@ var cmp = [
 	'id':161,
 	'drops':false,
 	'name':'Component161',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1641,7 +1641,7 @@ var cmp = [
 	'id':162,
 	'drops':false,
 	'name':'Component162',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1650,7 +1650,7 @@ var cmp = [
 	'id':163,
 	'drops':false,
 	'name':'Component163',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1659,7 +1659,7 @@ var cmp = [
 	'id':164,
 	'drops':false,
 	'name':'Component164',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1668,7 +1668,7 @@ var cmp = [
 	'id':165,
 	'drops':false,
 	'name':'Component165',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1677,7 +1677,7 @@ var cmp = [
 	'id':166,
 	'drops':false,
 	'name':'Component166',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1686,7 +1686,7 @@ var cmp = [
 	'id':167,
 	'drops':false,
 	'name':'Component167',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1695,7 +1695,7 @@ var cmp = [
 	'id':168,
 	'drops':false,
 	'name':'Component168',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1704,7 +1704,7 @@ var cmp = [
 	'id':169,
 	'drops':false,
 	'name':'Component169',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1713,7 +1713,7 @@ var cmp = [
 	'id':170,
 	'drops':false,
 	'name':'Component170',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1722,7 +1722,7 @@ var cmp = [
 	'id':171,
 	'drops':false,
 	'name':'Component171',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1731,7 +1731,7 @@ var cmp = [
 	'id':172,
 	'drops':false,
 	'name':'Component172',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1740,7 +1740,7 @@ var cmp = [
 	'id':173,
 	'drops':false,
 	'name':'Component173',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1749,7 +1749,7 @@ var cmp = [
 	'id':174,
 	'drops':false,
 	'name':'Component174',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1758,7 +1758,7 @@ var cmp = [
 	'id':175,
 	'drops':false,
 	'name':'Component175',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1767,7 +1767,7 @@ var cmp = [
 	'id':176,
 	'drops':false,
 	'name':'Component176',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1776,7 +1776,7 @@ var cmp = [
 	'id':177,
 	'drops':false,
 	'name':'Component177',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1785,7 +1785,7 @@ var cmp = [
 	'id':178,
 	'drops':false,
 	'name':'Component178',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1794,7 +1794,7 @@ var cmp = [
 	'id':179,
 	'drops':false,
 	'name':'Component179',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1803,7 +1803,7 @@ var cmp = [
 	'id':180,
 	'drops':false,
 	'name':'Component180',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1812,7 +1812,7 @@ var cmp = [
 	'id':181,
 	'drops':false,
 	'name':'Component181',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1821,7 +1821,7 @@ var cmp = [
 	'id':182,
 	'drops':false,
 	'name':'Component182',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1830,7 +1830,7 @@ var cmp = [
 	'id':183,
 	'drops':false,
 	'name':'Component183',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1839,7 +1839,7 @@ var cmp = [
 	'id':184,
 	'drops':false,
 	'name':'Component184',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1848,7 +1848,7 @@ var cmp = [
 	'id':185,
 	'drops':false,
 	'name':'Component185',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1857,7 +1857,7 @@ var cmp = [
 	'id':186,
 	'drops':false,
 	'name':'Component186',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1866,7 +1866,7 @@ var cmp = [
 	'id':187,
 	'drops':false,
 	'name':'Component187',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1875,7 +1875,7 @@ var cmp = [
 	'id':188,
 	'drops':false,
 	'name':'Component188',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1884,7 +1884,7 @@ var cmp = [
 	'id':189,
 	'drops':false,
 	'name':'Component189',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1893,7 +1893,7 @@ var cmp = [
 	'id':190,
 	'drops':false,
 	'name':'Component190',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1902,7 +1902,7 @@ var cmp = [
 	'id':191,
 	'drops':false,
 	'name':'Component191',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1911,7 +1911,7 @@ var cmp = [
 	'id':192,
 	'drops':false,
 	'name':'Component192',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1920,7 +1920,7 @@ var cmp = [
 	'id':193,
 	'drops':false,
 	'name':'Component193',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1929,7 +1929,7 @@ var cmp = [
 	'id':194,
 	'drops':false,
 	'name':'Component194',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1938,7 +1938,7 @@ var cmp = [
 	'id':195,
 	'drops':false,
 	'name':'Component195',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1947,7 +1947,7 @@ var cmp = [
 	'id':196,
 	'drops':false,
 	'name':'Component196',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1956,7 +1956,7 @@ var cmp = [
 	'id':197,
 	'drops':false,
 	'name':'Component197',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1965,7 +1965,7 @@ var cmp = [
 	'id':198,
 	'drops':false,
 	'name':'Component198',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1974,7 +1974,7 @@ var cmp = [
 	'id':199,
 	'drops':false,
 	'name':'Component199',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1983,7 +1983,7 @@ var cmp = [
 	'id':200,
 	'drops':false,
 	'name':'Component200',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1992,7 +1992,7 @@ var cmp = [
 	'id':201,
 	'drops':false,
 	'name':'Component201',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2001,7 +2001,7 @@ var cmp = [
 	'id':202,
 	'drops':false,
 	'name':'Component202',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2010,7 +2010,7 @@ var cmp = [
 	'id':203,
 	'drops':false,
 	'name':'Component203',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2019,7 +2019,7 @@ var cmp = [
 	'id':204,
 	'drops':false,
 	'name':'Component204',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2028,7 +2028,7 @@ var cmp = [
 	'id':205,
 	'drops':false,
 	'name':'Component205',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2037,7 +2037,7 @@ var cmp = [
 	'id':206,
 	'drops':false,
 	'name':'Component206',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2046,7 +2046,7 @@ var cmp = [
 	'id':207,
 	'drops':false,
 	'name':'Component207',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2055,7 +2055,7 @@ var cmp = [
 	'id':208,
 	'drops':false,
 	'name':'Component208',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2064,7 +2064,7 @@ var cmp = [
 	'id':209,
 	'drops':false,
 	'name':'Component209',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2073,7 +2073,7 @@ var cmp = [
 	'id':210,
 	'drops':false,
 	'name':'Component210',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2082,7 +2082,7 @@ var cmp = [
 	'id':211,
 	'drops':false,
 	'name':'Component211',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2091,7 +2091,7 @@ var cmp = [
 	'id':212,
 	'drops':false,
 	'name':'Component212',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2100,7 +2100,7 @@ var cmp = [
 	'id':213,
 	'drops':false,
 	'name':'Component213',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2109,7 +2109,7 @@ var cmp = [
 	'id':214,
 	'drops':false,
 	'name':'Component214',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2118,7 +2118,7 @@ var cmp = [
 	'id':215,
 	'drops':false,
 	'name':'Component215',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2127,7 +2127,7 @@ var cmp = [
 	'id':216,
 	'drops':false,
 	'name':'Component216',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2136,7 +2136,7 @@ var cmp = [
 	'id':217,
 	'drops':false,
 	'name':'Component217',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2145,7 +2145,7 @@ var cmp = [
 	'id':218,
 	'drops':false,
 	'name':'Component218',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2154,7 +2154,7 @@ var cmp = [
 	'id':219,
 	'drops':false,
 	'name':'Component219',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2163,7 +2163,7 @@ var cmp = [
 	'id':220,
 	'drops':false,
 	'name':'Component220',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2172,7 +2172,7 @@ var cmp = [
 	'id':221,
 	'drops':false,
 	'name':'Component221',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2181,7 +2181,7 @@ var cmp = [
 	'id':222,
 	'drops':false,
 	'name':'Component222',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2190,7 +2190,7 @@ var cmp = [
 	'id':223,
 	'drops':false,
 	'name':'Component223',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2199,7 +2199,7 @@ var cmp = [
 	'id':224,
 	'drops':false,
 	'name':'Component224',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2208,7 +2208,7 @@ var cmp = [
 	'id':225,
 	'drops':false,
 	'name':'Component225',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2217,7 +2217,7 @@ var cmp = [
 	'id':226,
 	'drops':false,
 	'name':'Component226',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2226,7 +2226,7 @@ var cmp = [
 	'id':227,
 	'drops':false,
 	'name':'Component227',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2235,7 +2235,7 @@ var cmp = [
 	'id':228,
 	'drops':false,
 	'name':'Component228',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2244,7 +2244,7 @@ var cmp = [
 	'id':229,
 	'drops':false,
 	'name':'Component229',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2253,7 +2253,7 @@ var cmp = [
 	'id':230,
 	'drops':false,
 	'name':'Component230',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2262,7 +2262,7 @@ var cmp = [
 	'id':231,
 	'drops':false,
 	'name':'Component231',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2271,7 +2271,7 @@ var cmp = [
 	'id':232,
 	'drops':false,
 	'name':'Component232',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2280,7 +2280,7 @@ var cmp = [
 	'id':233,
 	'drops':false,
 	'name':'Component233',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2289,7 +2289,7 @@ var cmp = [
 	'id':234,
 	'drops':false,
 	'name':'Component234',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2298,7 +2298,7 @@ var cmp = [
 	'id':235,
 	'drops':false,
 	'name':'Component235',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2307,7 +2307,7 @@ var cmp = [
 	'id':236,
 	'drops':false,
 	'name':'Component236',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2316,7 +2316,7 @@ var cmp = [
 	'id':237,
 	'drops':false,
 	'name':'Component237',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2325,7 +2325,7 @@ var cmp = [
 	'id':238,
 	'drops':false,
 	'name':'Component238',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2334,7 +2334,7 @@ var cmp = [
 	'id':239,
 	'drops':false,
 	'name':'Component239',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2343,7 +2343,7 @@ var cmp = [
 	'id':240,
 	'drops':false,
 	'name':'Component240',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2352,7 +2352,7 @@ var cmp = [
 	'id':241,
 	'drops':false,
 	'name':'Component241',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2361,7 +2361,7 @@ var cmp = [
 	'id':242,
 	'drops':false,
 	'name':'Component242',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2370,7 +2370,7 @@ var cmp = [
 	'id':243,
 	'drops':false,
 	'name':'Component243',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2379,7 +2379,7 @@ var cmp = [
 	'id':244,
 	'drops':false,
 	'name':'Component244',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2388,7 +2388,7 @@ var cmp = [
 	'id':245,
 	'drops':false,
 	'name':'Component245',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2397,7 +2397,7 @@ var cmp = [
 	'id':246,
 	'drops':false,
 	'name':'Component246',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2406,7 +2406,7 @@ var cmp = [
 	'id':247,
 	'drops':false,
 	'name':'Component247',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2415,7 +2415,7 @@ var cmp = [
 	'id':248,
 	'drops':false,
 	'name':'Component248',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2424,7 +2424,7 @@ var cmp = [
 	'id':249,
 	'drops':false,
 	'name':'Component249',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2433,7 +2433,7 @@ var cmp = [
 	'id':250,
 	'drops':false,
 	'name':'Component250',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2442,7 +2442,7 @@ var cmp = [
 	'id':251,
 	'drops':false,
 	'name':'Component251',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2451,7 +2451,7 @@ var cmp = [
 	'id':252,
 	'drops':false,
 	'name':'Component252',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2460,7 +2460,7 @@ var cmp = [
 	'id':253,
 	'drops':false,
 	'name':'Component253',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2469,7 +2469,7 @@ var cmp = [
 	'id':254,
 	'drops':false,
 	'name':'Component254',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2478,7 +2478,7 @@ var cmp = [
 	'id':255,
 	'drops':false,
 	'name':'Component255',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2487,7 +2487,7 @@ var cmp = [
 	'id':256,
 	'drops':false,
 	'name':'Component256',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2496,7 +2496,7 @@ var cmp = [
 	'id':257,
 	'drops':false,
 	'name':'Component-257',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2505,7 +2505,7 @@ var cmp = [
 	'id':258,
 	'drops':false,
 	'name':'Component-258',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2514,7 +2514,7 @@ var cmp = [
 	'id':259,
 	'drops':false,
 	'name':'Component-259',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2523,7 +2523,7 @@ var cmp = [
 	'id':260,
 	'drops':false,
 	'name':'Component-260',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2532,7 +2532,7 @@ var cmp = [
 	'id':261,
 	'drops':false,
 	'name':'Component-261',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2541,7 +2541,7 @@ var cmp = [
 	'id':262,
 	'drops':false,
 	'name':'Component-262',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2550,7 +2550,7 @@ var cmp = [
 	'id':263,
 	'drops':false,
 	'name':'Component-263',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2559,7 +2559,7 @@ var cmp = [
 	'id':264,
 	'drops':false,
 	'name':'Component-264',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2568,7 +2568,7 @@ var cmp = [
 	'id':265,
 	'drops':false,
 	'name':'Component-265',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2577,7 +2577,7 @@ var cmp = [
 	'id':266,
 	'drops':false,
 	'name':'Component-266',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2586,7 +2586,7 @@ var cmp = [
 	'id':267,
 	'drops':false,
 	'name':'Component-267',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2595,7 +2595,7 @@ var cmp = [
 	'id':268,
 	'drops':false,
 	'name':'Component-268',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2604,7 +2604,7 @@ var cmp = [
 	'id':269,
 	'drops':false,
 	'name':'Component-269',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2613,7 +2613,7 @@ var cmp = [
 	'id':270,
 	'drops':false,
 	'name':'Component-270',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2622,7 +2622,7 @@ var cmp = [
 	'id':271,
 	'drops':false,
 	'name':'Component-271',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2631,7 +2631,7 @@ var cmp = [
 	'id':272,
 	'drops':false,
 	'name':'Component-272',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2640,7 +2640,7 @@ var cmp = [
 	'id':273,
 	'drops':false,
 	'name':'Component-273',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2649,7 +2649,7 @@ var cmp = [
 	'id':274,
 	'drops':false,
 	'name':'Component-274',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2658,7 +2658,7 @@ var cmp = [
 	'id':275,
 	'drops':false,
 	'name':'Component-275',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2667,7 +2667,7 @@ var cmp = [
 	'id':276,
 	'drops':false,
 	'name':'Component-276',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2676,7 +2676,7 @@ var cmp = [
 	'id':277,
 	'drops':false,
 	'name':'Component-277',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2685,7 +2685,7 @@ var cmp = [
 	'id':278,
 	'drops':false,
 	'name':'Component-278',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2694,7 +2694,7 @@ var cmp = [
 	'id':279,
 	'drops':false,
 	'name':'Component-279',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2703,7 +2703,7 @@ var cmp = [
 	'id':280,
 	'drops':false,
 	'name':'Component-280',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2712,7 +2712,7 @@ var cmp = [
 	'id':281,
 	'drops':false,
 	'name':'Component-281',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2721,7 +2721,7 @@ var cmp = [
 	'id':282,
 	'drops':false,
 	'name':'Component-282',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2730,7 +2730,7 @@ var cmp = [
 	'id':283,
 	'drops':false,
 	'name':'Component-283',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2739,7 +2739,7 @@ var cmp = [
 	'id':284,
 	'drops':false,
 	'name':'Component-284',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2748,7 +2748,7 @@ var cmp = [
 	'id':285,
 	'drops':false,
 	'name':'Component-285',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2757,7 +2757,7 @@ var cmp = [
 	'id':286,
 	'drops':false,
 	'name':'Component-286',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2766,7 +2766,7 @@ var cmp = [
 	'id':287,
 	'drops':false,
 	'name':'Component-287',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2775,7 +2775,7 @@ var cmp = [
 	'id':288,
 	'drops':false,
 	'name':'Component-288',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2784,7 +2784,7 @@ var cmp = [
 	'id':289,
 	'drops':false,
 	'name':'Component-289',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2793,7 +2793,7 @@ var cmp = [
 	'id':290,
 	'drops':false,
 	'name':'Component-290',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2802,7 +2802,7 @@ var cmp = [
 	'id':291,
 	'drops':false,
 	'name':'Component-291',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2811,7 +2811,7 @@ var cmp = [
 	'id':292,
 	'drops':false,
 	'name':'Component-292',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2820,7 +2820,7 @@ var cmp = [
 	'id':293,
 	'drops':false,
 	'name':'Component-293',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2829,7 +2829,7 @@ var cmp = [
 	'id':294,
 	'drops':false,
 	'name':'Component-294',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2838,7 +2838,7 @@ var cmp = [
 	'id':295,
 	'drops':false,
 	'name':'Component-295',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2847,7 +2847,7 @@ var cmp = [
 	'id':296,
 	'drops':false,
 	'name':'Component-296',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2856,7 +2856,7 @@ var cmp = [
 	'id':297,
 	'drops':false,
 	'name':'Component-297',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2865,7 +2865,7 @@ var cmp = [
 	'id':298,
 	'drops':false,
 	'name':'Component-298',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2874,7 +2874,7 @@ var cmp = [
 	'id':299,
 	'drops':false,
 	'name':'Component-299',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2883,7 +2883,7 @@ var cmp = [
 	'id':300,
 	'drops':false,
 	'name':'Component-300',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2892,7 +2892,7 @@ var cmp = [
 	'id':301,
 	'drops':false,
 	'name':'Component-301',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2901,7 +2901,7 @@ var cmp = [
 	'id':302,
 	'drops':false,
 	'name':'Component-302',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2910,7 +2910,7 @@ var cmp = [
 	'id':303,
 	'drops':false,
 	'name':'Component-303',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2919,7 +2919,7 @@ var cmp = [
 	'id':304,
 	'drops':false,
 	'name':'Component-304',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2928,7 +2928,7 @@ var cmp = [
 	'id':305,
 	'drops':false,
 	'name':'Component-305',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2937,7 +2937,7 @@ var cmp = [
 	'id':306,
 	'drops':false,
 	'name':'Component-306',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2946,7 +2946,7 @@ var cmp = [
 	'id':307,
 	'drops':false,
 	'name':'Component-307',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2955,7 +2955,7 @@ var cmp = [
 	'id':308,
 	'drops':false,
 	'name':'Component-308',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2964,7 +2964,7 @@ var cmp = [
 	'id':309,
 	'drops':false,
 	'name':'Component-309',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2973,7 +2973,7 @@ var cmp = [
 	'id':310,
 	'drops':false,
 	'name':'Component-310',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2982,7 +2982,7 @@ var cmp = [
 	'id':311,
 	'drops':false,
 	'name':'Component-311',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -2991,7 +2991,7 @@ var cmp = [
 	'id':312,
 	'drops':false,
 	'name':'Component-312',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3000,7 +3000,7 @@ var cmp = [
 	'id':313,
 	'drops':false,
 	'name':'Component-313',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3009,7 +3009,7 @@ var cmp = [
 	'id':314,
 	'drops':false,
 	'name':'Component-314',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3018,7 +3018,7 @@ var cmp = [
 	'id':315,
 	'drops':false,
 	'name':'Component-315',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3027,7 +3027,7 @@ var cmp = [
 	'id':316,
 	'drops':false,
 	'name':'Component-316',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3036,7 +3036,7 @@ var cmp = [
 	'id':317,
 	'drops':false,
 	'name':'Component-317',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3045,7 +3045,7 @@ var cmp = [
 	'id':318,
 	'drops':false,
 	'name':'Component-318',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3054,7 +3054,7 @@ var cmp = [
 	'id':319,
 	'drops':false,
 	'name':'Component-319',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3063,7 +3063,7 @@ var cmp = [
 	'id':320,
 	'drops':false,
 	'name':'Component-320',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3072,7 +3072,7 @@ var cmp = [
 	'id':321,
 	'drops':false,
 	'name':'Component-321',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3081,7 +3081,7 @@ var cmp = [
 	'id':322,
 	'drops':false,
 	'name':'Component-322',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3090,7 +3090,7 @@ var cmp = [
 	'id':323,
 	'drops':false,
 	'name':'Component-323',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3099,7 +3099,7 @@ var cmp = [
 	'id':324,
 	'drops':false,
 	'name':'Component-324',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3108,7 +3108,7 @@ var cmp = [
 	'id':325,
 	'drops':false,
 	'name':'Component-325',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3117,7 +3117,7 @@ var cmp = [
 	'id':326,
 	'drops':false,
 	'name':'Component-326',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3126,7 +3126,7 @@ var cmp = [
 	'id':327,
 	'drops':false,
 	'name':'Component-327',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3135,7 +3135,7 @@ var cmp = [
 	'id':328,
 	'drops':false,
 	'name':'Component-328',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3144,7 +3144,7 @@ var cmp = [
 	'id':329,
 	'drops':false,
 	'name':'Component-329',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3153,7 +3153,7 @@ var cmp = [
 	'id':330,
 	'drops':false,
 	'name':'Component-330',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3162,7 +3162,7 @@ var cmp = [
 	'id':331,
 	'drops':false,
 	'name':'Component-331',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3171,7 +3171,7 @@ var cmp = [
 	'id':332,
 	'drops':false,
 	'name':'Component-332',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3180,7 +3180,7 @@ var cmp = [
 	'id':333,
 	'drops':false,
 	'name':'Component-333',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3189,7 +3189,7 @@ var cmp = [
 	'id':334,
 	'drops':false,
 	'name':'Component-334',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3198,7 +3198,7 @@ var cmp = [
 	'id':335,
 	'drops':false,
 	'name':'Component-335',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3207,7 +3207,7 @@ var cmp = [
 	'id':336,
 	'drops':false,
 	'name':'Component-336',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3216,7 +3216,7 @@ var cmp = [
 	'id':337,
 	'drops':false,
 	'name':'Component-337',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3225,7 +3225,7 @@ var cmp = [
 	'id':338,
 	'drops':false,
 	'name':'Component-338',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3234,7 +3234,7 @@ var cmp = [
 	'id':339,
 	'drops':false,
 	'name':'Component-339',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3243,7 +3243,7 @@ var cmp = [
 	'id':340,
 	'drops':false,
 	'name':'Component-340',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3252,7 +3252,7 @@ var cmp = [
 	'id':341,
 	'drops':false,
 	'name':'Component-341',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3261,7 +3261,7 @@ var cmp = [
 	'id':342,
 	'drops':false,
 	'name':'Component-342',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3270,7 +3270,7 @@ var cmp = [
 	'id':343,
 	'drops':false,
 	'name':'Component-343',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3279,7 +3279,7 @@ var cmp = [
 	'id':344,
 	'drops':false,
 	'name':'Component-344',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3288,7 +3288,7 @@ var cmp = [
 	'id':345,
 	'drops':false,
 	'name':'Component-345',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3297,7 +3297,7 @@ var cmp = [
 	'id':346,
 	'drops':false,
 	'name':'Component-346',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3306,7 +3306,7 @@ var cmp = [
 	'id':347,
 	'drops':false,
 	'name':'Component-347',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3315,7 +3315,7 @@ var cmp = [
 	'id':348,
 	'drops':false,
 	'name':'Component-348',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3324,7 +3324,7 @@ var cmp = [
 	'id':349,
 	'drops':false,
 	'name':'Component-349',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3333,7 +3333,7 @@ var cmp = [
 	'id':350,
 	'drops':false,
 	'name':'Component-350',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3342,7 +3342,7 @@ var cmp = [
 	'id':351,
 	'drops':false,
 	'name':'Component-351',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3351,7 +3351,7 @@ var cmp = [
 	'id':352,
 	'drops':false,
 	'name':'Component-352',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3360,7 +3360,7 @@ var cmp = [
 	'id':353,
 	'drops':false,
 	'name':'Component-353',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3369,7 +3369,7 @@ var cmp = [
 	'id':354,
 	'drops':false,
 	'name':'Component-354',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3378,7 +3378,7 @@ var cmp = [
 	'id':355,
 	'drops':false,
 	'name':'Component-355',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3387,7 +3387,7 @@ var cmp = [
 	'id':356,
 	'drops':false,
 	'name':'Component-356',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3396,7 +3396,7 @@ var cmp = [
 	'id':357,
 	'drops':false,
 	'name':'Component-357',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3405,7 +3405,7 @@ var cmp = [
 	'id':358,
 	'drops':false,
 	'name':'Component-358',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3414,7 +3414,7 @@ var cmp = [
 	'id':359,
 	'drops':false,
 	'name':'Component-359',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3423,7 +3423,7 @@ var cmp = [
 	'id':360,
 	'drops':false,
 	'name':'Component-360',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3432,7 +3432,7 @@ var cmp = [
 	'id':361,
 	'drops':false,
 	'name':'Component-361',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3441,7 +3441,7 @@ var cmp = [
 	'id':362,
 	'drops':false,
 	'name':'Component-362',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3450,7 +3450,7 @@ var cmp = [
 	'id':363,
 	'drops':false,
 	'name':'Component-363',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3459,7 +3459,7 @@ var cmp = [
 	'id':364,
 	'drops':false,
 	'name':'Component-364',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3468,7 +3468,7 @@ var cmp = [
 	'id':365,
 	'drops':false,
 	'name':'Component-365',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3477,7 +3477,7 @@ var cmp = [
 	'id':366,
 	'drops':false,
 	'name':'Component-366',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3486,7 +3486,7 @@ var cmp = [
 	'id':367,
 	'drops':false,
 	'name':'Component-367',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3495,7 +3495,7 @@ var cmp = [
 	'id':368,
 	'drops':false,
 	'name':'Component-368',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3504,7 +3504,7 @@ var cmp = [
 	'id':369,
 	'drops':false,
 	'name':'Component-369',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3513,7 +3513,7 @@ var cmp = [
 	'id':370,
 	'drops':false,
 	'name':'Component-370',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3522,7 +3522,7 @@ var cmp = [
 	'id':371,
 	'drops':false,
 	'name':'Component-371',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3531,7 +3531,7 @@ var cmp = [
 	'id':372,
 	'drops':false,
 	'name':'Component-372',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3540,7 +3540,7 @@ var cmp = [
 	'id':373,
 	'drops':false,
 	'name':'Component-373',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3549,7 +3549,7 @@ var cmp = [
 	'id':374,
 	'drops':false,
 	'name':'Component-374',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3558,7 +3558,7 @@ var cmp = [
 	'id':375,
 	'drops':false,
 	'name':'Component-375',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3567,7 +3567,7 @@ var cmp = [
 	'id':376,
 	'drops':false,
 	'name':'Component-376',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3576,7 +3576,7 @@ var cmp = [
 	'id':377,
 	'drops':false,
 	'name':'Component-377',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3585,7 +3585,7 @@ var cmp = [
 	'id':378,
 	'drops':false,
 	'name':'Component-378',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3594,7 +3594,7 @@ var cmp = [
 	'id':379,
 	'drops':false,
 	'name':'Component-379',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3603,7 +3603,7 @@ var cmp = [
 	'id':380,
 	'drops':false,
 	'name':'Component-380',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3612,7 +3612,7 @@ var cmp = [
 	'id':381,
 	'drops':false,
 	'name':'Component-381',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3621,7 +3621,7 @@ var cmp = [
 	'id':382,
 	'drops':false,
 	'name':'Component-382',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3630,7 +3630,7 @@ var cmp = [
 	'id':383,
 	'drops':false,
 	'name':'Component-383',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3639,7 +3639,7 @@ var cmp = [
 	'id':384,
 	'drops':false,
 	'name':'Component-384',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3648,7 +3648,7 @@ var cmp = [
 	'id':385,
 	'drops':false,
 	'name':'Component-385',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3657,7 +3657,7 @@ var cmp = [
 	'id':386,
 	'drops':false,
 	'name':'Component-386',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3666,7 +3666,7 @@ var cmp = [
 	'id':387,
 	'drops':false,
 	'name':'Component-387',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3675,7 +3675,7 @@ var cmp = [
 	'id':388,
 	'drops':false,
 	'name':'Component-388',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3684,7 +3684,7 @@ var cmp = [
 	'id':389,
 	'drops':false,
 	'name':'Component-389',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3693,7 +3693,7 @@ var cmp = [
 	'id':390,
 	'drops':false,
 	'name':'Component-390',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3702,7 +3702,7 @@ var cmp = [
 	'id':391,
 	'drops':false,
 	'name':'Component-391',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3711,7 +3711,7 @@ var cmp = [
 	'id':392,
 	'drops':false,
 	'name':'Component-392',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3720,7 +3720,7 @@ var cmp = [
 	'id':393,
 	'drops':false,
 	'name':'Component-393',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3729,7 +3729,7 @@ var cmp = [
 	'id':394,
 	'drops':false,
 	'name':'Component-394',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3738,7 +3738,7 @@ var cmp = [
 	'id':395,
 	'drops':false,
 	'name':'Component-395',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3747,7 +3747,7 @@ var cmp = [
 	'id':396,
 	'drops':false,
 	'name':'Component-396',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3756,7 +3756,7 @@ var cmp = [
 	'id':397,
 	'drops':false,
 	'name':'Component-397',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3765,7 +3765,7 @@ var cmp = [
 	'id':398,
 	'drops':false,
 	'name':'Component-398',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3774,7 +3774,7 @@ var cmp = [
 	'id':399,
 	'drops':false,
 	'name':'Component-399',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3783,7 +3783,7 @@ var cmp = [
 	'id':400,
 	'drops':false,
 	'name':'Component-400',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3792,7 +3792,7 @@ var cmp = [
 	'id':401,
 	'drops':false,
 	'name':'Component-401',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3801,7 +3801,7 @@ var cmp = [
 	'id':402,
 	'drops':false,
 	'name':'Component-402',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3810,7 +3810,7 @@ var cmp = [
 	'id':403,
 	'drops':false,
 	'name':'Component-403',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3819,7 +3819,7 @@ var cmp = [
 	'id':404,
 	'drops':false,
 	'name':'Component-404',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3828,7 +3828,7 @@ var cmp = [
 	'id':405,
 	'drops':false,
 	'name':'Component-405',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3837,7 +3837,7 @@ var cmp = [
 	'id':406,
 	'drops':false,
 	'name':'Component-406',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3846,7 +3846,7 @@ var cmp = [
 	'id':407,
 	'drops':false,
 	'name':'Component-407',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3855,7 +3855,7 @@ var cmp = [
 	'id':408,
 	'drops':false,
 	'name':'Component-408',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3864,7 +3864,7 @@ var cmp = [
 	'id':409,
 	'drops':false,
 	'name':'Component-409',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3873,7 +3873,7 @@ var cmp = [
 	'id':410,
 	'drops':false,
 	'name':'Component-410',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3882,7 +3882,7 @@ var cmp = [
 	'id':411,
 	'drops':false,
 	'name':'Component-411',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3891,7 +3891,7 @@ var cmp = [
 	'id':412,
 	'drops':false,
 	'name':'Component-412',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3900,7 +3900,7 @@ var cmp = [
 	'id':413,
 	'drops':false,
 	'name':'Component-413',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3909,7 +3909,7 @@ var cmp = [
 	'id':414,
 	'drops':false,
 	'name':'Component-414',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3918,7 +3918,7 @@ var cmp = [
 	'id':415,
 	'drops':false,
 	'name':'Component-415',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3927,7 +3927,7 @@ var cmp = [
 	'id':416,
 	'drops':false,
 	'name':'Component-416',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3936,7 +3936,7 @@ var cmp = [
 	'id':417,
 	'drops':false,
 	'name':'Component-417',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3945,7 +3945,7 @@ var cmp = [
 	'id':418,
 	'drops':false,
 	'name':'Component-418',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3954,7 +3954,7 @@ var cmp = [
 	'id':419,
 	'drops':false,
 	'name':'Component-419',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3963,7 +3963,7 @@ var cmp = [
 	'id':420,
 	'drops':false,
 	'name':'Component-420',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3972,7 +3972,7 @@ var cmp = [
 	'id':421,
 	'drops':false,
 	'name':'Component-421',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3981,7 +3981,7 @@ var cmp = [
 	'id':422,
 	'drops':false,
 	'name':'Component-422',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3990,7 +3990,7 @@ var cmp = [
 	'id':423,
 	'drops':false,
 	'name':'Component-423',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -3999,7 +3999,7 @@ var cmp = [
 	'id':424,
 	'drops':false,
 	'name':'Component-424',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4008,7 +4008,7 @@ var cmp = [
 	'id':425,
 	'drops':false,
 	'name':'Component-425',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4017,7 +4017,7 @@ var cmp = [
 	'id':426,
 	'drops':false,
 	'name':'Component-426',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4026,7 +4026,7 @@ var cmp = [
 	'id':427,
 	'drops':false,
 	'name':'Component-427',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4035,7 +4035,7 @@ var cmp = [
 	'id':428,
 	'drops':false,
 	'name':'Component-428',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4044,7 +4044,7 @@ var cmp = [
 	'id':429,
 	'drops':false,
 	'name':'Component-429',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4053,7 +4053,7 @@ var cmp = [
 	'id':430,
 	'drops':false,
 	'name':'Component-430',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4062,7 +4062,7 @@ var cmp = [
 	'id':431,
 	'drops':false,
 	'name':'Component-431',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4071,7 +4071,7 @@ var cmp = [
 	'id':432,
 	'drops':false,
 	'name':'Component-432',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4080,7 +4080,7 @@ var cmp = [
 	'id':433,
 	'drops':false,
 	'name':'Component-433',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4089,7 +4089,7 @@ var cmp = [
 	'id':434,
 	'drops':false,
 	'name':'Component-434',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4098,7 +4098,7 @@ var cmp = [
 	'id':435,
 	'drops':false,
 	'name':'Component-435',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4107,7 +4107,7 @@ var cmp = [
 	'id':436,
 	'drops':false,
 	'name':'Component-436',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4116,7 +4116,7 @@ var cmp = [
 	'id':437,
 	'drops':false,
 	'name':'Component-437',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4125,7 +4125,7 @@ var cmp = [
 	'id':438,
 	'drops':false,
 	'name':'Component-438',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4134,7 +4134,7 @@ var cmp = [
 	'id':439,
 	'drops':false,
 	'name':'Component-439',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4143,7 +4143,7 @@ var cmp = [
 	'id':440,
 	'drops':false,
 	'name':'Component-440',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4152,7 +4152,7 @@ var cmp = [
 	'id':441,
 	'drops':false,
 	'name':'Component-441',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4161,7 +4161,7 @@ var cmp = [
 	'id':442,
 	'drops':false,
 	'name':'Component-442',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4170,7 +4170,7 @@ var cmp = [
 	'id':443,
 	'drops':false,
 	'name':'Component-443',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4179,7 +4179,7 @@ var cmp = [
 	'id':444,
 	'drops':false,
 	'name':'Component-444',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4188,7 +4188,7 @@ var cmp = [
 	'id':445,
 	'drops':false,
 	'name':'Component-445',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4197,7 +4197,7 @@ var cmp = [
 	'id':446,
 	'drops':false,
 	'name':'Component-446',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4206,7 +4206,7 @@ var cmp = [
 	'id':447,
 	'drops':false,
 	'name':'Component-447',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4215,7 +4215,7 @@ var cmp = [
 	'id':448,
 	'drops':false,
 	'name':'Component-448',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4224,7 +4224,7 @@ var cmp = [
 	'id':449,
 	'drops':false,
 	'name':'Component-449',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4233,7 +4233,7 @@ var cmp = [
 	'id':450,
 	'drops':false,
 	'name':'Component-450',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4242,7 +4242,7 @@ var cmp = [
 	'id':451,
 	'drops':false,
 	'name':'Component-451',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4251,7 +4251,7 @@ var cmp = [
 	'id':452,
 	'drops':false,
 	'name':'Component-452',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4260,7 +4260,7 @@ var cmp = [
 	'id':453,
 	'drops':false,
 	'name':'Component-453',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4269,7 +4269,7 @@ var cmp = [
 	'id':454,
 	'drops':false,
 	'name':'Component-454',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4278,7 +4278,7 @@ var cmp = [
 	'id':455,
 	'drops':false,
 	'name':'Component-455',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4287,7 +4287,7 @@ var cmp = [
 	'id':456,
 	'drops':false,
 	'name':'Component-456',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4296,7 +4296,7 @@ var cmp = [
 	'id':457,
 	'drops':false,
 	'name':'Component-457',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4305,7 +4305,7 @@ var cmp = [
 	'id':458,
 	'drops':false,
 	'name':'Component-458',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4314,7 +4314,7 @@ var cmp = [
 	'id':459,
 	'drops':false,
 	'name':'Component-459',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4323,7 +4323,7 @@ var cmp = [
 	'id':460,
 	'drops':false,
 	'name':'Component-460',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4332,7 +4332,7 @@ var cmp = [
 	'id':461,
 	'drops':false,
 	'name':'Component-461',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4341,7 +4341,7 @@ var cmp = [
 	'id':462,
 	'drops':false,
 	'name':'Component-462',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4350,7 +4350,7 @@ var cmp = [
 	'id':463,
 	'drops':false,
 	'name':'Component-463',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4359,7 +4359,7 @@ var cmp = [
 	'id':464,
 	'drops':false,
 	'name':'Component-464',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4368,7 +4368,7 @@ var cmp = [
 	'id':465,
 	'drops':false,
 	'name':'Component-465',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4377,7 +4377,7 @@ var cmp = [
 	'id':466,
 	'drops':false,
 	'name':'Component-466',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4386,7 +4386,7 @@ var cmp = [
 	'id':467,
 	'drops':false,
 	'name':'Component-467',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4395,7 +4395,7 @@ var cmp = [
 	'id':468,
 	'drops':false,
 	'name':'Component-468',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4404,7 +4404,7 @@ var cmp = [
 	'id':469,
 	'drops':false,
 	'name':'Component-469',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4413,7 +4413,7 @@ var cmp = [
 	'id':470,
 	'drops':false,
 	'name':'Component-470',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4422,7 +4422,7 @@ var cmp = [
 	'id':471,
 	'drops':false,
 	'name':'Component-471',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4431,7 +4431,7 @@ var cmp = [
 	'id':472,
 	'drops':false,
 	'name':'Component-472',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4440,7 +4440,7 @@ var cmp = [
 	'id':473,
 	'drops':false,
 	'name':'Component-473',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4449,7 +4449,7 @@ var cmp = [
 	'id':474,
 	'drops':false,
 	'name':'Component-474',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4458,7 +4458,7 @@ var cmp = [
 	'id':475,
 	'drops':false,
 	'name':'Component-475',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4467,7 +4467,7 @@ var cmp = [
 	'id':476,
 	'drops':false,
 	'name':'Component-476',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4476,7 +4476,7 @@ var cmp = [
 	'id':477,
 	'drops':false,
 	'name':'Component-477',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4485,7 +4485,7 @@ var cmp = [
 	'id':478,
 	'drops':false,
 	'name':'Component-478',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4494,7 +4494,7 @@ var cmp = [
 	'id':479,
 	'drops':false,
 	'name':'Component-479',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4503,7 +4503,7 @@ var cmp = [
 	'id':480,
 	'drops':false,
 	'name':'Component-480',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4512,7 +4512,7 @@ var cmp = [
 	'id':481,
 	'drops':false,
 	'name':'Component-481',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4521,7 +4521,7 @@ var cmp = [
 	'id':482,
 	'drops':false,
 	'name':'Component-482',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4530,7 +4530,7 @@ var cmp = [
 	'id':483,
 	'drops':false,
 	'name':'Component-483',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4539,7 +4539,7 @@ var cmp = [
 	'id':484,
 	'drops':false,
 	'name':'Component-484',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4548,7 +4548,7 @@ var cmp = [
 	'id':485,
 	'drops':false,
 	'name':'Component-485',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4557,7 +4557,7 @@ var cmp = [
 	'id':486,
 	'drops':false,
 	'name':'Component-486',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4566,7 +4566,7 @@ var cmp = [
 	'id':487,
 	'drops':false,
 	'name':'Component-487',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4575,7 +4575,7 @@ var cmp = [
 	'id':488,
 	'drops':false,
 	'name':'Component-488',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4584,7 +4584,7 @@ var cmp = [
 	'id':489,
 	'drops':false,
 	'name':'Component-489',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4593,7 +4593,7 @@ var cmp = [
 	'id':490,
 	'drops':false,
 	'name':'Component-490',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4602,7 +4602,7 @@ var cmp = [
 	'id':491,
 	'drops':false,
 	'name':'Component-491',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4611,7 +4611,7 @@ var cmp = [
 	'id':492,
 	'drops':false,
 	'name':'Component-492',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4620,7 +4620,7 @@ var cmp = [
 	'id':493,
 	'drops':false,
 	'name':'Component-493',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4629,7 +4629,7 @@ var cmp = [
 	'id':494,
 	'drops':false,
 	'name':'Component-494',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4638,7 +4638,7 @@ var cmp = [
 	'id':495,
 	'drops':false,
 	'name':'Component-495',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4647,7 +4647,7 @@ var cmp = [
 	'id':496,
 	'drops':false,
 	'name':'Component-496',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4656,7 +4656,7 @@ var cmp = [
 	'id':497,
 	'drops':false,
 	'name':'Component-497',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4665,7 +4665,7 @@ var cmp = [
 	'id':498,
 	'drops':false,
 	'name':'Component-498',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4674,7 +4674,7 @@ var cmp = [
 	'id':499,
 	'drops':false,
 	'name':'Component-499',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4683,7 +4683,7 @@ var cmp = [
 	'id':500,
 	'drops':false,
 	'name':'Component-500',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4692,7 +4692,7 @@ var cmp = [
 	'id':501,
 	'drops':false,
 	'name':'Component-501',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4701,7 +4701,7 @@ var cmp = [
 	'id':502,
 	'drops':false,
 	'name':'Component-502',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4710,7 +4710,7 @@ var cmp = [
 	'id':503,
 	'drops':false,
 	'name':'Component-503',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4719,7 +4719,7 @@ var cmp = [
 	'id':504,
 	'drops':false,
 	'name':'Component-504',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4728,7 +4728,7 @@ var cmp = [
 	'id':505,
 	'drops':false,
 	'name':'Component-505',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4737,7 +4737,7 @@ var cmp = [
 	'id':506,
 	'drops':false,
 	'name':'Component-506',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4746,7 +4746,7 @@ var cmp = [
 	'id':507,
 	'drops':false,
 	'name':'Component-507',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4755,7 +4755,7 @@ var cmp = [
 	'id':508,
 	'drops':false,
 	'name':'Component-508',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4764,7 +4764,7 @@ var cmp = [
 	'id':509,
 	'drops':false,
 	'name':'Component-509',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4773,7 +4773,7 @@ var cmp = [
 	'id':510,
 	'drops':false,
 	'name':'Component-510',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4782,7 +4782,7 @@ var cmp = [
 	'id':511,
 	'drops':false,
 	'name':'Component-511',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4791,7 +4791,7 @@ var cmp = [
 	'id':512,
 	'drops':false,
 	'name':'Component-512',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4800,7 +4800,7 @@ var cmp = [
 	'id':513,
 	'drops':false,
 	'name':'Component-513',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4809,7 +4809,7 @@ var cmp = [
 	'id':514,
 	'drops':false,
 	'name':'Component-514',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4818,7 +4818,7 @@ var cmp = [
 	'id':515,
 	'drops':false,
 	'name':'Component-515',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4827,7 +4827,7 @@ var cmp = [
 	'id':516,
 	'drops':false,
 	'name':'Component-516',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4836,7 +4836,7 @@ var cmp = [
 	'id':517,
 	'drops':false,
 	'name':'Component-517',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4845,7 +4845,7 @@ var cmp = [
 	'id':518,
 	'drops':false,
 	'name':'Component-518',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4854,7 +4854,7 @@ var cmp = [
 	'id':519,
 	'drops':false,
 	'name':'Component-519',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4863,7 +4863,7 @@ var cmp = [
 	'id':520,
 	'drops':false,
 	'name':'Component-520',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4872,7 +4872,7 @@ var cmp = [
 	'id':521,
 	'drops':false,
 	'name':'Component-521',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4881,7 +4881,7 @@ var cmp = [
 	'id':522,
 	'drops':false,
 	'name':'Component-522',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4890,7 +4890,7 @@ var cmp = [
 	'id':523,
 	'drops':false,
 	'name':'Component-523',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4899,7 +4899,7 @@ var cmp = [
 	'id':524,
 	'drops':false,
 	'name':'Component-524',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4908,7 +4908,7 @@ var cmp = [
 	'id':525,
 	'drops':false,
 	'name':'Component-525',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4917,7 +4917,7 @@ var cmp = [
 	'id':526,
 	'drops':false,
 	'name':'Component-526',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4926,7 +4926,7 @@ var cmp = [
 	'id':527,
 	'drops':false,
 	'name':'Component-527',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4935,7 +4935,7 @@ var cmp = [
 	'id':528,
 	'drops':false,
 	'name':'Component-528',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4944,7 +4944,7 @@ var cmp = [
 	'id':529,
 	'drops':false,
 	'name':'Component-529',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4953,7 +4953,7 @@ var cmp = [
 	'id':530,
 	'drops':false,
 	'name':'Component-530',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4962,7 +4962,7 @@ var cmp = [
 	'id':531,
 	'drops':false,
 	'name':'Component-531',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4971,7 +4971,7 @@ var cmp = [
 	'id':532,
 	'drops':false,
 	'name':'Component-532',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4980,7 +4980,7 @@ var cmp = [
 	'id':533,
 	'drops':false,
 	'name':'Component-533',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4989,7 +4989,7 @@ var cmp = [
 	'id':534,
 	'drops':false,
 	'name':'Component-534',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -4998,7 +4998,7 @@ var cmp = [
 	'id':535,
 	'drops':false,
 	'name':'Component-535',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5007,7 +5007,7 @@ var cmp = [
 	'id':536,
 	'drops':false,
 	'name':'Component-536',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5016,7 +5016,7 @@ var cmp = [
 	'id':537,
 	'drops':false,
 	'name':'Component-537',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5025,7 +5025,7 @@ var cmp = [
 	'id':538,
 	'drops':false,
 	'name':'Component-538',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5034,7 +5034,7 @@ var cmp = [
 	'id':539,
 	'drops':false,
 	'name':'Component-539',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5043,7 +5043,7 @@ var cmp = [
 	'id':540,
 	'drops':false,
 	'name':'Component-540',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5052,7 +5052,7 @@ var cmp = [
 	'id':541,
 	'drops':false,
 	'name':'Component-541',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5061,7 +5061,7 @@ var cmp = [
 	'id':542,
 	'drops':false,
 	'name':'Component-542',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5070,7 +5070,7 @@ var cmp = [
 	'id':543,
 	'drops':false,
 	'name':'Component-543',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5079,7 +5079,7 @@ var cmp = [
 	'id':544,
 	'drops':false,
 	'name':'Component-544',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5088,7 +5088,7 @@ var cmp = [
 	'id':545,
 	'drops':false,
 	'name':'Component-545',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5097,7 +5097,7 @@ var cmp = [
 	'id':546,
 	'drops':false,
 	'name':'Component-546',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5106,7 +5106,7 @@ var cmp = [
 	'id':547,
 	'drops':false,
 	'name':'Component-547',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5115,7 +5115,7 @@ var cmp = [
 	'id':548,
 	'drops':false,
 	'name':'Component-548',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5124,7 +5124,7 @@ var cmp = [
 	'id':549,
 	'drops':false,
 	'name':'Component-549',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5133,7 +5133,7 @@ var cmp = [
 	'id':550,
 	'drops':false,
 	'name':'Component-550',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5142,7 +5142,7 @@ var cmp = [
 	'id':551,
 	'drops':false,
 	'name':'Component-551',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5151,7 +5151,7 @@ var cmp = [
 	'id':552,
 	'drops':false,
 	'name':'Component-552',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5160,7 +5160,7 @@ var cmp = [
 	'id':553,
 	'drops':false,
 	'name':'Component-553',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5169,7 +5169,7 @@ var cmp = [
 	'id':554,
 	'drops':false,
 	'name':'Component-554',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5178,7 +5178,7 @@ var cmp = [
 	'id':555,
 	'drops':false,
 	'name':'Component-555',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5187,7 +5187,7 @@ var cmp = [
 	'id':556,
 	'drops':false,
 	'name':'Component-556',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5196,7 +5196,7 @@ var cmp = [
 	'id':557,
 	'drops':false,
 	'name':'Component-557',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5205,7 +5205,7 @@ var cmp = [
 	'id':558,
 	'drops':false,
 	'name':'Component-558',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5214,7 +5214,7 @@ var cmp = [
 	'id':559,
 	'drops':false,
 	'name':'Component-559',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5223,7 +5223,7 @@ var cmp = [
 	'id':560,
 	'drops':false,
 	'name':'Component-560',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5232,7 +5232,7 @@ var cmp = [
 	'id':561,
 	'drops':false,
 	'name':'Component-561',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5241,7 +5241,7 @@ var cmp = [
 	'id':562,
 	'drops':false,
 	'name':'Component-562',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5250,7 +5250,7 @@ var cmp = [
 	'id':563,
 	'drops':false,
 	'name':'Component-563',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5259,7 +5259,7 @@ var cmp = [
 	'id':564,
 	'drops':false,
 	'name':'Component-564',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5268,7 +5268,7 @@ var cmp = [
 	'id':565,
 	'drops':false,
 	'name':'Component-565',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5277,7 +5277,7 @@ var cmp = [
 	'id':566,
 	'drops':false,
 	'name':'Component-566',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5286,7 +5286,7 @@ var cmp = [
 	'id':567,
 	'drops':false,
 	'name':'Component-567',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5295,7 +5295,7 @@ var cmp = [
 	'id':568,
 	'drops':false,
 	'name':'Component-568',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5304,7 +5304,7 @@ var cmp = [
 	'id':569,
 	'drops':false,
 	'name':'Component-569',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5313,7 +5313,7 @@ var cmp = [
 	'id':570,
 	'drops':false,
 	'name':'Component-570',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5322,7 +5322,7 @@ var cmp = [
 	'id':571,
 	'drops':false,
 	'name':'Component-571',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5331,7 +5331,7 @@ var cmp = [
 	'id':572,
 	'drops':false,
 	'name':'Component-572',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5340,7 +5340,7 @@ var cmp = [
 	'id':573,
 	'drops':false,
 	'name':'Component-573',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5349,7 +5349,7 @@ var cmp = [
 	'id':574,
 	'drops':false,
 	'name':'Component-574',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5358,7 +5358,7 @@ var cmp = [
 	'id':575,
 	'drops':false,
 	'name':'Component-575',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5367,7 +5367,7 @@ var cmp = [
 	'id':576,
 	'drops':false,
 	'name':'Component-576',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5376,7 +5376,7 @@ var cmp = [
 	'id':577,
 	'drops':false,
 	'name':'Component-577',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5385,7 +5385,7 @@ var cmp = [
 	'id':578,
 	'drops':false,
 	'name':'Component-578',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5394,7 +5394,7 @@ var cmp = [
 	'id':579,
 	'drops':false,
 	'name':'Component-579',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5403,7 +5403,7 @@ var cmp = [
 	'id':580,
 	'drops':false,
 	'name':'Component-580',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5412,7 +5412,7 @@ var cmp = [
 	'id':581,
 	'drops':false,
 	'name':'Component-581',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5421,7 +5421,7 @@ var cmp = [
 	'id':582,
 	'drops':false,
 	'name':'Component-582',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5430,7 +5430,7 @@ var cmp = [
 	'id':583,
 	'drops':false,
 	'name':'Component-583',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5439,7 +5439,7 @@ var cmp = [
 	'id':584,
 	'drops':false,
 	'name':'Component-584',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5448,7 +5448,7 @@ var cmp = [
 	'id':585,
 	'drops':false,
 	'name':'Component-585',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5457,7 +5457,7 @@ var cmp = [
 	'id':586,
 	'drops':false,
 	'name':'Component-586',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5466,7 +5466,7 @@ var cmp = [
 	'id':587,
 	'drops':false,
 	'name':'Component-587',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5475,7 +5475,7 @@ var cmp = [
 	'id':588,
 	'drops':false,
 	'name':'Component-588',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5484,7 +5484,7 @@ var cmp = [
 	'id':589,
 	'drops':false,
 	'name':'Component-589',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5493,7 +5493,7 @@ var cmp = [
 	'id':590,
 	'drops':false,
 	'name':'Component-590',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5502,7 +5502,7 @@ var cmp = [
 	'id':591,
 	'drops':false,
 	'name':'Component-591',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5511,7 +5511,7 @@ var cmp = [
 	'id':592,
 	'drops':false,
 	'name':'Component-592',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5520,7 +5520,7 @@ var cmp = [
 	'id':593,
 	'drops':false,
 	'name':'Component-593',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5529,7 +5529,7 @@ var cmp = [
 	'id':594,
 	'drops':false,
 	'name':'Component-594',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5538,7 +5538,7 @@ var cmp = [
 	'id':595,
 	'drops':false,
 	'name':'Component-595',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5547,7 +5547,7 @@ var cmp = [
 	'id':596,
 	'drops':false,
 	'name':'Component-596',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5556,7 +5556,7 @@ var cmp = [
 	'id':597,
 	'drops':false,
 	'name':'Component-597',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5565,7 +5565,7 @@ var cmp = [
 	'id':598,
 	'drops':false,
 	'name':'Component-598',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5574,7 +5574,7 @@ var cmp = [
 	'id':599,
 	'drops':false,
 	'name':'Component-599',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5583,7 +5583,7 @@ var cmp = [
 	'id':600,
 	'drops':false,
 	'name':'Component-600',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5592,7 +5592,7 @@ var cmp = [
 	'id':601,
 	'drops':false,
 	'name':'Component-601',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5601,7 +5601,7 @@ var cmp = [
 	'id':602,
 	'drops':false,
 	'name':'Component-602',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5610,7 +5610,7 @@ var cmp = [
 	'id':603,
 	'drops':false,
 	'name':'Component-603',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5619,7 +5619,7 @@ var cmp = [
 	'id':604,
 	'drops':false,
 	'name':'Component-604',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5628,7 +5628,7 @@ var cmp = [
 	'id':605,
 	'drops':false,
 	'name':'Component-605',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5637,7 +5637,7 @@ var cmp = [
 	'id':606,
 	'drops':false,
 	'name':'Component-606',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5646,7 +5646,7 @@ var cmp = [
 	'id':607,
 	'drops':false,
 	'name':'Component-607',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5655,7 +5655,7 @@ var cmp = [
 	'id':608,
 	'drops':false,
 	'name':'Component-608',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5664,7 +5664,7 @@ var cmp = [
 	'id':609,
 	'drops':false,
 	'name':'Component-609',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5673,7 +5673,7 @@ var cmp = [
 	'id':610,
 	'drops':false,
 	'name':'Component-610',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5682,7 +5682,7 @@ var cmp = [
 	'id':611,
 	'drops':false,
 	'name':'Component-611',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5691,7 +5691,7 @@ var cmp = [
 	'id':612,
 	'drops':false,
 	'name':'Component-612',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5700,7 +5700,7 @@ var cmp = [
 	'id':613,
 	'drops':false,
 	'name':'Component-613',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5709,7 +5709,7 @@ var cmp = [
 	'id':614,
 	'drops':false,
 	'name':'Component-614',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5718,7 +5718,7 @@ var cmp = [
 	'id':615,
 	'drops':false,
 	'name':'Component-615',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5727,7 +5727,7 @@ var cmp = [
 	'id':616,
 	'drops':false,
 	'name':'Component-616',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5736,7 +5736,7 @@ var cmp = [
 	'id':617,
 	'drops':false,
 	'name':'Component-617',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5745,7 +5745,7 @@ var cmp = [
 	'id':618,
 	'drops':false,
 	'name':'Component-618',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5754,7 +5754,7 @@ var cmp = [
 	'id':619,
 	'drops':false,
 	'name':'Component-619',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5763,7 +5763,7 @@ var cmp = [
 	'id':620,
 	'drops':false,
 	'name':'Component-620',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5772,7 +5772,7 @@ var cmp = [
 	'id':621,
 	'drops':false,
 	'name':'Component-621',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5781,7 +5781,7 @@ var cmp = [
 	'id':622,
 	'drops':false,
 	'name':'Component-622',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5790,7 +5790,7 @@ var cmp = [
 	'id':623,
 	'drops':false,
 	'name':'Component-623',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5799,7 +5799,7 @@ var cmp = [
 	'id':624,
 	'drops':false,
 	'name':'Component-624',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5808,7 +5808,7 @@ var cmp = [
 	'id':625,
 	'drops':false,
 	'name':'Component-625',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5817,7 +5817,7 @@ var cmp = [
 	'id':626,
 	'drops':false,
 	'name':'Component-626',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5826,7 +5826,7 @@ var cmp = [
 	'id':627,
 	'drops':false,
 	'name':'Component-627',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5835,7 +5835,7 @@ var cmp = [
 	'id':628,
 	'drops':false,
 	'name':'Component-628',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5844,7 +5844,7 @@ var cmp = [
 	'id':629,
 	'drops':false,
 	'name':'Component-629',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5853,7 +5853,7 @@ var cmp = [
 	'id':630,
 	'drops':false,
 	'name':'Component-630',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5862,7 +5862,7 @@ var cmp = [
 	'id':631,
 	'drops':false,
 	'name':'Component-631',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5871,7 +5871,7 @@ var cmp = [
 	'id':632,
 	'drops':false,
 	'name':'Component-632',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5880,7 +5880,7 @@ var cmp = [
 	'id':633,
 	'drops':false,
 	'name':'Component-633',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5889,7 +5889,7 @@ var cmp = [
 	'id':634,
 	'drops':false,
 	'name':'Component-634',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5898,7 +5898,7 @@ var cmp = [
 	'id':635,
 	'drops':false,
 	'name':'Component-635',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5907,7 +5907,7 @@ var cmp = [
 	'id':636,
 	'drops':false,
 	'name':'Component-636',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5916,7 +5916,7 @@ var cmp = [
 	'id':637,
 	'drops':false,
 	'name':'Component-637',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5925,7 +5925,7 @@ var cmp = [
 	'id':638,
 	'drops':false,
 	'name':'Component-638',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5934,7 +5934,7 @@ var cmp = [
 	'id':639,
 	'drops':false,
 	'name':'Component-639',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5943,7 +5943,7 @@ var cmp = [
 	'id':640,
 	'drops':false,
 	'name':'Component-640',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5952,7 +5952,7 @@ var cmp = [
 	'id':641,
 	'drops':false,
 	'name':'Component-641',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5961,7 +5961,7 @@ var cmp = [
 	'id':642,
 	'drops':false,
 	'name':'Component-642',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5970,7 +5970,7 @@ var cmp = [
 	'id':643,
 	'drops':false,
 	'name':'Component-643',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5979,7 +5979,7 @@ var cmp = [
 	'id':644,
 	'drops':false,
 	'name':'Component-644',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5988,7 +5988,7 @@ var cmp = [
 	'id':645,
 	'drops':false,
 	'name':'Component-645',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -5997,7 +5997,7 @@ var cmp = [
 	'id':646,
 	'drops':false,
 	'name':'Component-646',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6006,7 +6006,7 @@ var cmp = [
 	'id':647,
 	'drops':false,
 	'name':'Component-647',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6015,7 +6015,7 @@ var cmp = [
 	'id':648,
 	'drops':false,
 	'name':'Component-648',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6024,7 +6024,7 @@ var cmp = [
 	'id':649,
 	'drops':false,
 	'name':'Component-649',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6033,7 +6033,7 @@ var cmp = [
 	'id':650,
 	'drops':false,
 	'name':'Component-650',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6042,7 +6042,7 @@ var cmp = [
 	'id':651,
 	'drops':false,
 	'name':'Component-651',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6051,7 +6051,7 @@ var cmp = [
 	'id':652,
 	'drops':false,
 	'name':'Component-652',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6060,7 +6060,7 @@ var cmp = [
 	'id':653,
 	'drops':false,
 	'name':'Component-653',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6069,7 +6069,7 @@ var cmp = [
 	'id':654,
 	'drops':false,
 	'name':'Component-654',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6078,7 +6078,7 @@ var cmp = [
 	'id':655,
 	'drops':false,
 	'name':'Component-655',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6087,7 +6087,7 @@ var cmp = [
 	'id':656,
 	'drops':false,
 	'name':'Component-656',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6096,7 +6096,7 @@ var cmp = [
 	'id':657,
 	'drops':false,
 	'name':'Component-657',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6105,7 +6105,7 @@ var cmp = [
 	'id':658,
 	'drops':false,
 	'name':'Component-658',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6114,7 +6114,7 @@ var cmp = [
 	'id':659,
 	'drops':false,
 	'name':'Component-659',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6123,7 +6123,7 @@ var cmp = [
 	'id':660,
 	'drops':false,
 	'name':'Component-660',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6132,7 +6132,7 @@ var cmp = [
 	'id':661,
 	'drops':false,
 	'name':'Component-661',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6141,7 +6141,7 @@ var cmp = [
 	'id':662,
 	'drops':false,
 	'name':'Component-662',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6150,7 +6150,7 @@ var cmp = [
 	'id':663,
 	'drops':false,
 	'name':'Component-663',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6159,7 +6159,7 @@ var cmp = [
 	'id':664,
 	'drops':false,
 	'name':'Component-664',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6168,7 +6168,7 @@ var cmp = [
 	'id':665,
 	'drops':false,
 	'name':'Component-665',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6177,7 +6177,7 @@ var cmp = [
 	'id':666,
 	'drops':false,
 	'name':'Component-666',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6186,7 +6186,7 @@ var cmp = [
 	'id':667,
 	'drops':false,
 	'name':'Component-667',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6195,7 +6195,7 @@ var cmp = [
 	'id':668,
 	'drops':false,
 	'name':'Component-668',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6204,7 +6204,7 @@ var cmp = [
 	'id':669,
 	'drops':false,
 	'name':'Component-669',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6213,7 +6213,7 @@ var cmp = [
 	'id':670,
 	'drops':false,
 	'name':'Component-670',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6222,7 +6222,7 @@ var cmp = [
 	'id':671,
 	'drops':false,
 	'name':'Component-671',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6231,7 +6231,7 @@ var cmp = [
 	'id':672,
 	'drops':false,
 	'name':'Component-672',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6240,7 +6240,7 @@ var cmp = [
 	'id':673,
 	'drops':false,
 	'name':'Component-673',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6249,7 +6249,7 @@ var cmp = [
 	'id':674,
 	'drops':false,
 	'name':'Component-674',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6258,7 +6258,7 @@ var cmp = [
 	'id':675,
 	'drops':false,
 	'name':'Component-675',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6267,7 +6267,7 @@ var cmp = [
 	'id':676,
 	'drops':false,
 	'name':'Component-676',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6276,7 +6276,7 @@ var cmp = [
 	'id':677,
 	'drops':false,
 	'name':'Component-677',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6285,7 +6285,7 @@ var cmp = [
 	'id':678,
 	'drops':false,
 	'name':'Component-678',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6294,7 +6294,7 @@ var cmp = [
 	'id':679,
 	'drops':false,
 	'name':'Component-679',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6303,7 +6303,7 @@ var cmp = [
 	'id':680,
 	'drops':false,
 	'name':'Component-680',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6312,7 +6312,7 @@ var cmp = [
 	'id':681,
 	'drops':false,
 	'name':'Component-681',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6321,7 +6321,7 @@ var cmp = [
 	'id':682,
 	'drops':false,
 	'name':'Component-682',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6330,7 +6330,7 @@ var cmp = [
 	'id':683,
 	'drops':false,
 	'name':'Component-683',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6339,7 +6339,7 @@ var cmp = [
 	'id':684,
 	'drops':false,
 	'name':'Component-684',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6348,7 +6348,7 @@ var cmp = [
 	'id':685,
 	'drops':false,
 	'name':'Component-685',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6357,7 +6357,7 @@ var cmp = [
 	'id':686,
 	'drops':false,
 	'name':'Component-686',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6366,7 +6366,7 @@ var cmp = [
 	'id':687,
 	'drops':false,
 	'name':'Component-687',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6375,7 +6375,7 @@ var cmp = [
 	'id':688,
 	'drops':false,
 	'name':'Component-688',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6384,7 +6384,7 @@ var cmp = [
 	'id':689,
 	'drops':false,
 	'name':'Component-689',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6393,7 +6393,7 @@ var cmp = [
 	'id':690,
 	'drops':false,
 	'name':'Component-690',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6402,7 +6402,7 @@ var cmp = [
 	'id':691,
 	'drops':false,
 	'name':'Component-691',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6411,7 +6411,7 @@ var cmp = [
 	'id':692,
 	'drops':false,
 	'name':'Component-692',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6420,7 +6420,7 @@ var cmp = [
 	'id':693,
 	'drops':false,
 	'name':'Component-693',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6429,7 +6429,7 @@ var cmp = [
 	'id':694,
 	'drops':false,
 	'name':'Component-694',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6438,7 +6438,7 @@ var cmp = [
 	'id':695,
 	'drops':false,
 	'name':'Component-695',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6447,7 +6447,7 @@ var cmp = [
 	'id':696,
 	'drops':false,
 	'name':'Component-696',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6456,7 +6456,7 @@ var cmp = [
 	'id':697,
 	'drops':false,
 	'name':'Component-697',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6465,7 +6465,7 @@ var cmp = [
 	'id':698,
 	'drops':false,
 	'name':'Component-698',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6474,7 +6474,7 @@ var cmp = [
 	'id':699,
 	'drops':false,
 	'name':'Component-699',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6483,7 +6483,7 @@ var cmp = [
 	'id':700,
 	'drops':false,
 	'name':'Component-700',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6492,7 +6492,7 @@ var cmp = [
 	'id':701,
 	'drops':false,
 	'name':'Component-701',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6501,7 +6501,7 @@ var cmp = [
 	'id':702,
 	'drops':false,
 	'name':'Component-702',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6510,7 +6510,7 @@ var cmp = [
 	'id':703,
 	'drops':false,
 	'name':'Component-703',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6519,7 +6519,7 @@ var cmp = [
 	'id':704,
 	'drops':false,
 	'name':'Component-704',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6528,7 +6528,7 @@ var cmp = [
 	'id':705,
 	'drops':false,
 	'name':'Component-705',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6537,7 +6537,7 @@ var cmp = [
 	'id':706,
 	'drops':false,
 	'name':'Component-706',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6546,7 +6546,7 @@ var cmp = [
 	'id':707,
 	'drops':false,
 	'name':'Component-707',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6555,7 +6555,7 @@ var cmp = [
 	'id':708,
 	'drops':false,
 	'name':'Component-708',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6564,7 +6564,7 @@ var cmp = [
 	'id':709,
 	'drops':false,
 	'name':'Component-709',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6573,7 +6573,7 @@ var cmp = [
 	'id':710,
 	'drops':false,
 	'name':'Component-710',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6582,7 +6582,7 @@ var cmp = [
 	'id':711,
 	'drops':false,
 	'name':'Component-711',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6591,7 +6591,7 @@ var cmp = [
 	'id':712,
 	'drops':false,
 	'name':'Component-712',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6600,7 +6600,7 @@ var cmp = [
 	'id':713,
 	'drops':false,
 	'name':'Component-713',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6609,7 +6609,7 @@ var cmp = [
 	'id':714,
 	'drops':false,
 	'name':'Component-714',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6618,7 +6618,7 @@ var cmp = [
 	'id':715,
 	'drops':false,
 	'name':'Component-715',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6627,7 +6627,7 @@ var cmp = [
 	'id':716,
 	'drops':false,
 	'name':'Component-716',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6636,7 +6636,7 @@ var cmp = [
 	'id':717,
 	'drops':false,
 	'name':'Component-717',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6645,7 +6645,7 @@ var cmp = [
 	'id':718,
 	'drops':false,
 	'name':'Component-718',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6654,7 +6654,7 @@ var cmp = [
 	'id':719,
 	'drops':false,
 	'name':'Component-719',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6663,7 +6663,7 @@ var cmp = [
 	'id':720,
 	'drops':false,
 	'name':'Component-720',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6672,7 +6672,7 @@ var cmp = [
 	'id':721,
 	'drops':false,
 	'name':'Component-721',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6681,7 +6681,7 @@ var cmp = [
 	'id':722,
 	'drops':false,
 	'name':'Component-722',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6690,7 +6690,7 @@ var cmp = [
 	'id':723,
 	'drops':false,
 	'name':'Component-723',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6699,7 +6699,7 @@ var cmp = [
 	'id':724,
 	'drops':false,
 	'name':'Component-724',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6708,7 +6708,7 @@ var cmp = [
 	'id':725,
 	'drops':false,
 	'name':'Component-725',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6717,7 +6717,7 @@ var cmp = [
 	'id':726,
 	'drops':false,
 	'name':'Component-726',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6726,7 +6726,7 @@ var cmp = [
 	'id':727,
 	'drops':false,
 	'name':'Component-727',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6735,7 +6735,7 @@ var cmp = [
 	'id':728,
 	'drops':false,
 	'name':'Component-728',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6744,7 +6744,7 @@ var cmp = [
 	'id':729,
 	'drops':false,
 	'name':'Component-729',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6753,7 +6753,7 @@ var cmp = [
 	'id':730,
 	'drops':false,
 	'name':'Component-730',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6762,7 +6762,7 @@ var cmp = [
 	'id':731,
 	'drops':false,
 	'name':'Component-731',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6771,7 +6771,7 @@ var cmp = [
 	'id':732,
 	'drops':false,
 	'name':'Component-732',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6780,7 +6780,7 @@ var cmp = [
 	'id':733,
 	'drops':false,
 	'name':'Component-733',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6789,7 +6789,7 @@ var cmp = [
 	'id':734,
 	'drops':false,
 	'name':'Component-734',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6798,7 +6798,7 @@ var cmp = [
 	'id':735,
 	'drops':false,
 	'name':'Component-735',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6807,7 +6807,7 @@ var cmp = [
 	'id':736,
 	'drops':false,
 	'name':'Component-736',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6816,7 +6816,7 @@ var cmp = [
 	'id':737,
 	'drops':false,
 	'name':'Component-737',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6825,7 +6825,7 @@ var cmp = [
 	'id':738,
 	'drops':false,
 	'name':'Component-738',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6834,7 +6834,7 @@ var cmp = [
 	'id':739,
 	'drops':false,
 	'name':'Component-739',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6843,7 +6843,7 @@ var cmp = [
 	'id':740,
 	'drops':false,
 	'name':'Component-740',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6852,7 +6852,7 @@ var cmp = [
 	'id':741,
 	'drops':false,
 	'name':'Component-741',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6861,7 +6861,7 @@ var cmp = [
 	'id':742,
 	'drops':false,
 	'name':'Component-742',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6870,7 +6870,7 @@ var cmp = [
 	'id':743,
 	'drops':false,
 	'name':'Component-743',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6879,7 +6879,7 @@ var cmp = [
 	'id':744,
 	'drops':false,
 	'name':'Component-744',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6888,7 +6888,7 @@ var cmp = [
 	'id':745,
 	'drops':false,
 	'name':'Component-745',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6897,7 +6897,7 @@ var cmp = [
 	'id':746,
 	'drops':false,
 	'name':'Component-746',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6906,7 +6906,7 @@ var cmp = [
 	'id':747,
 	'drops':false,
 	'name':'Component-747',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6915,7 +6915,7 @@ var cmp = [
 	'id':748,
 	'drops':false,
 	'name':'Component-748',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6924,7 +6924,7 @@ var cmp = [
 	'id':749,
 	'drops':false,
 	'name':'Component-749',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6933,7 +6933,7 @@ var cmp = [
 	'id':750,
 	'drops':false,
 	'name':'Component-750',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6942,7 +6942,7 @@ var cmp = [
 	'id':751,
 	'drops':false,
 	'name':'Component-751',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6951,7 +6951,7 @@ var cmp = [
 	'id':752,
 	'drops':false,
 	'name':'Component-752',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6960,7 +6960,7 @@ var cmp = [
 	'id':753,
 	'drops':false,
 	'name':'Component-753',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6969,7 +6969,7 @@ var cmp = [
 	'id':754,
 	'drops':false,
 	'name':'Component-754',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6978,7 +6978,7 @@ var cmp = [
 	'id':755,
 	'drops':false,
 	'name':'Component-755',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6987,7 +6987,7 @@ var cmp = [
 	'id':756,
 	'drops':false,
 	'name':'Component-756',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -6996,7 +6996,7 @@ var cmp = [
 	'id':757,
 	'drops':false,
 	'name':'Component-757',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7005,7 +7005,7 @@ var cmp = [
 	'id':758,
 	'drops':false,
 	'name':'Component-758',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7014,7 +7014,7 @@ var cmp = [
 	'id':759,
 	'drops':false,
 	'name':'Component-759',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7023,7 +7023,7 @@ var cmp = [
 	'id':760,
 	'drops':false,
 	'name':'Component-760',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7032,7 +7032,7 @@ var cmp = [
 	'id':761,
 	'drops':false,
 	'name':'Component-761',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7041,7 +7041,7 @@ var cmp = [
 	'id':762,
 	'drops':false,
 	'name':'Component-762',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7050,7 +7050,7 @@ var cmp = [
 	'id':763,
 	'drops':false,
 	'name':'Component-763',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7059,7 +7059,7 @@ var cmp = [
 	'id':764,
 	'drops':false,
 	'name':'Component-764',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7068,7 +7068,7 @@ var cmp = [
 	'id':765,
 	'drops':false,
 	'name':'Component-765',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7077,7 +7077,7 @@ var cmp = [
 	'id':766,
 	'drops':false,
 	'name':'Component-766',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7086,7 +7086,7 @@ var cmp = [
 	'id':767,
 	'drops':false,
 	'name':'Component-767',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7095,7 +7095,7 @@ var cmp = [
 	'id':768,
 	'drops':false,
 	'name':'Component-768',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7104,7 +7104,7 @@ var cmp = [
 	'id':769,
 	'drops':false,
 	'name':'Component-769',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7113,7 +7113,7 @@ var cmp = [
 	'id':770,
 	'drops':false,
 	'name':'Component-770',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7122,7 +7122,7 @@ var cmp = [
 	'id':771,
 	'drops':false,
 	'name':'Component-771',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7131,7 +7131,7 @@ var cmp = [
 	'id':772,
 	'drops':false,
 	'name':'Component-772',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7140,7 +7140,7 @@ var cmp = [
 	'id':773,
 	'drops':false,
 	'name':'Component-773',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7149,7 +7149,7 @@ var cmp = [
 	'id':774,
 	'drops':false,
 	'name':'Component-774',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7158,7 +7158,7 @@ var cmp = [
 	'id':775,
 	'drops':false,
 	'name':'Component-775',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7167,7 +7167,7 @@ var cmp = [
 	'id':776,
 	'drops':false,
 	'name':'Component-776',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7176,7 +7176,7 @@ var cmp = [
 	'id':777,
 	'drops':false,
 	'name':'Component-777',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7185,7 +7185,7 @@ var cmp = [
 	'id':778,
 	'drops':false,
 	'name':'Component-778',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7194,7 +7194,7 @@ var cmp = [
 	'id':779,
 	'drops':false,
 	'name':'Component-779',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7203,7 +7203,7 @@ var cmp = [
 	'id':780,
 	'drops':false,
 	'name':'Component-780',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7212,7 +7212,7 @@ var cmp = [
 	'id':781,
 	'drops':false,
 	'name':'Component-781',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7221,7 +7221,7 @@ var cmp = [
 	'id':782,
 	'drops':false,
 	'name':'Component-782',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7230,7 +7230,7 @@ var cmp = [
 	'id':783,
 	'drops':false,
 	'name':'Component-783',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7239,7 +7239,7 @@ var cmp = [
 	'id':784,
 	'drops':false,
 	'name':'Component-784',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7248,7 +7248,7 @@ var cmp = [
 	'id':785,
 	'drops':false,
 	'name':'Component-785',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7257,7 +7257,7 @@ var cmp = [
 	'id':786,
 	'drops':false,
 	'name':'Component-786',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7266,7 +7266,7 @@ var cmp = [
 	'id':787,
 	'drops':false,
 	'name':'Component-787',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7275,7 +7275,7 @@ var cmp = [
 	'id':788,
 	'drops':false,
 	'name':'Component-788',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7284,7 +7284,7 @@ var cmp = [
 	'id':789,
 	'drops':false,
 	'name':'Component-789',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7293,7 +7293,7 @@ var cmp = [
 	'id':790,
 	'drops':false,
 	'name':'Component-790',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7302,7 +7302,7 @@ var cmp = [
 	'id':791,
 	'drops':false,
 	'name':'Component-791',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7311,7 +7311,7 @@ var cmp = [
 	'id':792,
 	'drops':false,
 	'name':'Component-792',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7320,7 +7320,7 @@ var cmp = [
 	'id':793,
 	'drops':false,
 	'name':'Component-793',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7329,7 +7329,7 @@ var cmp = [
 	'id':794,
 	'drops':false,
 	'name':'Component-794',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7338,7 +7338,7 @@ var cmp = [
 	'id':795,
 	'drops':false,
 	'name':'Component-795',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7347,7 +7347,7 @@ var cmp = [
 	'id':796,
 	'drops':false,
 	'name':'Component-796',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7356,7 +7356,7 @@ var cmp = [
 	'id':797,
 	'drops':false,
 	'name':'Component-797',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7365,7 +7365,7 @@ var cmp = [
 	'id':798,
 	'drops':false,
 	'name':'Component-798',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7374,7 +7374,7 @@ var cmp = [
 	'id':799,
 	'drops':false,
 	'name':'Component-799',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7383,7 +7383,7 @@ var cmp = [
 	'id':800,
 	'drops':false,
 	'name':'Component-800',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7392,7 +7392,7 @@ var cmp = [
 	'id':801,
 	'drops':false,
 	'name':'Component-801',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7401,7 +7401,7 @@ var cmp = [
 	'id':802,
 	'drops':false,
 	'name':'Component-802',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7410,7 +7410,7 @@ var cmp = [
 	'id':803,
 	'drops':false,
 	'name':'Component-803',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7419,7 +7419,7 @@ var cmp = [
 	'id':804,
 	'drops':false,
 	'name':'Component-804',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7428,7 +7428,7 @@ var cmp = [
 	'id':805,
 	'drops':false,
 	'name':'Component-805',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7437,7 +7437,7 @@ var cmp = [
 	'id':806,
 	'drops':false,
 	'name':'Component-806',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7446,7 +7446,7 @@ var cmp = [
 	'id':807,
 	'drops':false,
 	'name':'Component-807',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7455,7 +7455,7 @@ var cmp = [
 	'id':808,
 	'drops':false,
 	'name':'Component-808',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7464,7 +7464,7 @@ var cmp = [
 	'id':809,
 	'drops':false,
 	'name':'Component-809',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7473,7 +7473,7 @@ var cmp = [
 	'id':810,
 	'drops':false,
 	'name':'Component-810',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7482,7 +7482,7 @@ var cmp = [
 	'id':811,
 	'drops':false,
 	'name':'Component-811',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7491,7 +7491,7 @@ var cmp = [
 	'id':812,
 	'drops':false,
 	'name':'Component-812',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7500,7 +7500,7 @@ var cmp = [
 	'id':813,
 	'drops':false,
 	'name':'Component-813',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7509,7 +7509,7 @@ var cmp = [
 	'id':814,
 	'drops':false,
 	'name':'Component-814',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7518,7 +7518,7 @@ var cmp = [
 	'id':815,
 	'drops':false,
 	'name':'Component-815',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7527,7 +7527,7 @@ var cmp = [
 	'id':816,
 	'drops':false,
 	'name':'Component-816',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7536,7 +7536,7 @@ var cmp = [
 	'id':817,
 	'drops':false,
 	'name':'Component-817',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7545,7 +7545,7 @@ var cmp = [
 	'id':818,
 	'drops':false,
 	'name':'Component-818',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7554,7 +7554,7 @@ var cmp = [
 	'id':819,
 	'drops':false,
 	'name':'Component-819',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7563,7 +7563,7 @@ var cmp = [
 	'id':820,
 	'drops':false,
 	'name':'Component-820',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7572,7 +7572,7 @@ var cmp = [
 	'id':821,
 	'drops':false,
 	'name':'Component-821',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7581,7 +7581,7 @@ var cmp = [
 	'id':822,
 	'drops':false,
 	'name':'Component-822',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7590,7 +7590,7 @@ var cmp = [
 	'id':823,
 	'drops':false,
 	'name':'Component-823',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7599,7 +7599,7 @@ var cmp = [
 	'id':824,
 	'drops':false,
 	'name':'Component-824',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7608,7 +7608,7 @@ var cmp = [
 	'id':825,
 	'drops':false,
 	'name':'Component-825',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7617,7 +7617,7 @@ var cmp = [
 	'id':826,
 	'drops':false,
 	'name':'Component-826',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7626,7 +7626,7 @@ var cmp = [
 	'id':827,
 	'drops':false,
 	'name':'Component-827',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7635,7 +7635,7 @@ var cmp = [
 	'id':828,
 	'drops':false,
 	'name':'Component-828',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7644,7 +7644,7 @@ var cmp = [
 	'id':829,
 	'drops':false,
 	'name':'Component-829',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7653,7 +7653,7 @@ var cmp = [
 	'id':830,
 	'drops':false,
 	'name':'Component-830',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7662,7 +7662,7 @@ var cmp = [
 	'id':831,
 	'drops':false,
 	'name':'Component-831',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7671,7 +7671,7 @@ var cmp = [
 	'id':832,
 	'drops':false,
 	'name':'Component-832',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7680,7 +7680,7 @@ var cmp = [
 	'id':833,
 	'drops':false,
 	'name':'Component-833',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7689,7 +7689,7 @@ var cmp = [
 	'id':834,
 	'drops':false,
 	'name':'Component-834',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7698,7 +7698,7 @@ var cmp = [
 	'id':835,
 	'drops':false,
 	'name':'Component-835',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7707,7 +7707,7 @@ var cmp = [
 	'id':836,
 	'drops':false,
 	'name':'Component-836',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7716,7 +7716,7 @@ var cmp = [
 	'id':837,
 	'drops':false,
 	'name':'Component-837',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7725,7 +7725,7 @@ var cmp = [
 	'id':838,
 	'drops':false,
 	'name':'Component-838',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7734,7 +7734,7 @@ var cmp = [
 	'id':839,
 	'drops':false,
 	'name':'Component-839',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7743,7 +7743,7 @@ var cmp = [
 	'id':840,
 	'drops':false,
 	'name':'Component-840',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7752,7 +7752,7 @@ var cmp = [
 	'id':841,
 	'drops':false,
 	'name':'Component-841',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7761,7 +7761,7 @@ var cmp = [
 	'id':842,
 	'drops':false,
 	'name':'Component-842',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7770,7 +7770,7 @@ var cmp = [
 	'id':843,
 	'drops':false,
 	'name':'Component-843',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7779,7 +7779,7 @@ var cmp = [
 	'id':844,
 	'drops':false,
 	'name':'Component-844',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7788,7 +7788,7 @@ var cmp = [
 	'id':845,
 	'drops':false,
 	'name':'Component-845',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7797,7 +7797,7 @@ var cmp = [
 	'id':846,
 	'drops':false,
 	'name':'Component-846',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7806,7 +7806,7 @@ var cmp = [
 	'id':847,
 	'drops':false,
 	'name':'Component-847',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7815,7 +7815,7 @@ var cmp = [
 	'id':848,
 	'drops':false,
 	'name':'Component-848',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7824,7 +7824,7 @@ var cmp = [
 	'id':849,
 	'drops':false,
 	'name':'Component-849',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7833,7 +7833,7 @@ var cmp = [
 	'id':850,
 	'drops':false,
 	'name':'Component-850',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7842,7 +7842,7 @@ var cmp = [
 	'id':851,
 	'drops':false,
 	'name':'Component-851',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7851,7 +7851,7 @@ var cmp = [
 	'id':852,
 	'drops':false,
 	'name':'Component-852',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7860,7 +7860,7 @@ var cmp = [
 	'id':853,
 	'drops':false,
 	'name':'Component-853',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7869,7 +7869,7 @@ var cmp = [
 	'id':854,
 	'drops':false,
 	'name':'Component-854',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7878,7 +7878,7 @@ var cmp = [
 	'id':855,
 	'drops':false,
 	'name':'Component-855',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7887,7 +7887,7 @@ var cmp = [
 	'id':856,
 	'drops':false,
 	'name':'Component-856',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7896,7 +7896,7 @@ var cmp = [
 	'id':857,
 	'drops':false,
 	'name':'Component-857',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7905,7 +7905,7 @@ var cmp = [
 	'id':858,
 	'drops':false,
 	'name':'Component-858',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7914,7 +7914,7 @@ var cmp = [
 	'id':859,
 	'drops':false,
 	'name':'Component-859',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7923,7 +7923,7 @@ var cmp = [
 	'id':860,
 	'drops':false,
 	'name':'Component-860',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7932,7 +7932,7 @@ var cmp = [
 	'id':861,
 	'drops':false,
 	'name':'Component-861',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7941,7 +7941,7 @@ var cmp = [
 	'id':862,
 	'drops':false,
 	'name':'Component-862',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7950,7 +7950,7 @@ var cmp = [
 	'id':863,
 	'drops':false,
 	'name':'Component-863',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7959,7 +7959,7 @@ var cmp = [
 	'id':864,
 	'drops':false,
 	'name':'Component-864',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7968,7 +7968,7 @@ var cmp = [
 	'id':865,
 	'drops':false,
 	'name':'Component-865',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7977,7 +7977,7 @@ var cmp = [
 	'id':866,
 	'drops':false,
 	'name':'Component-866',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7986,7 +7986,7 @@ var cmp = [
 	'id':867,
 	'drops':false,
 	'name':'Component-867',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -7995,7 +7995,7 @@ var cmp = [
 	'id':868,
 	'drops':false,
 	'name':'Component-868',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8004,7 +8004,7 @@ var cmp = [
 	'id':869,
 	'drops':false,
 	'name':'Component-869',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8013,7 +8013,7 @@ var cmp = [
 	'id':870,
 	'drops':false,
 	'name':'Component-870',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8022,7 +8022,7 @@ var cmp = [
 	'id':871,
 	'drops':false,
 	'name':'Component-871',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8031,7 +8031,7 @@ var cmp = [
 	'id':872,
 	'drops':false,
 	'name':'Component-872',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8040,7 +8040,7 @@ var cmp = [
 	'id':873,
 	'drops':false,
 	'name':'Component-873',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8049,7 +8049,7 @@ var cmp = [
 	'id':874,
 	'drops':false,
 	'name':'Component-874',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8058,7 +8058,7 @@ var cmp = [
 	'id':875,
 	'drops':false,
 	'name':'Component-875',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8067,7 +8067,7 @@ var cmp = [
 	'id':876,
 	'drops':false,
 	'name':'Component-876',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8076,7 +8076,7 @@ var cmp = [
 	'id':877,
 	'drops':false,
 	'name':'Component-877',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8085,7 +8085,7 @@ var cmp = [
 	'id':878,
 	'drops':false,
 	'name':'Component-878',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8094,7 +8094,7 @@ var cmp = [
 	'id':879,
 	'drops':false,
 	'name':'Component-879',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8103,7 +8103,7 @@ var cmp = [
 	'id':880,
 	'drops':false,
 	'name':'Component-880',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8112,7 +8112,7 @@ var cmp = [
 	'id':881,
 	'drops':false,
 	'name':'Component-881',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8121,7 +8121,7 @@ var cmp = [
 	'id':882,
 	'drops':false,
 	'name':'Component-882',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8130,7 +8130,7 @@ var cmp = [
 	'id':883,
 	'drops':false,
 	'name':'Component-883',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8139,7 +8139,7 @@ var cmp = [
 	'id':884,
 	'drops':false,
 	'name':'Component-884',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8148,7 +8148,7 @@ var cmp = [
 	'id':885,
 	'drops':false,
 	'name':'Component-885',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8157,7 +8157,7 @@ var cmp = [
 	'id':886,
 	'drops':false,
 	'name':'Component-886',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8166,7 +8166,7 @@ var cmp = [
 	'id':887,
 	'drops':false,
 	'name':'Component-887',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8175,7 +8175,7 @@ var cmp = [
 	'id':888,
 	'drops':false,
 	'name':'Component-888',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8184,7 +8184,7 @@ var cmp = [
 	'id':889,
 	'drops':false,
 	'name':'Component-889',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8193,7 +8193,7 @@ var cmp = [
 	'id':890,
 	'drops':false,
 	'name':'Component-890',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8202,7 +8202,7 @@ var cmp = [
 	'id':891,
 	'drops':false,
 	'name':'Component-891',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8211,7 +8211,7 @@ var cmp = [
 	'id':892,
 	'drops':false,
 	'name':'Component-892',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8220,7 +8220,7 @@ var cmp = [
 	'id':893,
 	'drops':false,
 	'name':'Component-893',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8229,7 +8229,7 @@ var cmp = [
 	'id':894,
 	'drops':false,
 	'name':'Component-894',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8238,7 +8238,7 @@ var cmp = [
 	'id':895,
 	'drops':false,
 	'name':'Component-895',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8247,7 +8247,7 @@ var cmp = [
 	'id':896,
 	'drops':false,
 	'name':'Component-896',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8256,7 +8256,7 @@ var cmp = [
 	'id':897,
 	'drops':false,
 	'name':'Component-897',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8265,7 +8265,7 @@ var cmp = [
 	'id':898,
 	'drops':false,
 	'name':'Component-898',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8274,7 +8274,7 @@ var cmp = [
 	'id':899,
 	'drops':false,
 	'name':'Component-899',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8283,7 +8283,7 @@ var cmp = [
 	'id':900,
 	'drops':false,
 	'name':'Component-900',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8292,7 +8292,7 @@ var cmp = [
 	'id':901,
 	'drops':false,
 	'name':'Component-901',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8301,7 +8301,7 @@ var cmp = [
 	'id':902,
 	'drops':false,
 	'name':'Component-902',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8310,7 +8310,7 @@ var cmp = [
 	'id':903,
 	'drops':false,
 	'name':'Component-903',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8319,7 +8319,7 @@ var cmp = [
 	'id':904,
 	'drops':false,
 	'name':'Component-904',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8328,7 +8328,7 @@ var cmp = [
 	'id':905,
 	'drops':false,
 	'name':'Component-905',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8337,7 +8337,7 @@ var cmp = [
 	'id':906,
 	'drops':false,
 	'name':'Component-906',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8346,7 +8346,7 @@ var cmp = [
 	'id':907,
 	'drops':false,
 	'name':'Component-907',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8355,7 +8355,7 @@ var cmp = [
 	'id':908,
 	'drops':false,
 	'name':'Component-908',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8364,7 +8364,7 @@ var cmp = [
 	'id':909,
 	'drops':false,
 	'name':'Component-909',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8373,7 +8373,7 @@ var cmp = [
 	'id':910,
 	'drops':false,
 	'name':'Component-910',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8382,7 +8382,7 @@ var cmp = [
 	'id':911,
 	'drops':false,
 	'name':'Component-911',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8391,7 +8391,7 @@ var cmp = [
 	'id':912,
 	'drops':false,
 	'name':'Component-912',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8400,7 +8400,7 @@ var cmp = [
 	'id':913,
 	'drops':false,
 	'name':'Component-913',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8409,7 +8409,7 @@ var cmp = [
 	'id':914,
 	'drops':false,
 	'name':'Component-914',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8418,7 +8418,7 @@ var cmp = [
 	'id':915,
 	'drops':false,
 	'name':'Component-915',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8427,7 +8427,7 @@ var cmp = [
 	'id':916,
 	'drops':false,
 	'name':'Component-916',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8436,7 +8436,7 @@ var cmp = [
 	'id':917,
 	'drops':false,
 	'name':'Component-917',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8445,7 +8445,7 @@ var cmp = [
 	'id':918,
 	'drops':false,
 	'name':'Component-918',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8454,7 +8454,7 @@ var cmp = [
 	'id':919,
 	'drops':false,
 	'name':'Component-919',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8463,7 +8463,7 @@ var cmp = [
 	'id':920,
 	'drops':false,
 	'name':'Component-920',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8472,7 +8472,7 @@ var cmp = [
 	'id':921,
 	'drops':false,
 	'name':'Component-921',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8481,7 +8481,7 @@ var cmp = [
 	'id':922,
 	'drops':false,
 	'name':'Component-922',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8490,7 +8490,7 @@ var cmp = [
 	'id':923,
 	'drops':false,
 	'name':'Component-923',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8499,7 +8499,7 @@ var cmp = [
 	'id':924,
 	'drops':false,
 	'name':'Component-924',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8508,7 +8508,7 @@ var cmp = [
 	'id':925,
 	'drops':false,
 	'name':'Component-925',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8517,7 +8517,7 @@ var cmp = [
 	'id':926,
 	'drops':false,
 	'name':'Component-926',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8526,7 +8526,7 @@ var cmp = [
 	'id':927,
 	'drops':false,
 	'name':'Component-927',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8535,7 +8535,7 @@ var cmp = [
 	'id':928,
 	'drops':false,
 	'name':'Component-928',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8544,7 +8544,7 @@ var cmp = [
 	'id':929,
 	'drops':false,
 	'name':'Component-929',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8553,7 +8553,7 @@ var cmp = [
 	'id':930,
 	'drops':false,
 	'name':'Component-930',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8562,7 +8562,7 @@ var cmp = [
 	'id':931,
 	'drops':false,
 	'name':'Component-931',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8571,7 +8571,7 @@ var cmp = [
 	'id':932,
 	'drops':false,
 	'name':'Component-932',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8580,7 +8580,7 @@ var cmp = [
 	'id':933,
 	'drops':false,
 	'name':'Component-933',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8589,7 +8589,7 @@ var cmp = [
 	'id':934,
 	'drops':false,
 	'name':'Component-934',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8598,7 +8598,7 @@ var cmp = [
 	'id':935,
 	'drops':false,
 	'name':'Component-935',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8607,7 +8607,7 @@ var cmp = [
 	'id':936,
 	'drops':false,
 	'name':'Component-936',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8616,7 +8616,7 @@ var cmp = [
 	'id':937,
 	'drops':false,
 	'name':'Component-937',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8625,7 +8625,7 @@ var cmp = [
 	'id':938,
 	'drops':false,
 	'name':'Component-938',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8634,7 +8634,7 @@ var cmp = [
 	'id':939,
 	'drops':false,
 	'name':'Component-939',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8643,7 +8643,7 @@ var cmp = [
 	'id':940,
 	'drops':false,
 	'name':'Component-940',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8652,7 +8652,7 @@ var cmp = [
 	'id':941,
 	'drops':false,
 	'name':'Component-941',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8661,7 +8661,7 @@ var cmp = [
 	'id':942,
 	'drops':false,
 	'name':'Component-942',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8670,7 +8670,7 @@ var cmp = [
 	'id':943,
 	'drops':false,
 	'name':'Component-943',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8679,7 +8679,7 @@ var cmp = [
 	'id':944,
 	'drops':false,
 	'name':'Component-944',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8688,7 +8688,7 @@ var cmp = [
 	'id':945,
 	'drops':false,
 	'name':'Component-945',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8697,7 +8697,7 @@ var cmp = [
 	'id':946,
 	'drops':false,
 	'name':'Component-946',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8706,7 +8706,7 @@ var cmp = [
 	'id':947,
 	'drops':false,
 	'name':'Component-947',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8715,7 +8715,7 @@ var cmp = [
 	'id':948,
 	'drops':false,
 	'name':'Component-948',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8724,7 +8724,7 @@ var cmp = [
 	'id':949,
 	'drops':false,
 	'name':'Component-949',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8733,7 +8733,7 @@ var cmp = [
 	'id':950,
 	'drops':false,
 	'name':'Component-950',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8742,7 +8742,7 @@ var cmp = [
 	'id':951,
 	'drops':false,
 	'name':'Component-951',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8751,7 +8751,7 @@ var cmp = [
 	'id':952,
 	'drops':false,
 	'name':'Component-952',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8760,7 +8760,7 @@ var cmp = [
 	'id':953,
 	'drops':false,
 	'name':'Component-953',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8769,7 +8769,7 @@ var cmp = [
 	'id':954,
 	'drops':false,
 	'name':'Component-954',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8778,7 +8778,7 @@ var cmp = [
 	'id':955,
 	'drops':false,
 	'name':'Component-955',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8787,7 +8787,7 @@ var cmp = [
 	'id':956,
 	'drops':false,
 	'name':'Component-956',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8796,7 +8796,7 @@ var cmp = [
 	'id':957,
 	'drops':false,
 	'name':'Component-957',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8805,7 +8805,7 @@ var cmp = [
 	'id':958,
 	'drops':false,
 	'name':'Component-958',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8814,7 +8814,7 @@ var cmp = [
 	'id':959,
 	'drops':false,
 	'name':'Component-959',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8823,7 +8823,7 @@ var cmp = [
 	'id':960,
 	'drops':false,
 	'name':'Component-960',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8832,7 +8832,7 @@ var cmp = [
 	'id':961,
 	'drops':false,
 	'name':'Component-961',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8841,7 +8841,7 @@ var cmp = [
 	'id':962,
 	'drops':false,
 	'name':'Component-962',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8850,7 +8850,7 @@ var cmp = [
 	'id':963,
 	'drops':false,
 	'name':'Component-963',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8859,7 +8859,7 @@ var cmp = [
 	'id':964,
 	'drops':false,
 	'name':'Component-964',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8868,7 +8868,7 @@ var cmp = [
 	'id':965,
 	'drops':false,
 	'name':'Component-965',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8877,7 +8877,7 @@ var cmp = [
 	'id':966,
 	'drops':false,
 	'name':'Component-966',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8886,7 +8886,7 @@ var cmp = [
 	'id':967,
 	'drops':false,
 	'name':'Component-967',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8895,7 +8895,7 @@ var cmp = [
 	'id':968,
 	'drops':false,
 	'name':'Component-968',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8904,7 +8904,7 @@ var cmp = [
 	'id':969,
 	'drops':false,
 	'name':'Component-969',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8913,7 +8913,7 @@ var cmp = [
 	'id':970,
 	'drops':false,
 	'name':'Component-970',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8922,7 +8922,7 @@ var cmp = [
 	'id':971,
 	'drops':false,
 	'name':'Component-971',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8931,7 +8931,7 @@ var cmp = [
 	'id':972,
 	'drops':false,
 	'name':'Component-972',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8940,7 +8940,7 @@ var cmp = [
 	'id':973,
 	'drops':false,
 	'name':'Component-973',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8949,7 +8949,7 @@ var cmp = [
 	'id':974,
 	'drops':false,
 	'name':'Component-974',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8958,7 +8958,7 @@ var cmp = [
 	'id':975,
 	'drops':false,
 	'name':'Component-975',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8967,7 +8967,7 @@ var cmp = [
 	'id':976,
 	'drops':false,
 	'name':'Component-976',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8976,7 +8976,7 @@ var cmp = [
 	'id':977,
 	'drops':false,
 	'name':'Component-977',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8985,7 +8985,7 @@ var cmp = [
 	'id':978,
 	'drops':false,
 	'name':'Component-978',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -8994,7 +8994,7 @@ var cmp = [
 	'id':979,
 	'drops':false,
 	'name':'Component-979',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -9003,7 +9003,7 @@ var cmp = [
 	'id':980,
 	'drops':false,
 	'name':'Component-980',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -9012,7 +9012,7 @@ var cmp = [
 	'id':981,
 	'drops':false,
 	'name':'Component-981',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -9021,7 +9021,7 @@ var cmp = [
 	'id':982,
 	'drops':false,
 	'name':'Component-982',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -9030,7 +9030,7 @@ var cmp = [
 	'id':983,
 	'drops':false,
 	'name':'Component-983',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -9039,7 +9039,7 @@ var cmp = [
 	'id':984,
 	'drops':false,
 	'name':'Component-984',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -9048,7 +9048,7 @@ var cmp = [
 	'id':985,
 	'drops':false,
 	'name':'Component-985',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -9057,7 +9057,7 @@ var cmp = [
 	'id':986,
 	'drops':false,
 	'name':'Component-986',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -9066,7 +9066,7 @@ var cmp = [
 	'id':987,
 	'drops':false,
 	'name':'Component-987',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -9075,7 +9075,7 @@ var cmp = [
 	'id':988,
 	'drops':false,
 	'name':'Component-988',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -9084,7 +9084,7 @@ var cmp = [
 	'id':989,
 	'drops':false,
 	'name':'Component-989',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -9093,7 +9093,7 @@ var cmp = [
 	'id':990,
 	'drops':false,
 	'name':'Component-990',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -9102,7 +9102,7 @@ var cmp = [
 	'id':991,
 	'drops':false,
 	'name':'Component-991',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -9111,7 +9111,7 @@ var cmp = [
 	'id':992,
 	'drops':false,
 	'name':'Component-992',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -9120,7 +9120,7 @@ var cmp = [
 	'id':993,
 	'drops':false,
 	'name':'Component-993',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -9129,7 +9129,7 @@ var cmp = [
 	'id':994,
 	'drops':false,
 	'name':'Component-994',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -9138,7 +9138,7 @@ var cmp = [
 	'id':995,
 	'drops':false,
 	'name':'Component-995',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -9147,7 +9147,7 @@ var cmp = [
 	'id':996,
 	'drops':false,
 	'name':'Component-996',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -9156,7 +9156,7 @@ var cmp = [
 	'id':997,
 	'drops':false,
 	'name':'Component-997',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -9165,7 +9165,7 @@ var cmp = [
 	'id':998,
 	'drops':false,
 	'name':'Component-998',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -9174,7 +9174,7 @@ var cmp = [
 	'id':999,
 	'drops':false,
 	'name':'Component-999',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -9183,7 +9183,7 @@ var cmp = [
 	'id':1000,
 	'drops':false,
 	'name':'Component-1000',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -9192,7 +9192,7 @@ var cmp = [
 	'id':1001,
 	'drops':false,
 	'name':'Component-1001',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -9201,7 +9201,7 @@ var cmp = [
 	'id':1002,
 	'drops':false,
 	'name':'Component-1002',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -9210,7 +9210,7 @@ var cmp = [
 	'id':1003,
 	'drops':false,
 	'name':'Component-1003',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -9219,7 +9219,7 @@ var cmp = [
 	'id':1004,
 	'drops':false,
 	'name':'Component-1004',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -9228,7 +9228,7 @@ var cmp = [
 	'id':1005,
 	'drops':false,
 	'name':'Component-1005',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -9237,7 +9237,7 @@ var cmp = [
 	'id':1006,
 	'drops':false,
 	'name':'Component-1006',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -9246,7 +9246,7 @@ var cmp = [
 	'id':1007,
 	'drops':false,
 	'name':'Component-1007',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -9255,7 +9255,7 @@ var cmp = [
 	'id':1008,
 	'drops':false,
 	'name':'Component-1008',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -9264,7 +9264,7 @@ var cmp = [
 	'id':1009,
 	'drops':false,
 	'name':'Component-1009',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -9273,7 +9273,7 @@ var cmp = [
 	'id':1010,
 	'drops':false,
 	'name':'Component-1010',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -9282,7 +9282,7 @@ var cmp = [
 	'id':1011,
 	'drops':false,
 	'name':'Component-1011',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -9291,7 +9291,7 @@ var cmp = [
 	'id':1012,
 	'drops':false,
 	'name':'Component-1012',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -9300,7 +9300,7 @@ var cmp = [
 	'id':1013,
 	'drops':false,
 	'name':'Component-1013',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -9309,7 +9309,7 @@ var cmp = [
 	'id':1014,
 	'drops':false,
 	'name':'Component-1014',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -9318,7 +9318,7 @@ var cmp = [
 	'id':1015,
 	'drops':false,
 	'name':'Component-1015',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -9327,7 +9327,7 @@ var cmp = [
 	'id':1016,
 	'drops':false,
 	'name':'Component-1016',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -9336,7 +9336,7 @@ var cmp = [
 	'id':1017,
 	'drops':false,
 	'name':'Component-1017',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -9345,7 +9345,7 @@ var cmp = [
 	'id':1018,
 	'drops':false,
 	'name':'Component-1018',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -9354,7 +9354,7 @@ var cmp = [
 	'id':1019,
 	'drops':false,
 	'name':'Component-1019',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -9363,7 +9363,7 @@ var cmp = [
 	'id':1020,
 	'drops':false,
 	'name':'Component-1020',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -9372,7 +9372,7 @@ var cmp = [
 	'id':1021,
 	'drops':false,
 	'name':'Component-1021',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -9381,7 +9381,7 @@ var cmp = [
 	'id':1022,
 	'drops':false,
 	'name':'Component-1022',
-	'flavor':'',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}

@@ -569,6 +569,7 @@ playerShip.prototype.initPlayerShip = function (ship) {
 	this.target={};
 	this.ai=-1; //natural intelligence
 	this.radarTargets=1;
+	this.cashFlow=1;
 	this.radarShowInRange=false;
 	this.radarShowInEnemyRange=false;
 	this.radarOreTargets=4;
@@ -1013,7 +1014,7 @@ gameUI.prototype.nextPart = function () {
 gameUI.prototype.partsUI = function (ship) {
 	this.tempStation = game.add.sprite(0,0,'station');
 	this.tempStation.anchor.setTo(0.5,0.5);
-	playerStats.credits+=player.ore; //ore is reset with the new ship 
+	playerStats.credits+=player.ore*player.cashFlow; //ore is reset with the new ship 
 	player.sprite.reset(0,0);
 	player.sprite.rotation=0;
 	game.camera.follow=null;
@@ -1043,6 +1044,8 @@ gameUI.prototype.endPartsUI = function () {
 	this.partsSelector.destroy();
 	var ship = this.partsArray();
 	for(var i=0; i<this.parts.length;i++){
+		this.parts[i].sprite.inputEnabled=false;
+		this.parts[i].sprite.input.destroy();
 		this.parts[i].sprite.destroy();
 	}
 	this.parts=[];
