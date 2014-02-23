@@ -285,13 +285,13 @@ enemyShip.prototype.destroyParts = function() {
 	if(typeof(this.parts)!='undefined'){
 		for(var i=0; i<this.parts.length;i++)
 		{
+			//very explicit destroy
 			this.parts[i].sprite.input.destroy();
 			this.parts[i].sprite.animations.destroy();
 			this.parts[i].sprite.alive=false;
 			this.parts[i].sprite.exists=false;
 			this.parts[i].sprite.visible=false;
-			this.parts[i].sprite.game=null;
-		}
+			this.parts[i].sprite.game=null; }
 	}
 	this.parts=[];
 }
@@ -317,10 +317,10 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 			if (dmg != 31337){
 				if(Math.random() < globalDropRate){
 					spawnLoots(Math.floor(eo3.randomRange(0,4)), this.sprite.x, this.sprite.y);
-					this.parts[j].sprite.destroy();
+					this.parts[j].sprite.kill();
 				}else if(Math.random() < globalDropRate * 1.5 && components[this.parts[j].component].drops){ //TODO probably make stuff drop less, but we're just testing
 					spawnComponent(this.parts[j].component, this.sprite.x, this.sprite.y);
-					this.parts[j].sprite.destroy();	
+					this.parts[j].sprite.kill();	
 				}else{
 					this.parts[j].sprite.lifespan = eo3.randomRange(1500,3000);
 					this.parts[j].sprite.body.velocity = game.physics.velocityFromRotation(this.game.physics.angleBetween(this.sprite, this.parts[j].sprite), 200+eo3.randomRange(0,10*dmg));
@@ -331,7 +331,7 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 					}
 				}
 			}else{
-				this.parts[j].sprite.destroy();
+				this.parts[j].sprite.kill();
 			}
 		}	
 
@@ -568,12 +568,18 @@ var playerShip = function(ship) {
 	this.initPlayerShip(ship);
 }
 playerShip.prototype.destroyParts = function() {
-	if(typeof(this.parts)!='undefined'){
-		while(this.parts.length){
-			this.parts[this.parts.length-1].sprite.destroy();
-			this.parts.splice(this.parts.length-1,1);
-		}
+		if(typeof(this.parts)!='undefined'){
+		for(var i=0; i<this.parts.length;i++)
+		{
+			//very explicit destroy
+			this.parts[i].sprite.input.destroy();
+			this.parts[i].sprite.animations.destroy();
+			this.parts[i].sprite.alive=false;
+			this.parts[i].sprite.exists=false;
+			this.parts[i].sprite.visible=false;
+			this.parts[i].sprite.game=null; }
 	}
+	this.parts=[];
 }
 playerShip.prototype.initPlayerShip = function (ship) {
 
@@ -1413,9 +1419,9 @@ function update () {
 					player.initPlayerShip(defaultPlayerShip);
 				}
 			}
-			for(var i = 0; i < enemies.length ; i++) {
-				if (enemies[i].alive==false){
-					enemies[i].initEnemyShip();
+			for(var c = 0; c < enemies.length ; c++) {
+				if (enemies[c].alive==false){
+					enemies[c].initEnemyShip();
 					//					enemies[i] = new enemyShip(i, game, player.sprite, enemyBullets,enemies[i].shipList); //FIXME
 				};
 			}
