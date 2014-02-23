@@ -179,7 +179,7 @@ shipPart = function(x,y,sheet,index,targetSprite){
 	this.sprite.body.exchangeVelocity=false;
 };
 shipPart.prototype.update = function(){
-	if (this.target.alive) {
+	if (this.target.alive && this.alive) {
 		this.sprite.angle = this.target.angle;
 		this.sprite.x = this.target.x + (this.offsetx * Math.cos(game.math.degToRad(this.target.angle)));
 		this.sprite.y = this.target.y + (this.offsety * Math.cos(game.math.degToRad(this.target.angle)));
@@ -221,15 +221,20 @@ enemyShip = function (index, game, targetSprite, bullets, shipList) {
 
 enemyShip.prototype.initEnemyShip = function(ship) {
 
+	console.log('initEnemyShip ' + this.sprite.name);
+	var x = this.target.x + (eo3.randomSign() * eo3.randomRange(750,2000));
+	var y = this.target.y + (eo3.randomSign() * eo3.randomRange(750,2000));
+	this.sprite.reset(x,y);
 	this.ship = this.shipList[Math.floor(eo3.randomRange(0,this.shipList.length))];
-
-	this.sprite.profile = 250;
+	this.destroyParts()
+		this.sprite.profile = 250;
 	this.aggroList = [];
 	this.holdThrust=0;
 	this.acceleration=1;
 	this.health = 3;
 	this.bulletBehavior=[];
 	this.ai = 1;
+	this.alive=true;
 	this.behavior=defaultBehavior;
 	if(Math.random()<0.2){
 		this.behavior='chasing';
@@ -278,11 +283,17 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 }
 enemyShip.prototype.destroyParts = function() {
 	if(typeof(this.parts)!='undefined'){
-		while(this.parts.length){
-			this.parts[this.parts.length-1].sprite.destroy();
-			this.parts.splice(this.parts.length-1,1);
+		for(var i=0; i<this.parts.length;i++)
+		{
+			this.parts[i].sprite.input.destroy();
+			this.parts[i].sprite.animations.destroy();
+			this.parts[i].sprite.alive=false;
+			this.parts[i].sprite.exists=false;
+			this.parts[i].sprite.visible=false;
+			this.parts[i].sprite.game=null;
 		}
 	}
+	this.parts=[];
 }
 
 enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
@@ -975,12 +986,12 @@ gameUI.prototype.creditLinePing = function() {
 	}
 	this.creditLine.x = player.sprite.body.x-this.creditLine.width;
 	this.creditLine.y = player.sprite.body.height+player.sprite.body.y+35;
-if(gamemode=='?build'){
+	if(gamemode=='?build'){
 		this.creditLine.y+=200;
 	}
-	}
+}
 gameUI.prototype.update = function() {
-		this.creditLinePing();
+	this.creditLinePing();
 	if (gamemode == 'war'){
 		this.bar(this.healthLine, 0, player.health, player.healthMax);
 		this.bar(this.energyLine, 10, player.energy, player.energyMax);
@@ -1404,7 +1415,8 @@ function update () {
 			}
 			for(var i = 0; i < enemies.length ; i++) {
 				if (enemies[i].alive==false){
-					enemies[i] = new enemyShip(i, game, player.sprite, enemyBullets,enemies[i].shipList); //FIXME
+					enemies[i].initEnemyShip();
+					//					enemies[i] = new enemyShip(i, game, player.sprite, enemyBullets,enemies[i].shipList); //FIXME
 				};
 			}
 			nextSpawn=game.time.now+eo3.randomRange(5000,10000);

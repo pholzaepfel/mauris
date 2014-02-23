@@ -9812,8 +9812,10 @@
 			while (n--) {
 				this._bindings[n]._destroy();
 			}
-			}
 			this._bindings.length = 0;
+			console.log('removeAll failure!');
+			console.log(this);
+			}
 		},
 
 		/**
