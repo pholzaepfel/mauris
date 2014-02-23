@@ -833,6 +833,9 @@ gameUI.prototype.resetRadar = function() {
 }
 gameUI.prototype.initCombatUi = function() {
 
+	destroyIfExists(this.creditLine);
+	this.creditLine = game.add.text(200,100, '',{ font:'14px monospace', fill: 'rgb(64,255,16)', align: 'right' });
+	this.creditLine.flash = 0;
 	destroyIfExists(this.healthLine);
 	this.healthLine = game.add.text(200,100, '',{ font:'14px monospace', fill: 'rgb(96,96,240)', align: 'left' });
 	this.healthLine.flash = 0;
@@ -962,7 +965,22 @@ gameUI.prototype.wordsPing = function() {
 	this.words.x = player.sprite.body.x;
 	this.words.y = player.sprite.body.y + 200;
 }
+gameUI.prototype.creditLinePing = function() {
+
+	var targetDistance=game.physics.distanceBetween(player.sprite, station);
+	if(targetDistance>1000){
+		this.creditLine.setText('O' + player.ore);
+	}else{
+		this.creditLine.setText('$' + playerStats.credits + '  O' + player.ore);
+	}
+	this.creditLine.x = player.sprite.body.x-this.creditLine.width;
+	this.creditLine.y = player.sprite.body.height+player.sprite.body.y+35;
+if(gamemode=='?build'){
+		this.creditLine.y+=200;
+	}
+	}
 gameUI.prototype.update = function() {
+		this.creditLinePing();
 	if (gamemode == 'war'){
 		this.bar(this.healthLine, 0, player.health, player.healthMax);
 		this.bar(this.energyLine, 10, player.energy, player.energyMax);
@@ -985,7 +1003,7 @@ gameUI.prototype.updatePart = function () {
 	}else{
 		this.partsSelector.loadTexture('parts',0)
 			this.partText.setText('Drag a component to the X to store it in your inventory.')
-			this.partFlavorText.setText('Go get some loots. Press DOWN to undock!');
+			this.partFlavorText.setText('Press UP to buy a component for $20');
 	}
 	this.partText.x = player.sprite.body.x - (0.5 * this.partText.width);
 	this.partText.y = player.sprite.body.y + player.sprite.height * 12;
@@ -1041,7 +1059,7 @@ gameUI.prototype.partsUI = function (ship) {
 }
 gameUI.prototype.endPartsUI = function () {
 	this.tempStation.destroy()
-	this.partsSelector.destroy();
+		this.partsSelector.destroy();
 	var ship = this.partsArray();
 	for(var i=0; i<this.parts.length;i++){
 		this.parts[i].sprite.inputEnabled=false;
@@ -1204,7 +1222,7 @@ function create () {
 
 		station = game.add.sprite(0,0,'station');
 		station.anchor.setTo(0.5,0.5)
-		asteroids.push([-1,18,72,73,-1,-1,20,23,19,-1,-1,-1,20,25,-1,-1,-1,14,24,-1,-1,-1,16,21,-1]); 	
+			asteroids.push([-1,18,72,73,-1,-1,20,23,19,-1,-1,-1,20,25,-1,-1,-1,14,24,-1,-1,-1,16,21,-1]); 	
 		asteroids.push([-1,14,15,-1,-1,-1,17,25,19,-1,-1,-1,20,22,-1,-1,-1,14,24,-1,-1,-1,16,21,-1]); 	
 		asteroids.push([-1,25,19,-1,-1,18,22,-1,-1,23,24,-1,-1,20,21,-1]); 	
 		asteroids.push([-1,-1,25,-1,-1,-1,-1,-1,14,-1,-1,-1,-1,-1,16,19,-1,-1,-1,-1,18,22,-1,-1,-1,-1,23,24,-1,-1,-1,-1,20,21,-1,-1]); 	
@@ -1379,9 +1397,9 @@ function update () {
 		if(nextSpawn<game.time.now||nextSpawn==0||gamemode=='?attract'){
 			if(!player.alive){
 				if(cheatmode){
-				player.initPlayerShip();
+					player.initPlayerShip();
 				}else{
-				player.initPlayerShip(defaultPlayerShip);
+					player.initPlayerShip(defaultPlayerShip);
 				}
 			}
 			for(var i = 0; i < enemies.length ; i++) {
