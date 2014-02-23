@@ -537,6 +537,7 @@ var game = new Phaser.Game(resolutionX, resolutionY, Phaser.AUTO, 'phaser-exampl
 function preload () {
 
 	game.load.spritesheet('parts', 'assets/parts.png', 16, 16);
+	game.load.image('station', 'assets/station.png');
 	game.load.spritesheet('bullet', 'assets/bullets.png',16,16);
 	game.load.image('starfield2', 'assets/starfield2.png');
 	game.load.image('starfield3', 'assets/starfield3.png');
@@ -566,6 +567,7 @@ playerShip.prototype.initPlayerShip = function (ship) {
 	this.radarOreTargets=4;
 	this.acceleration=1;
 	this.sprite.reset(0,0);
+	this.sprite.rotation=0;
 	this.turnRate=0.5;
 	this.health=8;
 	this.alive=true;
@@ -729,6 +731,8 @@ playerShip.prototype.update = function(){
 };
 
 var player;
+
+var station; //we're going to keep this pretty much as a non-interactive sprite for now... it doesn't actually need to do anything
 
 var globalDropRate = 0.09;
 var backdrop1, backdrop2,backdrop3;
@@ -972,6 +976,8 @@ gameUI.prototype.nextPart = function () {
 }
 
 gameUI.prototype.partsUI = function (ship) {
+	player.sprite.reset(0,0);
+	player.sprite.rotation=0;
 	game.camera.follow=null;
 	if(gamemode != '?build'){
 		gamemode = '?build';
@@ -1100,10 +1106,11 @@ function createShip(shipParts, targetActor){
 }
 function createBuildParts(ship,x,y){
 	var myParts = [];
-	x-=x%32;
-	y-=y%32;
 	var n=Math.sqrt(ship.length);
-
+	y-=n*8;
+	x-=n*8;
+	y-=y%16;
+	x-=x%16;
 	if (n!=Math.floor(n)){
 		return [];
 	};
@@ -1150,6 +1157,8 @@ function create () {
 		backdrop3.scale.x=2;
 		backdrop3.scale.y=2;
 		
+		station = game.add.sprite(-256,-256,'station');
+
 	asteroids.push([-1,18,72,73,-1,-1,20,23,19,-1,-1,-1,20,25,-1,-1,-1,14,24,-1,-1,-1,16,21,-1]); 	
 	asteroids.push([-1,14,15,-1,-1,-1,17,25,19,-1,-1,-1,20,22,-1,-1,-1,14,24,-1,-1,-1,16,21,-1]); 	
 	asteroids.push([-1,25,19,-1,-1,18,22,-1,-1,23,24,-1,-1,20,21,-1]); 	
@@ -1384,8 +1393,11 @@ function update () {
 			player.up();
 		}
 		if (game.time.now > nextUIDelay + 2000 && (cursors.down.isDown || cursors.down2.isDown)){
+			if(Math.abs(player.sprite.x)<100 &&
+					Math.abs(player.sprite.y)<100){
 			ui.partsUI(player.ship);
 			nextUIDelay=game.time.now+1000;
+					}
 		}
 		player.update();
 		// scrolling
