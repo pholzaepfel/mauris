@@ -1,7 +1,7 @@
 var cmp = [
 {	
 	'id':0, 
-	'drops':true,
+	'drops':false,
 	'name':'Component0',
 	'flavor':'',
 	'bonus':function(target){}
@@ -66,7 +66,7 @@ var cmp = [
 },
 {
 	'id':6,
-	'drops':true,
+	'drops':false,
 	'name':'Alien Pustule',
 	'flavor':'',
 	'bonus':function(target){
@@ -77,7 +77,7 @@ var cmp = [
 },
 {
 	'id':7,
-	'drops':true,
+	'drops':false,
 	'name':'Alien Pustule',
 	'flavor':'',
 	'bonus':function(target){
@@ -278,7 +278,7 @@ var cmp = [
 },
 {
 	'id':26,
-	'drops':true,
+	'drops':false,
 	'name':'Loot',
 	'flavor':'',
 	'bonus':function(target){
@@ -287,7 +287,7 @@ var cmp = [
 },
 {
 	'id':27,
-	'drops':true,
+	'drops':false,
 	'name':'Loot',
 	'flavor':'',
 	'bonus':function(target){
@@ -296,7 +296,7 @@ var cmp = [
 },
 {
 	'id':28,
-	'drops':true,
+	'drops':false,
 	'name':'Loot',
 	'flavor':'',
 	'bonus':function(target){
@@ -305,7 +305,7 @@ var cmp = [
 },
 {
 	'id':29,
-	'drops':true,
+	'drops':false,
 	'name':'Loot',
 	'flavor':'',
 	'bonus':function(target){
@@ -401,7 +401,7 @@ var cmp = [
 
 {
 	'id':38,
-	'drops':true,
+	'drops':false,
 	'name':'Alien Pustule',
 	'flavor':'',
 	'bonus':function(target){
@@ -412,7 +412,7 @@ var cmp = [
 },
 {
 	'id':39,
-	'drops':true,
+	'drops':false,
 	'name':'Alien Pustule',
 	'flavor':'',
 	'bonus':function(target){
@@ -523,7 +523,7 @@ var cmp = [
 },
 {
 	'id':48,
-	'drops':true,
+	'drops':false,
 	'name':'Component48',
 	'flavor':'',
 	'bonus':function(target){
@@ -532,7 +532,7 @@ var cmp = [
 },
 {
 	'id':49,
-	'drops':true,
+	'drops':false,
 	'name':'Component49',
 	'flavor':'',
 	'bonus':function(target){
@@ -541,7 +541,7 @@ var cmp = [
 },
 {
 	'id':50,
-	'drops':true,
+	'drops':false,
 	'name':'Component50',
 	'flavor':'',
 	'bonus':function(target){
@@ -550,7 +550,7 @@ var cmp = [
 },
 {
 	'id':51,
-	'drops':true,
+	'drops':false,
 	'name':'Component51',
 	'flavor':'',
 	'bonus':function(target){
@@ -559,7 +559,7 @@ var cmp = [
 },
 {
 	'id':52,
-	'drops':true,
+	'drops':false,
 	'name':'Component52',
 	'flavor':'',
 	'bonus':function(target){
@@ -568,7 +568,7 @@ var cmp = [
 },
 {
 	'id':53,
-	'drops':true,
+	'drops':false,
 	'name':'Component53',
 	'flavor':'',
 	'bonus':function(target){
@@ -577,7 +577,7 @@ var cmp = [
 },
 {
 	'id':54,
-	'drops':true,
+	'drops':false,
 	'name':'Component54',
 	'flavor':'',
 	'bonus':function(target){
@@ -586,7 +586,7 @@ var cmp = [
 },
 {
 	'id':55,
-	'drops':true,
+	'drops':false,
 	'name':'Component55',
 	'flavor':'',
 	'bonus':function(target){
@@ -595,7 +595,7 @@ var cmp = [
 },
 {
 	'id':56,
-	'drops':true,
+	'drops':false,
 	'name':'Component56',
 	'flavor':'',
 	'bonus':function(target){
@@ -604,7 +604,7 @@ var cmp = [
 },
 {
 	'id':57,
-	'drops':true,
+	'drops':false,
 	'name':'Component57',
 	'flavor':'',
 	'bonus':function(target){
@@ -613,7 +613,7 @@ var cmp = [
 },
 {
 	'id':58,
-	'drops':true,
+	'drops':false,
 	'name':'Component58',
 	'flavor':'',
 	'bonus':function(target){
@@ -622,7 +622,7 @@ var cmp = [
 },
 {
 	'id':59,
-	'drops':true,
+	'drops':false,
 	'name':'Component59',
 	'flavor':'',
 	'bonus':function(target){
@@ -631,7 +631,7 @@ var cmp = [
 },
 {
 	'id':60,
-	'drops':true,
+	'drops':false,
 	'name':'Component60',
 	'flavor':'',
 	'bonus':function(target){
@@ -640,7 +640,7 @@ var cmp = [
 },
 {
 	'id':61,
-	'drops':true,
+	'drops':false,
 	'name':'Component61',
 	'flavor':'',
 	'bonus':function(target){
@@ -649,7 +649,7 @@ var cmp = [
 },
 {
 	'id':62,
-	'drops':true,
+	'drops':false,
 	'name':'Component62',
 	'flavor':'',
 	'bonus':function(target){
@@ -658,7 +658,7 @@ var cmp = [
 },
 {
 	'id':63,
-	'drops':true,
+	'drops':false,
 	'name':'Component63',
 	'flavor':'',
 	'bonus':function(target){
@@ -782,10 +782,10 @@ var cmp = [
 {
 	'id':74,
 	'drops':true,
-	'name':'Habitat',
+	'name':'Azure Plate',
 	'flavor':'',
 	'bonus':function(target){
-		target.health+=7;
+		target.health+=4;
 		target.acceleration-=0.1;
 		target.energyRate*=1.05;
 		target.energyMax+=3;
@@ -794,11 +794,11 @@ var cmp = [
 {
 	'id':75,
 	'drops':true,
-	'name':'Habitat',
+	'name':'Azure Plate',
 	'flavor':'',
 	'bonus':function(target){
 
-		target.health+=7;
+		target.health+=4;
 		target.acceleration-=0.1;
 		target.energyRate*=1.05;
 		target.energyMax+=3;
@@ -826,7 +826,7 @@ var cmp = [
 },
 {
 	'id':78,
-	'drops':true,
+	'drops':false,
 	'name':'Component78',
 	'flavor':'',
 	'bonus':function(target){
@@ -835,7 +835,7 @@ var cmp = [
 },
 {
 	'id':79,
-	'drops':true,
+	'drops':false,
 	'name':'Component79',
 	'flavor':'',
 	'bonus':function(target){
@@ -844,7 +844,7 @@ var cmp = [
 },
 {
 	'id':80,
-	'drops':true,
+	'drops':false,
 	'name':'Component80',
 	'flavor':'',
 	'bonus':function(target){
@@ -853,7 +853,7 @@ var cmp = [
 },
 {
 	'id':81,
-	'drops':true,
+	'drops':false,
 	'name':'Component81',
 	'flavor':'',
 	'bonus':function(target){
@@ -862,7 +862,7 @@ var cmp = [
 },
 {
 	'id':82,
-	'drops':true,
+	'drops':false,
 	'name':'Component82',
 	'flavor':'',
 	'bonus':function(target){
@@ -871,7 +871,7 @@ var cmp = [
 },
 {
 	'id':83,
-	'drops':true,
+	'drops':false,
 	'name':'Component83',
 	'flavor':'',
 	'bonus':function(target){
@@ -880,7 +880,7 @@ var cmp = [
 },
 {
 	'id':84,
-	'drops':true,
+	'drops':false,
 	'name':'Component84',
 	'flavor':'',
 	'bonus':function(target){
@@ -889,7 +889,7 @@ var cmp = [
 },
 {
 	'id':85,
-	'drops':true,
+	'drops':false,
 	'name':'Component85',
 	'flavor':'',
 	'bonus':function(target){
@@ -898,7 +898,7 @@ var cmp = [
 },
 {
 	'id':86,
-	'drops':true,
+	'drops':false,
 	'name':'Component86',
 	'flavor':'',
 	'bonus':function(target){
@@ -907,7 +907,7 @@ var cmp = [
 },
 {
 	'id':87,
-	'drops':true,
+	'drops':false,
 	'name':'Component87',
 	'flavor':'',
 	'bonus':function(target){
@@ -916,7 +916,7 @@ var cmp = [
 },
 {
 	'id':88,
-	'drops':true,
+	'drops':false,
 	'name':'Component88',
 	'flavor':'',
 	'bonus':function(target){
@@ -925,7 +925,7 @@ var cmp = [
 },
 {
 	'id':89,
-	'drops':true,
+	'drops':false,
 	'name':'Component89',
 	'flavor':'',
 	'bonus':function(target){
@@ -934,7 +934,7 @@ var cmp = [
 },
 {
 	'id':90,
-	'drops':true,
+	'drops':false,
 	'name':'Component90',
 	'flavor':'',
 	'bonus':function(target){
@@ -943,7 +943,7 @@ var cmp = [
 },
 {
 	'id':91,
-	'drops':true,
+	'drops':false,
 	'name':'Component91',
 	'flavor':'',
 	'bonus':function(target){
@@ -952,7 +952,7 @@ var cmp = [
 },
 {
 	'id':92,
-	'drops':true,
+	'drops':false,
 	'name':'Component92',
 	'flavor':'',
 	'bonus':function(target){
@@ -961,7 +961,7 @@ var cmp = [
 },
 {
 	'id':93,
-	'drops':true,
+	'drops':false,
 	'name':'Component93',
 	'flavor':'',
 	'bonus':function(target){
@@ -970,7 +970,7 @@ var cmp = [
 },
 {
 	'id':94,
-	'drops':true,
+	'drops':false,
 	'name':'Component94',
 	'flavor':'',
 	'bonus':function(target){
@@ -979,7 +979,7 @@ var cmp = [
 },
 {
 	'id':95,
-	'drops':true,
+	'drops':false,
 	'name':'Component95',
 	'flavor':'',
 	'bonus':function(target){
@@ -1102,11 +1102,11 @@ var cmp = [
 {
 	'id':106,
 	'drops':true,
-	'name':'Habitat',
+	'name':'Azure Plate',
 	'flavor':'',
 	'bonus':function(target){
 
-		target.health+=7;
+		target.health+=4;
 		target.acceleration-=0.1;
 		target.energyRate*=1.05;
 		target.energyMax+=3;
@@ -1115,11 +1115,11 @@ var cmp = [
 {
 	'id':107,
 	'drops':true,
-	'name':'Habitat',
+	'name':'Azure Plate',
 	'flavor':'',
 	'bonus':function(target){
 
-		target.health+=7;
+		target.health+=4;
 		target.acceleration-=0.1;
 		target.energyRate*=1.05;
 		target.energyMax+=3;
@@ -1148,7 +1148,7 @@ var cmp = [
 },
 {
 	'id':110,
-	'drops':true,
+	'drops':false,
 	'name':'Component110',
 	'flavor':'',
 	'bonus':function(target){
@@ -1157,7 +1157,7 @@ var cmp = [
 },
 {
 	'id':111,
-	'drops':true,
+	'drops':false,
 	'name':'Component111',
 	'flavor':'',
 	'bonus':function(target){
@@ -1166,7 +1166,7 @@ var cmp = [
 },
 {
 	'id':112,
-	'drops':true,
+	'drops':false,
 	'name':'Component112',
 	'flavor':'',
 	'bonus':function(target){
@@ -1175,7 +1175,7 @@ var cmp = [
 },
 {
 	'id':113,
-	'drops':true,
+	'drops':false,
 	'name':'Component113',
 	'flavor':'',
 	'bonus':function(target){
@@ -1184,7 +1184,7 @@ var cmp = [
 },
 {
 	'id':114,
-	'drops':true,
+	'drops':false,
 	'name':'Component114',
 	'flavor':'',
 	'bonus':function(target){
@@ -1193,7 +1193,7 @@ var cmp = [
 },
 {
 	'id':115,
-	'drops':true,
+	'drops':false,
 	'name':'Component115',
 	'flavor':'',
 	'bonus':function(target){
@@ -1202,7 +1202,7 @@ var cmp = [
 },
 {
 	'id':116,
-	'drops':true,
+	'drops':false,
 	'name':'Component116',
 	'flavor':'',
 	'bonus':function(target){
@@ -1211,7 +1211,7 @@ var cmp = [
 },
 {
 	'id':117,
-	'drops':true,
+	'drops':false,
 	'name':'Component117',
 	'flavor':'',
 	'bonus':function(target){
@@ -1220,7 +1220,7 @@ var cmp = [
 },
 {
 	'id':118,
-	'drops':true,
+	'drops':false,
 	'name':'Component118',
 	'flavor':'',
 	'bonus':function(target){
@@ -1229,7 +1229,7 @@ var cmp = [
 },
 {
 	'id':119,
-	'drops':true,
+	'drops':false,
 	'name':'Component119',
 	'flavor':'',
 	'bonus':function(target){
@@ -1238,7 +1238,7 @@ var cmp = [
 },
 {
 	'id':120,
-	'drops':true,
+	'drops':false,
 	'name':'Component120',
 	'flavor':'',
 	'bonus':function(target){
@@ -1247,7 +1247,7 @@ var cmp = [
 },
 {
 	'id':121,
-	'drops':true,
+	'drops':false,
 	'name':'Component121',
 	'flavor':'',
 	'bonus':function(target){
@@ -1256,7 +1256,7 @@ var cmp = [
 },
 {
 	'id':122,
-	'drops':true,
+	'drops':false,
 	'name':'Component122',
 	'flavor':'',
 	'bonus':function(target){
@@ -1265,7 +1265,7 @@ var cmp = [
 },
 {
 	'id':123,
-	'drops':true,
+	'drops':false,
 	'name':'Component123',
 	'flavor':'',
 	'bonus':function(target){
@@ -1274,7 +1274,7 @@ var cmp = [
 },
 {
 	'id':124,
-	'drops':true,
+	'drops':false,
 	'name':'Component124',
 	'flavor':'',
 	'bonus':function(target){
@@ -1283,7 +1283,7 @@ var cmp = [
 },
 {
 	'id':125,
-	'drops':true,
+	'drops':false,
 	'name':'Component125',
 	'flavor':'',
 	'bonus':function(target){
@@ -1292,7 +1292,7 @@ var cmp = [
 },
 {
 	'id':126,
-	'drops':true,
+	'drops':false,
 	'name':'Component126',
 	'flavor':'',
 	'bonus':function(target){
@@ -1301,7 +1301,7 @@ var cmp = [
 },
 {
 	'id':127,
-	'drops':true,
+	'drops':false,
 	'name':'Component127',
 	'flavor':'',
 	'bonus':function(target){
@@ -1384,7 +1384,7 @@ var cmp = [
 },
 {
 	'id':134,
-	'drops':true,
+	'drops':false,
 	'name':'Component134',
 	'flavor':'',
 	'bonus':function(target){
@@ -1393,7 +1393,7 @@ var cmp = [
 },
 {
 	'id':135,
-	'drops':true,
+	'drops':false,
 	'name':'Component135',
 	'flavor':'',
 	'bonus':function(target){
@@ -1402,7 +1402,7 @@ var cmp = [
 },
 {
 	'id':136,
-	'drops':true,
+	'drops':false,
 	'name':'Component136',
 	'flavor':'',
 	'bonus':function(target){
@@ -1411,7 +1411,7 @@ var cmp = [
 },
 {
 	'id':137,
-	'drops':true,
+	'drops':false,
 	'name':'Component137',
 	'flavor':'',
 	'bonus':function(target){
@@ -1420,7 +1420,7 @@ var cmp = [
 },
 {
 	'id':138,
-	'drops':true,
+	'drops':false,
 	'name':'Component138',
 	'flavor':'',
 	'bonus':function(target){
@@ -1429,7 +1429,7 @@ var cmp = [
 },
 {
 	'id':139,
-	'drops':true,
+	'drops':false,
 	'name':'Component139',
 	'flavor':'',
 	'bonus':function(target){
@@ -1438,7 +1438,7 @@ var cmp = [
 },
 {
 	'id':140,
-	'drops':true,
+	'drops':false,
 	'name':'Component140',
 	'flavor':'',
 	'bonus':function(target){
@@ -1447,7 +1447,7 @@ var cmp = [
 },
 {
 	'id':141,
-	'drops':true,
+	'drops':false,
 	'name':'Component141',
 	'flavor':'',
 	'bonus':function(target){
@@ -1456,7 +1456,7 @@ var cmp = [
 },
 {
 	'id':142,
-	'drops':true,
+	'drops':false,
 	'name':'Component142',
 	'flavor':'',
 	'bonus':function(target){
@@ -1465,7 +1465,7 @@ var cmp = [
 },
 {
 	'id':143,
-	'drops':true,
+	'drops':false,
 	'name':'Component143',
 	'flavor':'',
 	'bonus':function(target){
@@ -1474,7 +1474,7 @@ var cmp = [
 },
 {
 	'id':144,
-	'drops':true,
+	'drops':false,
 	'name':'Component144',
 	'flavor':'',
 	'bonus':function(target){
@@ -1483,7 +1483,7 @@ var cmp = [
 },
 {
 	'id':145,
-	'drops':true,
+	'drops':false,
 	'name':'Component145',
 	'flavor':'',
 	'bonus':function(target){
@@ -1492,7 +1492,7 @@ var cmp = [
 },
 {
 	'id':146,
-	'drops':true,
+	'drops':false,
 	'name':'Component146',
 	'flavor':'',
 	'bonus':function(target){
@@ -1501,7 +1501,7 @@ var cmp = [
 },
 {
 	'id':147,
-	'drops':true,
+	'drops':false,
 	'name':'Component147',
 	'flavor':'',
 	'bonus':function(target){
@@ -1510,7 +1510,7 @@ var cmp = [
 },
 {
 	'id':148,
-	'drops':true,
+	'drops':false,
 	'name':'Component148',
 	'flavor':'',
 	'bonus':function(target){
@@ -1519,7 +1519,7 @@ var cmp = [
 },
 {
 	'id':149,
-	'drops':true,
+	'drops':false,
 	'name':'Component149',
 	'flavor':'',
 	'bonus':function(target){
@@ -1528,7 +1528,7 @@ var cmp = [
 },
 {
 	'id':150,
-	'drops':true,
+	'drops':false,
 	'name':'Component150',
 	'flavor':'',
 	'bonus':function(target){
@@ -1537,7 +1537,7 @@ var cmp = [
 },
 {
 	'id':151,
-	'drops':true,
+	'drops':false,
 	'name':'Component151',
 	'flavor':'',
 	'bonus':function(target){
@@ -1546,7 +1546,7 @@ var cmp = [
 },
 {
 	'id':152,
-	'drops':true,
+	'drops':false,
 	'name':'Component152',
 	'flavor':'',
 	'bonus':function(target){
@@ -1555,7 +1555,7 @@ var cmp = [
 },
 {
 	'id':153,
-	'drops':true,
+	'drops':false,
 	'name':'Component153',
 	'flavor':'',
 	'bonus':function(target){
@@ -1564,7 +1564,7 @@ var cmp = [
 },
 {
 	'id':154,
-	'drops':true,
+	'drops':false,
 	'name':'Component154',
 	'flavor':'',
 	'bonus':function(target){
@@ -1573,7 +1573,7 @@ var cmp = [
 },
 {
 	'id':155,
-	'drops':true,
+	'drops':false,
 	'name':'Component155',
 	'flavor':'',
 	'bonus':function(target){
@@ -1582,7 +1582,7 @@ var cmp = [
 },
 {
 	'id':156,
-	'drops':true,
+	'drops':false,
 	'name':'Component156',
 	'flavor':'',
 	'bonus':function(target){
@@ -1591,7 +1591,7 @@ var cmp = [
 },
 {
 	'id':157,
-	'drops':true,
+	'drops':false,
 	'name':'Component157',
 	'flavor':'',
 	'bonus':function(target){
@@ -1600,7 +1600,7 @@ var cmp = [
 },
 {
 	'id':158,
-	'drops':true,
+	'drops':false,
 	'name':'Component158',
 	'flavor':'',
 	'bonus':function(target){
@@ -1609,7 +1609,7 @@ var cmp = [
 },
 {
 	'id':159,
-	'drops':true,
+	'drops':false,
 	'name':'Component159',
 	'flavor':'',
 	'bonus':function(target){
@@ -1630,7 +1630,7 @@ var cmp = [
 },
 {
 	'id':161,
-	'drops':true,
+	'drops':false,
 	'name':'Component161',
 	'flavor':'',
 	'bonus':function(target){
@@ -1639,7 +1639,7 @@ var cmp = [
 },
 {
 	'id':162,
-	'drops':true,
+	'drops':false,
 	'name':'Component162',
 	'flavor':'',
 	'bonus':function(target){
@@ -1648,7 +1648,7 @@ var cmp = [
 },
 {
 	'id':163,
-	'drops':true,
+	'drops':false,
 	'name':'Component163',
 	'flavor':'',
 	'bonus':function(target){
@@ -1657,7 +1657,7 @@ var cmp = [
 },
 {
 	'id':164,
-	'drops':true,
+	'drops':false,
 	'name':'Component164',
 	'flavor':'',
 	'bonus':function(target){
@@ -1666,7 +1666,7 @@ var cmp = [
 },
 {
 	'id':165,
-	'drops':true,
+	'drops':false,
 	'name':'Component165',
 	'flavor':'',
 	'bonus':function(target){
@@ -1675,7 +1675,7 @@ var cmp = [
 },
 {
 	'id':166,
-	'drops':true,
+	'drops':false,
 	'name':'Component166',
 	'flavor':'',
 	'bonus':function(target){
@@ -1684,7 +1684,7 @@ var cmp = [
 },
 {
 	'id':167,
-	'drops':true,
+	'drops':false,
 	'name':'Component167',
 	'flavor':'',
 	'bonus':function(target){
@@ -1693,7 +1693,7 @@ var cmp = [
 },
 {
 	'id':168,
-	'drops':true,
+	'drops':false,
 	'name':'Component168',
 	'flavor':'',
 	'bonus':function(target){
@@ -1702,7 +1702,7 @@ var cmp = [
 },
 {
 	'id':169,
-	'drops':true,
+	'drops':false,
 	'name':'Component169',
 	'flavor':'',
 	'bonus':function(target){
@@ -1711,7 +1711,7 @@ var cmp = [
 },
 {
 	'id':170,
-	'drops':true,
+	'drops':false,
 	'name':'Component170',
 	'flavor':'',
 	'bonus':function(target){
@@ -1720,7 +1720,7 @@ var cmp = [
 },
 {
 	'id':171,
-	'drops':true,
+	'drops':false,
 	'name':'Component171',
 	'flavor':'',
 	'bonus':function(target){
@@ -1729,7 +1729,7 @@ var cmp = [
 },
 {
 	'id':172,
-	'drops':true,
+	'drops':false,
 	'name':'Component172',
 	'flavor':'',
 	'bonus':function(target){
@@ -1738,7 +1738,7 @@ var cmp = [
 },
 {
 	'id':173,
-	'drops':true,
+	'drops':false,
 	'name':'Component173',
 	'flavor':'',
 	'bonus':function(target){
@@ -1747,7 +1747,7 @@ var cmp = [
 },
 {
 	'id':174,
-	'drops':true,
+	'drops':false,
 	'name':'Component174',
 	'flavor':'',
 	'bonus':function(target){
@@ -1756,7 +1756,7 @@ var cmp = [
 },
 {
 	'id':175,
-	'drops':true,
+	'drops':false,
 	'name':'Component175',
 	'flavor':'',
 	'bonus':function(target){
@@ -1765,7 +1765,7 @@ var cmp = [
 },
 {
 	'id':176,
-	'drops':true,
+	'drops':false,
 	'name':'Component176',
 	'flavor':'',
 	'bonus':function(target){
@@ -1774,7 +1774,7 @@ var cmp = [
 },
 {
 	'id':177,
-	'drops':true,
+	'drops':false,
 	'name':'Component177',
 	'flavor':'',
 	'bonus':function(target){
@@ -1783,7 +1783,7 @@ var cmp = [
 },
 {
 	'id':178,
-	'drops':true,
+	'drops':false,
 	'name':'Component178',
 	'flavor':'',
 	'bonus':function(target){
@@ -1792,7 +1792,7 @@ var cmp = [
 },
 {
 	'id':179,
-	'drops':true,
+	'drops':false,
 	'name':'Component179',
 	'flavor':'',
 	'bonus':function(target){
@@ -1801,7 +1801,7 @@ var cmp = [
 },
 {
 	'id':180,
-	'drops':true,
+	'drops':false,
 	'name':'Component180',
 	'flavor':'',
 	'bonus':function(target){
@@ -1810,7 +1810,7 @@ var cmp = [
 },
 {
 	'id':181,
-	'drops':true,
+	'drops':false,
 	'name':'Component181',
 	'flavor':'',
 	'bonus':function(target){
@@ -1819,7 +1819,7 @@ var cmp = [
 },
 {
 	'id':182,
-	'drops':true,
+	'drops':false,
 	'name':'Component182',
 	'flavor':'',
 	'bonus':function(target){
@@ -1828,7 +1828,7 @@ var cmp = [
 },
 {
 	'id':183,
-	'drops':true,
+	'drops':false,
 	'name':'Component183',
 	'flavor':'',
 	'bonus':function(target){
@@ -1837,7 +1837,7 @@ var cmp = [
 },
 {
 	'id':184,
-	'drops':true,
+	'drops':false,
 	'name':'Component184',
 	'flavor':'',
 	'bonus':function(target){
@@ -1846,7 +1846,7 @@ var cmp = [
 },
 {
 	'id':185,
-	'drops':true,
+	'drops':false,
 	'name':'Component185',
 	'flavor':'',
 	'bonus':function(target){
@@ -1855,7 +1855,7 @@ var cmp = [
 },
 {
 	'id':186,
-	'drops':true,
+	'drops':false,
 	'name':'Component186',
 	'flavor':'',
 	'bonus':function(target){
@@ -1864,7 +1864,7 @@ var cmp = [
 },
 {
 	'id':187,
-	'drops':true,
+	'drops':false,
 	'name':'Component187',
 	'flavor':'',
 	'bonus':function(target){
@@ -1873,7 +1873,7 @@ var cmp = [
 },
 {
 	'id':188,
-	'drops':true,
+	'drops':false,
 	'name':'Component188',
 	'flavor':'',
 	'bonus':function(target){
@@ -1882,7 +1882,7 @@ var cmp = [
 },
 {
 	'id':189,
-	'drops':true,
+	'drops':false,
 	'name':'Component189',
 	'flavor':'',
 	'bonus':function(target){
@@ -1891,7 +1891,7 @@ var cmp = [
 },
 {
 	'id':190,
-	'drops':true,
+	'drops':false,
 	'name':'Component190',
 	'flavor':'',
 	'bonus':function(target){
@@ -1900,7 +1900,7 @@ var cmp = [
 },
 {
 	'id':191,
-	'drops':true,
+	'drops':false,
 	'name':'Component191',
 	'flavor':'',
 	'bonus':function(target){
@@ -1909,7 +1909,7 @@ var cmp = [
 },
 {
 	'id':192,
-	'drops':true,
+	'drops':false,
 	'name':'Component192',
 	'flavor':'',
 	'bonus':function(target){
@@ -1918,7 +1918,7 @@ var cmp = [
 },
 {
 	'id':193,
-	'drops':true,
+	'drops':false,
 	'name':'Component193',
 	'flavor':'',
 	'bonus':function(target){
@@ -1927,7 +1927,7 @@ var cmp = [
 },
 {
 	'id':194,
-	'drops':true,
+	'drops':false,
 	'name':'Component194',
 	'flavor':'',
 	'bonus':function(target){
@@ -1936,7 +1936,7 @@ var cmp = [
 },
 {
 	'id':195,
-	'drops':true,
+	'drops':false,
 	'name':'Component195',
 	'flavor':'',
 	'bonus':function(target){
@@ -1945,7 +1945,7 @@ var cmp = [
 },
 {
 	'id':196,
-	'drops':true,
+	'drops':false,
 	'name':'Component196',
 	'flavor':'',
 	'bonus':function(target){
@@ -1954,7 +1954,7 @@ var cmp = [
 },
 {
 	'id':197,
-	'drops':true,
+	'drops':false,
 	'name':'Component197',
 	'flavor':'',
 	'bonus':function(target){
@@ -1963,7 +1963,7 @@ var cmp = [
 },
 {
 	'id':198,
-	'drops':true,
+	'drops':false,
 	'name':'Component198',
 	'flavor':'',
 	'bonus':function(target){
@@ -1972,7 +1972,7 @@ var cmp = [
 },
 {
 	'id':199,
-	'drops':true,
+	'drops':false,
 	'name':'Component199',
 	'flavor':'',
 	'bonus':function(target){
@@ -1981,7 +1981,7 @@ var cmp = [
 },
 {
 	'id':200,
-	'drops':true,
+	'drops':false,
 	'name':'Component200',
 	'flavor':'',
 	'bonus':function(target){
@@ -1990,7 +1990,7 @@ var cmp = [
 },
 {
 	'id':201,
-	'drops':true,
+	'drops':false,
 	'name':'Component201',
 	'flavor':'',
 	'bonus':function(target){
@@ -1999,7 +1999,7 @@ var cmp = [
 },
 {
 	'id':202,
-	'drops':true,
+	'drops':false,
 	'name':'Component202',
 	'flavor':'',
 	'bonus':function(target){
@@ -2008,7 +2008,7 @@ var cmp = [
 },
 {
 	'id':203,
-	'drops':true,
+	'drops':false,
 	'name':'Component203',
 	'flavor':'',
 	'bonus':function(target){
@@ -2017,7 +2017,7 @@ var cmp = [
 },
 {
 	'id':204,
-	'drops':true,
+	'drops':false,
 	'name':'Component204',
 	'flavor':'',
 	'bonus':function(target){
@@ -2026,7 +2026,7 @@ var cmp = [
 },
 {
 	'id':205,
-	'drops':true,
+	'drops':false,
 	'name':'Component205',
 	'flavor':'',
 	'bonus':function(target){
@@ -2035,7 +2035,7 @@ var cmp = [
 },
 {
 	'id':206,
-	'drops':true,
+	'drops':false,
 	'name':'Component206',
 	'flavor':'',
 	'bonus':function(target){
@@ -2044,7 +2044,7 @@ var cmp = [
 },
 {
 	'id':207,
-	'drops':true,
+	'drops':false,
 	'name':'Component207',
 	'flavor':'',
 	'bonus':function(target){
@@ -2053,7 +2053,7 @@ var cmp = [
 },
 {
 	'id':208,
-	'drops':true,
+	'drops':false,
 	'name':'Component208',
 	'flavor':'',
 	'bonus':function(target){
@@ -2062,7 +2062,7 @@ var cmp = [
 },
 {
 	'id':209,
-	'drops':true,
+	'drops':false,
 	'name':'Component209',
 	'flavor':'',
 	'bonus':function(target){
@@ -2071,7 +2071,7 @@ var cmp = [
 },
 {
 	'id':210,
-	'drops':true,
+	'drops':false,
 	'name':'Component210',
 	'flavor':'',
 	'bonus':function(target){
@@ -2080,7 +2080,7 @@ var cmp = [
 },
 {
 	'id':211,
-	'drops':true,
+	'drops':false,
 	'name':'Component211',
 	'flavor':'',
 	'bonus':function(target){
@@ -2089,7 +2089,7 @@ var cmp = [
 },
 {
 	'id':212,
-	'drops':true,
+	'drops':false,
 	'name':'Component212',
 	'flavor':'',
 	'bonus':function(target){
@@ -2098,7 +2098,7 @@ var cmp = [
 },
 {
 	'id':213,
-	'drops':true,
+	'drops':false,
 	'name':'Component213',
 	'flavor':'',
 	'bonus':function(target){
@@ -2107,7 +2107,7 @@ var cmp = [
 },
 {
 	'id':214,
-	'drops':true,
+	'drops':false,
 	'name':'Component214',
 	'flavor':'',
 	'bonus':function(target){
@@ -2116,7 +2116,7 @@ var cmp = [
 },
 {
 	'id':215,
-	'drops':true,
+	'drops':false,
 	'name':'Component215',
 	'flavor':'',
 	'bonus':function(target){
@@ -2125,7 +2125,7 @@ var cmp = [
 },
 {
 	'id':216,
-	'drops':true,
+	'drops':false,
 	'name':'Component216',
 	'flavor':'',
 	'bonus':function(target){
@@ -2134,7 +2134,7 @@ var cmp = [
 },
 {
 	'id':217,
-	'drops':true,
+	'drops':false,
 	'name':'Component217',
 	'flavor':'',
 	'bonus':function(target){
@@ -2143,7 +2143,7 @@ var cmp = [
 },
 {
 	'id':218,
-	'drops':true,
+	'drops':false,
 	'name':'Component218',
 	'flavor':'',
 	'bonus':function(target){
@@ -2152,7 +2152,7 @@ var cmp = [
 },
 {
 	'id':219,
-	'drops':true,
+	'drops':false,
 	'name':'Component219',
 	'flavor':'',
 	'bonus':function(target){
@@ -2161,7 +2161,7 @@ var cmp = [
 },
 {
 	'id':220,
-	'drops':true,
+	'drops':false,
 	'name':'Component220',
 	'flavor':'',
 	'bonus':function(target){
@@ -2170,7 +2170,7 @@ var cmp = [
 },
 {
 	'id':221,
-	'drops':true,
+	'drops':false,
 	'name':'Component221',
 	'flavor':'',
 	'bonus':function(target){
@@ -2179,7 +2179,7 @@ var cmp = [
 },
 {
 	'id':222,
-	'drops':true,
+	'drops':false,
 	'name':'Component222',
 	'flavor':'',
 	'bonus':function(target){
@@ -2188,7 +2188,7 @@ var cmp = [
 },
 {
 	'id':223,
-	'drops':true,
+	'drops':false,
 	'name':'Component223',
 	'flavor':'',
 	'bonus':function(target){
@@ -2197,7 +2197,7 @@ var cmp = [
 },
 {
 	'id':224,
-	'drops':true,
+	'drops':false,
 	'name':'Component224',
 	'flavor':'',
 	'bonus':function(target){
@@ -2206,7 +2206,7 @@ var cmp = [
 },
 {
 	'id':225,
-	'drops':true,
+	'drops':false,
 	'name':'Component225',
 	'flavor':'',
 	'bonus':function(target){
@@ -2215,7 +2215,7 @@ var cmp = [
 },
 {
 	'id':226,
-	'drops':true,
+	'drops':false,
 	'name':'Component226',
 	'flavor':'',
 	'bonus':function(target){
@@ -2224,7 +2224,7 @@ var cmp = [
 },
 {
 	'id':227,
-	'drops':true,
+	'drops':false,
 	'name':'Component227',
 	'flavor':'',
 	'bonus':function(target){
@@ -2233,7 +2233,7 @@ var cmp = [
 },
 {
 	'id':228,
-	'drops':true,
+	'drops':false,
 	'name':'Component228',
 	'flavor':'',
 	'bonus':function(target){
@@ -2242,7 +2242,7 @@ var cmp = [
 },
 {
 	'id':229,
-	'drops':true,
+	'drops':false,
 	'name':'Component229',
 	'flavor':'',
 	'bonus':function(target){
@@ -2251,7 +2251,7 @@ var cmp = [
 },
 {
 	'id':230,
-	'drops':true,
+	'drops':false,
 	'name':'Component230',
 	'flavor':'',
 	'bonus':function(target){
@@ -2260,7 +2260,7 @@ var cmp = [
 },
 {
 	'id':231,
-	'drops':true,
+	'drops':false,
 	'name':'Component231',
 	'flavor':'',
 	'bonus':function(target){
@@ -2269,7 +2269,7 @@ var cmp = [
 },
 {
 	'id':232,
-	'drops':true,
+	'drops':false,
 	'name':'Component232',
 	'flavor':'',
 	'bonus':function(target){
@@ -2278,7 +2278,7 @@ var cmp = [
 },
 {
 	'id':233,
-	'drops':true,
+	'drops':false,
 	'name':'Component233',
 	'flavor':'',
 	'bonus':function(target){
@@ -2287,7 +2287,7 @@ var cmp = [
 },
 {
 	'id':234,
-	'drops':true,
+	'drops':false,
 	'name':'Component234',
 	'flavor':'',
 	'bonus':function(target){
@@ -2296,7 +2296,7 @@ var cmp = [
 },
 {
 	'id':235,
-	'drops':true,
+	'drops':false,
 	'name':'Component235',
 	'flavor':'',
 	'bonus':function(target){
@@ -2305,7 +2305,7 @@ var cmp = [
 },
 {
 	'id':236,
-	'drops':true,
+	'drops':false,
 	'name':'Component236',
 	'flavor':'',
 	'bonus':function(target){
@@ -2314,7 +2314,7 @@ var cmp = [
 },
 {
 	'id':237,
-	'drops':true,
+	'drops':false,
 	'name':'Component237',
 	'flavor':'',
 	'bonus':function(target){
@@ -2323,7 +2323,7 @@ var cmp = [
 },
 {
 	'id':238,
-	'drops':true,
+	'drops':false,
 	'name':'Component238',
 	'flavor':'',
 	'bonus':function(target){
@@ -2332,7 +2332,7 @@ var cmp = [
 },
 {
 	'id':239,
-	'drops':true,
+	'drops':false,
 	'name':'Component239',
 	'flavor':'',
 	'bonus':function(target){
@@ -2341,7 +2341,7 @@ var cmp = [
 },
 {
 	'id':240,
-	'drops':true,
+	'drops':false,
 	'name':'Component240',
 	'flavor':'',
 	'bonus':function(target){
@@ -2350,7 +2350,7 @@ var cmp = [
 },
 {
 	'id':241,
-	'drops':true,
+	'drops':false,
 	'name':'Component241',
 	'flavor':'',
 	'bonus':function(target){
@@ -2359,7 +2359,7 @@ var cmp = [
 },
 {
 	'id':242,
-	'drops':true,
+	'drops':false,
 	'name':'Component242',
 	'flavor':'',
 	'bonus':function(target){
@@ -2368,7 +2368,7 @@ var cmp = [
 },
 {
 	'id':243,
-	'drops':true,
+	'drops':false,
 	'name':'Component243',
 	'flavor':'',
 	'bonus':function(target){
@@ -2377,7 +2377,7 @@ var cmp = [
 },
 {
 	'id':244,
-	'drops':true,
+	'drops':false,
 	'name':'Component244',
 	'flavor':'',
 	'bonus':function(target){
@@ -2386,7 +2386,7 @@ var cmp = [
 },
 {
 	'id':245,
-	'drops':true,
+	'drops':false,
 	'name':'Component245',
 	'flavor':'',
 	'bonus':function(target){
@@ -2395,7 +2395,7 @@ var cmp = [
 },
 {
 	'id':246,
-	'drops':true,
+	'drops':false,
 	'name':'Component246',
 	'flavor':'',
 	'bonus':function(target){
@@ -2404,7 +2404,7 @@ var cmp = [
 },
 {
 	'id':247,
-	'drops':true,
+	'drops':false,
 	'name':'Component247',
 	'flavor':'',
 	'bonus':function(target){
@@ -2413,7 +2413,7 @@ var cmp = [
 },
 {
 	'id':248,
-	'drops':true,
+	'drops':false,
 	'name':'Component248',
 	'flavor':'',
 	'bonus':function(target){
@@ -2422,7 +2422,7 @@ var cmp = [
 },
 {
 	'id':249,
-	'drops':true,
+	'drops':false,
 	'name':'Component249',
 	'flavor':'',
 	'bonus':function(target){
@@ -2431,7 +2431,7 @@ var cmp = [
 },
 {
 	'id':250,
-	'drops':true,
+	'drops':false,
 	'name':'Component250',
 	'flavor':'',
 	'bonus':function(target){
@@ -2440,7 +2440,7 @@ var cmp = [
 },
 {
 	'id':251,
-	'drops':true,
+	'drops':false,
 	'name':'Component251',
 	'flavor':'',
 	'bonus':function(target){
@@ -2449,7 +2449,7 @@ var cmp = [
 },
 {
 	'id':252,
-	'drops':true,
+	'drops':false,
 	'name':'Component252',
 	'flavor':'',
 	'bonus':function(target){
@@ -2458,7 +2458,7 @@ var cmp = [
 },
 {
 	'id':253,
-	'drops':true,
+	'drops':false,
 	'name':'Component253',
 	'flavor':'',
 	'bonus':function(target){
@@ -2467,7 +2467,7 @@ var cmp = [
 },
 {
 	'id':254,
-	'drops':true,
+	'drops':false,
 	'name':'Component254',
 	'flavor':'',
 	'bonus':function(target){
@@ -2476,7 +2476,7 @@ var cmp = [
 },
 {
 	'id':255,
-	'drops':true,
+	'drops':false,
 	'name':'Component255',
 	'flavor':'',
 	'bonus':function(target){
@@ -2485,7 +2485,7 @@ var cmp = [
 },
 {
 	'id':256,
-	'drops':true,
+	'drops':false,
 	'name':'Component256',
 	'flavor':'',
 	'bonus':function(target){
@@ -2494,7 +2494,7 @@ var cmp = [
 },
 {
 	'id':257,
-	'drops':true,
+	'drops':false,
 	'name':'Component-257',
 	'flavor':'',
 	'bonus':function(target){
@@ -2503,7 +2503,7 @@ var cmp = [
 },
 {
 	'id':258,
-	'drops':true,
+	'drops':false,
 	'name':'Component-258',
 	'flavor':'',
 	'bonus':function(target){
@@ -2512,7 +2512,7 @@ var cmp = [
 },
 {
 	'id':259,
-	'drops':true,
+	'drops':false,
 	'name':'Component-259',
 	'flavor':'',
 	'bonus':function(target){
@@ -2521,7 +2521,7 @@ var cmp = [
 },
 {
 	'id':260,
-	'drops':true,
+	'drops':false,
 	'name':'Component-260',
 	'flavor':'',
 	'bonus':function(target){
@@ -2530,7 +2530,7 @@ var cmp = [
 },
 {
 	'id':261,
-	'drops':true,
+	'drops':false,
 	'name':'Component-261',
 	'flavor':'',
 	'bonus':function(target){
@@ -2539,7 +2539,7 @@ var cmp = [
 },
 {
 	'id':262,
-	'drops':true,
+	'drops':false,
 	'name':'Component-262',
 	'flavor':'',
 	'bonus':function(target){
@@ -2548,7 +2548,7 @@ var cmp = [
 },
 {
 	'id':263,
-	'drops':true,
+	'drops':false,
 	'name':'Component-263',
 	'flavor':'',
 	'bonus':function(target){
@@ -2557,7 +2557,7 @@ var cmp = [
 },
 {
 	'id':264,
-	'drops':true,
+	'drops':false,
 	'name':'Component-264',
 	'flavor':'',
 	'bonus':function(target){
@@ -2566,7 +2566,7 @@ var cmp = [
 },
 {
 	'id':265,
-	'drops':true,
+	'drops':false,
 	'name':'Component-265',
 	'flavor':'',
 	'bonus':function(target){
@@ -2575,7 +2575,7 @@ var cmp = [
 },
 {
 	'id':266,
-	'drops':true,
+	'drops':false,
 	'name':'Component-266',
 	'flavor':'',
 	'bonus':function(target){
@@ -2584,7 +2584,7 @@ var cmp = [
 },
 {
 	'id':267,
-	'drops':true,
+	'drops':false,
 	'name':'Component-267',
 	'flavor':'',
 	'bonus':function(target){
@@ -2593,7 +2593,7 @@ var cmp = [
 },
 {
 	'id':268,
-	'drops':true,
+	'drops':false,
 	'name':'Component-268',
 	'flavor':'',
 	'bonus':function(target){
@@ -2602,7 +2602,7 @@ var cmp = [
 },
 {
 	'id':269,
-	'drops':true,
+	'drops':false,
 	'name':'Component-269',
 	'flavor':'',
 	'bonus':function(target){
@@ -2611,7 +2611,7 @@ var cmp = [
 },
 {
 	'id':270,
-	'drops':true,
+	'drops':false,
 	'name':'Component-270',
 	'flavor':'',
 	'bonus':function(target){
@@ -2620,7 +2620,7 @@ var cmp = [
 },
 {
 	'id':271,
-	'drops':true,
+	'drops':false,
 	'name':'Component-271',
 	'flavor':'',
 	'bonus':function(target){
@@ -2629,7 +2629,7 @@ var cmp = [
 },
 {
 	'id':272,
-	'drops':true,
+	'drops':false,
 	'name':'Component-272',
 	'flavor':'',
 	'bonus':function(target){
@@ -2638,7 +2638,7 @@ var cmp = [
 },
 {
 	'id':273,
-	'drops':true,
+	'drops':false,
 	'name':'Component-273',
 	'flavor':'',
 	'bonus':function(target){
@@ -2647,7 +2647,7 @@ var cmp = [
 },
 {
 	'id':274,
-	'drops':true,
+	'drops':false,
 	'name':'Component-274',
 	'flavor':'',
 	'bonus':function(target){
@@ -2656,7 +2656,7 @@ var cmp = [
 },
 {
 	'id':275,
-	'drops':true,
+	'drops':false,
 	'name':'Component-275',
 	'flavor':'',
 	'bonus':function(target){
@@ -2665,7 +2665,7 @@ var cmp = [
 },
 {
 	'id':276,
-	'drops':true,
+	'drops':false,
 	'name':'Component-276',
 	'flavor':'',
 	'bonus':function(target){
@@ -2674,7 +2674,7 @@ var cmp = [
 },
 {
 	'id':277,
-	'drops':true,
+	'drops':false,
 	'name':'Component-277',
 	'flavor':'',
 	'bonus':function(target){
@@ -2683,7 +2683,7 @@ var cmp = [
 },
 {
 	'id':278,
-	'drops':true,
+	'drops':false,
 	'name':'Component-278',
 	'flavor':'',
 	'bonus':function(target){
@@ -2692,7 +2692,7 @@ var cmp = [
 },
 {
 	'id':279,
-	'drops':true,
+	'drops':false,
 	'name':'Component-279',
 	'flavor':'',
 	'bonus':function(target){
@@ -2701,7 +2701,7 @@ var cmp = [
 },
 {
 	'id':280,
-	'drops':true,
+	'drops':false,
 	'name':'Component-280',
 	'flavor':'',
 	'bonus':function(target){
@@ -2710,7 +2710,7 @@ var cmp = [
 },
 {
 	'id':281,
-	'drops':true,
+	'drops':false,
 	'name':'Component-281',
 	'flavor':'',
 	'bonus':function(target){
@@ -2719,7 +2719,7 @@ var cmp = [
 },
 {
 	'id':282,
-	'drops':true,
+	'drops':false,
 	'name':'Component-282',
 	'flavor':'',
 	'bonus':function(target){
@@ -2728,7 +2728,7 @@ var cmp = [
 },
 {
 	'id':283,
-	'drops':true,
+	'drops':false,
 	'name':'Component-283',
 	'flavor':'',
 	'bonus':function(target){
@@ -2737,7 +2737,7 @@ var cmp = [
 },
 {
 	'id':284,
-	'drops':true,
+	'drops':false,
 	'name':'Component-284',
 	'flavor':'',
 	'bonus':function(target){
@@ -2746,7 +2746,7 @@ var cmp = [
 },
 {
 	'id':285,
-	'drops':true,
+	'drops':false,
 	'name':'Component-285',
 	'flavor':'',
 	'bonus':function(target){
@@ -2755,7 +2755,7 @@ var cmp = [
 },
 {
 	'id':286,
-	'drops':true,
+	'drops':false,
 	'name':'Component-286',
 	'flavor':'',
 	'bonus':function(target){
@@ -2764,7 +2764,7 @@ var cmp = [
 },
 {
 	'id':287,
-	'drops':true,
+	'drops':false,
 	'name':'Component-287',
 	'flavor':'',
 	'bonus':function(target){
@@ -2773,7 +2773,7 @@ var cmp = [
 },
 {
 	'id':288,
-	'drops':true,
+	'drops':false,
 	'name':'Component-288',
 	'flavor':'',
 	'bonus':function(target){
@@ -2782,7 +2782,7 @@ var cmp = [
 },
 {
 	'id':289,
-	'drops':true,
+	'drops':false,
 	'name':'Component-289',
 	'flavor':'',
 	'bonus':function(target){
@@ -2791,7 +2791,7 @@ var cmp = [
 },
 {
 	'id':290,
-	'drops':true,
+	'drops':false,
 	'name':'Component-290',
 	'flavor':'',
 	'bonus':function(target){
@@ -2800,7 +2800,7 @@ var cmp = [
 },
 {
 	'id':291,
-	'drops':true,
+	'drops':false,
 	'name':'Component-291',
 	'flavor':'',
 	'bonus':function(target){
@@ -2809,7 +2809,7 @@ var cmp = [
 },
 {
 	'id':292,
-	'drops':true,
+	'drops':false,
 	'name':'Component-292',
 	'flavor':'',
 	'bonus':function(target){
@@ -2818,7 +2818,7 @@ var cmp = [
 },
 {
 	'id':293,
-	'drops':true,
+	'drops':false,
 	'name':'Component-293',
 	'flavor':'',
 	'bonus':function(target){
@@ -2827,7 +2827,7 @@ var cmp = [
 },
 {
 	'id':294,
-	'drops':true,
+	'drops':false,
 	'name':'Component-294',
 	'flavor':'',
 	'bonus':function(target){
@@ -2836,7 +2836,7 @@ var cmp = [
 },
 {
 	'id':295,
-	'drops':true,
+	'drops':false,
 	'name':'Component-295',
 	'flavor':'',
 	'bonus':function(target){
@@ -2845,7 +2845,7 @@ var cmp = [
 },
 {
 	'id':296,
-	'drops':true,
+	'drops':false,
 	'name':'Component-296',
 	'flavor':'',
 	'bonus':function(target){
@@ -2854,7 +2854,7 @@ var cmp = [
 },
 {
 	'id':297,
-	'drops':true,
+	'drops':false,
 	'name':'Component-297',
 	'flavor':'',
 	'bonus':function(target){
@@ -2863,7 +2863,7 @@ var cmp = [
 },
 {
 	'id':298,
-	'drops':true,
+	'drops':false,
 	'name':'Component-298',
 	'flavor':'',
 	'bonus':function(target){
@@ -2872,7 +2872,7 @@ var cmp = [
 },
 {
 	'id':299,
-	'drops':true,
+	'drops':false,
 	'name':'Component-299',
 	'flavor':'',
 	'bonus':function(target){
@@ -2881,7 +2881,7 @@ var cmp = [
 },
 {
 	'id':300,
-	'drops':true,
+	'drops':false,
 	'name':'Component-300',
 	'flavor':'',
 	'bonus':function(target){
@@ -2890,7 +2890,7 @@ var cmp = [
 },
 {
 	'id':301,
-	'drops':true,
+	'drops':false,
 	'name':'Component-301',
 	'flavor':'',
 	'bonus':function(target){
@@ -2899,7 +2899,7 @@ var cmp = [
 },
 {
 	'id':302,
-	'drops':true,
+	'drops':false,
 	'name':'Component-302',
 	'flavor':'',
 	'bonus':function(target){
@@ -2908,7 +2908,7 @@ var cmp = [
 },
 {
 	'id':303,
-	'drops':true,
+	'drops':false,
 	'name':'Component-303',
 	'flavor':'',
 	'bonus':function(target){
@@ -2917,7 +2917,7 @@ var cmp = [
 },
 {
 	'id':304,
-	'drops':true,
+	'drops':false,
 	'name':'Component-304',
 	'flavor':'',
 	'bonus':function(target){
@@ -2926,7 +2926,7 @@ var cmp = [
 },
 {
 	'id':305,
-	'drops':true,
+	'drops':false,
 	'name':'Component-305',
 	'flavor':'',
 	'bonus':function(target){
@@ -2935,7 +2935,7 @@ var cmp = [
 },
 {
 	'id':306,
-	'drops':true,
+	'drops':false,
 	'name':'Component-306',
 	'flavor':'',
 	'bonus':function(target){
@@ -2944,7 +2944,7 @@ var cmp = [
 },
 {
 	'id':307,
-	'drops':true,
+	'drops':false,
 	'name':'Component-307',
 	'flavor':'',
 	'bonus':function(target){
@@ -2953,7 +2953,7 @@ var cmp = [
 },
 {
 	'id':308,
-	'drops':true,
+	'drops':false,
 	'name':'Component-308',
 	'flavor':'',
 	'bonus':function(target){
@@ -2962,7 +2962,7 @@ var cmp = [
 },
 {
 	'id':309,
-	'drops':true,
+	'drops':false,
 	'name':'Component-309',
 	'flavor':'',
 	'bonus':function(target){
@@ -2971,7 +2971,7 @@ var cmp = [
 },
 {
 	'id':310,
-	'drops':true,
+	'drops':false,
 	'name':'Component-310',
 	'flavor':'',
 	'bonus':function(target){
@@ -2980,7 +2980,7 @@ var cmp = [
 },
 {
 	'id':311,
-	'drops':true,
+	'drops':false,
 	'name':'Component-311',
 	'flavor':'',
 	'bonus':function(target){
@@ -2989,7 +2989,7 @@ var cmp = [
 },
 {
 	'id':312,
-	'drops':true,
+	'drops':false,
 	'name':'Component-312',
 	'flavor':'',
 	'bonus':function(target){
@@ -2998,7 +2998,7 @@ var cmp = [
 },
 {
 	'id':313,
-	'drops':true,
+	'drops':false,
 	'name':'Component-313',
 	'flavor':'',
 	'bonus':function(target){
@@ -3007,7 +3007,7 @@ var cmp = [
 },
 {
 	'id':314,
-	'drops':true,
+	'drops':false,
 	'name':'Component-314',
 	'flavor':'',
 	'bonus':function(target){
@@ -3016,7 +3016,7 @@ var cmp = [
 },
 {
 	'id':315,
-	'drops':true,
+	'drops':false,
 	'name':'Component-315',
 	'flavor':'',
 	'bonus':function(target){
@@ -3025,7 +3025,7 @@ var cmp = [
 },
 {
 	'id':316,
-	'drops':true,
+	'drops':false,
 	'name':'Component-316',
 	'flavor':'',
 	'bonus':function(target){
@@ -3034,7 +3034,7 @@ var cmp = [
 },
 {
 	'id':317,
-	'drops':true,
+	'drops':false,
 	'name':'Component-317',
 	'flavor':'',
 	'bonus':function(target){
@@ -3043,7 +3043,7 @@ var cmp = [
 },
 {
 	'id':318,
-	'drops':true,
+	'drops':false,
 	'name':'Component-318',
 	'flavor':'',
 	'bonus':function(target){
@@ -3052,7 +3052,7 @@ var cmp = [
 },
 {
 	'id':319,
-	'drops':true,
+	'drops':false,
 	'name':'Component-319',
 	'flavor':'',
 	'bonus':function(target){
@@ -3061,7 +3061,7 @@ var cmp = [
 },
 {
 	'id':320,
-	'drops':true,
+	'drops':false,
 	'name':'Component-320',
 	'flavor':'',
 	'bonus':function(target){
@@ -3070,7 +3070,7 @@ var cmp = [
 },
 {
 	'id':321,
-	'drops':true,
+	'drops':false,
 	'name':'Component-321',
 	'flavor':'',
 	'bonus':function(target){
@@ -3079,7 +3079,7 @@ var cmp = [
 },
 {
 	'id':322,
-	'drops':true,
+	'drops':false,
 	'name':'Component-322',
 	'flavor':'',
 	'bonus':function(target){
@@ -3088,7 +3088,7 @@ var cmp = [
 },
 {
 	'id':323,
-	'drops':true,
+	'drops':false,
 	'name':'Component-323',
 	'flavor':'',
 	'bonus':function(target){
@@ -3097,7 +3097,7 @@ var cmp = [
 },
 {
 	'id':324,
-	'drops':true,
+	'drops':false,
 	'name':'Component-324',
 	'flavor':'',
 	'bonus':function(target){
@@ -3106,7 +3106,7 @@ var cmp = [
 },
 {
 	'id':325,
-	'drops':true,
+	'drops':false,
 	'name':'Component-325',
 	'flavor':'',
 	'bonus':function(target){
@@ -3115,7 +3115,7 @@ var cmp = [
 },
 {
 	'id':326,
-	'drops':true,
+	'drops':false,
 	'name':'Component-326',
 	'flavor':'',
 	'bonus':function(target){
@@ -3124,7 +3124,7 @@ var cmp = [
 },
 {
 	'id':327,
-	'drops':true,
+	'drops':false,
 	'name':'Component-327',
 	'flavor':'',
 	'bonus':function(target){
@@ -3133,7 +3133,7 @@ var cmp = [
 },
 {
 	'id':328,
-	'drops':true,
+	'drops':false,
 	'name':'Component-328',
 	'flavor':'',
 	'bonus':function(target){
@@ -3142,7 +3142,7 @@ var cmp = [
 },
 {
 	'id':329,
-	'drops':true,
+	'drops':false,
 	'name':'Component-329',
 	'flavor':'',
 	'bonus':function(target){
@@ -3151,7 +3151,7 @@ var cmp = [
 },
 {
 	'id':330,
-	'drops':true,
+	'drops':false,
 	'name':'Component-330',
 	'flavor':'',
 	'bonus':function(target){
@@ -3160,7 +3160,7 @@ var cmp = [
 },
 {
 	'id':331,
-	'drops':true,
+	'drops':false,
 	'name':'Component-331',
 	'flavor':'',
 	'bonus':function(target){
@@ -3169,7 +3169,7 @@ var cmp = [
 },
 {
 	'id':332,
-	'drops':true,
+	'drops':false,
 	'name':'Component-332',
 	'flavor':'',
 	'bonus':function(target){
@@ -3178,7 +3178,7 @@ var cmp = [
 },
 {
 	'id':333,
-	'drops':true,
+	'drops':false,
 	'name':'Component-333',
 	'flavor':'',
 	'bonus':function(target){
@@ -3187,7 +3187,7 @@ var cmp = [
 },
 {
 	'id':334,
-	'drops':true,
+	'drops':false,
 	'name':'Component-334',
 	'flavor':'',
 	'bonus':function(target){
@@ -3196,7 +3196,7 @@ var cmp = [
 },
 {
 	'id':335,
-	'drops':true,
+	'drops':false,
 	'name':'Component-335',
 	'flavor':'',
 	'bonus':function(target){
@@ -3205,7 +3205,7 @@ var cmp = [
 },
 {
 	'id':336,
-	'drops':true,
+	'drops':false,
 	'name':'Component-336',
 	'flavor':'',
 	'bonus':function(target){
@@ -3214,7 +3214,7 @@ var cmp = [
 },
 {
 	'id':337,
-	'drops':true,
+	'drops':false,
 	'name':'Component-337',
 	'flavor':'',
 	'bonus':function(target){
@@ -3223,7 +3223,7 @@ var cmp = [
 },
 {
 	'id':338,
-	'drops':true,
+	'drops':false,
 	'name':'Component-338',
 	'flavor':'',
 	'bonus':function(target){
@@ -3232,7 +3232,7 @@ var cmp = [
 },
 {
 	'id':339,
-	'drops':true,
+	'drops':false,
 	'name':'Component-339',
 	'flavor':'',
 	'bonus':function(target){
@@ -3241,7 +3241,7 @@ var cmp = [
 },
 {
 	'id':340,
-	'drops':true,
+	'drops':false,
 	'name':'Component-340',
 	'flavor':'',
 	'bonus':function(target){
@@ -3250,7 +3250,7 @@ var cmp = [
 },
 {
 	'id':341,
-	'drops':true,
+	'drops':false,
 	'name':'Component-341',
 	'flavor':'',
 	'bonus':function(target){
@@ -3259,7 +3259,7 @@ var cmp = [
 },
 {
 	'id':342,
-	'drops':true,
+	'drops':false,
 	'name':'Component-342',
 	'flavor':'',
 	'bonus':function(target){
@@ -3268,7 +3268,7 @@ var cmp = [
 },
 {
 	'id':343,
-	'drops':true,
+	'drops':false,
 	'name':'Component-343',
 	'flavor':'',
 	'bonus':function(target){
@@ -3277,7 +3277,7 @@ var cmp = [
 },
 {
 	'id':344,
-	'drops':true,
+	'drops':false,
 	'name':'Component-344',
 	'flavor':'',
 	'bonus':function(target){
@@ -3286,7 +3286,7 @@ var cmp = [
 },
 {
 	'id':345,
-	'drops':true,
+	'drops':false,
 	'name':'Component-345',
 	'flavor':'',
 	'bonus':function(target){
@@ -3295,7 +3295,7 @@ var cmp = [
 },
 {
 	'id':346,
-	'drops':true,
+	'drops':false,
 	'name':'Component-346',
 	'flavor':'',
 	'bonus':function(target){
@@ -3304,7 +3304,7 @@ var cmp = [
 },
 {
 	'id':347,
-	'drops':true,
+	'drops':false,
 	'name':'Component-347',
 	'flavor':'',
 	'bonus':function(target){
@@ -3313,7 +3313,7 @@ var cmp = [
 },
 {
 	'id':348,
-	'drops':true,
+	'drops':false,
 	'name':'Component-348',
 	'flavor':'',
 	'bonus':function(target){
@@ -3322,7 +3322,7 @@ var cmp = [
 },
 {
 	'id':349,
-	'drops':true,
+	'drops':false,
 	'name':'Component-349',
 	'flavor':'',
 	'bonus':function(target){
@@ -3331,7 +3331,7 @@ var cmp = [
 },
 {
 	'id':350,
-	'drops':true,
+	'drops':false,
 	'name':'Component-350',
 	'flavor':'',
 	'bonus':function(target){
@@ -3340,7 +3340,7 @@ var cmp = [
 },
 {
 	'id':351,
-	'drops':true,
+	'drops':false,
 	'name':'Component-351',
 	'flavor':'',
 	'bonus':function(target){
@@ -3349,7 +3349,7 @@ var cmp = [
 },
 {
 	'id':352,
-	'drops':true,
+	'drops':false,
 	'name':'Component-352',
 	'flavor':'',
 	'bonus':function(target){
@@ -3358,7 +3358,7 @@ var cmp = [
 },
 {
 	'id':353,
-	'drops':true,
+	'drops':false,
 	'name':'Component-353',
 	'flavor':'',
 	'bonus':function(target){
@@ -3367,7 +3367,7 @@ var cmp = [
 },
 {
 	'id':354,
-	'drops':true,
+	'drops':false,
 	'name':'Component-354',
 	'flavor':'',
 	'bonus':function(target){
@@ -3376,7 +3376,7 @@ var cmp = [
 },
 {
 	'id':355,
-	'drops':true,
+	'drops':false,
 	'name':'Component-355',
 	'flavor':'',
 	'bonus':function(target){
@@ -3385,7 +3385,7 @@ var cmp = [
 },
 {
 	'id':356,
-	'drops':true,
+	'drops':false,
 	'name':'Component-356',
 	'flavor':'',
 	'bonus':function(target){
@@ -3394,7 +3394,7 @@ var cmp = [
 },
 {
 	'id':357,
-	'drops':true,
+	'drops':false,
 	'name':'Component-357',
 	'flavor':'',
 	'bonus':function(target){
@@ -3403,7 +3403,7 @@ var cmp = [
 },
 {
 	'id':358,
-	'drops':true,
+	'drops':false,
 	'name':'Component-358',
 	'flavor':'',
 	'bonus':function(target){
@@ -3412,7 +3412,7 @@ var cmp = [
 },
 {
 	'id':359,
-	'drops':true,
+	'drops':false,
 	'name':'Component-359',
 	'flavor':'',
 	'bonus':function(target){
@@ -3421,7 +3421,7 @@ var cmp = [
 },
 {
 	'id':360,
-	'drops':true,
+	'drops':false,
 	'name':'Component-360',
 	'flavor':'',
 	'bonus':function(target){
@@ -3430,7 +3430,7 @@ var cmp = [
 },
 {
 	'id':361,
-	'drops':true,
+	'drops':false,
 	'name':'Component-361',
 	'flavor':'',
 	'bonus':function(target){
@@ -3439,7 +3439,7 @@ var cmp = [
 },
 {
 	'id':362,
-	'drops':true,
+	'drops':false,
 	'name':'Component-362',
 	'flavor':'',
 	'bonus':function(target){
@@ -3448,7 +3448,7 @@ var cmp = [
 },
 {
 	'id':363,
-	'drops':true,
+	'drops':false,
 	'name':'Component-363',
 	'flavor':'',
 	'bonus':function(target){
@@ -3457,7 +3457,7 @@ var cmp = [
 },
 {
 	'id':364,
-	'drops':true,
+	'drops':false,
 	'name':'Component-364',
 	'flavor':'',
 	'bonus':function(target){
@@ -3466,7 +3466,7 @@ var cmp = [
 },
 {
 	'id':365,
-	'drops':true,
+	'drops':false,
 	'name':'Component-365',
 	'flavor':'',
 	'bonus':function(target){
@@ -3475,7 +3475,7 @@ var cmp = [
 },
 {
 	'id':366,
-	'drops':true,
+	'drops':false,
 	'name':'Component-366',
 	'flavor':'',
 	'bonus':function(target){
@@ -3484,7 +3484,7 @@ var cmp = [
 },
 {
 	'id':367,
-	'drops':true,
+	'drops':false,
 	'name':'Component-367',
 	'flavor':'',
 	'bonus':function(target){
@@ -3493,7 +3493,7 @@ var cmp = [
 },
 {
 	'id':368,
-	'drops':true,
+	'drops':false,
 	'name':'Component-368',
 	'flavor':'',
 	'bonus':function(target){
@@ -3502,7 +3502,7 @@ var cmp = [
 },
 {
 	'id':369,
-	'drops':true,
+	'drops':false,
 	'name':'Component-369',
 	'flavor':'',
 	'bonus':function(target){
@@ -3511,7 +3511,7 @@ var cmp = [
 },
 {
 	'id':370,
-	'drops':true,
+	'drops':false,
 	'name':'Component-370',
 	'flavor':'',
 	'bonus':function(target){
@@ -3520,7 +3520,7 @@ var cmp = [
 },
 {
 	'id':371,
-	'drops':true,
+	'drops':false,
 	'name':'Component-371',
 	'flavor':'',
 	'bonus':function(target){
@@ -3529,7 +3529,7 @@ var cmp = [
 },
 {
 	'id':372,
-	'drops':true,
+	'drops':false,
 	'name':'Component-372',
 	'flavor':'',
 	'bonus':function(target){
@@ -3538,7 +3538,7 @@ var cmp = [
 },
 {
 	'id':373,
-	'drops':true,
+	'drops':false,
 	'name':'Component-373',
 	'flavor':'',
 	'bonus':function(target){
@@ -3547,7 +3547,7 @@ var cmp = [
 },
 {
 	'id':374,
-	'drops':true,
+	'drops':false,
 	'name':'Component-374',
 	'flavor':'',
 	'bonus':function(target){
@@ -3556,7 +3556,7 @@ var cmp = [
 },
 {
 	'id':375,
-	'drops':true,
+	'drops':false,
 	'name':'Component-375',
 	'flavor':'',
 	'bonus':function(target){
@@ -3565,7 +3565,7 @@ var cmp = [
 },
 {
 	'id':376,
-	'drops':true,
+	'drops':false,
 	'name':'Component-376',
 	'flavor':'',
 	'bonus':function(target){
@@ -3574,7 +3574,7 @@ var cmp = [
 },
 {
 	'id':377,
-	'drops':true,
+	'drops':false,
 	'name':'Component-377',
 	'flavor':'',
 	'bonus':function(target){
@@ -3583,7 +3583,7 @@ var cmp = [
 },
 {
 	'id':378,
-	'drops':true,
+	'drops':false,
 	'name':'Component-378',
 	'flavor':'',
 	'bonus':function(target){
@@ -3592,7 +3592,7 @@ var cmp = [
 },
 {
 	'id':379,
-	'drops':true,
+	'drops':false,
 	'name':'Component-379',
 	'flavor':'',
 	'bonus':function(target){
@@ -3601,7 +3601,7 @@ var cmp = [
 },
 {
 	'id':380,
-	'drops':true,
+	'drops':false,
 	'name':'Component-380',
 	'flavor':'',
 	'bonus':function(target){
@@ -3610,7 +3610,7 @@ var cmp = [
 },
 {
 	'id':381,
-	'drops':true,
+	'drops':false,
 	'name':'Component-381',
 	'flavor':'',
 	'bonus':function(target){
@@ -3619,7 +3619,7 @@ var cmp = [
 },
 {
 	'id':382,
-	'drops':true,
+	'drops':false,
 	'name':'Component-382',
 	'flavor':'',
 	'bonus':function(target){
@@ -3628,7 +3628,7 @@ var cmp = [
 },
 {
 	'id':383,
-	'drops':true,
+	'drops':false,
 	'name':'Component-383',
 	'flavor':'',
 	'bonus':function(target){
@@ -3637,7 +3637,7 @@ var cmp = [
 },
 {
 	'id':384,
-	'drops':true,
+	'drops':false,
 	'name':'Component-384',
 	'flavor':'',
 	'bonus':function(target){
@@ -3646,7 +3646,7 @@ var cmp = [
 },
 {
 	'id':385,
-	'drops':true,
+	'drops':false,
 	'name':'Component-385',
 	'flavor':'',
 	'bonus':function(target){
@@ -3655,7 +3655,7 @@ var cmp = [
 },
 {
 	'id':386,
-	'drops':true,
+	'drops':false,
 	'name':'Component-386',
 	'flavor':'',
 	'bonus':function(target){
@@ -3664,7 +3664,7 @@ var cmp = [
 },
 {
 	'id':387,
-	'drops':true,
+	'drops':false,
 	'name':'Component-387',
 	'flavor':'',
 	'bonus':function(target){
@@ -3673,7 +3673,7 @@ var cmp = [
 },
 {
 	'id':388,
-	'drops':true,
+	'drops':false,
 	'name':'Component-388',
 	'flavor':'',
 	'bonus':function(target){
@@ -3682,7 +3682,7 @@ var cmp = [
 },
 {
 	'id':389,
-	'drops':true,
+	'drops':false,
 	'name':'Component-389',
 	'flavor':'',
 	'bonus':function(target){
@@ -3691,7 +3691,7 @@ var cmp = [
 },
 {
 	'id':390,
-	'drops':true,
+	'drops':false,
 	'name':'Component-390',
 	'flavor':'',
 	'bonus':function(target){
@@ -3700,7 +3700,7 @@ var cmp = [
 },
 {
 	'id':391,
-	'drops':true,
+	'drops':false,
 	'name':'Component-391',
 	'flavor':'',
 	'bonus':function(target){
@@ -3709,7 +3709,7 @@ var cmp = [
 },
 {
 	'id':392,
-	'drops':true,
+	'drops':false,
 	'name':'Component-392',
 	'flavor':'',
 	'bonus':function(target){
@@ -3718,7 +3718,7 @@ var cmp = [
 },
 {
 	'id':393,
-	'drops':true,
+	'drops':false,
 	'name':'Component-393',
 	'flavor':'',
 	'bonus':function(target){
@@ -3727,7 +3727,7 @@ var cmp = [
 },
 {
 	'id':394,
-	'drops':true,
+	'drops':false,
 	'name':'Component-394',
 	'flavor':'',
 	'bonus':function(target){
@@ -3736,7 +3736,7 @@ var cmp = [
 },
 {
 	'id':395,
-	'drops':true,
+	'drops':false,
 	'name':'Component-395',
 	'flavor':'',
 	'bonus':function(target){
@@ -3745,7 +3745,7 @@ var cmp = [
 },
 {
 	'id':396,
-	'drops':true,
+	'drops':false,
 	'name':'Component-396',
 	'flavor':'',
 	'bonus':function(target){
@@ -3754,7 +3754,7 @@ var cmp = [
 },
 {
 	'id':397,
-	'drops':true,
+	'drops':false,
 	'name':'Component-397',
 	'flavor':'',
 	'bonus':function(target){
@@ -3763,7 +3763,7 @@ var cmp = [
 },
 {
 	'id':398,
-	'drops':true,
+	'drops':false,
 	'name':'Component-398',
 	'flavor':'',
 	'bonus':function(target){
@@ -3772,7 +3772,7 @@ var cmp = [
 },
 {
 	'id':399,
-	'drops':true,
+	'drops':false,
 	'name':'Component-399',
 	'flavor':'',
 	'bonus':function(target){
@@ -3781,7 +3781,7 @@ var cmp = [
 },
 {
 	'id':400,
-	'drops':true,
+	'drops':false,
 	'name':'Component-400',
 	'flavor':'',
 	'bonus':function(target){
@@ -3790,7 +3790,7 @@ var cmp = [
 },
 {
 	'id':401,
-	'drops':true,
+	'drops':false,
 	'name':'Component-401',
 	'flavor':'',
 	'bonus':function(target){
@@ -3799,7 +3799,7 @@ var cmp = [
 },
 {
 	'id':402,
-	'drops':true,
+	'drops':false,
 	'name':'Component-402',
 	'flavor':'',
 	'bonus':function(target){
@@ -3808,7 +3808,7 @@ var cmp = [
 },
 {
 	'id':403,
-	'drops':true,
+	'drops':false,
 	'name':'Component-403',
 	'flavor':'',
 	'bonus':function(target){
@@ -3817,7 +3817,7 @@ var cmp = [
 },
 {
 	'id':404,
-	'drops':true,
+	'drops':false,
 	'name':'Component-404',
 	'flavor':'',
 	'bonus':function(target){
@@ -3826,7 +3826,7 @@ var cmp = [
 },
 {
 	'id':405,
-	'drops':true,
+	'drops':false,
 	'name':'Component-405',
 	'flavor':'',
 	'bonus':function(target){
@@ -3835,7 +3835,7 @@ var cmp = [
 },
 {
 	'id':406,
-	'drops':true,
+	'drops':false,
 	'name':'Component-406',
 	'flavor':'',
 	'bonus':function(target){
@@ -3844,7 +3844,7 @@ var cmp = [
 },
 {
 	'id':407,
-	'drops':true,
+	'drops':false,
 	'name':'Component-407',
 	'flavor':'',
 	'bonus':function(target){
@@ -3853,7 +3853,7 @@ var cmp = [
 },
 {
 	'id':408,
-	'drops':true,
+	'drops':false,
 	'name':'Component-408',
 	'flavor':'',
 	'bonus':function(target){
@@ -3862,7 +3862,7 @@ var cmp = [
 },
 {
 	'id':409,
-	'drops':true,
+	'drops':false,
 	'name':'Component-409',
 	'flavor':'',
 	'bonus':function(target){
@@ -3871,7 +3871,7 @@ var cmp = [
 },
 {
 	'id':410,
-	'drops':true,
+	'drops':false,
 	'name':'Component-410',
 	'flavor':'',
 	'bonus':function(target){
@@ -3880,7 +3880,7 @@ var cmp = [
 },
 {
 	'id':411,
-	'drops':true,
+	'drops':false,
 	'name':'Component-411',
 	'flavor':'',
 	'bonus':function(target){
@@ -3889,7 +3889,7 @@ var cmp = [
 },
 {
 	'id':412,
-	'drops':true,
+	'drops':false,
 	'name':'Component-412',
 	'flavor':'',
 	'bonus':function(target){
@@ -3898,7 +3898,7 @@ var cmp = [
 },
 {
 	'id':413,
-	'drops':true,
+	'drops':false,
 	'name':'Component-413',
 	'flavor':'',
 	'bonus':function(target){
@@ -3907,7 +3907,7 @@ var cmp = [
 },
 {
 	'id':414,
-	'drops':true,
+	'drops':false,
 	'name':'Component-414',
 	'flavor':'',
 	'bonus':function(target){
@@ -3916,7 +3916,7 @@ var cmp = [
 },
 {
 	'id':415,
-	'drops':true,
+	'drops':false,
 	'name':'Component-415',
 	'flavor':'',
 	'bonus':function(target){
@@ -3925,7 +3925,7 @@ var cmp = [
 },
 {
 	'id':416,
-	'drops':true,
+	'drops':false,
 	'name':'Component-416',
 	'flavor':'',
 	'bonus':function(target){
@@ -3934,7 +3934,7 @@ var cmp = [
 },
 {
 	'id':417,
-	'drops':true,
+	'drops':false,
 	'name':'Component-417',
 	'flavor':'',
 	'bonus':function(target){
@@ -3943,7 +3943,7 @@ var cmp = [
 },
 {
 	'id':418,
-	'drops':true,
+	'drops':false,
 	'name':'Component-418',
 	'flavor':'',
 	'bonus':function(target){
@@ -3952,7 +3952,7 @@ var cmp = [
 },
 {
 	'id':419,
-	'drops':true,
+	'drops':false,
 	'name':'Component-419',
 	'flavor':'',
 	'bonus':function(target){
@@ -3961,7 +3961,7 @@ var cmp = [
 },
 {
 	'id':420,
-	'drops':true,
+	'drops':false,
 	'name':'Component-420',
 	'flavor':'',
 	'bonus':function(target){
@@ -3970,7 +3970,7 @@ var cmp = [
 },
 {
 	'id':421,
-	'drops':true,
+	'drops':false,
 	'name':'Component-421',
 	'flavor':'',
 	'bonus':function(target){
@@ -3979,7 +3979,7 @@ var cmp = [
 },
 {
 	'id':422,
-	'drops':true,
+	'drops':false,
 	'name':'Component-422',
 	'flavor':'',
 	'bonus':function(target){
@@ -3988,7 +3988,7 @@ var cmp = [
 },
 {
 	'id':423,
-	'drops':true,
+	'drops':false,
 	'name':'Component-423',
 	'flavor':'',
 	'bonus':function(target){
@@ -3997,7 +3997,7 @@ var cmp = [
 },
 {
 	'id':424,
-	'drops':true,
+	'drops':false,
 	'name':'Component-424',
 	'flavor':'',
 	'bonus':function(target){
@@ -4006,7 +4006,7 @@ var cmp = [
 },
 {
 	'id':425,
-	'drops':true,
+	'drops':false,
 	'name':'Component-425',
 	'flavor':'',
 	'bonus':function(target){
@@ -4015,7 +4015,7 @@ var cmp = [
 },
 {
 	'id':426,
-	'drops':true,
+	'drops':false,
 	'name':'Component-426',
 	'flavor':'',
 	'bonus':function(target){
@@ -4024,7 +4024,7 @@ var cmp = [
 },
 {
 	'id':427,
-	'drops':true,
+	'drops':false,
 	'name':'Component-427',
 	'flavor':'',
 	'bonus':function(target){
@@ -4033,7 +4033,7 @@ var cmp = [
 },
 {
 	'id':428,
-	'drops':true,
+	'drops':false,
 	'name':'Component-428',
 	'flavor':'',
 	'bonus':function(target){
@@ -4042,7 +4042,7 @@ var cmp = [
 },
 {
 	'id':429,
-	'drops':true,
+	'drops':false,
 	'name':'Component-429',
 	'flavor':'',
 	'bonus':function(target){
@@ -4051,7 +4051,7 @@ var cmp = [
 },
 {
 	'id':430,
-	'drops':true,
+	'drops':false,
 	'name':'Component-430',
 	'flavor':'',
 	'bonus':function(target){
@@ -4060,7 +4060,7 @@ var cmp = [
 },
 {
 	'id':431,
-	'drops':true,
+	'drops':false,
 	'name':'Component-431',
 	'flavor':'',
 	'bonus':function(target){
@@ -4069,7 +4069,7 @@ var cmp = [
 },
 {
 	'id':432,
-	'drops':true,
+	'drops':false,
 	'name':'Component-432',
 	'flavor':'',
 	'bonus':function(target){
@@ -4078,7 +4078,7 @@ var cmp = [
 },
 {
 	'id':433,
-	'drops':true,
+	'drops':false,
 	'name':'Component-433',
 	'flavor':'',
 	'bonus':function(target){
@@ -4087,7 +4087,7 @@ var cmp = [
 },
 {
 	'id':434,
-	'drops':true,
+	'drops':false,
 	'name':'Component-434',
 	'flavor':'',
 	'bonus':function(target){
@@ -4096,7 +4096,7 @@ var cmp = [
 },
 {
 	'id':435,
-	'drops':true,
+	'drops':false,
 	'name':'Component-435',
 	'flavor':'',
 	'bonus':function(target){
@@ -4105,7 +4105,7 @@ var cmp = [
 },
 {
 	'id':436,
-	'drops':true,
+	'drops':false,
 	'name':'Component-436',
 	'flavor':'',
 	'bonus':function(target){
@@ -4114,7 +4114,7 @@ var cmp = [
 },
 {
 	'id':437,
-	'drops':true,
+	'drops':false,
 	'name':'Component-437',
 	'flavor':'',
 	'bonus':function(target){
@@ -4123,7 +4123,7 @@ var cmp = [
 },
 {
 	'id':438,
-	'drops':true,
+	'drops':false,
 	'name':'Component-438',
 	'flavor':'',
 	'bonus':function(target){
@@ -4132,7 +4132,7 @@ var cmp = [
 },
 {
 	'id':439,
-	'drops':true,
+	'drops':false,
 	'name':'Component-439',
 	'flavor':'',
 	'bonus':function(target){
@@ -4141,7 +4141,7 @@ var cmp = [
 },
 {
 	'id':440,
-	'drops':true,
+	'drops':false,
 	'name':'Component-440',
 	'flavor':'',
 	'bonus':function(target){
@@ -4150,7 +4150,7 @@ var cmp = [
 },
 {
 	'id':441,
-	'drops':true,
+	'drops':false,
 	'name':'Component-441',
 	'flavor':'',
 	'bonus':function(target){
@@ -4159,7 +4159,7 @@ var cmp = [
 },
 {
 	'id':442,
-	'drops':true,
+	'drops':false,
 	'name':'Component-442',
 	'flavor':'',
 	'bonus':function(target){
@@ -4168,7 +4168,7 @@ var cmp = [
 },
 {
 	'id':443,
-	'drops':true,
+	'drops':false,
 	'name':'Component-443',
 	'flavor':'',
 	'bonus':function(target){
@@ -4177,7 +4177,7 @@ var cmp = [
 },
 {
 	'id':444,
-	'drops':true,
+	'drops':false,
 	'name':'Component-444',
 	'flavor':'',
 	'bonus':function(target){
@@ -4186,7 +4186,7 @@ var cmp = [
 },
 {
 	'id':445,
-	'drops':true,
+	'drops':false,
 	'name':'Component-445',
 	'flavor':'',
 	'bonus':function(target){
@@ -4195,7 +4195,7 @@ var cmp = [
 },
 {
 	'id':446,
-	'drops':true,
+	'drops':false,
 	'name':'Component-446',
 	'flavor':'',
 	'bonus':function(target){
@@ -4204,7 +4204,7 @@ var cmp = [
 },
 {
 	'id':447,
-	'drops':true,
+	'drops':false,
 	'name':'Component-447',
 	'flavor':'',
 	'bonus':function(target){
@@ -4213,7 +4213,7 @@ var cmp = [
 },
 {
 	'id':448,
-	'drops':true,
+	'drops':false,
 	'name':'Component-448',
 	'flavor':'',
 	'bonus':function(target){
@@ -4222,7 +4222,7 @@ var cmp = [
 },
 {
 	'id':449,
-	'drops':true,
+	'drops':false,
 	'name':'Component-449',
 	'flavor':'',
 	'bonus':function(target){
@@ -4231,7 +4231,7 @@ var cmp = [
 },
 {
 	'id':450,
-	'drops':true,
+	'drops':false,
 	'name':'Component-450',
 	'flavor':'',
 	'bonus':function(target){
@@ -4240,7 +4240,7 @@ var cmp = [
 },
 {
 	'id':451,
-	'drops':true,
+	'drops':false,
 	'name':'Component-451',
 	'flavor':'',
 	'bonus':function(target){
@@ -4249,7 +4249,7 @@ var cmp = [
 },
 {
 	'id':452,
-	'drops':true,
+	'drops':false,
 	'name':'Component-452',
 	'flavor':'',
 	'bonus':function(target){
@@ -4258,7 +4258,7 @@ var cmp = [
 },
 {
 	'id':453,
-	'drops':true,
+	'drops':false,
 	'name':'Component-453',
 	'flavor':'',
 	'bonus':function(target){
@@ -4267,7 +4267,7 @@ var cmp = [
 },
 {
 	'id':454,
-	'drops':true,
+	'drops':false,
 	'name':'Component-454',
 	'flavor':'',
 	'bonus':function(target){
@@ -4276,7 +4276,7 @@ var cmp = [
 },
 {
 	'id':455,
-	'drops':true,
+	'drops':false,
 	'name':'Component-455',
 	'flavor':'',
 	'bonus':function(target){
@@ -4285,7 +4285,7 @@ var cmp = [
 },
 {
 	'id':456,
-	'drops':true,
+	'drops':false,
 	'name':'Component-456',
 	'flavor':'',
 	'bonus':function(target){
@@ -4294,7 +4294,7 @@ var cmp = [
 },
 {
 	'id':457,
-	'drops':true,
+	'drops':false,
 	'name':'Component-457',
 	'flavor':'',
 	'bonus':function(target){
@@ -4303,7 +4303,7 @@ var cmp = [
 },
 {
 	'id':458,
-	'drops':true,
+	'drops':false,
 	'name':'Component-458',
 	'flavor':'',
 	'bonus':function(target){
@@ -4312,7 +4312,7 @@ var cmp = [
 },
 {
 	'id':459,
-	'drops':true,
+	'drops':false,
 	'name':'Component-459',
 	'flavor':'',
 	'bonus':function(target){
@@ -4321,7 +4321,7 @@ var cmp = [
 },
 {
 	'id':460,
-	'drops':true,
+	'drops':false,
 	'name':'Component-460',
 	'flavor':'',
 	'bonus':function(target){
@@ -4330,7 +4330,7 @@ var cmp = [
 },
 {
 	'id':461,
-	'drops':true,
+	'drops':false,
 	'name':'Component-461',
 	'flavor':'',
 	'bonus':function(target){
@@ -4339,7 +4339,7 @@ var cmp = [
 },
 {
 	'id':462,
-	'drops':true,
+	'drops':false,
 	'name':'Component-462',
 	'flavor':'',
 	'bonus':function(target){
@@ -4348,7 +4348,7 @@ var cmp = [
 },
 {
 	'id':463,
-	'drops':true,
+	'drops':false,
 	'name':'Component-463',
 	'flavor':'',
 	'bonus':function(target){
@@ -4357,7 +4357,7 @@ var cmp = [
 },
 {
 	'id':464,
-	'drops':true,
+	'drops':false,
 	'name':'Component-464',
 	'flavor':'',
 	'bonus':function(target){
@@ -4366,7 +4366,7 @@ var cmp = [
 },
 {
 	'id':465,
-	'drops':true,
+	'drops':false,
 	'name':'Component-465',
 	'flavor':'',
 	'bonus':function(target){
@@ -4375,7 +4375,7 @@ var cmp = [
 },
 {
 	'id':466,
-	'drops':true,
+	'drops':false,
 	'name':'Component-466',
 	'flavor':'',
 	'bonus':function(target){
@@ -4384,7 +4384,7 @@ var cmp = [
 },
 {
 	'id':467,
-	'drops':true,
+	'drops':false,
 	'name':'Component-467',
 	'flavor':'',
 	'bonus':function(target){
@@ -4393,7 +4393,7 @@ var cmp = [
 },
 {
 	'id':468,
-	'drops':true,
+	'drops':false,
 	'name':'Component-468',
 	'flavor':'',
 	'bonus':function(target){
@@ -4402,7 +4402,7 @@ var cmp = [
 },
 {
 	'id':469,
-	'drops':true,
+	'drops':false,
 	'name':'Component-469',
 	'flavor':'',
 	'bonus':function(target){
@@ -4411,7 +4411,7 @@ var cmp = [
 },
 {
 	'id':470,
-	'drops':true,
+	'drops':false,
 	'name':'Component-470',
 	'flavor':'',
 	'bonus':function(target){
@@ -4420,7 +4420,7 @@ var cmp = [
 },
 {
 	'id':471,
-	'drops':true,
+	'drops':false,
 	'name':'Component-471',
 	'flavor':'',
 	'bonus':function(target){
@@ -4429,7 +4429,7 @@ var cmp = [
 },
 {
 	'id':472,
-	'drops':true,
+	'drops':false,
 	'name':'Component-472',
 	'flavor':'',
 	'bonus':function(target){
@@ -4438,7 +4438,7 @@ var cmp = [
 },
 {
 	'id':473,
-	'drops':true,
+	'drops':false,
 	'name':'Component-473',
 	'flavor':'',
 	'bonus':function(target){
@@ -4447,7 +4447,7 @@ var cmp = [
 },
 {
 	'id':474,
-	'drops':true,
+	'drops':false,
 	'name':'Component-474',
 	'flavor':'',
 	'bonus':function(target){
@@ -4456,7 +4456,7 @@ var cmp = [
 },
 {
 	'id':475,
-	'drops':true,
+	'drops':false,
 	'name':'Component-475',
 	'flavor':'',
 	'bonus':function(target){
@@ -4465,7 +4465,7 @@ var cmp = [
 },
 {
 	'id':476,
-	'drops':true,
+	'drops':false,
 	'name':'Component-476',
 	'flavor':'',
 	'bonus':function(target){
@@ -4474,7 +4474,7 @@ var cmp = [
 },
 {
 	'id':477,
-	'drops':true,
+	'drops':false,
 	'name':'Component-477',
 	'flavor':'',
 	'bonus':function(target){
@@ -4483,7 +4483,7 @@ var cmp = [
 },
 {
 	'id':478,
-	'drops':true,
+	'drops':false,
 	'name':'Component-478',
 	'flavor':'',
 	'bonus':function(target){
@@ -4492,7 +4492,7 @@ var cmp = [
 },
 {
 	'id':479,
-	'drops':true,
+	'drops':false,
 	'name':'Component-479',
 	'flavor':'',
 	'bonus':function(target){
@@ -4501,7 +4501,7 @@ var cmp = [
 },
 {
 	'id':480,
-	'drops':true,
+	'drops':false,
 	'name':'Component-480',
 	'flavor':'',
 	'bonus':function(target){
@@ -4510,7 +4510,7 @@ var cmp = [
 },
 {
 	'id':481,
-	'drops':true,
+	'drops':false,
 	'name':'Component-481',
 	'flavor':'',
 	'bonus':function(target){
@@ -4519,7 +4519,7 @@ var cmp = [
 },
 {
 	'id':482,
-	'drops':true,
+	'drops':false,
 	'name':'Component-482',
 	'flavor':'',
 	'bonus':function(target){
@@ -4528,7 +4528,7 @@ var cmp = [
 },
 {
 	'id':483,
-	'drops':true,
+	'drops':false,
 	'name':'Component-483',
 	'flavor':'',
 	'bonus':function(target){
@@ -4537,7 +4537,7 @@ var cmp = [
 },
 {
 	'id':484,
-	'drops':true,
+	'drops':false,
 	'name':'Component-484',
 	'flavor':'',
 	'bonus':function(target){
@@ -4546,7 +4546,7 @@ var cmp = [
 },
 {
 	'id':485,
-	'drops':true,
+	'drops':false,
 	'name':'Component-485',
 	'flavor':'',
 	'bonus':function(target){
@@ -4555,7 +4555,7 @@ var cmp = [
 },
 {
 	'id':486,
-	'drops':true,
+	'drops':false,
 	'name':'Component-486',
 	'flavor':'',
 	'bonus':function(target){
@@ -4564,7 +4564,7 @@ var cmp = [
 },
 {
 	'id':487,
-	'drops':true,
+	'drops':false,
 	'name':'Component-487',
 	'flavor':'',
 	'bonus':function(target){
@@ -4573,7 +4573,7 @@ var cmp = [
 },
 {
 	'id':488,
-	'drops':true,
+	'drops':false,
 	'name':'Component-488',
 	'flavor':'',
 	'bonus':function(target){
@@ -4582,7 +4582,7 @@ var cmp = [
 },
 {
 	'id':489,
-	'drops':true,
+	'drops':false,
 	'name':'Component-489',
 	'flavor':'',
 	'bonus':function(target){
@@ -4591,7 +4591,7 @@ var cmp = [
 },
 {
 	'id':490,
-	'drops':true,
+	'drops':false,
 	'name':'Component-490',
 	'flavor':'',
 	'bonus':function(target){
@@ -4600,7 +4600,7 @@ var cmp = [
 },
 {
 	'id':491,
-	'drops':true,
+	'drops':false,
 	'name':'Component-491',
 	'flavor':'',
 	'bonus':function(target){
@@ -4609,7 +4609,7 @@ var cmp = [
 },
 {
 	'id':492,
-	'drops':true,
+	'drops':false,
 	'name':'Component-492',
 	'flavor':'',
 	'bonus':function(target){
@@ -4618,7 +4618,7 @@ var cmp = [
 },
 {
 	'id':493,
-	'drops':true,
+	'drops':false,
 	'name':'Component-493',
 	'flavor':'',
 	'bonus':function(target){
@@ -4627,7 +4627,7 @@ var cmp = [
 },
 {
 	'id':494,
-	'drops':true,
+	'drops':false,
 	'name':'Component-494',
 	'flavor':'',
 	'bonus':function(target){
@@ -4636,7 +4636,7 @@ var cmp = [
 },
 {
 	'id':495,
-	'drops':true,
+	'drops':false,
 	'name':'Component-495',
 	'flavor':'',
 	'bonus':function(target){
@@ -4645,7 +4645,7 @@ var cmp = [
 },
 {
 	'id':496,
-	'drops':true,
+	'drops':false,
 	'name':'Component-496',
 	'flavor':'',
 	'bonus':function(target){
@@ -4654,7 +4654,7 @@ var cmp = [
 },
 {
 	'id':497,
-	'drops':true,
+	'drops':false,
 	'name':'Component-497',
 	'flavor':'',
 	'bonus':function(target){
@@ -4663,7 +4663,7 @@ var cmp = [
 },
 {
 	'id':498,
-	'drops':true,
+	'drops':false,
 	'name':'Component-498',
 	'flavor':'',
 	'bonus':function(target){
@@ -4672,7 +4672,7 @@ var cmp = [
 },
 {
 	'id':499,
-	'drops':true,
+	'drops':false,
 	'name':'Component-499',
 	'flavor':'',
 	'bonus':function(target){
@@ -4681,7 +4681,7 @@ var cmp = [
 },
 {
 	'id':500,
-	'drops':true,
+	'drops':false,
 	'name':'Component-500',
 	'flavor':'',
 	'bonus':function(target){
@@ -4690,7 +4690,7 @@ var cmp = [
 },
 {
 	'id':501,
-	'drops':true,
+	'drops':false,
 	'name':'Component-501',
 	'flavor':'',
 	'bonus':function(target){
@@ -4699,7 +4699,7 @@ var cmp = [
 },
 {
 	'id':502,
-	'drops':true,
+	'drops':false,
 	'name':'Component-502',
 	'flavor':'',
 	'bonus':function(target){
@@ -4708,7 +4708,7 @@ var cmp = [
 },
 {
 	'id':503,
-	'drops':true,
+	'drops':false,
 	'name':'Component-503',
 	'flavor':'',
 	'bonus':function(target){
@@ -4717,7 +4717,7 @@ var cmp = [
 },
 {
 	'id':504,
-	'drops':true,
+	'drops':false,
 	'name':'Component-504',
 	'flavor':'',
 	'bonus':function(target){
@@ -4726,7 +4726,7 @@ var cmp = [
 },
 {
 	'id':505,
-	'drops':true,
+	'drops':false,
 	'name':'Component-505',
 	'flavor':'',
 	'bonus':function(target){
@@ -4735,7 +4735,7 @@ var cmp = [
 },
 {
 	'id':506,
-	'drops':true,
+	'drops':false,
 	'name':'Component-506',
 	'flavor':'',
 	'bonus':function(target){
@@ -4744,7 +4744,7 @@ var cmp = [
 },
 {
 	'id':507,
-	'drops':true,
+	'drops':false,
 	'name':'Component-507',
 	'flavor':'',
 	'bonus':function(target){
@@ -4753,7 +4753,7 @@ var cmp = [
 },
 {
 	'id':508,
-	'drops':true,
+	'drops':false,
 	'name':'Component-508',
 	'flavor':'',
 	'bonus':function(target){
@@ -4762,7 +4762,7 @@ var cmp = [
 },
 {
 	'id':509,
-	'drops':true,
+	'drops':false,
 	'name':'Component-509',
 	'flavor':'',
 	'bonus':function(target){
@@ -4771,7 +4771,7 @@ var cmp = [
 },
 {
 	'id':510,
-	'drops':true,
+	'drops':false,
 	'name':'Component-510',
 	'flavor':'',
 	'bonus':function(target){
@@ -4780,7 +4780,7 @@ var cmp = [
 },
 {
 	'id':511,
-	'drops':true,
+	'drops':false,
 	'name':'Component-511',
 	'flavor':'',
 	'bonus':function(target){
@@ -4789,7 +4789,7 @@ var cmp = [
 },
 {
 	'id':512,
-	'drops':true,
+	'drops':false,
 	'name':'Component-512',
 	'flavor':'',
 	'bonus':function(target){
@@ -4798,7 +4798,7 @@ var cmp = [
 },
 {
 	'id':513,
-	'drops':true,
+	'drops':false,
 	'name':'Component-513',
 	'flavor':'',
 	'bonus':function(target){
@@ -4807,7 +4807,7 @@ var cmp = [
 },
 {
 	'id':514,
-	'drops':true,
+	'drops':false,
 	'name':'Component-514',
 	'flavor':'',
 	'bonus':function(target){
@@ -4816,7 +4816,7 @@ var cmp = [
 },
 {
 	'id':515,
-	'drops':true,
+	'drops':false,
 	'name':'Component-515',
 	'flavor':'',
 	'bonus':function(target){
@@ -4825,7 +4825,7 @@ var cmp = [
 },
 {
 	'id':516,
-	'drops':true,
+	'drops':false,
 	'name':'Component-516',
 	'flavor':'',
 	'bonus':function(target){
@@ -4834,7 +4834,7 @@ var cmp = [
 },
 {
 	'id':517,
-	'drops':true,
+	'drops':false,
 	'name':'Component-517',
 	'flavor':'',
 	'bonus':function(target){
@@ -4843,7 +4843,7 @@ var cmp = [
 },
 {
 	'id':518,
-	'drops':true,
+	'drops':false,
 	'name':'Component-518',
 	'flavor':'',
 	'bonus':function(target){
@@ -4852,7 +4852,7 @@ var cmp = [
 },
 {
 	'id':519,
-	'drops':true,
+	'drops':false,
 	'name':'Component-519',
 	'flavor':'',
 	'bonus':function(target){
@@ -4861,7 +4861,7 @@ var cmp = [
 },
 {
 	'id':520,
-	'drops':true,
+	'drops':false,
 	'name':'Component-520',
 	'flavor':'',
 	'bonus':function(target){
@@ -4870,7 +4870,7 @@ var cmp = [
 },
 {
 	'id':521,
-	'drops':true,
+	'drops':false,
 	'name':'Component-521',
 	'flavor':'',
 	'bonus':function(target){
@@ -4879,7 +4879,7 @@ var cmp = [
 },
 {
 	'id':522,
-	'drops':true,
+	'drops':false,
 	'name':'Component-522',
 	'flavor':'',
 	'bonus':function(target){
@@ -4888,7 +4888,7 @@ var cmp = [
 },
 {
 	'id':523,
-	'drops':true,
+	'drops':false,
 	'name':'Component-523',
 	'flavor':'',
 	'bonus':function(target){
@@ -4897,7 +4897,7 @@ var cmp = [
 },
 {
 	'id':524,
-	'drops':true,
+	'drops':false,
 	'name':'Component-524',
 	'flavor':'',
 	'bonus':function(target){
@@ -4906,7 +4906,7 @@ var cmp = [
 },
 {
 	'id':525,
-	'drops':true,
+	'drops':false,
 	'name':'Component-525',
 	'flavor':'',
 	'bonus':function(target){
@@ -4915,7 +4915,7 @@ var cmp = [
 },
 {
 	'id':526,
-	'drops':true,
+	'drops':false,
 	'name':'Component-526',
 	'flavor':'',
 	'bonus':function(target){
@@ -4924,7 +4924,7 @@ var cmp = [
 },
 {
 	'id':527,
-	'drops':true,
+	'drops':false,
 	'name':'Component-527',
 	'flavor':'',
 	'bonus':function(target){
@@ -4933,7 +4933,7 @@ var cmp = [
 },
 {
 	'id':528,
-	'drops':true,
+	'drops':false,
 	'name':'Component-528',
 	'flavor':'',
 	'bonus':function(target){
@@ -4942,7 +4942,7 @@ var cmp = [
 },
 {
 	'id':529,
-	'drops':true,
+	'drops':false,
 	'name':'Component-529',
 	'flavor':'',
 	'bonus':function(target){
@@ -4951,7 +4951,7 @@ var cmp = [
 },
 {
 	'id':530,
-	'drops':true,
+	'drops':false,
 	'name':'Component-530',
 	'flavor':'',
 	'bonus':function(target){
@@ -4960,7 +4960,7 @@ var cmp = [
 },
 {
 	'id':531,
-	'drops':true,
+	'drops':false,
 	'name':'Component-531',
 	'flavor':'',
 	'bonus':function(target){
@@ -4969,7 +4969,7 @@ var cmp = [
 },
 {
 	'id':532,
-	'drops':true,
+	'drops':false,
 	'name':'Component-532',
 	'flavor':'',
 	'bonus':function(target){
@@ -4978,7 +4978,7 @@ var cmp = [
 },
 {
 	'id':533,
-	'drops':true,
+	'drops':false,
 	'name':'Component-533',
 	'flavor':'',
 	'bonus':function(target){
@@ -4987,7 +4987,7 @@ var cmp = [
 },
 {
 	'id':534,
-	'drops':true,
+	'drops':false,
 	'name':'Component-534',
 	'flavor':'',
 	'bonus':function(target){
@@ -4996,7 +4996,7 @@ var cmp = [
 },
 {
 	'id':535,
-	'drops':true,
+	'drops':false,
 	'name':'Component-535',
 	'flavor':'',
 	'bonus':function(target){
@@ -5005,7 +5005,7 @@ var cmp = [
 },
 {
 	'id':536,
-	'drops':true,
+	'drops':false,
 	'name':'Component-536',
 	'flavor':'',
 	'bonus':function(target){
@@ -5014,7 +5014,7 @@ var cmp = [
 },
 {
 	'id':537,
-	'drops':true,
+	'drops':false,
 	'name':'Component-537',
 	'flavor':'',
 	'bonus':function(target){
@@ -5023,7 +5023,7 @@ var cmp = [
 },
 {
 	'id':538,
-	'drops':true,
+	'drops':false,
 	'name':'Component-538',
 	'flavor':'',
 	'bonus':function(target){
@@ -5032,7 +5032,7 @@ var cmp = [
 },
 {
 	'id':539,
-	'drops':true,
+	'drops':false,
 	'name':'Component-539',
 	'flavor':'',
 	'bonus':function(target){
@@ -5041,7 +5041,7 @@ var cmp = [
 },
 {
 	'id':540,
-	'drops':true,
+	'drops':false,
 	'name':'Component-540',
 	'flavor':'',
 	'bonus':function(target){
@@ -5050,7 +5050,7 @@ var cmp = [
 },
 {
 	'id':541,
-	'drops':true,
+	'drops':false,
 	'name':'Component-541',
 	'flavor':'',
 	'bonus':function(target){
@@ -5059,7 +5059,7 @@ var cmp = [
 },
 {
 	'id':542,
-	'drops':true,
+	'drops':false,
 	'name':'Component-542',
 	'flavor':'',
 	'bonus':function(target){
@@ -5068,7 +5068,7 @@ var cmp = [
 },
 {
 	'id':543,
-	'drops':true,
+	'drops':false,
 	'name':'Component-543',
 	'flavor':'',
 	'bonus':function(target){
@@ -5077,7 +5077,7 @@ var cmp = [
 },
 {
 	'id':544,
-	'drops':true,
+	'drops':false,
 	'name':'Component-544',
 	'flavor':'',
 	'bonus':function(target){
@@ -5086,7 +5086,7 @@ var cmp = [
 },
 {
 	'id':545,
-	'drops':true,
+	'drops':false,
 	'name':'Component-545',
 	'flavor':'',
 	'bonus':function(target){
@@ -5095,7 +5095,7 @@ var cmp = [
 },
 {
 	'id':546,
-	'drops':true,
+	'drops':false,
 	'name':'Component-546',
 	'flavor':'',
 	'bonus':function(target){
@@ -5104,7 +5104,7 @@ var cmp = [
 },
 {
 	'id':547,
-	'drops':true,
+	'drops':false,
 	'name':'Component-547',
 	'flavor':'',
 	'bonus':function(target){
@@ -5113,7 +5113,7 @@ var cmp = [
 },
 {
 	'id':548,
-	'drops':true,
+	'drops':false,
 	'name':'Component-548',
 	'flavor':'',
 	'bonus':function(target){
@@ -5122,7 +5122,7 @@ var cmp = [
 },
 {
 	'id':549,
-	'drops':true,
+	'drops':false,
 	'name':'Component-549',
 	'flavor':'',
 	'bonus':function(target){
@@ -5131,7 +5131,7 @@ var cmp = [
 },
 {
 	'id':550,
-	'drops':true,
+	'drops':false,
 	'name':'Component-550',
 	'flavor':'',
 	'bonus':function(target){
@@ -5140,7 +5140,7 @@ var cmp = [
 },
 {
 	'id':551,
-	'drops':true,
+	'drops':false,
 	'name':'Component-551',
 	'flavor':'',
 	'bonus':function(target){
@@ -5149,7 +5149,7 @@ var cmp = [
 },
 {
 	'id':552,
-	'drops':true,
+	'drops':false,
 	'name':'Component-552',
 	'flavor':'',
 	'bonus':function(target){
@@ -5158,7 +5158,7 @@ var cmp = [
 },
 {
 	'id':553,
-	'drops':true,
+	'drops':false,
 	'name':'Component-553',
 	'flavor':'',
 	'bonus':function(target){
@@ -5167,7 +5167,7 @@ var cmp = [
 },
 {
 	'id':554,
-	'drops':true,
+	'drops':false,
 	'name':'Component-554',
 	'flavor':'',
 	'bonus':function(target){
@@ -5176,7 +5176,7 @@ var cmp = [
 },
 {
 	'id':555,
-	'drops':true,
+	'drops':false,
 	'name':'Component-555',
 	'flavor':'',
 	'bonus':function(target){
@@ -5185,7 +5185,7 @@ var cmp = [
 },
 {
 	'id':556,
-	'drops':true,
+	'drops':false,
 	'name':'Component-556',
 	'flavor':'',
 	'bonus':function(target){
@@ -5194,7 +5194,7 @@ var cmp = [
 },
 {
 	'id':557,
-	'drops':true,
+	'drops':false,
 	'name':'Component-557',
 	'flavor':'',
 	'bonus':function(target){
@@ -5203,7 +5203,7 @@ var cmp = [
 },
 {
 	'id':558,
-	'drops':true,
+	'drops':false,
 	'name':'Component-558',
 	'flavor':'',
 	'bonus':function(target){
@@ -5212,7 +5212,7 @@ var cmp = [
 },
 {
 	'id':559,
-	'drops':true,
+	'drops':false,
 	'name':'Component-559',
 	'flavor':'',
 	'bonus':function(target){
@@ -5221,7 +5221,7 @@ var cmp = [
 },
 {
 	'id':560,
-	'drops':true,
+	'drops':false,
 	'name':'Component-560',
 	'flavor':'',
 	'bonus':function(target){
@@ -5230,7 +5230,7 @@ var cmp = [
 },
 {
 	'id':561,
-	'drops':true,
+	'drops':false,
 	'name':'Component-561',
 	'flavor':'',
 	'bonus':function(target){
@@ -5239,7 +5239,7 @@ var cmp = [
 },
 {
 	'id':562,
-	'drops':true,
+	'drops':false,
 	'name':'Component-562',
 	'flavor':'',
 	'bonus':function(target){
@@ -5248,7 +5248,7 @@ var cmp = [
 },
 {
 	'id':563,
-	'drops':true,
+	'drops':false,
 	'name':'Component-563',
 	'flavor':'',
 	'bonus':function(target){
@@ -5257,7 +5257,7 @@ var cmp = [
 },
 {
 	'id':564,
-	'drops':true,
+	'drops':false,
 	'name':'Component-564',
 	'flavor':'',
 	'bonus':function(target){
@@ -5266,7 +5266,7 @@ var cmp = [
 },
 {
 	'id':565,
-	'drops':true,
+	'drops':false,
 	'name':'Component-565',
 	'flavor':'',
 	'bonus':function(target){
@@ -5275,7 +5275,7 @@ var cmp = [
 },
 {
 	'id':566,
-	'drops':true,
+	'drops':false,
 	'name':'Component-566',
 	'flavor':'',
 	'bonus':function(target){
@@ -5284,7 +5284,7 @@ var cmp = [
 },
 {
 	'id':567,
-	'drops':true,
+	'drops':false,
 	'name':'Component-567',
 	'flavor':'',
 	'bonus':function(target){
@@ -5293,7 +5293,7 @@ var cmp = [
 },
 {
 	'id':568,
-	'drops':true,
+	'drops':false,
 	'name':'Component-568',
 	'flavor':'',
 	'bonus':function(target){
@@ -5302,7 +5302,7 @@ var cmp = [
 },
 {
 	'id':569,
-	'drops':true,
+	'drops':false,
 	'name':'Component-569',
 	'flavor':'',
 	'bonus':function(target){
@@ -5311,7 +5311,7 @@ var cmp = [
 },
 {
 	'id':570,
-	'drops':true,
+	'drops':false,
 	'name':'Component-570',
 	'flavor':'',
 	'bonus':function(target){
@@ -5320,7 +5320,7 @@ var cmp = [
 },
 {
 	'id':571,
-	'drops':true,
+	'drops':false,
 	'name':'Component-571',
 	'flavor':'',
 	'bonus':function(target){
@@ -5329,7 +5329,7 @@ var cmp = [
 },
 {
 	'id':572,
-	'drops':true,
+	'drops':false,
 	'name':'Component-572',
 	'flavor':'',
 	'bonus':function(target){
@@ -5338,7 +5338,7 @@ var cmp = [
 },
 {
 	'id':573,
-	'drops':true,
+	'drops':false,
 	'name':'Component-573',
 	'flavor':'',
 	'bonus':function(target){
@@ -5347,7 +5347,7 @@ var cmp = [
 },
 {
 	'id':574,
-	'drops':true,
+	'drops':false,
 	'name':'Component-574',
 	'flavor':'',
 	'bonus':function(target){
@@ -5356,7 +5356,7 @@ var cmp = [
 },
 {
 	'id':575,
-	'drops':true,
+	'drops':false,
 	'name':'Component-575',
 	'flavor':'',
 	'bonus':function(target){
@@ -5365,7 +5365,7 @@ var cmp = [
 },
 {
 	'id':576,
-	'drops':true,
+	'drops':false,
 	'name':'Component-576',
 	'flavor':'',
 	'bonus':function(target){
@@ -5374,7 +5374,7 @@ var cmp = [
 },
 {
 	'id':577,
-	'drops':true,
+	'drops':false,
 	'name':'Component-577',
 	'flavor':'',
 	'bonus':function(target){
@@ -5383,7 +5383,7 @@ var cmp = [
 },
 {
 	'id':578,
-	'drops':true,
+	'drops':false,
 	'name':'Component-578',
 	'flavor':'',
 	'bonus':function(target){
@@ -5392,7 +5392,7 @@ var cmp = [
 },
 {
 	'id':579,
-	'drops':true,
+	'drops':false,
 	'name':'Component-579',
 	'flavor':'',
 	'bonus':function(target){
@@ -5401,7 +5401,7 @@ var cmp = [
 },
 {
 	'id':580,
-	'drops':true,
+	'drops':false,
 	'name':'Component-580',
 	'flavor':'',
 	'bonus':function(target){
@@ -5410,7 +5410,7 @@ var cmp = [
 },
 {
 	'id':581,
-	'drops':true,
+	'drops':false,
 	'name':'Component-581',
 	'flavor':'',
 	'bonus':function(target){
@@ -5419,7 +5419,7 @@ var cmp = [
 },
 {
 	'id':582,
-	'drops':true,
+	'drops':false,
 	'name':'Component-582',
 	'flavor':'',
 	'bonus':function(target){
@@ -5428,7 +5428,7 @@ var cmp = [
 },
 {
 	'id':583,
-	'drops':true,
+	'drops':false,
 	'name':'Component-583',
 	'flavor':'',
 	'bonus':function(target){
@@ -5437,7 +5437,7 @@ var cmp = [
 },
 {
 	'id':584,
-	'drops':true,
+	'drops':false,
 	'name':'Component-584',
 	'flavor':'',
 	'bonus':function(target){
@@ -5446,7 +5446,7 @@ var cmp = [
 },
 {
 	'id':585,
-	'drops':true,
+	'drops':false,
 	'name':'Component-585',
 	'flavor':'',
 	'bonus':function(target){
@@ -5455,7 +5455,7 @@ var cmp = [
 },
 {
 	'id':586,
-	'drops':true,
+	'drops':false,
 	'name':'Component-586',
 	'flavor':'',
 	'bonus':function(target){
@@ -5464,7 +5464,7 @@ var cmp = [
 },
 {
 	'id':587,
-	'drops':true,
+	'drops':false,
 	'name':'Component-587',
 	'flavor':'',
 	'bonus':function(target){
@@ -5473,7 +5473,7 @@ var cmp = [
 },
 {
 	'id':588,
-	'drops':true,
+	'drops':false,
 	'name':'Component-588',
 	'flavor':'',
 	'bonus':function(target){
@@ -5482,7 +5482,7 @@ var cmp = [
 },
 {
 	'id':589,
-	'drops':true,
+	'drops':false,
 	'name':'Component-589',
 	'flavor':'',
 	'bonus':function(target){
@@ -5491,7 +5491,7 @@ var cmp = [
 },
 {
 	'id':590,
-	'drops':true,
+	'drops':false,
 	'name':'Component-590',
 	'flavor':'',
 	'bonus':function(target){
@@ -5500,7 +5500,7 @@ var cmp = [
 },
 {
 	'id':591,
-	'drops':true,
+	'drops':false,
 	'name':'Component-591',
 	'flavor':'',
 	'bonus':function(target){
@@ -5509,7 +5509,7 @@ var cmp = [
 },
 {
 	'id':592,
-	'drops':true,
+	'drops':false,
 	'name':'Component-592',
 	'flavor':'',
 	'bonus':function(target){
@@ -5518,7 +5518,7 @@ var cmp = [
 },
 {
 	'id':593,
-	'drops':true,
+	'drops':false,
 	'name':'Component-593',
 	'flavor':'',
 	'bonus':function(target){
@@ -5527,7 +5527,7 @@ var cmp = [
 },
 {
 	'id':594,
-	'drops':true,
+	'drops':false,
 	'name':'Component-594',
 	'flavor':'',
 	'bonus':function(target){
@@ -5536,7 +5536,7 @@ var cmp = [
 },
 {
 	'id':595,
-	'drops':true,
+	'drops':false,
 	'name':'Component-595',
 	'flavor':'',
 	'bonus':function(target){
@@ -5545,7 +5545,7 @@ var cmp = [
 },
 {
 	'id':596,
-	'drops':true,
+	'drops':false,
 	'name':'Component-596',
 	'flavor':'',
 	'bonus':function(target){
@@ -5554,7 +5554,7 @@ var cmp = [
 },
 {
 	'id':597,
-	'drops':true,
+	'drops':false,
 	'name':'Component-597',
 	'flavor':'',
 	'bonus':function(target){
@@ -5563,7 +5563,7 @@ var cmp = [
 },
 {
 	'id':598,
-	'drops':true,
+	'drops':false,
 	'name':'Component-598',
 	'flavor':'',
 	'bonus':function(target){
@@ -5572,7 +5572,7 @@ var cmp = [
 },
 {
 	'id':599,
-	'drops':true,
+	'drops':false,
 	'name':'Component-599',
 	'flavor':'',
 	'bonus':function(target){
@@ -5581,7 +5581,7 @@ var cmp = [
 },
 {
 	'id':600,
-	'drops':true,
+	'drops':false,
 	'name':'Component-600',
 	'flavor':'',
 	'bonus':function(target){
@@ -5590,7 +5590,7 @@ var cmp = [
 },
 {
 	'id':601,
-	'drops':true,
+	'drops':false,
 	'name':'Component-601',
 	'flavor':'',
 	'bonus':function(target){
@@ -5599,7 +5599,7 @@ var cmp = [
 },
 {
 	'id':602,
-	'drops':true,
+	'drops':false,
 	'name':'Component-602',
 	'flavor':'',
 	'bonus':function(target){
@@ -5608,7 +5608,7 @@ var cmp = [
 },
 {
 	'id':603,
-	'drops':true,
+	'drops':false,
 	'name':'Component-603',
 	'flavor':'',
 	'bonus':function(target){
@@ -5617,7 +5617,7 @@ var cmp = [
 },
 {
 	'id':604,
-	'drops':true,
+	'drops':false,
 	'name':'Component-604',
 	'flavor':'',
 	'bonus':function(target){
@@ -5626,7 +5626,7 @@ var cmp = [
 },
 {
 	'id':605,
-	'drops':true,
+	'drops':false,
 	'name':'Component-605',
 	'flavor':'',
 	'bonus':function(target){
@@ -5635,7 +5635,7 @@ var cmp = [
 },
 {
 	'id':606,
-	'drops':true,
+	'drops':false,
 	'name':'Component-606',
 	'flavor':'',
 	'bonus':function(target){
@@ -5644,7 +5644,7 @@ var cmp = [
 },
 {
 	'id':607,
-	'drops':true,
+	'drops':false,
 	'name':'Component-607',
 	'flavor':'',
 	'bonus':function(target){
@@ -5653,7 +5653,7 @@ var cmp = [
 },
 {
 	'id':608,
-	'drops':true,
+	'drops':false,
 	'name':'Component-608',
 	'flavor':'',
 	'bonus':function(target){
@@ -5662,7 +5662,7 @@ var cmp = [
 },
 {
 	'id':609,
-	'drops':true,
+	'drops':false,
 	'name':'Component-609',
 	'flavor':'',
 	'bonus':function(target){
@@ -5671,7 +5671,7 @@ var cmp = [
 },
 {
 	'id':610,
-	'drops':true,
+	'drops':false,
 	'name':'Component-610',
 	'flavor':'',
 	'bonus':function(target){
@@ -5680,7 +5680,7 @@ var cmp = [
 },
 {
 	'id':611,
-	'drops':true,
+	'drops':false,
 	'name':'Component-611',
 	'flavor':'',
 	'bonus':function(target){
@@ -5689,7 +5689,7 @@ var cmp = [
 },
 {
 	'id':612,
-	'drops':true,
+	'drops':false,
 	'name':'Component-612',
 	'flavor':'',
 	'bonus':function(target){
@@ -5698,7 +5698,7 @@ var cmp = [
 },
 {
 	'id':613,
-	'drops':true,
+	'drops':false,
 	'name':'Component-613',
 	'flavor':'',
 	'bonus':function(target){
@@ -5707,7 +5707,7 @@ var cmp = [
 },
 {
 	'id':614,
-	'drops':true,
+	'drops':false,
 	'name':'Component-614',
 	'flavor':'',
 	'bonus':function(target){
@@ -5716,7 +5716,7 @@ var cmp = [
 },
 {
 	'id':615,
-	'drops':true,
+	'drops':false,
 	'name':'Component-615',
 	'flavor':'',
 	'bonus':function(target){
@@ -5725,7 +5725,7 @@ var cmp = [
 },
 {
 	'id':616,
-	'drops':true,
+	'drops':false,
 	'name':'Component-616',
 	'flavor':'',
 	'bonus':function(target){
@@ -5734,7 +5734,7 @@ var cmp = [
 },
 {
 	'id':617,
-	'drops':true,
+	'drops':false,
 	'name':'Component-617',
 	'flavor':'',
 	'bonus':function(target){
@@ -5743,7 +5743,7 @@ var cmp = [
 },
 {
 	'id':618,
-	'drops':true,
+	'drops':false,
 	'name':'Component-618',
 	'flavor':'',
 	'bonus':function(target){
@@ -5752,7 +5752,7 @@ var cmp = [
 },
 {
 	'id':619,
-	'drops':true,
+	'drops':false,
 	'name':'Component-619',
 	'flavor':'',
 	'bonus':function(target){
@@ -5761,7 +5761,7 @@ var cmp = [
 },
 {
 	'id':620,
-	'drops':true,
+	'drops':false,
 	'name':'Component-620',
 	'flavor':'',
 	'bonus':function(target){
@@ -5770,7 +5770,7 @@ var cmp = [
 },
 {
 	'id':621,
-	'drops':true,
+	'drops':false,
 	'name':'Component-621',
 	'flavor':'',
 	'bonus':function(target){
@@ -5779,7 +5779,7 @@ var cmp = [
 },
 {
 	'id':622,
-	'drops':true,
+	'drops':false,
 	'name':'Component-622',
 	'flavor':'',
 	'bonus':function(target){
@@ -5788,7 +5788,7 @@ var cmp = [
 },
 {
 	'id':623,
-	'drops':true,
+	'drops':false,
 	'name':'Component-623',
 	'flavor':'',
 	'bonus':function(target){
@@ -5797,7 +5797,7 @@ var cmp = [
 },
 {
 	'id':624,
-	'drops':true,
+	'drops':false,
 	'name':'Component-624',
 	'flavor':'',
 	'bonus':function(target){
@@ -5806,7 +5806,7 @@ var cmp = [
 },
 {
 	'id':625,
-	'drops':true,
+	'drops':false,
 	'name':'Component-625',
 	'flavor':'',
 	'bonus':function(target){
@@ -5815,7 +5815,7 @@ var cmp = [
 },
 {
 	'id':626,
-	'drops':true,
+	'drops':false,
 	'name':'Component-626',
 	'flavor':'',
 	'bonus':function(target){
@@ -5824,7 +5824,7 @@ var cmp = [
 },
 {
 	'id':627,
-	'drops':true,
+	'drops':false,
 	'name':'Component-627',
 	'flavor':'',
 	'bonus':function(target){
@@ -5833,7 +5833,7 @@ var cmp = [
 },
 {
 	'id':628,
-	'drops':true,
+	'drops':false,
 	'name':'Component-628',
 	'flavor':'',
 	'bonus':function(target){
@@ -5842,7 +5842,7 @@ var cmp = [
 },
 {
 	'id':629,
-	'drops':true,
+	'drops':false,
 	'name':'Component-629',
 	'flavor':'',
 	'bonus':function(target){
@@ -5851,7 +5851,7 @@ var cmp = [
 },
 {
 	'id':630,
-	'drops':true,
+	'drops':false,
 	'name':'Component-630',
 	'flavor':'',
 	'bonus':function(target){
@@ -5860,7 +5860,7 @@ var cmp = [
 },
 {
 	'id':631,
-	'drops':true,
+	'drops':false,
 	'name':'Component-631',
 	'flavor':'',
 	'bonus':function(target){
@@ -5869,7 +5869,7 @@ var cmp = [
 },
 {
 	'id':632,
-	'drops':true,
+	'drops':false,
 	'name':'Component-632',
 	'flavor':'',
 	'bonus':function(target){
@@ -5878,7 +5878,7 @@ var cmp = [
 },
 {
 	'id':633,
-	'drops':true,
+	'drops':false,
 	'name':'Component-633',
 	'flavor':'',
 	'bonus':function(target){
@@ -5887,7 +5887,7 @@ var cmp = [
 },
 {
 	'id':634,
-	'drops':true,
+	'drops':false,
 	'name':'Component-634',
 	'flavor':'',
 	'bonus':function(target){
@@ -5896,7 +5896,7 @@ var cmp = [
 },
 {
 	'id':635,
-	'drops':true,
+	'drops':false,
 	'name':'Component-635',
 	'flavor':'',
 	'bonus':function(target){
@@ -5905,7 +5905,7 @@ var cmp = [
 },
 {
 	'id':636,
-	'drops':true,
+	'drops':false,
 	'name':'Component-636',
 	'flavor':'',
 	'bonus':function(target){
@@ -5914,7 +5914,7 @@ var cmp = [
 },
 {
 	'id':637,
-	'drops':true,
+	'drops':false,
 	'name':'Component-637',
 	'flavor':'',
 	'bonus':function(target){
@@ -5923,7 +5923,7 @@ var cmp = [
 },
 {
 	'id':638,
-	'drops':true,
+	'drops':false,
 	'name':'Component-638',
 	'flavor':'',
 	'bonus':function(target){
@@ -5932,7 +5932,7 @@ var cmp = [
 },
 {
 	'id':639,
-	'drops':true,
+	'drops':false,
 	'name':'Component-639',
 	'flavor':'',
 	'bonus':function(target){
@@ -5941,7 +5941,7 @@ var cmp = [
 },
 {
 	'id':640,
-	'drops':true,
+	'drops':false,
 	'name':'Component-640',
 	'flavor':'',
 	'bonus':function(target){
@@ -5950,7 +5950,7 @@ var cmp = [
 },
 {
 	'id':641,
-	'drops':true,
+	'drops':false,
 	'name':'Component-641',
 	'flavor':'',
 	'bonus':function(target){
@@ -5959,7 +5959,7 @@ var cmp = [
 },
 {
 	'id':642,
-	'drops':true,
+	'drops':false,
 	'name':'Component-642',
 	'flavor':'',
 	'bonus':function(target){
@@ -5968,7 +5968,7 @@ var cmp = [
 },
 {
 	'id':643,
-	'drops':true,
+	'drops':false,
 	'name':'Component-643',
 	'flavor':'',
 	'bonus':function(target){
@@ -5977,7 +5977,7 @@ var cmp = [
 },
 {
 	'id':644,
-	'drops':true,
+	'drops':false,
 	'name':'Component-644',
 	'flavor':'',
 	'bonus':function(target){
@@ -5986,7 +5986,7 @@ var cmp = [
 },
 {
 	'id':645,
-	'drops':true,
+	'drops':false,
 	'name':'Component-645',
 	'flavor':'',
 	'bonus':function(target){
@@ -5995,7 +5995,7 @@ var cmp = [
 },
 {
 	'id':646,
-	'drops':true,
+	'drops':false,
 	'name':'Component-646',
 	'flavor':'',
 	'bonus':function(target){
@@ -6004,7 +6004,7 @@ var cmp = [
 },
 {
 	'id':647,
-	'drops':true,
+	'drops':false,
 	'name':'Component-647',
 	'flavor':'',
 	'bonus':function(target){
@@ -6013,7 +6013,7 @@ var cmp = [
 },
 {
 	'id':648,
-	'drops':true,
+	'drops':false,
 	'name':'Component-648',
 	'flavor':'',
 	'bonus':function(target){
@@ -6022,7 +6022,7 @@ var cmp = [
 },
 {
 	'id':649,
-	'drops':true,
+	'drops':false,
 	'name':'Component-649',
 	'flavor':'',
 	'bonus':function(target){
@@ -6031,7 +6031,7 @@ var cmp = [
 },
 {
 	'id':650,
-	'drops':true,
+	'drops':false,
 	'name':'Component-650',
 	'flavor':'',
 	'bonus':function(target){
@@ -6040,7 +6040,7 @@ var cmp = [
 },
 {
 	'id':651,
-	'drops':true,
+	'drops':false,
 	'name':'Component-651',
 	'flavor':'',
 	'bonus':function(target){
@@ -6049,7 +6049,7 @@ var cmp = [
 },
 {
 	'id':652,
-	'drops':true,
+	'drops':false,
 	'name':'Component-652',
 	'flavor':'',
 	'bonus':function(target){
@@ -6058,7 +6058,7 @@ var cmp = [
 },
 {
 	'id':653,
-	'drops':true,
+	'drops':false,
 	'name':'Component-653',
 	'flavor':'',
 	'bonus':function(target){
@@ -6067,7 +6067,7 @@ var cmp = [
 },
 {
 	'id':654,
-	'drops':true,
+	'drops':false,
 	'name':'Component-654',
 	'flavor':'',
 	'bonus':function(target){
@@ -6076,7 +6076,7 @@ var cmp = [
 },
 {
 	'id':655,
-	'drops':true,
+	'drops':false,
 	'name':'Component-655',
 	'flavor':'',
 	'bonus':function(target){
@@ -6085,7 +6085,7 @@ var cmp = [
 },
 {
 	'id':656,
-	'drops':true,
+	'drops':false,
 	'name':'Component-656',
 	'flavor':'',
 	'bonus':function(target){
@@ -6094,7 +6094,7 @@ var cmp = [
 },
 {
 	'id':657,
-	'drops':true,
+	'drops':false,
 	'name':'Component-657',
 	'flavor':'',
 	'bonus':function(target){
@@ -6103,7 +6103,7 @@ var cmp = [
 },
 {
 	'id':658,
-	'drops':true,
+	'drops':false,
 	'name':'Component-658',
 	'flavor':'',
 	'bonus':function(target){
@@ -6112,7 +6112,7 @@ var cmp = [
 },
 {
 	'id':659,
-	'drops':true,
+	'drops':false,
 	'name':'Component-659',
 	'flavor':'',
 	'bonus':function(target){
@@ -6121,7 +6121,7 @@ var cmp = [
 },
 {
 	'id':660,
-	'drops':true,
+	'drops':false,
 	'name':'Component-660',
 	'flavor':'',
 	'bonus':function(target){
@@ -6130,7 +6130,7 @@ var cmp = [
 },
 {
 	'id':661,
-	'drops':true,
+	'drops':false,
 	'name':'Component-661',
 	'flavor':'',
 	'bonus':function(target){
@@ -6139,7 +6139,7 @@ var cmp = [
 },
 {
 	'id':662,
-	'drops':true,
+	'drops':false,
 	'name':'Component-662',
 	'flavor':'',
 	'bonus':function(target){
@@ -6148,7 +6148,7 @@ var cmp = [
 },
 {
 	'id':663,
-	'drops':true,
+	'drops':false,
 	'name':'Component-663',
 	'flavor':'',
 	'bonus':function(target){
@@ -6157,7 +6157,7 @@ var cmp = [
 },
 {
 	'id':664,
-	'drops':true,
+	'drops':false,
 	'name':'Component-664',
 	'flavor':'',
 	'bonus':function(target){
@@ -6166,7 +6166,7 @@ var cmp = [
 },
 {
 	'id':665,
-	'drops':true,
+	'drops':false,
 	'name':'Component-665',
 	'flavor':'',
 	'bonus':function(target){
@@ -6175,7 +6175,7 @@ var cmp = [
 },
 {
 	'id':666,
-	'drops':true,
+	'drops':false,
 	'name':'Component-666',
 	'flavor':'',
 	'bonus':function(target){
@@ -6184,7 +6184,7 @@ var cmp = [
 },
 {
 	'id':667,
-	'drops':true,
+	'drops':false,
 	'name':'Component-667',
 	'flavor':'',
 	'bonus':function(target){
@@ -6193,7 +6193,7 @@ var cmp = [
 },
 {
 	'id':668,
-	'drops':true,
+	'drops':false,
 	'name':'Component-668',
 	'flavor':'',
 	'bonus':function(target){
@@ -6202,7 +6202,7 @@ var cmp = [
 },
 {
 	'id':669,
-	'drops':true,
+	'drops':false,
 	'name':'Component-669',
 	'flavor':'',
 	'bonus':function(target){
@@ -6211,7 +6211,7 @@ var cmp = [
 },
 {
 	'id':670,
-	'drops':true,
+	'drops':false,
 	'name':'Component-670',
 	'flavor':'',
 	'bonus':function(target){
@@ -6220,7 +6220,7 @@ var cmp = [
 },
 {
 	'id':671,
-	'drops':true,
+	'drops':false,
 	'name':'Component-671',
 	'flavor':'',
 	'bonus':function(target){
@@ -6229,7 +6229,7 @@ var cmp = [
 },
 {
 	'id':672,
-	'drops':true,
+	'drops':false,
 	'name':'Component-672',
 	'flavor':'',
 	'bonus':function(target){
@@ -6238,7 +6238,7 @@ var cmp = [
 },
 {
 	'id':673,
-	'drops':true,
+	'drops':false,
 	'name':'Component-673',
 	'flavor':'',
 	'bonus':function(target){
@@ -6247,7 +6247,7 @@ var cmp = [
 },
 {
 	'id':674,
-	'drops':true,
+	'drops':false,
 	'name':'Component-674',
 	'flavor':'',
 	'bonus':function(target){
@@ -6256,7 +6256,7 @@ var cmp = [
 },
 {
 	'id':675,
-	'drops':true,
+	'drops':false,
 	'name':'Component-675',
 	'flavor':'',
 	'bonus':function(target){
@@ -6265,7 +6265,7 @@ var cmp = [
 },
 {
 	'id':676,
-	'drops':true,
+	'drops':false,
 	'name':'Component-676',
 	'flavor':'',
 	'bonus':function(target){
@@ -6274,7 +6274,7 @@ var cmp = [
 },
 {
 	'id':677,
-	'drops':true,
+	'drops':false,
 	'name':'Component-677',
 	'flavor':'',
 	'bonus':function(target){
@@ -6283,7 +6283,7 @@ var cmp = [
 },
 {
 	'id':678,
-	'drops':true,
+	'drops':false,
 	'name':'Component-678',
 	'flavor':'',
 	'bonus':function(target){
@@ -6292,7 +6292,7 @@ var cmp = [
 },
 {
 	'id':679,
-	'drops':true,
+	'drops':false,
 	'name':'Component-679',
 	'flavor':'',
 	'bonus':function(target){
@@ -6301,7 +6301,7 @@ var cmp = [
 },
 {
 	'id':680,
-	'drops':true,
+	'drops':false,
 	'name':'Component-680',
 	'flavor':'',
 	'bonus':function(target){
@@ -6310,7 +6310,7 @@ var cmp = [
 },
 {
 	'id':681,
-	'drops':true,
+	'drops':false,
 	'name':'Component-681',
 	'flavor':'',
 	'bonus':function(target){
@@ -6319,7 +6319,7 @@ var cmp = [
 },
 {
 	'id':682,
-	'drops':true,
+	'drops':false,
 	'name':'Component-682',
 	'flavor':'',
 	'bonus':function(target){
@@ -6328,7 +6328,7 @@ var cmp = [
 },
 {
 	'id':683,
-	'drops':true,
+	'drops':false,
 	'name':'Component-683',
 	'flavor':'',
 	'bonus':function(target){
@@ -6337,7 +6337,7 @@ var cmp = [
 },
 {
 	'id':684,
-	'drops':true,
+	'drops':false,
 	'name':'Component-684',
 	'flavor':'',
 	'bonus':function(target){
@@ -6346,7 +6346,7 @@ var cmp = [
 },
 {
 	'id':685,
-	'drops':true,
+	'drops':false,
 	'name':'Component-685',
 	'flavor':'',
 	'bonus':function(target){
@@ -6355,7 +6355,7 @@ var cmp = [
 },
 {
 	'id':686,
-	'drops':true,
+	'drops':false,
 	'name':'Component-686',
 	'flavor':'',
 	'bonus':function(target){
@@ -6364,7 +6364,7 @@ var cmp = [
 },
 {
 	'id':687,
-	'drops':true,
+	'drops':false,
 	'name':'Component-687',
 	'flavor':'',
 	'bonus':function(target){
@@ -6373,7 +6373,7 @@ var cmp = [
 },
 {
 	'id':688,
-	'drops':true,
+	'drops':false,
 	'name':'Component-688',
 	'flavor':'',
 	'bonus':function(target){
@@ -6382,7 +6382,7 @@ var cmp = [
 },
 {
 	'id':689,
-	'drops':true,
+	'drops':false,
 	'name':'Component-689',
 	'flavor':'',
 	'bonus':function(target){
@@ -6391,7 +6391,7 @@ var cmp = [
 },
 {
 	'id':690,
-	'drops':true,
+	'drops':false,
 	'name':'Component-690',
 	'flavor':'',
 	'bonus':function(target){
@@ -6400,7 +6400,7 @@ var cmp = [
 },
 {
 	'id':691,
-	'drops':true,
+	'drops':false,
 	'name':'Component-691',
 	'flavor':'',
 	'bonus':function(target){
@@ -6409,7 +6409,7 @@ var cmp = [
 },
 {
 	'id':692,
-	'drops':true,
+	'drops':false,
 	'name':'Component-692',
 	'flavor':'',
 	'bonus':function(target){
@@ -6418,7 +6418,7 @@ var cmp = [
 },
 {
 	'id':693,
-	'drops':true,
+	'drops':false,
 	'name':'Component-693',
 	'flavor':'',
 	'bonus':function(target){
@@ -6427,7 +6427,7 @@ var cmp = [
 },
 {
 	'id':694,
-	'drops':true,
+	'drops':false,
 	'name':'Component-694',
 	'flavor':'',
 	'bonus':function(target){
@@ -6436,7 +6436,7 @@ var cmp = [
 },
 {
 	'id':695,
-	'drops':true,
+	'drops':false,
 	'name':'Component-695',
 	'flavor':'',
 	'bonus':function(target){
@@ -6445,7 +6445,7 @@ var cmp = [
 },
 {
 	'id':696,
-	'drops':true,
+	'drops':false,
 	'name':'Component-696',
 	'flavor':'',
 	'bonus':function(target){
@@ -6454,7 +6454,7 @@ var cmp = [
 },
 {
 	'id':697,
-	'drops':true,
+	'drops':false,
 	'name':'Component-697',
 	'flavor':'',
 	'bonus':function(target){
@@ -6463,7 +6463,7 @@ var cmp = [
 },
 {
 	'id':698,
-	'drops':true,
+	'drops':false,
 	'name':'Component-698',
 	'flavor':'',
 	'bonus':function(target){
@@ -6472,7 +6472,7 @@ var cmp = [
 },
 {
 	'id':699,
-	'drops':true,
+	'drops':false,
 	'name':'Component-699',
 	'flavor':'',
 	'bonus':function(target){
@@ -6481,7 +6481,7 @@ var cmp = [
 },
 {
 	'id':700,
-	'drops':true,
+	'drops':false,
 	'name':'Component-700',
 	'flavor':'',
 	'bonus':function(target){
@@ -6490,7 +6490,7 @@ var cmp = [
 },
 {
 	'id':701,
-	'drops':true,
+	'drops':false,
 	'name':'Component-701',
 	'flavor':'',
 	'bonus':function(target){
@@ -6499,7 +6499,7 @@ var cmp = [
 },
 {
 	'id':702,
-	'drops':true,
+	'drops':false,
 	'name':'Component-702',
 	'flavor':'',
 	'bonus':function(target){
@@ -6508,7 +6508,7 @@ var cmp = [
 },
 {
 	'id':703,
-	'drops':true,
+	'drops':false,
 	'name':'Component-703',
 	'flavor':'',
 	'bonus':function(target){
@@ -6517,7 +6517,7 @@ var cmp = [
 },
 {
 	'id':704,
-	'drops':true,
+	'drops':false,
 	'name':'Component-704',
 	'flavor':'',
 	'bonus':function(target){
@@ -6526,7 +6526,7 @@ var cmp = [
 },
 {
 	'id':705,
-	'drops':true,
+	'drops':false,
 	'name':'Component-705',
 	'flavor':'',
 	'bonus':function(target){
@@ -6535,7 +6535,7 @@ var cmp = [
 },
 {
 	'id':706,
-	'drops':true,
+	'drops':false,
 	'name':'Component-706',
 	'flavor':'',
 	'bonus':function(target){
@@ -6544,7 +6544,7 @@ var cmp = [
 },
 {
 	'id':707,
-	'drops':true,
+	'drops':false,
 	'name':'Component-707',
 	'flavor':'',
 	'bonus':function(target){
@@ -6553,7 +6553,7 @@ var cmp = [
 },
 {
 	'id':708,
-	'drops':true,
+	'drops':false,
 	'name':'Component-708',
 	'flavor':'',
 	'bonus':function(target){
@@ -6562,7 +6562,7 @@ var cmp = [
 },
 {
 	'id':709,
-	'drops':true,
+	'drops':false,
 	'name':'Component-709',
 	'flavor':'',
 	'bonus':function(target){
@@ -6571,7 +6571,7 @@ var cmp = [
 },
 {
 	'id':710,
-	'drops':true,
+	'drops':false,
 	'name':'Component-710',
 	'flavor':'',
 	'bonus':function(target){
@@ -6580,7 +6580,7 @@ var cmp = [
 },
 {
 	'id':711,
-	'drops':true,
+	'drops':false,
 	'name':'Component-711',
 	'flavor':'',
 	'bonus':function(target){
@@ -6589,7 +6589,7 @@ var cmp = [
 },
 {
 	'id':712,
-	'drops':true,
+	'drops':false,
 	'name':'Component-712',
 	'flavor':'',
 	'bonus':function(target){
@@ -6598,7 +6598,7 @@ var cmp = [
 },
 {
 	'id':713,
-	'drops':true,
+	'drops':false,
 	'name':'Component-713',
 	'flavor':'',
 	'bonus':function(target){
@@ -6607,7 +6607,7 @@ var cmp = [
 },
 {
 	'id':714,
-	'drops':true,
+	'drops':false,
 	'name':'Component-714',
 	'flavor':'',
 	'bonus':function(target){
@@ -6616,7 +6616,7 @@ var cmp = [
 },
 {
 	'id':715,
-	'drops':true,
+	'drops':false,
 	'name':'Component-715',
 	'flavor':'',
 	'bonus':function(target){
@@ -6625,7 +6625,7 @@ var cmp = [
 },
 {
 	'id':716,
-	'drops':true,
+	'drops':false,
 	'name':'Component-716',
 	'flavor':'',
 	'bonus':function(target){
@@ -6634,7 +6634,7 @@ var cmp = [
 },
 {
 	'id':717,
-	'drops':true,
+	'drops':false,
 	'name':'Component-717',
 	'flavor':'',
 	'bonus':function(target){
@@ -6643,7 +6643,7 @@ var cmp = [
 },
 {
 	'id':718,
-	'drops':true,
+	'drops':false,
 	'name':'Component-718',
 	'flavor':'',
 	'bonus':function(target){
@@ -6652,7 +6652,7 @@ var cmp = [
 },
 {
 	'id':719,
-	'drops':true,
+	'drops':false,
 	'name':'Component-719',
 	'flavor':'',
 	'bonus':function(target){
@@ -6661,7 +6661,7 @@ var cmp = [
 },
 {
 	'id':720,
-	'drops':true,
+	'drops':false,
 	'name':'Component-720',
 	'flavor':'',
 	'bonus':function(target){
@@ -6670,7 +6670,7 @@ var cmp = [
 },
 {
 	'id':721,
-	'drops':true,
+	'drops':false,
 	'name':'Component-721',
 	'flavor':'',
 	'bonus':function(target){
@@ -6679,7 +6679,7 @@ var cmp = [
 },
 {
 	'id':722,
-	'drops':true,
+	'drops':false,
 	'name':'Component-722',
 	'flavor':'',
 	'bonus':function(target){
@@ -6688,7 +6688,7 @@ var cmp = [
 },
 {
 	'id':723,
-	'drops':true,
+	'drops':false,
 	'name':'Component-723',
 	'flavor':'',
 	'bonus':function(target){
@@ -6697,7 +6697,7 @@ var cmp = [
 },
 {
 	'id':724,
-	'drops':true,
+	'drops':false,
 	'name':'Component-724',
 	'flavor':'',
 	'bonus':function(target){
@@ -6706,7 +6706,7 @@ var cmp = [
 },
 {
 	'id':725,
-	'drops':true,
+	'drops':false,
 	'name':'Component-725',
 	'flavor':'',
 	'bonus':function(target){
@@ -6715,7 +6715,7 @@ var cmp = [
 },
 {
 	'id':726,
-	'drops':true,
+	'drops':false,
 	'name':'Component-726',
 	'flavor':'',
 	'bonus':function(target){
@@ -6724,7 +6724,7 @@ var cmp = [
 },
 {
 	'id':727,
-	'drops':true,
+	'drops':false,
 	'name':'Component-727',
 	'flavor':'',
 	'bonus':function(target){
@@ -6733,7 +6733,7 @@ var cmp = [
 },
 {
 	'id':728,
-	'drops':true,
+	'drops':false,
 	'name':'Component-728',
 	'flavor':'',
 	'bonus':function(target){
@@ -6742,7 +6742,7 @@ var cmp = [
 },
 {
 	'id':729,
-	'drops':true,
+	'drops':false,
 	'name':'Component-729',
 	'flavor':'',
 	'bonus':function(target){
@@ -6751,7 +6751,7 @@ var cmp = [
 },
 {
 	'id':730,
-	'drops':true,
+	'drops':false,
 	'name':'Component-730',
 	'flavor':'',
 	'bonus':function(target){
@@ -6760,7 +6760,7 @@ var cmp = [
 },
 {
 	'id':731,
-	'drops':true,
+	'drops':false,
 	'name':'Component-731',
 	'flavor':'',
 	'bonus':function(target){
@@ -6769,7 +6769,7 @@ var cmp = [
 },
 {
 	'id':732,
-	'drops':true,
+	'drops':false,
 	'name':'Component-732',
 	'flavor':'',
 	'bonus':function(target){
@@ -6778,7 +6778,7 @@ var cmp = [
 },
 {
 	'id':733,
-	'drops':true,
+	'drops':false,
 	'name':'Component-733',
 	'flavor':'',
 	'bonus':function(target){
@@ -6787,7 +6787,7 @@ var cmp = [
 },
 {
 	'id':734,
-	'drops':true,
+	'drops':false,
 	'name':'Component-734',
 	'flavor':'',
 	'bonus':function(target){
@@ -6796,7 +6796,7 @@ var cmp = [
 },
 {
 	'id':735,
-	'drops':true,
+	'drops':false,
 	'name':'Component-735',
 	'flavor':'',
 	'bonus':function(target){
@@ -6805,7 +6805,7 @@ var cmp = [
 },
 {
 	'id':736,
-	'drops':true,
+	'drops':false,
 	'name':'Component-736',
 	'flavor':'',
 	'bonus':function(target){
@@ -6814,7 +6814,7 @@ var cmp = [
 },
 {
 	'id':737,
-	'drops':true,
+	'drops':false,
 	'name':'Component-737',
 	'flavor':'',
 	'bonus':function(target){
@@ -6823,7 +6823,7 @@ var cmp = [
 },
 {
 	'id':738,
-	'drops':true,
+	'drops':false,
 	'name':'Component-738',
 	'flavor':'',
 	'bonus':function(target){
@@ -6832,7 +6832,7 @@ var cmp = [
 },
 {
 	'id':739,
-	'drops':true,
+	'drops':false,
 	'name':'Component-739',
 	'flavor':'',
 	'bonus':function(target){
@@ -6841,7 +6841,7 @@ var cmp = [
 },
 {
 	'id':740,
-	'drops':true,
+	'drops':false,
 	'name':'Component-740',
 	'flavor':'',
 	'bonus':function(target){
@@ -6850,7 +6850,7 @@ var cmp = [
 },
 {
 	'id':741,
-	'drops':true,
+	'drops':false,
 	'name':'Component-741',
 	'flavor':'',
 	'bonus':function(target){
@@ -6859,7 +6859,7 @@ var cmp = [
 },
 {
 	'id':742,
-	'drops':true,
+	'drops':false,
 	'name':'Component-742',
 	'flavor':'',
 	'bonus':function(target){
@@ -6868,7 +6868,7 @@ var cmp = [
 },
 {
 	'id':743,
-	'drops':true,
+	'drops':false,
 	'name':'Component-743',
 	'flavor':'',
 	'bonus':function(target){
@@ -6877,7 +6877,7 @@ var cmp = [
 },
 {
 	'id':744,
-	'drops':true,
+	'drops':false,
 	'name':'Component-744',
 	'flavor':'',
 	'bonus':function(target){
@@ -6886,7 +6886,7 @@ var cmp = [
 },
 {
 	'id':745,
-	'drops':true,
+	'drops':false,
 	'name':'Component-745',
 	'flavor':'',
 	'bonus':function(target){
@@ -6895,7 +6895,7 @@ var cmp = [
 },
 {
 	'id':746,
-	'drops':true,
+	'drops':false,
 	'name':'Component-746',
 	'flavor':'',
 	'bonus':function(target){
@@ -6904,7 +6904,7 @@ var cmp = [
 },
 {
 	'id':747,
-	'drops':true,
+	'drops':false,
 	'name':'Component-747',
 	'flavor':'',
 	'bonus':function(target){
@@ -6913,7 +6913,7 @@ var cmp = [
 },
 {
 	'id':748,
-	'drops':true,
+	'drops':false,
 	'name':'Component-748',
 	'flavor':'',
 	'bonus':function(target){
@@ -6922,7 +6922,7 @@ var cmp = [
 },
 {
 	'id':749,
-	'drops':true,
+	'drops':false,
 	'name':'Component-749',
 	'flavor':'',
 	'bonus':function(target){
@@ -6931,7 +6931,7 @@ var cmp = [
 },
 {
 	'id':750,
-	'drops':true,
+	'drops':false,
 	'name':'Component-750',
 	'flavor':'',
 	'bonus':function(target){
@@ -6940,7 +6940,7 @@ var cmp = [
 },
 {
 	'id':751,
-	'drops':true,
+	'drops':false,
 	'name':'Component-751',
 	'flavor':'',
 	'bonus':function(target){
@@ -6949,7 +6949,7 @@ var cmp = [
 },
 {
 	'id':752,
-	'drops':true,
+	'drops':false,
 	'name':'Component-752',
 	'flavor':'',
 	'bonus':function(target){
@@ -6958,7 +6958,7 @@ var cmp = [
 },
 {
 	'id':753,
-	'drops':true,
+	'drops':false,
 	'name':'Component-753',
 	'flavor':'',
 	'bonus':function(target){
@@ -6967,7 +6967,7 @@ var cmp = [
 },
 {
 	'id':754,
-	'drops':true,
+	'drops':false,
 	'name':'Component-754',
 	'flavor':'',
 	'bonus':function(target){
@@ -6976,7 +6976,7 @@ var cmp = [
 },
 {
 	'id':755,
-	'drops':true,
+	'drops':false,
 	'name':'Component-755',
 	'flavor':'',
 	'bonus':function(target){
@@ -6985,7 +6985,7 @@ var cmp = [
 },
 {
 	'id':756,
-	'drops':true,
+	'drops':false,
 	'name':'Component-756',
 	'flavor':'',
 	'bonus':function(target){
@@ -6994,7 +6994,7 @@ var cmp = [
 },
 {
 	'id':757,
-	'drops':true,
+	'drops':false,
 	'name':'Component-757',
 	'flavor':'',
 	'bonus':function(target){
@@ -7003,7 +7003,7 @@ var cmp = [
 },
 {
 	'id':758,
-	'drops':true,
+	'drops':false,
 	'name':'Component-758',
 	'flavor':'',
 	'bonus':function(target){
@@ -7012,7 +7012,7 @@ var cmp = [
 },
 {
 	'id':759,
-	'drops':true,
+	'drops':false,
 	'name':'Component-759',
 	'flavor':'',
 	'bonus':function(target){
@@ -7021,7 +7021,7 @@ var cmp = [
 },
 {
 	'id':760,
-	'drops':true,
+	'drops':false,
 	'name':'Component-760',
 	'flavor':'',
 	'bonus':function(target){
@@ -7030,7 +7030,7 @@ var cmp = [
 },
 {
 	'id':761,
-	'drops':true,
+	'drops':false,
 	'name':'Component-761',
 	'flavor':'',
 	'bonus':function(target){
@@ -7039,7 +7039,7 @@ var cmp = [
 },
 {
 	'id':762,
-	'drops':true,
+	'drops':false,
 	'name':'Component-762',
 	'flavor':'',
 	'bonus':function(target){
@@ -7048,7 +7048,7 @@ var cmp = [
 },
 {
 	'id':763,
-	'drops':true,
+	'drops':false,
 	'name':'Component-763',
 	'flavor':'',
 	'bonus':function(target){
@@ -7057,7 +7057,7 @@ var cmp = [
 },
 {
 	'id':764,
-	'drops':true,
+	'drops':false,
 	'name':'Component-764',
 	'flavor':'',
 	'bonus':function(target){
@@ -7066,7 +7066,7 @@ var cmp = [
 },
 {
 	'id':765,
-	'drops':true,
+	'drops':false,
 	'name':'Component-765',
 	'flavor':'',
 	'bonus':function(target){
@@ -7075,7 +7075,7 @@ var cmp = [
 },
 {
 	'id':766,
-	'drops':true,
+	'drops':false,
 	'name':'Component-766',
 	'flavor':'',
 	'bonus':function(target){
@@ -7084,7 +7084,7 @@ var cmp = [
 },
 {
 	'id':767,
-	'drops':true,
+	'drops':false,
 	'name':'Component-767',
 	'flavor':'',
 	'bonus':function(target){
@@ -7093,7 +7093,7 @@ var cmp = [
 },
 {
 	'id':768,
-	'drops':true,
+	'drops':false,
 	'name':'Component-768',
 	'flavor':'',
 	'bonus':function(target){
@@ -7102,7 +7102,7 @@ var cmp = [
 },
 {
 	'id':769,
-	'drops':true,
+	'drops':false,
 	'name':'Component-769',
 	'flavor':'',
 	'bonus':function(target){
@@ -7111,7 +7111,7 @@ var cmp = [
 },
 {
 	'id':770,
-	'drops':true,
+	'drops':false,
 	'name':'Component-770',
 	'flavor':'',
 	'bonus':function(target){
@@ -7120,7 +7120,7 @@ var cmp = [
 },
 {
 	'id':771,
-	'drops':true,
+	'drops':false,
 	'name':'Component-771',
 	'flavor':'',
 	'bonus':function(target){
@@ -7129,7 +7129,7 @@ var cmp = [
 },
 {
 	'id':772,
-	'drops':true,
+	'drops':false,
 	'name':'Component-772',
 	'flavor':'',
 	'bonus':function(target){
@@ -7138,7 +7138,7 @@ var cmp = [
 },
 {
 	'id':773,
-	'drops':true,
+	'drops':false,
 	'name':'Component-773',
 	'flavor':'',
 	'bonus':function(target){
@@ -7147,7 +7147,7 @@ var cmp = [
 },
 {
 	'id':774,
-	'drops':true,
+	'drops':false,
 	'name':'Component-774',
 	'flavor':'',
 	'bonus':function(target){
@@ -7156,7 +7156,7 @@ var cmp = [
 },
 {
 	'id':775,
-	'drops':true,
+	'drops':false,
 	'name':'Component-775',
 	'flavor':'',
 	'bonus':function(target){
@@ -7165,7 +7165,7 @@ var cmp = [
 },
 {
 	'id':776,
-	'drops':true,
+	'drops':false,
 	'name':'Component-776',
 	'flavor':'',
 	'bonus':function(target){
@@ -7174,7 +7174,7 @@ var cmp = [
 },
 {
 	'id':777,
-	'drops':true,
+	'drops':false,
 	'name':'Component-777',
 	'flavor':'',
 	'bonus':function(target){
@@ -7183,7 +7183,7 @@ var cmp = [
 },
 {
 	'id':778,
-	'drops':true,
+	'drops':false,
 	'name':'Component-778',
 	'flavor':'',
 	'bonus':function(target){
@@ -7192,7 +7192,7 @@ var cmp = [
 },
 {
 	'id':779,
-	'drops':true,
+	'drops':false,
 	'name':'Component-779',
 	'flavor':'',
 	'bonus':function(target){
@@ -7201,7 +7201,7 @@ var cmp = [
 },
 {
 	'id':780,
-	'drops':true,
+	'drops':false,
 	'name':'Component-780',
 	'flavor':'',
 	'bonus':function(target){
@@ -7210,7 +7210,7 @@ var cmp = [
 },
 {
 	'id':781,
-	'drops':true,
+	'drops':false,
 	'name':'Component-781',
 	'flavor':'',
 	'bonus':function(target){
@@ -7219,7 +7219,7 @@ var cmp = [
 },
 {
 	'id':782,
-	'drops':true,
+	'drops':false,
 	'name':'Component-782',
 	'flavor':'',
 	'bonus':function(target){
@@ -7228,7 +7228,7 @@ var cmp = [
 },
 {
 	'id':783,
-	'drops':true,
+	'drops':false,
 	'name':'Component-783',
 	'flavor':'',
 	'bonus':function(target){
@@ -7237,7 +7237,7 @@ var cmp = [
 },
 {
 	'id':784,
-	'drops':true,
+	'drops':false,
 	'name':'Component-784',
 	'flavor':'',
 	'bonus':function(target){
@@ -7246,7 +7246,7 @@ var cmp = [
 },
 {
 	'id':785,
-	'drops':true,
+	'drops':false,
 	'name':'Component-785',
 	'flavor':'',
 	'bonus':function(target){
@@ -7255,7 +7255,7 @@ var cmp = [
 },
 {
 	'id':786,
-	'drops':true,
+	'drops':false,
 	'name':'Component-786',
 	'flavor':'',
 	'bonus':function(target){
@@ -7264,7 +7264,7 @@ var cmp = [
 },
 {
 	'id':787,
-	'drops':true,
+	'drops':false,
 	'name':'Component-787',
 	'flavor':'',
 	'bonus':function(target){
@@ -7273,7 +7273,7 @@ var cmp = [
 },
 {
 	'id':788,
-	'drops':true,
+	'drops':false,
 	'name':'Component-788',
 	'flavor':'',
 	'bonus':function(target){
@@ -7282,7 +7282,7 @@ var cmp = [
 },
 {
 	'id':789,
-	'drops':true,
+	'drops':false,
 	'name':'Component-789',
 	'flavor':'',
 	'bonus':function(target){
@@ -7291,7 +7291,7 @@ var cmp = [
 },
 {
 	'id':790,
-	'drops':true,
+	'drops':false,
 	'name':'Component-790',
 	'flavor':'',
 	'bonus':function(target){
@@ -7300,7 +7300,7 @@ var cmp = [
 },
 {
 	'id':791,
-	'drops':true,
+	'drops':false,
 	'name':'Component-791',
 	'flavor':'',
 	'bonus':function(target){
@@ -7309,7 +7309,7 @@ var cmp = [
 },
 {
 	'id':792,
-	'drops':true,
+	'drops':false,
 	'name':'Component-792',
 	'flavor':'',
 	'bonus':function(target){
@@ -7318,7 +7318,7 @@ var cmp = [
 },
 {
 	'id':793,
-	'drops':true,
+	'drops':false,
 	'name':'Component-793',
 	'flavor':'',
 	'bonus':function(target){
@@ -7327,7 +7327,7 @@ var cmp = [
 },
 {
 	'id':794,
-	'drops':true,
+	'drops':false,
 	'name':'Component-794',
 	'flavor':'',
 	'bonus':function(target){
@@ -7336,7 +7336,7 @@ var cmp = [
 },
 {
 	'id':795,
-	'drops':true,
+	'drops':false,
 	'name':'Component-795',
 	'flavor':'',
 	'bonus':function(target){
@@ -7345,7 +7345,7 @@ var cmp = [
 },
 {
 	'id':796,
-	'drops':true,
+	'drops':false,
 	'name':'Component-796',
 	'flavor':'',
 	'bonus':function(target){
@@ -7354,7 +7354,7 @@ var cmp = [
 },
 {
 	'id':797,
-	'drops':true,
+	'drops':false,
 	'name':'Component-797',
 	'flavor':'',
 	'bonus':function(target){
@@ -7363,7 +7363,7 @@ var cmp = [
 },
 {
 	'id':798,
-	'drops':true,
+	'drops':false,
 	'name':'Component-798',
 	'flavor':'',
 	'bonus':function(target){
@@ -7372,7 +7372,7 @@ var cmp = [
 },
 {
 	'id':799,
-	'drops':true,
+	'drops':false,
 	'name':'Component-799',
 	'flavor':'',
 	'bonus':function(target){
@@ -7381,7 +7381,7 @@ var cmp = [
 },
 {
 	'id':800,
-	'drops':true,
+	'drops':false,
 	'name':'Component-800',
 	'flavor':'',
 	'bonus':function(target){
@@ -7390,7 +7390,7 @@ var cmp = [
 },
 {
 	'id':801,
-	'drops':true,
+	'drops':false,
 	'name':'Component-801',
 	'flavor':'',
 	'bonus':function(target){
@@ -7399,7 +7399,7 @@ var cmp = [
 },
 {
 	'id':802,
-	'drops':true,
+	'drops':false,
 	'name':'Component-802',
 	'flavor':'',
 	'bonus':function(target){
@@ -7408,7 +7408,7 @@ var cmp = [
 },
 {
 	'id':803,
-	'drops':true,
+	'drops':false,
 	'name':'Component-803',
 	'flavor':'',
 	'bonus':function(target){
@@ -7417,7 +7417,7 @@ var cmp = [
 },
 {
 	'id':804,
-	'drops':true,
+	'drops':false,
 	'name':'Component-804',
 	'flavor':'',
 	'bonus':function(target){
@@ -7426,7 +7426,7 @@ var cmp = [
 },
 {
 	'id':805,
-	'drops':true,
+	'drops':false,
 	'name':'Component-805',
 	'flavor':'',
 	'bonus':function(target){
@@ -7435,7 +7435,7 @@ var cmp = [
 },
 {
 	'id':806,
-	'drops':true,
+	'drops':false,
 	'name':'Component-806',
 	'flavor':'',
 	'bonus':function(target){
@@ -7444,7 +7444,7 @@ var cmp = [
 },
 {
 	'id':807,
-	'drops':true,
+	'drops':false,
 	'name':'Component-807',
 	'flavor':'',
 	'bonus':function(target){
@@ -7453,7 +7453,7 @@ var cmp = [
 },
 {
 	'id':808,
-	'drops':true,
+	'drops':false,
 	'name':'Component-808',
 	'flavor':'',
 	'bonus':function(target){
@@ -7462,7 +7462,7 @@ var cmp = [
 },
 {
 	'id':809,
-	'drops':true,
+	'drops':false,
 	'name':'Component-809',
 	'flavor':'',
 	'bonus':function(target){
@@ -7471,7 +7471,7 @@ var cmp = [
 },
 {
 	'id':810,
-	'drops':true,
+	'drops':false,
 	'name':'Component-810',
 	'flavor':'',
 	'bonus':function(target){
@@ -7480,7 +7480,7 @@ var cmp = [
 },
 {
 	'id':811,
-	'drops':true,
+	'drops':false,
 	'name':'Component-811',
 	'flavor':'',
 	'bonus':function(target){
@@ -7489,7 +7489,7 @@ var cmp = [
 },
 {
 	'id':812,
-	'drops':true,
+	'drops':false,
 	'name':'Component-812',
 	'flavor':'',
 	'bonus':function(target){
@@ -7498,7 +7498,7 @@ var cmp = [
 },
 {
 	'id':813,
-	'drops':true,
+	'drops':false,
 	'name':'Component-813',
 	'flavor':'',
 	'bonus':function(target){
@@ -7507,7 +7507,7 @@ var cmp = [
 },
 {
 	'id':814,
-	'drops':true,
+	'drops':false,
 	'name':'Component-814',
 	'flavor':'',
 	'bonus':function(target){
@@ -7516,7 +7516,7 @@ var cmp = [
 },
 {
 	'id':815,
-	'drops':true,
+	'drops':false,
 	'name':'Component-815',
 	'flavor':'',
 	'bonus':function(target){
@@ -7525,7 +7525,7 @@ var cmp = [
 },
 {
 	'id':816,
-	'drops':true,
+	'drops':false,
 	'name':'Component-816',
 	'flavor':'',
 	'bonus':function(target){
@@ -7534,7 +7534,7 @@ var cmp = [
 },
 {
 	'id':817,
-	'drops':true,
+	'drops':false,
 	'name':'Component-817',
 	'flavor':'',
 	'bonus':function(target){
@@ -7543,7 +7543,7 @@ var cmp = [
 },
 {
 	'id':818,
-	'drops':true,
+	'drops':false,
 	'name':'Component-818',
 	'flavor':'',
 	'bonus':function(target){
@@ -7552,7 +7552,7 @@ var cmp = [
 },
 {
 	'id':819,
-	'drops':true,
+	'drops':false,
 	'name':'Component-819',
 	'flavor':'',
 	'bonus':function(target){
@@ -7561,7 +7561,7 @@ var cmp = [
 },
 {
 	'id':820,
-	'drops':true,
+	'drops':false,
 	'name':'Component-820',
 	'flavor':'',
 	'bonus':function(target){
@@ -7570,7 +7570,7 @@ var cmp = [
 },
 {
 	'id':821,
-	'drops':true,
+	'drops':false,
 	'name':'Component-821',
 	'flavor':'',
 	'bonus':function(target){
@@ -7579,7 +7579,7 @@ var cmp = [
 },
 {
 	'id':822,
-	'drops':true,
+	'drops':false,
 	'name':'Component-822',
 	'flavor':'',
 	'bonus':function(target){
@@ -7588,7 +7588,7 @@ var cmp = [
 },
 {
 	'id':823,
-	'drops':true,
+	'drops':false,
 	'name':'Component-823',
 	'flavor':'',
 	'bonus':function(target){
@@ -7597,7 +7597,7 @@ var cmp = [
 },
 {
 	'id':824,
-	'drops':true,
+	'drops':false,
 	'name':'Component-824',
 	'flavor':'',
 	'bonus':function(target){
@@ -7606,7 +7606,7 @@ var cmp = [
 },
 {
 	'id':825,
-	'drops':true,
+	'drops':false,
 	'name':'Component-825',
 	'flavor':'',
 	'bonus':function(target){
@@ -7615,7 +7615,7 @@ var cmp = [
 },
 {
 	'id':826,
-	'drops':true,
+	'drops':false,
 	'name':'Component-826',
 	'flavor':'',
 	'bonus':function(target){
@@ -7624,7 +7624,7 @@ var cmp = [
 },
 {
 	'id':827,
-	'drops':true,
+	'drops':false,
 	'name':'Component-827',
 	'flavor':'',
 	'bonus':function(target){
@@ -7633,7 +7633,7 @@ var cmp = [
 },
 {
 	'id':828,
-	'drops':true,
+	'drops':false,
 	'name':'Component-828',
 	'flavor':'',
 	'bonus':function(target){
@@ -7642,7 +7642,7 @@ var cmp = [
 },
 {
 	'id':829,
-	'drops':true,
+	'drops':false,
 	'name':'Component-829',
 	'flavor':'',
 	'bonus':function(target){
@@ -7651,7 +7651,7 @@ var cmp = [
 },
 {
 	'id':830,
-	'drops':true,
+	'drops':false,
 	'name':'Component-830',
 	'flavor':'',
 	'bonus':function(target){
@@ -7660,7 +7660,7 @@ var cmp = [
 },
 {
 	'id':831,
-	'drops':true,
+	'drops':false,
 	'name':'Component-831',
 	'flavor':'',
 	'bonus':function(target){
@@ -7669,7 +7669,7 @@ var cmp = [
 },
 {
 	'id':832,
-	'drops':true,
+	'drops':false,
 	'name':'Component-832',
 	'flavor':'',
 	'bonus':function(target){
@@ -7678,7 +7678,7 @@ var cmp = [
 },
 {
 	'id':833,
-	'drops':true,
+	'drops':false,
 	'name':'Component-833',
 	'flavor':'',
 	'bonus':function(target){
@@ -7687,7 +7687,7 @@ var cmp = [
 },
 {
 	'id':834,
-	'drops':true,
+	'drops':false,
 	'name':'Component-834',
 	'flavor':'',
 	'bonus':function(target){
@@ -7696,7 +7696,7 @@ var cmp = [
 },
 {
 	'id':835,
-	'drops':true,
+	'drops':false,
 	'name':'Component-835',
 	'flavor':'',
 	'bonus':function(target){
@@ -7705,7 +7705,7 @@ var cmp = [
 },
 {
 	'id':836,
-	'drops':true,
+	'drops':false,
 	'name':'Component-836',
 	'flavor':'',
 	'bonus':function(target){
@@ -7714,7 +7714,7 @@ var cmp = [
 },
 {
 	'id':837,
-	'drops':true,
+	'drops':false,
 	'name':'Component-837',
 	'flavor':'',
 	'bonus':function(target){
@@ -7723,7 +7723,7 @@ var cmp = [
 },
 {
 	'id':838,
-	'drops':true,
+	'drops':false,
 	'name':'Component-838',
 	'flavor':'',
 	'bonus':function(target){
@@ -7732,7 +7732,7 @@ var cmp = [
 },
 {
 	'id':839,
-	'drops':true,
+	'drops':false,
 	'name':'Component-839',
 	'flavor':'',
 	'bonus':function(target){
@@ -7741,7 +7741,7 @@ var cmp = [
 },
 {
 	'id':840,
-	'drops':true,
+	'drops':false,
 	'name':'Component-840',
 	'flavor':'',
 	'bonus':function(target){
@@ -7750,7 +7750,7 @@ var cmp = [
 },
 {
 	'id':841,
-	'drops':true,
+	'drops':false,
 	'name':'Component-841',
 	'flavor':'',
 	'bonus':function(target){
@@ -7759,7 +7759,7 @@ var cmp = [
 },
 {
 	'id':842,
-	'drops':true,
+	'drops':false,
 	'name':'Component-842',
 	'flavor':'',
 	'bonus':function(target){
@@ -7768,7 +7768,7 @@ var cmp = [
 },
 {
 	'id':843,
-	'drops':true,
+	'drops':false,
 	'name':'Component-843',
 	'flavor':'',
 	'bonus':function(target){
@@ -7777,7 +7777,7 @@ var cmp = [
 },
 {
 	'id':844,
-	'drops':true,
+	'drops':false,
 	'name':'Component-844',
 	'flavor':'',
 	'bonus':function(target){
@@ -7786,7 +7786,7 @@ var cmp = [
 },
 {
 	'id':845,
-	'drops':true,
+	'drops':false,
 	'name':'Component-845',
 	'flavor':'',
 	'bonus':function(target){
@@ -7795,7 +7795,7 @@ var cmp = [
 },
 {
 	'id':846,
-	'drops':true,
+	'drops':false,
 	'name':'Component-846',
 	'flavor':'',
 	'bonus':function(target){
@@ -7804,7 +7804,7 @@ var cmp = [
 },
 {
 	'id':847,
-	'drops':true,
+	'drops':false,
 	'name':'Component-847',
 	'flavor':'',
 	'bonus':function(target){
@@ -7813,7 +7813,7 @@ var cmp = [
 },
 {
 	'id':848,
-	'drops':true,
+	'drops':false,
 	'name':'Component-848',
 	'flavor':'',
 	'bonus':function(target){
@@ -7822,7 +7822,7 @@ var cmp = [
 },
 {
 	'id':849,
-	'drops':true,
+	'drops':false,
 	'name':'Component-849',
 	'flavor':'',
 	'bonus':function(target){
@@ -7831,7 +7831,7 @@ var cmp = [
 },
 {
 	'id':850,
-	'drops':true,
+	'drops':false,
 	'name':'Component-850',
 	'flavor':'',
 	'bonus':function(target){
@@ -7840,7 +7840,7 @@ var cmp = [
 },
 {
 	'id':851,
-	'drops':true,
+	'drops':false,
 	'name':'Component-851',
 	'flavor':'',
 	'bonus':function(target){
@@ -7849,7 +7849,7 @@ var cmp = [
 },
 {
 	'id':852,
-	'drops':true,
+	'drops':false,
 	'name':'Component-852',
 	'flavor':'',
 	'bonus':function(target){
@@ -7858,7 +7858,7 @@ var cmp = [
 },
 {
 	'id':853,
-	'drops':true,
+	'drops':false,
 	'name':'Component-853',
 	'flavor':'',
 	'bonus':function(target){
@@ -7867,7 +7867,7 @@ var cmp = [
 },
 {
 	'id':854,
-	'drops':true,
+	'drops':false,
 	'name':'Component-854',
 	'flavor':'',
 	'bonus':function(target){
@@ -7876,7 +7876,7 @@ var cmp = [
 },
 {
 	'id':855,
-	'drops':true,
+	'drops':false,
 	'name':'Component-855',
 	'flavor':'',
 	'bonus':function(target){
@@ -7885,7 +7885,7 @@ var cmp = [
 },
 {
 	'id':856,
-	'drops':true,
+	'drops':false,
 	'name':'Component-856',
 	'flavor':'',
 	'bonus':function(target){
@@ -7894,7 +7894,7 @@ var cmp = [
 },
 {
 	'id':857,
-	'drops':true,
+	'drops':false,
 	'name':'Component-857',
 	'flavor':'',
 	'bonus':function(target){
@@ -7903,7 +7903,7 @@ var cmp = [
 },
 {
 	'id':858,
-	'drops':true,
+	'drops':false,
 	'name':'Component-858',
 	'flavor':'',
 	'bonus':function(target){
@@ -7912,7 +7912,7 @@ var cmp = [
 },
 {
 	'id':859,
-	'drops':true,
+	'drops':false,
 	'name':'Component-859',
 	'flavor':'',
 	'bonus':function(target){
@@ -7921,7 +7921,7 @@ var cmp = [
 },
 {
 	'id':860,
-	'drops':true,
+	'drops':false,
 	'name':'Component-860',
 	'flavor':'',
 	'bonus':function(target){
@@ -7930,7 +7930,7 @@ var cmp = [
 },
 {
 	'id':861,
-	'drops':true,
+	'drops':false,
 	'name':'Component-861',
 	'flavor':'',
 	'bonus':function(target){
@@ -7939,7 +7939,7 @@ var cmp = [
 },
 {
 	'id':862,
-	'drops':true,
+	'drops':false,
 	'name':'Component-862',
 	'flavor':'',
 	'bonus':function(target){
@@ -7948,7 +7948,7 @@ var cmp = [
 },
 {
 	'id':863,
-	'drops':true,
+	'drops':false,
 	'name':'Component-863',
 	'flavor':'',
 	'bonus':function(target){
@@ -7957,7 +7957,7 @@ var cmp = [
 },
 {
 	'id':864,
-	'drops':true,
+	'drops':false,
 	'name':'Component-864',
 	'flavor':'',
 	'bonus':function(target){
@@ -7966,7 +7966,7 @@ var cmp = [
 },
 {
 	'id':865,
-	'drops':true,
+	'drops':false,
 	'name':'Component-865',
 	'flavor':'',
 	'bonus':function(target){
@@ -7975,7 +7975,7 @@ var cmp = [
 },
 {
 	'id':866,
-	'drops':true,
+	'drops':false,
 	'name':'Component-866',
 	'flavor':'',
 	'bonus':function(target){
@@ -7984,7 +7984,7 @@ var cmp = [
 },
 {
 	'id':867,
-	'drops':true,
+	'drops':false,
 	'name':'Component-867',
 	'flavor':'',
 	'bonus':function(target){
@@ -7993,7 +7993,7 @@ var cmp = [
 },
 {
 	'id':868,
-	'drops':true,
+	'drops':false,
 	'name':'Component-868',
 	'flavor':'',
 	'bonus':function(target){
@@ -8002,7 +8002,7 @@ var cmp = [
 },
 {
 	'id':869,
-	'drops':true,
+	'drops':false,
 	'name':'Component-869',
 	'flavor':'',
 	'bonus':function(target){
@@ -8011,7 +8011,7 @@ var cmp = [
 },
 {
 	'id':870,
-	'drops':true,
+	'drops':false,
 	'name':'Component-870',
 	'flavor':'',
 	'bonus':function(target){
@@ -8020,7 +8020,7 @@ var cmp = [
 },
 {
 	'id':871,
-	'drops':true,
+	'drops':false,
 	'name':'Component-871',
 	'flavor':'',
 	'bonus':function(target){
@@ -8029,7 +8029,7 @@ var cmp = [
 },
 {
 	'id':872,
-	'drops':true,
+	'drops':false,
 	'name':'Component-872',
 	'flavor':'',
 	'bonus':function(target){
@@ -8038,7 +8038,7 @@ var cmp = [
 },
 {
 	'id':873,
-	'drops':true,
+	'drops':false,
 	'name':'Component-873',
 	'flavor':'',
 	'bonus':function(target){
@@ -8047,7 +8047,7 @@ var cmp = [
 },
 {
 	'id':874,
-	'drops':true,
+	'drops':false,
 	'name':'Component-874',
 	'flavor':'',
 	'bonus':function(target){
@@ -8056,7 +8056,7 @@ var cmp = [
 },
 {
 	'id':875,
-	'drops':true,
+	'drops':false,
 	'name':'Component-875',
 	'flavor':'',
 	'bonus':function(target){
@@ -8065,7 +8065,7 @@ var cmp = [
 },
 {
 	'id':876,
-	'drops':true,
+	'drops':false,
 	'name':'Component-876',
 	'flavor':'',
 	'bonus':function(target){
@@ -8074,7 +8074,7 @@ var cmp = [
 },
 {
 	'id':877,
-	'drops':true,
+	'drops':false,
 	'name':'Component-877',
 	'flavor':'',
 	'bonus':function(target){
@@ -8083,7 +8083,7 @@ var cmp = [
 },
 {
 	'id':878,
-	'drops':true,
+	'drops':false,
 	'name':'Component-878',
 	'flavor':'',
 	'bonus':function(target){
@@ -8092,7 +8092,7 @@ var cmp = [
 },
 {
 	'id':879,
-	'drops':true,
+	'drops':false,
 	'name':'Component-879',
 	'flavor':'',
 	'bonus':function(target){
@@ -8101,7 +8101,7 @@ var cmp = [
 },
 {
 	'id':880,
-	'drops':true,
+	'drops':false,
 	'name':'Component-880',
 	'flavor':'',
 	'bonus':function(target){
@@ -8110,7 +8110,7 @@ var cmp = [
 },
 {
 	'id':881,
-	'drops':true,
+	'drops':false,
 	'name':'Component-881',
 	'flavor':'',
 	'bonus':function(target){
@@ -8119,7 +8119,7 @@ var cmp = [
 },
 {
 	'id':882,
-	'drops':true,
+	'drops':false,
 	'name':'Component-882',
 	'flavor':'',
 	'bonus':function(target){
@@ -8128,7 +8128,7 @@ var cmp = [
 },
 {
 	'id':883,
-	'drops':true,
+	'drops':false,
 	'name':'Component-883',
 	'flavor':'',
 	'bonus':function(target){
@@ -8137,7 +8137,7 @@ var cmp = [
 },
 {
 	'id':884,
-	'drops':true,
+	'drops':false,
 	'name':'Component-884',
 	'flavor':'',
 	'bonus':function(target){
@@ -8146,7 +8146,7 @@ var cmp = [
 },
 {
 	'id':885,
-	'drops':true,
+	'drops':false,
 	'name':'Component-885',
 	'flavor':'',
 	'bonus':function(target){
@@ -8155,7 +8155,7 @@ var cmp = [
 },
 {
 	'id':886,
-	'drops':true,
+	'drops':false,
 	'name':'Component-886',
 	'flavor':'',
 	'bonus':function(target){
@@ -8164,7 +8164,7 @@ var cmp = [
 },
 {
 	'id':887,
-	'drops':true,
+	'drops':false,
 	'name':'Component-887',
 	'flavor':'',
 	'bonus':function(target){
@@ -8173,7 +8173,7 @@ var cmp = [
 },
 {
 	'id':888,
-	'drops':true,
+	'drops':false,
 	'name':'Component-888',
 	'flavor':'',
 	'bonus':function(target){
@@ -8182,7 +8182,7 @@ var cmp = [
 },
 {
 	'id':889,
-	'drops':true,
+	'drops':false,
 	'name':'Component-889',
 	'flavor':'',
 	'bonus':function(target){
@@ -8191,7 +8191,7 @@ var cmp = [
 },
 {
 	'id':890,
-	'drops':true,
+	'drops':false,
 	'name':'Component-890',
 	'flavor':'',
 	'bonus':function(target){
@@ -8200,7 +8200,7 @@ var cmp = [
 },
 {
 	'id':891,
-	'drops':true,
+	'drops':false,
 	'name':'Component-891',
 	'flavor':'',
 	'bonus':function(target){
@@ -8209,7 +8209,7 @@ var cmp = [
 },
 {
 	'id':892,
-	'drops':true,
+	'drops':false,
 	'name':'Component-892',
 	'flavor':'',
 	'bonus':function(target){
@@ -8218,7 +8218,7 @@ var cmp = [
 },
 {
 	'id':893,
-	'drops':true,
+	'drops':false,
 	'name':'Component-893',
 	'flavor':'',
 	'bonus':function(target){
@@ -8227,7 +8227,7 @@ var cmp = [
 },
 {
 	'id':894,
-	'drops':true,
+	'drops':false,
 	'name':'Component-894',
 	'flavor':'',
 	'bonus':function(target){
@@ -8236,7 +8236,7 @@ var cmp = [
 },
 {
 	'id':895,
-	'drops':true,
+	'drops':false,
 	'name':'Component-895',
 	'flavor':'',
 	'bonus':function(target){
@@ -8245,7 +8245,7 @@ var cmp = [
 },
 {
 	'id':896,
-	'drops':true,
+	'drops':false,
 	'name':'Component-896',
 	'flavor':'',
 	'bonus':function(target){
@@ -8254,7 +8254,7 @@ var cmp = [
 },
 {
 	'id':897,
-	'drops':true,
+	'drops':false,
 	'name':'Component-897',
 	'flavor':'',
 	'bonus':function(target){
@@ -8263,7 +8263,7 @@ var cmp = [
 },
 {
 	'id':898,
-	'drops':true,
+	'drops':false,
 	'name':'Component-898',
 	'flavor':'',
 	'bonus':function(target){
@@ -8272,7 +8272,7 @@ var cmp = [
 },
 {
 	'id':899,
-	'drops':true,
+	'drops':false,
 	'name':'Component-899',
 	'flavor':'',
 	'bonus':function(target){
@@ -8281,7 +8281,7 @@ var cmp = [
 },
 {
 	'id':900,
-	'drops':true,
+	'drops':false,
 	'name':'Component-900',
 	'flavor':'',
 	'bonus':function(target){
@@ -8290,7 +8290,7 @@ var cmp = [
 },
 {
 	'id':901,
-	'drops':true,
+	'drops':false,
 	'name':'Component-901',
 	'flavor':'',
 	'bonus':function(target){
@@ -8299,7 +8299,7 @@ var cmp = [
 },
 {
 	'id':902,
-	'drops':true,
+	'drops':false,
 	'name':'Component-902',
 	'flavor':'',
 	'bonus':function(target){
@@ -8308,7 +8308,7 @@ var cmp = [
 },
 {
 	'id':903,
-	'drops':true,
+	'drops':false,
 	'name':'Component-903',
 	'flavor':'',
 	'bonus':function(target){
@@ -8317,7 +8317,7 @@ var cmp = [
 },
 {
 	'id':904,
-	'drops':true,
+	'drops':false,
 	'name':'Component-904',
 	'flavor':'',
 	'bonus':function(target){
@@ -8326,7 +8326,7 @@ var cmp = [
 },
 {
 	'id':905,
-	'drops':true,
+	'drops':false,
 	'name':'Component-905',
 	'flavor':'',
 	'bonus':function(target){
@@ -8335,7 +8335,7 @@ var cmp = [
 },
 {
 	'id':906,
-	'drops':true,
+	'drops':false,
 	'name':'Component-906',
 	'flavor':'',
 	'bonus':function(target){
@@ -8344,7 +8344,7 @@ var cmp = [
 },
 {
 	'id':907,
-	'drops':true,
+	'drops':false,
 	'name':'Component-907',
 	'flavor':'',
 	'bonus':function(target){
@@ -8353,7 +8353,7 @@ var cmp = [
 },
 {
 	'id':908,
-	'drops':true,
+	'drops':false,
 	'name':'Component-908',
 	'flavor':'',
 	'bonus':function(target){
@@ -8362,7 +8362,7 @@ var cmp = [
 },
 {
 	'id':909,
-	'drops':true,
+	'drops':false,
 	'name':'Component-909',
 	'flavor':'',
 	'bonus':function(target){
@@ -8371,7 +8371,7 @@ var cmp = [
 },
 {
 	'id':910,
-	'drops':true,
+	'drops':false,
 	'name':'Component-910',
 	'flavor':'',
 	'bonus':function(target){
@@ -8380,7 +8380,7 @@ var cmp = [
 },
 {
 	'id':911,
-	'drops':true,
+	'drops':false,
 	'name':'Component-911',
 	'flavor':'',
 	'bonus':function(target){
@@ -8389,7 +8389,7 @@ var cmp = [
 },
 {
 	'id':912,
-	'drops':true,
+	'drops':false,
 	'name':'Component-912',
 	'flavor':'',
 	'bonus':function(target){
@@ -8398,7 +8398,7 @@ var cmp = [
 },
 {
 	'id':913,
-	'drops':true,
+	'drops':false,
 	'name':'Component-913',
 	'flavor':'',
 	'bonus':function(target){
@@ -8407,7 +8407,7 @@ var cmp = [
 },
 {
 	'id':914,
-	'drops':true,
+	'drops':false,
 	'name':'Component-914',
 	'flavor':'',
 	'bonus':function(target){
@@ -8416,7 +8416,7 @@ var cmp = [
 },
 {
 	'id':915,
-	'drops':true,
+	'drops':false,
 	'name':'Component-915',
 	'flavor':'',
 	'bonus':function(target){
@@ -8425,7 +8425,7 @@ var cmp = [
 },
 {
 	'id':916,
-	'drops':true,
+	'drops':false,
 	'name':'Component-916',
 	'flavor':'',
 	'bonus':function(target){
@@ -8434,7 +8434,7 @@ var cmp = [
 },
 {
 	'id':917,
-	'drops':true,
+	'drops':false,
 	'name':'Component-917',
 	'flavor':'',
 	'bonus':function(target){
@@ -8443,7 +8443,7 @@ var cmp = [
 },
 {
 	'id':918,
-	'drops':true,
+	'drops':false,
 	'name':'Component-918',
 	'flavor':'',
 	'bonus':function(target){
@@ -8452,7 +8452,7 @@ var cmp = [
 },
 {
 	'id':919,
-	'drops':true,
+	'drops':false,
 	'name':'Component-919',
 	'flavor':'',
 	'bonus':function(target){
@@ -8461,7 +8461,7 @@ var cmp = [
 },
 {
 	'id':920,
-	'drops':true,
+	'drops':false,
 	'name':'Component-920',
 	'flavor':'',
 	'bonus':function(target){
@@ -8470,7 +8470,7 @@ var cmp = [
 },
 {
 	'id':921,
-	'drops':true,
+	'drops':false,
 	'name':'Component-921',
 	'flavor':'',
 	'bonus':function(target){
@@ -8479,7 +8479,7 @@ var cmp = [
 },
 {
 	'id':922,
-	'drops':true,
+	'drops':false,
 	'name':'Component-922',
 	'flavor':'',
 	'bonus':function(target){
@@ -8488,7 +8488,7 @@ var cmp = [
 },
 {
 	'id':923,
-	'drops':true,
+	'drops':false,
 	'name':'Component-923',
 	'flavor':'',
 	'bonus':function(target){
@@ -8497,7 +8497,7 @@ var cmp = [
 },
 {
 	'id':924,
-	'drops':true,
+	'drops':false,
 	'name':'Component-924',
 	'flavor':'',
 	'bonus':function(target){
@@ -8506,7 +8506,7 @@ var cmp = [
 },
 {
 	'id':925,
-	'drops':true,
+	'drops':false,
 	'name':'Component-925',
 	'flavor':'',
 	'bonus':function(target){
@@ -8515,7 +8515,7 @@ var cmp = [
 },
 {
 	'id':926,
-	'drops':true,
+	'drops':false,
 	'name':'Component-926',
 	'flavor':'',
 	'bonus':function(target){
@@ -8524,7 +8524,7 @@ var cmp = [
 },
 {
 	'id':927,
-	'drops':true,
+	'drops':false,
 	'name':'Component-927',
 	'flavor':'',
 	'bonus':function(target){
@@ -8533,7 +8533,7 @@ var cmp = [
 },
 {
 	'id':928,
-	'drops':true,
+	'drops':false,
 	'name':'Component-928',
 	'flavor':'',
 	'bonus':function(target){
@@ -8542,7 +8542,7 @@ var cmp = [
 },
 {
 	'id':929,
-	'drops':true,
+	'drops':false,
 	'name':'Component-929',
 	'flavor':'',
 	'bonus':function(target){
@@ -8551,7 +8551,7 @@ var cmp = [
 },
 {
 	'id':930,
-	'drops':true,
+	'drops':false,
 	'name':'Component-930',
 	'flavor':'',
 	'bonus':function(target){
@@ -8560,7 +8560,7 @@ var cmp = [
 },
 {
 	'id':931,
-	'drops':true,
+	'drops':false,
 	'name':'Component-931',
 	'flavor':'',
 	'bonus':function(target){
@@ -8569,7 +8569,7 @@ var cmp = [
 },
 {
 	'id':932,
-	'drops':true,
+	'drops':false,
 	'name':'Component-932',
 	'flavor':'',
 	'bonus':function(target){
@@ -8578,7 +8578,7 @@ var cmp = [
 },
 {
 	'id':933,
-	'drops':true,
+	'drops':false,
 	'name':'Component-933',
 	'flavor':'',
 	'bonus':function(target){
@@ -8587,7 +8587,7 @@ var cmp = [
 },
 {
 	'id':934,
-	'drops':true,
+	'drops':false,
 	'name':'Component-934',
 	'flavor':'',
 	'bonus':function(target){
@@ -8596,7 +8596,7 @@ var cmp = [
 },
 {
 	'id':935,
-	'drops':true,
+	'drops':false,
 	'name':'Component-935',
 	'flavor':'',
 	'bonus':function(target){
@@ -8605,7 +8605,7 @@ var cmp = [
 },
 {
 	'id':936,
-	'drops':true,
+	'drops':false,
 	'name':'Component-936',
 	'flavor':'',
 	'bonus':function(target){
@@ -8614,7 +8614,7 @@ var cmp = [
 },
 {
 	'id':937,
-	'drops':true,
+	'drops':false,
 	'name':'Component-937',
 	'flavor':'',
 	'bonus':function(target){
@@ -8623,7 +8623,7 @@ var cmp = [
 },
 {
 	'id':938,
-	'drops':true,
+	'drops':false,
 	'name':'Component-938',
 	'flavor':'',
 	'bonus':function(target){
@@ -8632,7 +8632,7 @@ var cmp = [
 },
 {
 	'id':939,
-	'drops':true,
+	'drops':false,
 	'name':'Component-939',
 	'flavor':'',
 	'bonus':function(target){
@@ -8641,7 +8641,7 @@ var cmp = [
 },
 {
 	'id':940,
-	'drops':true,
+	'drops':false,
 	'name':'Component-940',
 	'flavor':'',
 	'bonus':function(target){
@@ -8650,7 +8650,7 @@ var cmp = [
 },
 {
 	'id':941,
-	'drops':true,
+	'drops':false,
 	'name':'Component-941',
 	'flavor':'',
 	'bonus':function(target){
@@ -8659,7 +8659,7 @@ var cmp = [
 },
 {
 	'id':942,
-	'drops':true,
+	'drops':false,
 	'name':'Component-942',
 	'flavor':'',
 	'bonus':function(target){
@@ -8668,7 +8668,7 @@ var cmp = [
 },
 {
 	'id':943,
-	'drops':true,
+	'drops':false,
 	'name':'Component-943',
 	'flavor':'',
 	'bonus':function(target){
@@ -8677,7 +8677,7 @@ var cmp = [
 },
 {
 	'id':944,
-	'drops':true,
+	'drops':false,
 	'name':'Component-944',
 	'flavor':'',
 	'bonus':function(target){
@@ -8686,7 +8686,7 @@ var cmp = [
 },
 {
 	'id':945,
-	'drops':true,
+	'drops':false,
 	'name':'Component-945',
 	'flavor':'',
 	'bonus':function(target){
@@ -8695,7 +8695,7 @@ var cmp = [
 },
 {
 	'id':946,
-	'drops':true,
+	'drops':false,
 	'name':'Component-946',
 	'flavor':'',
 	'bonus':function(target){
@@ -8704,7 +8704,7 @@ var cmp = [
 },
 {
 	'id':947,
-	'drops':true,
+	'drops':false,
 	'name':'Component-947',
 	'flavor':'',
 	'bonus':function(target){
@@ -8713,7 +8713,7 @@ var cmp = [
 },
 {
 	'id':948,
-	'drops':true,
+	'drops':false,
 	'name':'Component-948',
 	'flavor':'',
 	'bonus':function(target){
@@ -8722,7 +8722,7 @@ var cmp = [
 },
 {
 	'id':949,
-	'drops':true,
+	'drops':false,
 	'name':'Component-949',
 	'flavor':'',
 	'bonus':function(target){
@@ -8731,7 +8731,7 @@ var cmp = [
 },
 {
 	'id':950,
-	'drops':true,
+	'drops':false,
 	'name':'Component-950',
 	'flavor':'',
 	'bonus':function(target){
@@ -8740,7 +8740,7 @@ var cmp = [
 },
 {
 	'id':951,
-	'drops':true,
+	'drops':false,
 	'name':'Component-951',
 	'flavor':'',
 	'bonus':function(target){
@@ -8749,7 +8749,7 @@ var cmp = [
 },
 {
 	'id':952,
-	'drops':true,
+	'drops':false,
 	'name':'Component-952',
 	'flavor':'',
 	'bonus':function(target){
@@ -8758,7 +8758,7 @@ var cmp = [
 },
 {
 	'id':953,
-	'drops':true,
+	'drops':false,
 	'name':'Component-953',
 	'flavor':'',
 	'bonus':function(target){
@@ -8767,7 +8767,7 @@ var cmp = [
 },
 {
 	'id':954,
-	'drops':true,
+	'drops':false,
 	'name':'Component-954',
 	'flavor':'',
 	'bonus':function(target){
@@ -8776,7 +8776,7 @@ var cmp = [
 },
 {
 	'id':955,
-	'drops':true,
+	'drops':false,
 	'name':'Component-955',
 	'flavor':'',
 	'bonus':function(target){
@@ -8785,7 +8785,7 @@ var cmp = [
 },
 {
 	'id':956,
-	'drops':true,
+	'drops':false,
 	'name':'Component-956',
 	'flavor':'',
 	'bonus':function(target){
@@ -8794,7 +8794,7 @@ var cmp = [
 },
 {
 	'id':957,
-	'drops':true,
+	'drops':false,
 	'name':'Component-957',
 	'flavor':'',
 	'bonus':function(target){
@@ -8803,7 +8803,7 @@ var cmp = [
 },
 {
 	'id':958,
-	'drops':true,
+	'drops':false,
 	'name':'Component-958',
 	'flavor':'',
 	'bonus':function(target){
@@ -8812,7 +8812,7 @@ var cmp = [
 },
 {
 	'id':959,
-	'drops':true,
+	'drops':false,
 	'name':'Component-959',
 	'flavor':'',
 	'bonus':function(target){
@@ -8821,7 +8821,7 @@ var cmp = [
 },
 {
 	'id':960,
-	'drops':true,
+	'drops':false,
 	'name':'Component-960',
 	'flavor':'',
 	'bonus':function(target){
@@ -8830,7 +8830,7 @@ var cmp = [
 },
 {
 	'id':961,
-	'drops':true,
+	'drops':false,
 	'name':'Component-961',
 	'flavor':'',
 	'bonus':function(target){
@@ -8839,7 +8839,7 @@ var cmp = [
 },
 {
 	'id':962,
-	'drops':true,
+	'drops':false,
 	'name':'Component-962',
 	'flavor':'',
 	'bonus':function(target){
@@ -8848,7 +8848,7 @@ var cmp = [
 },
 {
 	'id':963,
-	'drops':true,
+	'drops':false,
 	'name':'Component-963',
 	'flavor':'',
 	'bonus':function(target){
@@ -8857,7 +8857,7 @@ var cmp = [
 },
 {
 	'id':964,
-	'drops':true,
+	'drops':false,
 	'name':'Component-964',
 	'flavor':'',
 	'bonus':function(target){
@@ -8866,7 +8866,7 @@ var cmp = [
 },
 {
 	'id':965,
-	'drops':true,
+	'drops':false,
 	'name':'Component-965',
 	'flavor':'',
 	'bonus':function(target){
@@ -8875,7 +8875,7 @@ var cmp = [
 },
 {
 	'id':966,
-	'drops':true,
+	'drops':false,
 	'name':'Component-966',
 	'flavor':'',
 	'bonus':function(target){
@@ -8884,7 +8884,7 @@ var cmp = [
 },
 {
 	'id':967,
-	'drops':true,
+	'drops':false,
 	'name':'Component-967',
 	'flavor':'',
 	'bonus':function(target){
@@ -8893,7 +8893,7 @@ var cmp = [
 },
 {
 	'id':968,
-	'drops':true,
+	'drops':false,
 	'name':'Component-968',
 	'flavor':'',
 	'bonus':function(target){
@@ -8902,7 +8902,7 @@ var cmp = [
 },
 {
 	'id':969,
-	'drops':true,
+	'drops':false,
 	'name':'Component-969',
 	'flavor':'',
 	'bonus':function(target){
@@ -8911,7 +8911,7 @@ var cmp = [
 },
 {
 	'id':970,
-	'drops':true,
+	'drops':false,
 	'name':'Component-970',
 	'flavor':'',
 	'bonus':function(target){
@@ -8920,7 +8920,7 @@ var cmp = [
 },
 {
 	'id':971,
-	'drops':true,
+	'drops':false,
 	'name':'Component-971',
 	'flavor':'',
 	'bonus':function(target){
@@ -8929,7 +8929,7 @@ var cmp = [
 },
 {
 	'id':972,
-	'drops':true,
+	'drops':false,
 	'name':'Component-972',
 	'flavor':'',
 	'bonus':function(target){
@@ -8938,7 +8938,7 @@ var cmp = [
 },
 {
 	'id':973,
-	'drops':true,
+	'drops':false,
 	'name':'Component-973',
 	'flavor':'',
 	'bonus':function(target){
@@ -8947,7 +8947,7 @@ var cmp = [
 },
 {
 	'id':974,
-	'drops':true,
+	'drops':false,
 	'name':'Component-974',
 	'flavor':'',
 	'bonus':function(target){
@@ -8956,7 +8956,7 @@ var cmp = [
 },
 {
 	'id':975,
-	'drops':true,
+	'drops':false,
 	'name':'Component-975',
 	'flavor':'',
 	'bonus':function(target){
@@ -8965,7 +8965,7 @@ var cmp = [
 },
 {
 	'id':976,
-	'drops':true,
+	'drops':false,
 	'name':'Component-976',
 	'flavor':'',
 	'bonus':function(target){
@@ -8974,7 +8974,7 @@ var cmp = [
 },
 {
 	'id':977,
-	'drops':true,
+	'drops':false,
 	'name':'Component-977',
 	'flavor':'',
 	'bonus':function(target){
@@ -8983,7 +8983,7 @@ var cmp = [
 },
 {
 	'id':978,
-	'drops':true,
+	'drops':false,
 	'name':'Component-978',
 	'flavor':'',
 	'bonus':function(target){
@@ -8992,7 +8992,7 @@ var cmp = [
 },
 {
 	'id':979,
-	'drops':true,
+	'drops':false,
 	'name':'Component-979',
 	'flavor':'',
 	'bonus':function(target){
@@ -9001,7 +9001,7 @@ var cmp = [
 },
 {
 	'id':980,
-	'drops':true,
+	'drops':false,
 	'name':'Component-980',
 	'flavor':'',
 	'bonus':function(target){
@@ -9010,7 +9010,7 @@ var cmp = [
 },
 {
 	'id':981,
-	'drops':true,
+	'drops':false,
 	'name':'Component-981',
 	'flavor':'',
 	'bonus':function(target){
@@ -9019,7 +9019,7 @@ var cmp = [
 },
 {
 	'id':982,
-	'drops':true,
+	'drops':false,
 	'name':'Component-982',
 	'flavor':'',
 	'bonus':function(target){
@@ -9028,7 +9028,7 @@ var cmp = [
 },
 {
 	'id':983,
-	'drops':true,
+	'drops':false,
 	'name':'Component-983',
 	'flavor':'',
 	'bonus':function(target){
@@ -9037,7 +9037,7 @@ var cmp = [
 },
 {
 	'id':984,
-	'drops':true,
+	'drops':false,
 	'name':'Component-984',
 	'flavor':'',
 	'bonus':function(target){
@@ -9046,7 +9046,7 @@ var cmp = [
 },
 {
 	'id':985,
-	'drops':true,
+	'drops':false,
 	'name':'Component-985',
 	'flavor':'',
 	'bonus':function(target){
@@ -9055,7 +9055,7 @@ var cmp = [
 },
 {
 	'id':986,
-	'drops':true,
+	'drops':false,
 	'name':'Component-986',
 	'flavor':'',
 	'bonus':function(target){
@@ -9064,7 +9064,7 @@ var cmp = [
 },
 {
 	'id':987,
-	'drops':true,
+	'drops':false,
 	'name':'Component-987',
 	'flavor':'',
 	'bonus':function(target){
@@ -9073,7 +9073,7 @@ var cmp = [
 },
 {
 	'id':988,
-	'drops':true,
+	'drops':false,
 	'name':'Component-988',
 	'flavor':'',
 	'bonus':function(target){
@@ -9082,7 +9082,7 @@ var cmp = [
 },
 {
 	'id':989,
-	'drops':true,
+	'drops':false,
 	'name':'Component-989',
 	'flavor':'',
 	'bonus':function(target){
@@ -9091,7 +9091,7 @@ var cmp = [
 },
 {
 	'id':990,
-	'drops':true,
+	'drops':false,
 	'name':'Component-990',
 	'flavor':'',
 	'bonus':function(target){
@@ -9100,7 +9100,7 @@ var cmp = [
 },
 {
 	'id':991,
-	'drops':true,
+	'drops':false,
 	'name':'Component-991',
 	'flavor':'',
 	'bonus':function(target){
@@ -9109,7 +9109,7 @@ var cmp = [
 },
 {
 	'id':992,
-	'drops':true,
+	'drops':false,
 	'name':'Component-992',
 	'flavor':'',
 	'bonus':function(target){
@@ -9118,7 +9118,7 @@ var cmp = [
 },
 {
 	'id':993,
-	'drops':true,
+	'drops':false,
 	'name':'Component-993',
 	'flavor':'',
 	'bonus':function(target){
@@ -9127,7 +9127,7 @@ var cmp = [
 },
 {
 	'id':994,
-	'drops':true,
+	'drops':false,
 	'name':'Component-994',
 	'flavor':'',
 	'bonus':function(target){
@@ -9136,7 +9136,7 @@ var cmp = [
 },
 {
 	'id':995,
-	'drops':true,
+	'drops':false,
 	'name':'Component-995',
 	'flavor':'',
 	'bonus':function(target){
@@ -9145,7 +9145,7 @@ var cmp = [
 },
 {
 	'id':996,
-	'drops':true,
+	'drops':false,
 	'name':'Component-996',
 	'flavor':'',
 	'bonus':function(target){
@@ -9154,7 +9154,7 @@ var cmp = [
 },
 {
 	'id':997,
-	'drops':true,
+	'drops':false,
 	'name':'Component-997',
 	'flavor':'',
 	'bonus':function(target){
@@ -9163,7 +9163,7 @@ var cmp = [
 },
 {
 	'id':998,
-	'drops':true,
+	'drops':false,
 	'name':'Component-998',
 	'flavor':'',
 	'bonus':function(target){
@@ -9172,7 +9172,7 @@ var cmp = [
 },
 {
 	'id':999,
-	'drops':true,
+	'drops':false,
 	'name':'Component-999',
 	'flavor':'',
 	'bonus':function(target){
@@ -9181,7 +9181,7 @@ var cmp = [
 },
 {
 	'id':1000,
-	'drops':true,
+	'drops':false,
 	'name':'Component-1000',
 	'flavor':'',
 	'bonus':function(target){
@@ -9190,7 +9190,7 @@ var cmp = [
 },
 {
 	'id':1001,
-	'drops':true,
+	'drops':false,
 	'name':'Component-1001',
 	'flavor':'',
 	'bonus':function(target){
@@ -9199,7 +9199,7 @@ var cmp = [
 },
 {
 	'id':1002,
-	'drops':true,
+	'drops':false,
 	'name':'Component-1002',
 	'flavor':'',
 	'bonus':function(target){
@@ -9208,7 +9208,7 @@ var cmp = [
 },
 {
 	'id':1003,
-	'drops':true,
+	'drops':false,
 	'name':'Component-1003',
 	'flavor':'',
 	'bonus':function(target){
@@ -9217,7 +9217,7 @@ var cmp = [
 },
 {
 	'id':1004,
-	'drops':true,
+	'drops':false,
 	'name':'Component-1004',
 	'flavor':'',
 	'bonus':function(target){
@@ -9226,7 +9226,7 @@ var cmp = [
 },
 {
 	'id':1005,
-	'drops':true,
+	'drops':false,
 	'name':'Component-1005',
 	'flavor':'',
 	'bonus':function(target){
@@ -9235,7 +9235,7 @@ var cmp = [
 },
 {
 	'id':1006,
-	'drops':true,
+	'drops':false,
 	'name':'Component-1006',
 	'flavor':'',
 	'bonus':function(target){
@@ -9244,7 +9244,7 @@ var cmp = [
 },
 {
 	'id':1007,
-	'drops':true,
+	'drops':false,
 	'name':'Component-1007',
 	'flavor':'',
 	'bonus':function(target){
@@ -9253,7 +9253,7 @@ var cmp = [
 },
 {
 	'id':1008,
-	'drops':true,
+	'drops':false,
 	'name':'Component-1008',
 	'flavor':'',
 	'bonus':function(target){
@@ -9262,7 +9262,7 @@ var cmp = [
 },
 {
 	'id':1009,
-	'drops':true,
+	'drops':false,
 	'name':'Component-1009',
 	'flavor':'',
 	'bonus':function(target){
@@ -9271,7 +9271,7 @@ var cmp = [
 },
 {
 	'id':1010,
-	'drops':true,
+	'drops':false,
 	'name':'Component-1010',
 	'flavor':'',
 	'bonus':function(target){
@@ -9280,7 +9280,7 @@ var cmp = [
 },
 {
 	'id':1011,
-	'drops':true,
+	'drops':false,
 	'name':'Component-1011',
 	'flavor':'',
 	'bonus':function(target){
@@ -9289,7 +9289,7 @@ var cmp = [
 },
 {
 	'id':1012,
-	'drops':true,
+	'drops':false,
 	'name':'Component-1012',
 	'flavor':'',
 	'bonus':function(target){
@@ -9298,7 +9298,7 @@ var cmp = [
 },
 {
 	'id':1013,
-	'drops':true,
+	'drops':false,
 	'name':'Component-1013',
 	'flavor':'',
 	'bonus':function(target){
@@ -9307,7 +9307,7 @@ var cmp = [
 },
 {
 	'id':1014,
-	'drops':true,
+	'drops':false,
 	'name':'Component-1014',
 	'flavor':'',
 	'bonus':function(target){
@@ -9316,7 +9316,7 @@ var cmp = [
 },
 {
 	'id':1015,
-	'drops':true,
+	'drops':false,
 	'name':'Component-1015',
 	'flavor':'',
 	'bonus':function(target){
@@ -9325,7 +9325,7 @@ var cmp = [
 },
 {
 	'id':1016,
-	'drops':true,
+	'drops':false,
 	'name':'Component-1016',
 	'flavor':'',
 	'bonus':function(target){
@@ -9334,7 +9334,7 @@ var cmp = [
 },
 {
 	'id':1017,
-	'drops':true,
+	'drops':false,
 	'name':'Component-1017',
 	'flavor':'',
 	'bonus':function(target){
@@ -9343,7 +9343,7 @@ var cmp = [
 },
 {
 	'id':1018,
-	'drops':true,
+	'drops':false,
 	'name':'Component-1018',
 	'flavor':'',
 	'bonus':function(target){
@@ -9352,7 +9352,7 @@ var cmp = [
 },
 {
 	'id':1019,
-	'drops':true,
+	'drops':false,
 	'name':'Component-1019',
 	'flavor':'',
 	'bonus':function(target){
@@ -9361,7 +9361,7 @@ var cmp = [
 },
 {
 	'id':1020,
-	'drops':true,
+	'drops':false,
 	'name':'Component-1020',
 	'flavor':'',
 	'bonus':function(target){
@@ -9370,7 +9370,7 @@ var cmp = [
 },
 {
 	'id':1021,
-	'drops':true,
+	'drops':false,
 	'name':'Component-1021',
 	'flavor':'',
 	'bonus':function(target){
@@ -9379,7 +9379,7 @@ var cmp = [
 },
 {
 	'id':1022,
-	'drops':true,
+	'drops':false,
 	'name':'Component-1022',
 	'flavor':'',
 	'bonus':function(target){
@@ -9387,7 +9387,7 @@ var cmp = [
 	}
 },{
 	'id':1023,
-	'drops':true,
+	'drops':false,
 	'name':'Component1023',
 	'flavor':'Void. Fearful dark void.',
 	'bonus':function(target){
