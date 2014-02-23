@@ -125,7 +125,7 @@ function refreshStats() {
 	ui.shadowPlayer.sprite.reset(game.camera.x+0.5*resolutionX,game.camera.y+0.5*resolutionY);	
 	ui.shadowPlayer.ship = ui.partsArray();
 	applyBonuses(ui.shadowPlayer);
-	ui.statsPing(ui.shadowPlayer);
+	//ui.statsPing(ui.shadowPlayer);
 }
 dragPart = function(x,y,sheet,index){
 	this.game = game;
