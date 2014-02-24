@@ -137,7 +137,6 @@ dragPart = function(x,y,sheet,index){
 	this.sprite.input.snapOnRelease=true;
 	this.sprite.input.snapX=16;
 	this.sprite.input.snapY=16;
-	this.sprite.events.onDragStop.add(refreshStats);
 };
 dragPart.prototype.update = function(){
 	if(!game.input.activePointer.isDown && this.sprite.alive){
