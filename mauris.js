@@ -366,6 +366,7 @@ enemyShip.prototype.fire = function () {
 				bullet.reset(this.sprite.x + (Math.cos(this.sprite.rotation)*(this.sprite.body.width)), this.sprite.y + (Math.sin(this.sprite.rotation)*(this.sprite.body.width)));
 				bullet.lifespan = this.fireRange; 
 				bullet.loadTexture('bullet', this.bulletSprite);
+				bullet.bulletSprite=this.bulletSprite;
 				bullet.body.exchangeVelocity = false;
 				bullet.fireVelocity=this.fireVelocity;
 				bullet.owner=this.sprite;
@@ -561,7 +562,10 @@ function preload () {
 	game.load.image('starfield4', 'assets/starfield4.png');
 	game.load.spritesheet('thrust', 'assets/thrust.png',8,8);
 	game.load.spritesheet('sparks', 'assets/sparks.png',8,8);
+	game.load.spritesheet('explosions', 'assets/explosions.png',16,16);
 }
+
+
 
 var playerShip = function(ship) {
 	this.sprite = game.add.sprite(0, 0, 'parts', 1023);
@@ -691,6 +695,7 @@ playerShip.prototype.fire = function(){
 		this.energy -= this.fireEnergy;
 		var bullet = bullets.getFirstDead();
 		bullet.loadTexture('bullet', this.bulletSprite);
+		bullet.bulletSprite = this.bulletSprite;
 		bullet.damage = this.fireDamage * targetDamageCoef;
 		bullet.lifespan = this.fireRange;
 		bullet.body.mass = this.fireMass;
@@ -767,6 +772,7 @@ var numAsteroids = 19;
 var enemies;
 var loots;
 var enemyBullets;
+var explosions;
 var logo;
 var nextUIDelay=0;
 var nextSpawn=0;
@@ -850,6 +856,11 @@ gameUI.prototype.resetRadar = function() {
 }
 gameUI.prototype.initCombatUi = function() {
 
+	this.partsSelector = game.add.sprite(player.sprite.x-300,player.sprite.y-100,'parts',0);
+	this.partsSelector.visible = false;
+	this.tempStation = game.add.sprite(0,0,'station');
+	this.tempStation.anchor.setTo(0.5,0.5);
+	this.tempStation.visible = false;
 	destroyIfExists(this.creditLine);
 	this.creditLine = game.add.text(200,100, '',{ font:'14px monospace', fill: 'rgb(64,255,16)', align: 'right' });
 	this.creditLine.flash = 0;
@@ -1013,6 +1024,8 @@ gameUI.prototype.update = function() {
 }
 
 gameUI.prototype.updatePart = function () {
+	this.partsSelector.visible=true;
+	this.partsSelector.bringToTop();
 	if(playerStats.inventory.length){
 		this.partsSelector.loadTexture('parts',playerStats.inventory[this.currentPart]);
 		this.partText.setText(components[playerStats.inventory[this.currentPart]].name);
@@ -1037,6 +1050,23 @@ gameUI.prototype.previousPart = function () {
 	}
 	this.updatePart();
 }
+
+gameUI.prototype.buyPart = function () {
+	if(playerStats.credits >= 20) {
+		playerStats.credits-=20;
+		var n=0;
+		while(n==0){
+			var q;
+			q = Math.floor(Math.random()*components.length);
+			if(components[q].drops){
+				n=q;
+				playerStats.inventory.push(q);
+				this.currentPart=playerStats.inventory.length-1;
+				this.updatePart()
+			}
+		}
+	}
+}
 gameUI.prototype.nextPart = function () {
 	if(playerStats.inventory.length){
 		this.currentPart = (this.currentPart  + 1 ) % playerStats.inventory.length;	
@@ -1047,8 +1077,6 @@ gameUI.prototype.nextPart = function () {
 }
 
 gameUI.prototype.partsUI = function (ship) {
-	this.tempStation = game.add.sprite(0,0,'station');
-	this.tempStation.anchor.setTo(0.5,0.5);
 	playerStats.credits+=player.ore*player.cashFlow; //ore is reset with the new ship 
 	player.sprite.reset(0,0);
 	player.sprite.rotation=0;
@@ -1065,18 +1093,20 @@ gameUI.prototype.partsUI = function (ship) {
 	this.energyLine.setText('');
 	this.stationRadar.visible=false;
 	this.clearRadar();
-	this.partsSelector = game.add.sprite(player.sprite.x-300,player.sprite.y-100,'parts',0);
 	this.updatePart();
+	this.tempStation.visible=true;
+	this.tempStation.bringToTop();
 	this.partsSelector.scale.setTo(4,4);
 	this.partsSelector.inputEnabled = true;
 	this.partsSelector.events.onInputDown.add(selectPart);
 	if(typeof(ship)!='undefined'){
 		this.parts = createBuildParts(ship,player.sprite.x,player.sprite.y);
 	}
+	ui.partsArray();
 }
 gameUI.prototype.endPartsUI = function () {
-	this.tempStation.destroy()
-		this.partsSelector.destroy();
+	this.tempStation.visible = false;
+		this.partsSelector.visible=false;
 	var ship = this.partsArray();
 	for(var i=0; i<this.parts.length;i++){
 		this.parts[i].sprite.inputEnabled=false;
@@ -1093,6 +1123,8 @@ gameUI.prototype.endPartsUI = function () {
 }
 gameUI.prototype.partsArray = function () {
 	this.graphics.clear();
+	this.graphics.destroy();
+	this.graphics = game.add.graphics(0,0);
 	var outArray = [];
 	if(typeof(this.parts[0])!='undefined'){
 		var minx = 999999999;
@@ -1141,7 +1173,6 @@ gameUI.prototype.partsArray = function () {
 				outArray[n] = this.parts[i].index;
 			}
 		}
-
 		this.graphics.lineStyle(1, 0x6666FF,1);
 		this.graphics.drawRect(minx,miny,16+maxx-minx,16+maxy-miny);
 	}
@@ -1317,11 +1348,7 @@ function create () {
 
 
 		playerStats = new playerMeta ();
-		if(cheatmode){
-			player = new playerShip(); //picks randomly from a list
-		}else{
 			player = new playerShip(defaultPlayerShip);
-		}
 		//  The enemies bullet group
 		enemyBullets = game.add.group();
 		enemyBullets.createMultiple(200, 'bullet');
@@ -1331,6 +1358,15 @@ function create () {
 			enemyBullets.setAll('body.immovable', 1);
 		enemyBullets.setAll('outOfBoundsKill', true);
 
+		
+		explosions = game.add.group();
+		explosions.createMultiple(100, 'explosions');
+		explosions.setAll('anchor.x', 0.5);
+		explosions.setAll('anchor.y', 0.5);
+		explosions.setAll('lifespan',5000)
+		explosions.setAll('body.exchangeVelocity', false);
+		
+		
 		//override the player obj in demo mode
 		if(gamemode == '?attract'){
 			for(var i=0;i<player.parts.length;i++){
@@ -1390,6 +1426,10 @@ function create () {
 	}
 	ui.initCombatUi();
 }
+function explosionAnimate(s) {
+	s.alpha*=0.85;
+	s.scale.setTo(s.scale.x+.2,s.scale.y+.2);
+}
 function pullLootToPlayer(s) {
 	if (!player.alive){
 		s.kill();
@@ -1413,11 +1453,7 @@ function update () {
 
 		if(nextSpawn<game.time.now||nextSpawn==0||gamemode=='?attract'){
 			if(!player.alive){
-				if(cheatmode){
-					player.initPlayerShip();
-				}else{
 					player.initPlayerShip(defaultPlayerShip);
-				}
 			}
 			for(var c = 0; c < enemies.length ; c++) {
 				if (enemies[c].alive==false){
@@ -1440,6 +1476,10 @@ function update () {
 			}
 			loots.forEachAlive(pullLootToPlayer, this);
 		}
+		if(explosions.getFirstAlive() != null) {
+
+			explosions.forEachAlive(explosionAnimate, this);
+		};
 		if(enemyBullets.getFirstAlive() != null) {
 
 			for (var i = 0; i < player.parts.length; i++) {
@@ -1516,6 +1556,8 @@ function update () {
 			nextUIDelay = game.time.now+1000;
 		}
 		if (game.time.now > nextUIDelay && (cursors.up.isDown || cursors.up2.isDown)){
+			ui.buyPart();
+			nextUIDelay = game.time.now+1000;
 			//somethin' clever!
 		}
 		if (game.time.now > nextUIDelay + 2000 && (cursors.down.isDown || cursors.down2.isDown)){
@@ -1529,6 +1571,28 @@ function update () {
 		  ){
 			  nextUIDelay = 0;
 		  }
+	}
+}
+
+function boom(explosionsGroup, bulletSprite, x, y){
+
+	var r = Math.random();
+
+	for(var i=0; i < 3 + (r * 6) ; i ++) { 
+	if(explosions.countDead()){
+	var explosion = explosionsGroup.getFirstDead();
+		explosion.loadTexture('explosions', bulletSprite || 0);
+		explosion.reset(x+eo3.randomRange(-8,8),y+eo3.randomRange(-8,8));
+		explosion.rotation = Math.random()*Math.PI;
+		explosion.body.exchangeVelocity = false;
+		explosion.angularVelocity=eo3.randomRange(-150,150);
+		explosion.fireVelocity=eo3.randomRange(-10,10);
+		explosion.lifespan=700;
+		r=eo3.randomRange(0.1,0.5);
+		explosion.scale.setTo(r,r);
+		explosion.alpha=1;
+		game.physics.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
+	}
 	}
 }
 
@@ -1596,23 +1660,28 @@ function playerGotLoot (sprite, loot) {
 	loot.kill();
 }
 function bulletHitPlayer (sprite, bullet) {
-	bullet.kill();
 
 	var destroyed = player.damage(bullet.damage, bullet.owner);
+
+	
+	boom(explosions, bullet.bulletSprite, bullet.x, bullet.y);
 	if (destroyed){
 		sparkExplosion(pew, sprite);	
 	}
+	bullet.kill();
 }
 
 function bulletHitEnemy (sprite, bullet) {
 
-	bullet.kill();
 
+	boom(explosions, bullet.bulletSprite, bullet.x, bullet.y);
+	
 	var destroyed = enemies[sprite.name].damage(bullet.damage, bullet.owner, bullet.body.velocity);
 	if (destroyed && enemies[sprite.name].ai!=3){
 		sparkExplosion(pew, sprite);	
 	}
 
+	bullet.kill();
 }
 
 

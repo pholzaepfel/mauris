@@ -826,92 +826,106 @@ var cmp = [
 },
 {
 	'id':78,
-	'drops':false,
-	'name':'Component78',
+	'drops':true,
+	'name':'Alien Support Frame',
 	'flavor':'--',
 	'bonus':function(target){
-
+		target.turnRate+=0.4;
+		target.energyMax+=4;
+		target.energyAmount+=1;
 	}
 },
 {
 	'id':79,
-	'drops':false,
-	'name':'Component79',
+	'drops':true,
+	'name':'Xenoid Laser',
 	'flavor':'--',
 	'bonus':function(target){
-
+		target.fireRate*=1.1;
+		target.fireEnergy*=0.5;
+		target.fireVelocity*=1.3;
 	}
 },
 {
 	'id':80,
-	'drops':false,
-	'name':'Component80',
+	'drops':true,
+	'name':'Mechanoid Husk',
 	'flavor':'--',
 	'bonus':function(target){
-
+		target.health+=4;
+		target.acceleration+=0.4;
+		target.turnRate+=0.2;
+		target.profile+=30;
 	}
 },
 {
 	'id':81,
-	'drops':false,
-	'name':'Component81',
+	'drops':true,
+	'name':'Mechanoid Quantum Cannon',
 	'flavor':'--',
 	'bonus':function(target){
-
+		target.fireDamage*=3;
+		target.health+=8;
+		target.TODO=1;
 	}
 },
 {
 	'id':82,
-	'drops':false,
-	'name':'Component82',
+	'drops':true,
+	'name':'External Power Plant',
 	'flavor':'--',
 	'bonus':function(target){
-
+		target.TODO=1;
 	}
 },
 {
 	'id':83,
-	'drops':false,
-	'name':'Component83',
+	'drops':true,
+	'name':'Concealed Cannon',
 	'flavor':'--',
 	'bonus':function(target){
 
+		target.TODO=1;
 	}
 },
 {
 	'id':84,
 	'drops':false,
-	'name':'Component84',
+	'name':'Crystalline Entity',
 	'flavor':'--',
 	'bonus':function(target){
 
+		target.TODO=1;
 	}
 },
 {
 	'id':85,
 	'drops':false,
-	'name':'Component85',
+	'name':'Crystalline Entity',
 	'flavor':'--',
 	'bonus':function(target){
 
+		target.TODO=1;
 	}
 },
 {
 	'id':86,
-	'drops':false,
-	'name':'Component86',
+	'drops':true,
+	'name':'Collector Vine',
 	'flavor':'--',
 	'bonus':function(target){
 
+		target.TODO=1;
 	}
 },
 {
 	'id':87,
 	'drops':false,
-	'name':'Component87',
+	'name':'Nutriment Tree',
 	'flavor':'--',
 	'bonus':function(target){
 
+		target.TODO=1;
 	}
 },
 {
@@ -1148,92 +1162,101 @@ var cmp = [
 },
 {
 	'id':110,
-	'drops':false,
-	'name':'Component110',
+	'drops':true,
+	'name':'Antimatter Furnace',
 	'flavor':'--',
 	'bonus':function(target){
-
+		target.TODO=1;
 	}
 },
 {
 	'id':111,
-	'drops':false,
-	'name':'Component111',
+	'drops':true,
+	'name':'Launch Bay',
 	'flavor':'--',
 	'bonus':function(target){
 
+		target.TODO=1;
 	}
 },
 {
 	'id':112,
-	'drops':false,
-	'name':'Component112',
+	'drops':true,
+	'name':'Mechanoid Husk',
 	'flavor':'--',
 	'bonus':function(target){
 
+		target.TODO=1;
 	}
 },
 {
 	'id':113,
-	'drops':false,
-	'name':'Component113',
+	'drops':true,
+	'name':'Inverse Field Generator',
 	'flavor':'--',
 	'bonus':function(target){
 
+		target.TODO=1;
 	}
 },
 {
 	'id':114,
-	'drops':false,
-	'name':'Component114',
+	'drops':true,
+	'name':'Secured Container',
 	'flavor':'--',
 	'bonus':function(target){
 
+		target.TODO=1;
 	}
 },
 {
 	'id':115,
-	'drops':false,
-	'name':'Component115',
+	'drops':true,
+	'name':'Jagged Armor Plating',
 	'flavor':'--',
 	'bonus':function(target){
 
+		target.TODO=1;
 	}
 },
 {
 	'id':116,
-	'drops':false,
-	'name':'Component116',
+	'drops':true,
+	'name':'Crystalline Entity',
 	'flavor':'--',
 	'bonus':function(target){
 
+		target.TODO=1;
 	}
 },
 {
 	'id':117,
-	'drops':false,
-	'name':'Component117',
+	'drops':true,
+	'name':'Crystalline Entity',
 	'flavor':'--',
 	'bonus':function(target){
 
+		target.TODO=1;
 	}
 },
 {
 	'id':118,
-	'drops':false,
-	'name':'Component118',
+	'drops':true,
+	'name':'Propelling Fruit',
 	'flavor':'--',
 	'bonus':function(target){
 
+		target.TODO=1;
 	}
 },
 {
 	'id':119,
-	'drops':false,
-	'name':'Component119',
+	'drops':true,
+	'name':'Roots',
 	'flavor':'--',
 	'bonus':function(target){
 
+		target.TODO=1;
 	}
 },
 {
@@ -1252,6 +1275,7 @@ var cmp = [
 	'flavor':'--',
 	'bonus':function(target){
 
+		target.TODO=1;
 	}
 },
 {
