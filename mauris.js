@@ -1106,15 +1106,27 @@ gameUI.prototype.partsUI = function (ship) {
 	}
 	ui.partsArray();
 }
+gameUI.prototype.destroyParts = function() {
+	if(typeof(this.parts)!='undefined'){
+		for(var i=0; i<this.parts.length;i++)
+		{
+			//very explicit destroy
+		this.parts[i].sprite.inputEnabled=false;
+			this.parts[i].sprite.input.destroy();
+			this.parts[i].sprite.animations.destroy();
+			this.parts[i].sprite.alive=false;
+			this.parts[i].sprite.exists=false;
+			this.parts[i].sprite.visible=false;
+			this.parts[i].sprite.game=null; }
+	}
+	this.parts=[];
+}
+
 gameUI.prototype.endPartsUI = function () {
 	this.tempStation.visible = false;
 		this.partsSelector.visible=false;
 	var ship = this.partsArray();
-	for(var i=0; i<this.parts.length;i++){
-		this.parts[i].sprite.inputEnabled=false;
-		this.parts[i].sprite.input.destroy();
-		this.parts[i].sprite.destroy();
-	}
+	this.destroyParts();
 	this.parts=[];
 	this.graphics.clear();
 	this.stationRadar.visible=true;
