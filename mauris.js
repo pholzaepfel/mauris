@@ -1188,7 +1188,7 @@ gameUI.prototype.partsArray = function () {
 			}
 		}
 		this.graphics.lineStyle(1, 0x6666FF,1);
-		this.graphics.drawRect(minx,miny,16+maxx-minx,16+maxy-miny);
+		//this.graphics.drawRect(minx,miny,16+maxx-minx,16+maxy-miny);
 	}
 	return outArray;
 }
