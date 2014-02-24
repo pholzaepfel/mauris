@@ -144,15 +144,16 @@ dragPart.prototype.update = function(){
 				this.sprite.x <= ui.partsSelector.x + ui.partsSelector.width &&	
 				this.sprite.y >= ui.partsSelector.y &&
 				this.sprite.y <= ui.partsSelector.y + ui.partsSelector.height){
-
+var n=0;
 					//prevent player from destroying the last part	
 					for (var i=0;i<ui.parts.length;i++){
-						if(ui.parts[i].sprite.alive && i != this.index){
-							break;
+						if(ui.parts[i].sprite.alive){
+							n+=1;
 						}
 					}
-					if (i == ui.parts.length){
-						this.sprite.y += 300;
+					if (n == 1){
+						this.sprite.reset(0,0);
+						ui.partsArray();
 					}else{
 						if (!cheatmode){
 							playerStats.inventory.push(this.index);
@@ -1192,10 +1193,12 @@ gameUI.prototype.partsArray = function () {
 	return outArray;
 }
 function selectPart() {
+	if(playerStats.inventory.length){
 	createPart(playerStats.inventory[ui.currentPart]);	
 	if(!cheatmode){
 		playerStats.inventory.splice(ui.currentPart,1);
 		ui.previousPart();
+	}
 	}
 }
 
