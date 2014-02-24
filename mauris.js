@@ -312,6 +312,7 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 	}
 	if (this.health <= 0){
 		this.alive = false;
+		bigBoom(explosions,this.sprite.x,this.sprite.y);
 		for (var j = 0; j < this.parts.length; j++) {
 
 			if (dmg != 31337){
@@ -653,6 +654,7 @@ playerShip.prototype.damage = function(dmg, aggro) {
 	this.health -= damageCoef * dmg;
 
 	if (this.health <= 0){
+		bigBoom(explosions,this.sprite.x,this.sprite.y);
 		this.alive = false;
 		for (var j = 0; j < this.parts.length; j++) {
 
@@ -1574,6 +1576,27 @@ function update () {
 	}
 }
 
+function bigBoom(explosionsGroup, x, y){
+
+	var r = Math.random();
+
+	for(var i=0; i < 5 + (r * 6) ; i ++) { 
+	if(explosions.countDead()){
+	var explosion = explosionsGroup.getFirstDead();
+		explosion.loadTexture('explosions', Math.random()>0.7 ? 1 : 2);
+		explosion.reset(x+eo3.randomRange(-20,20),y+eo3.randomRange(-20,20));
+		explosion.rotation = Math.random()*Math.PI;
+		explosion.body.exchangeVelocity = false;
+		explosion.angularVelocity=eo3.randomRange(-150,150);
+		explosion.fireVelocity=eo3.randomRange(30,60);
+		explosion.lifespan=700;
+		r=eo3.randomRange(0.4,1.9);
+		explosion.scale.setTo(r,r);
+		explosion.alpha=1;
+		game.physics.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
+	}
+	}
+}
 function boom(explosionsGroup, bulletSprite, x, y){
 
 	var r = Math.random();
