@@ -70,6 +70,13 @@ eo3.shipWithoutVoid = function (ship) {
 	}
 	return shipOut;
 };
+function randomSort(a, b) {
+	if(Math.random()>0.5){
+		return 1;
+	} else{
+		return -1;
+	}
+}
 function lengthSort(a, b) {
 	if(a.length>b.length){
 		return 1;
@@ -168,14 +175,16 @@ dragPart.prototype.update = function(){
 }
 partsPool = function(){
 this.parts=[];
-for(var i=0;i<30;i++){
+for(var i=0;i<500;i++){
 	this.parts.push(new shipPart(0,0,'parts',0,dummy));
 	this.parts[i].sprite.kill();
 }
 };
 partsPool.prototype.get = function (x,y,index,targetSprite){
+	this.parts.sort(randomSort);
+	
 	for (var i=0;i<this.parts.length;i++){
-		if(!this.parts[i].sprite.alive){
+		if(!this.parts[i].sprite.owneralive){
 			break;
 		}
 	}
@@ -187,12 +196,8 @@ partsPool.prototype.get = function (x,y,index,targetSprite){
 	return this.parts[i];
 }
 shipPart = function(x,y,sheet,index,targetSprite){
-	this.offsetx = x;
-	this.offsety = y;
 	this.game = game;
-	this.target = targetSprite;
 	this.sprite = game.add.sprite(x,y,sheet,index);
-	this.component = index;
 	this.initShipPart(x,y,index,targetSprite);
 };
 shipPart.prototype.initShipPart = function (x,y,index,targetSprite){
@@ -206,13 +211,15 @@ shipPart.prototype.initShipPart = function (x,y,index,targetSprite){
 	if(typeof(index)!='undefined'){
 		this.component = index;
 	}
+	this.sprite.owneralive = true;
 	if(typeof(targetSprite)!='undefined'){
 		this.target = targetSprite;
+		this.sprite.owneralive = targetSprite.alive;
 	}
 	this.sprite.loadTexture('parts', this.component);
 	this.alive = true;
 	this.sprite.alive=true;
-	this.target = targetSprite;
+	this.sprite.visible = true;
 	this.sprite.reset(this.offsetx,this.offsety);
 	this.sprite.anchor.setTo(0.5,0.5);
 	this.sprite.bringToTop();
@@ -358,7 +365,6 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 					spawnComponent(this.parts[j].component, this.sprite.x, this.sprite.y);
 					this.parts[j].sprite.kill();	
 				}else{
-					this.parts[j].sprite.lifespan = eo3.randomRange(1500,3000);
 					this.parts[j].sprite.body.velocity = game.physics.velocityFromRotation(this.game.physics.angleBetween(this.sprite, this.parts[j].sprite), 200+eo3.randomRange(0,10*dmg));
 					this.parts[j].sprite.body.angularVelocity=eo3.randomRange((dmg+2*14),(dmg+2)*62);					
 					if(typeof(bulletVelocity)!='undefined'){
@@ -690,7 +696,6 @@ playerShip.prototype.destroyParts = function() {
 			for (var j = 0; j < this.parts.length; j++) {
 
 				if (dmg != 31337){
-					this.parts[j].sprite.lifespan = eo3.randomRange(1500,3000);
 					this.parts[j].sprite.body.velocity = game.physics.velocityFromRotation(game.physics.angleBetween(this.sprite, this.parts[j].sprite), eo3.randomRange(200,400));
 					this.parts[j].sprite.body.angularVelocity=eo3.randomRange((dmg+2*14),(dmg+2)*62);	
 				}else{
@@ -1400,7 +1405,7 @@ playerShip.prototype.destroyParts = function() {
 			playerStats = new playerMeta ();
 
 			dummy=game.add.sprite(0,0,'parts',0);
-			dummy.visible=false;
+			dummy.kill();
 
 			pool = new partsPool();
 			player = new playerShip(defaultPlayerShip);
