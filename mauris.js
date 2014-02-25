@@ -226,7 +226,6 @@ shipPart.prototype.initShipPart = function (x,y,index,targetSprite){
 	this.sprite.body.exchangeVelocity=false;
 }
 shipPart.prototype.update = function(){
-	this.sprite.owneralive = this.target.alive;
 	if (this.target.alive && this.alive) {
 		this.sprite.angle = this.target.angle;
 		this.sprite.x = this.target.x + (this.offsetx * Math.cos(game.math.degToRad(this.target.angle)));
@@ -270,8 +269,8 @@ enemyShip = function (index, game, targetSprite, bullets, shipList) {
 enemyShip.prototype.initEnemyShip = function(ship) {
 
 	console.log('initEnemyShip ' + this.sprite.name);
-	var x = this.target.x + (eo3.randomSign() * eo3.randomRange(750,2000));
-	var y = this.target.y + (eo3.randomSign() * eo3.randomRange(750,2000));
+	var x = this.target.body.x + (eo3.randomSign() * eo3.randomRange(750,2000));
+	var y = this.target.body.y + (eo3.randomSign() * eo3.randomRange(750,2000));
 	this.sprite.reset(x,y);
 	this.ship = this.shipList[Math.floor(eo3.randomRange(0,this.shipList.length))];
 	this.destroyParts()
