@@ -226,6 +226,7 @@ shipPart.prototype.initShipPart = function (x,y,index,targetSprite){
 	this.sprite.body.exchangeVelocity=false;
 }
 shipPart.prototype.update = function(){
+	this.sprite.owneralive = this.target.alive;
 	if (this.target.alive && this.alive) {
 		this.sprite.angle = this.target.angle;
 		this.sprite.x = this.target.x + (this.offsetx * Math.cos(game.math.degToRad(this.target.angle)));
