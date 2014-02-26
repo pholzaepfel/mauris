@@ -681,7 +681,10 @@ playerShip.prototype.initPlayerShip = function (ship) {
 	this.sprite.body.bounce.setTo(0, 0);
 	this.sprite.body.collideWorldBounds = true; 
 	this.alt = function(){
+		if(game.time.now>this.nextShield){
 		sparks(pew,this.sprite);
+		this.nextShield=game.time.now+1000;
+		}
 	}
 	if(typeof(ship)=='undefined'){
 		this.ship = ships[Math.floor(eo3.randomRange(0,ships.length))];
