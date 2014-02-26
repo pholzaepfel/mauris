@@ -616,6 +616,7 @@ function preload () {
 
 	game.load.spritesheet('parts', 'assets/parts.png', 16, 16);
 	game.load.image('station', 'assets/station.png');
+	game.load.image('partswindow', 'assets/partswindow.png');
 	game.load.spritesheet('bullet', 'assets/bullets.png',16,16);
 	game.load.image('starfield2', 'assets/starfield2.png');
 	game.load.image('starfield3', 'assets/starfield3.png');
@@ -938,11 +939,14 @@ gameUI.prototype.resetRadar = function() {
 }
 gameUI.prototype.initCombatUi = function() {
 
-	this.partsSelector = game.add.sprite(player.sprite.x-300,player.sprite.y-100,'parts',0);
+	this.partsSelector = game.add.sprite(-300,-100,'parts',0);
 	this.partsSelector.visible = false;
 	this.tempStation = game.add.sprite(0,0,'station');
 	this.tempStation.anchor.setTo(0.5,0.5);
 	this.tempStation.visible = false;
+	this.partswindow = game.add.sprite(-364,-132,'partswindow');
+	this.partswindow.anchor.setTo(0,0);
+	this.partswindow.visible = false;
 	destroyIfExists(this.creditLine);
 	this.creditLine = game.add.text(200,100, '',{ font:'14px monospace', fill: 'rgb(64,255,16)', align: 'right' });
 	this.creditLine.flash = 0;
@@ -1175,6 +1179,9 @@ gameUI.prototype.partsUI = function (ship) {
 	this.updatePart();
 	this.tempStation.visible=true;
 	this.tempStation.bringToTop();
+	this.partswindow.visible=true;
+	this.partswindow.bringToTop();
+	this.partsSelector.bringToTop();
 	this.partsSelector.scale.setTo(4,4);
 	this.partsSelector.inputEnabled = true;
 	this.partsSelector.events.onInputDown.add(selectPart);
@@ -1200,6 +1207,7 @@ gameUI.prototype.destroyParts = function() {
 }
 
 gameUI.prototype.endPartsUI = function () {
+	this.partswindow.visible = false;
 	this.tempStation.visible = false;
 	this.partsSelector.visible=false;
 	var ship = this.partsArray();
