@@ -98,7 +98,7 @@ var cmp = [
 	'id':8,
 	'drops':true,
 	'name':'Shield Generator',
-	'flavor':'doesn\'t turn on',
+	'flavor':'press DOWN for invincibility',
 	'bonus':function(target){
 		target.alt=function(){
 			if(this.energy>0.1){				
@@ -1070,10 +1070,27 @@ var cmp = [
 {
 	'id':100,
 	'drops':true,
-	'name':'Special Device',
-	'flavor':'--',
+	'name':'Cloaking Device',
+	'flavor':'hold DOWN to throw off attackers',
 	'bonus':function(target){
-		target.TODO=1;
+		target.alt=function(){
+			if(this.energy>0.1){
+				this.energy-=0.1;
+				if(game.time.now>this.nextShield){
+				boom(explosions,1,this.sprite.x,this.sprite.y);
+				}
+				if(this.sprite.profile>100){
+					this.sprite.profile-=100;
+				}else{
+					this.sprite.profile=0;
+				}
+				for(var i=0;i<this.parts.length;i++){
+					this.nextShield=game.time.now+250;
+					this.parts[i].sprite.alpha=0.5;
+				}
+			}
+		
+		}
 	}
 },
 {

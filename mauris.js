@@ -771,6 +771,14 @@ playerShip.prototype.update = function(){
 	if(this.alive){
 	if(game.time.now>this.nextShield){
 		this.shield=false;
+		if(this.parts.length){
+		if(this.parts[0].sprite.alpha<1){
+						for(var i=0;i<this.parts.length;i++){
+					this.parts[i].sprite.alpha+=0.02;
+				}
+	
+		}
+		}
 	}
 		if(game.time.now>this.nextProfileDecay){
 			if (Math.abs(this.sprite.profile-this.sprite.profileMax) < this.profileDecay)	{	
