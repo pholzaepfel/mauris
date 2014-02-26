@@ -283,6 +283,7 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 	this.ai = 1;
 	this.alive=true;
 	this.behavior=defaultBehavior;
+	this.nextShield=0;
 	if(Math.random()<0.2){
 		this.behavior='chasing';
 	}
@@ -340,7 +341,11 @@ enemyShip.prototype.destroyParts = function() {
 
 enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 
+if(this.shield){
+		boom(explosions,4,this.sprite.x,this.sprite.y);
+	}else{
 	this.health -= damageCoef * dmg;
+	}
 
 	if(typeof(aggro)!='undefined'){
 		if((aggro.profile*2)/((this.target.profile)+(aggro.profile*2))>Math.random()){					
@@ -434,6 +439,10 @@ enemyShip.prototype.update = function() {
 					this.sprite.body.angularVelocity=eo3.randomRange(25,100)*eo3.randomSign();
 				}
 			}
+
+	if(game.time.now>this.nextShield){
+		this.shield=false;
+	}
 
 	if(this.ai==2){
 		//init asteroid stuff
@@ -688,7 +697,11 @@ playerShip.prototype.initPlayerShip = function (ship) {
 }
 playerShip.prototype.damage = function(dmg, aggro) {
 
+	if(this.shield){
+		boom(explosions,4,this.sprite.x,this.sprite.y);
+	}else{
 	this.health -= damageCoef * dmg;
+	}
 
 	if (this.health <= 0){
 		bigBoom(explosions,this.sprite.x,this.sprite.y);
@@ -756,6 +769,9 @@ playerShip.prototype.fire = function(){
 };
 playerShip.prototype.update = function(){
 	if(this.alive){
+	if(game.time.now>this.nextShield){
+		this.shield=false;
+	}
 		if(game.time.now>this.nextProfileDecay){
 			if (Math.abs(this.sprite.profile-this.sprite.profileMax) < this.profileDecay)	{	
 				this.sprite.profile=this.sprite.profileMax;
@@ -1488,13 +1504,6 @@ function explosionAnimate(s) {
 }
 
 
-function shieldCheck(s) {
-	if(game.physics.distanceBetween(s,player.sprite)<player.sprite.width*4){
-		boom(explosions, s.bulletSprite, s.x, s.y);
-		boom(explosions, 4, s.x, s.y);
-		s.kill();
-	}	
-}	
 function fadeSpark(s) {
 	s.alpha-=0.03;
 	s.scale.setTo(s.scale.x*1.03,s.scale.y*1.03);
@@ -1610,7 +1619,9 @@ function update () {
 						ui.partsUI(player.ship);
 						nextUIDelay=game.time.now+1000;
 					}else{
-						player.alt();
+						if(player.alive){
+							player.alt();
+						}
 					}
 		}
 		player.update();

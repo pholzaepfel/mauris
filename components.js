@@ -51,11 +51,11 @@ var cmp = [
 		target.turnRate+=0.4;
 		target.acceleration+=0.2;
 		target.alt=function(){
-			if(player.energy>0.1){
-				player.energy-=0.1;
-				player.sprite.body.velocity.x+=Math.cos(player.sprite.rotation)*5;
-				player.sprite.body.velocity.y+=Math.sin(player.sprite.rotation)*5;
-				player.speed=player.acceleration;
+			if(this.energy>0.1){
+				this.energy-=0.1;
+				this.sprite.body.velocity.x+=Math.cos(this.sprite.rotation)*5;
+				this.sprite.body.velocity.y+=Math.sin(this.sprite.rotation)*5;
+				this.speed=this.acceleration;
 			}
 		}
 	}
@@ -101,12 +101,12 @@ var cmp = [
 	'flavor':'doesn\'t turn on',
 	'bonus':function(target){
 		target.alt=function(){
-			if(player.energy>0.1){				
-				player.energy-=0.1;
-				enemyBullets.forEachAlive(shieldCheck,this);
-				if(game.time.now > player.nextShield){
-					player.nextShield=game.time.now+25;
-					shieldEffect(explosions, 4, player.sprite.x, player.sprite.y, player.sprite.body.velocity.x, player.sprite.body.velocity.y);
+			if(this.energy>0.1){				
+				this.energy-=0.1;
+				if(game.time.now > this.nextShield){
+					this.nextShield=game.time.now+50;
+					this.shield=true;
+					shieldEffect(explosions, 4, this.sprite.x, this.sprite.y, this.sprite.body.velocity.x, this.sprite.body.velocity.y);
 				}
 			}
 		}
@@ -380,7 +380,7 @@ var cmp = [
 	'bonus':function(target){
 		target.turnRate+=0.3;
 		target.acceleration+=0.2;
-		target.heatlth+=4;
+		target.health+=4;
 	}
 },
 {
