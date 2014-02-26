@@ -116,7 +116,7 @@ var cmp = [
 	'id':9,
 	'drops':true,
 	'name':'Mineral Scanner',
-	'flavor':'',
+	'flavor':'track more enemies and find more loot',
 	'bonus':function(target){
 		target.radarTargets+=1;
 		target.dropRate+=0.01;
@@ -126,7 +126,7 @@ var cmp = [
 	'id':10,
 	'drops':true,
 	'name':'Fusion Core',
-	'flavor':'--',
+	'flavor':'improves recharge speed and maneuverability',
 	'bonus':function(target){
 		target.energyMax+=2;
 		target.energyRate*=0.9;
@@ -138,7 +138,7 @@ var cmp = [
 	'id':11,
 	'drops':true,
 	'name':'Fusion Core',
-	'flavor':'--',
+	'flavor':'improves recharge speed and maneuverability',
 	'bonus':function(target){
 		target.energyMax+=2;
 		target.energyRate*=0.9;
@@ -149,8 +149,8 @@ var cmp = [
 {
 	'id':12,
 	'drops':true,
-	'name':'Xenoform Resprite',
-	'flavor':'--',
+	'name':'Xenoform Reactor',
+	'flavor':'hums with power. very valuable',
 	'bonus':function(target){
 		target.energyRate*=0.5;
 		target.sprite.profile+=100;
@@ -161,9 +161,9 @@ var cmp = [
 	'id':13,
 	'drops':true,
 	'name':'Fusion Bolt Cannon',
-	'flavor':'--',
+	'flavor':'covered in warnings in multiple languages',
 	'bonus':function(target){
-		target.bulletSprite=5; //TODO
+		target.bulletSprite=5; 
 		target.fireEnergy*=2;
 		if(target.energyMax<target.fireEnergy){
 			target.energyMax=target.fireEnergy;
@@ -333,7 +333,7 @@ var cmp = [
 	'id':30,
 	'drops':true,
 	'name':'Battle-worn Panel',
-	'flavor':'--',
+	'flavor':'medium armor, bonus damage',
 	'bonus':function(target){
 		target.health+=6;
 		target.fireDamage+=1;
@@ -344,16 +344,41 @@ var cmp = [
 	'id':31,
 	'drops':true,
 	'name':'Reeunk Afterburner',
-	'flavor':'--',
+	'flavor':'hold DOWN to blaze forward and burn enemies in your wake',
 	'bonus':function(target){
-		target.TODO=1;
+		target.acceleration+=0.2;
+		target.alt=function(){
+			if(this.energy>0.2){
+				this.energy-=0.2;
+				this.sprite.body.velocity.x+=Math.cos(this.sprite.rotation)*9;
+				this.sprite.body.velocity.y+=Math.sin(this.sprite.rotation)*9;
+				this.speed=this.acceleration;
+				if(game.time.now>this.nextShield){
+				var bullet=this.spawnBullet();
+				bullet.loadTexture('explosions',2);
+				bullet.reset(this.sprite.x - (Math.cos(this.sprite.rotation)*(this.sprite.body.width)), this.sprite.y - (Math.sin(this.sprite.rotation)*(this.sprite.body.width)));
+					boom(explosions,2,bullet.x,bullet.y);
+				bullet.rotation=Math.random()*Math.PI;
+				bullet.alpha=0.4;
+				bullet.damage=6;
+				bullet.body.velocity.x=0;
+				bullet.body.velocity.y=0;
+				bullet.scale.setTo(2,2);
+				bullet.lifespan=666;
+				bullet.body.angularVelocity=666;
+				this.nextShield=game.time.now+100;
+				}
+
+			}
+		}
+
 	}
 },
 {
 	'id':32,
 	'drops':true,
 	'name':'Radioactive Thruster',
-	'flavor':'--',
+	'flavor':'mostly safe',
 	'bonus':function(target){
 		target.acceleration+=1;
 		target.turnRate+=0.2;
@@ -364,7 +389,7 @@ var cmp = [
 	'id':33,
 	'drops':true,
 	'name':'Derelict Crewpod',
-	'flavor':'--',
+	'flavor':'extra crewhands speed energy regeneration',
 	'bonus':function(target){
 		target.health+=2;
 		target.energyRate*=0.8;
@@ -376,7 +401,7 @@ var cmp = [
 	'id':34,
 	'drops':true,
 	'name':'Filthy Cockpit',
-	'flavor':'--',
+	'flavor':'still reliable and fast!',
 	'bonus':function(target){
 		target.turnRate+=0.3;
 		target.acceleration+=0.2;
@@ -387,7 +412,7 @@ var cmp = [
 	'id':35,
 	'drops':true,
 	'name':'Fusion Thrust',
-	'flavor':'--',
+	'flavor':'clean energy thruster',
 	'bonus':function(target){
 		target.acceleration+=0.7;
 		target.health+=1;
@@ -397,7 +422,7 @@ var cmp = [
 	'id':36,
 	'drops':true,
 	'name':'Standard Quarters',
-	'flavor':'--',
+	'flavor':'more energy and health',
 	'bonus':function(target){
 		target.health+=3;
 		target.energyAmount+1;
@@ -409,7 +434,7 @@ var cmp = [
 	'id':37,
 	'drops':true,
 	'name':'Command Center',
-	'flavor':'--',
+	'flavor':'superior damage control',
 	'bonus':function(target){
 		target.health+=6;
 		target.turnRate+=0.2;
@@ -442,7 +467,7 @@ var cmp = [
 	'id':40,
 	'drops':true,
 	'name':'Experimental Navigation System',
-	'flavor':'--',
+	'flavor':'causes a minor quantum disturbance',
 	'bonus':function(target){
 		target.turnSpeed+=0.6;
 		target.fireRate*=0.9;
@@ -454,7 +479,7 @@ var cmp = [
 	'id':41,
 	'drops':true,
 	'name':'Force Multiplier',
-	'flavor':'--',
+	'flavor':'spray \'n pray',
 	'bonus':function(target){
 		target.bulletBehavior.push(function(bullet){
 			bullet.rotation+=Math.random()*0.4-0.2;
@@ -469,7 +494,7 @@ var cmp = [
 	'id':42,
 	'drops':true,
 	'name':'Fusion Core',
-	'flavor':'--',
+	'flavor':'improves recharge speed and maneuverability',
 	'bonus':function(target){
 		target.energyMax+=2;
 		target.energyRate*=0.9;
@@ -481,7 +506,7 @@ var cmp = [
 	'id':43,
 	'drops':true,
 	'name':'Fusion Core',
-	'flavor':'--',
+	'flavor':'improves recharge speed and maneuverability',
 	'bonus':function(target){
 		target.energyMax+=2;
 		target.energyRate*=0.9;
@@ -493,7 +518,7 @@ var cmp = [
 	'id':44,
 	'drops':true,
 	'name':'Thrust Package',
-	'flavor':'--',
+	'flavor':'fast and flashy',
 	'bonus':function(target){
 		target.fireDamage+=1;
 		target.acceleration+=0.6;
@@ -504,7 +529,7 @@ var cmp = [
 	'id':45,
 	'drops':true,
 	'name':'Secure Dormitory',
-	'flavor':'--',
+	'flavor':'heavily armored, but leeches energy',
 	'bonus':function(target){
 		target.health+=10;
 		target.energyRate*=1.2;
@@ -516,7 +541,7 @@ var cmp = [
 	'id':46,
 	'drops':true,
 	'name':'Flexible Grid',
-	'flavor':'--',
+	'flavor':'improves maneuverability and interferes with sensors',
 	'bonus':function(target){
 		target.turnRate+=0.3;
 		target.profileDecay+=20;
@@ -526,16 +551,21 @@ var cmp = [
 	'id':47,
 	'drops':true,
 	'name':'Gargantuan Plasma Thrower',
-	'flavor':'--',
+	'flavor':'burn, baby',
 	'bonus':function(target){
 		target.bulletBehavior.push(function(bullet){
 			bullet.rotation+=Math.random()*0.5-0.25;
+			bullet.loadTexture('explosions',2);
+			bullet.body.angularVelocity=eo3.randomRange(600,900);
+			bullet.alpha=eo3.randomRange(0.5,0.7);
 			game.physics.velocityFromRotation(bullet.rotation, bullet.fireVelocity, bullet.body.velocity);
 		});
 		target.bulletSprite=5;
-		target.fireRate*=0.5;
+		target.fireDamage+=2;
+		target.fireRate*=0.4;
 		target.fireEnergy*=0.6;
 		target.fireRange*=0.6;
+		target.fireVelocity*=0.6;
 		target.sprite.profile+=88;
 	}
 },
@@ -687,7 +717,7 @@ var cmp = [
 	'id':64,
 	'drops':true,
 	'name':'Targeting System',
-	'flavor':'--',
+	'flavor':'shows more targets on radar',
 	'bonus':function(target){
 		target.radarTargets+=2;
 		target.radarShowInEnemyRange=true;
@@ -697,7 +727,7 @@ var cmp = [
 	'id':65,
 	'drops':true,
 	'name':'Worn Armor Plating',
-	'flavor':'--',
+	'flavor':'heavy armor, increases mass',
 	'bonus':function(target){
 		target.health+=13;
 		target.acceleration*=0.8;
@@ -709,7 +739,7 @@ var cmp = [
 	'id':66,
 	'drops':true,
 	'name':'Discount Attitude Jet',
-	'flavor':'--',
+	'flavor':'strafe moar noob',
 	'bonus':function(target){
 		target.turnRate+=0.7;
 		target.acceleration+=0.3;
@@ -719,7 +749,7 @@ var cmp = [
 	'id':67,
 	'drops':true,
 	'name':'Long Range Sensor',
-	'flavor':'--',
+	'flavor':'show more targets on radar',
 	'bonus':function(target){
 		target.radarTargets+=2;
 		target.radarShowInRange=true;
@@ -729,7 +759,7 @@ var cmp = [
 	'id':68,
 	'drops':true,
 	'name':'Durasteel Plating',
-	'flavor':'--',
+	'flavor':'strong armor, inhibits aim',
 	'bonus':function(target){
 		target.health+=18;
 		target.acceleration*=0.7;
@@ -741,7 +771,7 @@ var cmp = [
 	'id':69,
 	'drops':true,
 	'name':'Angular Ion Thrust',
-	'flavor':'--',
+	'flavor':'basic turning jet',
 	'bonus':function(target){
 		target.turnRate+=1
 	}
@@ -750,7 +780,7 @@ var cmp = [
 	'id':70,
 	'drops':true,
 	'name':'Low-Profile Wing',
-	'flavor':'--',
+	'flavor':'increases maneuverability, makes you less noticeable to enemies',
 	'bonus':function(target){
 		target.sprite.profile-=25;//refund standard profile cost
 		target.sprite.profile*=0.9;
@@ -763,7 +793,7 @@ var cmp = [
 	'id':71,
 	'drops':true,
 	'name':'Command Deck',
-	'flavor':'--',
+	'flavor':'enhances many systems',
 	'bonus':function(target){
 		target.health+=5;
 		target.turnSpeed+=0.1;
@@ -777,7 +807,7 @@ var cmp = [
 	'id':72,
 	'drops':true,
 	'name':'Crew Pod',
-	'flavor':'--',
+	'flavor':'improves health and energy recharge',
 	'bonus':function(target){
 		target.health+=6;
 		target.energyMax-=2;
@@ -789,12 +819,12 @@ var cmp = [
 	'id':73,
 	'drops':true,
 	'name':'Mining Laser',
-	'flavor':'--',
+	'flavor':'increases chance to get loots',
 	'bonus':function(target){
 		target.fireDamage+=2;
 		target.fireRate+=100;
 		target.sprite.profile+=20;	
-		target.dropRate+=0.01;
+		target.dropRate+=0.04;
 		target.bulletSprite=4;
 	}
 },

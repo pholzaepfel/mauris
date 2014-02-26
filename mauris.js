@@ -407,24 +407,33 @@ enemyShip.prototype.fire = function () {
 			this.energy>=this.fireEnergy){
 				this.nextFire = this.game.time.now + this.fireRate;
 				this.energy-=this.fireEnergy;
-				var bullet = this.bullets.getFirstDead();
-				bullet.rotation=this.sprite.rotation;
-				bullet.damage=this.fireDamage;
-				bullet.reset(this.sprite.x + (Math.cos(this.sprite.rotation)*(this.sprite.body.width)), this.sprite.y + (Math.sin(this.sprite.rotation)*(this.sprite.body.width)));
-				bullet.lifespan = this.fireRange; 
-				bullet.loadTexture('bullet', this.bulletSprite);
-				bullet.bulletSprite=this.bulletSprite;
-				bullet.body.exchangeVelocity = false;
-				bullet.fireVelocity=this.fireVelocity;
-				bullet.owner=this.sprite;
-				game.physics.velocityFromRotation(bullet.rotation, bullet.fireVelocity, bullet.body.velocity);
-				bullet.body.velocity.x += 0.5 * this.sprite.body.velocity.x;
-				bullet.body.velocity.y += 0.5 * this.sprite.body.velocity.y;
-				bullet.target=player;
-				for (var i = 0; i < this.bulletBehavior.length; i++) {
-					this.bulletBehavior[i](bullet);
-				}
+				this.spawnBullet();
 			}
+
+}
+enemyShip.prototype.spawnBullet = function () {
+	var bullet = this.bullets.getFirstDead();
+	bullet.rotation=this.sprite.rotation;
+	bullet.damage=this.fireDamage;
+	bullet.reset(this.sprite.x + (Math.cos(this.sprite.rotation)*(this.sprite.body.width)), this.sprite.y + (Math.sin(this.sprite.rotation)*(this.sprite.body.width)));
+	bullet.lifespan = this.fireRange; 
+	bullet.alpha=1;
+	bullet.scale.setTo(1,1);
+	bullet.angularVelocity=0;
+	bullet.loadTexture('bullet', this.bulletSprite);
+	bullet.bulletSprite=this.bulletSprite;
+	bullet.body.exchangeVelocity = false;
+	bullet.fireVelocity=this.fireVelocity;
+	bullet.owner=this.sprite;
+	game.physics.velocityFromRotation(bullet.rotation, bullet.fireVelocity, bullet.body.velocity);
+	bullet.body.velocity.x += 0.5 * this.sprite.body.velocity.x;
+	bullet.body.velocity.y += 0.5 * this.sprite.body.velocity.y;
+	bullet.target=player;
+	for (var i = 0; i < this.bulletBehavior.length; i++) {
+		this.bulletBehavior[i](bullet);
+	}
+
+	return bullet;
 
 }
 enemyShip.prototype.update = function() {
@@ -522,8 +531,8 @@ enemyShip.prototype.update = function() {
 					if(targetDistance < 0.75 * this.fireRange){
 						this.behavior='strafing';
 					}
-					targetLocation.x += this.target.body.velocity.x;//hardmode! * Math.abs(targetDistance/this.sprite.body.velocity.x);			
-					targetLocation.y += this.target.body.velocity.y;//hardmode! * Math.abs(targetDistance/this.sprite.body.velocity.x);			
+					targetLocation.x += this.target.body.velocity.x * Math.abs(targetDistance/this.sprite.body.velocity.x);			
+					targetLocation.y += this.target.body.velocity.y * Math.abs(targetDistance/this.sprite.body.velocity.y);			
 					var targetDistance = this.game.math.distance(this.sprite.x, this.sprite.y, targetLocation.x, targetLocation.y);
 					var targetAngle = this.game.math.angleBetween(this.sprite.x, this.sprite.y, targetLocation.x, targetLocation.y);
 				}
@@ -747,29 +756,36 @@ playerShip.prototype.fire = function(){
 		this.sprite.profile+=Math.floor(this.fireDamage*40);
 		this.nextFire = game.time.now + this.fireRate;
 		this.energy -= this.fireEnergy;
-		var bullet = bullets.getFirstDead();
-		bullet.loadTexture('bullet', this.bulletSprite);
-		bullet.bulletSprite = this.bulletSprite;
-		bullet.damage = this.fireDamage * targetDamageCoef;
-		bullet.lifespan = this.fireRange;
-		bullet.body.mass = this.fireMass;
-		bullet.reset(this.sprite.x + (Math.cos(this.sprite.rotation)*(this.sprite.body.width)*0.75), this.sprite.y + (Math.sin(this.sprite.rotation)*(this.sprite.body.width)*0.75));
-		bullet.rotation = this.sprite.rotation;
-		bullet.body.exchangeVelocity = false;
-		bullet.owner=this.sprite;
-		bullet.fireVelocity = this.fireVelocity; //mostly useless but want this to be accessible for bulletBehaviors
-		game.physics.velocityFromRotation(bullet.rotation, bullet.fireVelocity, bullet.body.velocity);
-		bullet.body.velocity.x += 0.5 * this.sprite.body.velocity.x;
-		bullet.body.velocity.y += 0.5 * this.sprite.body.velocity.y;
-
-		for (var i = 0; i < this.bulletBehavior.length; i++) {
-			this.bulletBehavior[i](bullet);
-		}
-
+		this.spawnBullet();
 	}
 
 
 };
+playerShip.prototype.spawnBullet = function(){
+
+	var bullet = bullets.getFirstDead();
+	bullet.loadTexture('bullet', this.bulletSprite);
+	bullet.bulletSprite = this.bulletSprite;
+	bullet.damage = this.fireDamage * targetDamageCoef;
+	bullet.lifespan = this.fireRange;
+	bullet.body.mass = this.fireMass;
+	bullet.angularVelocity=0;
+	bullet.alpha=1;
+	bullet.scale.setTo(1,1);
+	bullet.reset(this.sprite.x + (Math.cos(this.sprite.rotation)*(this.sprite.body.width)*0.75), this.sprite.y + (Math.sin(this.sprite.rotation)*(this.sprite.body.width)*0.75));
+	bullet.rotation = this.sprite.rotation;
+	bullet.body.exchangeVelocity = false;
+	bullet.owner=this.sprite;
+	bullet.fireVelocity = this.fireVelocity; //mostly useless but want this to be accessible for bulletBehaviors
+	game.physics.velocityFromRotation(bullet.rotation, bullet.fireVelocity, bullet.body.velocity);
+	bullet.body.velocity.x += 0.5 * this.sprite.body.velocity.x;
+	bullet.body.velocity.y += 0.5 * this.sprite.body.velocity.y;
+
+	for (var i = 0; i < this.bulletBehavior.length; i++) {
+		this.bulletBehavior[i](bullet);
+	}
+	return bullet;
+}
 playerShip.prototype.update = function(){
 	if(this.alive){
 	if(game.time.now>this.nextShield){
@@ -1369,6 +1385,7 @@ function create () {
 		asteroids.push([-1, 18, 19, -1, 18, 23, 25, 19, 106, 30, 30, 107, -1, 106, 107, -1]);
 		asteroids.sort(lengthSort);
 
+		ships.push([-1, 106, 3, 81, -1, 69, 66, 132, -1, -1, -1, 42, 64, 34, -1, -1, 104, 132, -1, -1, -1, 106, 3, 77, -1]);
 		ships.push([129,128,33,-1,66,130,-1,-1,-1]); 
 		ships.push([12,9,131,71,71,-1,35,1,41,104,105,73,-1,31,131,73,40,77,-1,109,103,1,47,73,-1,-1,-1,108,-1,-1,-1,-1,-1,-1,-1,-1]);  
 		ships.push([66, 34, -1, -1]) //default player ship? 
@@ -1637,12 +1654,12 @@ function update () {
 		}
 		player.update();
 		// scrolling
-		backdrop1.tilePosition.x = -0.25*game.camera.x;
-		backdrop1.tilePosition.y = -0.25*game.camera.y;
-		backdrop2.tilePosition.x = -0.40*game.camera.x;
-		backdrop2.tilePosition.y = -0.40*game.camera.y;
-		backdrop3.tilePosition.x = -0.6*game.camera.x;
-		backdrop3.tilePosition.y = -0.6*game.camera.y;
+		backdrop1.tilePosition.x = -0.1*game.camera.x;
+		backdrop1.tilePosition.y = -0.1*game.camera.y;
+		backdrop2.tilePosition.x = -0.2*game.camera.x;
+		backdrop2.tilePosition.y = -0.2*game.camera.y;
+		backdrop3.tilePosition.x = -0.4*game.camera.x;
+		backdrop3.tilePosition.y = -0.4*game.camera.y;
 
 
 
