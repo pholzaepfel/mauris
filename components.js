@@ -10,7 +10,7 @@ var cmp = [
 	'id':1,
 	'drops':true,
 	'name':'Rusted Wing',
-	'flavor':'--',
+	'flavor':'improves maneuverability, inhibits energy return',
 	'bonus':function(target){
 		target.turnRate+=0.9;
 		target.acceleration+=0.6;
@@ -21,7 +21,7 @@ var cmp = [
 	'id':2,
 	'drops':true,
 	'name':'Ancient Railgun',
-	'flavor':'--',
+	'flavor':'fires long-ranged slugs, slow rate of fire',
 	'bonus':function(target){
 		target.bulletSprite=3;
 		target.fireEnergy+=1;
@@ -36,7 +36,7 @@ var cmp = [
 	'id':3,
 	'drops':true,
 	'name':'Capacitor Unit',
-	'flavor':'--',
+	'flavor':'basic energy storage',
 	'bonus':function(target){
 		target.energyMax+=10;
 		target.energyAmount+=1;
@@ -46,17 +46,25 @@ var cmp = [
 	'id':4,
 	'drops':true,
 	'name':'VariJet',
-	'flavor':'--',
+	'flavor':'hold DOWN for a burst of speed',
 	'bonus':function(target){
-		target.turnRate+=0.5;
-		target.acceleration+=0.3;
+		target.turnRate+=0.4;
+		target.acceleration+=0.2;
+		target.alt=function(){
+			if(player.energy>0.1){
+				player.energy-=0.1;
+				player.sprite.body.velocity.x+=Math.cos(player.sprite.rotation)*5;
+				player.sprite.body.velocity.y+=Math.sin(player.sprite.rotation)*5;
+				player.speed=player.acceleration;
+			}
+		}
 	}
 },
 {
 	'id':5,
 	'drops':true,
 	'name':'Overpowered Burst Laser',
-	'flavor':'--',
+	'flavor':'flashy and attracts attention',
 	'bonus':function(target){
 		target.fireVelocity+=200;
 		target.fireRate*=0.25;
@@ -90,19 +98,28 @@ var cmp = [
 	'id':8,
 	'drops':true,
 	'name':'Shield Generator',
-	'flavor':'--',
+	'flavor':'doesn\'t turn on',
 	'bonus':function(target){
-		target.TODO=1;
+		target.alt=function(){
+			if(player.energy>0.1){				
+				player.energy-=0.1;
+				enemyBullets.forEachAlive(shieldCheck,this);
+				if(game.time.now > player.nextShield){
+					player.nextShield=game.time.now+25;
+					shieldEffect(explosions, 4, player.sprite.x, player.sprite.y, player.sprite.body.velocity.x, player.sprite.body.velocity.y);
+				}
+			}
+		}
 	}
 },
 {
 	'id':9,
 	'drops':true,
 	'name':'Mineral Scanner',
-	'flavor':'--',
+	'flavor':'',
 	'bonus':function(target){
 		target.radarTargets+=1;
-		target.radarOreTargets+=2; //TODO
+		target.dropRate+=0.01;
 	}
 },
 {
@@ -146,7 +163,7 @@ var cmp = [
 	'name':'Fusion Bolt Cannon',
 	'flavor':'--',
 	'bonus':function(target){
-		target.bulletSprite=0; //TODO
+		target.bulletSprite=5; //TODO
 		target.fireEnergy*=2;
 		if(target.energyMax<target.fireEnergy){
 			target.energyMax=target.fireEnergy;
@@ -515,6 +532,7 @@ var cmp = [
 			bullet.rotation+=Math.random()*0.5-0.25;
 			game.physics.velocityFromRotation(bullet.rotation, bullet.fireVelocity, bullet.body.velocity);
 		});
+		target.bulletSprite=5;
 		target.fireRate*=0.5;
 		target.fireEnergy*=0.6;
 		target.fireRange*=0.6;
@@ -770,13 +788,14 @@ var cmp = [
 {
 	'id':73,
 	'drops':true,
-	'name':'Ion-Bolt Gun',
+	'name':'Mining Laser',
 	'flavor':'--',
 	'bonus':function(target){
 		target.fireDamage+=2;
 		target.fireRate+=100;
-
 		target.sprite.profile+=20;	
+		target.dropRate+=0.01;
+		target.bulletSprite=4;
 	}
 },
 {
@@ -844,6 +863,7 @@ var cmp = [
 		target.fireRate*=1.1;
 		target.fireEnergy*=0.5;
 		target.fireVelocity*=1.3;
+		target.bulletSprite=4;
 	}
 },
 {
@@ -1146,7 +1166,7 @@ var cmp = [
 	'flavor':'--',
 	'bonus':function(target){
 		target.sprite.profile+=25;
-		target.cashFlow+=0.1;
+		target.dropRate+=0.03;
 
 	}
 },
@@ -1157,7 +1177,7 @@ var cmp = [
 	'flavor':'--',
 	'bonus':function(target){
 		target.sprite.profile+=25;
-		target.cashFlow+=0.1; //TODO
+		target.dropRate+=0.03; //TODO
 	}
 },
 {
