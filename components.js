@@ -46,16 +46,16 @@ var cmp = [
 	'id':4,
 	'drops':true,
 	'name':'VariJet',
-	'flavor':'hold DOWN for a burst of speed',
+	'flavor':'hold DOWN to thrust backwards',
 	'bonus':function(target){
 		target.turnRate+=0.4;
 		target.acceleration+=0.2;
 		target.alt=function(){
 			if(this.energy>0.1){
 				this.energy-=0.1;
-				this.sprite.body.velocity.x+=Math.cos(this.sprite.rotation)*5;
-				this.sprite.body.velocity.y+=Math.sin(this.sprite.rotation)*5;
-				this.speed=this.acceleration;
+				this.sprite.body.velocity.x-=Math.cos(this.sprite.rotation)*this.acceleration*2;
+				this.sprite.body.velocity.y-=Math.sin(this.sprite.rotation)*this.acceleration*2;
+				this.speed=0.01;
 			}
 		}
 	}
