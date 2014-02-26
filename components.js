@@ -831,8 +831,8 @@ var cmp = [
 {
 	'id':74,
 	'drops':true,
-	'name':'Azure Plate',
-	'flavor':'--',
+	'name':'Habitat Module',
+	'flavor':'light and tough, with a bonus capacitor',
 	'bonus':function(target){
 		target.health+=4;
 		target.acceleration-=0.1;
@@ -843,8 +843,6 @@ var cmp = [
 {
 	'id':75,
 	'drops':true,
-	'name':'Azure Plate',
-	'flavor':'--',
 	'bonus':function(target){
 
 		target.health+=4;
@@ -1079,10 +1077,30 @@ var cmp = [
 	'id':98,
 	'drops':true,
 	'name':'Destroyed Airlock',
-	'flavor':'--',
+	'flavor':'press DOWN to unleash a damaging halo of contagion',
 	'bonus':function(target){
-		target.health-=1;
-		target.bulletDamage+=3;
+	target.alt=function(){
+			if(this.energy>6 || this.energy == this.energyMax){
+				this.energy-=6;	//if player has < 0 energy, it's effectively an extra recharge delay
+				if(game.time.now>this.nextShield){
+					for(var n=0; n<1;n+=0.075){
+				var bullet=this.spawnBullet();
+				bullet.loadTexture('explosions',4);
+				bullet.reset(this.sprite.x, this.sprite.y);
+				bullet.rotation=n*2*Math.PI;
+				game.physics.velocityFromRotation(bullet.rotation, 600, bullet.body.velocity);
+				bullet.alpha=0.3;
+				bullet.damage=12;
+				bullet.bulletSprite=4;
+				bullet.scale.setTo(2,2);
+				bullet.lifespan=400;
+				bullet.body.angularVelocity=999;
+					}
+				this.nextShield=game.time.now+100;
+				
+				}
+			}
+	}
 	}
 },
 {
@@ -1183,8 +1201,8 @@ var cmp = [
 {
 	'id':106,
 	'drops':true,
-	'name':'Azure Plate',
-	'flavor':'--',
+		'name':'Habitat Module',
+	'flavor':'light and tough, with a bonus capacitor',
 	'bonus':function(target){
 
 		target.health+=4;
@@ -1196,8 +1214,8 @@ var cmp = [
 {
 	'id':107,
 	'drops':true,
-	'name':'Azure Plate',
-	'flavor':'--',
+		'name':'Habitat Module',
+	'flavor':'light and tough, with a bonus capacitor',
 	'bonus':function(target){
 
 		target.health+=4;

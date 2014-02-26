@@ -147,10 +147,10 @@ dragPart = function(x,y,sheet,index){
 };
 dragPart.prototype.update = function(){
 	if(!game.input.activePointer.isDown && this.sprite.alive){
-		if(this.sprite.x >= ui.partsSelector.x &&
-				this.sprite.x <= ui.partsSelector.x + ui.partsSelector.width &&	
-				this.sprite.y >= ui.partsSelector.y &&
-				this.sprite.y <= ui.partsSelector.y + ui.partsSelector.height){
+		if(this.sprite.x >= ui.partswindow.x &&
+				this.sprite.x <= ui.partswindow.x + ui.partswindow.width &&	
+				this.sprite.y >= ui.partswindow.y &&
+				this.sprite.y <= ui.partswindow.y + ui.partswindow.height){
 					var n=0;
 					//prevent player from destroying the last part	
 					for (var i=0;i<ui.parts.length;i++){
