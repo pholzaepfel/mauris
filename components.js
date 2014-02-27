@@ -51,10 +51,10 @@ var cmp = [
 		target.turnRate+=0.4;
 		target.acceleration+=0.2;
 		target.alt=function(){
-			if(this.energy>0.1){
-				this.energy-=0.1;
-				this.sprite.body.velocity.x-=Math.cos(this.sprite.rotation)*this.acceleration*2;
-				this.sprite.body.velocity.y-=Math.sin(this.sprite.rotation)*this.acceleration*2;
+			if(this.energy>0.3){
+				this.energy-=0.3;
+				this.sprite.body.velocity.x-=Math.cos(this.sprite.rotation)*this.acceleration*6;
+				this.sprite.body.velocity.y-=Math.sin(this.sprite.rotation)*this.acceleration*6;
 				this.speed=0.01;
 			}
 		}

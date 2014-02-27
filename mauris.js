@@ -74,6 +74,13 @@ eo3.shipWithoutVoid = function (ship) {
 	}
 	return shipOut;
 };
+function diedSort(a, b) {
+	if(a.died>b.died){
+		return 1;
+	} else{
+		return -1;
+	}
+}
 function randomSort(a, b) {
 	if(Math.random()>0.5){
 		return 1;
@@ -185,10 +192,10 @@ partsPool = function(){
 	}
 };
 partsPool.prototype.get = function (x,y,index,targetSprite){
-	this.parts.sort(randomSort);
+	this.parts.sort(diedSort);
 
 	for (var i=0;i<this.parts.length;i++){
-		if(!this.parts[i].sprite.owneralive){
+		if(!this.parts[i].sprite.owneralive && game.time.now > this.parts[i].died + 5000){
 			break;
 		}
 	}
@@ -228,6 +235,7 @@ shipPart.prototype.initShipPart = function (x,y,index,targetSprite){
 	this.sprite.anchor.setTo(0.5,0.5);
 	this.sprite.bringToTop();
 	this.sprite.body.exchangeVelocity=false;
+	this.died=0;
 }
 shipPart.prototype.update = function(){
 	if (this.target.alive && this.alive) {
@@ -272,7 +280,6 @@ enemyShip = function (index, game, targetSprite, bullets, shipList) {
 
 enemyShip.prototype.initEnemyShip = function(ship) {
 
-	console.log('initEnemyShip ' + this.sprite.name);
 	var x = this.target.body.x + (eo3.randomSign() * eo3.randomRange(750,2000));
 	var y = this.target.body.y + (eo3.randomSign() * eo3.randomRange(750,2000));
 	this.sprite.reset(x,y);
@@ -365,6 +372,7 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 		this.alive = false;
 		bigBoom(explosions,this.sprite.x,this.sprite.y);
 		for (var j = 0; j < this.parts.length; j++) {
+				this.parts[j].died=game.time.now;
 
 			if (dmg != 31337){
 				if(Math.random() < globalDropRate + player.dropRate){
@@ -724,6 +732,7 @@ playerShip.prototype.damage = function(dmg, aggro) {
 		bigBoom(explosions,this.sprite.x,this.sprite.y);
 		this.alive = false;
 		for (var j = 0; j < this.parts.length; j++) {
+				this.parts[j].died=game.time.now;
 
 			if (dmg != 31337){
 				this.parts[j].sprite.body.velocity = game.physics.velocityFromRotation(game.physics.angleBetween(this.sprite, this.parts[j].sprite), eo3.randomRange(200,400));
