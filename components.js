@@ -46,7 +46,7 @@ var cmp = [
 	'id':4,
 	'drops':true,
 	'name':'VariJet',
-	'flavor':'hold DOWN to thrust backwards',
+	'flavor':'hold RIGHT MOUSE to thrust backwards',
 	'bonus':function(target){
 		target.turnRate+=0.4;
 		target.acceleration+=0.2;
@@ -98,7 +98,7 @@ var cmp = [
 	'id':8,
 	'drops':true,
 	'name':'Shield Generator',
-	'flavor':'press DOWN for invincibility',
+	'flavor':'press RIGHT MOUSE for invincibility',
 	'bonus':function(target){
 		target.alt=function(){
 			if(this.energy>0.1){				
@@ -344,7 +344,7 @@ var cmp = [
 	'id':31,
 	'drops':true,
 	'name':'Reeunk Afterburner',
-	'flavor':'hold DOWN to blaze forward and burn enemies in your wake',
+	'flavor':'hold RIGHT MOUSE to blaze forward and burn enemies in your wake',
 	'bonus':function(target){
 		target.acceleration+=0.2;
 		target.alt=function(){
@@ -354,19 +354,19 @@ var cmp = [
 				this.sprite.body.velocity.y+=Math.sin(this.sprite.rotation)*9;
 				this.speed=this.acceleration;
 				if(game.time.now>this.nextShield){
-				var bullet=this.spawnBullet();
-				bullet.loadTexture('explosions',2);
-				bullet.reset(this.sprite.x - (Math.cos(this.sprite.rotation)*(this.sprite.body.width)), this.sprite.y - (Math.sin(this.sprite.rotation)*(this.sprite.body.width)));
+					var bullet=this.spawnBullet();
+					bullet.loadTexture('explosions',2);
+					bullet.reset(this.sprite.x - (Math.cos(this.sprite.rotation)*(this.sprite.body.width)), this.sprite.y - (Math.sin(this.sprite.rotation)*(this.sprite.body.width)));
 					boom(explosions,2,bullet.x,bullet.y);
-				bullet.rotation=Math.random()*Math.PI;
-				bullet.alpha=0.4;
-				bullet.damage=6;
-				bullet.body.velocity.x=0;
-				bullet.body.velocity.y=0;
-				bullet.scale.setTo(2,2);
-				bullet.lifespan=666;
-				bullet.body.angularVelocity=666;
-				this.nextShield=game.time.now+100;
+					bullet.rotation=Math.random()*Math.PI;
+					bullet.alpha=0.4;
+					bullet.damage=6;
+					bullet.body.velocity.x=0;
+					bullet.body.velocity.y=0;
+					bullet.scale.setTo(2,2);
+					bullet.lifespan=666;
+					bullet.body.angularVelocity=666;
+					this.nextShield=game.time.now+100;
 				}
 
 			}
@@ -842,6 +842,9 @@ var cmp = [
 },
 {
 	'id':75,
+	'name':'Habitat Module',
+	'flavor':'light and tough, with a bonus capacitor',
+
 	'drops':true,
 	'bonus':function(target){
 
@@ -1077,30 +1080,30 @@ var cmp = [
 	'id':98,
 	'drops':true,
 	'name':'Destroyed Airlock',
-	'flavor':'press DOWN to unleash a damaging halo of contagion',
+	'flavor':'press RIGHT MOUSE to unleash a damaging halo of contagion',
 	'bonus':function(target){
-	target.alt=function(){
+		target.alt=function(){
 			if(this.energy>6 || this.energy == this.energyMax){
 				this.energy-=6;	//if player has < 0 energy, it's effectively an extra recharge delay
 				if(game.time.now>this.nextShield){
 					for(var n=0; n<1;n+=0.075){
-				var bullet=this.spawnBullet();
-				bullet.loadTexture('explosions',4);
-				bullet.reset(this.sprite.x, this.sprite.y);
-				bullet.rotation=n*2*Math.PI;
-				game.physics.velocityFromRotation(bullet.rotation, 600, bullet.body.velocity);
-				bullet.alpha=0.3;
-				bullet.damage=12;
-				bullet.bulletSprite=4;
-				bullet.scale.setTo(2,2);
-				bullet.lifespan=400;
-				bullet.body.angularVelocity=999;
+						var bullet=this.spawnBullet();
+						bullet.loadTexture('explosions',4);
+						bullet.reset(this.sprite.x, this.sprite.y);
+						bullet.rotation=n*2*Math.PI;
+						game.physics.velocityFromRotation(bullet.rotation, 600, bullet.body.velocity);
+						bullet.alpha=0.3;
+						bullet.damage=12;
+						bullet.bulletSprite=4;
+						bullet.scale.setTo(2,2);
+						bullet.lifespan=400;
+						bullet.body.angularVelocity=999;
 					}
-				this.nextShield=game.time.now+100;
-				
+					this.nextShield=game.time.now+100;
+
 				}
 			}
-	}
+		}
 	}
 },
 {
@@ -1119,13 +1122,13 @@ var cmp = [
 	'id':100,
 	'drops':true,
 	'name':'Cloaking Device',
-	'flavor':'hold DOWN to throw off attackers',
+	'flavor':'hold RIGHT MOUSE to throw off attackers',
 	'bonus':function(target){
 		target.alt=function(){
 			if(this.energy>0.1){
 				this.energy-=0.1;
 				if(game.time.now>this.nextShield){
-				boom(explosions,1,this.sprite.x,this.sprite.y);
+					boom(explosions,1,this.sprite.x,this.sprite.y);
 				}
 				if(this.sprite.profile>100){
 					this.sprite.profile-=100;
@@ -1137,7 +1140,7 @@ var cmp = [
 					this.parts[i].sprite.alpha=0.5;
 				}
 			}
-		
+
 		}
 	}
 },
@@ -1201,7 +1204,7 @@ var cmp = [
 {
 	'id':106,
 	'drops':true,
-		'name':'Habitat Module',
+	'name':'Habitat Module',
 	'flavor':'light and tough, with a bonus capacitor',
 	'bonus':function(target){
 
@@ -1214,7 +1217,7 @@ var cmp = [
 {
 	'id':107,
 	'drops':true,
-		'name':'Habitat Module',
+	'name':'Habitat Module',
 	'flavor':'light and tough, with a bonus capacitor',
 	'bonus':function(target){
 
@@ -9502,7 +9505,8 @@ var cmp = [
 	'bonus':function(target){
 
 	}
-}	];
+}	
+];
 
 var components=[];
 
