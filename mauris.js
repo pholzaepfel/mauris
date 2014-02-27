@@ -8,7 +8,6 @@ var playerMeta = function () {
 	if(cheatmode){
 		for(var i=0; i<components.length; i++){
 			if(typeof(components[i].name)=='undefined'){
-				console.log(i);
 			}else{
 				if(!components[i].name.match(/Component/)){
 					this.inventory.push(i);
@@ -186,16 +185,17 @@ dragPart.prototype.update = function(){
 }
 partsPool = function(){
 	this.parts=[];
-	for(var i=0;i<500;i++){
+	for(var i=0;i<400;i++){
 		this.parts.push(new shipPart(0,0,'parts',0,dummy));
 		this.parts[i].sprite.kill();
+
 	}
 };
 partsPool.prototype.get = function (x,y,index,targetSprite){
 	this.parts.sort(randomSort);
 
 	for (var i=0;i<this.parts.length;i++){
-		if(!this.parts[i].sprite.owneralive && this.parts[i].owneralive){
+		if(!this.parts[i].sprite.alive){
 			break;
 		}
 	}
@@ -222,14 +222,11 @@ shipPart.prototype.initShipPart = function (x,y,index,targetSprite){
 	if(typeof(index)!='undefined'){
 		this.component = index;
 	}
-	this.sprite.owneralive = true;
 	if(typeof(targetSprite)!='undefined'){
 		this.target = targetSprite;
-		this.sprite.owneralive = targetSprite.alive;
 	}
 	this.sprite.loadTexture('parts', this.component);
 	this.alive = true;
-	this.died = 0;
 	this.sprite.alive=true;
 	this.sprite.visible = true;
 	this.sprite.reset(this.offsetx,this.offsety);
@@ -371,11 +368,9 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 	}
 	if (this.health <= 0){
 		this.alive = false;
+		this.died=game.time.now+10000;
 		bigBoom(explosions,this.sprite.x,this.sprite.y);
 		for (var j = 0; j < this.parts.length; j++) {
-			this.died=game.time.now+10000;
-			this.parts[j].sprite.owneralive=false;
-			this.parts[j].died=game.time.now+10000;
 			if (dmg != 31337){
 				if(Math.random() < globalDropRate + player.dropRate){
 					spawnLoots(Math.floor(eo3.randomRange(0,4)), this.sprite.x, this.sprite.y);
@@ -650,7 +645,6 @@ playerShip.prototype.destroyParts = function() {
 	if(typeof(this.parts)!='undefined'){
 		for(var i=0; i<this.parts.length;i++)
 		{
-			//very explicit destroy
 			this.parts[i].sprite.kill();
 		}
 		this.parts=[];
@@ -732,6 +726,7 @@ playerShip.prototype.damage = function(dmg, aggro) {
 
 	if (this.health <= 0){
 		bigBoom(explosions,this.sprite.x,this.sprite.y);
+		this.died=game.time.now+10000;
 		this.alive = false;
 		for (var j = 0; j < this.parts.length; j++) {
 
