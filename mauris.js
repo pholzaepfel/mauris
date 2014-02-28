@@ -422,7 +422,7 @@ enemyShip.prototype.spawnBullet = function () {
 	var bullet = this.bullets.getFirstDead();
 	bullet.rotation=this.sprite.rotation;
 	bullet.damage=this.fireDamage;
-	bullet.reset(this.sprite.x + (Math.cos(this.sprite.rotation)*(this.sprite.body.width)), this.sprite.y + (Math.sin(this.sprite.rotation)*(this.sprite.body.width)));
+	bullet.reset(this.sprite.x + (Math.cos(this.sprite.rotation)*(this.sprite.width)), this.sprite.y + (Math.sin(this.sprite.rotation)*(this.sprite.width)));
 	bullet.lifespan = this.fireRange; 
 	bullet.alpha=1;
 	bullet.scale.setTo(1,1);
@@ -569,13 +569,6 @@ enemyShip.prototype.update = function() {
 				if (targetDistance < this.target.profile) {
 					if(this.behavior=='neutral'){
 						this.behavior='chasing';
-					}
-					for(var i=0;i<enemies.length;i++){
-						if(this.game.physics.distanceBetween(this.sprite, enemies[i].sprite) < this.target.profile){
-							if(enemies[i].behavior=='neutral'){
-								enemies[i].behavior='chasing';
-							}
-						}
 					}
 				}
 
@@ -1911,7 +1904,7 @@ function bulletHitPlayer (sprite, bullet) {
 
 function bulletHitEnemy (sprite, bullet) {
 
-
+	if(bullet.owner!=sprite){
 	boom(explosions, bullet.bulletSprite, bullet.x, bullet.y);
 
 	var destroyed = enemies[sprite.name].damage(bullet.damage, bullet.owner, bullet.body.velocity);
@@ -1920,6 +1913,7 @@ function bulletHitEnemy (sprite, bullet) {
 	}
 
 	bullet.kill();
+	}
 }
 
 
