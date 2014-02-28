@@ -973,6 +973,7 @@ gameUI.prototype.initCombatUi = function() {
 
 	this.partsSelector = game.add.sprite(-300,-100,'parts',0);
 	this.partsSelector.visible = false;
+	
 	this.tempStation = game.add.sprite(0,0,'station');
 	this.tempStation.anchor.setTo(0.5,0.5);
 	this.tempStation.visible = false;
@@ -981,14 +982,17 @@ gameUI.prototype.initCombatUi = function() {
 	this.partswindow.visible = false;
 	destroyIfExists(this.creditLine);
 	this.creditLine = game.add.text(200,100, '',{ font:'14px monospace', fill: 'rgb(64,255,16)', align: 'right' });
+	this.creditLine.alpha = 0.75;
 	destroyIfExists(this.healthLine);
 	this.healthLine = game.add.text(200,100, '',{ font:'14px monospace', fill: 'rgb(96,96,240)', align: 'left' });
+	this.healthLine.alpha = 0.75;
 
 	destroyIfExists(this.energyLine);
 	this.energyLine = game.add.text(200,100, '',{ font:'14px monospace', fill: 'rgb(240,64,255)', align: 'left' });
+	this.energyLine.alpha = 0.75;
 	destroyIfExists(this.statsLine);
 	this.statsLine = game.add.text(200,100, '',{ font:'1em monospace', fill: 'rgb(240,240,240)', align: 'left' });
-
+	this.statsLine.alpha=0.75;
 	destroyIfExists(this.graphics);
 	this.graphics = game.add.graphics(0,0);
 
@@ -1102,6 +1106,7 @@ gameUI.prototype.radarPing = function() {
 		var range = targetDistance;
 		if(range>180){range=180};	
 		this.radar[i].setText(s);
+		this.radar[i].alpha=range/280;
 		this.radar[i].x = player.sprite.body.x + Math.cos(targetAngle) * range - 0.5 * this.radar[i].width;
 		this.radar[i].y = player.sprite.body.y + Math.sin(targetAngle) * range;	
 	}
@@ -1626,10 +1631,12 @@ function pullLootToPlayer(s) {
 		s.kill();
 	}
 	s.acceleration+=3;
+	if(game.physics.distanceBetween(s, player.sprite) < 500){
 	game.physics.accelerateToObject(s,player.sprite.body,s.acceleration);
 	if(s.acceleration>500){
 		var targetAngle = game.physics.angleBetween(s, player.sprite); 
 		game.physics.velocityFromRotation(targetAngle, s.acceleration, s.body.velocity);
+	}
 	}
 }
 function update () {
