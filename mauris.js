@@ -1111,7 +1111,7 @@ gameUI.prototype.wordsPing = function() {
 	this.words.y = player.sprite.body.y + 200;
 
 	if (game.time.now > this.nextWords && this.textIndex < this.texts.length){
-
+		this.words.alpha=1;
 		this.textLine = this.texts[this.textIndex].substr(0, this.textLineIndex++);
 		this.words.setText(this.textLine);
 		if(this.textLineIndex>this.texts[this.textIndex].length){
@@ -1119,10 +1119,10 @@ gameUI.prototype.wordsPing = function() {
 			this.textIndex+=1;
 			this.textLineIndex=0;
 		}else{
-			this.nextWords=game.time.now+50;
+			this.nextWords=game.time.now+20;
 		}
 	} else if (game.time.now > this.nextWords) {
-		this.textLine='';
+		this.words.alpha-=0.02;
 	}
 	if(this.textLine.length>0 && game.time.now % 200 > 100){
 		this.words.setText(this.textLine + '_');
@@ -1889,6 +1889,7 @@ function playerGotLoot (sprite, loot) {
 		player.ore+=1;
 	}else if(loot.lootType=='component'){
 		playerStats.inventory.push(loot.component);
+		ui.texts.push('got ' + components[loot.component].name);
 	}
 	loot.kill();
 }

@@ -1137,7 +1137,7 @@ var cmp = [
 				}
 				for(var i=0;i<this.parts.length;i++){
 					this.nextShield=game.time.now+250;
-					this.parts[i].sprite.alpha=0.5;
+					this.parts[i].sprite.alpha=0.35;
 				}
 			}
 
