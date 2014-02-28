@@ -653,6 +653,7 @@ playerShip.prototype.destroyParts = function() {
 playerShip.prototype.initPlayerShip = function (ship) {
 
 	this.target={};
+	this.sprite.body.exchangeVelocity = false;
 	this.ai=-1; //natural intelligence
 	this.radarTargets=1;
 	this.dropRate=0;

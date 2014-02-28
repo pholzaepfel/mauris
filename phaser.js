@@ -35682,7 +35682,7 @@
 
 					this._velocity1 = body1.velocity.x;
 					this._velocity2 = body2.velocity.x;
-					if (body1.exchangeVelocity && body2.exchangeVelocity)
+					/*if (body1.exchangeVelocity && body2.exchangeVelocity)
 					{
 						if (!body1.immovable && !body2.immovable)
 						{
@@ -35710,7 +35710,7 @@
 							body2.x += this._overlap;
 							body2.velocity.x = this._velocity1 - this._velocity2 * body2.bounce.x;
 						}
-					}
+					}*/
 					}
 					body1.updateHulls();
 					body2.updateHulls();
