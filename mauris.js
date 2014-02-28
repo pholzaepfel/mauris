@@ -659,6 +659,8 @@ playerShip.prototype.initPlayerShip = function (ship) {
 	this.acceleration=1;
 	this.sprite.reset(0,0);
 	this.sprite.rotation=0;
+			this.lastVelocityX = this.sprite.body.velocity.x;
+			this.lastVelocityY = this.sprite.body.velocity.y;
 	this.turnRate=0.5;
 	this.health=8;
 	this.alive=true;
@@ -796,6 +798,17 @@ playerShip.prototype.spawnBullet = function(){
 }
 playerShip.prototype.update = function(){
 	if(this.alive){
+
+		//fugly hack to get around mysterious loss of velocity
+		if(this.sprite.body.velocity.x != 0 || this.sprite.body.velocity.y != 0){
+			this.lastVelocityX = this.sprite.body.velocity.x;
+			this.lastVelocityY = this.sprite.body.velocity.y;
+		}else{
+			this.sprite.body.velocity.x = this.lastVelocityX;
+			this.sprite.body.velocity.y = this.lastVelocityY;
+		}
+
+
 		if(game.time.now>this.nextShield){
 			this.shield=false;
 			if(this.parts.length){
