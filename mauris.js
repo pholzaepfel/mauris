@@ -1061,7 +1061,7 @@ gameUI.prototype.stationRadarPing = function() {
 	var s='';
 	var targetAngle=game.physics.angleBetween(player.sprite, station);
 	var targetDistance=game.physics.distanceBetween(player.sprite, station);
-	var s='●'; //I cannot believe this circle renders in my terminal
+	var s='\u2302'; //I cannot believe this circle renders in my terminal
 	var n=Math.floor(255-(targetDistance/2-900));
 	if(n<0){n=0;}if(n>255){n=255};
 	this.stationRadar.style.fill="rgb(192,"+n+",192)";
