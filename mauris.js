@@ -185,7 +185,7 @@ dragPart.prototype.update = function(){
 }
 partsPool = function(){
 	this.parts=[];
-	for(var i=0;i<400;i++){
+	for(var i=0;i<500;i++){
 		this.parts.push(new shipPart(0,0,'parts',0,dummy));
 		this.parts[i].sprite.kill();
 
