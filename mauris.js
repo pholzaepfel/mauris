@@ -317,7 +317,7 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 	this.bulletSprite = 0;
 	this.parts = createShip(this.ship,this.sprite);
 
-	this.sprite.body.setRectangle(Math.sqrt(this.ship.length)*-8,Math.sqrt(this.ship.length)*-8,Math.sqrt(this.ship.length)*8,Math.sqrt(this.ship.length)*8);
+	this.sprite.body.setRectangle(Math.sqrt(this.ship.length)*16,Math.sqrt(this.ship.length)*16,Math.sqrt(this.ship.length)*-8,Math.sqrt(this.ship.length)*-8);
 
 	this.sprite.body.mass = eo3.shipWithoutVoid(this.ship).length*10000
 
