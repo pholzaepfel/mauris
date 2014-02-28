@@ -264,6 +264,7 @@ enemyShip = function (index, game, targetSprite, bullets, shipList) {
 	this.game = game;
 	this.shipList = shipList;
 	this.sprite = game.add.sprite(x, y, 'parts', 1023);
+	this.sprite.body.exchangeVelocity = false;
 	this.bullets = bullets;
 	this.sprite.name = index;
 	this.thrust = game.add.emitter(0,0,20);
@@ -393,7 +394,7 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 		}	
 
 		this.sprite.kill();
-		playerStats.kills+=1;
+		if(this.ai!=3){playerStats.kills+=1;}
 		return true;
 	}
 
@@ -766,6 +767,9 @@ playerShip.prototype.fire = function(){
 
 	if (game.time.now > this.nextFire && bullets.countDead() > 0 && this.energy > this.fireEnergy && this.alive){
 		this.sprite.profile+=Math.floor(this.fireDamage*40);
+		if(this.sprite.profile>this.sprite.profileMax*3){
+			this.sprite.profile=this.sprite.profileMax*3;
+		}
 		this.nextFire = game.time.now + this.fireRate;
 		this.energy -= this.fireEnergy;
 		this.spawnBullet();
@@ -1153,6 +1157,8 @@ gameUI.prototype.update = function() {
 		this.stationRadarPing();
 		//this.statsPing(player);
 		this.wordsPing();
+	}else{
+		this.words.setText('');
 	}
 }
 

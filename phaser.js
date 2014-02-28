@@ -35873,7 +35873,7 @@
 		separateTileX: function (body, tile, separate) {
 
 			//  Can't separate two immovable objects (tiles are always immovable)
-			if (body.immovable || body.deltaX() === 0 || Phaser.Rectangle.intersects(body.hullX, tile) === false)
+			if (!body.exchangeVelocity || body.immovable || body.deltaX() === 0 || Phaser.Rectangle.intersects(body.hullX, tile) === false)
 			{
 				return false;
 			}
@@ -35959,7 +35959,7 @@
 		separateTileY: function (body, tile, separate) {
 
 			//  Can't separate two immovable objects (tiles are always immovable)
-			if (body.immovable || body.deltaY() === 0 || Phaser.Rectangle.intersects(body.hullY, tile) === false)
+			if (!body.exchangeVelocity || body.immovable || body.deltaY() === 0 || Phaser.Rectangle.intersects(body.hullY, tile) === false)
 			{
 				return false;
 			}
