@@ -1098,10 +1098,12 @@ gameUI.prototype.radarPing = function() {
 		} else if (targetDistance < 1000) {
 			s=' '+s+' ';
 		}
-
+		
+		var range = targetDistance;
+		if(range>180){range=180};	
 		this.radar[i].setText(s);
-		this.radar[i].x = player.sprite.body.x + Math.cos(targetAngle) * 180 - 0.5 * this.radar[i].width;
-		this.radar[i].y = player.sprite.body.y + Math.sin(targetAngle) * 180;	
+		this.radar[i].x = player.sprite.body.x + Math.cos(targetAngle) * range - 0.5 * this.radar[i].width;
+		this.radar[i].y = player.sprite.body.y + Math.sin(targetAngle) * range;	
 	}
 }
 gameUI.prototype.wordsPing = function() {
