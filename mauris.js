@@ -232,7 +232,6 @@ shipPart.prototype.initShipPart = function (x,y,index,targetSprite){
 	this.sprite.reset(this.offsetx,this.offsety);
 	this.sprite.anchor.setTo(0.5,0.5);
 	this.sprite.bringToTop();
-	this.sprite.body.exchangeVelocity=false;
 }
 shipPart.prototype.update = function(){
 	if (this.target.alive && this.alive) {
@@ -250,7 +249,6 @@ lootItem = function(x,y,sheet,index){
 	this.sprite = game.add.sprite(x,y,sheet,index);
 	this.sprite.anchor.setTo(0.5,0.5);
 	this.sprite.bringToTop();
-	this.sprite.body.exchangeVelocity=false;
 	this.sprite.index=index;
 };
 
@@ -264,7 +262,6 @@ enemyShip = function (index, game, targetSprite, bullets, shipList) {
 	this.game = game;
 	this.shipList = shipList;
 	this.sprite = game.add.sprite(x, y, 'parts', 1023);
-	this.sprite.body.exchangeVelocity = false;
 	this.bullets = bullets;
 	this.sprite.name = index;
 	this.thrust = game.add.emitter(0,0,20);
@@ -284,7 +281,6 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 	this.ship = this.shipList[Math.floor(eo3.randomRange(0,this.shipList.length))];
 	this.destroyParts()
 		this.sprite.profile = 250;
-	this.sprite.body.exchangeVelocity=false;
 	this.aggroList = [];
 	this.holdThrust=0;
 	this.acceleration=1;
@@ -321,7 +317,7 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 	this.bulletSprite = 0;
 	this.parts = createShip(this.ship,this.sprite);
 
-	this.sprite.body.setSize(Math.sqrt(this.ship.length)*16,Math.sqrt(this.ship.length)*16,0,0);
+	this.sprite.body.setRectangle(Math.sqrt(this.ship.length)*16,Math.sqrt(this.ship.length)*16,0,0);
 
 	this.sprite.body.mass = eo3.shipWithoutVoid(this.ship).length*10000
 
@@ -433,7 +429,6 @@ enemyShip.prototype.spawnBullet = function () {
 	bullet.angularVelocity=0;
 	bullet.loadTexture('bullet', this.bulletSprite);
 	bullet.bulletSprite=this.bulletSprite;
-	bullet.body.exchangeVelocity = false;
 	bullet.fireVelocity=this.fireVelocity;
 	bullet.owner=this.sprite;
 	game.physics.velocityFromRotation(bullet.rotation, bullet.fireVelocity, bullet.body.velocity);
@@ -655,7 +650,6 @@ playerShip.prototype.destroyParts = function() {
 playerShip.prototype.initPlayerShip = function (ship) {
 
 	this.target={};
-	this.sprite.body.exchangeVelocity = false;
 	this.ai=-1; //natural intelligence
 	this.radarTargets=1;
 	this.dropRate=0;
@@ -698,7 +692,6 @@ playerShip.prototype.initPlayerShip = function (ship) {
 	this.thrust.setAll('alpha',0.7);
 	this.thrust.gravity=0;
 
-	this.sprite.body.drag.setTo(0, 0);
 	this.sprite.body.bounce.setTo(0, 0);
 	this.sprite.body.collideWorldBounds = true; 
 	this.alt = function(){
@@ -714,7 +707,7 @@ playerShip.prototype.initPlayerShip = function (ship) {
 	}
 	this.parts = createShip(this.ship, this.sprite);
 
-	this.sprite.body.setSize(Math.sqrt(this.ship.length)*16,Math.sqrt(this.ship.length)*16,0,0);
+	this.sprite.body.setRectangle(Math.sqrt(this.ship.length)*16,Math.sqrt(this.ship.length)*16,0,0);
 
 	applyBonuses(this);
 
@@ -790,7 +783,6 @@ playerShip.prototype.spawnBullet = function(){
 	bullet.scale.setTo(1,1);
 	bullet.reset(this.sprite.x + (Math.cos(this.sprite.rotation)*(this.sprite.body.width)*0.75), this.sprite.y + (Math.sin(this.sprite.rotation)*(this.sprite.body.width)*0.75));
 	bullet.rotation = this.sprite.rotation;
-	bullet.body.exchangeVelocity = false;
 	bullet.owner=this.sprite;
 	bullet.fireVelocity = this.fireVelocity; //mostly useless but want this to be accessible for bulletBehaviors
 	game.physics.velocityFromRotation(bullet.rotation, bullet.fireVelocity, bullet.body.velocity);
@@ -1527,7 +1519,6 @@ function create () {
 		explosions.setAll('anchor.x', 0.5);
 		explosions.setAll('anchor.y', 0.5);
 		explosions.setAll('lifespan',5000)
-			explosions.setAll('body.exchangeVelocity', false);
 
 
 		//override the player obj in demo mode
@@ -1658,7 +1649,7 @@ function update () {
 		if(loots.getFirstAlive() != null) {
 
 			for (var i = 0; i < player.parts.length; i++) {
-				game.physics.collide(loots, player.parts[i].sprite, playerGotLoot, null, this);
+				game.physics.overlap(loots, player.parts[i].sprite, playerGotLoot, null, this);
 			}
 			loots.forEachAlive(pullLootToPlayer, this);
 		}
@@ -1669,10 +1660,10 @@ function update () {
 		if(enemyBullets.getFirstAlive() != null) {
 
 			for (var i = 0; i < player.parts.length; i++) {
-				game.physics.collide(enemyBullets, player.parts[i].sprite, bulletHitPlayer, null, this);
+				game.physics.overlap(enemyBullets, player.parts[i].sprite, bulletHitPlayer, null, this);
 			}
 			for (var i = 0; i < enemies.length; i++) {
-				game.physics.collide(enemyBullets, enemies[i].sprite, bulletHitEnemy, null, this);
+				game.physics.overlap(enemyBullets, enemies[i].sprite, bulletHitEnemy, null, this);
 			}
 		}
 
@@ -1680,9 +1671,9 @@ function update () {
 			if (enemies[i].alive){
 				enemies[i].update();
 				for (var j = 0; j < player.parts.length; j++) {
-					game.physics.collide(enemies[i].sprite, player.parts[j].sprite);
+					game.physics.overlap(enemies[i].sprite, player.parts[j].sprite);
 				}
-				game.physics.collide(bullets, enemies[i].sprite, bulletHitEnemy, null, this);
+				game.physics.overlap(bullets, enemies[i].sprite, bulletHitEnemy, null, this);
 				for (var j = 0; j < enemies[i].parts.length; j++) {
 
 					enemies[i].parts[j].update();
@@ -1774,7 +1765,6 @@ function bigBoom(explosionsGroup, x, y){
 			explosion.loadTexture('explosions', Math.random()>0.7 ? 1 : 2);
 			explosion.reset(x+eo3.randomRange(-20,20),y+eo3.randomRange(-20,20));
 			explosion.rotation = Math.random()*Math.PI;
-			explosion.body.exchangeVelocity = false;
 			explosion.angularVelocity=eo3.randomRange(-150,150);
 			explosion.fireVelocity=eo3.randomRange(30,80);
 			explosion.lifespan=700;
@@ -1794,7 +1784,6 @@ function shieldEffect(explosionsGroup, bulletSprite, x, y, velx, vely){
 		explosion.loadTexture('explosions', bulletSprite || 0);
 		explosion.reset(x,y);
 		explosion.rotation=Math.random()*Math.PI;
-		explosion.body.exchangeVelocity = false;
 		explosion.angularVelocity=200;
 		explosion.fireVelocity=eo3.randomRange(-10,10);
 		explosion.lifespan=700;
@@ -1815,7 +1804,6 @@ function boom(explosionsGroup, bulletSprite, x, y){
 			explosion.loadTexture('explosions', bulletSprite || 0);
 			explosion.reset(x+eo3.randomRange(-8,8),y+eo3.randomRange(-8,8));
 			explosion.rotation = Math.random()*Math.PI;
-			explosion.body.exchangeVelocity = false;
 			explosion.angularVelocity=eo3.randomRange(-150,150);
 			explosion.fireVelocity=eo3.randomRange(-10,10);
 			explosion.lifespan=700;
@@ -1832,7 +1820,7 @@ function sparks(emitter, sprite){
 	emitter.y=sprite.y+eo3.randomRange(-.7*sprite.body.width,sprite.body.width);;
 	emitter.minParticleSpeed.setTo(-200,-200);
 	emitter.maxParticleSpeed.setTo(200,200);
-	emitter.particleDrag.setTo(50,50);
+	emitter.particleFriction = 50;
 	emitter.start(true,200,null, eo3.randomRange(1,14));
 }
 function sparkExplosion(emitter, sprite){
@@ -1840,7 +1828,7 @@ function sparkExplosion(emitter, sprite){
 	emitter.y=sprite.y;
 	emitter.minParticleSpeed.setTo(-300,-300);
 	emitter.maxParticleSpeed.setTo(300,300);
-	emitter.particleDrag.setTo(200,200);
+	emitter.particleFriction = 200;
 	emitter.start(true,600,null, 200);
 }
 function spawnLoots(_count, x, y){
@@ -1859,7 +1847,6 @@ function spawnLoots(_count, x, y){
 		loot.rotation = Math.random()*Math.PI;
 		var scale = eo3.randomRange(0.5,1);
 		loot.scale.setTo(scale,scale);
-		loot.body.exchangeVelocity = false;
 		loot.lootType='ore';
 		loot.acceleration=0;
 		game.physics.velocityFromRotation(loot.rotation, eo3.randomRange(100,300), loot.body.velocity);
@@ -1873,7 +1860,6 @@ function spawnComponent(component,x,y){
 		loot.scale.setTo(2,2);
 		loot.reset(x + eo3.randomRange(-16,16), y+eo3.randomRange(-16,16));
 		loot.rotation = 0; 
-		loot.body.exchangeVelocity = false;
 		loot.lootType='component';
 		loot.component = component;
 		loot.acceleration=0;
