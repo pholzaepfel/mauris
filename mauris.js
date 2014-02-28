@@ -1635,7 +1635,14 @@ function pullLootToPlayer(s) {
 	game.physics.accelerateToObject(s,player.sprite.body,s.acceleration);
 	if(s.acceleration>500){
 		var targetAngle = game.physics.angleBetween(s, player.sprite); 
+		var tempx, tempy;
+		tempx = s.body.velocity.x;
+		tempy = s.body.velocity.y;
 		game.physics.velocityFromRotation(targetAngle, s.acceleration, s.body.velocity);
+		s.body.velocity.x+=tempx*31;
+		s.body.velocity.x/=32;
+		s.body.velocity.y+=tempy*31;
+		s.body.velocity.y/=32;
 	}
 	}
 }
