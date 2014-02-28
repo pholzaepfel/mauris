@@ -1228,7 +1228,9 @@ gameUI.prototype.partsUI = function (ship) {
 	if(typeof(player)!='undefined'){
 		player.destroyParts();
 		player.sprite.body.velocity.x=0;
+		player.lastVelocityX=0;
 		player.sprite.body.velocity.y=0;
+		player.lastVelocityY=0;
 	}
 	this.healthLine.setText('');
 	this.energyLine.setText('');
