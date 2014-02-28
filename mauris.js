@@ -875,7 +875,7 @@ var defaultPlayerShip = [66, 34, -1, -1];
 var station; //we're going to keep this pretty much as a non-interactive sprite for now... it doesn't actually need to do anything
 
 var globalDropRate = 0.09;
-var backdrop1, backdrop2,backdrop3;
+var backdrop1, backdrop2,backdrop3,backdrop4;
 var numBaddies = 9;
 var numAsteroids = 19;
 var enemies;
@@ -1421,11 +1421,17 @@ function create () {
 
 		backdrop2 = game.add.tileSprite(0, 0, resolutionX, resolutionY, 'starfield3');
 		backdrop2.fixedToCamera = true;
+		backdrop2.alpha=0.5;
 		backdrop2.scale.x=2;
 		backdrop2.scale.y=2;	
 
 		backdrop3 = game.add.tileSprite(0, 0, resolutionX, resolutionY, 'starfield4');
 		backdrop3.fixedToCamera = true;
+		
+		backdrop4 = game.add.tileSprite(0, 0, resolutionX*1.5, resolutionY*1.5, 'starfield4');
+		backdrop4.fixedToCamera = true;
+		backdrop4.scale.x=0.75;
+		backdrop4.scale.y=0.75;
 
 		station = game.add.sprite(0,0,'station');
 		station.anchor.setTo(0.5,0.5)
@@ -1728,6 +1734,8 @@ function update () {
 		backdrop2.tilePosition.y = -0.08*game.camera.y;
 		backdrop3.tilePosition.x = -0.15*game.camera.x;
 		backdrop3.tilePosition.y = -0.15*game.camera.y;
+		backdrop4.tilePosition.x = -0.40*game.camera.x;
+		backdrop4.tilePosition.y = -0.40*game.camera.y;
 
 
 
