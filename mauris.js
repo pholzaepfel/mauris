@@ -317,7 +317,7 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 	this.bulletSprite = 0;
 	this.parts = createShip(this.ship,this.sprite);
 
-	this.sprite.body.setRectangle(Math.sqrt(this.ship.length)*16,Math.sqrt(this.ship.length)*16,0,0);
+	this.sprite.body.setRectangle(Math.sqrt(this.ship.length)*-8,Math.sqrt(this.ship.length)*-8,Math.sqrt(this.ship.length)*8,Math.sqrt(this.ship.length)*8);
 
 	this.sprite.body.mass = eo3.shipWithoutVoid(this.ship).length*10000
 
@@ -1516,7 +1516,7 @@ function create () {
 		explosions.createMultiple(100, 'explosions');
 		explosions.setAll('anchor.x', 0.5);
 		explosions.setAll('anchor.y', 0.5);
-		explosions.setAll('lifespan',5000)
+		explosions.setAll('lifespan',5000);
 
 
 		//override the player obj in demo mode
