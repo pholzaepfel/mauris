@@ -283,6 +283,7 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 	this.ship = this.shipList[Math.floor(eo3.randomRange(0,this.shipList.length))];
 	this.destroyParts()
 		this.sprite.profile = 250;
+	this.sprite.body.exchangeVelocity=false;
 	this.aggroList = [];
 	this.holdThrust=0;
 	this.acceleration=1;
