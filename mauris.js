@@ -1417,8 +1417,8 @@ function create () {
 		backdrop2 = game.add.tileSprite(0, 0, resolutionX, resolutionY, 'starfield3');
 		backdrop2.fixedToCamera = true;
 		backdrop2.alpha=0.5;
-		backdrop2.scale.x=2;
-		backdrop2.scale.y=2;	
+		backdrop2.scale.x=4;
+		backdrop2.scale.y=4;	
 
 		backdrop3 = game.add.tileSprite(0, 0, resolutionX, resolutionY, 'starfield4');
 		backdrop3.fixedToCamera = true;
