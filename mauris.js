@@ -1413,8 +1413,6 @@ function create () {
 
 		backdrop3 = game.add.tileSprite(0, 0, resolutionX, resolutionY, 'starfield4');
 		backdrop3.fixedToCamera = true;
-		backdrop3.scale.x=2;
-		backdrop3.scale.y=2;
 
 		station = game.add.sprite(0,0,'station');
 		station.anchor.setTo(0.5,0.5)
@@ -1711,12 +1709,12 @@ function update () {
 		}
 		player.update();
 		// scrolling
-		backdrop1.tilePosition.x = -0.1*game.camera.x;
-		backdrop1.tilePosition.y = -0.1*game.camera.y;
-		backdrop2.tilePosition.x = -0.2*game.camera.x;
-		backdrop2.tilePosition.y = -0.2*game.camera.y;
-		backdrop3.tilePosition.x = -0.4*game.camera.x;
-		backdrop3.tilePosition.y = -0.4*game.camera.y;
+		backdrop1.tilePosition.x = -0.03*game.camera.x;
+		backdrop1.tilePosition.y = -0.03*game.camera.y;
+		backdrop2.tilePosition.x = -0.08*game.camera.x;
+		backdrop2.tilePosition.y = -0.08*game.camera.y;
+		backdrop3.tilePosition.x = -0.15*game.camera.x;
+		backdrop3.tilePosition.y = -0.15*game.camera.y;
 
 
 
