@@ -466,12 +466,11 @@ var cmp = [
 {
 	'id':40,
 	'drops':true,
-	'name':'Experimental Navigation System',
-	'flavor':'causes a minor quantum disturbance',
+	'name':'Tractor Beam Array',
+	'flavor':'pull in loots from farther away',
 	'bonus':function(target){
-		target.turnSpeed+=0.6;
+		target.lootRange+=300;
 		target.fireRate*=0.9;
-		target.acceleration+=0.4;
 		target.energyRate*=0.95;
 	}
 },

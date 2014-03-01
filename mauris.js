@@ -659,6 +659,7 @@ playerShip.prototype.initPlayerShip = function (ship) {
 	this.radarShowInEnemyRange=false;
 	this.radarOreTargets=4;
 	this.acceleration=1;
+	this.lootRange=500;
 	this.sprite.reset(0,0);
 	this.sprite.rotation=0;
 			this.lastVelocityX = this.sprite.body.velocity.x;
@@ -1074,7 +1075,7 @@ gameUI.prototype.stationRadarPing = function() {
 	var n=Math.floor(255-(targetDistance/2-900));
 	if(n<0){n=0;}if(n>255){n=255};
 	this.stationRadar.style.fill="rgb(192,"+n+",192)";
-	if (game.time.now % 2000 > targetDistance && game.time.now % 100 < 50)  {
+	if (targetDistance < 2000 && game.time.now % 250 < 50)  {
 		this.stationRadar.style.fill="rgb(0,255,0)";
 
 	}
@@ -1642,7 +1643,7 @@ function pullLootToPlayer(s) {
 	if(game.physics.distanceBetween(s, player.sprite) < 500){
 	s.acceleration+=3;
 	game.physics.accelerateToObject(s,player.sprite.body,s.acceleration);
-	if(s.acceleration>500){
+	if(s.acceleration>player.lootRange){
 		var targetAngle = game.physics.angleBetween(s, player.sprite); 
 		var tempx, tempy;
 		tempx = s.body.velocity.x;
