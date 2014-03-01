@@ -641,7 +641,6 @@ function preload () {
 
 var playerShip = function(ship) {
 	this.sprite = game.add.sprite(0, 0, 'parts', 1023);
-	this.sprite.name = 'player';
 	this.initPlayerShip(ship);
 }
 playerShip.prototype.destroyParts = function() {
@@ -665,6 +664,7 @@ playerShip.prototype.initPlayerShip = function (ship) {
 	this.acceleration=1;
 	this.lootRange=500;
 	this.sprite.reset(0,0);
+	this.sprite.name = 'player';
 	this.sprite.rotation=0;
 			this.lastVelocityX = this.sprite.body.velocity.x;
 			this.lastVelocityY = this.sprite.body.velocity.y;
@@ -683,7 +683,8 @@ playerShip.prototype.initPlayerShip = function (ship) {
 	this.fireRange = 1000;
 	this.fireMass = 0.1;
 	this.fireEnergy = 2;
-	this.profileDecay = 300;
+	this.profileDecay = 166;
+	this.profileShow = false;
 	this.energy=10;
 	this.energyMax=10;
 	this.energyRate=1000;
@@ -716,7 +717,9 @@ playerShip.prototype.initPlayerShip = function (ship) {
 		this.ship = ship;
 	}
 	this.parts = createShip(this.ship, this.sprite);
-
+	for(var i = 0; i<this.parts.length; i++){
+		this.parts[i].sprite.name="player";	//this lets bullet hit behaviors detect the player correctly
+	}	
 	this.sprite.body.setRectangle(Math.sqrt(this.ship.length)*16,Math.sqrt(this.ship.length)*16,0,0);
 
 	applyBonuses(this);
@@ -773,9 +776,9 @@ playerShip.prototype.fire = function(){
 
 
 	if (game.time.now > this.nextFire && bullets.countDead() > 0 && this.energy > this.fireEnergy && this.alive){
-		this.sprite.profile+=Math.floor(this.fireDamage*40);
-		if(this.sprite.profile>this.sprite.profileMax*3){
-			this.sprite.profile=this.sprite.profileMax*3;
+		this.sprite.profile+=Math.floor(this.fireDamage*80);
+		if(this.sprite.profile>this.sprite.profileMax*5){
+			this.sprite.profile=this.sprite.profileMax*5;
 		}
 		this.nextFire = game.time.now + this.fireRate;
 		this.energy -= this.fireEnergy;
@@ -1007,6 +1010,9 @@ gameUI.prototype.initCombatUi = function() {
 	destroyIfExists(this.creditLine);
 	this.creditLine = game.add.text(200,100, '',{ font:'14px monospace', fill: 'rgb(64,255,16)', align: 'right' });
 	this.creditLine.alpha = 0.75;
+	destroyIfExists(this.profileLine);
+	this.profileLine = game.add.text(200,100, '',{ font:'14px monospace', fill: 'rgb(255,64,16)', align: 'right' });
+	this.profileLine.alpha = 0.75;
 	destroyIfExists(this.healthLine);
 	this.healthLine = game.add.text(200,100, '',{ font:'14px monospace', fill: 'rgb(96,96,240)', align: 'left' });
 	this.healthLine.alpha = 0.75;
@@ -1159,6 +1165,15 @@ gameUI.prototype.wordsPing = function() {
 		this.words.setText(this.textLine);
 	}
 }
+gameUI.prototype.profileLinePing = function() {
+
+	if(player.profileShow){
+	this.profileLine.style.fill="rgb(192,"+Math.floor((player.sprite.profile/5/player.sprite.profileMax)*255)+",16)";
+	this.profileLine.setText(player.sprite.profile);
+	this.profileLine.x = player.sprite.body.x-this.profileLine.width;
+	this.profileLine.y = player.sprite.body.height+player.sprite.body.y+55;
+	}
+}
 gameUI.prototype.creditLinePing = function() {
 
 	var targetDistance=game.physics.distanceBetween(player.sprite, station);
@@ -1176,6 +1191,7 @@ gameUI.prototype.creditLinePing = function() {
 gameUI.prototype.update = function() {
 	this.creditLinePing();
 	if (gamemode == 'war'){
+		this.profileLinePing();
 		this.bar(this.healthLine, 0, player.health, player.healthMax);
 		this.bar(this.energyLine, 10, player.energy, player.energyMax);
 		this.enemies=enemies.slice(0);
@@ -1258,6 +1274,7 @@ gameUI.prototype.partsUI = function (ship) {
 	}
 	this.healthLine.setText('');
 	this.energyLine.setText('');
+	this.profileLine.setText('');
 	this.stationRadar.visible=false;
 	this.clearRadar();
 	this.updatePart();
@@ -1617,6 +1634,7 @@ function update () {
 			for(var c = 0; c < enemies.length ; c++) {
 				if (enemies[c].alive==false && game.time.now > enemies[c].died){
 					enemies[c].initEnemyShip();
+					boom(explosions,4,enemies[c].sprite.x,enemies[c].sprite.y);
 					break;
 				};
 			}

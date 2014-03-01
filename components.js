@@ -712,11 +712,11 @@ var cmp = [
 {
 	'id':64,
 	'drops':true,
-	'name':'Targeting System',
-	'flavor':'shows more targets on radar',
+	'name':'Thermal Monitoring System',
+	'flavor':'also tracks additional target',
 	'bonus':function(target){
-		target.radarTargets+=2;
-		target.radarShowInEnemyRange=true;
+		target.profileShow=true;
+		target.radarTargets+=1;
 	}
 },
 {
@@ -854,9 +854,19 @@ var cmp = [
 	'id':76,
 	'drops':true,
 	'name':'AWSM',
-	'flavor':'',
+	'flavor':'press RIGHT MOUSE to alert nearby enemies!',
 	'bonus':function(target){
-		target.TODO=1;
+		target.profileShow=true;
+		target.alt=function(){
+			if(this.energy>6 && game.time.now>this.nextShield){
+				this.energy-=6;
+				this.nextShield=game.time.now+2000;
+					bigBoom(explosions,this.sprite.x,this.sprite.y);
+					this.sprite.profile=this.sprite.profileMax*5;
+			}
+
+		}
+
 	}
 },
 {
