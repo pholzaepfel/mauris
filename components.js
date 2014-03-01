@@ -165,9 +165,6 @@ var cmp = [
 	'bonus':function(target){
 		target.bulletSprite=5; 
 		target.fireEnergy*=2;
-		if(target.energyMax<target.fireEnergy){
-			target.energyMax=target.fireEnergy;
-		}
 		target.fireDamage*=2;
 		target.fireRate*=1.5;
 		target.fireVelocity*=2;
@@ -857,7 +854,7 @@ var cmp = [
 	'id':76,
 	'drops':true,
 	'name':'AWSM',
-	'flavor':'--',
+	'flavor':'',
 	'bonus':function(target){
 		target.TODO=1;
 	}
@@ -865,32 +862,41 @@ var cmp = [
 {
 	'id':77,
 	'drops':true,
-	'name':'Decorative Skull',
-	'flavor':'--',
+	'name':'skul-gun',
+	'flavor':'drains targets\' energy',
 	'bonus':function(target){
-		target.sprite.profile+=50;
-		target.fireDamage+=2;
+		target.sprite.profile+=20;
 		target.fireRate*=0.9;
+		target.bulletHitBehavior.push(function(sprite,bullet){
+			if(sprite.name=='player'){
+				player.energy-=4;
+			}else{
+				enemies[sprite.name].energy-=4;
+			}
+
+		});
 	}
 },
 {
 	'id':78,
 	'drops':true,
-	'name':'Alien Support Frame',
-	'flavor':'--',
+	'name':'Xenoid Navigation Unit',
+	'flavor':'mysteriously causes drag',
 	'bonus':function(target){
-		target.turnRate+=0.4;
+		target.turnRate+=0.5;
+		target.acceleration+=0.5;
 		target.energyMax+=4;
-		target.energyAmount+=1;
+		target.sprite.body.linearDamping=0.8;
 	}
 },
 {
 	'id':79,
 	'drops':true,
-	'name':'Xenoid Laser',
-	'flavor':'--',
+	'name':'Xenoid Pulse Laser',
+	'flavor':'very cheap shots',
 	'bonus':function(target){
 		target.fireRate*=1.1;
+		target.fireDamage+=1;
 		target.fireEnergy*=0.5;
 		target.fireVelocity*=1.3;
 		target.bulletSprite=4;
@@ -900,7 +906,7 @@ var cmp = [
 	'id':80,
 	'drops':true,
 	'name':'Mechanoid Husk',
-	'flavor':'--',
+	'flavor':'armored yet maneuverable',
 	'bonus':function(target){
 		target.health+=4;
 		target.acceleration+=0.4;
@@ -911,12 +917,17 @@ var cmp = [
 {
 	'id':81,
 	'drops':true,
-	'name':'Mechanoid Quantum Cannon',
-	'flavor':'--',
+	'name':'Mechanoid Turret',
+	'flavor':'target with mouse!',
 	'bonus':function(target){
-		target.fireDamage*=3;
-		target.health+=8;
-		target.TODO=1;
+		if(target.ai==-1){
+			target.bulletBehavior.push(function(bullet){
+				game.physics.moveToPointer(bullet,bullet.fireVelocity);
+			});
+		}else{
+			target.fireDamage+=2;
+			target.fireRate-=100;
+		};
 	}
 },
 {
@@ -932,9 +943,12 @@ var cmp = [
 	'id':83,
 	'drops':true,
 	'name':'Concealed Cannon',
-	'flavor':'--',
+	'flavor':'reduces thermal profile, high energy cost',
 	'bonus':function(target){
-
+		target.profile-=25;
+		target.profileDecay+=100;
+		target.bulletDamage+=2;
+		target.fireEnergy+=3;
 		target.TODO=1;
 	}
 },
@@ -1270,20 +1284,39 @@ var cmp = [
 	'id':112,
 	'drops':true,
 	'name':'Mechanoid Husk',
-	'flavor':'--',
+	'flavor':'armored yet maneuverable',
 	'bonus':function(target){
-
-		target.TODO=1;
-	}
+		target.health+=4;
+		target.acceleration+=0.4;
+		target.turnRate+=0.2;
+		target.energyMax+=2;
+		target.profile+=40;
+}
 },
 {
 	'id':113,
 	'drops':true,
-	'name':'Inverse Field Generator',
-	'flavor':'--',
+	'name':'Mechanoid Jumpdrive',
+	'flavor':'press RIGHT MOUSE to teleport',
 	'bonus':function(target){
 
-		target.TODO=1;
+		target.alt=function(){
+			if(this.energyMax<12)
+			{
+				ui.error('FAILURE: not have enough energy capacity to use the ' + this.name);
+			}
+			if(this.energy>12){
+				this.energy-=12;
+
+					boom(explosions,1,this.sprite.x,this.sprite.y);
+					boom(explosions,3,this.sprite.x,this.sprite.y);
+					this.sprite.reset(this.sprite.x+eo3.randomRange(-2000,2000),this.sprite.y+eo3.randomRange(-2000,2000));
+					boom(explosions,1,this.sprite.x,this.sprite.y);
+					boom(explosions,3,this.sprite.x,this.sprite.y);
+					
+			}
+		}
+;
 	}
 },
 {

@@ -62,7 +62,8 @@ function applyBonuses(target){
 	if(this.turnRate < 0.5){this.turnRate=0.5}
 	if(this.fireRate < 100){this.fireDamage+=(100-this.fireRate)/25;this.fireRate=100}
 	if(this.energyRate < 400){this.energyAmount+=(400-this.energyRate)/100}		
-	
+	if(this.fireEnergy < 1){this.fireEnergy=1}	
+
 	target.healthMax = target.health;
 	target.sprite.profileMax=target.sprite.profile; 
 }
@@ -294,6 +295,7 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 	this.holdThrust=0;
 	this.acceleration=1;
 	this.health = 3;
+	this.bulletHitBehavior=[];
 	this.bulletBehavior=[];
 	this.ai = 1;
 	this.alive=true;
@@ -435,6 +437,7 @@ enemyShip.prototype.spawnBullet = function () {
 	bullet.lifespan = this.fireRange; 
 	bullet.alpha=1;
 	bullet.scale.setTo(1,1);
+	bullet.bulletHitBehavior=this.bulletHitBehavior;
 	bullet.angularVelocity=0;
 	bullet.loadTexture('bullet', this.bulletSprite);
 	bullet.bulletSprite=this.bulletSprite;
@@ -638,6 +641,7 @@ function preload () {
 
 var playerShip = function(ship) {
 	this.sprite = game.add.sprite(0, 0, 'parts', 1023);
+	this.sprite.name = 'player';
 	this.initPlayerShip(ship);
 }
 playerShip.prototype.destroyParts = function() {
@@ -668,6 +672,7 @@ playerShip.prototype.initPlayerShip = function (ship) {
 	this.health=8;
 	this.alive=true;
 	this.bulletSprite=0;
+	this.bulletHitBehavior=[];
 	this.bulletBehavior=[];
 	this.destroyParts();
 	this.parts=[];
@@ -762,6 +767,10 @@ playerShip.prototype.up = function(){
 };
 playerShip.prototype.fire = function(){
 
+	if (this.fireEnergy>this.energyMax){
+		ui.error('FATAL: insufficient capacity to fire. reconfigure vessel immediately!');
+	}
+
 
 	if (game.time.now > this.nextFire && bullets.countDead() > 0 && this.energy > this.fireEnergy && this.alive){
 		this.sprite.profile+=Math.floor(this.fireDamage*40);
@@ -784,6 +793,7 @@ playerShip.prototype.spawnBullet = function(){
 	bullet.lifespan = this.fireRange;
 	bullet.body.mass = this.fireMass;
 	bullet.angularVelocity=0;
+	bullet.bulletHitBehavior=this.bulletHitBehavior;
 	bullet.alpha=1;
 	bullet.scale.setTo(1,1);
 	bullet.reset(this.sprite.x + (Math.cos(this.sprite.rotation)*(this.sprite.body.width)*0.75), this.sprite.y + (Math.sin(this.sprite.rotation)*(this.sprite.body.width)*0.75));
@@ -920,7 +930,15 @@ var gameUI = function () {
 	this.textLine = '';
 	this.textIndex = 0;
 	this.textLineIndex = 0;
+	this.nextError=0;
 
+}
+gameUI.prototype.error = function(msg) {
+			if(game.time.now>this.nextError){					
+				this.texts.push(msg);
+				this.nextError=game.time.now+6000;
+				}
+	
 }
 gameUI.prototype.calculatePartPosition = function() {
 
@@ -1468,6 +1486,8 @@ function create () {
 		asteroids.push([-1, 18, 19, -1, 18, 23, 25, 19, 106, 30, 30, 107, -1, 106, 107, -1]);
 		asteroids.sort(lengthSort);
 
+		ships.push([-1, 9, -1, 31, 32, 47, -1, 40, -1]);
+		ships.push([-1, -1, -1, -1, 12, 71, 10, 83, 44, 103, 42, 13, -1, -1, -1, -1]);
 		ships.push([12, 104, 5, -1, 66, 99, 67, 34, -1, 106, 41, 73, -1, -1, -1, -1]);
 		ships.push([-1, 106, 3, 81, -1, 69, 66, 132, -1, -1, -1, 42, 64, 34, -1, -1, 104, 132, -1, -1, -1, 106, 3, 77, -1]);
 		ships.push([129,128,33,-1,66,130,-1,-1,-1]); 
@@ -1762,7 +1782,6 @@ function update () {
 
 
 		if (mouseState[0]){
-			//  Boom!
 			player.fire();
 		}
 
@@ -1888,8 +1907,8 @@ function spawnLoots(_count, x, y){
 		loot.rotation = Math.random()*Math.PI;
 		var scale = eo3.randomRange(0.5,1.1);
 		loot.scale.setTo(scale,scale);
-		loot.averageCounter=40;
-		loot.acceleration=100;
+		loot.averageCounter=32;
+		loot.acceleration=200;
 		loot.lootType='ore';
 		loot.acceleration=0;
 		game.physics.velocityFromRotation(loot.rotation, eo3.randomRange(100,300), loot.body.velocity);
@@ -1903,8 +1922,8 @@ function spawnComponent(component,x,y){
 		loot.scale.setTo(2,2);
 		loot.reset(x + eo3.randomRange(-16,16), y+eo3.randomRange(-16,16));
 		loot.rotation = 0; 
-		loot.averageCounter=40;
-		loot.acceleration=100;
+		loot.averageCounter=32;
+		loot.acceleration=200;
 		loot.lootType='component';
 		loot.component = component;
 		loot.acceleration=0;
@@ -1926,6 +1945,9 @@ function bulletHitPlayer (sprite, bullet) {
 
 	var destroyed = player.damage(bullet.damage, bullet.owner);
 
+	for (var i = 0; i < bullet.bulletHitBehavior.length; i++) {
+		bullet.bulletHitBehavior[i](sprite, bullet);
+	}
 
 	boom(explosions, bullet.bulletSprite, bullet.x, bullet.y);
 	if (destroyed){
@@ -1939,6 +1961,9 @@ function bulletHitEnemy (sprite, bullet) {
 	if(bullet.owner!=sprite){
 	boom(explosions, bullet.bulletSprite, bullet.x, bullet.y);
 
+	for (var i = 0; i < bullet.bulletHitBehavior.length; i++) {
+		bullet.bulletHitBehavior[i](sprite, bullet);
+	}
 	var destroyed = enemies[sprite.name].damage(bullet.damage, bullet.owner, bullet.body.velocity);
 	if (destroyed && enemies[sprite.name].ai!=3){
 		sparkExplosion(pew, sprite);	
