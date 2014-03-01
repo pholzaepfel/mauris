@@ -886,7 +886,9 @@ var cmp = [
 		target.turnRate+=0.5;
 		target.acceleration+=0.5;
 		target.energyMax+=4;
+		if(target.ai!=2){
 		target.sprite.body.linearDamping=0.8;
+		}
 	}
 },
 {
@@ -974,12 +976,11 @@ var cmp = [
 },
 {
 	'id':86,
-	'drops':true,
+	'drops':false,
 	'name':'Collector Vine',
 	'flavor':'--',
 	'bonus':function(target){
 
-		target.TODO=1;
 	}
 },
 {
@@ -989,7 +990,6 @@ var cmp = [
 	'flavor':'--',
 	'bonus':function(target){
 
-		target.TODO=1;
 	}
 },
 {
@@ -1361,22 +1361,20 @@ var cmp = [
 },
 {
 	'id':118,
-	'drops':true,
+	'drops':false,
 	'name':'Propelling Fruit',
 	'flavor':'--',
 	'bonus':function(target){
 
-		target.TODO=1;
 	}
 },
 {
 	'id':119,
-	'drops':true,
+	'drops':false,
 	'name':'Roots',
 	'flavor':'--',
 	'bonus':function(target){
 
-		target.TODO=1;
 	}
 },
 {
