@@ -55,6 +55,14 @@ function applyBonuses(target){
 		}
 	}
 	target.acceleration = (target.sprite.body.maxVelocity.x * target.acceleration)/ 250;
+
+	//apply some minimums
+	if(this.health < 6){this.health=6;}
+	if(this.acceleration < 0.5){this.acceleration=0.5}
+	if(this.turnRate < 0.5){this.turnRate=0.5}
+	if(this.fireRate < 100){this.fireDamage+=(100-this.fireRate)/25;this.fireRate=100}
+	if(this.energyRate < 400){this.energyAmount+=(400-this.energyRate)/100}		
+	
 	target.healthMax = target.health;
 	target.sprite.profileMax=target.sprite.profile; 
 }
@@ -228,6 +236,7 @@ shipPart.prototype.initShipPart = function (x,y,index,targetSprite){
 	this.sprite.loadTexture('parts', this.component);
 	this.alive = true;
 	this.sprite.alive=true;
+	this.sprite.alpha=1;
 	this.sprite.visible = true;
 	this.sprite.reset(this.offsetx,this.offsety);
 	this.sprite.anchor.setTo(0.5,0.5);
@@ -1065,7 +1074,7 @@ gameUI.prototype.stationRadarPing = function() {
 	var n=Math.floor(255-(targetDistance/2-900));
 	if(n<0){n=0;}if(n>255){n=255};
 	this.stationRadar.style.fill="rgb(192,"+n+",192)";
-	if (targetDistance < 2000 && game.time.now % 4000 > 500 && game.time.now % 4000 < 1000)  {
+	if (game.time.now % 2000 > targetDistance && game.time.now % 100 < 50)  {
 		this.stationRadar.style.fill="rgb(0,255,0)";
 
 	}
@@ -1630,8 +1639,8 @@ function pullLootToPlayer(s) {
 	if (!player.alive){
 		s.kill();
 	}
-	s.acceleration+=3;
 	if(game.physics.distanceBetween(s, player.sprite) < 500){
+	s.acceleration+=3;
 	game.physics.accelerateToObject(s,player.sprite.body,s.acceleration);
 	if(s.acceleration>500){
 		var targetAngle = game.physics.angleBetween(s, player.sprite); 
@@ -1639,10 +1648,11 @@ function pullLootToPlayer(s) {
 		tempx = s.body.velocity.x;
 		tempy = s.body.velocity.y;
 		game.physics.velocityFromRotation(targetAngle, s.acceleration, s.body.velocity);
-		s.body.velocity.x+=tempx*31;
-		s.body.velocity.x/=32;
-		s.body.velocity.y+=tempy*31;
-		s.body.velocity.y/=32;
+		s.body.velocity.x+=tempx*s.averageCounter;
+		s.body.velocity.x/=s.averageCounter+1;
+		s.body.velocity.y+=tempy*s.averageCounter;
+		s.body.velocity.y/=s.averageCounter+1;
+		if(s.averageCounter){s.averageCounter--};
 	}
 	}
 }
@@ -1875,8 +1885,10 @@ function spawnLoots(_count, x, y){
 		loot.body.angularVelocity = eo3.randomRange(-300,300);
 		loot.reset(x + eo3.randomRange(-16,16), y+eo3.randomRange(-16,16));
 		loot.rotation = Math.random()*Math.PI;
-		var scale = eo3.randomRange(0.5,1);
+		var scale = eo3.randomRange(0.5,1.1);
 		loot.scale.setTo(scale,scale);
+		loot.averageCounter=40;
+		loot.acceleration=100;
 		loot.lootType='ore';
 		loot.acceleration=0;
 		game.physics.velocityFromRotation(loot.rotation, eo3.randomRange(100,300), loot.body.velocity);
@@ -1886,10 +1898,12 @@ function spawnComponent(component,x,y){
 	if(loots.countDead()){
 		var loot = loots.getFirstDead();
 		loot.loadTexture('parts', component);
-		loot.lifespan = 60000;
+		loot.lifespan = 120000;
 		loot.scale.setTo(2,2);
 		loot.reset(x + eo3.randomRange(-16,16), y+eo3.randomRange(-16,16));
 		loot.rotation = 0; 
+		loot.averageCounter=40;
+		loot.acceleration=100;
 		loot.lootType='component';
 		loot.component = component;
 		loot.acceleration=0;
