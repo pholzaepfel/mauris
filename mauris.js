@@ -285,8 +285,8 @@ enemyShip = function (index, game, targetSprite, bullets, shipList) {
 
 enemyShip.prototype.initEnemyShip = function(ship) {
 
-	var x = this.target.body.x + (eo3.randomSign() * eo3.randomRange(750,2000));
-	var y = this.target.body.y + (eo3.randomSign() * eo3.randomRange(750,2000));
+	var x = this.target.body.x + (eo3.randomSign() * eo3.randomRange(750,2000)) + player.sprite.body.velocity.x*3;
+	var y = this.target.body.y + (eo3.randomSign() * eo3.randomRange(750,2000)) + player.sprite.body.velocity.y*3;
 	this.sprite.reset(x,y);
 	this.ship = this.shipList[Math.floor(eo3.randomRange(0,this.shipList.length))];
 	this.destroyParts()
@@ -662,7 +662,7 @@ playerShip.prototype.initPlayerShip = function (ship) {
 	this.radarShowInEnemyRange=false;
 	this.radarOreTargets=4;
 	this.acceleration=1;
-	this.lootRange=500;
+	this.lootRange=250;
 	this.sprite.reset(0,0);
 	this.sprite.name = 'player';
 	this.sprite.rotation=0;
