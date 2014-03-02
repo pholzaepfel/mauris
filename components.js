@@ -712,7 +712,7 @@ var cmp = [
 	'id':64,
 	'drops':true,
 	'name':'Thermal Monitoring System',
-	'flavor':'shows threat profile info and tracks additional target',
+	'flavor':'warns when in enemy sensor range',
 	'bonus':function(target){
 		target.profileShow=true;
 		target.radarTargets+=1;

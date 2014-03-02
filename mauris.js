@@ -1065,8 +1065,8 @@ gameUI.prototype.bar = function (targetText, offset, numerator, denominator) {
 	var s = '';
 	var n=Math.floor((numerator/denominator)*barSize);
 	if(n<0){n=0;}
-	s+=repeat('●',n);
-	s+=repeat('.',barSize-n);
+	s+=repeat('\u25cf',n-1);
+	s+=repeat('\u25cb',barSize-n);
 	targetText.setText(s);
 }
 
