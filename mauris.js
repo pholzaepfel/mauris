@@ -51,7 +51,7 @@ function applyBonuses(target){
 			target.sprite.body.maxVelocity.y-=5;
 			target.sprite.profile+=25;
 			if(i>9){
-			target.turnRate-=0.04; //gimp larger ships a bit
+			target.turnRate-=0.02; //gimp larger ships a bit
 			}
 			components[target.ship[i]].bonus(target);
 		}
