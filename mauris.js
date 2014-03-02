@@ -50,7 +50,9 @@ function applyBonuses(target){
 			target.sprite.body.maxVelocity.x-=5;
 			target.sprite.body.maxVelocity.y-=5;
 			target.sprite.profile+=25;
-			target.turnRate-=0.03;
+			if(i>9){
+			target.turnRate-=0.04; //gimp larger ships a bit
+			}
 			components[target.ship[i]].bonus(target);
 		}
 	}
@@ -370,8 +372,8 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 	}
 
 	if(typeof(aggro)!='undefined'){
-			this.aggroList.push(aggro);
-			this.target = aggro;
+		this.aggroList.push(aggro);
+		this.target = aggro;
 	}
 	if (this.health <= 0){
 		this.alive = false;
@@ -417,10 +419,6 @@ enemyShip.prototype.up = function(){
 enemyShip.prototype.fire = function () {
 	if (this.game.time.now > this.nextFire && this.bullets.countDead() > 0 &&
 			this.energy>=this.fireEnergy){
-				this.sprite.profile+=Math.floor(this.fireDamage*80);
-				if(this.sprite.profile>this.sprite.profileMax*5){
-					this.sprite.profile=this.sprite.profileMax*5;
-				}
 				this.nextFire = this.game.time.now + this.fireRate;
 				this.energy-=this.fireEnergy;
 				this.spawnBullet();
@@ -466,18 +464,7 @@ enemyShip.prototype.update = function() {
 					this.sprite.body.angularVelocity=eo3.randomRange(25,100)*eo3.randomSign();
 				}
 			}
-	if(game.time.now>this.nextProfileDecay){
-		if (Math.abs(this.sprite.profile-this.sprite.profileMax) < this.profileDecay)	{	
-			this.sprite.profile=this.sprite.profileMax;
-		}
-		if (this.sprite.profile > this.sprite.profileMax){
-			this.sprite.profile-=this.profileDecay;
-		}else if (this.sprite.profile < this.sprite.profileMax){
-			this.sprite.profile+=this.profileDecay;
-		}
-
-		this.nextProfileDecay=game.time.now+1000;
-	}
+	this.sprite.profile = this.sprite.profileMax; //tracking this in detail is hard and unnecessary
 
 	if(game.time.now>this.altCooldown){
 		this.shield=false;
