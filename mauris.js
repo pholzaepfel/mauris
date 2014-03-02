@@ -1600,21 +1600,17 @@ function pullLootToPlayer(s) {
 	if (!player.alive){
 		s.kill();
 	}
-	if(game.physics.distanceBetween(s, player.sprite) < 500){
-	s.acceleration+=3;
-	game.physics.accelerateToObject(s,player.sprite.body,s.acceleration);
-	if(s.acceleration>player.lootRange){
+	if(game.physics.distanceBetween(s, player.sprite) < player.lootRange){
 		var targetAngle = game.physics.angleBetween(s, player.sprite); 
 		var tempx, tempy;
 		tempx = s.body.velocity.x;
 		tempy = s.body.velocity.y;
-		game.physics.velocityFromRotation(targetAngle, s.acceleration, s.body.velocity);
+		game.physics.velocityFromRotation(targetAngle, 500, s.body.velocity);
 		s.body.velocity.x+=tempx*s.averageCounter;
 		s.body.velocity.x/=s.averageCounter+1;
 		s.body.velocity.y+=tempy*s.averageCounter;
 		s.body.velocity.y/=s.averageCounter+1;
 		if(s.averageCounter){s.averageCounter--};
-	}
 	}
 }
 function update () {
@@ -1848,7 +1844,7 @@ function spawnLoots(_count, x, y){
 		loot.rotation = Math.random()*Math.PI;
 		var scale = eo3.randomRange(0.5,1.1);
 		loot.scale.setTo(scale,scale);
-		loot.averageCounter=32;
+		loot.averageCounter=50;
 		loot.acceleration=200;
 		loot.lootType='ore';
 		loot.acceleration=0;
@@ -1863,7 +1859,7 @@ function spawnComponent(component,x,y){
 		loot.scale.setTo(2,2);
 		loot.reset(x + eo3.randomRange(-16,16), y+eo3.randomRange(-16,16));
 		loot.rotation = 0; 
-		loot.averageCounter=32;
+		loot.averageCounter=50;
 		loot.acceleration=200;
 		loot.lootType='component';
 		loot.component = component;
