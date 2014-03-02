@@ -922,6 +922,7 @@ var cmp = [
 	'bonus':function(target){
 		if(target.ai==-1){
 			target.bulletBehavior.push(function(bullet){
+				bullet.reset(bullet.owner.x,bullet.owner.y);
 				game.physics.moveToPointer(bullet,bullet.fireVelocity);
 			});
 		}else{
