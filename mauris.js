@@ -456,9 +456,10 @@ enemyShip.prototype.spawnBullet = function () {
 }
 enemyShip.prototype.update = function() {
 	if (this.game.physics.distanceBetween(this.sprite, player.sprite) > 5000 && gamemode != '?attract' ||
-			this.game.physics.distanceBetween(this.sprite, player.sprite) > 2000 && this.ai == 3){
-				var x = this.target.x + (eo3.randomSign() * eo3.randomRange(750,2000));
-				var y = this.target.y + (eo3.randomSign() * eo3.randomRange(750,2000));
+			this.game.physics.distanceBetween(this.sprite, player.sprite) > 2500 && this.ai == 3){
+
+				var x = this.target.x + (eo3.randomSign() * eo3.randomRange(750,2000)) + player.sprite.body.velocity.x*3;
+				var y = this.target.y + (eo3.randomSign() * eo3.randomRange(750,2000)) + player.sprite.body.velocity.y*3;
 				this.sprite.reset(x,y);
 				if(this.ai==3){
 
@@ -1174,6 +1175,8 @@ gameUI.prototype.profileLinePing = function() {
 	this.profileLine.setText(player.sprite.profile);
 	this.profileLine.x = player.sprite.body.x-this.profileLine.width;
 	this.profileLine.y = player.sprite.body.height+player.sprite.body.y+55;
+	}else{
+	this.profileLine.setText('');
 	}
 }
 gameUI.prototype.creditLinePing = function() {
@@ -1549,10 +1552,10 @@ function create () {
 		game.camera.follow(player.sprite);
 		game.camera.focusOnXY(0, 0);
 
-	sparkles = game.add.emitter(0,0,50);
+	sparkles = game.add.emitter(0,0,100);
 	sparkles.makeParticles('sparkles',[0,1,2,3,4,5,6,7]);
 	sparkles.setAll('alpha',0.8);
-	sparkles.lifespan=100;
+	sparkles.lifespan=200;
 
 	}
 
@@ -1607,8 +1610,9 @@ function pullLootToPlayer(s) {
 	}
 	if(s.alive){
 		if(Math.random() > 0.1){
-					sparkles.x=s.x+eo3.randomRange(-5,5);
-					sparkles.y=s.y+eo3.randomRange(-5,5);
+			var halfWidth = s.width * 0.5;
+					sparkles.x=s.x+eo3.randomRange(-1 * halfWidth,halfWidth);
+					sparkles.y=s.y+eo3.randomRange(-1 * halfWidth,halfWidth);
 					sparkles.minParticleSpeed.setTo(0,0);
 					sparkles.maxParticleSpeed.setTo(0,0);
 					sparkles.emitParticle();
@@ -1881,7 +1885,6 @@ function spawnComponent(component,x,y){
 	}
 }
 function playerGotLoot (sprite, loot) {
-	player.ore+=1;
 	if(loot.lootType=='ore'){
 		player.ore+=1;
 	}else if(loot.lootType=='component'){
