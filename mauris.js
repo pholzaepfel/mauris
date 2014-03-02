@@ -370,14 +370,8 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 	}
 
 	if(typeof(aggro)!='undefined'){
-		if((aggro.profile*2)/((this.target.profile)+(aggro.profile*2))>Math.random()){					
 			this.aggroList.push(aggro);
 			this.target = aggro;
-		}
-		if(gamemode=='?attract'){
-			this.aggroList.push(aggro);
-			this.target = aggro;		
-		}
 	}
 	if (this.health <= 0){
 		this.alive = false;
