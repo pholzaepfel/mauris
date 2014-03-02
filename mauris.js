@@ -515,7 +515,7 @@ enemyShip.prototype.update = function() {
 					this.thrust.y=this.sprite.y-(Math.sin(this.sprite.rotation)*(this.sprite.body.width)*0.5);
 					this.thrust.minParticleSpeed.setTo(0,0);
 					this.thrust.maxParticleSpeed.setTo(0,0);
-					this.thrust.start(true, 1000, null, 1);
+					this.thrust.emitParticle();
 					this.nextThrust = game.time.now + 15; 
 				}
 				eo3.addVelocity(this.sprite.rotation, this.speed, this.sprite.body.velocity);
@@ -632,6 +632,7 @@ function preload () {
 	game.load.image('starfield2', 'assets/starfield2.png');
 	game.load.image('starfield3', 'assets/starfield3.png');
 	game.load.image('starfield4', 'assets/starfield4.png');
+	game.load.spritesheet('sparkles', 'assets/sparkles.png',4,4);
 	game.load.spritesheet('thrust', 'assets/thrust.png',8,8);
 	game.load.spritesheet('sparks', 'assets/sparks.png',8,8);
 	game.load.spritesheet('explosions', 'assets/explosions.png',16,16);
@@ -855,7 +856,7 @@ playerShip.prototype.update = function(){
 				this.thrust.y=this.sprite.y-(Math.sin(this.sprite.rotation)*(this.sprite.body.width)*0.5);
 				this.thrust.minParticleSpeed.setTo(0,0);
 				this.thrust.maxParticleSpeed.setTo(0,0);
-				this.thrust.start(true, 1000, null, 1);
+				this.thrust.emitParticle();
 				this.nextThrust = game.time.now + 15; 
 			}
 			eo3.addVelocity(this.sprite.rotation, this.speed, this.sprite.body.velocity);
@@ -896,6 +897,7 @@ var numBaddies = 9;
 var numAsteroids = 19;
 var enemies;
 var loots;
+var sparkles;
 var enemyBullets;
 var explosions;
 var logo;
@@ -1547,7 +1549,10 @@ function create () {
 		game.camera.follow(player.sprite);
 		game.camera.focusOnXY(0, 0);
 
-
+	sparkles = game.add.emitter(0,0,50);
+	sparkles.makeParticles('sparkles',[0,1,2,3,4,5,6,7]);
+	sparkles.setAll('alpha',0.8);
+	sparkles.lifespan=100;
 
 	}
 
@@ -1600,6 +1605,14 @@ function pullLootToPlayer(s) {
 	if (!player.alive){
 		s.kill();
 	}
+	if(s.alive){
+		if(Math.random() > 0.1){
+					sparkles.x=s.x+eo3.randomRange(-5,5);
+					sparkles.y=s.y+eo3.randomRange(-5,5);
+					sparkles.minParticleSpeed.setTo(0,0);
+					sparkles.maxParticleSpeed.setTo(0,0);
+					sparkles.emitParticle();
+		}
 	if(game.physics.distanceBetween(s, player.sprite) < player.lootRange){
 		var targetAngle = game.physics.angleBetween(s, player.sprite); 
 		var tempx, tempy;
@@ -1611,6 +1624,7 @@ function pullLootToPlayer(s) {
 		s.body.velocity.y+=tempy*s.averageCounter;
 		s.body.velocity.y/=s.averageCounter+1;
 		if(s.averageCounter){s.averageCounter--};
+	}
 	}
 }
 function update () {
@@ -1682,9 +1696,7 @@ function update () {
 		for (var i = 0; i < player.parts.length; i++){
 			player.parts[i].update();
 		};
-		//player.thrust.forEachAlive(fade,this);
 
-		//pew.forEachAlive(fadeSpark,this);
 		if (cursors.left.isDown || cursors.left2.isDown){
 			player.left();
 		}
