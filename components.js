@@ -119,7 +119,7 @@ var cmp = [
 	'flavor':'track more enemies and find more loot',
 	'bonus':function(target){
 		target.radarTargets+=1;
-		target.dropRate+=0.01;
+		target.dropRate+=0.004;
 	}
 },
 {
@@ -713,7 +713,7 @@ var cmp = [
 	'id':64,
 	'drops':true,
 	'name':'Thermal Monitoring System',
-	'flavor':'also tracks additional target',
+	'flavor':'shows threat profile info and tracks additional target',
 	'bonus':function(target){
 		target.profileShow=true;
 		target.radarTargets+=1;
@@ -735,20 +735,20 @@ var cmp = [
 	'id':66,
 	'drops':true,
 	'name':'Discount Attitude Jet',
-	'flavor':'strafe moar noob',
+	'flavor':'improves turn rate, lowers maximum energy',
 	'bonus':function(target){
 		target.turnRate+=0.7;
 		target.acceleration+=0.3;
+		target.energyMax-=2;
 	}
 },
 {
 	'id':67,
 	'drops':true,
 	'name':'Long Range Sensor',
-	'flavor':'show more targets on radar',
+	'flavor':'track 2 more targets',
 	'bonus':function(target){
 		target.radarTargets+=2;
-		target.radarShowInRange=true;
 	}
 },
 {
@@ -820,7 +820,7 @@ var cmp = [
 		target.fireDamage+=2;
 		target.fireRate+=100;
 		target.sprite.profile+=20;	
-		target.dropRate+=0.04;
+		target.dropRate+=0.004;
 		target.bulletSprite=4;
 	}
 },
@@ -854,19 +854,9 @@ var cmp = [
 	'id':76,
 	'drops':true,
 	'name':'AWSM',
-	'flavor':'press RIGHT MOUSE to alert nearby enemies!',
+	'flavor':'--',
 	'bonus':function(target){
-		target.profileShow=true;
-		target.alt=function(){
-			if(this.energy>6 && game.time.now>this.nextShield){
-				this.energy-=6;
-				this.nextShield=game.time.now+2000;
-					bigBoom(explosions,this.sprite.x,this.sprite.y);
-					this.sprite.profile=this.sprite.profileMax*5;
-			}
-
-		}
-
+		target.TODO=1;	
 	}
 },
 {
@@ -1089,14 +1079,18 @@ var cmp = [
 {
 	'id':97,
 	'drops':true,
-	'name':'Faulty Wiring',
-	'flavor':'--',
+	'name':'Thermal Resonator',
+	'flavor':'press RIGHT MOUSE to alert nearby enemies!',
 	'bonus':function(target){
-		target.energyMax+=12;
-		target.energyRate+=1000;
-		target.energyAmount+=1;
+		target.alt=function(){
+			if(this.energy>6 && game.time.now>this.nextShield){
+				this.energy-=6;
+				this.nextShield=game.time.now+2000;
+					bigBoom(explosions,this.sprite.x,this.sprite.y);
+					this.sprite.profile=this.sprite.profileMax*5;
+			}
 
-		target.sprite.profile-=20;	
+		}
 	}
 },
 {
@@ -1257,7 +1251,7 @@ var cmp = [
 	'flavor':'--',
 	'bonus':function(target){
 		target.sprite.profile+=25;
-		target.dropRate+=0.03;
+		target.dropRate+=0.01;
 
 	}
 },
@@ -1268,7 +1262,7 @@ var cmp = [
 	'flavor':'--',
 	'bonus':function(target){
 		target.sprite.profile+=25;
-		target.dropRate+=0.03; //TODO
+		target.dropRate+=0.01;
 	}
 },
 {

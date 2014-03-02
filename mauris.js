@@ -47,10 +47,10 @@ function applyBonuses(target){
 
 	for(var i=0;i<target.ship.length;i++){
 		if (target.ship[i]!=-1){
-			target.mass+=10000;
 			target.sprite.body.maxVelocity.x-=5;
 			target.sprite.body.maxVelocity.y-=5;
 			target.sprite.profile+=25;
+			target.turnRate-=0.03;
 			components[target.ship[i]].bonus(target);
 		}
 	}
@@ -313,7 +313,7 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 	this.fireMass = 0.1;
 	this.fireEnergy = 2;
 	this.speed = 0;
-	this.energy=10;
+	this.energy=0;
 	this.energyMax=10;
 	this.energyRate=1000;
 	this.energyAmount=2;
@@ -380,11 +380,10 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 		this.died=game.time.now+10000;
 		bigBoom(explosions,this.sprite.x,this.sprite.y);
 		for (var j = 0; j < this.parts.length; j++) {
-			if (dmg != 31337){
-				if(Math.random() < globalDropRate + player.dropRate){
+				if(Math.random() < lootDropRate + player.dropRate){
 					spawnLoots(Math.floor(eo3.randomRange(0,4)), this.sprite.x, this.sprite.y);
 					this.parts[j].sprite.kill();
-				}else if(Math.random() < (globalDropRate + player.dropRate) * 1.5 && components[this.parts[j].component].drops){ //TODO probably make stuff drop less, but we're just testing
+				}else if(Math.random() < (componentDropRate + player.dropRate) && components[this.parts[j].component].drops){ //TODO probably make stuff drop less, but we're just testing
 					spawnComponent(this.parts[j].component, this.sprite.x, this.sprite.y);
 					this.parts[j].sprite.kill();	
 				}else{
@@ -395,9 +394,6 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 						this.parts[j].sprite.body.velocity.y = this.parts[j].sprite.body.velocity.y + (bulletVelocity.y*.01*dmg);
 					}
 				}
-			}else{
-				this.parts[j].sprite.kill();
-			}
 		}	
 
 		this.sprite.kill();
@@ -433,7 +429,7 @@ enemyShip.prototype.spawnBullet = function () {
 	var bullet = this.bullets.getFirstDead();
 	bullet.rotation=this.sprite.rotation;
 	bullet.damage=this.fireDamage;
-	bullet.reset(this.sprite.x + (Math.cos(this.sprite.rotation)*(this.sprite.width)), this.sprite.y + (Math.sin(this.sprite.rotation)*(this.sprite.width)));
+	bullet.reset(this.sprite.x + (Math.cos(this.sprite.rotation)*(this.sprite.body.width)), this.sprite.y + (Math.sin(this.sprite.rotation)*(this.sprite.body.width)));
 	bullet.lifespan = this.fireRange; 
 	bullet.alpha=1;
 	bullet.scale.setTo(1,1);
@@ -687,8 +683,8 @@ playerShip.prototype.initPlayerShip = function (ship) {
 	this.fireEnergy = 2;
 	this.profileDecay = 166;
 	this.profileShow = false;
-	this.energy=10;
-	this.energyMax=10;
+	this.energy=0;
+	this.energyMax=12;
 	this.energyRate=1000;
 	this.energyAmount=2;
 	this.ore=0;
@@ -741,12 +737,8 @@ playerShip.prototype.damage = function(dmg, aggro) {
 		this.alive = false;
 		for (var j = 0; j < this.parts.length; j++) {
 
-			if (dmg != 31337){
 				this.parts[j].sprite.body.velocity = game.physics.velocityFromRotation(game.physics.angleBetween(this.sprite, this.parts[j].sprite), eo3.randomRange(200,400));
 				this.parts[j].sprite.body.angularVelocity=eo3.randomRange((dmg+2*14),(dmg+2)*62);	
-			}else{
-				this.parts[j].sprite.kill();
-			}
 		}	
 
 		this.sprite.kill();
@@ -892,7 +884,8 @@ var dummy;
 var defaultPlayerShip = [66, 34, -1, -1];
 var station; //we're going to keep this pretty much as a non-interactive sprite for now... it doesn't actually need to do anything
 
-var globalDropRate = 0.09;
+var lootDropRate = 0.09;
+var componentDropRate = 0.09;
 var backdrop1, backdrop2,backdrop3,backdrop4;
 var numBaddies = 9;
 var numAsteroids = 19;
@@ -919,6 +912,7 @@ var partShip;
 var ui;
 var gameUI = function () {
 	this.parts = [];
+	this.partCost=20;
 	this.currentPart = 0;
 	this.texts = ['welcome to mauris.',
 		'UP/W: thrust. be aware of inertia.',
@@ -1118,6 +1112,12 @@ gameUI.prototype.radarPing = function() {
 		var targetDistance=game.physics.distanceBetween(player.sprite, this.enemies[i].sprite);
 		var s='●'; //I cannot believe this circle renders in my terminal
 		var n=Math.floor(255-(targetDistance/2-900));
+		var blinkDistance = 1000;
+
+		if(player.profileShow){
+			this.blinkDistance=player.sprite.profile*2.1;
+		}
+
 		if(n<0){n=0;}if(n>255){n=255};
 		this.radar[i].style.fill="rgb("+n+",96,96)";
 		if(this.enemies[i].sprite.profile>player.sprite.profileMax*2){
@@ -1129,10 +1129,15 @@ gameUI.prototype.radarPing = function() {
 		}else{
 			this.radar[i].style.font='12px monospace';
 		}
-		if (targetDistance < 1000 && game.time.now % 1000 > 500)  {
+
+		if (targetDistance < 0.5 * blinkDistance && game.time.now % 250 > 125){
 			s='['+s+']';
 			this.radar[i].style.fill="rgb(255,0,0)";
-		} else if (targetDistance < 1000) {
+		}
+		else if (targetDistance < blinkDistance && targetDistance >= 0.5 * blinkDistance && game.time.now % 1000 > 500)  {
+			s='['+s+']';
+			this.radar[i].style.fill="rgb(255,0,0)";
+		} else {
 			s=' '+s+' ';
 		}
 		
@@ -1222,7 +1227,7 @@ gameUI.prototype.updatePart = function () {
 	}else{
 		this.partsSelector.loadTexture('parts',0)
 			this.partText.setText('Drag a component to the X to store it in your inventory.')
-			this.partFlavorText.setText('Press UP to buy a component for $20');
+			this.partFlavorText.setText('Press UP to buy a component for $' + ui.partCost);
 	}
 
 }
@@ -1237,8 +1242,8 @@ gameUI.prototype.previousPart = function () {
 }
 
 gameUI.prototype.buyPart = function () {
-	if(playerStats.credits >= 20) {
-		playerStats.credits-=20;
+	if(playerStats.credits >= ui.partCost) {
+		playerStats.credits-=ui.partCost;
 		var n=0;
 		while(n==0){
 			var q;
