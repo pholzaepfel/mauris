@@ -3,7 +3,7 @@ var cmp = [
 	'id':0, 
 	'drops':false,
 	'name':'Component0',
-	'flavor':'--',
+	'flavor':'-',
 	'bonus':function(target){}
 },
 {
@@ -76,7 +76,7 @@ var cmp = [
 	'id':6,
 	'drops':false,
 	'name':'Alien Pustule',
-	'flavor':'--',
+	'flavor':'-',
 	'bonus':function(target){
 		target.fireDamage+=1;
 		target.energyMax+=2;
@@ -87,7 +87,7 @@ var cmp = [
 	'id':7,
 	'drops':false,
 	'name':'Alien Pustule',
-	'flavor':'--',
+	'flavor':'-',
 	'bonus':function(target){
 		target.fireDamage+=1;
 		target.energyMax+=2;
@@ -103,8 +103,8 @@ var cmp = [
 		target.alt=function(){
 			if(this.energy>0.1){				
 				this.energy-=0.1;
-				if(game.time.now > this.nextShield){
-					this.nextShield=game.time.now+50;
+				if(game.time.now > this.altCooldown){
+					this.altCooldown=game.time.now+50;
 					this.shield=true;
 					shieldEffect(explosions, 4, this.sprite.x, this.sprite.y, this.sprite.body.velocity.x, this.sprite.body.velocity.y);
 				}
@@ -152,9 +152,8 @@ var cmp = [
 	'name':'Xenoform Reactor',
 	'flavor':'hums with power. very valuable',
 	'bonus':function(target){
-		target.energyRate*=0.5;
+		target.energyRate*=0.7;
 		target.sprite.profile+=100;
-		target.fireDamage*=1.2;
 	}
 },
 {
@@ -175,7 +174,7 @@ var cmp = [
 	'id':14,
 	'drops':false,
 	'name':'Asteroid',
-	'flavor':'--',
+	'flavor':'-',
 	'bonus':function(target){
 		target.ai=2;
 	}
@@ -184,7 +183,7 @@ var cmp = [
 	'id':15,
 	'drops':false,
 	'name':'Asteroid',
-	'flavor':'--',
+	'flavor':'-',
 	'bonus':function(target){
 
 		target.ai=2;
@@ -194,7 +193,7 @@ var cmp = [
 	'id':16,
 	'drops':false,
 	'name':'Asteroid',
-	'flavor':'--',
+	'flavor':'-',
 	'bonus':function(target){
 		target.ai=2;
 
@@ -204,7 +203,7 @@ var cmp = [
 	'id':17,
 	'drops':false,
 	'name':'Asteroid',
-	'flavor':'--',
+	'flavor':'-',
 	'bonus':function(target){
 		target.ai=2;
 
@@ -214,7 +213,7 @@ var cmp = [
 	'id':18,
 	'drops':false,
 	'name':'Asteroid',
-	'flavor':'--',
+	'flavor':'-',
 	'bonus':function(target){
 		target.ai=2;
 
@@ -224,7 +223,7 @@ var cmp = [
 	'id':19,
 	'drops':false,
 	'name':'Asteroid',
-	'flavor':'--',
+	'flavor':'-',
 	'bonus':function(target){
 		target.ai=2;
 
@@ -234,7 +233,7 @@ var cmp = [
 	'id':20,
 	'drops':false,
 	'name':'Asteroid',
-	'flavor':'--',
+	'flavor':'-',
 	'bonus':function(target){
 		target.ai=2;
 
@@ -244,7 +243,7 @@ var cmp = [
 	'id':21,
 	'drops':false,
 	'name':'Asteroid',
-	'flavor':'--',
+	'flavor':'-',
 	'bonus':function(target){
 		target.ai=2;
 
@@ -254,7 +253,7 @@ var cmp = [
 	'id':22,
 	'drops':false,
 	'name':'Asteroid',
-	'flavor':'--',
+	'flavor':'-',
 	'bonus':function(target){
 		target.ai=2;
 
@@ -264,7 +263,7 @@ var cmp = [
 	'id':23,
 	'drops':false,
 	'name':'Asteroid',
-	'flavor':'--',
+	'flavor':'-',
 	'bonus':function(target){
 		target.ai=2;
 
@@ -274,7 +273,7 @@ var cmp = [
 	'id':24,
 	'drops':false,
 	'name':'Asteroid',
-	'flavor':'--',
+	'flavor':'-',
 	'bonus':function(target){
 		target.ai=2;
 
@@ -284,7 +283,7 @@ var cmp = [
 	'id':25,
 	'drops':false,
 	'name':'Asteroid',
-	'flavor':'--',
+	'flavor':'-',
 	'bonus':function(target){
 		target.ai=2;
 
@@ -294,7 +293,7 @@ var cmp = [
 	'id':26,
 	'drops':false,
 	'name':'Loot',
-	'flavor':'--',
+	'flavor':'-',
 	'bonus':function(target){
 
 	}
@@ -303,7 +302,7 @@ var cmp = [
 	'id':27,
 	'drops':false,
 	'name':'Loot',
-	'flavor':'--',
+	'flavor':'-',
 	'bonus':function(target){
 
 	}
@@ -312,7 +311,7 @@ var cmp = [
 	'id':28,
 	'drops':false,
 	'name':'Loot',
-	'flavor':'--',
+	'flavor':'-',
 	'bonus':function(target){
 
 	}
@@ -321,7 +320,7 @@ var cmp = [
 	'id':29,
 	'drops':false,
 	'name':'Loot',
-	'flavor':'--',
+	'flavor':'-',
 	'bonus':function(target){
 
 	}
@@ -350,7 +349,7 @@ var cmp = [
 				this.sprite.body.velocity.x+=Math.cos(this.sprite.rotation)*9;
 				this.sprite.body.velocity.y+=Math.sin(this.sprite.rotation)*9;
 				this.speed=this.acceleration;
-				if(game.time.now>this.nextShield){
+				if(game.time.now>this.altCooldown){
 					var bullet=this.spawnBullet();
 					bullet.loadTexture('explosions',2);
 					bullet.reset(this.sprite.x - (Math.cos(this.sprite.rotation)*(this.sprite.body.width)), this.sprite.y - (Math.sin(this.sprite.rotation)*(this.sprite.body.width)));
@@ -363,7 +362,7 @@ var cmp = [
 					bullet.scale.setTo(2,2);
 					bullet.lifespan=666;
 					bullet.body.angularVelocity=666;
-					this.nextShield=game.time.now+100;
+					this.altCooldown=game.time.now+100;
 				}
 
 			}
@@ -442,7 +441,7 @@ var cmp = [
 	'id':38,
 	'drops':false,
 	'name':'Alien Pustule',
-	'flavor':'--',
+	'flavor':'-',
 	'bonus':function(target){
 		target.fireDamage+=1;
 		target.energyMax+=2;
@@ -453,7 +452,7 @@ var cmp = [
 	'id':39,
 	'drops':false,
 	'name':'Alien Pustule',
-	'flavor':'--',
+	'flavor':'-',
 	'bonus':function(target){
 		target.fireDamage+=1;
 		target.energyMax+=2;
@@ -840,7 +839,6 @@ var cmp = [
 	'id':75,
 	'name':'Habitat Module',
 	'flavor':'light and tough, with a bonus capacitor',
-
 	'drops':true,
 	'bonus':function(target){
 
@@ -854,7 +852,7 @@ var cmp = [
 	'id':76,
 	'drops':true,
 	'name':'AWSM',
-	'flavor':'--',
+	'flavor':'NYI',
 	'bonus':function(target){
 		target.TODO=1;	
 	}
@@ -887,7 +885,7 @@ var cmp = [
 		target.acceleration+=0.5;
 		target.energyMax+=4;
 		if(target.ai!=2){
-		target.sprite.body.linearDamping=0.8;
+			target.sprite.body.linearDamping=0.8;
 		}
 	}
 },
@@ -936,9 +934,20 @@ var cmp = [
 	'id':82,
 	'drops':true,
 	'name':'External Power Plant',
-	'flavor':'--',
+	'flavor':'press RIGHT MOUSE to convert ore into energy',
 	'bonus':function(target){
-		target.TODO=1;
+		target.alt=function(){
+			if(game.time.now > target.altCooldown){	
+				var amt = Math.floor(target.energyMax - target.energy);
+				boom(explosions,0,this.sprite.x,this.sprite.y);
+				if(target.ore < amt){
+					amt = target.ore;
+				}
+				target.ore-=amt;
+				target.energy+=amt;	
+				target.altCooldown = game.time.now + 2000;
+			}
+		}
 	}
 },
 {
@@ -958,7 +967,7 @@ var cmp = [
 	'id':84,
 	'drops':false,
 	'name':'Crystalline Entity',
-	'flavor':'--',
+	'flavor':'NYI',
 	'bonus':function(target){
 
 		target.TODO=1;
@@ -968,7 +977,7 @@ var cmp = [
 	'id':85,
 	'drops':false,
 	'name':'Crystalline Entity',
-	'flavor':'--',
+	'flavor':'NYI',
 	'bonus':function(target){
 
 		target.TODO=1;
@@ -978,7 +987,7 @@ var cmp = [
 	'id':86,
 	'drops':false,
 	'name':'Collector Vine',
-	'flavor':'--',
+	'flavor':'NYI',
 	'bonus':function(target){
 
 	}
@@ -987,7 +996,7 @@ var cmp = [
 	'id':87,
 	'drops':false,
 	'name':'Nutriment Tree',
-	'flavor':'--',
+	'flavor':'NYI',
 	'bonus':function(target){
 
 	}
@@ -1068,11 +1077,10 @@ var cmp = [
 	'id':96,
 	'drops':true,
 	'name':'Pirate CPU',
-	'flavor':'--',
+	'flavor':'track an extra target, improves firerate',
 	'bonus':function(target){
 		target.fireRate*=0.8;
-		target.energyRate*=0.7;
-
+		target.radarTargets+=1;
 		target.sprite.profile+=20;	
 	}
 },
@@ -1083,11 +1091,11 @@ var cmp = [
 	'flavor':'press RIGHT MOUSE to alert nearby enemies!',
 	'bonus':function(target){
 		target.alt=function(){
-			if(this.energy>6 && game.time.now>this.nextShield){
+			if(this.energy>6 && game.time.now>this.altCooldown){
 				this.energy-=6;
-				this.nextShield=game.time.now+2000;
-					bigBoom(explosions,this.sprite.x,this.sprite.y);
-					this.sprite.profile=this.sprite.profileMax*5;
+				this.altCooldown=game.time.now+2000;
+				bigBoom(explosions,this.sprite.x,this.sprite.y);
+				this.sprite.profile=this.sprite.profileMax*5;
 			}
 
 		}
@@ -1102,7 +1110,7 @@ var cmp = [
 		target.alt=function(){
 			if(this.energy>6 || this.energy == this.energyMax){
 				this.energy-=6;	//if player has < 0 energy, it's effectively an extra recharge delay
-				if(game.time.now>this.nextShield){
+				if(game.time.now>this.altCooldown){
 					for(var n=0; n<1;n+=0.075){
 						var bullet=this.spawnBullet();
 						bullet.loadTexture('explosions',4);
@@ -1116,7 +1124,7 @@ var cmp = [
 						bullet.lifespan=400;
 						bullet.body.angularVelocity=999;
 					}
-					this.nextShield=game.time.now+100;
+					this.altCooldown=game.time.now+100;
 
 				}
 			}
@@ -1127,7 +1135,7 @@ var cmp = [
 	'id':99,
 	'drops':true,
 	'name':'Advanced Processor',
-	'flavor':'--',
+	'flavor':'improves firing, maneuverability, and damage control',
 	'bonus':function(target){
 		target.fireRate*=0.8;
 		target.turnRate+=0.3;
@@ -1144,7 +1152,7 @@ var cmp = [
 		target.alt=function(){
 			if(this.energy>0.1){
 				this.energy-=0.1;
-				if(game.time.now>this.nextShield){
+				if(game.time.now>this.altCooldown){
 					boom(explosions,1,this.sprite.x,this.sprite.y);
 				}
 				if(this.sprite.profile>100){
@@ -1153,7 +1161,7 @@ var cmp = [
 					this.sprite.profile=0;
 				}
 				for(var i=0;i<this.parts.length;i++){
-					this.nextShield=game.time.now+250;
+					this.altCooldown=game.time.now+250;
 					this.parts[i].sprite.alpha=0.35;
 				}
 			}
@@ -1165,11 +1173,12 @@ var cmp = [
 	'id':101,
 	'drops':true,
 	'name':'Weapon Rotator',
-	'flavor':'--',
+	'flavor':'greatly improves fire rate, but generates heat',
 	'bonus':function(target){
 		target.fireRate*=0.7;
+		target.fireEnergy*=0.9;
 		target.fireDamage+=1;
-		target.sprite.profile+=30;
+		target.bulletBehavior.push(function(bullet){bullet.owner.profile+=10});
 	}
 },
 {
@@ -1295,7 +1304,7 @@ var cmp = [
 		target.turnRate+=0.2;
 		target.energyMax+=2;
 		target.profile+=40;
-}
+	}
 },
 {
 	'id':113,
@@ -1312,15 +1321,15 @@ var cmp = [
 			if(this.energy>12){
 				this.energy-=12;
 
-					boom(explosions,1,this.sprite.x,this.sprite.y);
-					boom(explosions,3,this.sprite.x,this.sprite.y);
-					this.sprite.reset(this.sprite.x+eo3.randomRange(-2000,2000),this.sprite.y+eo3.randomRange(-2000,2000));
-					boom(explosions,1,this.sprite.x,this.sprite.y);
-					boom(explosions,3,this.sprite.x,this.sprite.y);
-					
+				boom(explosions,1,this.sprite.x,this.sprite.y);
+				boom(explosions,3,this.sprite.x,this.sprite.y);
+				this.sprite.reset(this.sprite.x+eo3.randomRange(-2000,2000),this.sprite.y+eo3.randomRange(-2000,2000));
+				boom(explosions,1,this.sprite.x,this.sprite.y);
+				boom(explosions,3,this.sprite.x,this.sprite.y);
+
 			}
 		}
-;
+		;
 	}
 },
 {
@@ -1766,10 +1775,9 @@ var cmp = [
 	'id':160,
 	'drops':true,
 	'name':'Illegal Cargo',
-	'flavor':'--',
+	'flavor':'increases energy, attracts attention',
 	'bonus':function(target){
 		target.energyMax+=6;
-		target.energyRate*=.75;
 		target.energyAmount+=1;
 		target.sprite.profile+=100;
 	}
