@@ -38,8 +38,8 @@ var cmp = [
 	'name':'Capacitor Unit',
 	'flavor':'basic energy storage',
 	'bonus':function(target){
-		target.energyMax+=10;
-		target.energyAmount+=1;
+		target.energyMax+=6;
+		target.energyRate*=0.9;
 	}
 },
 {
@@ -421,8 +421,8 @@ var cmp = [
 	'flavor':'more energy and health',
 	'bonus':function(target){
 		target.health+=3;
-		target.energyAmount+1;
-		target.energyMax+=4;
+		target.energyAmount*=1.2;
+		target.energyMax+=3;
 		target.sprite.profile+=20;
 	}
 },
@@ -560,7 +560,6 @@ var cmp = [
 		target.fireRate*=0.4;
 		target.fireEnergy*=0.6;
 		target.fireRange*=0.6;
-		target.fireVelocity*=0.6;
 		target.sprite.profile+=88;
 	}
 },
@@ -768,20 +767,26 @@ var cmp = [
 	'name':'Angular Ion Thrust',
 	'flavor':'basic turning jet',
 	'bonus':function(target){
-		target.turnRate+=1
+		target.turnRate+=0.4;
 	}
 },
 {
 	'id':70,
 	'drops':true,
-	'name':'Low-Profile Wing',
-	'flavor':'increases maneuverability, makes you less noticeable to enemies',
+	'name':'Flimsy Wing',
+	'flavor':'increases turn rate, but turns will require correction',
 	'bonus':function(target){
-		target.sprite.profile-=25;//refund standard profile cost
-		target.sprite.profile*=0.9;
-		target.acceleration+=0.3;
-		target.turnRate+=0.2;
+		target.turnRate+=0.3;
+		if(target.ai==-1)
+		{
+			target.left=function(){
+				this.sprite.body.angularVelocity-=this.turnRate*5;
+			}
+			target.right=function(){
+				this.sprite.body.angularVelocity+=this.turnRate*5;
+			}
 
+		}
 	}
 },
 {
@@ -924,6 +929,7 @@ var cmp = [
 			target.bulletBehavior.push(function(bullet){
 				bullet.reset(bullet.owner.x,bullet.owner.y);
 				game.physics.moveToPointer(bullet,bullet.fireVelocity);
+				bullet.rotation=game.physics.angleToPointer(bullet);
 			});
 		}else{
 			target.fireDamage+=2;
@@ -1185,12 +1191,20 @@ var cmp = [
 {
 	'id':102,
 	'drops':true,
-	'name':'Prototype Stabilizer',
-	'flavor':'--',
+	'name':'Flimsy Wing',
+	'flavor':'increases turn rate, but turns will require correction',
 	'bonus':function(target){
-		target.turnRate+=0.6;
-		target.acceleration+=0.2;
-		target.sprite.profile*=0.9;
+		target.turnRate+=0.3;
+		if(target.ai==-1)
+		{
+			target.left=function(){
+				this.sprite.body.angularVelocity-=this.turnRate*5;
+			}
+			target.right=function(){
+				this.sprite.body.angularVelocity+=this.turnRate*5;
+			}
+
+		}
 	}
 },
 {
@@ -1779,7 +1793,7 @@ var cmp = [
 	'flavor':'increases energy, attracts attention',
 	'bonus':function(target){
 		target.energyMax+=6;
-		target.energyAmount+=1;
+		target.energyAmount*=1.2;
 		target.sprite.profile+=100;
 	}
 },

@@ -357,6 +357,7 @@ enemyShip.prototype.destroyParts = function() {
 	if(typeof(this.parts)!='undefined'){
 		for(var i=0; i<this.parts.length;i++)
 		{
+			boom(explosions,1,this.parts[i].sprite.x,this.parts[i].sprite.y);
 			this.parts[i].sprite.kill();
 		}
 	}
@@ -666,6 +667,7 @@ playerShip.prototype.initPlayerShip = function (ship) {
 	this.sprite.reset(0,0);
 	this.sprite.name = 'player';
 	this.sprite.rotation=0;
+	this.sprite.body.angularVelocity=0;
 	this.lastVelocityX = this.sprite.body.velocity.x;
 	this.lastVelocityY = this.sprite.body.velocity.y;
 	this.turnRate=0.5;
@@ -702,7 +704,7 @@ playerShip.prototype.initPlayerShip = function (ship) {
 	this.thrust.makeParticles('thrust',[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]);
 	this.thrust.setAll('alpha',0.7);
 	this.thrust.gravity=0;
-
+	this.sprite.body.linearDamping=0;
 	this.sprite.body.bounce.setTo(0, 0);
 	this.sprite.body.collideWorldBounds = true; 
 	this.alt = function(){
@@ -721,6 +723,12 @@ playerShip.prototype.initPlayerShip = function (ship) {
 		this.parts[i].sprite.name="player";	//this lets bullet hit behaviors detect the player correctly
 	}	
 	this.sprite.body.setRectangle(Math.sqrt(this.ship.length)*16,Math.sqrt(this.ship.length)*16,0,0);
+this.left = function(){
+	this.sprite.angle-=this.turnRate;
+};
+this.right = function(){
+	this.sprite.angle+=this.turnRate;
+};
 
 	applyBonuses(this);
 
@@ -753,12 +761,6 @@ playerShip.prototype.damage = function(dmg, aggro) {
 
 }
 
-playerShip.prototype.left = function(){
-	this.sprite.angle-=this.turnRate;
-};
-playerShip.prototype.right = function(){
-	this.sprite.angle+=this.turnRate;
-};
 playerShip.prototype.up = function(){
 
 	this.speed = this.acceleration;
@@ -820,6 +822,9 @@ playerShip.prototype.update = function(){
 			this.sprite.body.velocity.y = this.lastVelocityY;
 		}
 
+		if(Math.abs(this.sprite.body.angularVelocity) > this.turnRate * 100){
+			this.sprite.body.angularVelocity = (this.sprite.body.angularVelocity>0?1:-1)*this.turnRate*100;
+		}
 
 		if(game.time.now>this.altCooldown){
 			this.shield=false;
@@ -880,6 +885,7 @@ function mouseDownHandle(event){
 	mouseState[event.button]=true;
 }
 var player;
+var startParts = 1; //extra parts given to player at beginning!
 var mouseState=[false,false,false];
 var pool;
 var dummy;
@@ -917,11 +923,11 @@ var gameUI = function () {
 	this.partCost=20;
 	this.currentPart = 0;
 	this.texts = ['welcome to mauris.',
+		'DOWN/S: dock or undock at station',
+		'exchange parts when docked; LEFT/RIGHT or A/D cycle inventory.',
 		'UP/W: thrust. be aware of inertia.',
 		'LEFT/RIGHT or A/D: turn.',
 		'LEFT MOUSE BUTTON: fire.',
-		'DOWN/S: dock or undock at station',
-		'exchange parts when docked; LEFT/RIGHT or A/D cycle inventory.',
 		'go blow things up. bring parts back. build new ship. repeat.'
 			];
 	this.nextWords=0;
@@ -1153,7 +1159,9 @@ gameUI.prototype.radarPing = function() {
 gameUI.prototype.wordsPing = function() {
 	this.words.x = player.sprite.body.x - 200;
 	this.words.y = player.sprite.body.y + 200;
-
+	if(gamemode=='?build'){
+		this.words.y+=50;
+	}
 	if (game.time.now > this.nextWords && this.textIndex < this.texts.length){
 		this.words.alpha=1;
 		this.textLine = this.texts[this.textIndex].substr(0, this.textLineIndex++);
@@ -1201,6 +1209,7 @@ gameUI.prototype.creditLinePing = function() {
 }
 gameUI.prototype.update = function() {
 	this.creditLinePing();
+	this.wordsPing();
 	if (gamemode == 'war'){
 		this.profileLinePing();
 		this.bar(this.healthLine, 0, player.health, player.healthMax);
@@ -1212,9 +1221,6 @@ gameUI.prototype.update = function() {
 		this.radarPing();
 		this.stationRadarPing();
 		//this.statsPing(player);
-		this.wordsPing();
-	}else{
-		this.words.setText('');
 	}
 }
 
@@ -1253,7 +1259,6 @@ gameUI.prototype.buyPart = function () {
 				n=q;
 				playerStats.inventory.push(q);
 				this.currentPart=playerStats.inventory.length-1;
-				this.updatePart()
 			}
 		}
 	}
@@ -1581,11 +1586,13 @@ function create () {
 	game.input.mouse.mouseDownCallback=mouseDownHandle;
 
 
-	if (gamemode == '?build'){
-		ui.partsUI();
-		player = new playerShip([1023]);
-	}
 	ui.initCombatUi();
+
+	for(var i=0;i<startParts;i++)
+	{
+	playerStats.credits+=ui.partCost;
+	ui.buyPart();
+	}
 }
 function explosionAnimate(s) {
 	s.alpha*=0.85;
@@ -1756,6 +1763,7 @@ function update () {
 		}
 		if (game.time.now > nextUIDelay && (cursors.up.isDown || cursors.up2.isDown)){
 			ui.buyPart();
+			ui.updatePart();
 			nextUIDelay = game.time.now+1000;
 			//somethin' clever!
 		}
