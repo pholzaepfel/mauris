@@ -177,6 +177,7 @@ var cmp = [
 	'flavor':'-',
 	'bonus':function(target){
 		target.ai=2;
+		target.health+=0.25;
 	}
 },
 {
@@ -187,6 +188,7 @@ var cmp = [
 	'bonus':function(target){
 
 		target.ai=2;
+		target.health+=0.25;
 	}
 },
 {
@@ -196,6 +198,7 @@ var cmp = [
 	'flavor':'-',
 	'bonus':function(target){
 		target.ai=2;
+		target.health+=0.25;
 
 	}
 },
@@ -206,6 +209,7 @@ var cmp = [
 	'flavor':'-',
 	'bonus':function(target){
 		target.ai=2;
+		target.health+=0.25;
 
 	}
 },
@@ -216,6 +220,7 @@ var cmp = [
 	'flavor':'-',
 	'bonus':function(target){
 		target.ai=2;
+		target.health+=0.25;
 
 	}
 },
@@ -226,6 +231,7 @@ var cmp = [
 	'flavor':'-',
 	'bonus':function(target){
 		target.ai=2;
+		target.health+=0.25;
 
 	}
 },
@@ -236,6 +242,7 @@ var cmp = [
 	'flavor':'-',
 	'bonus':function(target){
 		target.ai=2;
+		target.health+=0.25;
 
 	}
 },
@@ -246,6 +253,7 @@ var cmp = [
 	'flavor':'-',
 	'bonus':function(target){
 		target.ai=2;
+		target.health+=0.25;
 
 	}
 },
@@ -256,6 +264,7 @@ var cmp = [
 	'flavor':'-',
 	'bonus':function(target){
 		target.ai=2;
+		target.health+=0.25;
 
 	}
 },
@@ -266,6 +275,7 @@ var cmp = [
 	'flavor':'-',
 	'bonus':function(target){
 		target.ai=2;
+		target.health+=0.25;
 
 	}
 },
@@ -276,6 +286,7 @@ var cmp = [
 	'flavor':'-',
 	'bonus':function(target){
 		target.ai=2;
+		target.health+=0.25;
 
 	}
 },
@@ -286,6 +297,7 @@ var cmp = [
 	'flavor':'-',
 	'bonus':function(target){
 		target.ai=2;
+		target.health+=0.25;
 
 	}
 },
@@ -777,6 +789,7 @@ var cmp = [
 	'flavor':'increases turn rate, but turns will require correction',
 	'bonus':function(target){
 		target.turnRate+=0.3;
+		target.acceleration+=0.5;
 		if(target.ai==-1)
 		{
 			target.left=function(){
@@ -1195,6 +1208,7 @@ var cmp = [
 	'flavor':'increases turn rate, but turns will require correction',
 	'bonus':function(target){
 		target.turnRate+=0.3;
+		target.acceleration+=0.5;
 		if(target.ai==-1)
 		{
 			target.left=function(){
@@ -1301,11 +1315,38 @@ var cmp = [
 {
 	'id':111,
 	'drops':true,
-	'name':'Launch Bay',
-	'flavor':'--',
+	'name':'Transporter',
+	'flavor':'press RIGHT MOUSE to board an enemy vessel. this will destroy your ship if successful',
 	'bonus':function(target){
+		if(target.ai==-1){ //no baddie should EVER have this - too frustrating
+			target.altTexts=['the captain\'s screams are silenced by the void',
+				'the control room is littered with pictures of a life long forgotten',
+					'why the hell is everything pink?'];
+			target.alt=function(){
+				if(this.energy>=6 || this.energy == this.energyMax){
+					this.energy-=6;	//if player has < 0 energy, it's effectively an extra recharge delay
+					if(game.time.now>this.altCooldown){
+						var bullet=this.spawnBullet();
+						bullet.bulletHitBehavior.push(function(sprite,bullet){
+							if(sprite.name!='player'){
+								if(enemies[sprite.name].ai!=3)
+						{
+							player.initPlayerShip(enemies[sprite.name].ship);
+							bigBoom(explosions,player.x,player.y);
+							//player.sprite.reset(enemies[sprite.name].x,enemies[sprite.name].y);
+							player.rotation = enemies[sprite.name].rotation;
+							enemies[sprite.name].damage(enemies[sprite.name].health-bullet.damage);									
+							ui.texts.push(player.altTexts[Math.floor(eo3.randomRange(0,player.altTexts.length))]);
+						}	
+							}
 
-		target.TODO=1;
+						});
+						this.altCooldown=game.time.now+2000;
+
+					}
+				}
+			}
+		}
 	}
 },
 {

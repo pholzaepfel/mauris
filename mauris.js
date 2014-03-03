@@ -51,7 +51,7 @@ function applyBonuses(target){
 			target.sprite.body.maxVelocity.y-=5;
 			target.sprite.profile+=25;
 			if(i>9){
-			target.turnRate-=0.02; //gimp larger ships a bit
+				target.turnRate-=0.02; //gimp larger ships a bit
 			}
 			components[target.ship[i]].bonus(target);
 		}
@@ -366,6 +366,14 @@ enemyShip.prototype.destroyParts = function() {
 
 enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 
+	if(dmg==31337){
+		dmg=0;
+		for(var i=0;i<this.parts.length;i++){
+			this.parts[i].sprite.kill;
+			this.cullParts();
+		}	
+	}
+
 	if(this.shield){
 		boom(explosions,4,this.sprite.x,this.sprite.y);
 	}else{
@@ -379,6 +387,9 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 	if (this.health <= 0){
 		this.alive = false;
 		this.died=game.time.now+10000;
+
+
+
 		bigBoom(explosions,this.sprite.x,this.sprite.y);
 		for (var j = 0; j < this.parts.length; j++) {
 			if(Math.random() < lootDropRate + player.dropRate){
@@ -396,7 +407,7 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 				}
 			}
 		}	
-
+		this.cullParts();
 		this.sprite.kill();
 		if(this.ai!=3){playerStats.kills+=1;}
 		return true;
@@ -405,7 +416,21 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 	return false;
 
 }
+//parts, when killed, are 'available' to be used in newly init'd ships
+//this prevents destroyParts() from attempting to cull parts that have
+//already been destroyed.
+//if there is anything else that can happen between the ship's death
+//and the destroyParts call, it wll need to be cleaned up in this
+//fashion as well 
+enemyShip.prototype.cullParts = function() {
+	for(var j = 0; j < this.parts.length; j++) {
+		if(!this.parts[j].sprite.alive){
+			this.parts.splice(j,1);
+			j-=1;
+		}
+	}	
 
+}
 enemyShip.prototype.left = function(){
 	this.sprite.angle-=this.turnRate;
 };
@@ -644,10 +669,25 @@ var playerShip = function(ship) {
 	this.sprite = game.add.sprite(0, 0, 'parts', 1023);
 	this.initPlayerShip(ship);
 }
+//parts, when killed, are 'available' to be used in newly init'd ships
+//this prevents destroyParts() from attempting to cull parts that have
+//already been destroyed.
+//if there is anything else that can happen between the ship's death
+//and the destroyParts call, it wll need to be cleaned up in this
+//fashion as well 
+playerShip.prototype.cullParts = function() {
+	for(var j = 0; j < this.parts.length; j++) {
+		if(!this.parts[j].sprite.alive){
+			this.parts.splice(j,1);
+			j-=1;
+		}
+	}	
+}
 playerShip.prototype.destroyParts = function() {
 	if(typeof(this.parts)!='undefined'){
 		for(var i=0; i<this.parts.length;i++)
 		{
+			boom(explosions,1,this.parts[i].sprite.x,this.parts[i].sprite.y);
 			this.parts[i].sprite.kill();
 		}
 		this.parts=[];
@@ -723,12 +763,12 @@ playerShip.prototype.initPlayerShip = function (ship) {
 		this.parts[i].sprite.name="player";	//this lets bullet hit behaviors detect the player correctly
 	}	
 	this.sprite.body.setRectangle(Math.sqrt(this.ship.length)*16,Math.sqrt(this.ship.length)*16,0,0);
-this.left = function(){
-	this.sprite.angle-=this.turnRate;
-};
-this.right = function(){
-	this.sprite.angle+=this.turnRate;
-};
+	this.left = function(){
+		this.sprite.angle-=this.turnRate;
+	};
+	this.right = function(){
+		this.sprite.angle+=this.turnRate;
+	};
 
 	applyBonuses(this);
 
@@ -752,7 +792,7 @@ playerShip.prototype.damage = function(dmg, aggro) {
 		}	
 
 		this.sprite.kill();
-
+		this.cullParts();	//defensive programming, in case I ever decide to do something that will kill a player sprite early :P
 		nextSpawn = game.time.now+5000;
 		return true;
 	}
@@ -1590,8 +1630,8 @@ function create () {
 
 	for(var i=0;i<startParts;i++)
 	{
-	playerStats.credits+=ui.partCost;
-	ui.buyPart();
+		playerStats.credits+=ui.partCost;
+		ui.buyPart();
 	}
 }
 function explosionAnimate(s) {
@@ -1908,13 +1948,13 @@ function playerGotLoot (sprite, loot) {
 }
 function bulletHitPlayer (sprite, bullet) {
 
-	var destroyed = player.damage(bullet.damage, bullet.owner);
+	boom(explosions, bullet.bulletSprite, bullet.x, bullet.y);
 
 	for (var i = 0; i < bullet.bulletHitBehavior.length; i++) {
 		bullet.bulletHitBehavior[i](sprite, bullet);
 	}
 
-	boom(explosions, bullet.bulletSprite, bullet.x, bullet.y);
+	var destroyed = player.damage(bullet.damage, bullet.owner);
 	if (destroyed){
 		sparkExplosion(pew, sprite);	
 	}
