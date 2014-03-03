@@ -771,7 +771,7 @@ playerShip.prototype.fire = function(){
 	}
 
 
-	if (game.time.now > this.nextFire && bullets.countDead() > 0 && this.energy > this.fireEnergy && this.alive){
+	if (game.time.now > this.nextFire && bullets.countDead() > 0 && this.energy >= this.fireEnergy && this.alive){
 		this.sprite.profile+=Math.floor(this.fireDamage*80);
 		if(this.sprite.profile>this.sprite.profileMax*5){
 			this.sprite.profile=this.sprite.profileMax*5;
@@ -1041,12 +1041,11 @@ gameUI.prototype.initCombatUi = function() {
 gameUI.prototype.bar = function (targetText, offset, numerator, denominator) {
 	targetText.x = player.sprite.body.x+(player.sprite.body.width/2);
 	targetText.y = player.sprite.body.y+player.sprite.body.height+30+offset;
-	s='◼◼◼◼◼◼◼';
 	var barSize=Math.floor(denominator/2);	
 	var s = '';
-	var n=Math.floor((numerator/denominator)*barSize);
+	var n=Math.floor(numerator/2);
 	if(n<0){n=0;}
-	s+=repeat('\u25cf',n-1);
+	s+=repeat('\u25cf',n);
 	s+=repeat('\u25cb',barSize-n);
 	targetText.setText(s);
 }

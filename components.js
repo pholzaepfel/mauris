@@ -51,7 +51,7 @@ var cmp = [
 		target.turnRate+=0.4;
 		target.acceleration+=0.2;
 		target.alt=function(){
-			if(this.energy>0.3){
+			if(this.energy>=0.3){
 				this.energy-=0.3;
 				this.sprite.body.velocity.x-=Math.cos(this.sprite.rotation)*this.acceleration*6;
 				this.sprite.body.velocity.y-=Math.sin(this.sprite.rotation)*this.acceleration*6;
@@ -101,7 +101,7 @@ var cmp = [
 	'flavor':'press RIGHT MOUSE for invincibility',
 	'bonus':function(target){
 		target.alt=function(){
-			if(this.energy>0.1){				
+			if(this.energy>=0.1){				
 				this.energy-=0.1;
 				if(game.time.now > this.altCooldown){
 					this.altCooldown=game.time.now+50;
@@ -344,7 +344,7 @@ var cmp = [
 	'bonus':function(target){
 		target.acceleration+=0.2;
 		target.alt=function(){
-			if(this.energy>0.2){
+			if(this.energy>=0.2){
 				this.energy-=0.2;
 				this.sprite.body.velocity.x+=Math.cos(this.sprite.rotation)*9;
 				this.sprite.body.velocity.y+=Math.sin(this.sprite.rotation)*9;
@@ -1092,7 +1092,7 @@ var cmp = [
 	'flavor':'press RIGHT MOUSE to alert nearby enemies!',
 	'bonus':function(target){
 		target.alt=function(){
-			if(this.energy>6 && game.time.now>this.altCooldown){
+			if(this.energy>=6 && game.time.now>this.altCooldown){
 				this.energy-=6;
 				this.altCooldown=game.time.now+2000;
 				bigBoom(explosions,this.sprite.x,this.sprite.y);
@@ -1109,7 +1109,7 @@ var cmp = [
 	'flavor':'press RIGHT MOUSE to unleash a damaging halo of contagion',
 	'bonus':function(target){
 		target.alt=function(){
-			if(this.energy>6 || this.energy == this.energyMax){
+			if(this.energy>=6 || this.energy == this.energyMax){
 				this.energy-=6;	//if player has < 0 energy, it's effectively an extra recharge delay
 				if(game.time.now>this.altCooldown){
 					for(var n=0; n<1;n+=0.075){
@@ -1151,7 +1151,7 @@ var cmp = [
 	'flavor':'hold RIGHT MOUSE to throw off attackers',
 	'bonus':function(target){
 		target.alt=function(){
-			if(this.energy>0.1){
+			if(this.energy>=0.1){
 				this.energy-=0.1;
 				if(game.time.now>this.altCooldown){
 					boom(explosions,1,this.sprite.x,this.sprite.y);
@@ -1319,7 +1319,7 @@ var cmp = [
 			{
 				ui.error('FAILURE: not have enough energy capacity to use the ' + this.name);
 			}
-			if(this.energy>12){
+			if(this.energy>=12){
 				this.energy-=12;
 
 				boom(explosions,1,this.sprite.x,this.sprite.y);
