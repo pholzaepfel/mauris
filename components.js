@@ -563,8 +563,8 @@ var cmp = [
 		target.bulletBehavior.push(function(bullet){
 			bullet.rotation+=Math.random()*0.5-0.25;
 			bullet.loadTexture('explosions',2);
-			bullet.body.angularVelocity=eo3.randomRange(600,900);
-			bullet.alpha=eo3.randomRange(0.5,0.7);
+			bullet.body.angularVelocity=randomRange(600,900);
+			bullet.alpha=randomRange(0.5,0.7);
 			game.physics.velocityFromRotation(bullet.rotation, bullet.fireVelocity, bullet.body.velocity);
 		});
 		target.bulletSprite=5;
@@ -1333,10 +1333,10 @@ var cmp = [
 						{
 							player.initPlayerShip(enemies[sprite.name].ship);
 							bigBoom(explosions,player.x,player.y);
-							//player.sprite.reset(enemies[sprite.name].x,enemies[sprite.name].y);
+							player.sprite.reset(enemies[sprite.name].sprite.x,enemies[sprite.name].sprite.y);
 							player.rotation = enemies[sprite.name].rotation;
-							enemies[sprite.name].damage(enemies[sprite.name].health-bullet.damage);									
-							ui.texts.push(player.altTexts[Math.floor(eo3.randomRange(0,player.altTexts.length))]);
+							enemies[sprite.name].damage(31337);									
+							ui.texts.push(player.altTexts[Math.floor(randomRange(0,player.altTexts.length))]);
 						}	
 							}
 
@@ -1379,7 +1379,7 @@ var cmp = [
 
 				boom(explosions,1,this.sprite.x,this.sprite.y);
 				boom(explosions,3,this.sprite.x,this.sprite.y);
-				this.sprite.reset(this.sprite.x+eo3.randomRange(-2000,2000),this.sprite.y+eo3.randomRange(-2000,2000));
+				this.sprite.reset(this.sprite.x+randomRange(-2000,2000),this.sprite.y+randomRange(-2000,2000));
 				boom(explosions,1,this.sprite.x,this.sprite.y);
 				boom(explosions,3,this.sprite.x,this.sprite.y);
 
