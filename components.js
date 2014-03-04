@@ -873,25 +873,6 @@ var cmp = [
 	}
 },
 {
-	'id':76,
-	'drops':true,
-	'name':'AWSM',
-	'flavor':'press RIGHT MOUSE to self-destruct, destroying nearby ships',
-	'bonus':function(target){
-		target.alt=function(){
-			hugeBoom(explosions,this.sprite.x,this.sprite.y);
-			for(var i=0; i<enemies.length; i++){
-				if(game.physics.distanceBetween(this.sprite, enemies[i].sprite)<500 && enemies[i].alive){
-					enemies[i].damage(500);
-				}
-			}
-			if(game.physics.distanceBetween(this.sprite,player.sprite)<500 && player.alive){
-				player.damage(500);
-			}
-		}
-	}
-},
-{
 	'id':77,
 	'drops':true,
 	'name':'skul-gun',

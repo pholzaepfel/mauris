@@ -715,6 +715,7 @@ function preload () {
 var playerShip = function(ship) {
 	this.sprite = game.add.sprite(0, 0, 'parts', 1023);
 	this.initPlayerShip(ship);
+	this.thrust.makeParticles('thrust',[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]);
 }
 //parts, when killed, are 'available' to be used in newly init'd ships
 //this prevents destroyParts() from attempting to cull parts that have
@@ -788,7 +789,6 @@ playerShip.prototype.initPlayerShip = function (ship) {
 	this.sprite.body.maxVelocity.setTo(300,300);
 	this.sprite.profile=250;	//max range at which opponents will attack. this will change dynamically
 	this.thrust = game.add.emitter(0,0,200);
-	this.thrust.makeParticles('thrust',[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]);
 	this.thrust.setAll('alpha',0.7);
 	this.thrust.gravity=0;
 	this.sprite.body.linearDamping=0;
