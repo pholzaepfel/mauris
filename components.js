@@ -1247,7 +1247,7 @@ var cmp = [
 	'id':103,
 	'drops':true,
 	'name':'Tactical Control Module',
-	'flavor':'--',
+	'flavor':'improves weapons and other critical systems',
 	'bonus':function(target){
 		target.fireDamage+=1;
 		target.fireRate*=0.9;
@@ -1260,22 +1260,22 @@ var cmp = [
 	'id':104,
 	'drops':true,
 	'name':'Inline Warp Thrust',
-	'flavor':'--',
+	'flavor':'high speed, low profile',
 	'bonus':function(target){
 		target.acceleration+=0.8;
-		target.energyRate*=0.9;
+		target.energyRate*=1.1;
+		target.profile-=20;
 	}
 },
 {
 	'id':105,
 	'drops':true,
 	'name':'Observation Unit',
-	'flavor':'--',
+	'flavor':'extra range and track an additional target',
 	'bonus':function(target){
-		target.health+=3;
+		target.radarTargets+=1;
 		target.fireRange+=500;
 		target.fireVelocity+=100;
-		target.TODO=1;
 	}
 },
 {
@@ -1308,7 +1308,7 @@ var cmp = [
 	'id':108,
 	'drops':true,
 	'name':'Vidscreen Ad <BurgerJoint>',
-	'flavor':'--',
+	'flavor':'more drops, high profile',
 	'bonus':function(target){
 		target.sprite.profile+=25;
 		target.dropRate+=0.01;
@@ -1319,7 +1319,7 @@ var cmp = [
 	'id':109,
 	'drops':true,
 	'name':'Vidscreen Ad <Cola>',
-	'flavor':'--',
+	'flavor':'more drops, high profile',
 	'bonus':function(target){
 		target.sprite.profile+=25;
 		target.dropRate+=0.01;
