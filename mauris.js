@@ -1908,7 +1908,7 @@ function boom(explosionsGroup, bulletSprite, x, y){
 }
 
 function sparks(emitter, sprite){
-	if(onscreen(x,y)){
+	if(onscreen(sprite.x,sprite.y)){
 	emitter.x=sprite.x+randomRange(-.7*sprite.body.width,sprite.body.width);
 	emitter.y=sprite.y+randomRange(-.7*sprite.body.width,sprite.body.width);;
 	emitter.minParticleSpeed.setTo(-200,-200);
@@ -1918,7 +1918,7 @@ function sparks(emitter, sprite){
 	}
 }
 function sparkExplosion(emitter, sprite){
-	if(onscreen(x,y)){
+	if(onscreen(sprite.x,sprite.y)){
 	emitter.x=sprite.x;
 	emitter.y=sprite.y;
 	emitter.minParticleSpeed.setTo(-300,-300);
