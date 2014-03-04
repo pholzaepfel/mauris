@@ -148,53 +148,64 @@ function threatSort(a, b) {
 //////
 
 dragPart = function(x,y,sheet,index){
-	this.game = game;
-	this.alive = true;
-	this.sprite = game.add.sprite(x-x%16,y-y%16,sheet,index);
+	this.sprite = game.add.sprite(x,y,sheet,index);
+	this.sprite.visible = false;
+	this.sprite.alive = false;
+};
+dragPart.prototype.initDragPart=function(x,y,sheet,index){
+	this.sprite.loadTexture(sheet,index);
+	this.sprite.reset(x-x%16,y-y%16);
+	this.sprite.bringToTop();
+	this.sprite.alive = true;
+	this.sprite.visible = true;
 	this.index = index;
 	this.sprite.inputEnabled=true;
-	this.sprite.input.enableDrag(true,true);
+	this.sprite.input.enableDrag(false,true);
 	this.sprite.input.snapOnRelease=true;
 	this.sprite.input.snapX=16;
 	this.sprite.input.snapY=16;
 };
+dragPart.prototype.dispose=function(x,y,sheet,index){
+	this.sprite.inputEnabled=false;
+	this.sprite.input.destroy();
+	this.sprite.kill();
+}
 dragPart.prototype.update = function(){
-	if(!game.input.activePointer.isDown && this.sprite.alive){
-		if(this.sprite.x >= ui.partswindow.x &&
-				this.sprite.x <= ui.partswindow.x + ui.partswindow.width &&	
-				this.sprite.y >= ui.partswindow.y &&
-				this.sprite.y <= ui.partswindow.y + ui.partswindow.height){
-					var n=0;
-					//prevent player from destroying the last part	
-					for (var i=0;i<ui.parts.length;i++){
-						if(ui.parts[i].sprite.alive){
-							n+=1;
+	if(this.sprite.alive){
+		if(!game.input.activePointer.isDown){
+			if(this.sprite.x >= ui.partswindow.x &&
+					this.sprite.x <= ui.partswindow.x + ui.partswindow.width &&	
+					this.sprite.y >= ui.partswindow.y &&
+					this.sprite.y <= ui.partswindow.y + ui.partswindow.height){
+						var n=0;
+						//prevent player from destroying the last part	
+						for (var i=0;i<ui.parts.length;i++){
+							if(ui.parts[i].sprite.alive){
+								n+=1;
+							}
+						}
+						if (n == 1){
+							this.sprite.reset(0,0);
+							ui.partsArray();
+						}else{
+							if (!cheatmode){
+								playerStats.inventory.push(this.index);
+							}
+							this.sprite.kill();
+							ui.updatePart();
+							ui.partsArray(); //recalc rectangle
 						}
 					}
-					if (n == 1){
-						this.sprite.reset(0,0);
-						ui.partsArray();
-					}else{
-						if (!cheatmode){
-							playerStats.inventory.push(this.index);
-						}
-						this.sprite.kill();
-						ui.updatePart();
-						ui.partsArray(); //recalc rectangle
-					}
-				}
+		}
 	}
-
 }
 dragPartsPool = function(){
 	this.parts=[];
 	for(var i=0;i<50;i++){
 		this.parts.push(new dragPart(0,0,'parts',0));
-		this.parts[i].sprite.kill();
-
 	}
 };
-dragPartsPool.prototype.get = function (x,y,index,targetSprite){
+dragPartsPool.prototype.get = function (x,y,sheet, index){
 
 	for (var i=0;i<this.parts.length;i++){
 		if(!this.parts[i].sprite.alive){
@@ -204,7 +215,7 @@ dragPartsPool.prototype.get = function (x,y,index,targetSprite){
 	if(i==this.parts.length){
 		this.parts.push(new dragPart(x,y,'parts',index));
 	}else{
-		this.parts[i].initDragPart(x,y,index);
+		this.parts[i].initDragPart(x,y,'parts',index);
 	}
 	return this.parts[i];
 }
@@ -942,6 +953,7 @@ var player;
 var startParts = 1; //extra parts given to player at beginning!
 var mouseState=[false,false,false];
 var pool;
+var dragPool;
 var dummy;
 var defaultPlayerShip = [66, 34, -1, -1];
 var station; //we're going to keep this pretty much as a non-interactive sprite for now... it doesn't actually need to do anything
@@ -1365,18 +1377,11 @@ gameUI.prototype.destroyParts = function() {
 	if(typeof(this.parts)!='undefined'){
 		for(var i=0; i<this.parts.length;i++)
 		{
-			//very explicit destroy
-			this.parts[i].sprite.inputEnabled=false;
-			this.parts[i].sprite.input.destroy();
-			this.parts[i].sprite.animations.destroy();
-			this.parts[i].sprite.alive=false;
-			this.parts[i].sprite.exists=false;
-			this.parts[i].sprite.visible=false;
-			this.parts[i].sprite.game=null; }
+			this.parts[i].dispose();
+		}
+		this.parts=[];
 	}
-	this.parts=[];
 }
-
 gameUI.prototype.endPartsUI = function () {
 	this.partswindow.visible = false;
 	this.tempStation.visible = false;
@@ -1463,7 +1468,7 @@ function selectPart() {
 function createPart(n){
 
 	var partPosition = ui.calculatePartPosition(); 
-	ui.parts.push(new dragPart(partPosition.x,partPosition.y,'parts',n));
+	ui.parts.push(dragPool.get(partPosition.x,partPosition.y,'parts',n));
 
 }
 // assumes that the incoming parts list is a square
@@ -1501,7 +1506,7 @@ function createBuildParts(ship,x,y){
 			//that godawful barf there is a terse calculation for the coordinates of the part
 			//assuming an array of 'parts' (sprite ids) - array should have a length
 			//with an int square root
-			myParts.push(new dragPart(x+(16*(i%n)),y+(16*Math.floor(i/n)),'parts',ship[i]));
+			myParts.push(dragPool.get(x+(16*(i%n)),y+(16*Math.floor(i/n)),'parts',ship[i]));
 		}
 	}
 	return myParts; 
@@ -1561,7 +1566,9 @@ function create () {
 		dummy.kill();
 
 		pool = new partsPool();
+		dragPool = new dragPartsPool();
 		player = new playerShip(defaultPlayerShip);
+
 		//  The enemies bullet group
 		enemyBullets = game.add.group();
 		enemyBullets.createMultiple(200, 'bullet');
