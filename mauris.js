@@ -25,7 +25,16 @@ window.oncontextmenu = function (){
 }
 function onscreen(x,y) {
 	return	(player.sprite.x - resolutionX < x && x < player.sprite.x + resolutionX &&
-	player.sprite.y - resolutionY < y && y < player.sprite.y + resolutionY)
+			player.sprite.y - resolutionY < y && y < player.sprite.y + resolutionY)
+}
+
+function ownerFromName(name){
+
+	if(name == 'player'){
+		return player;
+	}else{
+		return enemies[name];
+	}
 }
 function repeat(pattern, count) { //http://stackoverflow.com/questions/202605/repeat-string-javascript - elegant!
 	if (count < 1) return '';
@@ -375,8 +384,8 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 	this.sprite.body.velocity.x*=.3+Math.random()*0.7;
 	this.sprite.body.velocity.y*=.3+Math.random()*0.7;
 
-			this.lastVelocityX = this.sprite.body.velocity.x;
-			this.lastVelocityY = this.sprite.body.velocity.y;
+	this.lastVelocityX = this.sprite.body.velocity.x;
+	this.lastVelocityY = this.sprite.body.velocity.y;
 
 
 	game.physics.velocityFromRotation(this.sprite.rotation, 100, this.sprite.body.velocity);
@@ -507,15 +516,15 @@ enemyShip.prototype.spawnBullet = function () {
 
 }
 enemyShip.prototype.update = function() {
-			//fugly hack to get around mysterious loss of velocity
-		if(this.sprite.body.velocity.x != 0 || this.sprite.body.velocity.y != 0){
-			this.lastVelocityX = this.sprite.body.velocity.x;
-			this.lastVelocityY = this.sprite.body.velocity.y;
-		}else{
-			this.sprite.body.velocity.x = this.lastVelocityX;
-			this.sprite.body.velocity.y = this.lastVelocityY;
-		}
-if (this.game.physics.distanceBetween(this.sprite, player.sprite) > 5000 && gamemode != '?attract' ||
+	//fugly hack to get around mysterious loss of velocity
+	if(this.sprite.body.velocity.x != 0 || this.sprite.body.velocity.y != 0){
+		this.lastVelocityX = this.sprite.body.velocity.x;
+		this.lastVelocityY = this.sprite.body.velocity.y;
+	}else{
+		this.sprite.body.velocity.x = this.lastVelocityX;
+		this.sprite.body.velocity.y = this.lastVelocityY;
+	}
+	if (this.game.physics.distanceBetween(this.sprite, player.sprite) > 5000 && gamemode != '?attract' ||
 			this.game.physics.distanceBetween(this.sprite, player.sprite) > 2500 && this.ai == 3){
 
 				var x = this.target.x + (randomSign() * randomRange(750,2000)) + player.sprite.body.velocity.x*3;
@@ -1856,47 +1865,47 @@ function update () {
 function hugeBoom(explosionsGroup, x, y){
 
 	if(onscreen(x,y)){
-	var r = Math.random();
+		var r = Math.random();
 
-	for(var i=0; i < 10 + (r * 9) ; i ++) { 
-		if(explosions.countDead()){
-			var explosion = explosionsGroup.getFirstDead();
-			explosion.loadTexture('explosions', Math.random()>0.7 ? 1 : 2);
-			explosion.reset(x+randomRange(-80,80),y+randomRange(-80,80));
-			explosion.rotation = Math.random()*Math.PI*2;
-			explosion.angularVelocity=randomRange(-200,200);
-			explosion.fireVelocity=randomRange(600,890);
-			explosion.lifespan=1200;
-			explosion.linearDamping=-1;
-			r=randomRange(4,11);
-			explosion.scale.setTo(r,r);
-			explosion.alpha=1;
-			game.physics.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
+		for(var i=0; i < 10 + (r * 9) ; i ++) { 
+			if(explosions.countDead()){
+				var explosion = explosionsGroup.getFirstDead();
+				explosion.loadTexture('explosions', Math.random()>0.7 ? 1 : 2);
+				explosion.reset(x+randomRange(-80,80),y+randomRange(-80,80));
+				explosion.rotation = Math.random()*Math.PI*2;
+				explosion.angularVelocity=randomRange(-200,200);
+				explosion.fireVelocity=randomRange(600,890);
+				explosion.lifespan=1200;
+				explosion.linearDamping=-1;
+				r=randomRange(4,11);
+				explosion.scale.setTo(r,r);
+				explosion.alpha=1;
+				game.physics.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
+			}
 		}
-	}
 	}
 }
 function bigBoom(explosionsGroup, x, y){
 
 	if(onscreen(x,y)){
-	var r = Math.random();
+		var r = Math.random();
 
-	for(var i=0; i < 5 + (r * 6) ; i ++) { 
-		if(explosions.countDead()){
-			var explosion = explosionsGroup.getFirstDead();
-			explosion.loadTexture('explosions', Math.random()>0.7 ? 1 : 2);
-			explosion.reset(x+randomRange(-20,20),y+randomRange(-20,20));
-			explosion.rotation = Math.random()*Math.PI;
-			explosion.angularVelocity=randomRange(-150,150);
-			explosion.fireVelocity=randomRange(30,80);
-			explosion.lifespan=700;
-			explosion.linearDamping=-1;
-			r=randomRange(0.4,1.9);
-			explosion.scale.setTo(r,r);
-			explosion.alpha=1;
-			game.physics.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
+		for(var i=0; i < 5 + (r * 6) ; i ++) { 
+			if(explosions.countDead()){
+				var explosion = explosionsGroup.getFirstDead();
+				explosion.loadTexture('explosions', Math.random()>0.7 ? 1 : 2);
+				explosion.reset(x+randomRange(-20,20),y+randomRange(-20,20));
+				explosion.rotation = Math.random()*Math.PI;
+				explosion.angularVelocity=randomRange(-150,150);
+				explosion.fireVelocity=randomRange(30,80);
+				explosion.lifespan=700;
+				explosion.linearDamping=-1;
+				r=randomRange(0.4,1.9);
+				explosion.scale.setTo(r,r);
+				explosion.alpha=1;
+				game.physics.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
+			}
 		}
-	}
 	}
 }
 function shieldEffect(explosionsGroup, bulletSprite, x, y, velx, vely){
@@ -1922,45 +1931,45 @@ function boom(explosionsGroup, bulletSprite, x, y){
 
 	if(onscreen(x,y)){
 
-	var r = Math.random();
+		var r = Math.random();
 
-	for(var i=0; i < 3 + (r * 6) ; i ++) { 
-		if(explosions.countDead()){
-			var explosion = explosionsGroup.getFirstDead();
-			explosion.loadTexture('explosions', bulletSprite || 0);
-			explosion.reset(x+randomRange(-8,8),y+randomRange(-8,8));
-			explosion.rotation = Math.random()*Math.PI;
-			explosion.angularVelocity=randomRange(-150,150);
-			explosion.linearDamping=-1;
-			explosion.fireVelocity=randomRange(-10,10);
-			explosion.lifespan=700;
-			r=randomRange(0.1,0.5);
-			explosion.scale.setTo(r,r);
-			explosion.alpha=1;
-			game.physics.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
+		for(var i=0; i < 3 + (r * 6) ; i ++) { 
+			if(explosions.countDead()){
+				var explosion = explosionsGroup.getFirstDead();
+				explosion.loadTexture('explosions', bulletSprite || 0);
+				explosion.reset(x+randomRange(-8,8),y+randomRange(-8,8));
+				explosion.rotation = Math.random()*Math.PI;
+				explosion.angularVelocity=randomRange(-150,150);
+				explosion.linearDamping=-1;
+				explosion.fireVelocity=randomRange(-10,10);
+				explosion.lifespan=700;
+				r=randomRange(0.1,0.5);
+				explosion.scale.setTo(r,r);
+				explosion.alpha=1;
+				game.physics.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
+			}
 		}
-	}
 	}
 }
 
 function sparks(emitter, sprite){
 	if(onscreen(sprite.x,sprite.y)){
-	emitter.x=sprite.x+randomRange(-.7*sprite.body.width,sprite.body.width);
-	emitter.y=sprite.y+randomRange(-.7*sprite.body.width,sprite.body.width);;
-	emitter.minParticleSpeed.setTo(-200,-200);
-	emitter.maxParticleSpeed.setTo(200,200);
-	emitter.particleFriction = 50;
-	emitter.start(true,200,null, randomRange(1,14));
+		emitter.x=sprite.x+randomRange(-.7*sprite.body.width,sprite.body.width);
+		emitter.y=sprite.y+randomRange(-.7*sprite.body.width,sprite.body.width);;
+		emitter.minParticleSpeed.setTo(-200,-200);
+		emitter.maxParticleSpeed.setTo(200,200);
+		emitter.particleFriction = 50;
+		emitter.start(true,200,null, randomRange(1,14));
 	}
 }
 function sparkExplosion(emitter, sprite){
 	if(onscreen(sprite.x,sprite.y)){
-	emitter.x=sprite.x;
-	emitter.y=sprite.y;
-	emitter.minParticleSpeed.setTo(-300,-300);
-	emitter.maxParticleSpeed.setTo(300,300);
-	emitter.particleFriction = 200;
-	emitter.start(true,600,null, 200);
+		emitter.x=sprite.x;
+		emitter.y=sprite.y;
+		emitter.minParticleSpeed.setTo(-300,-300);
+		emitter.maxParticleSpeed.setTo(300,300);
+		emitter.particleFriction = 200;
+		emitter.start(true,600,null, 200);
 	}
 }
 function spawnLoots(_count, x, y){

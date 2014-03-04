@@ -900,11 +900,8 @@ var cmp = [
 		target.sprite.profile+=20;
 		target.fireRate*=0.9;
 		target.bulletHitBehavior.push(function(sprite,bullet){
-			if(sprite.name=='player'){
-				player.energy-=4;
-			}else{
-				enemies[sprite.name].energy-=4;
-			}
+			var tgt = ownerFromName(sprite.name);
+				tgt.energy-=4;
 
 		});
 	}
@@ -1333,12 +1330,7 @@ var cmp = [
 	'bonus':function(target){
 		target.energyAmount+=2;
 		target.bulletBehavior.push(function(bullet){
-			var tgt;
-			if(bullet.owner.name == 'player'){
-				tgt=player;
-			}else{
-				tgt=enemies[bullet.owner.name];
-			}
+			var tgt = ownerFromName(bullet.owner.name);
 			if(Math.random()<0.1 && tgt.health > 1){
 				tgt.damage(1);
 				boom(explosions,4,tgt.sprite.x,tgt.sprite.y);
@@ -1558,7 +1550,7 @@ var cmp = [
 	'id':128,
 	'drops':true,
 	'name':'Contraband Missiles',
-	'flavor':'--',
+	'flavor':'high damage, unreliable speed',
 	'bonus':function(target){
 		target.bulletSprite=2;
 		target.fireDamage+=4;
@@ -1573,7 +1565,7 @@ var cmp = [
 	'id':129,
 	'drops':true,
 	'name':'Scavenged Exoskeleton',
-	'flavor':'--',
+	'flavor':'light frame fitted with thrusters',
 	'bonus':function(target){
 		target.acceleration+=1;
 		target.turnrate+=0.1;
@@ -1584,12 +1576,15 @@ var cmp = [
 	'id':130,
 	'drops':true,
 	'name':'Aftermarket Gatling',
-	'flavor':'--',
+	'flavor':'erratic fire rate',
 	'bonus':function(target){
 		target.bulletSprite=1;
-		target.fireRate*=0.7;
+		target.bulletBehavior.push(function(bullet){				
+			var tgt = ownerFromName(bullet.owner.name);
+			tgt.nextFire = game.time.now + (randomRange(0.25,1.5) * tgt.fireRate);
+		});
 		target.fireRange*=0.7;
-		target.fireDamage*=0.7;
+		target.fireDamage*=0.9;
 		target.fireEnergy*=0.7;
 		target.sprite.profile+=20;
 	}
