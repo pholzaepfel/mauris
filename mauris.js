@@ -23,7 +23,10 @@ var playerMeta = function () {
 window.oncontextmenu = function (){
 	return false;     // cancel default menu
 }
-
+function onscreen(x,y) {
+	return	(player.sprite.x - resolutionX < x < player.sprite.x + resolutionX &&
+	player.sprite.y - resolutionY < y < player.sprite.y + resolutionY)
+}
 function repeat(pattern, count) { //http://stackoverflow.com/questions/202605/repeat-string-javascript - elegant!
 	if (count < 1) return '';
 	var result = '';
@@ -70,12 +73,10 @@ function applyBonuses(target){
 	target.sprite.profileMax=target.sprite.profile; 
 }
 
-eo3 = {};
-eo3.addVelocity = function (a,b,c){return"undefined"==typeof b&&(b=60),	c=c||new d.Point,c.setTo(c.x+Math.cos(a)*b,c.y+Math.sin(a)*b)};
-eo3.randomRange = function(a,b){var c,d; if(a>b){c=a;d=b;}else{d=a;c=b};return (Math.random()*(c-d))+d};
-eo3.randomSign = function(){return Math.random()>.5?1:-1};
-eo3.addVelocityTest = function (a,b,c){return '' +  c.x + ' - ' + Math.cos((game.math.degToRad(a))*b) + ' : ' + c.y+' - '+(Math.sin(game.math.degToRad(a))*b)};
-eo3.shipWithoutVoid = function (ship) {
+function addVelocity (a,b,c){return"undefined"==typeof b&&(b=60),	c=c||new d.Point,c.setTo(c.x+Math.cos(a)*b,c.y+Math.sin(a)*b)};
+function randomRange (a,b){var c,d; if(a>b){c=a;d=b;}else{d=a;c=b};return (Math.random()*(c-d))+d};
+function randomSign (){return Math.random()>.5?1:-1};
+function shipWithoutVoid (ship) {
 	var shipOut=[];
 	for (var i=0;i<ship.length;i++){
 		if (ship[i]!=-1){
@@ -293,8 +294,8 @@ enemyShip = function (index, game, targetSprite, bullets, shipList) {
 
 	this.target = targetSprite;
 
-	var x = this.target.x + (eo3.randomSign() * eo3.randomRange(750,2000));
-	var y = this.target.y + (eo3.randomSign() * eo3.randomRange(750,2000));
+	var x = this.target.x + (randomSign() * randomRange(750,2000));
+	var y = this.target.y + (randomSign() * randomRange(750,2000));
 
 	this.game = game;
 	this.shipList = shipList;
@@ -312,12 +313,12 @@ enemyShip = function (index, game, targetSprite, bullets, shipList) {
 
 enemyShip.prototype.initEnemyShip = function(ship) {
 
-	var x = this.target.body.x + (eo3.randomSign() * eo3.randomRange(750,2000)) + player.sprite.body.velocity.x*3;
-	var y = this.target.body.y + (eo3.randomSign() * eo3.randomRange(750,2000)) + player.sprite.body.velocity.y*3;
+	var x = this.target.body.x + (randomSign() * randomRange(750,2000)) + player.sprite.body.velocity.x*3;
+	var y = this.target.body.y + (randomSign() * randomRange(750,2000)) + player.sprite.body.velocity.y*3;
 
 	this.sprite.reset(x,y);
 	boom(explosions,4,x,y);
-	this.ship = this.shipList[Math.floor(eo3.randomRange(0,this.shipList.length))];
+	this.ship = this.shipList[Math.floor(randomRange(0,this.shipList.length))];
 	this.destroyParts()
 		this.sprite.profile = 250;
 	this.sprite.profileDecay = 166;
@@ -351,7 +352,7 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 
 
 	this.nextEnergy = 0;
-	this.nextFire = game.time.now+eo3.randomRange(1000,8000);
+	this.nextFire = game.time.now+randomRange(1000,8000);
 	this.alive = true;
 	this.parts = [];
 	this.sprite.visible = true;
@@ -361,7 +362,7 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 
 	this.sprite.body.setRectangle(Math.sqrt(this.ship.length)*16,Math.sqrt(this.ship.length)*16,Math.sqrt(this.ship.length)*-8,Math.sqrt(this.ship.length)*-8);
 
-	this.sprite.body.mass = eo3.shipWithoutVoid(this.ship).length*10000
+	this.sprite.body.mass = shipWithoutVoid(this.ship).length*10000
 
 
 		this.sprite.body.collideWorldBounds = true;
@@ -418,14 +419,14 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 		bigBoom(explosions,this.sprite.x,this.sprite.y);
 		for (var j = 0; j < this.parts.length; j++) {
 			if(Math.random() < lootDropRate + player.dropRate){
-				spawnLoots(Math.floor(eo3.randomRange(0,4)), this.sprite.x, this.sprite.y);
+				spawnLoots(Math.floor(randomRange(0,4)), this.sprite.x, this.sprite.y);
 				this.parts[j].sprite.kill();
 			}else if(Math.random() < (componentDropRate + player.dropRate) && components[this.parts[j].component].drops){ //TODO probably make stuff drop less, but we're just testing
 				spawnComponent(this.parts[j].component, this.sprite.x, this.sprite.y);
 				this.parts[j].sprite.kill();	
 			}else{
-				this.parts[j].sprite.body.velocity = game.physics.velocityFromRotation(this.game.physics.angleBetween(this.sprite, this.parts[j].sprite), 200+eo3.randomRange(0,10*dmg));
-				this.parts[j].sprite.body.angularVelocity=eo3.randomRange((dmg+2*14),(dmg+2)*62);					
+				this.parts[j].sprite.body.velocity = game.physics.velocityFromRotation(this.game.physics.angleBetween(this.sprite, this.parts[j].sprite), 200+randomRange(0,10*dmg));
+				this.parts[j].sprite.body.angularVelocity=randomRange((dmg+2*14),(dmg+2)*62);					
 				if(typeof(bulletVelocity)!='undefined'){
 					this.parts[j].sprite.body.velocity.x = this.parts[j].sprite.body.velocity.x + (bulletVelocity.x*.01*dmg);
 					this.parts[j].sprite.body.velocity.y = this.parts[j].sprite.body.velocity.y + (bulletVelocity.y*.01*dmg);
@@ -505,14 +506,14 @@ enemyShip.prototype.update = function() {
 	if (this.game.physics.distanceBetween(this.sprite, player.sprite) > 5000 && gamemode != '?attract' ||
 			this.game.physics.distanceBetween(this.sprite, player.sprite) > 2500 && this.ai == 3){
 
-				var x = this.target.x + (eo3.randomSign() * eo3.randomRange(750,2000)) + player.sprite.body.velocity.x*3;
-				var y = this.target.y + (eo3.randomSign() * eo3.randomRange(750,2000)) + player.sprite.body.velocity.y*3;
+				var x = this.target.x + (randomSign() * randomRange(750,2000)) + player.sprite.body.velocity.x*3;
+				var y = this.target.y + (randomSign() * randomRange(750,2000)) + player.sprite.body.velocity.y*3;
 				this.sprite.reset(x,y);
 				boom(explosions,4,x,y);
 				if(this.ai==3){
 
-					this.sprite.body.velocity = game.physics.velocityFromRotation(game.physics.angleBetween(this.sprite, player.sprite), eo3.randomRange(25,100));	
-					this.sprite.body.angularVelocity=eo3.randomRange(25,100)*eo3.randomSign();
+					this.sprite.body.velocity = game.physics.velocityFromRotation(game.physics.angleBetween(this.sprite, player.sprite), randomRange(25,100));	
+					this.sprite.body.angularVelocity=randomRange(25,100)*randomSign();
 				}
 			}
 	this.sprite.profile = this.sprite.profileMax; //tracking this in detail is hard and unnecessary
@@ -523,8 +524,8 @@ enemyShip.prototype.update = function() {
 
 	if(this.ai==2){
 		//init asteroid stuff
-		this.sprite.body.velocity = game.physics.velocityFromRotation(game.physics.angleBetween(this.sprite, player.sprite), eo3.randomRange(25,100));	
-		this.sprite.body.angularVelocity=eo3.randomRange(25,100)*eo3.randomSign();
+		this.sprite.body.velocity = game.physics.velocityFromRotation(game.physics.angleBetween(this.sprite, player.sprite), randomRange(25,100));	
+		this.sprite.body.angularVelocity=randomRange(25,100)*randomSign();
 		this.sprite.profile=0;
 		this.sprite.profileMax=0;
 		this.ai=3;
@@ -568,7 +569,7 @@ enemyShip.prototype.update = function() {
 					this.thrust.emitParticle();
 					this.nextThrust = game.time.now + 15; 
 				}
-				eo3.addVelocity(this.sprite.rotation, this.speed, this.sprite.body.velocity);
+				addVelocity(this.sprite.rotation, this.speed, this.sprite.body.velocity);
 				this.speed=0;
 			}
 
@@ -779,7 +780,7 @@ playerShip.prototype.initPlayerShip = function (ship) {
 		}
 	}
 	if(typeof(ship)=='undefined'){
-		this.ship = ships[Math.floor(eo3.randomRange(0,ships.length))];
+		this.ship = ships[Math.floor(randomRange(0,ships.length))];
 	}else{
 		this.ship = ship;
 	}
@@ -812,8 +813,8 @@ playerShip.prototype.damage = function(dmg, aggro) {
 		this.alive = false;
 		for (var j = 0; j < this.parts.length; j++) {
 
-			this.parts[j].sprite.body.velocity = game.physics.velocityFromRotation(game.physics.angleBetween(this.sprite, this.parts[j].sprite), eo3.randomRange(200,400));
-			this.parts[j].sprite.body.angularVelocity=eo3.randomRange((dmg+2*14),(dmg+2)*62);	
+			this.parts[j].sprite.body.velocity = game.physics.velocityFromRotation(game.physics.angleBetween(this.sprite, this.parts[j].sprite), randomRange(200,400));
+			this.parts[j].sprite.body.angularVelocity=randomRange((dmg+2*14),(dmg+2)*62);	
 		}	
 
 		this.sprite.kill();
@@ -924,7 +925,7 @@ playerShip.prototype.update = function(){
 				this.thrust.emitParticle();
 				this.nextThrust = game.time.now + 15; 
 			}
-			eo3.addVelocity(this.sprite.rotation, this.speed, this.sprite.body.velocity);
+			addVelocity(this.sprite.rotation, this.speed, this.sprite.body.velocity);
 			this.speed=0;
 		}
 
@@ -1035,19 +1036,19 @@ gameUI.prototype.calculatePartPosition = function() {
 	}
 	var outx = 0;
 	var outy = 0;
-	var choice = Math.floor(eo3.randomRange(0,4));
+	var choice = Math.floor(randomRange(0,4));
 	if(choice==0){
 		outx = minx-16;
-		outy = Math.floor(eo3.randomRange(miny, maxy+16));
+		outy = Math.floor(randomRange(miny, maxy+16));
 	}else if(choice==1){
 		outy = miny-16;
-		outx = Math.floor(eo3.randomRange(minx, maxx+16));
+		outx = Math.floor(randomRange(minx, maxx+16));
 	}else if(choice==2){
 		outx = maxx+16;
-		outy = Math.floor(eo3.randomRange(miny, maxy+16));
+		outy = Math.floor(randomRange(miny, maxy+16));
 	}else if(choice==3){
 		outy = maxy+16;
-		outx = Math.floor(eo3.randomRange(minx, maxx+16));
+		outx = Math.floor(randomRange(minx, maxx+16));
 	}
 	return {'x':outx,'y':outy};
 }
@@ -1684,8 +1685,8 @@ function pullLootToPlayer(s) {
 	if(s.alive){
 		if(Math.random() > 0.1){
 			var halfWidth = s.width * 0.5;
-			sparkles.x=s.x+eo3.randomRange(-1 * halfWidth,halfWidth);
-			sparkles.y=s.y+eo3.randomRange(-1 * halfWidth,halfWidth);
+			sparkles.x=s.x+randomRange(-1 * halfWidth,halfWidth);
+			sparkles.y=s.y+randomRange(-1 * halfWidth,halfWidth);
 			sparkles.minParticleSpeed.setTo(0,0);
 			sparkles.maxParticleSpeed.setTo(0,0);
 			sparkles.emitParticle();
@@ -1724,12 +1725,12 @@ function update () {
 					break;
 				};
 			}
-			nextSpawn=game.time.now+eo3.randomRange(100,200);
+			nextSpawn=game.time.now+randomRange(100,200);
 		}	
 
 		if(nextCamera<game.time.now&&gamemode=='?attract'){
 			game.camera.follow(enemies[Math.floor(Math.random()*enemies.length)].sprite);
-			nextCamera=game.time.now+eo3.randomRange(5000,15000);
+			nextCamera=game.time.now+randomRange(5000,15000);
 		}
 
 		if(loots.getFirstAlive() != null) {
@@ -1843,22 +1844,24 @@ function update () {
 
 function bigBoom(explosionsGroup, x, y){
 
+	if(onscreen(x,y)){
 	var r = Math.random();
 
 	for(var i=0; i < 5 + (r * 6) ; i ++) { 
 		if(explosions.countDead()){
 			var explosion = explosionsGroup.getFirstDead();
 			explosion.loadTexture('explosions', Math.random()>0.7 ? 1 : 2);
-			explosion.reset(x+eo3.randomRange(-20,20),y+eo3.randomRange(-20,20));
+			explosion.reset(x+randomRange(-20,20),y+randomRange(-20,20));
 			explosion.rotation = Math.random()*Math.PI;
-			explosion.angularVelocity=eo3.randomRange(-150,150);
-			explosion.fireVelocity=eo3.randomRange(30,80);
+			explosion.angularVelocity=randomRange(-150,150);
+			explosion.fireVelocity=randomRange(30,80);
 			explosion.lifespan=700;
-			r=eo3.randomRange(0.4,1.9);
+			r=randomRange(0.4,1.9);
 			explosion.scale.setTo(r,r);
 			explosion.alpha=1;
 			game.physics.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
 		}
+	}
 	}
 }
 function shieldEffect(explosionsGroup, bulletSprite, x, y, velx, vely){
@@ -1871,9 +1874,9 @@ function shieldEffect(explosionsGroup, bulletSprite, x, y, velx, vely){
 		explosion.reset(x,y);
 		explosion.rotation=Math.random()*Math.PI;
 		explosion.angularVelocity=200;
-		explosion.fireVelocity=eo3.randomRange(-10,10);
+		explosion.fireVelocity=randomRange(-10,10);
 		explosion.lifespan=700;
-		r=eo3.randomRange(2,4);
+		r=randomRange(2,4);
 		explosion.scale.setTo(r,r);
 		explosion.alpha=1;
 		explosion.body.velocity.x=velx;
@@ -1882,40 +1885,47 @@ function shieldEffect(explosionsGroup, bulletSprite, x, y, velx, vely){
 }
 function boom(explosionsGroup, bulletSprite, x, y){
 
+	if(onscreen(x,y)){
+
 	var r = Math.random();
 
 	for(var i=0; i < 3 + (r * 6) ; i ++) { 
 		if(explosions.countDead()){
 			var explosion = explosionsGroup.getFirstDead();
 			explosion.loadTexture('explosions', bulletSprite || 0);
-			explosion.reset(x+eo3.randomRange(-8,8),y+eo3.randomRange(-8,8));
+			explosion.reset(x+randomRange(-8,8),y+randomRange(-8,8));
 			explosion.rotation = Math.random()*Math.PI;
-			explosion.angularVelocity=eo3.randomRange(-150,150);
-			explosion.fireVelocity=eo3.randomRange(-10,10);
+			explosion.angularVelocity=randomRange(-150,150);
+			explosion.fireVelocity=randomRange(-10,10);
 			explosion.lifespan=700;
-			r=eo3.randomRange(0.1,0.5);
+			r=randomRange(0.1,0.5);
 			explosion.scale.setTo(r,r);
 			explosion.alpha=1;
 			game.physics.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
 		}
 	}
+	}
 }
 
 function sparks(emitter, sprite){
-	emitter.x=sprite.x+eo3.randomRange(-.7*sprite.body.width,sprite.body.width);
-	emitter.y=sprite.y+eo3.randomRange(-.7*sprite.body.width,sprite.body.width);;
+	if(onscreen(x,y)){
+	emitter.x=sprite.x+randomRange(-.7*sprite.body.width,sprite.body.width);
+	emitter.y=sprite.y+randomRange(-.7*sprite.body.width,sprite.body.width);;
 	emitter.minParticleSpeed.setTo(-200,-200);
 	emitter.maxParticleSpeed.setTo(200,200);
 	emitter.particleFriction = 50;
-	emitter.start(true,200,null, eo3.randomRange(1,14));
+	emitter.start(true,200,null, randomRange(1,14));
+	}
 }
 function sparkExplosion(emitter, sprite){
+	if(onscreen(x,y)){
 	emitter.x=sprite.x;
 	emitter.y=sprite.y;
 	emitter.minParticleSpeed.setTo(-300,-300);
 	emitter.maxParticleSpeed.setTo(300,300);
 	emitter.particleFriction = 200;
 	emitter.start(true,600,null, 200);
+	}
 }
 function spawnLoots(_count, x, y){
 	var lootCount = _count;
@@ -1926,18 +1936,18 @@ function spawnLoots(_count, x, y){
 	for(var i = 0; i < lootCount; i++)
 	{
 		var loot = loots.getFirstDead();
-		loot.loadTexture('parts', Math.floor(eo3.randomRange(0,4))+26);
+		loot.loadTexture('parts', Math.floor(randomRange(0,4))+26);
 		loot.lifespan = 60000;
-		loot.body.angularVelocity = eo3.randomRange(-300,300);
-		loot.reset(x + eo3.randomRange(-16,16), y+eo3.randomRange(-16,16));
+		loot.body.angularVelocity = randomRange(-300,300);
+		loot.reset(x + randomRange(-16,16), y+randomRange(-16,16));
 		loot.rotation = Math.random()*Math.PI;
-		var scale = eo3.randomRange(0.5,1.1);
+		var scale = randomRange(0.5,1.1);
 		loot.scale.setTo(scale,scale);
 		loot.averageCounter=50;
 		loot.acceleration=200;
 		loot.lootType='ore';
 		loot.acceleration=0;
-		game.physics.velocityFromRotation(loot.rotation, eo3.randomRange(100,300), loot.body.velocity);
+		game.physics.velocityFromRotation(loot.rotation, randomRange(100,300), loot.body.velocity);
 	}
 }
 function spawnComponent(component,x,y){
@@ -1946,14 +1956,14 @@ function spawnComponent(component,x,y){
 		loot.loadTexture('parts', component);
 		loot.lifespan = 120000;
 		loot.scale.setTo(2,2);
-		loot.reset(x + eo3.randomRange(-16,16), y+eo3.randomRange(-16,16));
+		loot.reset(x + randomRange(-16,16), y+randomRange(-16,16));
 		loot.rotation = 0; 
 		loot.averageCounter=50;
 		loot.acceleration=200;
 		loot.lootType='component';
 		loot.component = component;
 		loot.acceleration=0;
-		game.physics.velocityFromRotation(loot.rotation, eo3.randomRange(100,300), loot.body.velocity);
+		game.physics.velocityFromRotation(loot.rotation, randomRange(100,300), loot.body.velocity);
 
 	}
 }
