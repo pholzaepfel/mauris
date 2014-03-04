@@ -786,17 +786,23 @@ var cmp = [
 	'id':70,
 	'drops':true,
 	'name':'Flimsy Wing',
-	'flavor':'increases turn rate, but turns will require correction',
+	'flavor':'increases turn rate, but turns will require correction on smaller ships',
 	'bonus':function(target){
-		target.turnRate+=0.3;
-		target.acceleration+=0.5;
+		target.turnRate+=0.6;
+		target.acceleration+=0.2;
 		if(target.ai==-1)
 		{
 			target.left=function(){
-				this.sprite.body.angularVelocity-=this.turnRate*5;
+				this.sprite.angle-=this.turnRate;
+				var av = 50-(this.ship.length);
+				if(av<0){av=0};
+				this.sprite.body.angularVelocity=this.turnRate*-av;
 			}
 			target.right=function(){
-				this.sprite.body.angularVelocity+=this.turnRate*5;
+				this.sprite.angle+=this.turnRate;
+				var av = 50-(this.ship.length);
+				if(av<0){av=0};
+				this.sprite.body.angularVelocity=this.turnRate*av;
 			}
 
 		}
@@ -870,9 +876,19 @@ var cmp = [
 	'id':76,
 	'drops':true,
 	'name':'AWSM',
-	'flavor':'NYI',
+	'flavor':'press RIGHT MOUSE to self-destruct, destroying nearby ships',
 	'bonus':function(target){
-		target.TODO=1;	
+		target.alt=function(){
+			hugeBoom(explosions,this.sprite.x,this.sprite.y);
+			for(var i=0; i<enemies.length; i++){
+				if(game.physics.distanceBetween(this.sprite, enemies[i].sprite)<500 && enemies[i].alive){
+					enemies[i].damage(500);
+				}
+			}
+			if(game.physics.distanceBetween(this.sprite,player.sprite)<500 && player.alive){
+				player.damage(500);
+			}
+		}
 	}
 },
 {
@@ -1212,10 +1228,16 @@ var cmp = [
 		if(target.ai==-1)
 		{
 			target.left=function(){
-				this.sprite.body.angularVelocity-=this.turnRate*5;
+				this.sprite.angle-=this.turnRate;
+				var av = 50-(this.ship.length);
+				if(av<0){av=0};
+				this.sprite.body.angularVelocity=this.turnRate*-av;
 			}
 			target.right=function(){
-				this.sprite.body.angularVelocity+=this.turnRate*5;
+				this.sprite.angle+=this.turnRate;
+				var av = 50-(this.ship.length);
+				if(av<0){av=0};
+				this.sprite.body.angularVelocity=this.turnRate*av;
 			}
 
 		}
@@ -1307,9 +1329,22 @@ var cmp = [
 	'id':110,
 	'drops':true,
 	'name':'Antimatter Furnace',
-	'flavor':'--',
+	'flavor':'faster energy return, but occasionally damages you when firing',
 	'bonus':function(target){
-		target.TODO=1;
+		target.energyAmount+=2;
+		target.bulletBehavior.push(function(bullet){
+			var tgt;
+			if(bullet.owner.name == 'player'){
+				tgt=player;
+			}else{
+				tgt=enemies[bullet.owner.name];
+			}
+			if(Math.random()<0.1 && tgt.health > 1){
+				tgt.damage(1);
+				boom(explosions,4,tgt.sprite.x,tgt.sprite.y);
+			}
+		});
+
 	}
 },
 {

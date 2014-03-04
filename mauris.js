@@ -1853,6 +1853,29 @@ function update () {
 	}
 }
 
+function hugeBoom(explosionsGroup, x, y){
+
+	if(onscreen(x,y)){
+	var r = Math.random();
+
+	for(var i=0; i < 10 + (r * 9) ; i ++) { 
+		if(explosions.countDead()){
+			var explosion = explosionsGroup.getFirstDead();
+			explosion.loadTexture('explosions', Math.random()>0.7 ? 1 : 2);
+			explosion.reset(x+randomRange(-80,80),y+randomRange(-80,80));
+			explosion.rotation = Math.random()*Math.PI*2;
+			explosion.angularVelocity=randomRange(-200,200);
+			explosion.fireVelocity=randomRange(600,890);
+			explosion.lifespan=1200;
+			explosion.linearDamping=-1;
+			r=randomRange(4,11);
+			explosion.scale.setTo(r,r);
+			explosion.alpha=1;
+			game.physics.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
+		}
+	}
+	}
+}
 function bigBoom(explosionsGroup, x, y){
 
 	if(onscreen(x,y)){
@@ -1867,6 +1890,7 @@ function bigBoom(explosionsGroup, x, y){
 			explosion.angularVelocity=randomRange(-150,150);
 			explosion.fireVelocity=randomRange(30,80);
 			explosion.lifespan=700;
+			explosion.linearDamping=-1;
 			r=randomRange(0.4,1.9);
 			explosion.scale.setTo(r,r);
 			explosion.alpha=1;
@@ -1907,6 +1931,7 @@ function boom(explosionsGroup, bulletSprite, x, y){
 			explosion.reset(x+randomRange(-8,8),y+randomRange(-8,8));
 			explosion.rotation = Math.random()*Math.PI;
 			explosion.angularVelocity=randomRange(-150,150);
+			explosion.linearDamping=-1;
 			explosion.fireVelocity=randomRange(-10,10);
 			explosion.lifespan=700;
 			r=randomRange(0.1,0.5);
