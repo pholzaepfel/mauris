@@ -1183,8 +1183,8 @@ var cmp = [
 	'flavor':'hold RIGHT MOUSE to throw off attackers',
 	'bonus':function(target){
 		target.alt=function(){
-			if(this.energy>=0.1){
-				this.energy-=0.1;
+			if(this.energy>=0.4){
+				this.energy-=0.4;
 				if(game.time.now>this.altCooldown){
 					boom(explosions,1,this.sprite.x,this.sprite.y);
 				}

@@ -915,7 +915,7 @@ playerShip.prototype.update = function(){
 		if(game.time.now>this.altCooldown){
 			this.shield=false;
 			if(this.parts.length){
-				if(this.parts[0].sprite.alpha<1){
+				if(this.parts[0].sprite.alpha<1 && this.sprite.profile > 0.5 * this.sprite.profileMax){
 					for(var i=0;i<this.parts.length;i++){
 						this.parts[i].sprite.alpha+=0.02;
 					}
