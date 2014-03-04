@@ -24,8 +24,8 @@ window.oncontextmenu = function (){
 	return false;     // cancel default menu
 }
 function onscreen(x,y) {
-	return	(player.sprite.x - resolutionX < x < player.sprite.x + resolutionX &&
-	player.sprite.y - resolutionY < y < player.sprite.y + resolutionY)
+	return	(player.sprite.x - resolutionX < x && x < player.sprite.x + resolutionX &&
+	player.sprite.y - resolutionY < y && y < player.sprite.y + resolutionY)
 }
 function repeat(pattern, count) { //http://stackoverflow.com/questions/202605/repeat-string-javascript - elegant!
 	if (count < 1) return '';
