@@ -366,7 +366,6 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 
 
 		this.sprite.body.collideWorldBounds = true;
-	this.sprite.body.bounce.setTo(1, 1);
 	this.sprite.angle = game.rnd.angle();
 
 	this.sprite.body.maxVelocity.setTo(300,300);
@@ -375,6 +374,11 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 
 	this.sprite.body.velocity.x*=.3+Math.random()*0.7;
 	this.sprite.body.velocity.y*=.3+Math.random()*0.7;
+
+			this.lastVelocityX = this.sprite.body.velocity.x;
+			this.lastVelocityY = this.sprite.body.velocity.y;
+
+
 	game.physics.velocityFromRotation(this.sprite.rotation, 100, this.sprite.body.velocity);
 	this.health*=enemyHealthCoef;
 	this.healthMax*=enemyHealthCoef;
@@ -392,10 +396,10 @@ enemyShip.prototype.destroyParts = function() {
 
 enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 
-	if(dmg==31337){
+	if(this.health==0){
 		dmg=0;
 		for(var i=0;i<this.parts.length;i++){
-			this.parts[i].sprite.kill;
+			this.parts[i].sprite.kill();
 			this.cullParts();
 		}	
 	}
@@ -503,7 +507,15 @@ enemyShip.prototype.spawnBullet = function () {
 
 }
 enemyShip.prototype.update = function() {
-	if (this.game.physics.distanceBetween(this.sprite, player.sprite) > 5000 && gamemode != '?attract' ||
+			//fugly hack to get around mysterious loss of velocity
+		if(this.sprite.body.velocity.x != 0 || this.sprite.body.velocity.y != 0){
+			this.lastVelocityX = this.sprite.body.velocity.x;
+			this.lastVelocityY = this.sprite.body.velocity.y;
+		}else{
+			this.sprite.body.velocity.x = this.lastVelocityX;
+			this.sprite.body.velocity.y = this.lastVelocityY;
+		}
+if (this.game.physics.distanceBetween(this.sprite, player.sprite) > 5000 && gamemode != '?attract' ||
 			this.game.physics.distanceBetween(this.sprite, player.sprite) > 2500 && this.ai == 3){
 
 				var x = this.target.x + (randomSign() * randomRange(750,2000)) + player.sprite.body.velocity.x*3;
@@ -771,7 +783,6 @@ playerShip.prototype.initPlayerShip = function (ship) {
 	this.thrust.setAll('alpha',0.7);
 	this.thrust.gravity=0;
 	this.sprite.body.linearDamping=0;
-	this.sprite.body.bounce.setTo(0, 0);
 	this.sprite.body.collideWorldBounds = true; 
 	this.alt = function(){
 		if(game.time.now>this.altCooldown){

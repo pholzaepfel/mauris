@@ -1329,21 +1329,21 @@ var cmp = [
 						var bullet=this.spawnBullet();
 						bullet.bulletHitBehavior.push(function(sprite,bullet){
 							if(sprite.name!='player'){
-								if(enemies[sprite.name].ai!=3)
-						{
-							player.initPlayerShip(enemies[sprite.name].ship);
-							bigBoom(explosions,player.x,player.y);
-							player.sprite.reset(enemies[sprite.name].sprite.x,enemies[sprite.name].sprite.y);
-							player.rotation = enemies[sprite.name].rotation;
-							enemies[sprite.name].damage(31337);									
-							ui.texts.push(player.altTexts[Math.floor(randomRange(0,player.altTexts.length))]);
-						}	
-							}
+								if(enemies[sprite.name].ai!=3){
+									enemies[sprite.name].health=0;
+									player.initPlayerShip(enemies[sprite.name].ship);
+									bigBoom(explosions,player.x,player.y);
+									player.sprite.reset(enemies[sprite.name].sprite.x,enemies[sprite.name].sprite.y);
+									player.rotation = enemies[sprite.name].rotation;
+									ui.texts.push(player.altTexts[Math.floor(randomRange(0,player.altTexts.length))]);
+								}
 
+							}
 						});
 						this.altCooldown=game.time.now+2000;
 
 					}
+
 				}
 			}
 		}
