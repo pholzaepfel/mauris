@@ -147,14 +147,6 @@ function threatSort(a, b) {
 //
 //////
 
-function refreshStats() {
-
-	ui.shadowPlayer = new playerShip([1023]);
-	ui.shadowPlayer.sprite.reset(game.camera.x+0.5*resolutionX,game.camera.y+0.5*resolutionY);	
-	ui.shadowPlayer.ship = ui.partsArray();
-	applyBonuses(ui.shadowPlayer);
-	//ui.statsPing(ui.shadowPlayer);
-}
 dragPart = function(x,y,sheet,index){
 	this.game = game;
 	this.alive = true;
@@ -193,6 +185,28 @@ dragPart.prototype.update = function(){
 				}
 	}
 
+}
+dragPartsPool = function(){
+	this.parts=[];
+	for(var i=0;i<50;i++){
+		this.parts.push(new dragPart(0,0,'parts',0));
+		this.parts[i].sprite.kill();
+
+	}
+};
+dragPartsPool.prototype.get = function (x,y,index,targetSprite){
+
+	for (var i=0;i<this.parts.length;i++){
+		if(!this.parts[i].sprite.alive){
+			break;
+		}
+	}
+	if(i==this.parts.length){
+		this.parts.push(new dragPart(x,y,'parts',index));
+	}else{
+		this.parts[i].initDragPart(x,y,index);
+	}
+	return this.parts[i];
 }
 partsPool = function(){
 	this.parts=[];
@@ -1450,7 +1464,6 @@ function createPart(n){
 
 	var partPosition = ui.calculatePartPosition(); 
 	ui.parts.push(new dragPart(partPosition.x,partPosition.y,'parts',n));
-	refreshStats();
 
 }
 // assumes that the incoming parts list is a square
