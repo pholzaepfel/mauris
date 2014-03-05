@@ -901,7 +901,7 @@ var cmp = [
 		target.fireRate*=0.9;
 		target.bulletHitBehavior.push(function(sprite,bullet){
 			var tgt = ownerFromName(sprite.name);
-				tgt.energy-=4;
+			tgt.energy-=4;
 
 		});
 	}
@@ -1141,25 +1141,23 @@ var cmp = [
 	'flavor':'press RIGHT MOUSE to unleash a damaging halo of contagion',
 	'bonus':function(target){
 		target.alt=function(){
-			if(this.energy>=6 || this.energy == this.energyMax){
+			if(game.time.now>this.altCooldown && (this.energy>=6 || this.energy == this.energyMax)){
 				this.energy-=6;	//if player has < 0 energy, it's effectively an extra recharge delay
-				if(game.time.now>this.altCooldown){
-					for(var n=0; n<1;n+=0.075){
-						var bullet=this.spawnBullet();
-						bullet.loadTexture('explosions',4);
-						bullet.reset(this.sprite.x, this.sprite.y);
-						bullet.rotation=n*2*Math.PI;
-						game.physics.velocityFromRotation(bullet.rotation, 600, bullet.body.velocity);
-						bullet.alpha=0.3;
-						bullet.damage=12;
-						bullet.bulletSprite=4;
-						bullet.scale.setTo(2,2);
-						bullet.lifespan=400;
-						bullet.body.angularVelocity=999;
-					}
-					this.altCooldown=game.time.now+100;
-
+				for(var n=0; n<1;n+=0.075){
+					var bullet=this.spawnBullet();
+					bullet.loadTexture('explosions',4);
+					bullet.reset(this.sprite.x, this.sprite.y);
+					bullet.rotation=n*2*Math.PI;
+					game.physics.velocityFromRotation(bullet.rotation, 600, bullet.body.velocity);
+					bullet.alpha=0.3;
+					bullet.damage=12;
+					bullet.bulletSprite=4;
+					bullet.scale.setTo(2,2);
+					bullet.lifespan=400;
+					bullet.body.angularVelocity=999;
 				}
+				this.altCooldown=game.time.now+2000;
+
 			}
 		}
 	}
