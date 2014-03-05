@@ -1966,7 +1966,7 @@ function sparks(emitter, sprite){
 		emitter.y=sprite.y+randomRange(-.7*sprite.body.width,sprite.body.width);;
 		emitter.minParticleSpeed.setTo(-200,-200);
 		emitter.maxParticleSpeed.setTo(200,200);
-		emitter.particleFriction = 50;
+		emitter.particleFriction = -500;
 		emitter.start(true,200,null, randomRange(1,14));
 	}
 }
@@ -1974,10 +1974,10 @@ function sparkExplosion(emitter, sprite){
 	if(onscreen(sprite.x,sprite.y)){
 		emitter.x=sprite.x;
 		emitter.y=sprite.y;
-		emitter.minParticleSpeed.setTo(-300,-300);
-		emitter.maxParticleSpeed.setTo(300,300);
-		emitter.particleFriction = 200;
-		emitter.start(true,600,null, 200);
+		emitter.minParticleSpeed.setTo(-500,-500);
+		emitter.maxParticleSpeed.setTo(500,500);
+		emitter.particleFriction = -2000;
+		emitter.start(true,300,null, 50);
 	}
 }
 function spawnLoots(_count, x, y){
