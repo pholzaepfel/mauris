@@ -736,8 +736,8 @@ var cmp = [
 	'flavor':'heavy armor, increases mass',
 	'bonus':function(target){
 		target.health+=13;
-		target.acceleration*=0.8;
-		target.turnRate*=0.6;
+		target.acceleration-=0.2;
+		target.turnRate-=0.3;
 		target.sprite.profile+=10;
 	}
 },
@@ -768,9 +768,9 @@ var cmp = [
 	'flavor':'strong armor, inhibits aim',
 	'bonus':function(target){
 		target.health+=18;
-		target.acceleration*=0.7;
-		target.turnRate*=0.5;
-		target.sprite.profile+=10;	
+		target.acceleration-=0.1;
+		target.turnRate-=0.5;
+		target.sprite.profile+=25;	
 	}
 },
 {
