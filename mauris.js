@@ -28,6 +28,12 @@ function onscreen(x,y) {
 			player.sprite.y - resolutionY < y && y < player.sprite.y + resolutionY)
 }
 
+function partsToTop(tgt){
+
+for (var i =0; i < tgt.parts.length; i++){
+	tgt.parts[i].sprite.bringToTop();
+}
+}
 function ownerFromName(name){
 
 	if(name == 'player'){
@@ -588,6 +594,7 @@ enemyShip.prototype.update = function() {
 					this.thrust.minParticleSpeed.setTo(0,0);
 					this.thrust.maxParticleSpeed.setTo(0,0);
 					this.thrust.emitParticle();
+					partsToTop(this);	
 					this.nextThrust = game.time.now + 15; 
 				}
 				addVelocity(this.sprite.rotation, this.speed, this.sprite.body.velocity);
@@ -943,6 +950,7 @@ playerShip.prototype.update = function(){
 				this.thrust.minParticleSpeed.setTo(0,0);
 				this.thrust.maxParticleSpeed.setTo(0,0);
 				this.thrust.emitParticle();
+				partsToTop(this);	
 				this.nextThrust = game.time.now + 15; 
 			}
 			addVelocity(this.sprite.rotation, this.speed, this.sprite.body.velocity);
