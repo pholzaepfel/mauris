@@ -1004,24 +1004,13 @@ var gameUI = function () {
 	this.parts = [];
 	this.partCost=20;
 	this.currentPart = 0;
-	this.texts = ['welcome to mauris.',
-		'DOWN/S: dock or undock at station',
-		'exchange parts when docked; LEFT/RIGHT or A/D cycle inventory.',
-		'UP/W: thrust. be aware of inertia.',
-		'LEFT/RIGHT or A/D: turn.',
-		'LEFT MOUSE BUTTON: fire.',
-		'go blow things up. bring parts back. build new ship. repeat.'
-			];
+	this.texts = [];
 	this.nextWords=0;
 	this.textLine = '';
 	this.textIndex = 0;
 	this.textLineIndex = 0;
 	this.nextError=0;
 
-}
-gameUI.prototype.startMission = function(missionId){
-	this.mission = missions[missionId];
-	initMission(this.mission);
 }
 gameUI.prototype.error = function(msg) {
 	if(game.time.now>this.nextError){					
@@ -1533,8 +1522,11 @@ function createBuildParts(ship,x,y){
 }
 
 
-function initMission (mission) {
-
+function initMission (missionId) {
+	playerStats.mission = missions[missionId];
+	for(var i=0;i<playerStats.mission.intro.length;i++){
+			ui.texts.push(playerStats.mission.intro[i]);
+	}
 }
 
 function create () {
@@ -1659,7 +1651,7 @@ function create () {
 
 
 	ui.initCombatUi();
-
+	initMission(0);
 	for(var i=0;i<startParts;i++)
 	{
 		playerStats.credits+=ui.partCost;
