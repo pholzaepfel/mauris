@@ -30,9 +30,9 @@ function onscreen(x,y) {
 
 function partsToTop(tgt){
 
-for (var i =0; i < tgt.parts.length; i++){
-	tgt.parts[i].sprite.bringToTop();
-}
+	for (var i =0; i < tgt.parts.length; i++){
+		tgt.parts[i].sprite.bringToTop();
+	}
 }
 function ownerFromName(name){
 
@@ -530,7 +530,7 @@ enemyShip.prototype.update = function() {
 		this.sprite.body.velocity.x = this.lastVelocityX;
 		this.sprite.body.velocity.y = this.lastVelocityY;
 	}
-	if (this.game.physics.distanceBetween(this.sprite, player.sprite) > 5000 && gamemode != '?attract' ||
+	if (this.game.physics.distanceBetween(this.sprite, player.sprite) > 5000 ||
 			this.game.physics.distanceBetween(this.sprite, player.sprite) > 2500 && this.ai == 3){
 
 				var x = this.target.x + (randomSign() * randomRange(750,2000)) + player.sprite.body.velocity.x*3;
@@ -558,8 +558,8 @@ enemyShip.prototype.update = function() {
 		this.ai=3;
 	}
 	if(this.ai!=3){
-		if(!this.target.alive || (this.target == player.sprite && gamemode == '?attract') || 
-				(game.physics.distanceBetween(this.sprite,this.target) > this.target.profile * 1.5 && this.behavior=='chasing' && gamemode != '?attract')){
+		if(!this.target.alive || 
+				(game.physics.distanceBetween(this.sprite,this.target) > this.target.profile * 1.5 && this.behavior=='chasing')){
 					for(var i=0;i<this.aggroList.length;i++){
 						if(this.aggroList[i].alive){		//this will cause the enemy to keep chasing the player if they were fired upon.
 							this.target=this.aggroList[i]; // I believe this may cause a 'feature' where grudges are kept beyond the grave. 
@@ -568,20 +568,7 @@ enemyShip.prototype.update = function() {
 					}
 					if(i>=this.aggroList.length){			
 						this.target=player.sprite;
-						if(gamemode!='?attract' && game.physics.distanceBetween(this.sprite, this.target) > this.target.profile) {
 							this.behavior='neutral';
-						}else if(gamemode=='?attract'){
-							var minDistance=99999;
-							var targetIndex;
-							for(var i=0;i<enemies.length;i++){
-								if(enemies[i].sprite.alive && game.physics.distanceBetween(this.sprite, enemies[i].sprite) < minDistance){
-									minDistance = game.physics.distanceBetween(this.sprite, this.target);
-									targetIndex = i;
-								}
-							}
-
-							this.target=enemies[targetIndex].sprite;
-						}
 					}
 				}
 
@@ -1031,6 +1018,10 @@ var gameUI = function () {
 	this.textLineIndex = 0;
 	this.nextError=0;
 
+}
+gameUI.prototype.startMission = function(missionId){
+	this.mission = missions[missionId];
+	initMission(this.mission);
 }
 gameUI.prototype.error = function(msg) {
 	if(game.time.now>this.nextError){					
@@ -1542,6 +1533,10 @@ function createBuildParts(ship,x,y){
 }
 
 
+function initMission (mission) {
+
+}
+
 function create () {
 
 	game.stage.scale.setMaximum();
@@ -1552,11 +1547,7 @@ function create () {
 		gamemode = 'war';
 		cheatmode = 1;
 	}
-	if (gamemode == 'war' | gamemode == '?attract'){
-		if(gamemode=='?attract'){
-			numBaddies=30;
-			defaultBehavior='chasing';
-		}
+	if (gamemode == 'war'){
 		game.world.setBounds(-100000, -100000, 200000, 200000);
 		backdrop1 = game.add.tileSprite(0, 0, resolutionX, resolutionY, 'starfield2');
 
@@ -1615,13 +1606,6 @@ function create () {
 		explosions.setAll('lifespan',5000);
 
 
-		//override the player obj in demo mode
-		if(gamemode == '?attract'){
-			for(var i=0;i<player.parts.length;i++){
-				player.parts[i].sprite.visible=false;
-			}
-		}
-		//  Create some baddies to waste :)
 		enemies = [];
 
 		for (var i = 0; i < numBaddies; i++){
@@ -1635,7 +1619,6 @@ function create () {
 		pew.makeParticles('sparks');
 		pew.gravity=0;
 
-		//  Our bullet group
 		bullets = game.add.group();
 		bullets.createMultiple(30, 'bullet');
 		bullets.setAll('anchor.x', 0.5);
@@ -1740,10 +1723,10 @@ function update () {
 			ui.parts[i].update();
 		}
 	}
-	if(gamemode=='war' || gamemode=='?attract'){
+	if(gamemode=='war' ){
 
 
-		if(nextSpawn<game.time.now||nextSpawn==0||gamemode=='?attract'){
+		if(nextSpawn<game.time.now||nextSpawn==0){
 			if(!player.alive){
 				player.initPlayerShip(defaultPlayerShip);
 			}
@@ -1756,10 +1739,6 @@ function update () {
 			nextSpawn=game.time.now+randomRange(100,200);
 		}	
 
-		if(nextCamera<game.time.now&&gamemode=='?attract'){
-			game.camera.follow(enemies[Math.floor(Math.random()*enemies.length)].sprite);
-			nextCamera=game.time.now+randomRange(5000,15000);
-		}
 
 		if(loots.getFirstAlive() != null) {
 
