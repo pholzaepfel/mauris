@@ -454,7 +454,11 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 		}	
 		this.cullParts();
 		this.sprite.kill();
-		if(this.ai!=3){playerStats.kills+=1;}
+		if(typeof(playerStats.mission.win.killType)!='undefined'){
+			if(playerStats.mission.win.killType==this.shipList){
+				playerStats.kills+=1;
+			}
+		}
 		return true;
 	}
 
@@ -568,7 +572,7 @@ enemyShip.prototype.update = function() {
 					}
 					if(i>=this.aggroList.length){			
 						this.target=player.sprite;
-							this.behavior='neutral';
+						this.behavior='neutral';
 					}
 				}
 
@@ -658,8 +662,8 @@ enemyShip.prototype.update = function() {
 				}
 				if (targetDistance < this.fireRange * 0.75 &&
 						targetDistance < this.target.profile){
-							if(Math.abs(targetAngle-this.sprite.rotation)<0.2 ||
-									Math.abs(targetAngle-this.sprite.rotation)>Math.PI-0.2){
+							if(Math.abs(targetAngle-this.sprite.rotation)<0.15 ||
+									Math.abs(targetAngle-this.sprite.rotation)>Math.PI-0.15){
 										this.fire(); 
 									}
 
@@ -1172,10 +1176,10 @@ gameUI.prototype.stationRadarPing = function() {
 	var targetDistance=game.physics.distanceBetween(player.sprite, station);
 	var s='\u2302'; //I cannot believe this circle renders in my terminal
 	var n=Math.floor(255-(targetDistance/2-900));
-	if(n<0){n=0;}if(n>255){n=255};
-	this.stationRadar.style.fill="rgb(192,"+n+",192)";
-	if (targetDistance < 2000 && game.time.now % 250 < 50)  {
-		this.stationRadar.style.fill="rgb(0,255,0)";
+	if(n<64){n=64;}if(n>255){n=255};
+	this.stationRadar.style.fill="rgb("+(Math.floor(n/2))+","+n+","+(Math.floor(n/2))+")";
+	if (game.time.now % 250 < 50)  {
+		this.stationRadar.style.fill="rgb("+(n+32)+","+(n+64)+","+(n+32)+")";
 
 	}
 
@@ -1240,6 +1244,15 @@ gameUI.prototype.wordsPing = function() {
 	if (game.time.now > this.nextWords && this.textIndex < this.texts.length){
 		this.words.alpha=1;
 		this.textLine = this.texts[this.textIndex].substr(0, this.textLineIndex++);
+		var s ='';
+		for(var i=0;i<this.textLine.length;i++){
+			if(this.textLineIndex > this.texts[this.textIndex].length || Math.random()<0.95 ){
+				s+=this.textLine[i];
+			}else{
+				s+=String.fromCharCode(Math.floor(Math.random()*4000));
+			}
+		}
+		this.textLine=s;
 		this.words.setText(this.textLine);
 		if(this.textLineIndex>this.texts[this.textIndex].length){
 			this.nextWords=game.time.now+5000;
@@ -1524,8 +1537,29 @@ function createBuildParts(ship,x,y){
 
 function initMission (missionId) {
 	playerStats.mission = missions[missionId];
+
 	for(var i=0;i<playerStats.mission.intro.length;i++){
-			ui.texts.push(playerStats.mission.intro[i]);
+		ui.texts.push(playerStats.mission.intro[i]);
+	}
+	var index = 0;
+	for(var n=0;n<playerStats.mission.enemies.length;n++){	
+		for (var i = 0; i < playerStats.mission.enemies[n].count; i++){
+			if(index<enemies.length){
+				enemies[index].shipList=playerStats.mission.enemies[n].ships;
+				enemies[index].initEnemyShip();
+				enemies[index].respawn=playerStats.mission.enemies[n].respawn;
+			}else{
+				enemies.push(new enemyShip(index, game, player.sprite, enemyBullets, playerStats.mission.enemies[n].ships));
+				enemies[index].respawn=playerStats.mission.enemies[n].respawn;
+			}
+			index++;
+		}
+	}
+	while(index<enemies.length){	//cleanup if we haven't use the entired pool
+		enemies[index].respawn=false;
+		enemies[index].health=0;
+		enemies[index].damage(9);
+		index++;
 	}
 }
 
@@ -1544,24 +1578,38 @@ function create () {
 		backdrop1 = game.add.tileSprite(0, 0, resolutionX, resolutionY, 'starfield2');
 
 		backdrop1.fixedToCamera = true;
-		backdrop1.scale.x=2;
-		backdrop1.scale.y=2;	
-
-
+		backdrop1.scale.x=4;
+		backdrop1.scale.y=4;	
+		backdrop1.offsetx = Math.random()*resolutionX;
+		backdrop1.offsety = Math.random()*resolutionY;
 		backdrop2 = game.add.tileSprite(0, 0, resolutionX, resolutionY, 'starfield3');
 		backdrop2.fixedToCamera = true;
-		backdrop2.alpha=0.5;
-		backdrop2.scale.x=4;
-		backdrop2.scale.y=4;	
+		backdrop2.alpha=1;
+		backdrop2.scale.x=8;
+		backdrop2.scale.y=8;	
+		backdrop2.offsetx = Math.random()*resolutionX;
+		backdrop2.offsety = Math.random()*resolutionY;
+	
+		backdrop5 = game.add.tileSprite(0, 0, resolutionX * 1.2, resolutionY * 1.2, 'starfield3');
+		backdrop5.fixedToCamera = true;
+		backdrop5.scale.x=4;
+		backdrop5.scale.y=4;
+		backdrop5.alpha=1;
+		backdrop5.offsetx = Math.random()*resolutionX;
+		backdrop5.offsety = Math.random()*resolutionY;
 
 		backdrop3 = game.add.tileSprite(0, 0, resolutionX, resolutionY, 'starfield4');
 		backdrop3.fixedToCamera = true;
-
+		backdrop3.offsetx = Math.random()*resolutionX;
+		backdrop3.offsety = Math.random()*resolutionY;
+		backdrop3.alpha=0.666;
 		backdrop4 = game.add.tileSprite(0, 0, resolutionX*1.5, resolutionY*1.5, 'starfield4');
+		backdrop4.offsetx = Math.random()*resolutionX;
+		backdrop4.offsety = Math.random()*resolutionY;
 		backdrop4.fixedToCamera = true;
 		backdrop4.scale.x=0.75;
 		backdrop4.scale.y=0.75;
-
+		backdrop4.alpha=0.4;
 		station = game.add.sprite(0,0,'station');
 		station.anchor.setTo(0.5,0.5)
 			asteroids.sort(lengthSort);
@@ -1600,13 +1648,6 @@ function create () {
 
 		enemies = [];
 
-		for (var i = 0; i < numBaddies; i++){
-			enemies.push(new enemyShip(i, game, player.sprite, enemyBullets, ships));
-		}
-
-		for (var i = numBaddies; i < numAsteroids + numBaddies; i++){	//fugliness to compensate for index fugliness
-			enemies.push(new enemyShip(i, game, player.sprite, enemyBullets, asteroids));
-		}
 		pew = game.add.emitter(0,0,200);
 		pew.makeParticles('sparks');
 		pew.gravity=0;
@@ -1708,6 +1749,34 @@ function pullLootToPlayer(s) {
 		}
 	}
 }
+function handleMission() {
+
+	if(playerStats.mission.win.condition=='kill'){
+		if(playerStats.mission.win.killCount<playerStats.kills){
+			playerStats.mission.complete=true;
+		}
+	}
+
+
+	if(playerStats.mission.complete){
+	for(var i=0;i<playerStats.mission.outro.length;i++){
+		ui.texts.push(playerStats.mission.outro[i]);
+	}
+
+	playerStats.mission.outro=[];
+	}
+}
+
+function winMission(){
+
+	if(playerStats.mission.complete){
+	var n = Math.floor(randomRange(0,playerStats.mission.next.length));
+	initMission(playerStats.mission.next[n]);
+	playerStats.mission.complete=false;
+	playerStats.kills=0;
+	}
+}
+
 function update () {
 	if(gamemode=='?build'){
 
@@ -1717,6 +1786,7 @@ function update () {
 	}
 	if(gamemode=='war' ){
 
+		handleMission();
 
 		if(nextSpawn<game.time.now||nextSpawn==0){
 			if(!player.alive){
@@ -1786,6 +1856,7 @@ function update () {
 			//player at station
 			if(game.time.now > nextUIDelay + 2000 && Math.abs(player.sprite.x)<100 &&
 					Math.abs(player.sprite.y)<100){
+						winMission(); 
 						ui.partsUI(player.ship);
 						nextUIDelay=game.time.now+1000;
 					}
@@ -1794,15 +1865,6 @@ function update () {
 			player.alt();
 		}
 		player.update();
-		// scrolling
-		backdrop1.tilePosition.x = -0.03*game.camera.x;
-		backdrop1.tilePosition.y = -0.03*game.camera.y;
-		backdrop2.tilePosition.x = -0.08*game.camera.x;
-		backdrop2.tilePosition.y = -0.08*game.camera.y;
-		backdrop3.tilePosition.x = -0.15*game.camera.x;
-		backdrop3.tilePosition.y = -0.15*game.camera.y;
-		backdrop4.tilePosition.x = -0.40*game.camera.x;
-		backdrop4.tilePosition.y = -0.40*game.camera.y;
 
 
 
@@ -1811,7 +1873,19 @@ function update () {
 		}
 
 	}	
-	ui.update();
+		// scrolling
+		backdrop1.tilePosition.x = backdrop1.offsetx + ( -0.11*game.camera.x / backdrop1.scale.x) + (game.time.now / (100));
+		backdrop1.tilePosition.y = backdrop1.offsety + ( -0.11*game.camera.y / backdrop1.scale.y);
+		backdrop2.tilePosition.x = backdrop2.offsetx + ( -0.22*game.camera.x / backdrop2.scale.x) + (game.time.now / (40));
+		backdrop2.tilePosition.y = backdrop2.offsety + ( -0.22*game.camera.y / backdrop2.scale.y);
+		backdrop5.tilePosition.x = backdrop5.offsetx + ( -0.26*game.camera.x / backdrop5.scale.x) + (game.time.now / (70));
+		backdrop5.tilePosition.y = backdrop5.offsety + ( -0.26*game.camera.y / backdrop5.scale.y);
+		backdrop3.tilePosition.x = backdrop3.offsetx + ( -0.30*game.camera.x / backdrop3.scale.x) + (game.time.now / (60));
+		backdrop3.tilePosition.y = backdrop3.offsety + ( -0.30*game.camera.y / backdrop3.scale.y);
+		backdrop4.tilePosition.x = backdrop4.offsetx + ( -0.40*game.camera.x / backdrop4.scale.x) + (game.time.now / (40));
+		backdrop4.tilePosition.y = backdrop4.offsety + ( -0.40*game.camera.y / backdrop4.scale.y);
+
+		ui.update();
 	if (gamemode == '?build' && !game.input.activePointer.isDown) {
 		if (game.time.now > nextUIDelay && (cursors.left.isDown || cursors.left2.isDown)){
 			ui.previousPart();

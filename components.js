@@ -986,15 +986,21 @@ var cmp = [
 {
 	'id':83,
 	'drops':true,
-	'name':'Concealed Cannon',
-	'flavor':'reduces thermal profile, high energy cost',
+	'name':'Force Cannon',
+	'flavor':'high damage with knockback',
 	'bonus':function(target){
-		target.profile-=25;
-		target.profileDecay+=100;
+		target.bulletSprite=3;
 		target.bulletDamage+=2;
-		target.fireEnergy+=3;
-		target.TODO=1;
-	}
+		target.fireEnergy+=2;
+		target.bulletBehavior.push(function(bullet){
+			addVelocity(bullet.rotation+Math.PI,100, bullet.owner.body.velocity);
+		});
+
+			target.bulletHitBehavior.push(function(sprite,bullet){
+			
+				addVelocity(bullet.rotation, 100, sprite.body.velocity);
+		});
+}
 },
 {
 	'id':84,
@@ -1397,7 +1403,7 @@ var cmp = [
 		target.alt=function(){
 			if(this.energyMax<12)
 			{
-				ui.error('FAILURE: not have enough energy capacity to use the ' + this.name);
+				ui.error('FAILURE: not have enough energy capacity to use the Jumpdrive');
 			}
 			if(this.energy>=12){
 				this.energy-=12;
