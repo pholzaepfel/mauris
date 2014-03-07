@@ -954,8 +954,8 @@ var cmp = [
 		if(target.ai==-1){
 			target.bulletBehavior.push(function(bullet){
 				bullet.reset(bullet.owner.x,bullet.owner.y);
-				game.physics.moveToPointer(bullet,bullet.fireVelocity);
 				bullet.rotation=game.physics.angleToPointer(bullet);
+				game.physics.velocityFromRotation(bullet.rotation,bullet.fireVelocity,bullet.body.velocity);
 			});
 		}else{
 			target.fireDamage+=2;
