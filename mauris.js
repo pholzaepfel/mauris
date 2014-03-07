@@ -501,6 +501,7 @@ enemyShip.prototype.fire = function () {
 
 }
 enemyShip.prototype.spawnBullet = function () {
+	if(this.bullets.countDead()){
 	var bullet = this.bullets.getFirstDead();
 	bullet.rotation=this.sprite.rotation;
 	bullet.damage=this.fireDamage;
@@ -523,7 +524,7 @@ enemyShip.prototype.spawnBullet = function () {
 	}
 
 	return bullet;
-
+	}
 }
 enemyShip.prototype.update = function() {
 	//fugly hack to get around mysterious loss of velocity
@@ -870,6 +871,7 @@ playerShip.prototype.fire = function(){
 
 };
 playerShip.prototype.spawnBullet = function(){
+	if(bullets.countDead()){
 
 	var bullet = bullets.getFirstDead();
 	bullet.loadTexture('bullet', this.bulletSprite);
@@ -893,6 +895,7 @@ playerShip.prototype.spawnBullet = function(){
 		this.bulletBehavior[i](bullet);
 	}
 	return bullet;
+	}
 }
 playerShip.prototype.update = function(){
 	if(this.alive){
