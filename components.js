@@ -1401,11 +1401,7 @@ var cmp = [
 	'bonus':function(target){
 
 		target.alt=function(){
-			if(this.energyMax<12)
-			{
-				ui.error('FAILURE: not have enough energy capacity to use the Jumpdrive');
-			}
-			if(this.energy>=12){
+			if(this.energy>=12 || this.energy==this.energyMax){
 				this.energy-=12;
 
 				boom(explosions,1,this.sprite.x,this.sprite.y);

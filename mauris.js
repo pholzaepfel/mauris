@@ -1346,7 +1346,6 @@ gameUI.prototype.buyPart = function () {
 			if(components[q].drops){
 				n=q;
 				playerStats.inventory.push(q);
-				this.currentPart=playerStats.inventory.length-1;
 			}
 		}
 	}
@@ -1359,12 +1358,16 @@ gameUI.prototype.nextPart = function () {
 	}
 	this.updatePart();
 }
-
+gameUI.prototype.newestPart = function() {
+	this.currentPart=playerStats.inventory.length>0?playerStats.inventory.length-1:0;
+	this.updatePart();
+}
 gameUI.prototype.partsUI = function (ship) {
 	playerStats.credits+=player.ore; //ore is reset with the new ship 
 	player.ore=0;
 	player.sprite.reset(0,0);
 	player.sprite.rotation=0;
+	this.newestPart();
 	game.camera.follow=null;
 	if(gamemode != '?build'){
 		gamemode = '?build';
@@ -1897,7 +1900,7 @@ function update () {
 		}
 		if (game.time.now > nextUIDelay && (cursors.up.isDown || cursors.up2.isDown)){
 			ui.buyPart();
-			ui.updatePart();
+			ui.newestPart();
 			nextUIDelay = game.time.now+1000;
 			//somethin' clever!
 		}
