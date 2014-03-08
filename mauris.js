@@ -1803,12 +1803,20 @@ function handleMission() {
 function winMission(){
 
 	if(playerStats.mission.complete){
+		var s = 'completed ' + playerStats.mission.name + '. ';
+	if(playerStats.mission.componentsReward.length){
 	playerStats.inventory.push(playerStats.mission.componentsReward[Math.floor(randomRange(0,playerStats.mission.componentsReward.length))]);
-	ui.texts.push('got ' + components[playerStats.inventory[playerStats.inventory.length-1]].name); //heinous
+	s+='got '+ components[playerStats.inventory[playerStats.inventory.length-1]].name +'. '
+	}
+	playerStats.credits+=playerStats.mission.creditsReward;
+	if(playerStats.mission.creditsReward){
+	s+='got $' + playerStats.mission.creditsReward + '. ';
+	}
 		var n = Math.floor(randomRange(0,playerStats.mission.next.length));
 	initMission(playerStats.mission.next[n]);
 	playerStats.mission.complete=false;
 	playerStats.kills=0;
+	ui.texts.push(s);
 	}
 }
 
