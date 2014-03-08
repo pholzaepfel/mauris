@@ -983,7 +983,8 @@ var station; //we're going to keep this pretty much as a non-interactive sprite 
 
 var lootDropRate = 0.09;
 var componentDropRate = 0.09;
-var backdrop1, backdrop2,backdrop3,backdrop4;
+var backdrop1, backdrop2,backdrop3,backdrop4,backdrop5;
+var foredrop;
 var numBaddies = 9;
 var numAsteroids = 19;
 var enemies;
@@ -1888,8 +1889,8 @@ function update () {
 		backdrop5.tilePosition.y = backdrop5.offsety + ( -0.26*game.camera.y / backdrop5.scale.y);
 		backdrop3.tilePosition.x = backdrop3.offsetx + ( -0.30*game.camera.x / backdrop3.scale.x) + (game.time.now / (60));
 		backdrop3.tilePosition.y = backdrop3.offsety + ( -0.30*game.camera.y / backdrop3.scale.y);
-		backdrop4.tilePosition.x = backdrop4.offsetx + ( -0.40*game.camera.x / backdrop4.scale.x) + (game.time.now / (40));
-		backdrop4.tilePosition.y = backdrop4.offsety + ( -0.40*game.camera.y / backdrop4.scale.y);
+		backdrop4.tilePosition.x = backdrop4.offsetx + ( -0.5*game.camera.x / backdrop4.scale.x) + (game.time.now / (40));
+		backdrop4.tilePosition.y = backdrop4.offsety + ( -0.5*game.camera.y / backdrop4.scale.y);
 
 		ui.update();
 	if (gamemode == '?build' && !game.input.activePointer.isDown) {
