@@ -847,6 +847,11 @@ playerShip.prototype.damage = function(dmg, aggro) {
 		this.sprite.kill();
 		this.cullParts();	//defensive programming, in case I ever decide to do something that will kill a player sprite early :P
 		nextSpawn = game.time.now+5000;
+		if(contextTutorialDeath){
+			ui.texts.push(contextTutorialDeath);
+			contextTutorialDeath='';
+		}
+		playerStats.deaths+=1; //hahahahahhahahahahahahahhahahahahahaha
 		return true;
 	}
 
@@ -876,7 +881,10 @@ playerShip.prototype.fire = function(){
 		this.spawnBullet();
 	}
 
-
+		if(contextTutorialProfile && this.sprite.profile > 1200){
+			ui.texts.push(contextTutorialProfile);
+			contextTutorialProfile='';
+		}
 };
 playerShip.prototype.spawnBullet = function(){
 	if(bullets.countDead()){
@@ -1227,6 +1235,13 @@ gameUI.prototype.radarPing = function() {
 		}else{
 			this.radar[i].style.font='12px monospace';
 		}
+
+
+		if(contextTutorialBlink && targetDistance < 0.5 * blinkDistance && this.enemies[i].sprite.profile > 200){
+			ui.texts.push(contextTutorialBlink);
+			contextTutorialBlink='';
+		}
+
 
 		if (targetDistance < 0.5 * blinkDistance && game.time.now % 250 > 125){
 			s='['+s+']';
