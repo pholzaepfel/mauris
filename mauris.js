@@ -1798,6 +1798,8 @@ function handleMission() {
 
 	playerStats.mission.outro=[];
 	}
+
+
 }
 
 function winMission(){
@@ -1819,7 +1821,9 @@ function winMission(){
 	playerStats.kills=0;
 	}
 }
+function adjustHaze(haze, target){
 
+}
 function update () {
 	if(gamemode=='?build'){
 
@@ -1961,6 +1965,13 @@ function update () {
 			  nextUIDelay = 0;
 		  }
 	}
+
+	if(hazeRed.alpha < playerStats.mission.hazeRed){		hazeRed.alpha+=0.001;	}
+	if(hazeRed.alpha > playerStats.mission.hazeRed){		hazeRed.alpha-=0.001;	}
+	if(hazeWhite.alpha < playerStats.mission.hazeWhite){		hazeWhite.alpha+=0.001;	}
+	if(hazeWhite.alpha > playerStats.mission.hazeWhite){		hazeWhite.alpha-=0.001;	}
+if(hazePurple.alpha < playerStats.mission.hazePurple){		hazePurple.alpha+=0.001;	}
+	if(hazePurple.alpha > playerStats.mission.hazePurple){		hazePurple.alpha-=0.001;	}
 }
 
 function hugeBoom(explosionsGroup, x, y){
