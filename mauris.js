@@ -1812,11 +1812,11 @@ function winMission(){
 	if(playerStats.mission.creditsReward){
 	s+='got $' + playerStats.mission.creditsReward + '. ';
 	}
+	ui.texts.push(s);
 		var n = Math.floor(randomRange(0,playerStats.mission.next.length));
 	initMission(playerStats.mission.next[n]);
 	playerStats.mission.complete=false;
 	playerStats.kills=0;
-	ui.texts.push(s);
 	}
 }
 
