@@ -1429,10 +1429,13 @@ var cmp = [
 	'id':115,
 	'drops':true,
 	'name':'Jagged Armor Plating',
-	'flavor':'--',
+	'flavor':'heavy armor, crash into debris to destroy it',
 	'bonus':function(target){
-
-		target.TODO=1;
+		target.sawDamage+=12;
+		target.health+=5;
+		target.acceleration-=0.1;
+		target.turnRate-=0.3;
+		
 	}
 },
 {

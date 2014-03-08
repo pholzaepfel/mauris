@@ -336,6 +336,7 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 	this.ship = this.shipList[Math.floor(randomRange(0,this.shipList.length))];
 	this.destroyParts()
 		this.sprite.profile = 250;
+	this.sawDamage=0;
 	this.sprite.profileDecay = 166;
 	this.nextProfileDecay = 0;
 	this.aggroList = [];
@@ -433,6 +434,9 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 		this.alive = false;
 		this.died=game.time.now+10000;
 
+		if (this.ai!=3){
+			sparkExplosion(pew, this.sprite);	
+		}
 
 
 		bigBoom(explosions,this.sprite.x,this.sprite.y);
@@ -703,6 +707,8 @@ function preload () {
 	game.load.image('starfield2', 'assets/starfield2.png');
 	game.load.image('starfield3', 'assets/starfield3.png');
 	game.load.image('starfield4', 'assets/starfield4.png');
+	game.load.image('haze', 'assets/haze.png');
+	game.load.image('haze2', 'assets/haze2.png');
 	game.load.spritesheet('sparkles', 'assets/sparkles.png',4,4);
 	game.load.spritesheet('thrust', 'assets/thrust.png',8,8);
 	game.load.spritesheet('sparks', 'assets/sparks.png',8,8);
@@ -749,6 +755,7 @@ playerShip.prototype.initPlayerShip = function (ship) {
 	this.ai=-1; //natural intelligence
 	this.radarTargets=1;
 	this.dropRate=0;
+	this.sawDamage=0;
 	this.radarShowInRange=false;
 	this.radarShowInEnemyRange=false;
 	this.radarOreTargets=4;
@@ -827,6 +834,7 @@ playerShip.prototype.damage = function(dmg, aggro) {
 	}
 
 	if (this.health <= 0){
+		sparkExplosion(pew, this.sprite);	
 		bigBoom(explosions,this.sprite.x,this.sprite.y);
 		this.died=game.time.now+10000;
 		this.alive = false;
@@ -983,7 +991,7 @@ var station; //we're going to keep this pretty much as a non-interactive sprite 
 
 var lootDropRate = 0.09;
 var componentDropRate = 0.09;
-var backdrop1, backdrop2,backdrop3,backdrop4,backdrop5;
+var backdrop1, backdrop2,backdrop3,backdrop4,hazeWhite,hazeRed,hazePurple;
 var foredrop;
 var numBaddies = 9;
 var numAsteroids = 19;
@@ -1585,8 +1593,9 @@ function create () {
 		backdrop1 = game.add.tileSprite(0, 0, resolutionX, resolutionY, 'starfield2');
 
 		backdrop1.fixedToCamera = true;
-		backdrop1.scale.x=4;
+		backdrop1.scale.x=4;	
 		backdrop1.scale.y=4;	
+		backdrop1.alpha=0.8;
 		backdrop1.offsetx = Math.random()*resolutionX;
 		backdrop1.offsety = Math.random()*resolutionY;
 		backdrop2 = game.add.tileSprite(0, 0, resolutionX, resolutionY, 'starfield3');
@@ -1597,14 +1606,14 @@ function create () {
 		backdrop2.offsetx = Math.random()*resolutionX;
 		backdrop2.offsety = Math.random()*resolutionY;
 	
-		backdrop5 = game.add.tileSprite(0, 0, resolutionX * 1.2, resolutionY * 1.2, 'starfield3');
-		backdrop5.fixedToCamera = true;
-		backdrop5.scale.x=4;
-		backdrop5.scale.y=4;
-		backdrop5.alpha=1;
-		backdrop5.offsetx = Math.random()*resolutionX;
-		backdrop5.offsety = Math.random()*resolutionY;
-
+		hazeWhite = game.add.tileSprite(0, 0, resolutionX * 1.2, resolutionY * 1.2, 'starfield3');
+		hazeWhite.fixedToCamera = true;
+		hazeWhite.scale.x=4;
+		hazeWhite.scale.y=4;
+		hazeWhite.alpha=0.5; //random()
+		hazeWhite.offsetx = Math.random()*resolutionX;
+		hazeWhite.offsety = Math.random()*resolutionY;
+		hazeWhite.speed = 70;
 		backdrop3 = game.add.tileSprite(0, 0, resolutionX, resolutionY, 'starfield4');
 		backdrop3.fixedToCamera = true;
 		backdrop3.offsetx = Math.random()*resolutionX;
@@ -1617,6 +1626,23 @@ function create () {
 		backdrop4.scale.x=0.75;
 		backdrop4.scale.y=0.75;
 		backdrop4.alpha=0.4;
+		hazeRed = game.add.tileSprite(0, 0, resolutionX, resolutionY, 'haze');
+		hazeRed.offsetx = Math.random()*resolutionX;
+		hazeRed.offsety = Math.random()*resolutionY;
+		hazeRed.fixedToCamera = true;
+		hazeRed.scale.x=3;
+		hazeRed.scale.y=3;
+		hazeRed.alpha=0.7; //randomRange(0,0.8)-0.2;
+		hazeRed.speed = 160;
+		hazePurple = game.add.tileSprite(0, 0, resolutionX, resolutionY, 'haze2');
+		hazePurple.offsetx = Math.random()*resolutionX;
+		hazePurple.offsety = Math.random()*resolutionY;
+		hazePurple.fixedToCamera = true;
+		hazePurple.scale.x=3;
+		hazePurple.scale.y=3;
+		hazePurple.alpha=0; //randomRange(0,0.6)-0.2;
+		hazePurple.speed=160;
+
 		station = game.add.sprite(0,0,'station');
 		station.anchor.setTo(0.5,0.5)
 			asteroids.sort(lengthSort);
@@ -1651,7 +1677,7 @@ function create () {
 		explosions.setAll('anchor.x', 0.5);
 		explosions.setAll('anchor.y', 0.5);
 		explosions.setAll('lifespan',5000);
-
+		explosions.setAll('blendMode',1);
 
 		enemies = [];
 
@@ -1777,7 +1803,9 @@ function handleMission() {
 function winMission(){
 
 	if(playerStats.mission.complete){
-	var n = Math.floor(randomRange(0,playerStats.mission.next.length));
+	playerStats.inventory.push(playerStats.mission.componentsReward[Math.floor(randomRange(0,playerStats.mission.componentsReward.length))]);
+	ui.texts.push('got ' + components[playerStats.inventory[playerStats.inventory.length-1]].name); //heinous
+		var n = Math.floor(randomRange(0,playerStats.mission.next.length));
 	initMission(playerStats.mission.next[n]);
 	playerStats.mission.complete=false;
 	playerStats.kills=0;
@@ -1834,7 +1862,7 @@ function update () {
 			if (enemies[i].alive){
 				enemies[i].update();
 				for (var j = 0; j < player.parts.length; j++) {
-					game.physics.overlap(enemies[i].sprite, player.parts[j].sprite);
+					game.physics.overlap(enemies[i].sprite, player.parts[j].sprite, enemyTouchPlayer, null, this);
 				}
 				game.physics.overlap(bullets, enemies[i].sprite, bulletHitEnemy, null, this);
 				for (var j = 0; j < enemies[i].parts.length; j++) {
@@ -1881,16 +1909,21 @@ function update () {
 
 	}	
 		// scrolling
-		backdrop1.tilePosition.x = backdrop1.offsetx + ( -0.11*game.camera.x / backdrop1.scale.x) + (game.time.now / (100));
+		backdrop1.tilePosition.x = backdrop1.offsetx + ( -0.11*game.camera.x / backdrop1.scale.x) + (game.time.now / (4000));
 		backdrop1.tilePosition.y = backdrop1.offsety + ( -0.11*game.camera.y / backdrop1.scale.y);
-		backdrop2.tilePosition.x = backdrop2.offsetx + ( -0.22*game.camera.x / backdrop2.scale.x) + (game.time.now / (40));
+		backdrop2.tilePosition.x = backdrop2.offsetx + ( -0.22*game.camera.x / backdrop2.scale.x) + (game.time.now / (80));
 		backdrop2.tilePosition.y = backdrop2.offsety + ( -0.22*game.camera.y / backdrop2.scale.y);
-		backdrop5.tilePosition.x = backdrop5.offsetx + ( -0.26*game.camera.x / backdrop5.scale.x) + (game.time.now / (70));
-		backdrop5.tilePosition.y = backdrop5.offsety + ( -0.26*game.camera.y / backdrop5.scale.y);
+		hazeWhite.tilePosition.x = hazeWhite.offsetx + ( -0.26*game.camera.x / hazeWhite.scale.x) + (game.time.now / (hazeWhite.speed));
+		hazeWhite.tilePosition.y = hazeWhite.offsety + ( -0.26*game.camera.y / hazeWhite.scale.y);
 		backdrop3.tilePosition.x = backdrop3.offsetx + ( -0.30*game.camera.x / backdrop3.scale.x) + (game.time.now / (60));
 		backdrop3.tilePosition.y = backdrop3.offsety + ( -0.30*game.camera.y / backdrop3.scale.y);
 		backdrop4.tilePosition.x = backdrop4.offsetx + ( -0.5*game.camera.x / backdrop4.scale.x) + (game.time.now / (40));
 		backdrop4.tilePosition.y = backdrop4.offsety + ( -0.5*game.camera.y / backdrop4.scale.y);
+		hazeRed.tilePosition.x = hazeRed.offsetx + ( -0.5*game.camera.x / hazeRed.scale.x) + (game.time.now / (hazeRed.speed));
+		hazeRed.tilePosition.y = hazeRed.offsety + ( -0.5*game.camera.y / hazeRed.scale.y);
+		hazePurple.tilePosition.x = hazePurple.offsetx + ( -1.5*game.camera.x / hazePurple.scale.x) + (game.time.now / (hazePurple.speed));
+		hazePurple.tilePosition.y = hazePurple.offsety + ( -1.5*game.camera.y / hazePurple.scale.y);
+		hazePurple.bringToTop();	
 
 		ui.update();
 	if (gamemode == '?build' && !game.input.activePointer.isDown) {
@@ -1953,12 +1986,13 @@ function bigBoom(explosionsGroup, x, y){
 		for(var i=0; i < 5 + (r * 6) ; i ++) { 
 			if(explosions.countDead()){
 				var explosion = explosionsGroup.getFirstDead();
-				explosion.loadTexture('explosions', Math.random()>0.7 ? 1 : 2);
+				var rand2 = Math.random()>0.7 ? 1 : 2;
+				explosion.loadTexture('explosions', rand2);
 				explosion.reset(x+randomRange(-20,20),y+randomRange(-20,20));
 				explosion.rotation = Math.random()*Math.PI;
 				explosion.angularVelocity=randomRange(-150,150);
-				explosion.fireVelocity=randomRange(30,80);
-				explosion.lifespan=700;
+				explosion.fireVelocity=randomRange(30,80) * (2-rand2);
+				explosion.lifespan=700 * rand2;
 				explosion.linearDamping=-1;
 				r=randomRange(0.4,1.9);
 				explosion.scale.setTo(r,r);
@@ -2090,10 +2124,18 @@ function bulletHitPlayer (sprite, bullet) {
 	}
 
 	var destroyed = player.damage(bullet.damage, bullet.owner);
-	if (destroyed){
-		sparkExplosion(pew, sprite);	
-	}
 	bullet.kill();
+}
+
+function enemyTouchPlayer (enemySprite, playerSprite) {
+	if(player.sawDamage && enemies[enemySprite.name].ai==3)
+	{
+		enemies[enemySprite.name].damage(player.sawDamage);
+	
+		var angle=game.physics.angleBetween(playerSprite,enemySprite);
+		enemySprite.body.velocity.x+=Math.cos(angle)*200;
+		enemySprite.body.velocity.y+=Math.sin(angle)*200;
+	}	
 }
 
 function bulletHitEnemy (sprite, bullet) {
@@ -2105,9 +2147,6 @@ function bulletHitEnemy (sprite, bullet) {
 			bullet.bulletHitBehavior[i](sprite, bullet);
 		}
 		var destroyed = enemies[sprite.name].damage(bullet.damage, bullet.owner, bullet.body.velocity);
-		if (destroyed && enemies[sprite.name].ai!=3){
-			sparkExplosion(pew, sprite);	
-		}
 
 		bullet.kill();
 	}
