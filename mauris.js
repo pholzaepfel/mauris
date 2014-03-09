@@ -339,6 +339,7 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 	this.sawDamage=0;
 	this.sprite.profileDecay = 166;
 	this.nextProfileDecay = 0;
+	this.rotation=Math.random()*2*Math.PI;
 	this.aggroList = [];
 	this.holdThrust=0;
 	this.acceleration=1;

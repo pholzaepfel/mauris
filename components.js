@@ -1006,20 +1006,28 @@ var cmp = [
 	'id':84,
 	'drops':false,
 	'name':'Crystalline Entity',
-	'flavor':'NYI',
+	'flavor':'increases the size of your shots',
 	'bonus':function(target){
+		target.bulletBehavior.push(function(bullet){
+			bullet.scale.setTo(bullet.scale.x+1,bullet.scale.y+1);
+			bullet.body.angularVelocity+=800;
+			bullet.alpha=0.5;
+		});
 
-		target.TODO=1;
 	}
 },
 {
 	'id':85,
 	'drops':false,
 	'name':'Crystalline Entity',
-	'flavor':'NYI',
+	'flavor':'increases the size of your shots',
 	'bonus':function(target){
+		target.bulletBehavior.push(function(bullet){
+			bullet.scale.setTo(bullet.scale.x+1,bullet.scale.y+1);
+			bullet.body.angularVelocity+=800;
+			bullet.alpha=0.5;
+		});
 
-		target.TODO=1;
 	}
 },
 {
@@ -1442,20 +1450,29 @@ var cmp = [
 	'id':116,
 	'drops':true,
 	'name':'Crystalline Entity',
-	'flavor':'--',
+	'flavor':'increases the size of your shots',
 	'bonus':function(target){
+		target.bulletBehavior.push(function(bullet){
+			bullet.scale.setTo(bullet.scale.x+1,bullet.scale.y+1);
+			bullet.body.angularVelocity+=800;
+			bullet.alpha=0.5;
+		});
 
-		target.TODO=1;
 	}
 },
+
 {
 	'id':117,
 	'drops':true,
 	'name':'Crystalline Entity',
-	'flavor':'--',
+	'flavor':'increases the size of your shots',
 	'bonus':function(target){
+		target.bulletBehavior.push(function(bullet){
+			bullet.scale.setTo(bullet.scale.x+1,bullet.scale.y+1);
+			bullet.body.angularVelocity+=800;
+			bullet.alpha=0.5;
+		});
 
-		target.TODO=1;
 	}
 },
 {
