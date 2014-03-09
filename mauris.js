@@ -350,6 +350,7 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 	this.alive=true;
 	this.behavior=defaultBehavior;
 	this.altCooldown=0;
+	this.cooldown114=0;
 	if(Math.random()<0.2){
 		this.behavior='chasing';
 	}
@@ -794,6 +795,7 @@ playerShip.prototype.initPlayerShip = function (ship) {
 	this.nextEnergy = 0;
 	this.nextFire = 0;
 	this.altCooldown=0;
+	this.cooldown114=0;
 	this.sprite.visible=true;
 	this.sprite.anchor.setTo(0.5, 0.5);
 	this.sprite.body.maxVelocity.setTo(300,300);
@@ -1931,7 +1933,10 @@ function update () {
 			player.alt();
 		}
 		player.update();
-
+		
+		if(!mouseState[2]){
+			player.cooldown114=0;
+		}
 
 
 		if (mouseState[0]){

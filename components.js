@@ -1427,9 +1427,25 @@ var cmp = [
 	'id':114,
 	'drops':true,
 	'name':'Secured Container',
-	'flavor':'--',
+	'flavor':'recharge energy by rapidly pressing RIGHT MOUSE. inhibits normal recharge',
 	'bonus':function(target){
+		target.energyRate=60000; //slow enough
+		target.alt=function(){
+			//this guy has his own cooldown timer, so the user
+			//has to repeatedly press RIGHT MOUSE; there should
+			//be something in update() that resets this to 0
+			//if mouse2 is up
+			if(this.cooldown114<game.time.now){
+				if(this.energy+this.energyAmount>this.energyMax){
+					this.energy=this.energyMax;	
+				}else{
+					this.energy+=this.energyAmount;
+				}
+				this.nextEnergy = game.time.now + this.energyRate;
 
+			this.cooldown114=game.time.now+60000;
+			}
+		};
 		target.TODO=1;
 	}
 },
