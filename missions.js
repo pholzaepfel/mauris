@@ -6,10 +6,10 @@ var contextTutorialBlink = 'as enemy vessels approach, your HUD will blink.\nyou
 var missions = [
 
 {	'id':0,
-	'next':[1],
+	'next':[2],
 	'name':'tutorial',
 	'complete':false,
-	'componentsReward':[1],
+	'componentsReward':banditGear,
 	'creditsReward':10,
 	'hazeRed':0,
 	'hazeWhite':0.9,
@@ -31,6 +31,8 @@ var missions = [
 		'ships': asteroids,
 		'respawn':true,
 		'count':30, 
+		'missionTarget':false,
+		'count':30, 
 		'taunts':[],
 		'deaths':[]
 	}]
@@ -43,14 +45,12 @@ var missions = [
 	'next':[1],
 	'name':'random warzone',
 	'complete':false,
-	'componentsReward':[1],
+	'componentsReward':banditGear,
 	'creditsReward':10,
 	'hazeRed':0.7,
 	'hazeWhite':0.5,
 	'hazePurple':0.1,
-'intro':['we have a free COMPONENT for you.\nCLICK the picture to add it to your ship.\n then, DRAG the component wherever you like on your ship.',
-	'LEFT/RIGHT or A/D will cycle through your inventory.\ndifferent components will have different effects, some good, some bad.',
-	'captain, we have company. gear up and go wreak hell.\npress DOWN to leave the bay.'],
+'intro':['er... go kill things'],
 	'win':{
 		'condition':'kill',
 		'killCount':999,
@@ -59,6 +59,7 @@ var missions = [
 	'enemies': [{
 		'ships': ships,
 		'respawn':true,
+		'missionTarget':false,
 		'count':12, 
 		'taunts':['test message'],
 		'deaths':['I SMELL DELICIOUS!']
@@ -66,6 +67,55 @@ var missions = [
 	{
 		'ships': asteroids,
 		'respawn':true,
+		'missionTarget':false,
+		'count':20, 
+		'taunts':[],
+		'deaths':[]
+	}
+	]
+
+
+	
+},
+{	'id':2,
+	'next':[1],
+	'name':'obligatory rats quest',
+	'complete':false,
+	'componentsReward':banditGear,
+	'creditsReward':20,
+	'hazeRed':0.7,
+	'hazeWhite':0.8,
+	'hazePurple':0.2,
+'intro':['we have COMPONENTS for you.\nCLICK the picture to add a part to your ship.\nthen, DRAG the component wherever you like on your ship.',
+	'LEFT/RIGHT or A/D will cycle through your inventory.\ndifferent components will have different effects, some good, some bad.',
+	'captain, i have an idea. let\'s try your new gear out on the local\nbandit gang, the Rats. kill their leader and return.\npress DOWN to leave the bay.',
+	'the bandit leader will have a GOLD blip on your hud. \n this will allow you to identify mission targets.'],
+	'outro':['amazing! that\'s one less rat in the cellar.\ncome on back.'],
+	'win':{
+		'condition':'kill',
+		'killCount':1,
+		'killType': banditBoss1
+	},
+	'enemies': [{
+		'ships': bandits,
+		'respawn':true,
+		'missionTarget':false,
+		'count':12, 
+		'taunts':['test message'],
+		'deaths':['I SMELL DELICIOUS!']
+	},
+	{
+		'ships': banditBoss1,
+		'respawn':false,
+		'missionTarget':true,
+		'count':1, 
+		'taunts':[],
+		'deaths':[]
+	},
+{
+		'ships': asteroids,
+		'respawn':true,
+		'missionTarget':false,
 		'count':20, 
 		'taunts':[],
 		'deaths':[]

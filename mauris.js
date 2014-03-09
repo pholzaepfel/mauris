@@ -506,28 +506,28 @@ enemyShip.prototype.fire = function () {
 }
 enemyShip.prototype.spawnBullet = function () {
 	if(this.bullets.countDead()){
-	var bullet = this.bullets.getFirstDead();
-	bullet.rotation=this.sprite.rotation;
-	bullet.damage=this.fireDamage;
-	bullet.reset(this.sprite.x + (Math.cos(this.sprite.rotation)*(this.sprite.body.width)), this.sprite.y + (Math.sin(this.sprite.rotation)*(this.sprite.body.width)));
-	bullet.lifespan = this.fireRange; 
-	bullet.alpha=1;
-	bullet.scale.setTo(1,1);
-	bullet.bulletHitBehavior=this.bulletHitBehavior;
-	bullet.angularVelocity=0;
-	bullet.loadTexture('bullet', this.bulletSprite);
-	bullet.bulletSprite=this.bulletSprite;
-	bullet.fireVelocity=this.fireVelocity;
-	bullet.owner=this.sprite;
-	game.physics.velocityFromRotation(bullet.rotation, bullet.fireVelocity, bullet.body.velocity);
-	bullet.body.velocity.x += 0.5 * this.sprite.body.velocity.x;
-	bullet.body.velocity.y += 0.5 * this.sprite.body.velocity.y;
-	bullet.target=player;
-	for (var i = 0; i < this.bulletBehavior.length; i++) {
-		this.bulletBehavior[i](bullet);
-	}
+		var bullet = this.bullets.getFirstDead();
+		bullet.rotation=this.sprite.rotation;
+		bullet.damage=this.fireDamage;
+		bullet.reset(this.sprite.x + (Math.cos(this.sprite.rotation)*(this.sprite.body.width)), this.sprite.y + (Math.sin(this.sprite.rotation)*(this.sprite.body.width)));
+		bullet.lifespan = this.fireRange; 
+		bullet.alpha=1;
+		bullet.scale.setTo(1,1);
+		bullet.bulletHitBehavior=this.bulletHitBehavior;
+		bullet.angularVelocity=0;
+		bullet.loadTexture('bullet', this.bulletSprite);
+		bullet.bulletSprite=this.bulletSprite;
+		bullet.fireVelocity=this.fireVelocity;
+		bullet.owner=this.sprite;
+		game.physics.velocityFromRotation(bullet.rotation, bullet.fireVelocity, bullet.body.velocity);
+		bullet.body.velocity.x += 0.5 * this.sprite.body.velocity.x;
+		bullet.body.velocity.y += 0.5 * this.sprite.body.velocity.y;
+		bullet.target=player;
+		for (var i = 0; i < this.bulletBehavior.length; i++) {
+			this.bulletBehavior[i](bullet);
+		}
 
-	return bullet;
+		return bullet;
 	}
 }
 enemyShip.prototype.update = function() {
@@ -847,10 +847,6 @@ playerShip.prototype.damage = function(dmg, aggro) {
 		this.sprite.kill();
 		this.cullParts();	//defensive programming, in case I ever decide to do something that will kill a player sprite early :P
 		nextSpawn = game.time.now+5000;
-		if(contextTutorialDeath){
-			ui.texts.push(contextTutorialDeath);
-			contextTutorialDeath='';
-		}
 		playerStats.deaths+=1; //hahahahahhahahahahahahahhahahahahahaha
 		return true;
 	}
@@ -881,36 +877,36 @@ playerShip.prototype.fire = function(){
 		this.spawnBullet();
 	}
 
-		if(contextTutorialProfile && this.sprite.profile > 1200){
-			ui.texts.push(contextTutorialProfile);
-			contextTutorialProfile='';
-		}
+	if(contextTutorialProfile && this.sprite.profile > 1200){
+		ui.texts.push(contextTutorialProfile);
+		contextTutorialProfile='';
+	}
 };
 playerShip.prototype.spawnBullet = function(){
 	if(bullets.countDead()){
 
-	var bullet = bullets.getFirstDead();
-	bullet.loadTexture('bullet', this.bulletSprite);
-	bullet.bulletSprite = this.bulletSprite;
-	bullet.damage = this.fireDamage * targetDamageCoef;
-	bullet.lifespan = this.fireRange;
-	bullet.body.mass = this.fireMass;
-	bullet.angularVelocity=0;
-	bullet.bulletHitBehavior=this.bulletHitBehavior;
-	bullet.alpha=1;
-	bullet.scale.setTo(1,1);
-	bullet.reset(this.sprite.x + (Math.cos(this.sprite.rotation)*(this.sprite.body.width)*0.75), this.sprite.y + (Math.sin(this.sprite.rotation)*(this.sprite.body.width)*0.75));
-	bullet.rotation = this.sprite.rotation;
-	bullet.owner=this.sprite;
-	bullet.fireVelocity = this.fireVelocity; //mostly useless but want this to be accessible for bulletBehaviors
-	game.physics.velocityFromRotation(bullet.rotation, bullet.fireVelocity, bullet.body.velocity);
-	bullet.body.velocity.x += 0.5 * this.sprite.body.velocity.x;
-	bullet.body.velocity.y += 0.5 * this.sprite.body.velocity.y;
+		var bullet = bullets.getFirstDead();
+		bullet.loadTexture('bullet', this.bulletSprite);
+		bullet.bulletSprite = this.bulletSprite;
+		bullet.damage = this.fireDamage * targetDamageCoef;
+		bullet.lifespan = this.fireRange;
+		bullet.body.mass = this.fireMass;
+		bullet.angularVelocity=0;
+		bullet.bulletHitBehavior=this.bulletHitBehavior;
+		bullet.alpha=1;
+		bullet.scale.setTo(1,1);
+		bullet.reset(this.sprite.x + (Math.cos(this.sprite.rotation)*(this.sprite.body.width)*0.75), this.sprite.y + (Math.sin(this.sprite.rotation)*(this.sprite.body.width)*0.75));
+		bullet.rotation = this.sprite.rotation;
+		bullet.owner=this.sprite;
+		bullet.fireVelocity = this.fireVelocity; //mostly useless but want this to be accessible for bulletBehaviors
+		game.physics.velocityFromRotation(bullet.rotation, bullet.fireVelocity, bullet.body.velocity);
+		bullet.body.velocity.x += 0.5 * this.sprite.body.velocity.x;
+		bullet.body.velocity.y += 0.5 * this.sprite.body.velocity.y;
 
-	for (var i = 0; i < this.bulletBehavior.length; i++) {
-		this.bulletBehavior[i](bullet);
-	}
-	return bullet;
+		for (var i = 0; i < this.bulletBehavior.length; i++) {
+			this.bulletBehavior[i](bullet);
+		}
+		return bullet;
 	}
 }
 playerShip.prototype.update = function(){
@@ -1219,13 +1215,13 @@ gameUI.prototype.radarPing = function() {
 		var s='●'; //I cannot believe this circle renders in my terminal
 		var n=Math.floor(255-(targetDistance/2-900));
 		var blinkDistance = 1000;
-
+		var missionTarget = this.enemies[i].missionTarget ? 128 : 0;
 		if(player.profileShow){
 			this.blinkDistance=player.sprite.profile*2.1;
 		}
 
 		if(n<0){n=0;}if(n>255){n=255};
-		this.radar[i].style.fill="rgb("+n+",96,96)";
+		this.radar[i].style.fill="rgb("+n+","+(96+missionTarget)+",96)";
 		if(this.enemies[i].sprite.profile>player.sprite.profileMax*2){
 			this.radar[i].style.font='28px monospace';
 		}else if(this.enemies[i].sprite.profile>player.sprite.profileMax){
@@ -1245,11 +1241,11 @@ gameUI.prototype.radarPing = function() {
 
 		if (targetDistance < 0.5 * blinkDistance && game.time.now % 250 > 125){
 			s='['+s+']';
-			this.radar[i].style.fill="rgb(255,0,0)";
+			this.radar[i].style.fill="rgb(255," + missionTarget + ",0)";
 		}
 		else if (targetDistance < blinkDistance && targetDistance >= 0.5 * blinkDistance && game.time.now % 1000 > 500)  {
 			s='['+s+']';
-			this.radar[i].style.fill="rgb(255,0,0)";
+			this.radar[i].style.fill="rgb(255," + missionTarget + ",0)";
 		} else {
 			s=' '+s+' ';
 		}
@@ -1319,7 +1315,7 @@ gameUI.prototype.creditLinePing = function() {
 	this.creditLine.x = player.sprite.body.x-this.creditLine.width;
 	this.creditLine.y = player.sprite.body.height+player.sprite.body.y+35;
 	if(gamemode=='?build'){
-		this.creditLine.y+=200;
+		this.creditLine.y+=151;
 	}
 }
 gameUI.prototype.update = function() {
@@ -1577,11 +1573,13 @@ function initMission (missionId) {
 			if(index<enemies.length){
 				enemies[index].shipList=playerStats.mission.enemies[n].ships;
 				enemies[index].initEnemyShip();
-				enemies[index].respawn=playerStats.mission.enemies[n].respawn;
 			}else{
 				enemies.push(new enemyShip(index, game, player.sprite, enemyBullets, playerStats.mission.enemies[n].ships));
-				enemies[index].respawn=playerStats.mission.enemies[n].respawn;
 			}
+			enemies[index].respawn=playerStats.mission.enemies[n].respawn;
+			enemies[index].missionTarget=playerStats.mission.enemies[n].missionTarget;
+			enemies[index].taunts=playerStats.mission.enemies[n].taunts;
+			enemies[index].deaths=playerStats.mission.enemies[n].deaths;
 			index++;
 		}
 	}
@@ -1620,7 +1618,7 @@ function create () {
 		backdrop2.scale.y=8;	
 		backdrop2.offsetx = Math.random()*resolutionX;
 		backdrop2.offsety = Math.random()*resolutionY;
-	
+
 		hazeWhite = game.add.tileSprite(0, 0, resolutionX * 1.2, resolutionY * 1.2, 'starfield3');
 		hazeWhite.fixedToCamera = true;
 		hazeWhite.scale.x=4;
@@ -1800,18 +1798,18 @@ function pullLootToPlayer(s) {
 function handleMission() {
 
 	if(playerStats.mission.win.condition=='kill'){
-		if(playerStats.mission.win.killCount<playerStats.kills){
+		if(playerStats.mission.win.killCount<=playerStats.kills){
 			playerStats.mission.complete=true;
 		}
 	}
 
 
 	if(playerStats.mission.complete){
-	for(var i=0;i<playerStats.mission.outro.length;i++){
-		ui.texts.push(playerStats.mission.outro[i]);
-	}
+		for(var i=0;i<playerStats.mission.outro.length;i++){
+			ui.texts.push(playerStats.mission.outro[i]);
+		}
 
-	playerStats.mission.outro=[];
+		playerStats.mission.outro=[];
 	}
 
 
@@ -1821,19 +1819,19 @@ function winMission(){
 
 	if(playerStats.mission.complete){
 		var s = 'completed ' + playerStats.mission.name + '. ';
-	if(playerStats.mission.componentsReward.length){
-	playerStats.inventory.push(playerStats.mission.componentsReward[Math.floor(randomRange(0,playerStats.mission.componentsReward.length))]);
-	s+='got '+ components[playerStats.inventory[playerStats.inventory.length-1]].name +'. '
-	}
-	playerStats.credits+=playerStats.mission.creditsReward;
-	if(playerStats.mission.creditsReward){
-	s+='got $' + playerStats.mission.creditsReward + '. ';
-	}
-	ui.texts.push(s);
+		if(playerStats.mission.componentsReward.length){
+			playerStats.inventory.push(playerStats.mission.componentsReward[Math.floor(randomRange(0,playerStats.mission.componentsReward.length))]);
+			s+='got '+ components[playerStats.inventory[playerStats.inventory.length-1]].name +'. '
+		}
+		playerStats.credits+=playerStats.mission.creditsReward;
+		if(playerStats.mission.creditsReward){
+			s+='got $' + playerStats.mission.creditsReward + '. ';
+		}
+		ui.texts.push(s);
 		var n = Math.floor(randomRange(0,playerStats.mission.next.length));
-	initMission(playerStats.mission.next[n]);
-	playerStats.mission.complete=false;
-	playerStats.kills=0;
+		initMission(playerStats.mission.next[n]);
+		playerStats.mission.complete=false;
+		playerStats.kills=0;
 	}
 }
 function adjustHaze(haze, target){
@@ -1853,9 +1851,13 @@ function update () {
 		if(nextSpawn<game.time.now||nextSpawn==0){
 			if(!player.alive){
 				player.initPlayerShip(defaultPlayerShip);
+				if(contextTutorialDeath){
+					ui.texts.push(contextTutorialDeath);
+					contextTutorialDeath='';
+				}
 			}
 			for(var c = 0; c < enemies.length ; c++) {
-				if (enemies[c].alive==false && game.time.now > enemies[c].died){
+				if (enemies[c].alive==false && enemies[c].respawn && game.time.now > enemies[c].died){
 					enemies[c].initEnemyShip();
 					break;
 				};
@@ -1935,24 +1937,24 @@ function update () {
 		}
 
 	}	
-		// scrolling
-		backdrop1.tilePosition.x = backdrop1.offsetx + ( -0.11*game.camera.x / backdrop1.scale.x) + (game.time.now / (4000));
-		backdrop1.tilePosition.y = backdrop1.offsety + ( -0.11*game.camera.y / backdrop1.scale.y);
-		backdrop2.tilePosition.x = backdrop2.offsetx + ( -0.22*game.camera.x / backdrop2.scale.x) + (game.time.now / (80));
-		backdrop2.tilePosition.y = backdrop2.offsety + ( -0.22*game.camera.y / backdrop2.scale.y);
-		hazeWhite.tilePosition.x = hazeWhite.offsetx + ( -0.26*game.camera.x / hazeWhite.scale.x) + (game.time.now / (hazeWhite.speed));
-		hazeWhite.tilePosition.y = hazeWhite.offsety + ( -0.26*game.camera.y / hazeWhite.scale.y);
-		backdrop3.tilePosition.x = backdrop3.offsetx + ( -0.30*game.camera.x / backdrop3.scale.x) + (game.time.now / (60));
-		backdrop3.tilePosition.y = backdrop3.offsety + ( -0.30*game.camera.y / backdrop3.scale.y);
-		backdrop4.tilePosition.x = backdrop4.offsetx + ( -0.5*game.camera.x / backdrop4.scale.x) + (game.time.now / (40));
-		backdrop4.tilePosition.y = backdrop4.offsety + ( -0.5*game.camera.y / backdrop4.scale.y);
-		hazeRed.tilePosition.x = hazeRed.offsetx + ( -0.5*game.camera.x / hazeRed.scale.x) + (game.time.now / (hazeRed.speed));
-		hazeRed.tilePosition.y = hazeRed.offsety + ( -0.5*game.camera.y / hazeRed.scale.y);
-		hazePurple.tilePosition.x = hazePurple.offsetx + ( -1.5*game.camera.x / hazePurple.scale.x) + (game.time.now / (hazePurple.speed));
-		hazePurple.tilePosition.y = hazePurple.offsety + ( -1.5*game.camera.y / hazePurple.scale.y);
-		hazePurple.bringToTop();	
+	// scrolling
+	backdrop1.tilePosition.x = backdrop1.offsetx + ( -0.11*game.camera.x / backdrop1.scale.x) + (game.time.now / (4000));
+	backdrop1.tilePosition.y = backdrop1.offsety + ( -0.11*game.camera.y / backdrop1.scale.y);
+	backdrop2.tilePosition.x = backdrop2.offsetx + ( -0.22*game.camera.x / backdrop2.scale.x) + (game.time.now / (80));
+	backdrop2.tilePosition.y = backdrop2.offsety + ( -0.22*game.camera.y / backdrop2.scale.y);
+	hazeWhite.tilePosition.x = hazeWhite.offsetx + ( -0.26*game.camera.x / hazeWhite.scale.x) + (game.time.now / (hazeWhite.speed));
+	hazeWhite.tilePosition.y = hazeWhite.offsety + ( -0.26*game.camera.y / hazeWhite.scale.y);
+	backdrop3.tilePosition.x = backdrop3.offsetx + ( -0.30*game.camera.x / backdrop3.scale.x) + (game.time.now / (60));
+	backdrop3.tilePosition.y = backdrop3.offsety + ( -0.30*game.camera.y / backdrop3.scale.y);
+	backdrop4.tilePosition.x = backdrop4.offsetx + ( -0.5*game.camera.x / backdrop4.scale.x) + (game.time.now / (40));
+	backdrop4.tilePosition.y = backdrop4.offsety + ( -0.5*game.camera.y / backdrop4.scale.y);
+	hazeRed.tilePosition.x = hazeRed.offsetx + ( -0.5*game.camera.x / hazeRed.scale.x) + (game.time.now / (hazeRed.speed));
+	hazeRed.tilePosition.y = hazeRed.offsety + ( -0.5*game.camera.y / hazeRed.scale.y);
+	hazePurple.tilePosition.x = hazePurple.offsetx + ( -1.5*game.camera.x / hazePurple.scale.x) + (game.time.now / (hazePurple.speed));
+	hazePurple.tilePosition.y = hazePurple.offsety + ( -1.5*game.camera.y / hazePurple.scale.y);
+	hazePurple.bringToTop();	
 
-		ui.update();
+	ui.update();
 	if (gamemode == '?build' && !game.input.activePointer.isDown) {
 		if (game.time.now > nextUIDelay && (cursors.left.isDown || cursors.left2.isDown)){
 			ui.previousPart();
@@ -1985,7 +1987,7 @@ function update () {
 	if(hazeRed.alpha > playerStats.mission.hazeRed){		hazeRed.alpha-=0.001;	}
 	if(hazeWhite.alpha < playerStats.mission.hazeWhite){		hazeWhite.alpha+=0.001;	}
 	if(hazeWhite.alpha > playerStats.mission.hazeWhite){		hazeWhite.alpha-=0.001;	}
-if(hazePurple.alpha < playerStats.mission.hazePurple){		hazePurple.alpha+=0.001;	}
+	if(hazePurple.alpha < playerStats.mission.hazePurple){		hazePurple.alpha+=0.001;	}
 	if(hazePurple.alpha > playerStats.mission.hazePurple){		hazePurple.alpha-=0.001;	}
 }
 
@@ -2165,7 +2167,7 @@ function enemyTouchPlayer (enemySprite, playerSprite) {
 	if(player.sawDamage && enemies[enemySprite.name].ai==3)
 	{
 		enemies[enemySprite.name].damage(player.sawDamage);
-	
+
 		var angle=game.physics.angleBetween(playerSprite,enemySprite);
 		enemySprite.body.velocity.x+=Math.cos(angle)*200;
 		enemySprite.body.velocity.y+=Math.sin(angle)*200;
