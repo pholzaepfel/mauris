@@ -1269,7 +1269,7 @@ gameUI.prototype.wordsPing = function() {
 		this.textLine = this.texts[this.textIndex].substr(0, this.textLineIndex++);
 		var s ='';
 		for(var i=0;i<this.textLine.length;i++){
-			if(this.textLineIndex > this.texts[this.textIndex].length || Math.random()<0.99 ){
+			if(this.textLineIndex > this.texts[this.textIndex].length || this.textLine[i]=='\n' || Math.random()<0.99 ){
 				s+=this.textLine[i];
 			}else{
 				s+=String.fromCharCode(Math.floor(Math.random()*255));
