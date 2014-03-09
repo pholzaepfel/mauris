@@ -1446,7 +1446,6 @@ var cmp = [
 			this.cooldown114=game.time.now+60000;
 			}
 		};
-		target.TODO=1;
 	}
 },
 {
@@ -1525,7 +1524,6 @@ var cmp = [
 	'flavor':'--',
 	'bonus':function(target){
 
-		target.TODO=1;
 	}
 },
 {
