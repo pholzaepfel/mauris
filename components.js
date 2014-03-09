@@ -1034,7 +1034,7 @@ var cmp = [
 	'id':86,
 	'drops':false,
 	'name':'Collector Vine',
-	'flavor':'NYI',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1043,7 +1043,7 @@ var cmp = [
 	'id':87,
 	'drops':false,
 	'name':'Nutriment Tree',
-	'flavor':'NYI',
+	'flavor':'--',
 	'bonus':function(target){
 
 	}
@@ -1629,7 +1629,7 @@ var cmp = [
 	'id':131,
 	'drops':true,
 	'name':'Freedom Missiles',
-	'flavor':'--',
+	'flavor':'liberate your opponents. higher damage and energy cost.',
 	'bonus':function(target){
 		target.bulletSprite=2;
 		target.fireDamage+=2;
@@ -1641,7 +1641,7 @@ var cmp = [
 	'id':132,
 	'drops':true,
 	'name':'Ultralight Wing',
-	'flavor':'--',
+	'flavor':'lightly armored, improves acceleration',
 	'bonus':function(target){
 		target.health+=2;
 		target.acceleration+=0.5;
@@ -1651,7 +1651,7 @@ var cmp = [
 	'id':133,
 	'drops':true,
 	'name':'Gleaming Autocannon',
-	'flavor':'--',
+	'flavor':'BRRRRRRAAAAAAPPPPPP',
 	'bonus':function(target){
 		target.bulletSprite=1;
 		target.fireRate*=0.7;
