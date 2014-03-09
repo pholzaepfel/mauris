@@ -388,8 +388,8 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 
 	applyBonuses(this);
 
-	this.sprite.body.velocity.x*=.3+Math.random()*0.7;
-	this.sprite.body.velocity.y*=.3+Math.random()*0.7;
+	this.sprite.body.velocity.x=randomRange(0.3,1)*Math.cos(this.sprite.rotation)*this.sprite.body.maxVelocity.x;	
+	this.sprite.body.velocity.y=randomRange(0.3,1)*Math.sin(this.sprite.rotation)*this.sprite.body.maxVelocity.y;	
 
 	this.lastVelocityX = this.sprite.body.velocity.x;
 	this.lastVelocityY = this.sprite.body.velocity.y;
@@ -1315,7 +1315,7 @@ gameUI.prototype.creditLinePing = function() {
 	this.creditLine.x = player.sprite.body.x-this.creditLine.width;
 	this.creditLine.y = player.sprite.body.height+player.sprite.body.y+35;
 	if(gamemode=='?build'){
-		this.creditLine.y+=151;
+		this.creditLine.y=210;
 	}
 }
 gameUI.prototype.update = function() {
@@ -1573,6 +1573,7 @@ function initMission (missionId) {
 			if(index<enemies.length){
 				enemies[index].shipList=playerStats.mission.enemies[n].ships;
 				enemies[index].initEnemyShip();
+				enemies[index].target=player.sprite;
 			}else{
 				enemies.push(new enemyShip(index, game, player.sprite, enemyBullets, playerStats.mission.enemies[n].ships));
 			}
@@ -1894,14 +1895,14 @@ function update () {
 					game.physics.overlap(enemies[i].sprite, player.parts[j].sprite, enemyTouchPlayer, null, this);
 				}
 				game.physics.overlap(bullets, enemies[i].sprite, bulletHitEnemy, null, this);
-				for (var j = 0; j < enemies[i].parts.length; j++) {
-
+			for (var j = 0; j < enemies[i].parts.length; j++) {
+					
 					enemies[i].parts[j].update();
 
-				}	
-
+			}	
+				
 			}
-		}
+}
 
 		for (var i = 0; i < player.parts.length; i++){
 			player.parts[i].update();

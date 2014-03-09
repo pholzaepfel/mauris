@@ -78,7 +78,7 @@ var missions = [
 	
 },
 {	'id':2,
-	'next':[1],
+	'next':[3],
 	'name':'obligatory rats quest',
 	'complete':false,
 	'componentsReward':banditGear,
@@ -124,6 +124,52 @@ var missions = [
 
 
 	
+},
+{	'id':3,
+	'next':[1],
+	'name':'shots in the dark',
+	'complete':false,
+	'componentsReward':banditGear,
+	'creditsReward':20,
+	'hazeRed':0.2,
+	'hazeWhite':1,
+	'hazePurple':0.4,
+'intro':['moving into a sector with some mining drones. we can take the asteroids for\nourselves and scrap the drones for parts.','kill 12 drones and report back.\nwatch out for bandits, visibility is poor here.'],
+	'outro':['you know the drill. come on back for the loot.'],
+	'win':{
+		'condition':'kill',
+		'killCount':12,
+		'killType': drones 
+	},
+	'enemies': [{
+		'ships': bandits,
+		'respawn':true,
+		'missionTarget':false,
+		'count': 6, 
+		'taunts':['test message'],
+		'deaths':['I SMELL DELICIOUS!']
+	},
+	{
+		'ships': drones,
+		'respawn':true,
+		'missionTarget':true,
+		'count':8, 
+		'taunts':[],
+		'deaths':[]
+	},
+{
+		'ships': asteroids,
+		'respawn':true,
+		'missionTarget':false,
+		'count':20, 
+		'taunts':[],
+		'deaths':[]
+	}
+	]
+
+
+	
 }
+
 
 ];

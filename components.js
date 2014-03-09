@@ -372,7 +372,7 @@ var cmp = [
 					bullet.body.velocity.x=0;
 					bullet.body.velocity.y=0;
 					bullet.scale.setTo(2,2);
-					bullet.lifespan=666;
+					bullet.lifespan=1666;
 					bullet.body.angularVelocity=666;
 					this.altCooldown=game.time.now+100;
 				}
