@@ -1197,7 +1197,8 @@ gameUI.prototype.stationRadarPing = function() {
 	var n=Math.floor(255-(targetDistance/2-900));
 	if(n<64){n=64;}if(n>255){n=255};
 	this.stationRadar.style.fill="rgb("+(Math.floor(n/2))+","+n+","+(Math.floor(n/2))+")";
-	if (game.time.now % 250 < 50)  {
+	var delay=playerStats.mission.complete?100:1000;1
+	if (game.time.now % delay < 50)  {
 		this.stationRadar.style.fill="rgb("+(n+32)+","+(n+64)+","+(n+32)+")";
 
 	}
@@ -1218,7 +1219,7 @@ gameUI.prototype.radarPing = function() {
 		var s='●'; //I cannot believe this circle renders in my terminal
 		var n=Math.floor(255-(targetDistance/2-900));
 		var blinkDistance = 1000;
-		var missionTarget = this.enemies[i].missionTarget ? 128 : 0;
+		var missionTarget = !playerStats.mission.complete && this.enemies[i].missionTarget ? 128 : 0;
 		if(player.profileShow){
 			this.blinkDistance=player.sprite.profile*2.1;
 		}
