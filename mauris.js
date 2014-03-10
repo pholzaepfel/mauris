@@ -596,7 +596,7 @@ enemyShip.prototype.update = function() {
 							this.fire(); 
 
 						}
-			} else if (this.ai == 1) {
+			} else {
 				var targetLocation = {
 					x:this.target.x,
 					y:this.target.y
@@ -684,7 +684,7 @@ enemyShip.prototype.update = function() {
 				}
 				this.nextEnergy = game.time.now + this.energyRate;
 			}
-			if(Math.random()>Math.cos((this.health-this.healthMax)/this.healthMax)){
+			if(this.ai != 3 && Math.random()>Math.cos((this.health-this.healthMax)/this.healthMax)){
 				if(Math.random()>(this.health/this.healthMax)){
 					sparks(pew,this.sprite);
 				}
@@ -995,7 +995,7 @@ var defaultPlayerShip = [66, 34, -1, -1];
 var station; //we're going to keep this pretty much as a non-interactive sprite for now... it doesn't actually need to do anything
 
 var lootDropRate = 0.09;
-var componentDropRate = 0.04;
+var componentDropRate = 0.06;
 var backdrop1, backdrop2,backdrop3,backdrop4,hazeWhite,hazeRed,hazePurple;
 var foredrop;
 var numBaddies = 9;
