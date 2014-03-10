@@ -585,7 +585,7 @@ enemyShip.prototype.update = function() {
 				}
 	}
 
-		if(this.alive && this.target.alive){
+		if(this.ai!=3 && this.alive && this.target.alive){
 
 
 			if(this.ai==0){
@@ -1127,8 +1127,8 @@ gameUI.prototype.initCombatUi = function() {
 	destroyIfExists(this.graphics);
 	this.graphics = game.add.graphics(0,0);
 
-	destroyIfExists(this.words);
-	this.words = game.add.text(0,0,'',{font:'1.5em monospace', fill: 'rgb(255,255,255)', align: 'left'});
+	destroyIfExists(this.comms);
+	this.comms = game.add.text(0,0,'',{font:'1.5em monospace', fill: 'rgb(255,255,255)', align: 'left'});
 
 	destroyIfExists(this.partText);
 	this.partText = game.add.text(-200,150,'',{font:'1.5em monospace', fill: 'rgb(255,255,255)', align: 'left'});
@@ -1260,14 +1260,14 @@ gameUI.prototype.radarPing = function() {
 		this.radar[i].y = player.sprite.body.y + Math.sin(targetAngle) * range;	
 	}
 }
-gameUI.prototype.wordsPing = function() {
-	this.words.x = player.sprite.body.x - 200;
-	this.words.y = player.sprite.body.y + 200;
+gameUI.prototype.commsPing = function() {
+	this.comms.x = player.sprite.body.x - 200;
+	this.comms.y = player.sprite.body.y + 200;
 	if(gamemode=='?build'){
-		this.words.y+=50;
+		this.comms.y+=50;
 	}
 	if (game.time.now > this.nextWords && this.textIndex < this.texts.length){
-		this.words.alpha=1;
+		this.comms.alpha=1;
 		this.textLine = this.texts[this.textIndex].substr(0, this.textLineIndex++);
 		var s ='';
 		for(var i=0;i<this.textLine.length;i++){
@@ -1278,7 +1278,7 @@ gameUI.prototype.wordsPing = function() {
 			}
 		}
 		this.textLine=s;
-		this.words.setText(this.textLine);
+		this.comms.setText(this.textLine);
 		if(this.textLineIndex>this.texts[this.textIndex].length){
 			this.nextWords=game.time.now+5000;
 			this.textIndex+=1;
@@ -1286,13 +1286,16 @@ gameUI.prototype.wordsPing = function() {
 		}else{
 			this.nextWords=game.time.now+20;
 		}
+		if(this.textLine.substr(-1)=='\n'){
+			this.nextWords+=1000;
+		}
 	} else if (game.time.now > this.nextWords) {
-		this.words.alpha-=0.02;
+		this.comms.alpha-=0.02;
 	}
 	if(this.textLine.length>0 && game.time.now % 200 > 100){
-		this.words.setText(this.textLine + '_');
+		this.comms.setText(this.textLine + '_');
 	}else{
-		this.words.setText(this.textLine);
+		this.comms.setText(this.textLine);
 	}
 }
 gameUI.prototype.profileLinePing = function() {
@@ -1322,7 +1325,7 @@ gameUI.prototype.creditLinePing = function() {
 }
 gameUI.prototype.update = function() {
 	this.creditLinePing();
-	this.wordsPing();
+	this.commsPing();
 	if (gamemode == 'war'){
 		this.profileLinePing();
 		this.bar(this.healthLine, 0, player.health, player.healthMax);
