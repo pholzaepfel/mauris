@@ -2002,6 +2002,14 @@ function update () {
 		  }
 	}
 
+	if(hazeRed.alpha < playerStats.mission.hazeRed){		hazeRed.alpha+=0.001;	}
+	if(hazeRed.alpha > playerStats.mission.hazeRed){		hazeRed.alpha-=0.001;	}
+
+	if(hazeWhite.alpha < playerStats.mission.hazeWhite){		hazeWhite.alpha+=0.001;	}
+	if(hazeWhite.alpha > playerStats.mission.hazeWhite){		hazeWhite.alpha-=0.001;	}
+
+	if(hazePurple.alpha < playerStats.mission.hazePurple){		hazePurple.alpha+=0.001;	}
+	if(hazePurple.alpha > playerStats.mission.hazePurple){		hazePurple.alpha-=0.001;	}
 
 
 }
