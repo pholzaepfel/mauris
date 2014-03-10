@@ -1116,11 +1116,11 @@ gameUI.prototype.initCombatUi = function() {
 	this.profileLine.alpha = 0.75;
 	destroyIfExists(this.healthLine);
 	this.healthLine = game.add.text(200,100, '',{ font:'14px monospace', fill: 'rgb(96,96,240)', align: 'left' });
-	this.healthLine.alpha = 0.75;
+	this.healthLine.alpha = 1.3;
 
 	destroyIfExists(this.energyLine);
 	this.energyLine = game.add.text(200,100, '',{ font:'14px monospace', fill: 'rgb(240,64,255)', align: 'left' });
-	this.energyLine.alpha = 0.75;
+	this.energyLine.alpha = 1.5;
 	destroyIfExists(this.statsLine);
 	this.statsLine = game.add.text(200,100, '',{ font:'1em monospace', fill: 'rgb(240,240,240)', align: 'left' });
 	this.statsLine.alpha=0.75;
@@ -1128,7 +1128,7 @@ gameUI.prototype.initCombatUi = function() {
 	this.graphics = game.add.graphics(0,0);
 
 	destroyIfExists(this.comms);
-	this.comms = game.add.text(0,0,'',{font:'1.5em monospace', fill: 'rgb(255,255,255)', align: 'left'});
+	this.comms = game.add.text(0,0,'',{font:'1.5em monospace', fill: 'rgb(240,255,183)', align: 'left'});
 
 	destroyIfExists(this.partText);
 	this.partText = game.add.text(-200,150,'',{font:'1.5em monospace', fill: 'rgb(255,255,255)', align: 'left'});
@@ -1195,7 +1195,7 @@ gameUI.prototype.stationRadarPing = function() {
 	var n=Math.floor(255-(targetDistance/2-900));
 	if(n<64){n=64;}if(n>255){n=255};
 	this.stationRadar.style.fill="rgb("+(Math.floor(n/2))+","+n+","+(Math.floor(n/2))+")";
-	var delay=playerStats.mission.complete?100:1000;1
+	var delay=playerStats.mission.complete?200:1000;
 	if (game.time.now % delay < 50)  {
 		this.stationRadar.style.fill="rgb("+(n+32)+","+(n+64)+","+(n+32)+")";
 
@@ -1266,16 +1266,21 @@ gameUI.prototype.commsPing = function() {
 	if(gamemode=='?build'){
 		this.comms.y+=50;
 	}
+		
 	if (game.time.now > this.nextWords && this.textIndex < this.texts.length){
-		this.comms.alpha=1;
+		this.comms.alpha+=randomRange(-0.1,0.1);
+		this.comms.alpha=Math.min(0.8,this.comms.alpha);
+		this.comms.alpha=Math.max(0.7,this.comms.alpha);
 		this.textLine = this.texts[this.textIndex].substr(0, this.textLineIndex++);
 		var s ='';
+		if(!this.textLine.substr(-1)=='\n'){
 		for(var i=0;i<this.textLine.length;i++){
 			if(this.textLineIndex > this.texts[this.textIndex].length || this.textLine[i]=='\n' || Math.random()<0.99 ){
 				s+=this.textLine[i];
 			}else{
 				s+=String.fromCharCode(Math.floor(Math.random()*255));
 			}
+		}
 		}
 		this.textLine=s;
 		this.comms.setText(this.textLine);
@@ -1290,7 +1295,12 @@ gameUI.prototype.commsPing = function() {
 			this.nextWords+=1000;
 		}
 	} else if (game.time.now > this.nextWords) {
-		this.comms.alpha-=0.02;
+		this.comms.alpha-=randomRange(0,0.05);
+	} else {
+		this.comms.alpha+=randomRange(-0.1,0.1);
+		this.comms.alpha=Math.min(0.8,this.comms.alpha);
+		this.comms.alpha=Math.max(0.7,this.comms.alpha);
+
 	}
 	if(this.textLine.length>0 && game.time.now % 200 > 100){
 		this.comms.setText(this.textLine + '_');
@@ -1994,10 +2004,17 @@ function update () {
 
 	if(hazeRed.alpha < playerStats.mission.hazeRed){		hazeRed.alpha+=0.001;	}
 	if(hazeRed.alpha > playerStats.mission.hazeRed){		hazeRed.alpha-=0.001;	}
+	hazeRed.speed=((hazeRed.speed*32)+playerStats.mission.hazeRedSpeed)/33;
+
 	if(hazeWhite.alpha < playerStats.mission.hazeWhite){		hazeWhite.alpha+=0.001;	}
 	if(hazeWhite.alpha > playerStats.mission.hazeWhite){		hazeWhite.alpha-=0.001;	}
+	hazeWhite.speed=((hazeWhite.speed*32)+playerStats.mission.hazeWhiteSpeed)/33;
+
 	if(hazePurple.alpha < playerStats.mission.hazePurple){		hazePurple.alpha+=0.001;	}
 	if(hazePurple.alpha > playerStats.mission.hazePurple){		hazePurple.alpha-=0.001;	}
+	hazePurple.speed=((hazePurple.speed*32)+playerStats.mission.hazePurpleSpeed)/33;
+
+
 }
 
 function hugeBoom(explosionsGroup, x, y){
