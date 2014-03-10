@@ -1429,6 +1429,7 @@ var cmp = [
 	'name':'Secured Container',
 	'flavor':'recharge energy by rapidly pressing RIGHT MOUSE. inhibits normal recharge',
 	'bonus':function(target){
+		if(target.ai==-1){
 		target.energyRate=60000; //slow enough
 		target.alt=function(){
 			//this guy has his own cooldown timer, so the user
@@ -1446,6 +1447,9 @@ var cmp = [
 			this.cooldown114=game.time.now+60000;
 			}
 		};
+		}else{
+			target.energyRate*=0.6; //baddies get all the love
+		}
 	}
 },
 {

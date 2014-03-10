@@ -23,6 +23,10 @@ var playerMeta = function () {
 window.oncontextmenu = function (){
 	return false;     // cancel default menu
 }
+function compareAngles(x,y){
+
+	return Math.atan2(Math.sin(x-y),Math.cos(x-y));
+}
 function onscreen(x,y) {
 	return	(player.sprite.x - resolutionX < x && x < player.sprite.x + resolutionX &&
 			player.sprite.y - resolutionY < y && y < player.sprite.y + resolutionY)
@@ -351,9 +355,6 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 	this.behavior=defaultBehavior;
 	this.altCooldown=0;
 	this.cooldown114=0;
-	if(Math.random()<0.2){
-		this.behavior='chasing';
-	}
 	this.died=0;
 	this.turnRate=0.5;
 	this.fireRate = 300;
@@ -582,22 +583,10 @@ enemyShip.prototype.update = function() {
 						this.behavior='neutral';
 					}
 				}
+	}
 
 		if(this.alive && this.target.alive){
 
-			if (this.speed > 0){
-				if(game.time.now>(this.nextThrust||0)){
-					this.thrust.x=this.sprite.x-(Math.cos(this.sprite.rotation)*(this.sprite.body.width)*0.5);
-					this.thrust.y=this.sprite.y-(Math.sin(this.sprite.rotation)*(this.sprite.body.width)*0.5);
-					this.thrust.minParticleSpeed.setTo(0,0);
-					this.thrust.maxParticleSpeed.setTo(0,0);
-					this.thrust.emitParticle();
-					partsToTop(this);	
-					this.nextThrust = game.time.now + 15; 
-				}
-				addVelocity(this.sprite.rotation, this.speed, this.sprite.body.velocity);
-				this.speed=0;
-			}
 
 			if(this.ai==0){
 				this.sprite.rotation = this.game.physics.angleBetween(this.sprite, this.target);
@@ -617,36 +606,33 @@ enemyShip.prototype.update = function() {
 				var targetDistance = this.game.physics.distanceBetween(this.sprite, this.target);
 				var targetAngle = this.game.physics.angleBetween(this.sprite, this.target); 
 
+
 				if(this.behavior=='strafing'){
 					if(targetDistance > this.fireRange){
 						this.behavior='chasing';
 					}
+				//to dramatically increase difficulty, put the below target location adjustment here
+
 				}
 				if(this.behavior=='chasing'){
 					if(targetDistance < 0.75 * this.fireRange){
 						this.behavior='strafing';
 					}
-					targetLocation.x += this.target.body.velocity.x * Math.abs(targetDistance/this.sprite.body.velocity.x);			
-					targetLocation.y += this.target.body.velocity.y * Math.abs(targetDistance/this.sprite.body.velocity.y);			
-					var targetDistance = this.game.math.distance(this.sprite.x, this.sprite.y, targetLocation.x, targetLocation.y);
-					var targetAngle = this.game.math.angleBetween(this.sprite.x, this.sprite.y, targetLocation.x, targetLocation.y);
+					
+				targetLocation.x += this.target.body.velocity.x * 0.95 * Math.abs(targetDistance/this.fireVelocity);			
+				targetLocation.y += this.target.body.velocity.y * 0.95 * Math.abs(targetDistance/this.fireVelocity);			
+				var targetDistance = this.game.math.distance(this.sprite.x, this.sprite.y, targetLocation.x, targetLocation.y);
+				var targetAngle = this.game.math.angleBetween(this.sprite.x, this.sprite.y, targetLocation.x, targetLocation.y);
+					
 				}
 
-
-				if (game.math.radToDeg(Math.abs(this.sprite.rotation-targetAngle))>this.behavior=='neutral'?this.turnRate*30:this.turnRate){
-
-					if(this.sprite.rotation-targetAngle>0){
-						if(game.math.radToDeg(Math.abs(this.sprite.rotation-targetAngle))<180){	
-							this.left();
-						}else{
-							this.right();
-						}
+				var diffAngle = compareAngles(this.sprite.rotation,targetAngle);
+				if (diffAngle>this.behavior=='neutral'?this.turnRate*30:this.turnRate){
+					if(diffAngle>0)
+					{
+						this.left();
 					}else{
-						if(game.math.radToDeg(Math.abs(this.sprite.rotation-targetAngle))<180){	
-							this.right();
-						}else{
-							this.left();
-						}
+						this.right();
 					}
 
 
@@ -662,15 +648,13 @@ enemyShip.prototype.update = function() {
 				}
 
 				if (this.target!= player.sprite || (targetDistance < this.target.profile*10 && this.behavior!='neutral')){
-					if(Math.abs(targetAngle-this.sprite.rotation)<0.6 ||
-							Math.abs(this.sprite.rotation-targetAngle)<0.6){
+					if(Math.abs(compareAngles(targetAngle,this.sprite.rotation))<Math.PI){
 								this.up();
 							}
 				}
 				if (targetDistance < this.fireRange * 0.75 &&
 						targetDistance < this.target.profile){
-							if(Math.abs(targetAngle-this.sprite.rotation)<0.15 ||
-									Math.abs(targetAngle-this.sprite.rotation)>Math.PI-0.15){
+							if(Math.abs(compareAngles(targetAngle,this.sprite.rotation)) < 0.5){
 										this.fire(); 
 									}
 
@@ -678,6 +662,19 @@ enemyShip.prototype.update = function() {
 
 			}
 
+			if (this.speed > 0){
+				if(game.time.now>(this.nextThrust||0)){
+					this.thrust.x=this.sprite.x-(Math.cos(this.sprite.rotation)*(this.sprite.body.width)*0.5);
+					this.thrust.y=this.sprite.y-(Math.sin(this.sprite.rotation)*(this.sprite.body.width)*0.5);
+					this.thrust.minParticleSpeed.setTo(0,0);
+					this.thrust.maxParticleSpeed.setTo(0,0);
+					this.thrust.emitParticle();
+					partsToTop(this);	
+					this.nextThrust = game.time.now + 15; 
+				}
+				addVelocity(this.sprite.rotation, this.speed, this.sprite.body.velocity);
+				this.speed=0;
+			}
 
 			if (game.time.now > this.nextEnergy){
 				if(this.energy+this.energyAmount>this.energyMax){
@@ -693,7 +690,7 @@ enemyShip.prototype.update = function() {
 				}
 			}
 		}
-	}
+	
 }
 ;
 var resolutionX=Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
@@ -772,6 +769,7 @@ playerShip.prototype.initPlayerShip = function (ship) {
 	this.turnRate=0.5;
 	this.health=8;
 	this.alive=true;
+	this.sprite.alive=true;
 	this.bulletSprite=0;
 	this.bulletHitBehavior=[];
 	this.bulletBehavior=[];
