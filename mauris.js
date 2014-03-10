@@ -447,7 +447,7 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 			if(Math.random() < lootDropRate + player.dropRate){
 				spawnLoots(Math.floor(randomRange(0,4)), this.sprite.x, this.sprite.y);
 				this.parts[j].sprite.kill();
-			}else if(Math.random() < (componentDropRate + player.dropRate) && components[this.parts[j].component].drops){ //TODO probably make stuff drop less, but we're just testing
+			}else if(Math.random() < (componentDropRate) && components[this.parts[j].component].drops){ 
 				spawnComponent(this.parts[j].component, this.sprite.x, this.sprite.y);
 				this.parts[j].sprite.kill();	
 			}else{
@@ -995,7 +995,7 @@ var defaultPlayerShip = [66, 34, -1, -1];
 var station; //we're going to keep this pretty much as a non-interactive sprite for now... it doesn't actually need to do anything
 
 var lootDropRate = 0.09;
-var componentDropRate = 0.09;
+var componentDropRate = 0.04;
 var backdrop1, backdrop2,backdrop3,backdrop4,hazeWhite,hazeRed,hazePurple;
 var foredrop;
 var numBaddies = 9;

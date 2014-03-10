@@ -119,7 +119,7 @@ var cmp = [
 	'flavor':'track more enemies and find more loot',
 	'bonus':function(target){
 		target.radarTargets+=1;
-		target.dropRate+=0.004;
+		target.dropRate+=0.008;
 	}
 },
 {
@@ -843,7 +843,7 @@ var cmp = [
 		target.fireDamage+=2;
 		target.fireRate+=100;
 		target.sprite.profile+=20;	
-		target.dropRate+=0.004;
+		target.dropRate+=0.008;
 		target.bulletSprite=4;
 	}
 },
@@ -1319,8 +1319,8 @@ var cmp = [
 	'name':'Vidscreen Ad <BurgerJoint>',
 	'flavor':'more drops, high profile',
 	'bonus':function(target){
-		target.sprite.profile+=25;
-		target.dropRate+=0.01;
+		target.sprite.profile+=60;
+		target.dropRate+=0.016;
 
 	}
 },
@@ -1330,8 +1330,8 @@ var cmp = [
 	'name':'Vidscreen Ad <Cola>',
 	'flavor':'more drops, high profile',
 	'bonus':function(target){
-		target.sprite.profile+=25;
-		target.dropRate+=0.01;
+		target.sprite.profile+=60;
+		target.dropRate+=0.016;
 	}
 },
 {
