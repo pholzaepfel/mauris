@@ -1,7 +1,7 @@
 var contextTutorialDeath = 'wake up, captain. we managed to recover you from the wreckage.\nif you had any ore collected, it\'s gone, but any parts\nyou collect will remain.';
 var contextTutorialProfile = 'going in guns blazing and/or with a huge warship will attract attention.\nyou can use this to your advantage. provoke attacks!\nenemies will be caught in the crossfire and' +
 '\nturn on each other.';
-var contextTutorialBlink = 'as enemy vessels approach, your HUD will blink.\nyour thermal imaging array will track the largest, closest opponent.\nuse the HUD to compensate for poor visibility in the debris field.';
+var contextTutorialBlink = 'your thermal imaging array automatically tracks the largest, closest opponent.\nyour HUD will also blink as enemies approach.\nmission targets will be marked GOLD. use the HUD to compensate for poor visibility in the debris field.';
 
 var missions = [
 
@@ -12,7 +12,7 @@ var missions = [
 	'componentsReward':banditGear,
 	'creditsReward':10,
 	'hazeRed':0,
-	'hazeWhite':0.9,
+	'hazeWhite':1,
 	'hazePurple':0,
 	'hazeRedSpeed':160,
 	'hazeWhiteSpeed':70,
@@ -95,8 +95,8 @@ var missions = [
 	'hazeRedSpeed':160,
 	'hazeWhiteSpeed':70,
 	'hazePurpleSpeed':160,
-	'intro':['uh, captain... there\'s a big nasty incoming.\nit looks like one of the bandit ships.\n','equip this THERMAL RESONATOR. circle your opponents,\nand try to get them to fight each other instead oyou.\n','IFF systems are worthless anymore, so the crazy bastards shoot at everything...'],
-	'outro':['amazing! that\'s one less rat in the cellar.\ncome on back.'],
+	'intro':['uh, captain... there\'s a big nasty incoming.\nlooks like a bandit warship.\nalright, we\'ve got an AWSM bomb here...','it will obliterate your ship,\nbut if you can get close enough, you can take the warship out with you.','pull in close and RIGHT CLICK with the AWSM equipped.'],
+	'outro':['BOOoooom! that was amazing!\ncome on back.'],
 	'win':{
 		'condition':'kill',
 		'killCount':1,
@@ -145,7 +145,7 @@ var missions = [
 	'hazePurpleSpeed':160,
 	'intro':['we have COMPONENTS for you.\nCLICK the picture to add a part to your ship.\nthen, DRAG the component wherever you like on your ship.',
 	'LEFT/RIGHT or A/D will cycle through your inventory.\ndifferent components will have different effects, some good, some bad.','... drifting into a sector with some mining drones. we can take the asteroids for\nourselves and scrap the drones for parts.','kill 12 drones and report back.\nwatch out for bandits, visibility is poor here.'],
-	'outro':['nice job. come on back.\nwe found something you\'ll like.'],
+	'outro':['nice job. hurry back, there are alliance warships coming in!'],
 	'win':{
 		'condition':'kill',
 		'killCount':12,
@@ -185,7 +185,7 @@ var missions = [
 	'next':[2],
 	'name':'smuggling',
 	'complete':false,
-	'componentsReward':[97],
+	'componentsReward':[76],
 	'creditsReward':20,
 	'hazeRed':0.2,
 	'hazeWhite':0.1,
@@ -193,7 +193,7 @@ var missions = [
 	'hazeRedSpeed':160,
 	'hazeWhiteSpeed':70,
 	'hazePurpleSpeed':160,
-	'intro':['we need to get supplies to our colony.\nfollow the GOLD DIAMOND indicator there.','the remnants of the alliance fleet are passing through!\nstrip down your ship and hold your fire at all costs. if they come after you, RUN!','we\'ve found a THERMAL MONITORING SYSTEM. it will warn you right\nwhen you enter enemy sensor range, and again when the enemy has locked on.\nuse it to avoid the alliance warships.'],
+	'intro':['we need to get supplies to our colony NOW.\nthe GOLD DIAMOND indicator will lead you to the waypoint.\nnow about those warships...','don\'t try to engage them. we can\'t spare the ships for that.\nstrip down your ship to lower your profile and hold your fire at all costs. if they come after you, RUN!','this THERMAL MONITORING SYSTEM will warn you right\nwhen you enter enemy sensor range, and again when the enemy has locked on.\nuse it to avoid the warships if you can.'],
 	'outro':['appreciate it, captain. try to make it back in one piece.'],
 	'win':{
 		'condition':'frob',

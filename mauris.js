@@ -2297,7 +2297,7 @@ function spawnLoots(_count, x, y){
 		loot.lifespan = 60000;
 		loot.body.angularVelocity = randomRange(-300,300);
 		loot.reset(x + randomRange(-16,16), y+randomRange(-16,16));
-		loot.rotation = Math.random()*Math.PI;
+		loot.rotation = Math.random()*2*Math.PI;
 		var scale = randomRange(0.5,1.1);
 		loot.scale.setTo(scale,scale);
 		loot.averageCounter=50;
@@ -2314,13 +2314,13 @@ function spawnComponent(component,x,y){
 		loot.lifespan = 120000;
 		loot.scale.setTo(2,2);
 		loot.reset(x + randomRange(-16,16), y+randomRange(-16,16));
-		loot.rotation = 0; 
 		loot.averageCounter=50;
+		loot.rotation=0;
 		loot.acceleration=200;
 		loot.lootType='component';
 		loot.component = component;
 		loot.acceleration=0;
-		game.physics.velocityFromRotation(loot.rotation, randomRange(100,300), loot.body.velocity);
+		game.physics.velocityFromRotation(Math.random()*2*Math.PI, randomRange(50,player.sprite.body.maxVelocity.x*0.75), loot.body.velocity);
 
 	}
 }
