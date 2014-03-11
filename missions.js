@@ -193,7 +193,7 @@ var missions = [
 	'hazeRedSpeed':160,
 	'hazeWhiteSpeed':70,
 	'hazePurpleSpeed':160,
-	'intro':['we need to get supplies to our colony NOW.\nthe GOLD DIAMOND indicator will lead you to the waypoint.\nnow about those warships...','don\'t try to engage them. we can\'t spare the ships for that.\nstrip down your ship to lower your profile and hold your fire at all costs. if they come after you, RUN!','this THERMAL MONITORING SYSTEM will warn you right\nwhen you enter enemy sensor range, and again when the enemy has locked on.\nuse it to avoid the warships if you can.'],
+	'intro':['we need to get supplies to our colony NOW.\nthe GOLD DIAMOND indicator will lead you to the waypoint.\nnow about those warships...','don\'t try to engage them. we can\'t spare the ships for that.\nstrip down your ship to lower your profile and hold your fire at all costs.\nif they come after you, RUN!','this THERMAL MONITORING SYSTEM will warn you right\nwhen you enter enemy sensor range, and again when the enemy has locked on.\nuse it to avoid the warships if you can.'],
 	'outro':['appreciate it, captain. try to make it back in one piece.'],
 	'win':{
 		'condition':'frob',
