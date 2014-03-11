@@ -66,7 +66,7 @@ var missions = [
 		'ships': ships,
 		'respawn':true,
 		'missionTarget':false,
-		'count':12, 
+		'count':9, 
 		'taunts':['test message'],
 		'deaths':['I SMELL DELICIOUS!']
 	},
@@ -122,7 +122,7 @@ var missions = [
 		'ships': asteroids,
 		'respawn':true,
 		'missionTarget':false,
-		'count':20, 
+		'count':15, 
 		'taunts':[],
 		'deaths':[]
 	}
@@ -171,7 +171,7 @@ var missions = [
 		'ships': asteroids,
 		'respawn':true,
 		'missionTarget':false,
-		'count':20, 
+		'count':15, 
 		'taunts':[],
 		'deaths':[]
 	}
@@ -193,7 +193,7 @@ var missions = [
 	'hazeRedSpeed':160,
 	'hazeWhiteSpeed':70,
 	'hazePurpleSpeed':160,
-	'intro':['we need to get supplies to our colony.\nfollow the GOLD EXCLAMATION there.','the remnants of the alliance fleet are passing through!\nstrip down your ship and hold your fire at all costs. if they come after you, RUN!','we\'ve found a THERMAL MONITORING SYSTEM. it will warn you right\nwhen you enter enemy sensor range, and again when the enemy has locked on.\nuse it to avoid the alliance warships.'],
+	'intro':['we need to get supplies to our colony.\nfollow the GOLD DIAMOND indicator there.','the remnants of the alliance fleet are passing through!\nstrip down your ship and hold your fire at all costs. if they come after you, RUN!','we\'ve found a THERMAL MONITORING SYSTEM. it will warn you right\nwhen you enter enemy sensor range, and again when the enemy has locked on.\nuse it to avoid the alliance warships.'],
 	'outro':['appreciate it, captain. try to make it back in one piece.'],
 	'win':{
 		'condition':'frob',
@@ -202,7 +202,7 @@ var missions = [
 		[{
 			'ships': asteroids,
 			'respawn':true,
-			'count':20, 
+			'count':17, 
 			'missionTarget':false,
 			'taunts':[],
 			'deaths':[]

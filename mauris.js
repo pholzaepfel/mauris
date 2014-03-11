@@ -301,6 +301,7 @@ shipPart.prototype.initShipPart = function (x,y,index,targetSprite){
 	this.sprite.reset(this.offsetx,this.offsety);
 	this.sprite.anchor.setTo(0.5,0.5);
 	this.sprite.bringToTop();
+	this.sprite.autoCull=true;
 }
 shipPart.prototype.update = function(){
 	if (this.target.alive && this.alive) {
@@ -586,7 +587,7 @@ enemyShip.prototype.update = function() {
 		this.ai=3;
 	}
 	if(this.ai!=3){
-		var adjustedProfile = 200 + Math.pow(this.target.profile,0.8);
+		var adjustedProfile = 200 + Math.pow(this.target.profile,profileExponent);
 		if(!this.target.alive || 
 				(game.physics.distanceBetween(this.sprite,this.target) > adjustedProfile * 1.5 && this.behavior=='chasing')){
 					for(var i=0;i<this.aggroList.length;i++){
@@ -1019,6 +1020,7 @@ var defaultPlayerShip = [66, 34, -1, -1];
 var station; //we're going to keep this pretty much as a non-interactive sprite for now... it doesn't actually need to do anything
 var frob1;
 
+var profileExponent=0.9;
 var lootDropRate = 0.09;
 var componentDropRate = 0.06;
 var backdrop1, backdrop2,backdrop3,backdrop4,hazeWhite,hazeRed,hazePurple;
@@ -1183,7 +1185,7 @@ gameUI.prototype.bar = function (targetText, offset, numerator, denominator) {
 	s+=repeat('\u25cb',barSize-n);
 	targetText.setText(s);
 	if(numerator>targetText.lastValue){
-		targetText.alpha=1.5;
+		targetText.alpha=1;
 	}else if(numerator<targetText.lastValue){
 		targetText.alpha=0.2;		
 	}else{
@@ -1234,7 +1236,7 @@ gameUI.prototype.frobRadarPing = function() {
 		var s='';
 		var targetAngle=game.physics.angleBetween(player.sprite, frob1);
 		var targetDistance=game.physics.distanceBetween(player.sprite, frob1);
-		var s='!'; 
+		var s='\u25C6'; 
 		var n=Math.floor(255-(targetDistance/2-900));
 		if(n<64){n=64;}if(n>255){n=255};
 		this.frobRadar.style.fill="rgb("+(Math.floor(n))+","+n+","+(Math.floor(n/2))+")";
@@ -1304,7 +1306,8 @@ gameUI.prototype.radarPing = function() {
 		var missionTarget = !playerStats.mission.complete && this.enemies[i].missionTarget ? 128 : 0;
 		
 		if(player.profileShow){
-			this.blinkDistance=player.sprite.profile*2.1;
+		var adjustedProfile = 200 + Math.pow(this.sprite.profile,profileExponent);
+			this.blinkDistance=adjustedProfile*2.1;
 			if(targetDistance<0.5*blinkDistance){
 			bracketLeft='>';
 			s='\u203c';
@@ -1684,7 +1687,7 @@ function createBuildParts(ship,x,y){
 
 function initMission (missionId) {
 	playerStats.mission = missions[missionId];
-
+	ui.skipText();
 	for(var i=0;i<playerStats.mission.intro.length;i++){
 		ui.texts.push(playerStats.mission.intro[i]);
 	}
@@ -1855,7 +1858,7 @@ function create () {
 
 		sparkles = game.add.emitter(0,0,100);
 		sparkles.makeParticles('sparkles',[0,1,2,3,4,5,6,7]);
-		sparkles.setAll('alpha',0.8);
+		sparkles.setAll('alpha',0.3);
 		sparkles.lifespan=200;
 
 	}
@@ -2231,7 +2234,7 @@ function sparkleBoom(explosionsGroup, minSprite, maxSprite, x, y){
 				explosion.lifespan=700;
 				r=randomRange(0.5,1.5);
 				explosion.scale.setTo(r,r);
-				explosion.alpha=1.5;
+				explosion.alpha=1;
 				game.physics.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
 			}
 		}
