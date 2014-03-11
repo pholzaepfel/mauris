@@ -253,7 +253,7 @@ dragPartsPool.prototype.get = function (x,y,sheet, index){
 }
 partsPool = function(){
 	this.parts=[];
-	for(var i=0;i<500;i++){
+	for(var i=0;i<150;i++){
 		this.parts.push(new shipPart(0,0,'parts',0,dummy));
 		this.parts[i].sprite.kill();
 
@@ -351,7 +351,7 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 
 	var x = this.target.body.x + (randomSign() * randomRange(750,2000)) + player.sprite.body.velocity.x*3;
 	var y = this.target.body.y + (randomSign() * randomRange(750,2000)) + player.sprite.body.velocity.y*3;
-
+	this.built=false;
 	this.sprite.reset(x,y);
 	boom(explosions,4,x,y);
 	this.ship = this.shipList[Math.floor(randomRange(0,this.shipList.length))];
@@ -394,7 +394,7 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 	this.sprite.visible = true;
 	this.sprite.anchor.setTo(0.5, 0.5);
 	this.bulletSprite = 0;
-	this.parts = createShip(this.ship,this.sprite);
+	this.parts = [];
 
 	this.sprite.body.setRectangle(Math.sqrt(this.ship.length)*16,Math.sqrt(this.ship.length)*16,Math.sqrt(this.ship.length)*-8,Math.sqrt(this.ship.length)*-8);
 
@@ -555,6 +555,11 @@ enemyShip.prototype.spawnBullet = function () {
 	}
 }
 enemyShip.prototype.update = function() {
+	if(!this.built && onscreen(this.sprite.x,this.sprite.y))
+	{
+		this.parts=createShip(this.ship,this.sprite);
+		this.built=true;
+	}
 	//fugly hack to get around mysterious loss of velocity
 	if(this.sprite.body.velocity.x != 0 || this.sprite.body.velocity.y != 0){
 		this.lastVelocityX = this.sprite.body.velocity.x;
