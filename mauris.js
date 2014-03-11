@@ -303,19 +303,14 @@ shipPart.prototype.initShipPart = function (x,y,index,targetSprite){
 	this.sprite.bringToTop();
 }
 shipPart.prototype.update = function(){
-
-	this.sprite.exists=true;
-	if (this.target.alive && this.alive && onscreen(this.sprite.x,this.sprite.y)) {
+	if (this.target.alive && this.alive && onscreen(this.sprite.x,this.sprite.y) {
 		this.sprite.angle = this.target.angle;
 		this.sprite.x = this.target.x + (this.offsetx * Math.cos(game.math.degToRad(this.target.angle)));
 		this.sprite.y = this.target.y + (this.offsety * Math.cos(game.math.degToRad(this.target.angle)));
 		this.sprite.x -= (this.offsety * Math.sin(game.math.degToRad(this.target.angle)));
 		this.sprite.y += (this.offsetx * Math.sin(game.math.degToRad(this.target.angle)));
 		this.sprite.body.velocity = this.target.body.velocity;
-	}else if(!onscreen(this.sprite.x,this.sprite.y)){
-		this.sprite.exists=false;
 	}
-
 };
 lootItem = function(x,y,sheet,index){
 	this.game = game;
