@@ -570,8 +570,9 @@ enemyShip.prototype.update = function() {
 		this.ai=3;
 	}
 	if(this.ai!=3){
+		var adjustedProfile = 200 + Math.pow(this.target.profile,0.8);
 		if(!this.target.alive || 
-				(game.physics.distanceBetween(this.sprite,this.target) > this.target.profile * 1.5 && this.behavior=='chasing')){
+				(game.physics.distanceBetween(this.sprite,this.target) > adjustedProfile * 1.5 && this.behavior=='chasing')){
 					for(var i=0;i<this.aggroList.length;i++){
 						if(this.aggroList[i].alive){		//this will cause the enemy to keep chasing the player if they were fired upon.
 							this.target=this.aggroList[i]; // I believe this may cause a 'feature' where grudges are kept beyond the grave. 
@@ -592,7 +593,7 @@ enemyShip.prototype.update = function() {
 				this.sprite.rotation = this.game.physics.angleBetween(this.sprite, this.target);
 
 				if (this.game.physics.distanceBetween(this.sprite, this.target) < this.fireRange * 0.75 &&
-						this.game.physics.distanceBetween(this.sprite, this.target) < this.behavior=='neutral'? this.target.profile : this.target.profile*2){
+						this.game.physics.distanceBetween(this.sprite, this.target) < adjustedProfile * (this.behavior=='neutral'? 1 : 2)){
 							this.fire(); 
 
 						}
@@ -641,20 +642,20 @@ enemyShip.prototype.update = function() {
 
 				}
 
-				if (targetDistance < this.target.profile) {
+				if (targetDistance < adjustedProfile) {
 					if(this.behavior=='neutral'){
 						this.behavior='chasing';
 					}
 				}
 
-				if (this.target!= player.sprite || (targetDistance < this.target.profile*10 && this.behavior!='neutral')){
-					if(Math.abs(compareAngles(targetAngle,this.sprite.rotation))<Math.PI){
+				if (this.target!= player.sprite || (targetDistance < adjustedProfile * 2 && this.behavior!='neutral')){
+					if(Math.abs(diffAngle)<Math.PI){
 								this.up();
 							}
 				}
 				if (targetDistance < this.fireRange * 0.75 &&
-						targetDistance < this.target.profile){
-							if(Math.abs(compareAngles(targetAngle,this.sprite.rotation)) < 0.5){
+						targetDistance < adjustedProfile){
+							if(Math.abs(diffAngle) < 0.5){
 										this.fire(); 
 									}
 
@@ -870,8 +871,8 @@ playerShip.prototype.fire = function(){
 
 	if (game.time.now > this.nextFire && bullets.countDead() > 0 && this.energy >= this.fireEnergy && this.alive){
 		this.sprite.profile+=Math.floor(this.fireDamage*80);
-		if(this.sprite.profile>this.sprite.profileMax*5){
-			this.sprite.profile=this.sprite.profileMax*5;
+		if(this.sprite.profile>this.sprite.profileMax*10){
+			this.sprite.profile=this.sprite.profileMax*10;
 		}
 		this.nextFire = game.time.now + this.fireRate;
 		this.energy -= this.fireEnergy;
@@ -1141,6 +1142,9 @@ gameUI.prototype.initCombatUi = function() {
 	this.stationRadar = game.add.text(200,100,'*',{font:'30px monospace', fill: 'rgb(130,255,130)', align: 'center'});
 }
 gameUI.prototype.bar = function (targetText, offset, numerator, denominator) {
+	if(typeof(targetText.lastValue)=='undefined'){
+		targetText.lastValue=numerator;
+	}
 	targetText.x = player.sprite.body.x+(player.sprite.body.width/2);
 	targetText.y = player.sprite.body.y+player.sprite.body.height+30+offset;
 	var barSize=Math.floor(denominator/2);	
@@ -1150,6 +1154,14 @@ gameUI.prototype.bar = function (targetText, offset, numerator, denominator) {
 	s+=repeat('\u25cf',n);
 	s+=repeat('\u25cb',barSize-n);
 	targetText.setText(s);
+	if(numerator>targetText.lastValue){
+		targetText.alpha=1.5;
+	}else if(numerator<targetText.lastValue){
+		targetText.alpha=0.2;		
+}else{
+		targetText.alpha=0.7;
+	}
+	targetText.lastValue=numerator;
 }
 
 gameUI.prototype.statsPing = function(target) {
@@ -1195,9 +1207,17 @@ gameUI.prototype.stationRadarPing = function() {
 	var n=Math.floor(255-(targetDistance/2-900));
 	if(n<64){n=64;}if(n>255){n=255};
 	this.stationRadar.style.fill="rgb("+(Math.floor(n/2))+","+n+","+(Math.floor(n/2))+")";
-	var delay=playerStats.mission.complete?200:1000;
-	if (game.time.now % delay < 50)  {
+	if(playerStats.mission.complete){
+	if (game.time.now % 200 < 50)  {
+		this.stationRadar.style.fill="rgb("+(n+72)+","+(n+72)+","+(n)+")";
+
+	}
+
+	}else{
+	if (game.time.now % 1000 < 50)  {
 		this.stationRadar.style.fill="rgb("+(n+32)+","+(n+64)+","+(n+32)+")";
+
+	}
 
 	}
 
