@@ -1306,7 +1306,7 @@ gameUI.prototype.radarPing = function() {
 		var missionTarget = !playerStats.mission.complete && this.enemies[i].missionTarget ? 128 : 0;
 		
 		if(player.profileShow){
-		var adjustedProfile = 200 + Math.pow(this.sprite.profile,profileExponent);
+		var adjustedProfile = 200 + Math.pow(player.sprite.profile,profileExponent);
 			this.blinkDistance=adjustedProfile*2.1;
 			if(targetDistance<0.5*blinkDistance){
 			bracketLeft='>';
