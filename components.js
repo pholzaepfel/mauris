@@ -48,6 +48,7 @@ var cmp = [
 	'name':'VariJet',
 	'flavor':'hold RIGHT MOUSE to thrust backwards',
 	'bonus':function(target){
+		target.ai=4; //accurate
 		target.turnRate+=0.4;
 		target.acceleration+=0.2;
 		target.alt=function(){

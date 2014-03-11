@@ -23,26 +23,26 @@ var missions = [
 	'i think you\'re ready.\npress UP/W to thrust... gently.\nyou probably aren\'t used to dealing with inertia.\nto slow down, TURN AROUND and THRUST.',
 	'see if you can clear 10 of the rocks around the station.\nwe\'ve got a surprise for you when you get back.\nwe\'ll contact you when ready.'],
 	'outro':['great job. now, you\'ll need to head back to the station.\nthe green HOME ICON always points home. when you get here...',
-		'press DOWN/S to dock in the REPAIR BAY.'],
+	'press DOWN/S to dock in the REPAIR BAY.'],
 	'win':{
 		'condition':'kill',
 		'killCount':10,
 		'killType': asteroids
 	},
 	'enemies':
-	[{
-		'ships': asteroids,
-		'respawn':true,
-		'count':30, 
-		'missionTarget':false,
-		'count':30, 
-		'taunts':[],
-		'deaths':[]
-	}]
+		[{
+			'ships': asteroids,
+			'respawn':true,
+			'count':30, 
+			'missionTarget':false,
+			'count':30, 
+			'taunts':[],
+			'deaths':[]
+		}]
 
 
 
-	
+
 },
 {	'id':1,
 	'next':[1],
@@ -56,7 +56,7 @@ var missions = [
 	'hazeRedSpeed':160,
 	'hazeWhiteSpeed':70,
 	'hazePurpleSpeed':160,
-'intro':['er... go kill things'],
+	'intro':['er... go kill things'],
 	'win':{
 		'condition':'kill',
 		'killCount':999,
@@ -81,7 +81,7 @@ var missions = [
 	]
 
 
-	
+
 },
 {	'id':2,
 	'next':[1],
@@ -118,7 +118,7 @@ var missions = [
 		'taunts':[],
 		'deaths':[]
 	},
-{
+	{
 		'ships': asteroids,
 		'respawn':true,
 		'missionTarget':false,
@@ -129,13 +129,13 @@ var missions = [
 	]
 
 
-	
+
 },
 {	'id':3,
-	'next':[2],
+	'next':[4],
 	'name':'shots in the dark',
 	'complete':false,
-	'componentsReward':[97],
+	'componentsReward':[64],
 	'creditsReward':20,
 	'hazeRed':0.2,
 	'hazeWhite':1,
@@ -143,7 +143,7 @@ var missions = [
 	'hazeRedSpeed':160,
 	'hazeWhiteSpeed':70,
 	'hazePurpleSpeed':160,
-'intro':['we have COMPONENTS for you.\nCLICK the picture to add a part to your ship.\nthen, DRAG the component wherever you like on your ship.',
+	'intro':['we have COMPONENTS for you.\nCLICK the picture to add a part to your ship.\nthen, DRAG the component wherever you like on your ship.',
 	'LEFT/RIGHT or A/D will cycle through your inventory.\ndifferent components will have different effects, some good, some bad.','... drifting into a sector with some mining drones. we can take the asteroids for\nourselves and scrap the drones for parts.','kill 12 drones and report back.\nwatch out for bandits, visibility is poor here.'],
 	'outro':['nice job. come on back.\nwe found something you\'ll like.'],
 	'win':{
@@ -167,7 +167,7 @@ var missions = [
 		'taunts':[],
 		'deaths':[]
 	},
-{
+	{
 		'ships': asteroids,
 		'respawn':true,
 		'missionTarget':false,
@@ -178,8 +178,48 @@ var missions = [
 	]
 
 
-	
+
+},
+{
+	'id':4,
+	'next':[2],
+	'name':'smuggling',
+	'complete':false,
+	'componentsReward':[97],
+	'creditsReward':20,
+	'hazeRed':0.2,
+	'hazeWhite':0.1,
+	'hazePurple':0.1,
+	'hazeRedSpeed':160,
+	'hazeWhiteSpeed':70,
+	'hazePurpleSpeed':160,
+	'intro':['we need to get supplies to our colony.\nfollow the GOLD EXCLAMATION there.','the remnants of the alliance fleet are passing through!\nstrip down your ship and hold your fire at all costs. if they come after you, RUN!','we\'ve found a THERMAL MONITORING SYSTEM. it will warn you right\nwhen you enter enemy sensor range, and again when the enemy has locked on.\nuse it to avoid the alliance warships.'],
+	'outro':['appreciate it, captain. try to make it back in one piece.'],
+	'win':{
+		'condition':'frob',
+	},
+	'enemies':
+		[{
+			'ships': asteroids,
+			'respawn':true,
+			'count':20, 
+			'missionTarget':false,
+			'taunts':[],
+			'deaths':[]
+		},
+	{
+			'ships': cops,
+			'respawn':true,
+			'count':13, 
+			'missionTarget':false,
+			'taunts':[],
+			'deaths':[]
+		}]
+
+
+
+
+
+
 }
-
-
 ];

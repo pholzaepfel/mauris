@@ -19,7 +19,19 @@ var playerMeta = function () {
 	this.deaths=0;
 };
 
+var blackOut = function(){
 
+	ui.tempStation.visible=false;
+	station.visible=false;
+	backdrop1.visible=false;
+	backdrop2.visible=false;
+	backdrop3.visible=false;
+	backdrop4.visible=false;
+	hazeRed.visible=false;
+	hazeWhite.visible=false;
+	hazePurple.visible=false;
+
+}
 window.oncontextmenu = function (){
 	return false;     // cancel default menu
 }
@@ -429,6 +441,10 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 		this.health -= damageCoef * dmg;
 	}
 
+	if(this.behavior=='neutral'){
+		this.behavior='chasing';
+	}
+
 	if(typeof(aggro)!='undefined'){
 		this.aggroList.push(aggro);
 		this.target = aggro;
@@ -586,112 +602,118 @@ enemyShip.prototype.update = function() {
 				}
 	}
 
-		if(this.ai!=3 && this.alive && this.target.alive){
+	if(this.ai!=3 && this.alive && this.target.alive){
 
 
-			if(this.ai==0){
-				this.sprite.rotation = this.game.physics.angleBetween(this.sprite, this.target);
+		if(this.ai==0){
+			this.sprite.rotation = this.game.physics.angleBetween(this.sprite, this.target);
 
-				if (this.game.physics.distanceBetween(this.sprite, this.target) < this.fireRange * 0.75 &&
-						this.game.physics.distanceBetween(this.sprite, this.target) < adjustedProfile * (this.behavior=='neutral'? 1 : 2)){
-							this.fire(); 
+			if (this.game.physics.distanceBetween(this.sprite, this.target) < this.fireRange * 0.75 &&
+					this.game.physics.distanceBetween(this.sprite, this.target) < adjustedProfile * (this.behavior=='neutral'? 1 : 2)){
+						this.fire(); 
 
-						}
-			} else {
-				var targetLocation = {
-					x:this.target.x,
-					y:this.target.y
-				};
-				//TODO add some kind of fleeing behavior
-
-				var targetDistance = this.game.physics.distanceBetween(this.sprite, this.target);
-				var targetAngle = this.game.physics.angleBetween(this.sprite, this.target); 
-
-
-				if(this.behavior=='strafing'){
-					if(targetDistance > this.fireRange){
-						this.behavior='chasing';
 					}
-				//to dramatically increase difficulty, put the below target location adjustment here
+		} else {
+			var targetLocation = {
+				x:this.target.x,
+				y:this.target.y
+			};
+			//TODO add some kind of fleeing behavior
 
+			var targetDistance = this.game.physics.distanceBetween(this.sprite, this.target);
+			var targetAngle = this.game.physics.angleBetween(this.sprite, this.target); 
+
+
+			if(this.behavior=='strafing'){
+				if(targetDistance > this.fireRange){
+					this.behavior='chasing';
 				}
-				if(this.behavior=='chasing'){
-					if(targetDistance < 0.75 * this.fireRange){
-						this.behavior='strafing';
-					}
-					
+				//to dramatically increase difficulty, put the below target location adjustment here
+				if(this.ai==4){
 				targetLocation.x += this.target.body.velocity.x * 0.95 * Math.abs(targetDistance/this.fireVelocity);			
 				targetLocation.y += this.target.body.velocity.y * 0.95 * Math.abs(targetDistance/this.fireVelocity);			
 				var targetDistance = this.game.math.distance(this.sprite.x, this.sprite.y, targetLocation.x, targetLocation.y);
 				var targetAngle = this.game.math.angleBetween(this.sprite.x, this.sprite.y, targetLocation.x, targetLocation.y);
-					
-				}
-
-				var diffAngle = compareAngles(this.sprite.rotation,targetAngle);
-				if (diffAngle>this.behavior=='neutral'?this.turnRate*30:this.turnRate){
-					if(diffAngle>0)
-					{
-						this.left();
-					}else{
-						this.right();
-					}
-
-
-
-
 
 				}
-
-				if (targetDistance < adjustedProfile) {
-					if(this.behavior=='neutral'){
-						this.behavior='chasing';
-					}
+			}
+			if(this.behavior=='chasing'){
+				if(targetDistance < 0.75 * this.fireRange){
+					this.behavior='strafing';
 				}
 
-				if (this.target!= player.sprite || (targetDistance < adjustedProfile * 2 && this.behavior!='neutral')){
-					if(Math.abs(diffAngle)<Math.PI){
-								this.up();
-							}
-				}
-				if (targetDistance < this.fireRange * 0.75 &&
-						targetDistance < adjustedProfile){
-							if(Math.abs(diffAngle) < 0.5){
-										this.fire(); 
-									}
+				targetLocation.x += this.target.body.velocity.x * 0.95 * Math.abs(targetDistance/this.fireVelocity);			
+				targetLocation.y += this.target.body.velocity.y * 0.95 * Math.abs(targetDistance/this.fireVelocity);			
+				var targetDistance = this.game.math.distance(this.sprite.x, this.sprite.y, targetLocation.x, targetLocation.y);
+				var targetAngle = this.game.math.angleBetween(this.sprite.x, this.sprite.y, targetLocation.x, targetLocation.y);
 
+			}
+
+			var diffAngle = compareAngles(this.sprite.rotation,targetAngle);
+			if (diffAngle>this.behavior=='neutral'?this.turnRate*30:this.turnRate){
+				if(diffAngle>0)
+				{
+					this.left();
+				}else{
+					this.right();
+				}
+
+
+
+
+
+			}
+
+			if (targetDistance < adjustedProfile) {
+				if(this.behavior=='neutral'){
+					this.behavior='chasing';
+				}
+			}
+
+			if (this.target!= player.sprite || (targetDistance < adjustedProfile * 2 && this.behavior!='neutral')){
+				if(Math.abs(diffAngle)<Math.PI){
+					this.up();
+				}
+			}
+			if (targetDistance < this.fireRange * 0.75 &&
+					targetDistance < adjustedProfile){
+						if(Math.abs(diffAngle) < 0.5){
+							this.fire(); 
 						}
 
-			}
+					}
 
-			if (this.speed > 0){
-				if(game.time.now>(this.nextThrust||0)){
-					this.thrust.x=this.sprite.x-(Math.cos(this.sprite.rotation)*(this.sprite.body.width)*0.5);
-					this.thrust.y=this.sprite.y-(Math.sin(this.sprite.rotation)*(this.sprite.body.width)*0.5);
-					this.thrust.minParticleSpeed.setTo(0,0);
-					this.thrust.maxParticleSpeed.setTo(0,0);
-					this.thrust.emitParticle();
-					partsToTop(this);	
-					this.nextThrust = game.time.now + 15; 
-				}
-				addVelocity(this.sprite.rotation, this.speed, this.sprite.body.velocity);
-				this.speed=0;
-			}
+		}
 
-			if (game.time.now > this.nextEnergy){
-				if(this.energy+this.energyAmount>this.energyMax){
-					this.energy=this.energyMax;	
-				}else{
-					this.energy+=this.energyAmount;
-				}
-				this.nextEnergy = game.time.now + this.energyRate;
+		if (this.speed > 0){
+			if(game.time.now>(this.nextThrust||0)){
+				this.thrust.x=this.sprite.x-(Math.cos(this.sprite.rotation)*(this.sprite.body.width)*0.5);
+				this.thrust.y=this.sprite.y-(Math.sin(this.sprite.rotation)*(this.sprite.body.width)*0.5);
+				this.thrust.minParticleSpeed.setTo(0,0);
+				this.thrust.maxParticleSpeed.setTo(0,0);
+				this.thrust.emitParticle();
+				partsToTop(this);	
+				this.nextThrust = game.time.now + 15; 
 			}
-			if(this.ai != 3 && Math.random()>Math.cos((this.health-this.healthMax)/this.healthMax)){
-				if(Math.random()>(this.health/this.healthMax)){
-					sparks(pew,this.sprite);
-				}
+			addVelocity(this.sprite.rotation, this.speed, this.sprite.body.velocity);
+			this.speed=0;
+		}
+
+		if (game.time.now > this.nextEnergy){
+			if(this.energy+this.energyAmount>this.energyMax){
+				this.energy=this.energyMax;	
+			}else{
+				this.energy+=this.energyAmount;
+			}
+			this.nextEnergy = game.time.now + this.energyRate;
+		}
+		if(this.ai != 3 && Math.random()>Math.cos((this.health-this.healthMax)/this.healthMax)){
+			if(Math.random()>(this.health/this.healthMax)){
+				sparks(pew,this.sprite);
 			}
 		}
-	
+	}
+
 }
 ;
 var resolutionX=Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
@@ -702,6 +724,7 @@ function preload () {
 
 	game.load.spritesheet('parts', 'assets/parts.png', 16, 16);
 	game.load.image('station', 'assets/station.png');
+	game.load.image('frob1', 'assets/frob1.png');
 	game.load.image('partswindow', 'assets/partswindow.png');
 	game.load.spritesheet('bullet', 'assets/bullets.png',16,16);
 	game.load.image('starfield2', 'assets/starfield2.png');
@@ -709,7 +732,7 @@ function preload () {
 	game.load.image('starfield4', 'assets/starfield4.png');
 	game.load.image('haze', 'assets/haze.png');
 	game.load.image('haze2', 'assets/haze2.png');
-	game.load.spritesheet('sparkles', 'assets/sparkles.png',4,4);
+	game.load.spritesheet('sparkles', 'assets/sparkles.png',8,8);
 	game.load.spritesheet('thrust', 'assets/thrust.png',8,8);
 	game.load.spritesheet('sparks', 'assets/sparks.png',8,8);
 	game.load.spritesheet('explosions', 'assets/explosions.png',16,16);
@@ -994,6 +1017,7 @@ var dragPool;
 var dummy;
 var defaultPlayerShip = [66, 34, -1, -1];
 var station; //we're going to keep this pretty much as a non-interactive sprite for now... it doesn't actually need to do anything
+var frob1;
 
 var lootDropRate = 0.09;
 var componentDropRate = 0.06;
@@ -1006,6 +1030,7 @@ var loots;
 var sparkles;
 var enemyBullets;
 var explosions;
+var sparkleExplosions;
 var logo;
 var nextUIDelay=0;
 var nextSpawn=0;
@@ -1112,6 +1137,8 @@ gameUI.prototype.initCombatUi = function() {
 	destroyIfExists(this.creditLine);
 	this.creditLine = game.add.text(200,100, '',{ font:'14px monospace', fill: 'rgb(64,255,16)', align: 'right' });
 	this.creditLine.alpha = 0.75;
+	this.creditLine.lastOre=0;
+	this.creditLine.lastCredits=0;
 	destroyIfExists(this.profileLine);
 	this.profileLine = game.add.text(200,100, '',{ font:'14px monospace', fill: 'rgb(255,64,16)', align: 'right' });
 	this.profileLine.alpha = 0.75;
@@ -1140,6 +1167,7 @@ gameUI.prototype.initCombatUi = function() {
 	this.resetRadar();
 
 	this.stationRadar = game.add.text(200,100,'*',{font:'30px monospace', fill: 'rgb(130,255,130)', align: 'center'});
+	this.frobRadar = game.add.text(200,100,'*',{font:'30px monospace', fill: 'rgb(255,255,130)', align: 'center'});
 }
 gameUI.prototype.bar = function (targetText, offset, numerator, denominator) {
 	if(typeof(targetText.lastValue)=='undefined'){
@@ -1158,7 +1186,7 @@ gameUI.prototype.bar = function (targetText, offset, numerator, denominator) {
 		targetText.alpha=1.5;
 	}else if(numerator<targetText.lastValue){
 		targetText.alpha=0.2;		
-}else{
+	}else{
 		targetText.alpha=0.7;
 	}
 	targetText.lastValue=numerator;
@@ -1199,6 +1227,39 @@ gameUI.prototype.statsPing = function(target) {
 	this.statsLine.y = game.camera.y+resolutionY*0.5;
 	this.statsLine.setText(s);
 }
+gameUI.prototype.frobRadarPing = function() {
+	if(playerStats.mission.win.condition!='frob' || playerStats.mission.complete){
+		this.frobRadar.setText('');
+	}else{
+		var s='';
+		var targetAngle=game.physics.angleBetween(player.sprite, frob1);
+		var targetDistance=game.physics.distanceBetween(player.sprite, frob1);
+		var s='!'; 
+		var n=Math.floor(255-(targetDistance/2-900));
+		if(n<64){n=64;}if(n>255){n=255};
+		this.frobRadar.style.fill="rgb("+(Math.floor(n))+","+n+","+(Math.floor(n/2))+")";
+		if(targetDistance<1000){
+			if (game.time.now % 200 < 50)  {
+				this.frobRadar.style.fill="rgb("+(n+72)+","+(n+72)+","+(n)+")";
+
+			}
+
+		}else{
+			if (game.time.now % 1000 < 50)  {
+				this.frobRadar.style.fill="rgb("+(n+64)+","+(n+64)+","+(n+32)+")";
+
+			}
+
+		}
+
+		if (targetDistance < 300){
+			s='';
+		}
+		this.frobRadar.setText(s);
+		this.frobRadar.x = player.sprite.body.x + Math.cos(targetAngle) * 240 - 0.5 * this.frobRadar.width;
+		this.frobRadar.y = player.sprite.body.y + Math.sin(targetAngle) * 240;	
+	}
+}
 gameUI.prototype.stationRadarPing = function() {
 	var s='';
 	var targetAngle=game.physics.angleBetween(player.sprite, station);
@@ -1208,16 +1269,16 @@ gameUI.prototype.stationRadarPing = function() {
 	if(n<64){n=64;}if(n>255){n=255};
 	this.stationRadar.style.fill="rgb("+(Math.floor(n/2))+","+n+","+(Math.floor(n/2))+")";
 	if(playerStats.mission.complete){
-	if (game.time.now % 200 < 50)  {
-		this.stationRadar.style.fill="rgb("+(n+72)+","+(n+72)+","+(n)+")";
+		if (game.time.now % 200 < 50)  {
+			this.stationRadar.style.fill="rgb("+(n+72)+","+(n+72)+","+(n)+")";
 
-	}
+		}
 
 	}else{
-	if (game.time.now % 1000 < 50)  {
-		this.stationRadar.style.fill="rgb("+(n+32)+","+(n+64)+","+(n+32)+")";
+		if (game.time.now % 1000 < 50)  {
+			this.stationRadar.style.fill="rgb("+(n+32)+","+(n+64)+","+(n+32)+")";
 
-	}
+		}
 
 	}
 
@@ -1237,9 +1298,21 @@ gameUI.prototype.radarPing = function() {
 		var s='●'; //I cannot believe this circle renders in my terminal
 		var n=Math.floor(255-(targetDistance/2-900));
 		var blinkDistance = 1000;
+		var bracketLeft = '[';
+		var bracketRight = ']';
+
 		var missionTarget = !playerStats.mission.complete && this.enemies[i].missionTarget ? 128 : 0;
+		
 		if(player.profileShow){
 			this.blinkDistance=player.sprite.profile*2.1;
+			if(targetDistance<0.5*blinkDistance){
+			bracketLeft='>';
+			s='\u203c';
+			bracketRight='<';
+			}else{
+			bracketLeft='(';
+			bracketRight=')';
+			}
 		}
 
 		if(n<0){n=0;}if(n>255){n=255};
@@ -1280,13 +1353,18 @@ gameUI.prototype.radarPing = function() {
 		this.radar[i].y = player.sprite.body.y + Math.sin(targetAngle) * range;	
 	}
 }
+//follow this with a push!
+gameUI.prototype.skipText = function() {
+	this.textIndex=this.texts.length;
+	this.textLineIndex=0;
+}
 gameUI.prototype.commsPing = function() {
 	this.comms.x = player.sprite.body.x - 200;
 	this.comms.y = player.sprite.body.y + 200;
 	if(gamemode=='?build'){
 		this.comms.y+=50;
 	}
-		
+
 	if (game.time.now > this.nextWords && this.textIndex < this.texts.length){
 		this.comms.alpha+=randomRange(-0.1,0.1);
 		this.comms.alpha=Math.min(0.8,this.comms.alpha);
@@ -1294,13 +1372,13 @@ gameUI.prototype.commsPing = function() {
 		this.textLine = this.texts[this.textIndex].substr(0, this.textLineIndex++);
 		var s ='';
 		if(!this.textLine.substr(-1)=='\n'){
-		for(var i=0;i<this.textLine.length;i++){
-			if(this.textLineIndex > this.texts[this.textIndex].length || this.textLine[i]=='\n' || Math.random()<0.99 ){
-				s+=this.textLine[i];
-			}else{
-				s+=String.fromCharCode(Math.floor(Math.random()*255));
+			for(var i=0;i<this.textLine.length;i++){
+				if(this.textLineIndex > this.texts[this.textIndex].length || this.textLine[i]=='\n' || Math.random()<0.99 ){
+					s+=this.textLine[i];
+				}else{
+					s+=String.fromCharCode(Math.floor(Math.random()*255));
+				}
 			}
-		}
 		}
 		this.textLine=s;
 		this.comms.setText(this.textLine);
@@ -1341,6 +1419,11 @@ gameUI.prototype.profileLinePing = function() {
 }
 gameUI.prototype.creditLinePing = function() {
 
+	if(this.creditLine.lastOre!=player.ore || this.creditLine.lastCredits!=playerStats.credits){
+		this.creditLine.style.fill="rgb(232,255,232)";
+	}else{
+		this.creditLine.style.fill="rgb(64,255,16)";
+	}
 	var targetDistance=game.physics.distanceBetween(player.sprite, station);
 	if(targetDistance>1000){
 		this.creditLine.setText('O' + player.ore);
@@ -1352,6 +1435,8 @@ gameUI.prototype.creditLinePing = function() {
 	if(gamemode=='?build'){
 		this.creditLine.y=210;
 	}
+	this.creditLine.lastOre = player.ore;
+	this.creditLine.lastCredits = playerStats.credits;
 }
 gameUI.prototype.update = function() {
 	this.creditLinePing();
@@ -1366,6 +1451,7 @@ gameUI.prototype.update = function() {
 		this.asteroids.sort(asteroidSort);
 		this.radarPing();
 		this.stationRadarPing();
+		this.frobRadarPing();
 		//this.statsPing(player);
 	}
 }
@@ -1625,6 +1711,13 @@ function initMission (missionId) {
 		enemies[index].damage(9);
 		index++;
 	}
+	if(playerStats.mission.win.condition=='frob'){
+		frob1.visible=true;
+		frob1.reset(randomSign()*randomRange(2000,10000),randomSign()*randomRange(2000,10000));
+		frob1.body.angularVelocity=randomRange(-30,30);
+		frob1.body.velocity.x=randomRange(-20,20);
+		frob1.body.velocity.y=randomRange(-20,20);
+	}
 }
 
 function create () {
@@ -1696,6 +1789,9 @@ function create () {
 		station.anchor.setTo(0.5,0.5)
 			asteroids.sort(lengthSort);
 
+		frob1 = game.add.sprite(-200,-200,'frob1');
+		frob1.anchor.setTo(0.5,0.5);
+		frob1.visible=false;
 		ships.sort(lengthSort);
 
 		var temp = game.add.sprite(0,0,'parts');
@@ -1728,6 +1824,13 @@ function create () {
 		explosions.setAll('lifespan',5000);
 		explosions.setAll('blendMode',1);
 
+		sparkleExplosions = game.add.group();
+		sparkleExplosions.createMultiple(50, 'sparkles');
+		sparkleExplosions.setAll('anchor.x', 0.5);
+		sparkleExplosions.setAll('anchor.y', 0.5);
+		sparkleExplosions.setAll('lifespan',5000);
+		sparkleExplosions.setAll('blendMode',1);
+		
 		enemies = [];
 
 		pew = game.add.emitter(0,0,200);
@@ -1839,8 +1942,13 @@ function handleMission() {
 		}
 	}
 
-
-	if(playerStats.mission.complete){
+	if(playerStats.mission.win.condition=='frob' &&
+			game.physics.overlap(player.sprite,frob1))
+	{
+		playerStats.mission.complete=true;
+	}
+	if(playerStats.mission.complete && playerStats.mission.outro.length){
+		ui.skipText();
 		for(var i=0;i<playerStats.mission.outro.length;i++){
 			ui.texts.push(playerStats.mission.outro[i]);
 		}
@@ -1863,6 +1971,7 @@ function winMission(){
 		if(playerStats.mission.creditsReward){
 			s+='got $' + playerStats.mission.creditsReward + '. ';
 		}
+		ui.skipText();
 		ui.texts.push(s);
 		var n = Math.floor(randomRange(0,playerStats.mission.next.length));
 		initMission(playerStats.mission.next[n]);
@@ -1913,6 +2022,11 @@ function update () {
 
 			explosions.forEachAlive(explosionAnimate, this);
 		};
+		if(sparkleExplosions.getFirstAlive != null){
+
+			sparkleExplosions.forEachAlive(explosionAnimate,this);
+
+		};
 		if(enemyBullets.getFirstAlive() != null) {
 
 			for (var i = 0; i < player.parts.length; i++) {
@@ -1930,14 +2044,14 @@ function update () {
 					game.physics.overlap(enemies[i].sprite, player.parts[j].sprite, enemyTouchPlayer, null, this);
 				}
 				game.physics.overlap(bullets, enemies[i].sprite, bulletHitEnemy, null, this);
-			for (var j = 0; j < enemies[i].parts.length; j++) {
-					
+				for (var j = 0; j < enemies[i].parts.length; j++) {
+
 					enemies[i].parts[j].update();
 
-			}	
-				
+				}	
+
 			}
-}
+		}
 
 		for (var i = 0; i < player.parts.length; i++){
 			player.parts[i].update();
@@ -1965,7 +2079,7 @@ function update () {
 			player.alt();
 		}
 		player.update();
-		
+
 		if(!mouseState[2]){
 			player.cooldown114=0;
 		}
@@ -2085,7 +2199,7 @@ function shieldEffect(explosionsGroup, bulletSprite, x, y, velx, vely){
 
 	var r = Math.random();
 
-	if(explosions.countDead()){
+	if(explosionsGroup.countDead()){
 		var explosion = explosionsGroup.getFirstDead();
 		explosion.loadTexture('explosions', bulletSprite || 0);
 		explosion.reset(x,y);
@@ -2100,6 +2214,28 @@ function shieldEffect(explosionsGroup, bulletSprite, x, y, velx, vely){
 		explosion.body.velocity.y=vely;
 	}
 }
+function sparkleBoom(explosionsGroup, minSprite, maxSprite, x, y){
+
+
+		var r = Math.random();
+
+		for(var i=0; i < 8 + (r * 6) ; i ++) { 
+			if(explosionsGroup.countDead()){
+				var explosion = explosionsGroup.getFirstDead();
+				explosion.loadTexture('sparkles', Math.floor(randomRange(minSprite,maxSprite)));
+				explosion.reset(x+randomRange(-8,8),y+randomRange(-8,8));
+				explosion.rotation = Math.random()*Math.PI;
+				explosion.angularVelocity=randomRange(-150,150);
+				explosion.linearDamping=-1;
+				explosion.fireVelocity=randomRange(-10,10);
+				explosion.lifespan=700;
+				r=randomRange(0.5,1.5);
+				explosion.scale.setTo(r,r);
+				explosion.alpha=1.5;
+				game.physics.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
+			}
+		}
+}
 function boom(explosionsGroup, bulletSprite, x, y){
 
 	if(onscreen(x,y)){
@@ -2107,7 +2243,7 @@ function boom(explosionsGroup, bulletSprite, x, y){
 		var r = Math.random();
 
 		for(var i=0; i < 3 + (r * 6) ; i ++) { 
-			if(explosions.countDead()){
+			if(explosionsGroup.countDead()){
 				var explosion = explosionsGroup.getFirstDead();
 				explosion.loadTexture('explosions', bulletSprite || 0);
 				explosion.reset(x+randomRange(-8,8),y+randomRange(-8,8));
@@ -2192,6 +2328,7 @@ function playerGotLoot (sprite, loot) {
 		playerStats.inventory.push(loot.component);
 		ui.texts.push('got ' + components[loot.component].name);
 	}
+	sparkleBoom(sparkleExplosions,0,8,loot.x,loot.y);	
 	loot.kill();
 }
 function bulletHitPlayer (sprite, bullet) {
