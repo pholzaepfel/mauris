@@ -329,7 +329,7 @@ lootItem = function(x,y,sheet,index){
 	this.sprite.index=index;
 };
 
-enemyShip = function (index, game, targetSprite, bullets, shipList) {
+enemyShip = function (index, game, targetSprite, bullets, shipList, thrust) {
 
 	this.target = targetSprite;
 
@@ -341,10 +341,7 @@ enemyShip = function (index, game, targetSprite, bullets, shipList) {
 	this.sprite = game.add.sprite(x, y, 'parts', 1023);
 	this.bullets = bullets;
 	this.sprite.name = index;
-	this.thrust = game.add.emitter(0,0,20);
-	this.thrust.makeParticles('thrust',[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]);
-	this.thrust.setAll('alpha','0.8');
-	this.thrust.gravity=0;
+	this.thrust=thrust;
 	this.initEnemyShip();
 
 
@@ -751,7 +748,7 @@ function preload () {
 var playerShip = function(ship) {
 	this.sprite = game.add.sprite(0, 0, 'parts', 1023);
 	this.initPlayerShip(ship);
-	this.thrust = game.add.emitter(0,0,200);
+	this.thrust = game.add.emitter(0,0,100);
 	this.thrust.makeParticles('thrust',[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]);
 	this.thrust.setAll('alpha',0.7);
 	this.thrust.gravity=0;
@@ -1038,6 +1035,7 @@ var enemies;
 var loots;
 var sparkles;
 var enemyBullets;
+var enemyThrust;
 var explosions;
 var sparkleExplosions;
 var logo;
@@ -1706,7 +1704,7 @@ function initMission (missionId) {
 				enemies[index].initEnemyShip();
 				enemies[index].target=player.sprite;
 			}else{
-				enemies.push(new enemyShip(index, game, player.sprite, enemyBullets, playerStats.mission.enemies[n].ships));
+				enemies.push(new enemyShip(index, game, player.sprite, enemyBullets, playerStats.mission.enemies[n].ships, enemyThrust));
 			}
 			enemies[index].respawn=playerStats.mission.enemies[n].respawn;
 			enemies[index].missionTarget=playerStats.mission.enemies[n].missionTarget;
@@ -1826,6 +1824,10 @@ function create () {
 			enemyBullets.setAll('body.immovable', 1);
 		enemyBullets.setAll('outOfBoundsKill', true);
 
+		enemyThrust = game.add.emitter(0,0,100);
+		enemyThrust.makeParticles('thrust',[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]);
+		enemyThrust.setAll('alpha','0.8');
+		enemyThrust.gravity=0;
 
 		explosions = game.add.group();
 		explosions.createMultiple(100, 'explosions');
