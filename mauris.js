@@ -2370,7 +2370,7 @@ function spawnLoots(_count, x, y){
 		loot.body.angularVelocity = randomRange(-300,300);
 		loot.reset(x + randomRange(-16,16), y+randomRange(-16,16));
 		loot.rotation = Math.random()*2*Math.PI;
-		var scale = randomRange(0.5,1.1);
+		var scale = randomRange(0.8,1.1);
 		loot.scale.setTo(scale,scale);
 		loot.averageCounter=50;
 		loot.acceleration=200;
