@@ -753,7 +753,7 @@ function preload () {
 var playerShip = function(ship) {
 	this.sprite = game.add.sprite(0, 0, 'parts', 1023);
 	this.initPlayerShip(ship);
-	this.thrust = game.add.emitter(0,0,100);
+	this.thrust = game.add.emitter(0,0,125); //this is the right number for continuous thrust
 	this.thrust.makeParticles('thrust',[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]);
 	this.thrust.setAll('alpha',0.7);
 	this.thrust.gravity=0;
