@@ -1110,6 +1110,14 @@ gameUI.prototype.initSound = function(){
 	this.sound_comms = game.add.audio('comms');
 	this.sound_bullet = game.add.audio('bullet');
 }
+gameUI.prototype.sound_randomBoom = function(){
+		if(Math.random()>0.5){
+			this.sound_boom1.play();
+		}else{
+			this.sound_boom2.play();
+		}
+
+}
 gameUI.prototype.error = function(msg) {
 	if(game.time.now>this.nextError){					
 		this.texts.push(msg);
@@ -2410,20 +2418,19 @@ function bulletHitPlayer (sprite, bullet) {
 	var destroyed = player.damage(bullet.damage, bullet.owner);
 
 	if(destroyed){
-		if(Math.random()>0.5){
-			ui.sound_boom1.play();
-		}else{
-			ui.sound_boom2.play();
-		}
-
+		ui.sound_randomBoom();
 	}
 	bullet.kill();
 }
 function enemyTouchPlayer (enemySprite, playerSprite) {
 	if(player.sawDamage && enemies[enemySprite.name].ai==3)
 	{
-		enemies[enemySprite.name].damage(player.sawDamage);
-
+	
+		ui.sound_hit1.play();
+		var destroyed = enemies[enemySprite.name].damage(player.sawDamage);
+		if(destroyed){
+		ui.sound_randomBoom();
+		}
 		var angle=game.physics.angleBetween(playerSprite,enemySprite);
 		enemySprite.body.velocity.x+=Math.cos(angle)*200;
 		enemySprite.body.velocity.y+=Math.sin(angle)*200;
