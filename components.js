@@ -27,6 +27,7 @@ var cmp = [
 		target.fireEnergy+=1;
 		target.fireRange+=1000;
 		target.fireDamage+=1;
+		target.fireSound=ui.sound_bullet;
 		target.fireRate+=200;
 		target.fireVelocity+=150;
 		target.sprite.profile+=25;
@@ -53,6 +54,10 @@ var cmp = [
 		target.acceleration+=0.2;
 		target.alt=function(){
 			if(this.energy>=0.3){
+				if(this.altCooldown<game.time.now){
+				ui.sound_plasma.play();
+				this.altCooldown=game.time.now+250;
+				}
 				this.energy-=0.3;
 				this.sprite.body.velocity.x-=Math.cos(this.sprite.rotation)*this.acceleration*6;
 				this.sprite.body.velocity.y-=Math.sin(this.sprite.rotation)*this.acceleration*6;
@@ -105,7 +110,8 @@ var cmp = [
 			if(this.energy>=0.1){				
 				this.energy-=0.1;
 				if(game.time.now > this.altCooldown){
-					this.altCooldown=game.time.now+50;
+					ui.sound_boop.play();
+					this.altCooldown=game.time.now+100;
 					this.shield=true;
 					shieldEffect(explosions, 4, this.sprite.x, this.sprite.y, this.sprite.body.velocity.x, this.sprite.body.velocity.y);
 				}
@@ -166,6 +172,8 @@ var cmp = [
 		target.bulletSprite=5; 
 		target.fireEnergy*=2;
 		target.fireDamage*=2;
+
+		target.fireSound=ui.sound_boom2;
 		target.fireRate*=1.5;
 		target.fireVelocity*=2;
 		target.sprite.profile+=200;
@@ -358,11 +366,12 @@ var cmp = [
 		target.acceleration+=0.2;
 		target.alt=function(){
 			if(this.energy>=0.2){
-				this.energy-=0.2;
-				this.sprite.body.velocity.x+=Math.cos(this.sprite.rotation)*9;
-				this.sprite.body.velocity.y+=Math.sin(this.sprite.rotation)*9;
-				this.speed=this.acceleration;
 				if(game.time.now>this.altCooldown){
+					ui.sound_plasma.play();
+					this.energy-=0.2;
+					this.sprite.body.velocity.x+=Math.cos(this.sprite.rotation)*9;
+					this.sprite.body.velocity.y+=Math.sin(this.sprite.rotation)*9;
+					this.speed=this.acceleration;
 					var bullet=this.spawnBullet();
 					bullet.loadTexture('explosions',2);
 					bullet.reset(this.sprite.x - (Math.cos(this.sprite.rotation)*(this.sprite.body.width)), this.sprite.y - (Math.sin(this.sprite.rotation)*(this.sprite.body.width)));
@@ -570,6 +579,7 @@ var cmp = [
 		});
 		target.bulletSprite=5;
 		target.fireDamage+=2;
+		target.fireSound=ui.sound_plasma;
 		target.fireRate*=0.4;
 		target.fireEnergy*=0.6;
 		target.fireRange*=0.6;
@@ -842,6 +852,7 @@ var cmp = [
 	'flavor':'increases chance to get loots',
 	'bonus':function(target){
 		target.fireDamage+=2;
+		target.fireSound=ui.sound_pew2;
 		target.fireRate+=100;
 		target.sprite.profile+=20;	
 		target.dropRate+=0.008;
@@ -880,6 +891,8 @@ var cmp = [
 	'flavor':'press RIGHT MOUSE to self-destruct, destroying nearby ships',
 	'bonus':function(target){
 		target.alt=function(){
+			ui.sound_boom1.play();
+			ui.sound_boom2.play();
 			hugeBoom(explosions,this.sprite.x,this.sprite.y);
 			for(var i=0; i<enemies.length; i++){
 				if(game.physics.distanceBetween(this.sprite, enemies[i].sprite)<500 && enemies[i].alive){
@@ -929,6 +942,7 @@ var cmp = [
 	'bonus':function(target){
 		target.fireRate*=1.1;
 		target.fireDamage+=1;
+		target.fireSound=ui.sound_pew2;
 		target.fireEnergy*=0.5;
 		target.fireVelocity*=1.3;
 		target.bulletSprite=4;
@@ -972,6 +986,7 @@ var cmp = [
 	'bonus':function(target){
 		target.alt=function(){
 			if(game.time.now > target.altCooldown){	
+				ui.sound_boop.play();
 				var amt = Math.floor(target.energyMax - target.energy);
 				boom(explosions,0,this.sprite.x,this.sprite.y);
 				if(target.ore < amt){
@@ -1140,6 +1155,7 @@ var cmp = [
 	'bonus':function(target){
 		target.alt=function(){
 			if(this.energy>=6 && game.time.now>this.altCooldown){
+				ui.sound_plasma.play();
 				this.energy-=6;
 				this.altCooldown=game.time.now+2000;
 				bigBoom(explosions,this.sprite.x,this.sprite.y);
@@ -1158,6 +1174,7 @@ var cmp = [
 		target.alt=function(){
 			if(game.time.now>this.altCooldown && (this.energy>=6 || this.energy == this.energyMax)){
 				this.energy-=6;	//if player has < 0 energy, it's effectively an extra recharge delay
+				ui.sound_missile.play();
 				for(var n=0; n<1;n+=0.075){
 					var bullet=this.spawnBullet();
 					bullet.loadTexture('explosions',4);
@@ -1200,6 +1217,7 @@ var cmp = [
 				this.energy-=0.4;
 				if(game.time.now>this.altCooldown){
 					boom(explosions,1,this.sprite.x,this.sprite.y);
+					ui.sound_boop.play();
 				}
 				if(this.sprite.profile>100){
 					this.sprite.profile-=100;
@@ -1370,6 +1388,7 @@ var cmp = [
 						bullet.bulletHitBehavior.push(function(sprite,bullet){
 							if(sprite.name!='player'){
 								if(enemies[sprite.name].ai!=3){
+									ui.sound_boop.play();
 									enemies[sprite.name].health=0;
 									player.initPlayerShip(enemies[sprite.name].ship);
 									bigBoom(explosions,player.x,player.y);
@@ -1410,14 +1429,16 @@ var cmp = [
 	'bonus':function(target){
 
 		target.alt=function(){
-			if(this.energy>=12 || this.energy==this.energyMax){
+			if((this.energy>=12 || this.energy==this.energyMax)&&this.altCooldown<game.time.now){
 				this.energy-=12;
+				ui.sound_boop.play();
 
 				boom(explosions,1,this.sprite.x,this.sprite.y);
 				boom(explosions,3,this.sprite.x,this.sprite.y);
 				this.sprite.reset(this.sprite.x+randomRange(-2000,2000),this.sprite.y+randomRange(-2000,2000));
 				boom(explosions,1,this.sprite.x,this.sprite.y);
 				boom(explosions,3,this.sprite.x,this.sprite.y);
+				this.altCooldown=game.time.now+2000;
 
 			}
 		}
@@ -1438,6 +1459,7 @@ var cmp = [
 			//be something in update() that resets this to 0
 			//if mouse2 is up
 			if(this.cooldown114<game.time.now){
+				ui.sound_beep.play();
 				if(this.energy+this.energyAmount>this.energyMax){
 					this.energy=this.energyMax;	
 				}else{
@@ -1593,6 +1615,7 @@ var cmp = [
 	'bonus':function(target){
 		target.bulletSprite=2;
 		target.fireDamage+=4;
+		target.fireSound=ui.sound_missile;
 		target.bulletBehavior.push(function(bullet){bullet.body.velocity.x*=.75+Math.random()*.5;
 			bullet.body.velocity.y*=.75+Math.random()*.5});
 		target.fireVelocity+=100;
@@ -1623,6 +1646,7 @@ var cmp = [
 			tgt.nextFire = game.time.now + (randomRange(0.25,1.5) * tgt.fireRate);
 		});
 		target.fireRange*=0.7;
+		target.fireSound=ui.sound_bullet;
 		target.fireDamage*=0.9;
 		target.fireEnergy*=0.7;
 		target.sprite.profile+=20;
@@ -1635,6 +1659,7 @@ var cmp = [
 	'flavor':'liberate your opponents. higher damage and energy cost.',
 	'bonus':function(target){
 		target.bulletSprite=2;
+		target.fireSound=ui.sound_missile;
 		target.fireDamage+=2;
 		target.fireEnergy+=2;
 		target.sprite.profile+=15;
@@ -1658,6 +1683,7 @@ var cmp = [
 	'bonus':function(target){
 		target.bulletSprite=1;
 		target.fireRate*=0.7;
+		target.fireSound=ui.sound_bullet;
 		target.fireDamage+=1;
 		target.sprite.profile+=150;
 	}

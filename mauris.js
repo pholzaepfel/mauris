@@ -351,6 +351,7 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 
 	var x = this.target.body.x + (randomSign() * randomRange(750,2000)) + player.sprite.body.velocity.x*3;
 	var y = this.target.body.y + (randomSign() * randomRange(750,2000)) + player.sprite.body.velocity.y*3;
+	this.fireSound=ui.sound_pew2;
 	this.built=false;
 	this.sprite.reset(x,y);
 	boom(explosions,4,x,y);
@@ -522,6 +523,7 @@ enemyShip.prototype.up = function(){
 enemyShip.prototype.fire = function () {
 	if (this.game.time.now > this.nextFire && this.bullets.countDead() > 0 &&
 			this.energy>=this.fireEnergy){
+				this.fireSound.play();
 				this.nextFire = this.game.time.now + this.fireRate;
 				this.energy-=this.fireEnergy;
 				this.spawnBullet();
@@ -640,10 +642,10 @@ enemyShip.prototype.update = function() {
 				}
 				//to dramatically increase difficulty, put the below target location adjustment here
 				if(this.ai==4){
-				targetLocation.x += this.target.body.velocity.x * 0.95 * Math.abs(targetDistance/this.fireVelocity);			
-				targetLocation.y += this.target.body.velocity.y * 0.95 * Math.abs(targetDistance/this.fireVelocity);			
-				var targetDistance = this.game.math.distance(this.sprite.x, this.sprite.y, targetLocation.x, targetLocation.y);
-				var targetAngle = this.game.math.angleBetween(this.sprite.x, this.sprite.y, targetLocation.x, targetLocation.y);
+					targetLocation.x += this.target.body.velocity.x * 0.95 * Math.abs(targetDistance/this.fireVelocity);			
+					targetLocation.y += this.target.body.velocity.y * 0.95 * Math.abs(targetDistance/this.fireVelocity);			
+					var targetDistance = this.game.math.distance(this.sprite.x, this.sprite.y, targetLocation.x, targetLocation.y);
+					var targetAngle = this.game.math.angleBetween(this.sprite.x, this.sprite.y, targetLocation.x, targetLocation.y);
 
 				}
 			}
@@ -746,6 +748,19 @@ function preload () {
 	game.load.spritesheet('thrust', 'assets/thrust.png',8,8);
 	game.load.spritesheet('sparks', 'assets/sparks.png',8,8);
 	game.load.spritesheet('explosions', 'assets/explosions.png',16,16);
+	game.load.audio('pew1','assets/pew1.wav');
+	game.load.audio('redalert','assets/redalert.wav');
+	game.load.audio('beep','assets/beep.wav');
+	game.load.audio('hit1','assets/hit1.wav');
+	game.load.audio('boom1','assets/boom1.wav');
+	game.load.audio('boom2','assets/boom2.wav');
+	game.load.audio('plasma','assets/plasma.wav');
+	game.load.audio('boop','assets/boop.wav');
+	game.load.audio('complete','assets/complete.wav');
+	game.load.audio('comms','assets/comms.wav');
+	game.load.audio('pew2','assets/pew2.wav');
+	game.load.audio('missile','assets/missile.wav');
+	game.load.audio('bullet','assets/bullet.wav');
 }
 
 
@@ -785,6 +800,7 @@ playerShip.prototype.destroyParts = function() {
 playerShip.prototype.initPlayerShip = function (ship) {
 
 	this.target={};
+	this.fireSound=ui.sound_pew2;
 	this.ai=-1; //natural intelligence
 	this.radarTargets=1;
 	this.dropRate=0;
@@ -903,7 +919,11 @@ playerShip.prototype.fire = function(){
 
 
 	if (game.time.now > this.nextFire && bullets.countDead() > 0 && this.energy >= this.fireEnergy && this.alive){
+
+		this.fireSound.play();
+
 		this.sprite.profile+=Math.floor(this.fireDamage*80);
+
 		if(this.sprite.profile>this.sprite.profileMax*10){
 			this.sprite.profile=this.sprite.profileMax*10;
 		}
@@ -1058,18 +1078,37 @@ var nextFire = 0;
 
 var partShip;
 
+
 var ui;
 var gameUI = function () {
 	this.parts = [];
 	this.partCost=20;
 	this.currentPart = 0;
 	this.texts = [];
-	this.nextWords=0;
+	this.nextComms=0;
+	this.nextCommsPing=false;
+	this.nextRadarSound=0; 
 	this.textLine = '';
 	this.textIndex = 0;
 	this.textLineIndex = 0;
 	this.nextError=0;
 
+}
+gameUI.prototype.initSound = function(){
+	this.sound_pew1 = game.add.audio('pew1');
+	this.sound_pew2 = game.add.audio('pew2');
+	this.sound_missile = game.add.audio('missile');
+
+	this.sound_hit1 = game.add.audio('hit1');
+	this.sound_redalert = game.add.audio('redalert');
+	this.sound_beep = game.add.audio('beep');
+	this.sound_boom1 = game.add.audio('boom1');
+	this.sound_boom2 = game.add.audio('boom2');
+	this.sound_plasma = game.add.audio('plasma');
+	this.sound_boop = game.add.audio('boop');
+	this.sound_complete = game.add.audio('complete');
+	this.sound_comms = game.add.audio('comms');
+	this.sound_bullet = game.add.audio('bullet');
 }
 gameUI.prototype.error = function(msg) {
 	if(game.time.now>this.nextError){					
@@ -1314,17 +1353,17 @@ gameUI.prototype.radarPing = function() {
 		var bracketRight = ']';
 
 		var missionTarget = !playerStats.mission.complete && this.enemies[i].missionTarget ? 128 : 0;
-		
+
 		if(player.profileShow){
-		var adjustedProfile = 200 + Math.pow(player.sprite.profile,profileExponent);
+			var adjustedProfile = 200 + Math.pow(player.sprite.profile,profileExponent);
 			this.blinkDistance=adjustedProfile*2.1;
 			if(targetDistance<0.5*blinkDistance){
-			bracketLeft='>';
-			s='\u203c';
-			bracketRight='<';
+				bracketLeft='>';
+				s='\u203c';
+				bracketRight='<';
 			}else{
-			bracketLeft='(';
-			bracketRight=')';
+				bracketLeft='(';
+				bracketRight=')';
 			}
 		}
 
@@ -1345,8 +1384,10 @@ gameUI.prototype.radarPing = function() {
 			ui.texts.push(contextTutorialBlink);
 			contextTutorialBlink='';
 		}
-
-
+		if(game.time.now>this.nextRadarSound && targetDistance < 0.75 * blinkDistance && this.enemies[i].sprite.profile > 200){
+			this.nextRadarSound=game.time.now+3333;
+			this.sound_redalert.play()
+		}
 		if (targetDistance < 0.5 * blinkDistance && game.time.now % 250 > 125){
 			s='['+s+']';
 			this.radar[i].style.fill="rgb(255," + missionTarget + ",0)";
@@ -1378,7 +1419,11 @@ gameUI.prototype.commsPing = function() {
 		this.comms.y+=50;
 	}
 
-	if (game.time.now > this.nextWords && this.textIndex < this.texts.length){
+	if (game.time.now > this.nextComms && this.textIndex < this.texts.length){
+		if(this.textLineIndex==0||this.nextCommsPing){
+			ui.sound_comms.play();
+			this.nextCommsPing=false;
+		}
 		this.comms.alpha+=randomRange(-0.1,0.1);
 		this.comms.alpha=Math.min(0.8,this.comms.alpha);
 		this.comms.alpha=Math.max(0.7,this.comms.alpha);
@@ -1396,16 +1441,17 @@ gameUI.prototype.commsPing = function() {
 		this.textLine=s;
 		this.comms.setText(this.textLine);
 		if(this.textLineIndex>this.texts[this.textIndex].length){
-			this.nextWords=game.time.now+5000;
+			this.nextComms=game.time.now+5000;
 			this.textIndex+=1;
 			this.textLineIndex=0;
 		}else{
-			this.nextWords=game.time.now+20;
+			this.nextComms=game.time.now+20;
 		}
 		if(this.textLine.substr(-1)=='\n'){
-			this.nextWords+=1000;
+			this.nextComms+=1000;
+			this.nextCommsPing=true;
 		}
-	} else if (game.time.now > this.nextWords) {
+	} else if (game.time.now > this.nextComms) {
 		this.comms.alpha-=randomRange(0,0.05);
 	} else {
 		this.comms.alpha+=randomRange(-0.1,0.1);
@@ -1735,9 +1781,11 @@ function initMission (missionId) {
 
 function create () {
 
+
 	game.stage.scale.setMaximum();
 	game.stage.scaleMode=2;
 	ui = new gameUI();
+	ui.initSound();
 	gamemode = location.search||'war';
 	if (gamemode == '?cheat'){
 		gamemode = 'war';
@@ -1847,7 +1895,7 @@ function create () {
 		sparkleExplosions.setAll('anchor.y', 0.5);
 		sparkleExplosions.setAll('lifespan',5000);
 		sparkleExplosions.setAll('blendMode',1);
-		
+
 		enemies = [];
 
 		pew = game.add.emitter(0,0,200);
@@ -1965,6 +2013,7 @@ function handleMission() {
 		playerStats.mission.complete=true;
 	}
 	if(playerStats.mission.complete && playerStats.mission.outro.length){
+		ui.sound_complete.play();
 		ui.skipText();
 		for(var i=0;i<playerStats.mission.outro.length;i++){
 			ui.texts.push(playerStats.mission.outro[i]);
@@ -1979,6 +2028,7 @@ function handleMission() {
 function winMission(){
 
 	if(playerStats.mission.complete){
+		ui.sound_complete.play();
 		var s = 'completed ' + playerStats.mission.name + '. ';
 		if(playerStats.mission.componentsReward.length){
 			playerStats.inventory.push(playerStats.mission.componentsReward[Math.floor(randomRange(0,playerStats.mission.componentsReward.length))]);
@@ -2234,24 +2284,24 @@ function shieldEffect(explosionsGroup, bulletSprite, x, y, velx, vely){
 function sparkleBoom(explosionsGroup, minSprite, maxSprite, x, y){
 
 
-		var r = Math.random();
+	var r = Math.random();
 
-		for(var i=0; i < 8 + (r * 6) ; i ++) { 
-			if(explosionsGroup.countDead()){
-				var explosion = explosionsGroup.getFirstDead();
-				explosion.loadTexture('sparkles', Math.floor(randomRange(minSprite,maxSprite)));
-				explosion.reset(x+randomRange(-8,8),y+randomRange(-8,8));
-				explosion.rotation = Math.random()*Math.PI;
-				explosion.angularVelocity=randomRange(-150,150);
-				explosion.linearDamping=-1;
-				explosion.fireVelocity=randomRange(-10,10);
-				explosion.lifespan=700;
-				r=randomRange(0.5,1.5);
-				explosion.scale.setTo(r,r);
-				explosion.alpha=1;
-				game.physics.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
-			}
+	for(var i=0; i < 8 + (r * 6) ; i ++) { 
+		if(explosionsGroup.countDead()){
+			var explosion = explosionsGroup.getFirstDead();
+			explosion.loadTexture('sparkles', Math.floor(randomRange(minSprite,maxSprite)));
+			explosion.reset(x+randomRange(-8,8),y+randomRange(-8,8));
+			explosion.rotation = Math.random()*Math.PI;
+			explosion.angularVelocity=randomRange(-150,150);
+			explosion.linearDamping=-1;
+			explosion.fireVelocity=randomRange(-10,10);
+			explosion.lifespan=700;
+			r=randomRange(0.5,1.5);
+			explosion.scale.setTo(r,r);
+			explosion.alpha=1;
+			game.physics.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
 		}
+	}
 }
 function boom(explosionsGroup, bulletSprite, x, y){
 
@@ -2341,6 +2391,7 @@ function spawnComponent(component,x,y){
 function playerGotLoot (sprite, loot) {
 	if(loot.lootType=='ore'){
 		player.ore+=1;
+		ui.sound_beep.play();
 	}else if(loot.lootType=='component'){
 		playerStats.inventory.push(loot.component);
 		ui.texts.push('got ' + components[loot.component].name);
@@ -2351,15 +2402,23 @@ function playerGotLoot (sprite, loot) {
 function bulletHitPlayer (sprite, bullet) {
 
 	boom(explosions, bullet.bulletSprite, bullet.x, bullet.y);
-
+	ui.sound_hit1.play();
 	for (var i = 0; i < bullet.bulletHitBehavior.length; i++) {
 		bullet.bulletHitBehavior[i](sprite, bullet);
 	}
 
 	var destroyed = player.damage(bullet.damage, bullet.owner);
+
+	if(destroyed){
+		if(Math.random()>0.5){
+			ui.sound_boom1.play();
+		}else{
+			ui.sound_boom2.play();
+		}
+
+	}
 	bullet.kill();
 }
-
 function enemyTouchPlayer (enemySprite, playerSprite) {
 	if(player.sawDamage && enemies[enemySprite.name].ai==3)
 	{
@@ -2374,18 +2433,24 @@ function enemyTouchPlayer (enemySprite, playerSprite) {
 function bulletHitEnemy (sprite, bullet) {
 
 	if(bullet.owner!=sprite){
+		ui.sound_hit1.play();
 		boom(explosions, bullet.bulletSprite, bullet.x, bullet.y);
 
 		for (var i = 0; i < bullet.bulletHitBehavior.length; i++) {
 			bullet.bulletHitBehavior[i](sprite, bullet);
 		}
 		var destroyed = enemies[sprite.name].damage(bullet.damage, bullet.owner, bullet.body.velocity);
-
+		if(destroyed){
+			if(Math.random()>0.5){
+				ui.sound_boom1.play();
+			}else{
+				ui.sound_boom2.play();
+			}
+		}
 		bullet.kill();
 	}
+
 }
-
-
 
 function render () {
 
