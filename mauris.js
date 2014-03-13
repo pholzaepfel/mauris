@@ -733,7 +733,7 @@ var resolutionY=Math.max(document.documentElement.clientHeight, window.innerHeig
 var game = new Phaser.Game(resolutionX, resolutionY, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update, render: render });
 
 function preload () {
-
+	hello =	game.add.text(resolutionX*0.5,resolutionY*0.4, 'LOADING',{ font:'12px monospace', fill: 'rgb(196,150,255)', align: 'center' })
 	game.load.spritesheet('parts', 'assets/parts.png', 16, 16);
 	game.load.image('station', 'assets/station.png');
 	game.load.image('frob1', 'assets/frob1.png');
@@ -1040,6 +1040,7 @@ function mouseDownHandle(event){
 	mouseState[event.button]=true;
 }
 var player;
+var hello;
 var startParts = 1; //extra parts given to player at beginning!
 var mouseState=[false,false,false];
 var pool;
@@ -1923,6 +1924,9 @@ function create () {
 		playerStats.credits+=ui.partCost;
 		ui.buyPart();
 	}
+
+	hello.visible=false;
+
 }
 function explosionAnimate(s) {
 	s.alpha*=0.85;
