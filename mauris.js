@@ -1111,11 +1111,11 @@ gameUI.prototype.initSound = function(){
 	this.sound_bullet = game.add.audio('bullet');
 }
 gameUI.prototype.sound_randomBoom = function(){
-		if(Math.random()>0.5){
-			this.sound_boom1.play();
-		}else{
-			this.sound_boom2.play();
-		}
+	if(Math.random()>0.5){
+		this.sound_boom1.play();
+	}else{
+		this.sound_boom2.play();
+	}
 
 }
 gameUI.prototype.error = function(msg) {
@@ -1150,21 +1150,25 @@ gameUI.prototype.calculatePartPosition = function() {
 	}
 	var outx = 0;
 	var outy = 0;
-	var choice = Math.floor(randomRange(0,4));
-	if(choice==0){
-		outx = minx-16;
-		outy = Math.floor(randomRange(miny, maxy+16));
-	}else if(choice==1){
-		outy = miny-16;
-		outx = Math.floor(randomRange(minx, maxx+16));
-	}else if(choice==2){
-		outx = maxx+16;
-		outy = Math.floor(randomRange(miny, maxy+16));
-	}else if(choice==3){
-		outy = maxy+16;
-		outx = Math.floor(randomRange(minx, maxx+16));
+
+	while(ui.partAt(outx,outy)){
+		if(Math.random()>0.5){
+			outx+=randomSign()*16;
+		}else{
+			outy+=randomSign()*16;
+		}
 	}
 	return {'x':outx,'y':outy};
+}
+gameUI.prototype.partAt = function(x,y){
+	var count=0;
+	for(var i=0;i<this.parts.length;i++){
+		if(this.parts[i].sprite.x==x &&
+					this.parts[i].sprite.y==y){
+				count++;
+				}
+	}
+	return count;
 }
 gameUI.prototype.clearRadar = function() {
 	for (var i = 0; i < this.radar.length; i++){
@@ -1208,11 +1212,6 @@ gameUI.prototype.initCombatUi = function() {
 	destroyIfExists(this.energyLine);
 	this.energyLine = game.add.text(200,100, '',{ font:'14px monospace', fill: 'rgb(240,64,255)', align: 'left' });
 	this.energyLine.alpha = 1.5;
-	destroyIfExists(this.statsLine);
-	this.statsLine = game.add.text(200,100, '',{ font:'1em monospace', fill: 'rgb(240,240,240)', align: 'left' });
-	this.statsLine.alpha=0.75;
-	destroyIfExists(this.graphics);
-	this.graphics = game.add.graphics(0,0);
 
 	destroyIfExists(this.comms);
 	this.comms = game.add.text(0,0,'',{font:'1.5em monospace', fill: 'rgb(240,255,183)', align: 'left'});
@@ -1251,41 +1250,6 @@ gameUI.prototype.bar = function (targetText, offset, numerator, denominator) {
 	targetText.lastValue=numerator;
 }
 
-gameUI.prototype.statsPing = function(target) {
-	var s='';
-	s+='health: ' + Math.floor(target.health).toFixed(1) + '\n';
-	s+='healthMax: ' + target.healthMax.toFixed(1) + '\n'
-		s+='\n';
-	s+='energy: ' + target.energy.toFixed(1) + '\n';
-	s+='energyMax: ' + target.energyMax.toFixed(1) + '\n';
-
-	s+='\n';
-	s+='energyRate: ' + target.energyRate.toFixed(1) + '\n';
-	s+='energyAmount: ' + target.energyAmount.toFixed(1) + '\n';
-
-	s+='\n';
-	s+='radarTargets: ' + target.radarTargets.toFixed(1) + '\n';
-	s+='\n';
-	s+='acceleration: ' + target.acceleration.toFixed(1) + '\n';
-	s+='turnRate: ' + target.turnRate.toFixed(1) + '\n';
-
-	s+='\n';
-	s+='fireRate: ' + target.fireRate.toFixed(1) + '\n';
-	s+='fireDamage: ' + target.fireDamage.toFixed(1) + '\n';
-	s+='fireVelocity: ' + target.fireVelocity.toFixed(1) + '\n';
-	s+='fireRange: ' + target.fireRange.toFixed(1) + '\n';
-	s+='fireMass: ' + target.fireMass.toFixed(1) + '\n';
-	s+='fireEnergy: ' + target.fireEnergy.toFixed(1) + '\n';
-
-	s+='\n';
-	s+='profile: ' + target.sprite.profile.toFixed(1) + '\n';
-	s+='profileMax: ' + target.sprite.profileMax.toFixed(1) + '\n';
-	s+='profileDecay: ' + target.profileDecay.toFixed(1) + '\n';
-
-	this.statsLine.x = game.camera.x+20; 
-	this.statsLine.y = game.camera.y+resolutionY*0.5;
-	this.statsLine.setText(s);
-}
 gameUI.prototype.frobRadarPing = function() {
 	if(playerStats.mission.win.condition!='frob' || playerStats.mission.complete){
 		this.frobRadar.setText('');
@@ -1519,7 +1483,6 @@ gameUI.prototype.update = function() {
 		this.radarPing();
 		this.stationRadarPing();
 		this.frobRadarPing();
-		//this.statsPing(player);
 	}
 }
 
@@ -1625,7 +1588,6 @@ gameUI.prototype.endPartsUI = function () {
 	var ship = this.partsArray();
 	this.destroyParts();
 	this.parts=[];
-	this.graphics.clear();
 	this.stationRadar.visible=true;
 	this.partText.setText('');
 	this.partFlavorText.setText('');
@@ -1633,9 +1595,6 @@ gameUI.prototype.endPartsUI = function () {
 	gamemode = 'war';
 }
 gameUI.prototype.partsArray = function () {
-	this.graphics.clear();
-	this.graphics.destroy();
-	this.graphics = game.add.graphics(0,0);
 	var outArray = [];
 	if(typeof(this.parts[0])!='undefined'){
 		var minx = 999999999;
@@ -1645,6 +1604,16 @@ gameUI.prototype.partsArray = function () {
 		var shipSize = 0;
 		for(var i=0;i<this.parts.length;i++){
 			if(this.parts[i].sprite.alive){
+	
+				//prevent overlapping parts	
+				while(ui.partAt(this.parts[i].sprite.x,this.parts[i].sprite.y)>1){
+					if(Math.random()>0.5){
+						this.parts[i].sprite.x+=randomSign()*16;
+					}else{
+						this.parts[i].sprite.y+=randomSign()*16;
+					}
+				}
+
 				if(this.parts[i].sprite.x < minx){
 					minx = this.parts[i].sprite.x;
 				}
@@ -1684,8 +1653,6 @@ gameUI.prototype.partsArray = function () {
 				outArray[n] = this.parts[i].index;
 			}
 		}
-		this.graphics.lineStyle(1, 0x6666FF,1);
-		//this.graphics.drawRect(minx,miny,16+maxx-minx,16+maxy-miny);
 	}
 	return outArray;
 }
@@ -2425,11 +2392,11 @@ function bulletHitPlayer (sprite, bullet) {
 function enemyTouchPlayer (enemySprite, playerSprite) {
 	if(player.sawDamage && enemies[enemySprite.name].ai==3)
 	{
-	
+
 		ui.sound_hit1.play();
 		var destroyed = enemies[enemySprite.name].damage(player.sawDamage);
 		if(destroyed){
-		ui.sound_randomBoom();
+			ui.sound_randomBoom();
 		}
 		var angle=game.physics.angleBetween(playerSprite,enemySprite);
 		enemySprite.body.velocity.x+=Math.cos(angle)*200;
