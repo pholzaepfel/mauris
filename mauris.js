@@ -1171,7 +1171,8 @@ gameUI.prototype.calculatePartPosition = function() {
 gameUI.prototype.partAt = function(x,y){
 	var count=0;
 	for(var i=0;i<this.parts.length;i++){
-		if(this.parts[i].sprite.x==x &&
+		if(this.parts[i].sprite.alive &&
+				this.parts[i].sprite.x==x &&
 					this.parts[i].sprite.y==y){
 				count++;
 				}
@@ -1752,7 +1753,7 @@ function initMission (missionId) {
 	}
 	if(playerStats.mission.win.condition=='frob'){
 		frob1.visible=true;
-		frob1.reset(randomSign()*randomRange(2000,10000),randomSign()*randomRange(2000,10000));
+		frob1.reset(randomSign()*randomRange(2000,5000),randomSign()*randomRange(2000,5000));
 		frob1.body.angularVelocity=randomRange(-30,30);
 		frob1.body.velocity.x=randomRange(-20,20);
 		frob1.body.velocity.y=randomRange(-20,20);
