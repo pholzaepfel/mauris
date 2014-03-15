@@ -47,20 +47,19 @@ var cmp = [
 	'id':4,
 	'drops':true,
 	'name':'VariJet',
-	'flavor':'hold RIGHT MOUSE to thrust backwards',
+	'flavor':'press RIGHT MOUSE to rocket backwards',
 	'bonus':function(target){
 		target.ai=4; //accurate
 		target.turnRate+=0.4;
 		target.acceleration+=0.2;
 		target.alt=function(){
-			if(this.energy>=0.3){
-				if(this.altCooldown<game.time.now){
+			if(this.energy>=6 &&
+				this.altCooldown<game.time.now){
 				ui.sound_plasma.play();
-				this.altCooldown=game.time.now+250;
-				}
-				this.energy-=0.3;
-				this.sprite.body.velocity.x-=Math.cos(this.sprite.rotation)*this.acceleration*6;
-				this.sprite.body.velocity.y-=Math.sin(this.sprite.rotation)*this.acceleration*6;
+				this.altCooldown=game.time.now+1000;
+				this.energy-=6;
+				this.sprite.body.velocity.x=Math.cos(this.sprite.rotation+Math.PI)*this.sprite.body.maxVelocity.x;
+				this.sprite.body.velocity.y=Math.sin(this.sprite.rotation+Math.PI)*this.sprite.body.maxVelocity.y;
 				this.speed=0.01;
 			}
 		}

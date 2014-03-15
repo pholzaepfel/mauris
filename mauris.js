@@ -223,7 +223,7 @@ dragPart.prototype.update = function(){
 							if (!cheatmode){
 								playerStats.inventory.push(this.index);
 							}
-							this.sprite.kill();
+							this.sprite.kill();							
 							ui.updatePart();
 							ui.partsArray(); //recalc rectangle
 						}
@@ -1923,7 +1923,11 @@ function create () {
 
 
 	ui.initCombatUi();
+	if(cheatmode){
+		initMission(1);
+	}else{
 	initMission(0);
+	}
 	for(var i=0;i<startParts;i++)
 	{
 		playerStats.credits+=ui.partCost;
