@@ -351,7 +351,7 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 
 	var x = this.target.body.x + (randomSign() * randomRange(750,2000)) + player.sprite.body.velocity.x*3;
 	var y = this.target.body.y + (randomSign() * randomRange(750,2000)) + player.sprite.body.velocity.y*3;
-	this.fireSound=ui.sound_pew2;
+	this.fireSound=ui.sound_pew3;
 	this.built=false;
 	this.sprite.reset(x,y);
 	boom(explosions,4,x,y);
@@ -759,6 +759,10 @@ function preload () {
 	game.load.audio('complete','assets/complete.wav');
 	game.load.audio('comms','assets/comms.wav');
 	game.load.audio('pew2','assets/pew2.wav');
+	game.load.audio('pew3','assets/pew3.wav');
+	game.load.audio('dock','assets/dock.wav');
+	game.load.audio('ominous','assets/ominous.wav');
+	game.load.audio('powerup','assets/powerup.wav');
 	game.load.audio('missile','assets/missile.wav');
 	game.load.audio('bullet','assets/bullet.wav');
 }
@@ -799,7 +803,7 @@ playerShip.prototype.destroyParts = function() {
 playerShip.prototype.initPlayerShip = function (ship) {
 
 	this.target={};
-	this.fireSound=ui.sound_pew2;
+	this.fireSound=ui.sound_pew3;
 	this.ai=-1; //natural intelligence
 	this.radarTargets=1;
 	this.dropRate=0;
@@ -1097,6 +1101,10 @@ var gameUI = function () {
 gameUI.prototype.initSound = function(){
 	this.sound_pew1 = game.add.audio('pew1');
 	this.sound_pew2 = game.add.audio('pew2');
+	this.sound_dock = game.add.audio('dock');
+	this.sound_powerup = game.add.audio('powerup');
+	this.sound_ominous = game.add.audio('ominous');
+	this.sound_pew3 = game.add.audio('pew3');
 	this.sound_missile = game.add.audio('missile');
 
 	this.sound_hit1 = game.add.audio('hit1');
@@ -1153,9 +1161,9 @@ gameUI.prototype.calculatePartPosition = function() {
 
 	while(ui.partAt(outx,outy)){
 		if(Math.random()>0.5){
-			outx+=16;
+			outx+=randomSign()*16;
 		}else{
-			outy+=16;
+			outy+=randomSign()*16;
 		}
 	}
 	return {'x':outx,'y':outy};
@@ -1537,6 +1545,7 @@ gameUI.prototype.newestPart = function() {
 	this.updatePart();
 }
 gameUI.prototype.partsUI = function (ship) {
+	this.sound_dock.play();
 	playerStats.credits+=player.ore; //ore is reset with the new ship 
 	player.ore=0;
 	player.sprite.reset(0,0);
@@ -2002,7 +2011,7 @@ function handleMission() {
 function winMission(){
 
 	if(playerStats.mission.complete){
-		ui.sound_complete.play();
+		ui.sound_ominous.play();
 		var s = 'completed ' + playerStats.mission.name + '. ';
 		if(playerStats.mission.componentsReward.length){
 			playerStats.inventory.push(playerStats.mission.componentsReward[Math.floor(randomRange(0,playerStats.mission.componentsReward.length))]);

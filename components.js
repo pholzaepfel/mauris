@@ -365,15 +365,16 @@ var cmp = [
 	'bonus':function(target){
 		target.acceleration+=0.2;
 		target.alt=function(){
-			if(this.energy>=0.2){
+			if(this.energy>=1){
 				if(game.time.now>this.altCooldown){
 					ui.sound_plasma.play();
-					this.energy-=0.2;
-					this.sprite.body.velocity.x+=Math.cos(this.sprite.rotation)*9;
-					this.sprite.body.velocity.y+=Math.sin(this.sprite.rotation)*9;
+					this.energy-=1;
+					this.sprite.body.velocity.x+=Math.cos(this.sprite.rotation)*50;
+					this.sprite.body.velocity.y+=Math.sin(this.sprite.rotation)*50;
 					this.speed=this.acceleration;
 					var bullet=this.spawnBullet();
 					bullet.loadTexture('explosions',2);
+					bullet.bulletSprite=2;
 					bullet.reset(this.sprite.x - (Math.cos(this.sprite.rotation)*(this.sprite.body.width)), this.sprite.y - (Math.sin(this.sprite.rotation)*(this.sprite.body.width)));
 					boom(explosions,2,bullet.x,bullet.y);
 					bullet.rotation=Math.random()*Math.PI;
@@ -942,7 +943,7 @@ var cmp = [
 	'bonus':function(target){
 		target.fireRate*=1.1;
 		target.fireDamage+=1;
-		target.fireSound=ui.sound_pew2;
+		target.fireSound=ui.sound_pew1;
 		target.fireEnergy*=0.5;
 		target.fireVelocity*=1.3;
 		target.bulletSprite=4;
