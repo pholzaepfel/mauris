@@ -149,8 +149,8 @@ function asteroidSort(a, b) {
 	}else if (!b.alive || a.sprite.profile){
 		return -1;
 	}
-	if(game.physics.distanceBetween(a.sprite,player.sprite)>
-			game.physics.distanceBetween(b.sprite,player.sprite)){
+	if(game.physics.arcade.distanceBetween(a.sprite,player.sprite)>
+			game.physics.arcade.distanceBetween(b.sprite,player.sprite)){
 				return -1;
 			}else{
 				return 1;
@@ -165,8 +165,8 @@ function threatSort(a, b) {
 		return -1;
 	}
 
-	if(a.sprite.profile/game.physics.distanceBetween(a.sprite,player.sprite)>
-			b.sprite.profile/game.physics.distanceBetween(b.sprite,player.sprite)){
+	if(a.sprite.profile/game.physics.arcade.distanceBetween(a.sprite,player.sprite)>
+			b.sprite.profile/game.physics.arcade.distanceBetween(b.sprite,player.sprite)){
 				return -1;
 			}else{
 				return 1;
@@ -183,6 +183,7 @@ function threatSort(a, b) {
 
 dragPart = function(x,y,sheet,index){
 	this.sprite = game.add.sprite(x,y,sheet,index);
+	this.sprite.smoothed=false;
 	this.sprite.visible = false;
 	this.sprite.alive = false;
 };
@@ -279,6 +280,8 @@ partsPool.prototype.get = function (x,y,index,targetSprite){
 shipPart = function(x,y,sheet,index,targetSprite){
 	this.game = game;
 	this.sprite = game.add.sprite(x,y,sheet,index);
+	this.sprite.smoothed=false;
+	game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
 	this.initShipPart(x,y,index,targetSprite);
 };
 shipPart.prototype.initShipPart = function (x,y,index,targetSprite){
@@ -326,6 +329,8 @@ lootItem = function(x,y,sheet,index){
 	this.game = game;
 	this.alive = true;
 	this.sprite = game.add.sprite(x,y,sheet,index);
+	this.sprite.smoothed=false;
+	game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
 	this.sprite.anchor.setTo(0.5,0.5);
 	this.sprite.bringToTop();
 	this.sprite.index=index;
@@ -341,6 +346,8 @@ enemyShip = function (index, game, targetSprite, bullets, shipList, thrust) {
 	this.game = game;
 	this.shipList = shipList;
 	this.sprite = game.add.sprite(x, y, 'parts', 1023);
+	this.sprite.smoothed=false;
+	game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
 	this.bullets = bullets;
 	this.sprite.name = index;
 	this.thrust=thrust;
@@ -399,7 +406,7 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 	this.bulletSprite = 0;
 	this.parts = [];
 
-	this.sprite.body.setRectangle(Math.sqrt(this.ship.length)*16,Math.sqrt(this.ship.length)*16,Math.sqrt(this.ship.length)*-8,Math.sqrt(this.ship.length)*-8);
+	this.sprite.body.setSize(Math.sqrt(this.ship.length)*16,Math.sqrt(this.ship.length)*16,Math.sqrt(this.ship.length)*-8,Math.sqrt(this.ship.length)*-8);
 
 	this.sprite.body.mass = shipWithoutVoid(this.ship).length*10000
 
@@ -418,7 +425,7 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 	this.lastVelocityY = this.sprite.body.velocity.y;
 
 
-	game.physics.velocityFromRotation(this.sprite.rotation, 100, this.sprite.body.velocity);
+	game.physics.arcade.velocityFromRotation(this.sprite.rotation, 100, this.sprite.body.velocity);
 	this.health*=enemyHealthCoef;
 	this.healthMax*=enemyHealthCoef;
 }
@@ -475,7 +482,7 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 				spawnComponent(this.parts[j].component, this.sprite.x, this.sprite.y);
 				this.parts[j].sprite.kill();	
 			}else{
-				this.parts[j].sprite.body.velocity = game.physics.velocityFromRotation(this.game.physics.angleBetween(this.sprite, this.parts[j].sprite), 200+randomRange(0,10*dmg));
+				this.parts[j].sprite.body.velocity = game.physics.arcade.velocityFromRotation(this.game.physics.arcade.angleBetween(this.sprite, this.parts[j].sprite), 200+randomRange(0,10*dmg));
 				this.parts[j].sprite.body.angularVelocity=randomRange((dmg+2*14),(dmg+2)*62);					
 				if(typeof(bulletVelocity)!='undefined'){
 					this.parts[j].sprite.body.velocity.x = this.parts[j].sprite.body.velocity.x + (bulletVelocity.x*.01*dmg);
@@ -547,7 +554,7 @@ enemyShip.prototype.spawnBullet = function () {
 		bullet.bulletSprite=this.bulletSprite;
 		bullet.fireVelocity=this.fireVelocity;
 		bullet.owner=this.sprite;
-		game.physics.velocityFromRotation(bullet.rotation, bullet.fireVelocity, bullet.body.velocity);
+		game.physics.arcade.velocityFromRotation(bullet.rotation, bullet.fireVelocity, bullet.body.velocity);
 		bullet.body.velocity.x += 0.5 * this.sprite.body.velocity.x;
 		bullet.body.velocity.y += 0.5 * this.sprite.body.velocity.y;
 		bullet.target=player;
@@ -572,8 +579,8 @@ enemyShip.prototype.update = function() {
 		this.sprite.body.velocity.x = this.lastVelocityX;
 		this.sprite.body.velocity.y = this.lastVelocityY;
 	}
-	if (this.game.physics.distanceBetween(this.sprite, player.sprite) > 5000 ||
-			this.game.physics.distanceBetween(this.sprite, player.sprite) > 2500 && this.ai == 3){
+	if (this.game.physics.arcade.distanceBetween(this.sprite, player.sprite) > 5000 ||
+			this.game.physics.arcade.distanceBetween(this.sprite, player.sprite) > 2500 && this.ai == 3){
 
 				var x = this.target.x + (randomSign() * randomRange(750,2000)) + player.sprite.body.velocity.x*3;
 				var y = this.target.y + (randomSign() * randomRange(750,2000)) + player.sprite.body.velocity.y*3;
@@ -581,7 +588,7 @@ enemyShip.prototype.update = function() {
 				boom(explosions,4,x,y);
 				if(this.ai==3){
 
-					this.sprite.body.velocity = game.physics.velocityFromRotation(game.physics.angleBetween(this.sprite, player.sprite), randomRange(25,100));	
+					this.sprite.body.velocity = game.physics.arcade.velocityFromRotation(game.physics.arcade.angleBetween(this.sprite, player.sprite), randomRange(25,100));	
 					this.sprite.body.angularVelocity=randomRange(25,100)*randomSign();
 				}
 			}
@@ -593,7 +600,7 @@ enemyShip.prototype.update = function() {
 
 	if(this.ai==2){
 		//init asteroid stuff
-		this.sprite.body.velocity = game.physics.velocityFromRotation(game.physics.angleBetween(this.sprite, player.sprite), randomRange(25,100));	
+		this.sprite.body.velocity = game.physics.arcade.velocityFromRotation(game.physics.arcade.angleBetween(this.sprite, player.sprite), randomRange(25,100));	
 		this.sprite.body.angularVelocity=randomRange(25,100)*randomSign();
 		this.sprite.profile=0;
 		this.sprite.profileMax=0;
@@ -602,7 +609,7 @@ enemyShip.prototype.update = function() {
 	if(this.ai!=3){
 		var adjustedProfile = 200 + Math.pow(this.target.profile,profileExponent);
 		if(!this.target.alive || 
-				(game.physics.distanceBetween(this.sprite,this.target) > adjustedProfile * 1.5 && this.behavior=='chasing')){
+				(game.physics.arcade.distanceBetween(this.sprite,this.target) > adjustedProfile * 1.5 && this.behavior=='chasing')){
 					for(var i=0;i<this.aggroList.length;i++){
 						if(this.aggroList[i].alive){		//this will cause the enemy to keep chasing the player if they were fired upon.
 							this.target=this.aggroList[i]; // I believe this may cause a 'feature' where grudges are kept beyond the grave. 
@@ -620,10 +627,10 @@ enemyShip.prototype.update = function() {
 
 
 		if(this.ai==0){
-			this.sprite.rotation = this.game.physics.angleBetween(this.sprite, this.target);
+			this.sprite.rotation = this.game.physics.arcade.angleBetween(this.sprite, this.target);
 
-			if (this.game.physics.distanceBetween(this.sprite, this.target) < this.fireRange * 0.75 &&
-					this.game.physics.distanceBetween(this.sprite, this.target) < adjustedProfile * (this.behavior=='neutral'? 1 : 2)){
+			if (this.game.physics.arcade.distanceBetween(this.sprite, this.target) < this.fireRange * 0.75 &&
+					this.game.physics.arcade.distanceBetween(this.sprite, this.target) < adjustedProfile * (this.behavior=='neutral'? 1 : 2)){
 						this.fire(); 
 
 					}
@@ -634,8 +641,8 @@ enemyShip.prototype.update = function() {
 			};
 			//TODO add some kind of fleeing behavior
 
-			var targetDistance = this.game.physics.distanceBetween(this.sprite, this.target);
-			var targetAngle = this.game.physics.angleBetween(this.sprite, this.target); 
+			var targetDistance = this.game.physics.arcade.distanceBetween(this.sprite, this.target);
+			var targetAngle = this.game.physics.arcade.angleBetween(this.sprite, this.target); 
 
 
 			if(this.behavior=='strafing'){
@@ -771,6 +778,8 @@ function preload () {
 
 var playerShip = function(ship) {
 	this.sprite = game.add.sprite(0, 0, 'parts', 1023);
+	this.sprite.smoothed=false;
+	game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
 	this.initPlayerShip(ship);
 	this.thrust = game.add.emitter(0,0,125); //this is the right number for continuous thrust
 	this.thrust.makeParticles('thrust',[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]);
@@ -816,7 +825,6 @@ playerShip.prototype.initPlayerShip = function (ship) {
 	this.sprite.reset(0,0);
 	this.sprite.name = 'player';
 	this.sprite.rotation=0;
-	this.sprite.body.angularVelocity=0;
 	this.lastVelocityX = this.sprite.body.velocity.x;
 	this.lastVelocityY = this.sprite.body.velocity.y;
 	this.turnRate=0.5;
@@ -868,7 +876,7 @@ playerShip.prototype.initPlayerShip = function (ship) {
 	for(var i = 0; i<this.parts.length; i++){
 		this.parts[i].sprite.name="player";	//this lets bullet hit behaviors detect the player correctly
 	}	
-	this.sprite.body.setRectangle(Math.sqrt(this.ship.length)*16,Math.sqrt(this.ship.length)*16,0,0);
+	this.sprite.body.setSize(Math.sqrt(this.ship.length)*16,Math.sqrt(this.ship.length)*16,0,0);
 	this.left = function(){
 		this.sprite.angle-=this.turnRate;
 	};
@@ -894,7 +902,7 @@ playerShip.prototype.damage = function(dmg, aggro) {
 		this.alive = false;
 		for (var j = 0; j < this.parts.length; j++) {
 
-			this.parts[j].sprite.body.velocity = game.physics.velocityFromRotation(game.physics.angleBetween(this.sprite, this.parts[j].sprite), randomRange(200,400));
+			this.parts[j].sprite.body.velocity = game.physics.arcade.velocityFromRotation(game.physics.arcade.angleBetween(this.sprite, this.parts[j].sprite), randomRange(200,400));
 			this.parts[j].sprite.body.angularVelocity=randomRange((dmg+2*14),(dmg+2)*62);	
 		}	
 
@@ -957,7 +965,7 @@ playerShip.prototype.spawnBullet = function(){
 		bullet.rotation = this.sprite.rotation;
 		bullet.owner=this.sprite;
 		bullet.fireVelocity = this.fireVelocity; //mostly useless but want this to be accessible for bulletBehaviors
-		game.physics.velocityFromRotation(bullet.rotation, bullet.fireVelocity, bullet.body.velocity);
+		game.physics.arcade.velocityFromRotation(bullet.rotation, bullet.fireVelocity, bullet.body.velocity);
 		bullet.body.velocity.x += 0.5 * this.sprite.body.velocity.x;
 		bullet.body.velocity.y += 0.5 * this.sprite.body.velocity.y;
 
@@ -1198,12 +1206,15 @@ gameUI.prototype.resetRadar = function() {
 gameUI.prototype.initCombatUi = function() {
 
 	this.partsSelector = game.add.sprite(-300,-100,'parts',0);
+	this.partsSelector.smoothed=false;
 	this.partsSelector.visible = false;
 
 	this.tempStation = game.add.sprite(0,0,'station');
+	this.tempStation.smoothed=false;
 	this.tempStation.anchor.setTo(0.5,0.5);
 	this.tempStation.visible = false;
 	this.partswindow = game.add.sprite(-364,-132,'partswindow');
+	this.partswindow.smoothed=false;
 	this.partswindow.anchor.setTo(0,0);
 	this.partswindow.visible = false;
 	destroyIfExists(this.creditLine);
@@ -1264,8 +1275,8 @@ gameUI.prototype.frobRadarPing = function() {
 		this.frobRadar.setText('');
 	}else{
 		var s='';
-		var targetAngle=game.physics.angleBetween(player.sprite, frob1);
-		var targetDistance=game.physics.distanceBetween(player.sprite, frob1);
+		var targetAngle=game.physics.arcade.angleBetween(player.sprite, frob1);
+		var targetDistance=game.physics.arcade.distanceBetween(player.sprite, frob1);
 		var s='\u25C6'; 
 		var n=Math.floor(255-(targetDistance/2-900));
 		if(n<64){n=64;}if(n>255){n=255};
@@ -1294,8 +1305,8 @@ gameUI.prototype.frobRadarPing = function() {
 }
 gameUI.prototype.stationRadarPing = function() {
 	var s='';
-	var targetAngle=game.physics.angleBetween(player.sprite, station);
-	var targetDistance=game.physics.distanceBetween(player.sprite, station);
+	var targetAngle=game.physics.arcade.angleBetween(player.sprite, station);
+	var targetDistance=game.physics.arcade.distanceBetween(player.sprite, station);
 	var s='\u2302'; //I cannot believe this circle renders in my terminal
 	var n=Math.floor(255-(targetDistance/2-900));
 	if(n<64){n=64;}if(n>255){n=255};
@@ -1325,8 +1336,8 @@ gameUI.prototype.radarPing = function() {
 	var s='';
 	this.resetRadar();
 	for(var i=0;i<this.radar.length;i++){
-		var targetAngle=game.physics.angleBetween(player.sprite, this.enemies[i].sprite);
-		var targetDistance=game.physics.distanceBetween(player.sprite, this.enemies[i].sprite);
+		var targetAngle=game.physics.arcade.angleBetween(player.sprite, this.enemies[i].sprite);
+		var targetDistance=game.physics.arcade.distanceBetween(player.sprite, this.enemies[i].sprite);
 		var s='●'; //I cannot believe this circle renders in my terminal
 		var n=Math.floor(255-(targetDistance/2-900));
 		var blinkDistance = 1000;
@@ -1464,7 +1475,7 @@ gameUI.prototype.creditLinePing = function() {
 	}else{
 		this.creditLine.style.fill="rgb(64,255,16)";
 	}
-	var targetDistance=game.physics.distanceBetween(player.sprite, station);
+	var targetDistance=game.physics.arcade.distanceBetween(player.sprite, station);
 	if(targetDistance>1000){
 		this.creditLine.setText('O' + player.ore);
 	}else{
@@ -1763,16 +1774,14 @@ function initMission (missionId) {
 function create () {
 
 
-	game.stage.scale.setMaximum();
-	game.stage.scaleMode=2;
 	ui = new gameUI();
 	ui.initSound();
-	gamemode = location.search||'war';
+	gamemode = location.search||'init';
 	if (gamemode == '?cheat'){
-		gamemode = 'war';
+		gamemode = 'init';
 		cheatmode = 1;
 	}
-	if (gamemode == 'war'){
+	if (gamemode == 'init'){
 		game.world.setBounds(-100000, -100000, 200000, 200000);
 		backdrop1 = game.add.tileSprite(0, 0, resolutionX, resolutionY, 'starfield2');
 
@@ -1827,15 +1836,19 @@ function create () {
 		hazePurple.alpha=0; //randomRange(0,0.6)-0.2;
 		hazePurple.speed=160;
 		station = game.add.sprite(0,0,'station');
+		station.smoothed=false;
 		station.anchor.setTo(0.5,0.5)
 			asteroids.sort(lengthSort);
 
 		frob1 = game.add.sprite(-200,-200,'frob1');
+		frob1.smoothed=false;
+		game.physics.enable(frob1, Phaser.Physics.ARCADE);
 		frob1.anchor.setTo(0.5,0.5);
 		frob1.visible=false;
 		ships.sort(lengthSort);
 
 		var temp = game.add.sprite(0,0,'parts');
+		tempsmoothed=false;
 		temp.visible = false;
 
 
@@ -1851,10 +1864,11 @@ function create () {
 		//  The enemies bullet group
 		enemyBullets = game.add.group();
 		enemyBullets.createMultiple(200, 'bullet');
+		game.physics.enable(enemyBullets, Phaser.Physics.ARCADE);
+		enemyBullets.setAll('body.immovable', true);
 		enemyBullets.setAll('anchor.x', 0.5);
 		enemyBullets.setAll('anchor.y', 0.5);
 		enemyBullets.setAll('lifespan',5000)
-			enemyBullets.setAll('body.immovable', 1);
 		enemyBullets.setAll('outOfBoundsKill', true);
 
 		enemyThrust = game.add.emitter(0,0,100);
@@ -1864,6 +1878,7 @@ function create () {
 
 		explosions = game.add.group();
 		explosions.createMultiple(100, 'explosions');
+		game.physics.enable(explosions, Phaser.Physics.ARCADE);
 		explosions.setAll('anchor.x', 0.5);
 		explosions.setAll('anchor.y', 0.5);
 		explosions.setAll('lifespan',5000);
@@ -1871,6 +1886,7 @@ function create () {
 
 		sparkleExplosions = game.add.group();
 		sparkleExplosions.createMultiple(50, 'sparkles');
+		game.physics.enable(sparkleExplosions, Phaser.Physics.ARCADE);
 		sparkleExplosions.setAll('anchor.x', 0.5);
 		sparkleExplosions.setAll('anchor.y', 0.5);
 		sparkleExplosions.setAll('lifespan',5000);
@@ -1884,14 +1900,16 @@ function create () {
 
 		bullets = game.add.group();
 		bullets.createMultiple(30, 'bullet');
-		bullets.setAll('anchor.x', 0.5);
+game.physics.enable(bullets, Phaser.Physics.ARCADE);
+bullets.setAll('anchor.x', 0.5);
 		bullets.setAll('anchor.y', 0.5);
 		bullets.setAll('outOfBoundsKill', true);
 		bullets.setAll('lifespan', 1000);
 
 		loots = game.add.group();
 		loots.createMultiple(30, 'parts');
-		loots.setAll('anchor.x',0.5);
+game.physics.enable(loots, Phaser.Physics.ARCADE);
+loots.setAll('anchor.x',0.5);
 		loots.setAll('anchor.y', 0.5);
 		loots.setAll('outOfBoundsKill', true);
 		loots.setAll('lifespan', 60000);
@@ -1934,6 +1952,7 @@ function create () {
 	}
 
 	hello.visible=false;
+	gamemode='war';
 
 }
 function explosionAnimate(s) {
@@ -1972,12 +1991,12 @@ function pullLootToPlayer(s) {
 			sparkles.maxParticleSpeed.setTo(0,0);
 			sparkles.emitParticle();
 		}
-		if(game.physics.distanceBetween(s, player.sprite) < player.lootRange){
-			var targetAngle = game.physics.angleBetween(s, player.sprite); 
+		if(game.physics.arcade.distanceBetween(s, player.sprite) < player.lootRange){
+			var targetAngle = game.physics.arcade.angleBetween(s, player.sprite); 
 			var tempx, tempy;
 			tempx = s.body.velocity.x;
 			tempy = s.body.velocity.y;
-			game.physics.velocityFromRotation(targetAngle, 500, s.body.velocity);
+			game.physics.arcade.velocityFromRotation(targetAngle, 500, s.body.velocity);
 			s.body.velocity.x+=tempx*s.averageCounter;
 			s.body.velocity.x/=s.averageCounter+1;
 			s.body.velocity.y+=tempy*s.averageCounter;
@@ -1995,7 +2014,7 @@ function handleMission() {
 	}
 
 	if(playerStats.mission.win.condition=='frob' &&
-			game.physics.overlap(player.sprite,frob1))
+			game.physics.arcade.overlap(player.sprite,frob1))
 	{
 		playerStats.mission.complete=true;
 	}
@@ -2008,7 +2027,6 @@ function handleMission() {
 
 		playerStats.mission.outro=[];
 	}
-
 
 }
 
@@ -2037,6 +2055,7 @@ function adjustHaze(haze, target){
 
 }
 function update () {
+	if(gamemode!='init'){
 	if(gamemode=='?build'){
 
 		for (var i = 0; i < ui.parts.length; i++){
@@ -2068,7 +2087,7 @@ function update () {
 		if(loots.getFirstAlive() != null) {
 
 			for (var i = 0; i < player.parts.length; i++) {
-				game.physics.overlap(loots, player.parts[i].sprite, playerGotLoot, null, this);
+				game.physics.arcade.overlap(loots, player.parts[i].sprite, playerGotLoot, null, this);
 			}
 			loots.forEachAlive(pullLootToPlayer, this);
 		}
@@ -2084,10 +2103,10 @@ function update () {
 		if(enemyBullets.getFirstAlive() != null) {
 
 			for (var i = 0; i < player.parts.length; i++) {
-				game.physics.overlap(enemyBullets, player.parts[i].sprite, bulletHitPlayer, null, this);
+				game.physics.arcade.overlap(enemyBullets, player.parts[i].sprite, bulletHitPlayer, null, this);
 			}
 			for (var i = 0; i < enemies.length; i++) {
-				game.physics.overlap(enemyBullets, enemies[i].sprite, bulletHitEnemy, null, this);
+				game.physics.arcade.overlap(enemyBullets, enemies[i].sprite, bulletHitEnemy, null, this);
 			}
 		}
 
@@ -2095,9 +2114,9 @@ function update () {
 			if (enemies[i].alive){
 				enemies[i].update();
 				for (var j = 0; j < player.parts.length; j++) {
-					game.physics.overlap(enemies[i].sprite, player.parts[j].sprite, enemyTouchPlayer, null, this);
+					game.physics.arcade.overlap(enemies[i].sprite, player.parts[j].sprite, enemyTouchPlayer, null, this);
 				}
-				game.physics.overlap(bullets, enemies[i].sprite, bulletHitEnemy, null, this);
+				game.physics.arcade.overlap(bullets, enemies[i].sprite, bulletHitEnemy, null, this);
 				for (var j = 0; j < enemies[i].parts.length; j++) {
 
 					enemies[i].parts[j].update();
@@ -2159,7 +2178,7 @@ function update () {
 	hazeRed.tilePosition.y = hazeRed.offsety + ( -0.5*game.camera.y / hazeRed.scale.y);
 	hazePurple.tilePosition.x = hazePurple.offsetx + ( -1.5*game.camera.x / hazePurple.scale.x) + (game.time.now / (hazePurple.speed));
 	hazePurple.tilePosition.y = hazePurple.offsety + ( -1.5*game.camera.y / hazePurple.scale.y);
-	hazePurple.bringToTop();	
+	//hazePurple.bringToTop();	
 
 	ui.update();
 	if (gamemode == '?build' && !game.input.activePointer.isDown) {
@@ -2199,7 +2218,7 @@ function update () {
 	if(hazePurple.alpha < playerStats.mission.hazePurple){		hazePurple.alpha+=0.001;	}
 	if(hazePurple.alpha > playerStats.mission.hazePurple){		hazePurple.alpha-=0.001;	}
 */
-
+	}
 }
 
 function hugeBoom(explosionsGroup, x, y){
@@ -2220,7 +2239,7 @@ function hugeBoom(explosionsGroup, x, y){
 				r=randomRange(4,11);
 				explosion.scale.setTo(r,r);
 				explosion.alpha=1;
-				game.physics.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
+				game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
 			}
 		}
 	}
@@ -2244,7 +2263,7 @@ function bigBoom(explosionsGroup, x, y){
 				r=randomRange(0.4,1.9);
 				explosion.scale.setTo(r,r);
 				explosion.alpha=1;
-				game.physics.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
+				game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
 			}
 		}
 	}
@@ -2286,7 +2305,7 @@ function sparkleBoom(explosionsGroup, minSprite, maxSprite, x, y){
 			r=randomRange(0.5,1.5);
 			explosion.scale.setTo(r,r);
 			explosion.alpha=1;
-			game.physics.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
+			game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
 		}
 	}
 }
@@ -2309,7 +2328,7 @@ function boom(explosionsGroup, bulletSprite, x, y){
 				r=randomRange(0.1,0.5);
 				explosion.scale.setTo(r,r);
 				explosion.alpha=1;
-				game.physics.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
+				game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
 			}
 		}
 	}
@@ -2355,7 +2374,7 @@ function spawnLoots(_count, x, y){
 		loot.acceleration=200;
 		loot.lootType='ore';
 		loot.acceleration=0;
-		game.physics.velocityFromRotation(loot.rotation, randomRange(100,300), loot.body.velocity);
+		game.physics.arcade.velocityFromRotation(loot.rotation, randomRange(100,300), loot.body.velocity);
 	}
 }
 function spawnComponent(component,x,y){
@@ -2371,7 +2390,7 @@ function spawnComponent(component,x,y){
 		loot.lootType='component';
 		loot.component = component;
 		loot.acceleration=0;
-		game.physics.velocityFromRotation(Math.random()*2*Math.PI, randomRange(50,player.sprite.body.maxVelocity.x*0.75), loot.body.velocity);
+		game.physics.arcade.velocityFromRotation(Math.random()*2*Math.PI, randomRange(50,player.sprite.body.maxVelocity.x*0.75), loot.body.velocity);
 
 	}
 }
@@ -2410,7 +2429,7 @@ function enemyTouchPlayer (enemySprite, playerSprite) {
 		if(destroyed){
 			ui.sound_randomBoom();
 		}
-		var angle=game.physics.angleBetween(playerSprite,enemySprite);
+		var angle=game.physics.arcade.angleBetween(playerSprite,enemySprite);
 		enemySprite.body.velocity.x+=Math.cos(angle)*200;
 		enemySprite.body.velocity.y+=Math.sin(angle)*200;
 	}	
