@@ -93,13 +93,15 @@ function applyBonuses(target){
 	target.acceleration = (target.sprite.body.maxVelocity.x * target.acceleration)/ 250;
 
 	//apply some minimums
-	if(this.health < 6){this.health=6;}
-	if(this.acceleration < 0.5){this.acceleration=0.5}
-	if(this.turnRate < 0.5){this.turnRate=0.5}
-	if(this.fireRate < 100){this.fireDamage+=(100-this.fireRate)/25;this.fireRate=100}
-	if(this.energyRate < 400){this.energyAmount+=(400-this.energyRate)/100}		
-	if(this.fireEnergy < 1){this.fireEnergy=1}	
+	if(target.health < 6){target.health=6;}
+	if(target.acceleration < 0.5){target.acceleration=0.5}
+	if(target.turnRate < 0.5){target.turnRate=0.5}
+	if(target.fireRate < 100){target.fireDamage+=(100-target.fireRate)/25;target.fireRate=100}
+	if(target.energyRate < 400){target.energyAmount+=(400-target.energyRate)/100}		
+	if(target.fireEnergy < 1){target.fireEnergy=1}	
 
+	target.acceleration*=4;
+	target.turnRate*=3;
 	target.healthMax = target.health;
 	target.sprite.profileMax=target.sprite.profile; 
 }
@@ -662,11 +664,10 @@ enemyShip.prototype.update = function() {
 			}
 
 			var diffAngle = compareAngles(this.sprite.rotation,targetAngle);
-			if (diffAngle>this.behavior=='neutral'?this.turnRate*30:this.turnRate){
-				if(diffAngle>0)
+				if(diffAngle*60>this.turnRate)
 				{
 					this.left();
-				}else{
+				}else if(diffAngle*60<-this.turnRate){
 					this.right();
 				}
 
@@ -674,7 +675,6 @@ enemyShip.prototype.update = function() {
 
 
 
-			}
 
 			if (targetDistance < adjustedProfile) {
 				if(this.behavior=='neutral'){
@@ -1826,7 +1826,6 @@ function create () {
 		hazePurple.scale.y=3;
 		hazePurple.alpha=0; //randomRange(0,0.6)-0.2;
 		hazePurple.speed=160;
-
 		station = game.add.sprite(0,0,'station');
 		station.anchor.setTo(0.5,0.5)
 			asteroids.sort(lengthSort);
@@ -2191,7 +2190,7 @@ function update () {
 		  }
 	}
 
-	if(hazeRed.alpha < playerStats.mission.hazeRed){		hazeRed.alpha+=0.001;	}
+/*	if(hazeRed.alpha < playerStats.mission.hazeRed){		hazeRed.alpha+=0.001;	}
 	if(hazeRed.alpha > playerStats.mission.hazeRed){		hazeRed.alpha-=0.001;	}
 
 	if(hazeWhite.alpha < playerStats.mission.hazeWhite){		hazeWhite.alpha+=0.001;	}
@@ -2199,7 +2198,7 @@ function update () {
 
 	if(hazePurple.alpha < playerStats.mission.hazePurple){		hazePurple.alpha+=0.001;	}
 	if(hazePurple.alpha > playerStats.mission.hazePurple){		hazePurple.alpha-=0.001;	}
-
+*/
 
 }
 
