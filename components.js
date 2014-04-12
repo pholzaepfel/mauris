@@ -500,7 +500,7 @@ var cmp = [
 	'bonus':function(target){
 		target.bulletBehavior.push(function(bullet){
 			bullet.rotation+=Math.random()*0.4-0.2;
-			game.physics.velocityFromRotation(bullet.rotation, bullet.fireVelocity, bullet.body.velocity);
+			game.physics.arcade.velocityFromRotation(bullet.rotation, bullet.fireVelocity, bullet.body.velocity);
 		});
 		target.fireRate*=0.7;
 		target.fireEnergy*=0.8;
@@ -575,7 +575,7 @@ var cmp = [
 			bullet.loadTexture('explosions',2);
 			bullet.body.angularVelocity=randomRange(600,900);
 			bullet.alpha=randomRange(0.5,0.7);
-			game.physics.velocityFromRotation(bullet.rotation, bullet.fireVelocity, bullet.body.velocity);
+			game.physics.arcade.velocityFromRotation(bullet.rotation, bullet.fireVelocity, bullet.body.velocity);
 		});
 		target.bulletSprite=5;
 		target.fireDamage+=2;
@@ -895,11 +895,11 @@ var cmp = [
 			ui.sound_boom2.play();
 			hugeBoom(explosions,this.sprite.x,this.sprite.y);
 			for(var i=0; i<enemies.length; i++){
-				if(game.physics.distanceBetween(this.sprite, enemies[i].sprite)<500 && enemies[i].alive){
+				if(game.physics.arcade.distanceBetween(this.sprite, enemies[i].sprite)<500 && enemies[i].alive){
 					enemies[i].damage(500);
 				}
 			}
-			if(game.physics.distanceBetween(this.sprite,player.sprite)<500 && player.alive){
+			if(game.physics.arcade.distanceBetween(this.sprite,player.sprite)<500 && player.alive){
 				player.damage(500);
 			}
 		}
@@ -969,8 +969,8 @@ var cmp = [
 		if(target.ai==-1){
 			target.bulletBehavior.push(function(bullet){
 				bullet.reset(bullet.owner.x,bullet.owner.y);
-				bullet.rotation=game.physics.angleToPointer(bullet);
-				game.physics.velocityFromRotation(bullet.rotation,bullet.fireVelocity,bullet.body.velocity);
+				bullet.rotation=game.physics.arcade.angleToPointer(bullet);
+				game.physics.arcade.velocityFromRotation(bullet.rotation,bullet.fireVelocity,bullet.body.velocity);
 			});
 		}else{
 			target.fireDamage+=2;
@@ -1180,7 +1180,7 @@ var cmp = [
 					bullet.loadTexture('explosions',4);
 					bullet.reset(this.sprite.x, this.sprite.y);
 					bullet.rotation=n*2*Math.PI;
-					game.physics.velocityFromRotation(bullet.rotation, 600, bullet.body.velocity);
+					game.physics.arcade.velocityFromRotation(bullet.rotation, 600, bullet.body.velocity);
 					bullet.alpha=0.3;
 					bullet.damage=12;
 					bullet.bulletSprite=4;

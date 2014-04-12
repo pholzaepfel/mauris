@@ -183,7 +183,6 @@ function threatSort(a, b) {
 
 dragPart = function(x,y,sheet,index){
 	this.sprite = game.add.sprite(x,y,sheet,index);
-	this.sprite.smoothed=false;
 	this.sprite.visible = false;
 	this.sprite.alive = false;
 };
@@ -280,7 +279,6 @@ partsPool.prototype.get = function (x,y,index,targetSprite){
 shipPart = function(x,y,sheet,index,targetSprite){
 	this.game = game;
 	this.sprite = game.add.sprite(x,y,sheet,index);
-	this.sprite.smoothed=false;
 	game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
 	this.initShipPart(x,y,index,targetSprite);
 };
@@ -329,7 +327,6 @@ lootItem = function(x,y,sheet,index){
 	this.game = game;
 	this.alive = true;
 	this.sprite = game.add.sprite(x,y,sheet,index);
-	this.sprite.smoothed=false;
 	game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
 	this.sprite.anchor.setTo(0.5,0.5);
 	this.sprite.bringToTop();
@@ -346,7 +343,6 @@ enemyShip = function (index, game, targetSprite, bullets, shipList, thrust) {
 	this.game = game;
 	this.shipList = shipList;
 	this.sprite = game.add.sprite(x, y, 'parts', 1023);
-	this.sprite.smoothed=false;
 	game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
 	this.bullets = bullets;
 	this.sprite.name = index;
@@ -778,7 +774,6 @@ function preload () {
 
 var playerShip = function(ship) {
 	this.sprite = game.add.sprite(0, 0, 'parts', 1023);
-	this.sprite.smoothed=false;
 	game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
 	this.initPlayerShip(ship);
 	this.thrust = game.add.emitter(0,0,125); //this is the right number for continuous thrust
@@ -1206,15 +1201,12 @@ gameUI.prototype.resetRadar = function() {
 gameUI.prototype.initCombatUi = function() {
 
 	this.partsSelector = game.add.sprite(-300,-100,'parts',0);
-	this.partsSelector.smoothed=false;
 	this.partsSelector.visible = false;
 
 	this.tempStation = game.add.sprite(0,0,'station');
-	this.tempStation.smoothed=false;
 	this.tempStation.anchor.setTo(0.5,0.5);
 	this.tempStation.visible = false;
 	this.partswindow = game.add.sprite(-364,-132,'partswindow');
-	this.partswindow.smoothed=false;
 	this.partswindow.anchor.setTo(0,0);
 	this.partswindow.visible = false;
 	destroyIfExists(this.creditLine);
@@ -1836,19 +1828,16 @@ function create () {
 		hazePurple.alpha=0; //randomRange(0,0.6)-0.2;
 		hazePurple.speed=160;
 		station = game.add.sprite(0,0,'station');
-		station.smoothed=false;
 		station.anchor.setTo(0.5,0.5)
 			asteroids.sort(lengthSort);
 
 		frob1 = game.add.sprite(-200,-200,'frob1');
-		frob1.smoothed=false;
 		game.physics.enable(frob1, Phaser.Physics.ARCADE);
 		frob1.anchor.setTo(0.5,0.5);
 		frob1.visible=false;
 		ships.sort(lengthSort);
 
 		var temp = game.add.sprite(0,0,'parts');
-		tempsmoothed=false;
 		temp.visible = false;
 
 
