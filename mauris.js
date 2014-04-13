@@ -96,7 +96,6 @@ function applyBonuses(target){
 	if(target.health < 6){target.health=6;}
 	if(target.acceleration < 0.5){target.acceleration=0.5}
 	if(target.turnRate < 1){target.turnRate=1}
-	if(target.fireRate < 100){target.fireDamage+=(100-target.fireRate)/25;target.fireRate=100}
 	if(target.energyRate < 400){target.energyAmount+=(400-target.energyRate)/100}		
 	if(target.fireEnergy < 1){target.fireEnergy=1}	
 
@@ -778,7 +777,8 @@ var playerShip = function(ship) {
 	this.initPlayerShip(ship);
 	this.thrust = game.add.emitter(0,0,20); //this is the right number for continuous thrust
 	this.thrust.makeParticles('thrust',[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]);
-	this.thrust.setAll('alpha',0.7);
+	this.thrust.alpha = 0.7;
+	this.thrust.blendMode = 1;
 	this.thrust.gravity=0;
 }
 //parts, when killed, are 'available' to be used in newly init'd ships
@@ -1865,7 +1865,8 @@ function create () {
 
 		enemyThrust = game.add.emitter(0,0,100);
 		enemyThrust.makeParticles('thrust',[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]);
-		enemyThrust.setAll('alpha','0.8');
+		enemyThrust.alpha = 0.7;
+		enemyThrust.blendMode = 1;
 		enemyThrust.gravity=0;
 
 		explosions = game.add.group();
@@ -1910,7 +1911,8 @@ loots.setAll('anchor.x',0.5);
 
 		sparkles = game.add.emitter(0,0,100);
 		sparkles.makeParticles('sparkles',[0,1,2,3,4,5,6,7]);
-		sparkles.setAll('alpha',0.3);
+		sparkles.alpha= 0.5;
+		sparkles.blendMode = 1;
 		sparkles.lifespan=200;
 
 	}
@@ -1984,6 +1986,7 @@ function pullLootToPlayer(s) {
 			var halfWidth = s.width * 0.5;
 			sparkles.x=s.x+randomRange(-1 * halfWidth,halfWidth);
 			sparkles.y=s.y+randomRange(-1 * halfWidth,halfWidth);
+			sparkles.alpha=randomRange(0.3,0.6);
 			sparkles.minParticleSpeed.setTo(0,0);
 			sparkles.maxParticleSpeed.setTo(0,0);
 			sparkles.emitParticle();
