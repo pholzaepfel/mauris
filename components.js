@@ -12,8 +12,8 @@ var cmp = [
 	'name':'Rusted Wing',
 	'flavor':'improves maneuverability, inhibits energy return',
 	'bonus':function(target){
-		target.turnRate+=0.9;
-		target.acceleration+=0.6;
+		target.turnRate+=0.3;
+		target.acceleration+=0.3;
 		target.energyRate+=100;
 	}
 },
@@ -50,7 +50,7 @@ var cmp = [
 	'flavor':'press RIGHT MOUSE to rocket backwards',
 	'bonus':function(target){
 		target.ai=4; //accurate
-		target.turnRate+=0.4;
+		target.turnRate+=0.3;
 		target.acceleration+=0.2;
 		target.alt=function(){
 			if(this.energy>=6 &&
@@ -368,8 +368,8 @@ var cmp = [
 				if(game.time.now>this.altCooldown){
 					ui.sound_plasma.play();
 					this.energy-=1;
-					this.sprite.body.velocity.x+=Math.cos(this.sprite.rotation)*50;
-					this.sprite.body.velocity.y+=Math.sin(this.sprite.rotation)*50;
+					this.sprite.body.velocity.x+=Math.cos(this.sprite.rotation)*150;
+					this.sprite.body.velocity.y+=Math.sin(this.sprite.rotation)*150;
 					this.speed=this.acceleration;
 					var bullet=this.spawnBullet();
 					bullet.loadTexture('explosions',2);
@@ -421,7 +421,7 @@ var cmp = [
 	'name':'Filthy Cockpit',
 	'flavor':'still reliable and fast!',
 	'bonus':function(target){
-		target.turnRate+=0.3;
+		target.turnRate+=0.2;
 		target.acceleration+=0.2;
 		target.health+=4;
 	}
@@ -758,8 +758,8 @@ var cmp = [
 	'name':'Discount Attitude Jet',
 	'flavor':'improves turn rate, lowers maximum energy',
 	'bonus':function(target){
-		target.turnRate+=0.7;
-		target.acceleration+=0.3;
+		target.turnRate+=0.6;
+		target.acceleration+=0.2;
 		target.energyMax-=2;
 	}
 },

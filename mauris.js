@@ -84,22 +84,22 @@ function applyBonuses(target){
 			target.sprite.body.maxVelocity.x-=5;
 			target.sprite.body.maxVelocity.y-=5;
 			target.sprite.profile+=25;
-			target.turnRate-=0.2; //gimp larger ships a bit
+			target.turnRate-=0.1;
 			components[target.ship[i]].bonus(target);
 		}
 	}
-	target.acceleration = (target.sprite.body.maxVelocity.x * target.acceleration)/ 250;
+	target.acceleration = (target.sprite.body.maxVelocity.x * target.sprite.body.maxVelocity.x * target.acceleration)/90000;
+	target.acceleration*=4;
+	target.turnRate*=2.5;
 
 	//apply some minimums
 	if(target.health < 6){target.health=6;}
 	if(target.acceleration < 0.5){target.acceleration=0.5}
-	if(target.turnRate < 0.5){target.turnRate=0.5}
+	if(target.turnRate < 1){target.turnRate=1}
 	if(target.fireRate < 100){target.fireDamage+=(100-target.fireRate)/25;target.fireRate=100}
 	if(target.energyRate < 400){target.energyAmount+=(400-target.energyRate)/100}		
 	if(target.fireEnergy < 1){target.fireEnergy=1}	
 
-	target.acceleration*=4;
-	target.turnRate*=3;
 	target.healthMax = target.health;
 	target.sprite.profileMax=target.sprite.profile; 
 }
@@ -704,7 +704,9 @@ enemyShip.prototype.update = function() {
 				this.thrust.y=this.sprite.y-(Math.sin(this.sprite.rotation)*(this.sprite.body.width)*0.5);
 				this.thrust.minParticleSpeed.setTo(0,0);
 				this.thrust.maxParticleSpeed.setTo(0,0);
-				this.thrust.emitParticle();
+								this.thrust.lifespan=(1-Math.cos(randomRange(0,0.5*Math.PI)))*500;
+				this.thrust.lifespan+=200;
+this.thrust.emitParticle();
 				partsToTop(this);	
 				this.nextThrust = game.time.now + 15; 
 			}
@@ -774,7 +776,7 @@ var playerShip = function(ship) {
 	this.sprite = game.add.sprite(0, 0, 'parts', 1023);
 	game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
 	this.initPlayerShip(ship);
-	this.thrust = game.add.emitter(0,0,125); //this is the right number for continuous thrust
+	this.thrust = game.add.emitter(0,0,20); //this is the right number for continuous thrust
 	this.thrust.makeParticles('thrust',[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]);
 	this.thrust.setAll('alpha',0.7);
 	this.thrust.gravity=0;
@@ -1014,6 +1016,8 @@ playerShip.prototype.update = function(){
 				this.thrust.y=this.sprite.y-(Math.sin(this.sprite.rotation)*(this.sprite.body.width)*0.5);
 				this.thrust.minParticleSpeed.setTo(0,0);
 				this.thrust.maxParticleSpeed.setTo(0,0);
+				this.thrust.lifespan=(1-Math.cos(randomRange(0,0.5*Math.PI)))*500;
+				this.thrust.lifespan+=200;
 				this.thrust.emitParticle();
 				partsToTop(this);	
 				this.nextThrust = game.time.now + 15; 
@@ -1944,13 +1948,18 @@ loots.setAll('anchor.x',0.5);
 
 }
 function explosionAnimate(s) {
-	s.alpha*=0.85;
-	s.scale.setTo(s.scale.x+.2,s.scale.y+.2);
+	if(s.alive){
+	s.alpha-=game.time.physicsElapsed*0.5;
+	s.alpha-=game.time.physicsElapsed*(9/s.scale.x);
+        s.rotation += (s.angularVelocity * game.time.physicsElapsed);
+	s.scale.setTo(s.scale.x+(48*game.time.physicsElapsed),s.scale.y+(48*game.time.physicsElapsed));
+	if(s.alpha<=0){s.kill()};
+	};
 }
 
 
 function fadeSpark(s) {
-	s.alpha-=0.03;
+	s.alpha-=0.01*game.time.physicsElapsed;
 	s.scale.setTo(s.scale.x*1.03,s.scale.y*1.03);
 	if(s.lifespan>175 && s.lifespan < 201){
 		s.scale.setTo(1,1);
@@ -1958,7 +1967,7 @@ function fadeSpark(s) {
 	}
 }
 function fade(s) {
-	s.alpha-=0.03;
+	s.alpha-=0.01*game.time.physicsElapsed;
 	s.scale.setTo(s.scale.x*1.03,s.scale.y*1.03);
 	if(s.lifespan>750){
 		s.scale.setTo(1,1);
@@ -2220,7 +2229,7 @@ function hugeBoom(explosionsGroup, x, y){
 				explosion.loadTexture('explosions', Math.random()>0.7 ? 1 : 2);
 				explosion.reset(x+randomRange(-80,80),y+randomRange(-80,80));
 				explosion.rotation = Math.random()*Math.PI*2;
-				explosion.angularVelocity=randomRange(-200,200);
+				explosion.angularVelocity=randomRange(-3,3);
 				explosion.fireVelocity=randomRange(600,890);
 				explosion.lifespan=1200;
 				explosion.linearDamping=-1;
@@ -2244,13 +2253,17 @@ function bigBoom(explosionsGroup, x, y){
 				explosion.loadTexture('explosions', rand2);
 				explosion.reset(x+randomRange(-20,20),y+randomRange(-20,20));
 				explosion.rotation = Math.random()*Math.PI;
-				explosion.angularVelocity=randomRange(-150,150);
 				explosion.fireVelocity=randomRange(30,80) * (2-rand2);
-				explosion.lifespan=700 * rand2;
+				explosion.lifespan=700 * (4 - rand2);
 				explosion.linearDamping=-1;
-				r=randomRange(0.4,1.9);
+				r=randomRange(0.9,1.4);
+				explosion.angularVelocity=randomRange(-5,5)*Math.sin(randomRange(0,0.5*Math.PI));
 				explosion.scale.setTo(r,r);
-				explosion.alpha=1;
+				explosion.alpha=2.1-r;
+				if(rand2==2){
+					explosion.scale.setTo(r-0.4,r-0.4);
+					r.alpha+=0.5;
+				}
 				game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
 			}
 		}
@@ -2286,13 +2299,13 @@ function sparkleBoom(explosionsGroup, minSprite, maxSprite, x, y){
 			explosion.loadTexture('sparkles', Math.floor(randomRange(minSprite,maxSprite)));
 			explosion.reset(x+randomRange(-8,8),y+randomRange(-8,8));
 			explosion.rotation = Math.random()*Math.PI;
-			explosion.angularVelocity=randomRange(-150,150);
-			explosion.linearDamping=-1;
-			explosion.fireVelocity=randomRange(-10,10);
+			explosion.angularVelocity=randomRange(-40,40);
+			explosion.linearDamping=-10;
+			explosion.fireVelocity=randomRange(-20,20);
 			explosion.lifespan=700;
-			r=randomRange(0.5,1.5);
+			r=randomRange(0.7,1.2);
 			explosion.scale.setTo(r,r);
-			explosion.alpha=1;
+			explosion.alpha=1.8-r;
 			game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
 		}
 	}
@@ -2309,13 +2322,13 @@ function boom(explosionsGroup, bulletSprite, x, y){
 				explosion.loadTexture('explosions', bulletSprite || 0);
 				explosion.reset(x+randomRange(-8,8),y+randomRange(-8,8));
 				explosion.rotation = Math.random()*Math.PI;
-				explosion.angularVelocity=randomRange(-150,150);
-				explosion.linearDamping=-1;
+				explosion.angularVelocity=randomRange(-5,5);
+				explosion.linearDamping=-4;
 				explosion.fireVelocity=randomRange(-10,10);
 				explosion.lifespan=700;
-				r=randomRange(0.1,0.5);
+				r=randomRange(0.3,0.5);
 				explosion.scale.setTo(r,r);
-				explosion.alpha=1;
+				explosion.alpha=1.1;
 				game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
 			}
 		}
