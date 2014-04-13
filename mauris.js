@@ -1922,6 +1922,7 @@ function create () {
 
 		pew = game.add.emitter(0,0,200);
 		pew.makeParticles('sparks');
+		pew.blendMode=1;
 		pew.gravity=0;
 
 		bullets = game.add.group();
@@ -1984,11 +1985,13 @@ loots.setAll('anchor.x',0.5);
 }
 function explosionAnimate(s) {
 	if(s.alive){
-	s.alpha-=game.time.physicsElapsed*2;
+//	s.alpha+=s.alpha;
+	s.alpha-=game.time.physicsElapsed*(Math.min(Math.pow(s.alpha,1.7),1.5))*15;
 		//	s.alpha=Math.cos((s.alpha-game.time.physicsElapsed)*0.5*Math.PI);
 
 	      	      s.rotation += (s.angularVelocity * game.time.physicsElapsed);
-	s.scale.setTo(s.scale.x+(48*game.time.physicsElapsed),s.scale.y+(48*game.time.physicsElapsed));
+	s.scale.setTo(s.scale.x+((game.time.physicsElapsed*16)),s.scale.y+((game.time.physicsElapsed*16)));
+	s.scale.setTo(s.scale.x*(1+(game.time.physicsElapsed*2)),s.scale.y*(1+(game.time.physicsElapsed*2)));
 	if(s.alpha<=0){s.kill()};
 	};
 }
@@ -2272,7 +2275,7 @@ function hugeBoom(explosionsGroup, x, y){
 				explosion.linearDamping=-1;
 				r=randomRange(4,11);
 				explosion.scale.setTo(r,r);
-				explosion.alpha=1;
+				explosion.alpha=2;
 				game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
 			}
 		}
@@ -2293,14 +2296,10 @@ function bigBoom(explosionsGroup, x, y){
 				explosion.fireVelocity=randomRange(30,80) * (2-rand2);
 				explosion.lifespan=700 * (4 - rand2);
 				explosion.linearDamping=-1;
-				r=randomRange(0.9,1.4);
+				r=randomRange(0.9,3.1);
 				explosion.angularVelocity=randomRange(-5,5)*Math.sin(randomRange(0,0.5*Math.PI));
 				explosion.scale.setTo(r,r);
-				explosion.alpha=2.1-r;
-				if(rand2==2){
-					explosion.scale.setTo(r-0.4,r-0.4);
-					r.alpha+=0.5;
-				}
+				explosion.alpha=5.1-r;
 				game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
 			}
 		}
@@ -2320,7 +2319,7 @@ function shieldEffect(explosionsGroup, bulletSprite, x, y, velx, vely){
 		explosion.lifespan=700;
 		r=randomRange(2,4);
 		explosion.scale.setTo(r,r);
-		explosion.alpha=1;
+		explosion.alpha=3;
 		explosion.body.velocity.x=velx;
 		explosion.body.velocity.y=vely;
 	}
@@ -2363,9 +2362,9 @@ function boom(explosionsGroup, bulletSprite, x, y){
 				explosion.linearDamping=-4;
 				explosion.fireVelocity=randomRange(-10,10);
 				explosion.lifespan=700;
-				r=randomRange(0.3,0.5);
+				r=randomRange(0.1,0.3);
 				explosion.scale.setTo(r,r);
-				explosion.alpha=0.9;
+				explosion.alpha=3.4;
 				game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
 			}
 		}

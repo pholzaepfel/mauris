@@ -575,7 +575,8 @@ var cmp = [
 			bullet.rotation+=Math.random()*0.5-0.25;
 			bullet.loadTexture('explosions',2);
 			bullet.body.angularVelocity=randomRange(600,900);
-			bullet.alpha=randomRange(0.5,0.7);
+			bullet.alpha=randomRange(0.8,0.9);
+			bullet.blendMode=1;
 			game.physics.arcade.velocityFromRotation(bullet.rotation, bullet.fireVelocity, bullet.body.velocity);
 		});
 		target.bulletSprite=5;
@@ -1028,7 +1029,7 @@ var cmp = [
 		target.bulletBehavior.push(function(bullet){
 			bullet.scale.setTo(bullet.scale.x+1,bullet.scale.y+1);
 			bullet.body.angularVelocity+=800;
-			bullet.alpha=0.5;
+			bullet.blendMode=1;
 		});
 
 	}
@@ -1042,7 +1043,7 @@ var cmp = [
 		target.bulletBehavior.push(function(bullet){
 			bullet.scale.setTo(bullet.scale.x+1,bullet.scale.y+1);
 			bullet.body.angularVelocity+=800;
-			bullet.alpha=0.5;
+			bullet.blendMode=1;
 		});
 
 	}
@@ -1182,12 +1183,13 @@ var cmp = [
 					bullet.reset(this.sprite.x, this.sprite.y);
 					bullet.rotation=n*2*Math.PI;
 					game.physics.arcade.velocityFromRotation(bullet.rotation, 600, bullet.body.velocity);
-					bullet.alpha=0.3;
+					bullet.alpha=0.8;
 					bullet.damage=12;
 					bullet.bulletSprite=4;
 					bullet.scale.setTo(2,2);
 					bullet.lifespan=400;
 					bullet.body.angularVelocity=999;
+					bullet.blendMode=1;
 				}
 				this.altCooldown=game.time.now+2000;
 
@@ -1498,7 +1500,7 @@ var cmp = [
 		target.bulletBehavior.push(function(bullet){
 			bullet.scale.setTo(bullet.scale.x+1,bullet.scale.y+1);
 			bullet.body.angularVelocity+=800;
-			bullet.alpha=0.5;
+			bullet.blendMode=1;
 		});
 
 	}
@@ -1513,7 +1515,7 @@ var cmp = [
 		target.bulletBehavior.push(function(bullet){
 			bullet.scale.setTo(bullet.scale.x+1,bullet.scale.y+1);
 			bullet.body.angularVelocity+=800;
-			bullet.alpha=0.5;
+			bullet.blendMode=1;
 		});
 
 	}
