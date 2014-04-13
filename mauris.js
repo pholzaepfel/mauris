@@ -397,6 +397,7 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 	this.sprite.visible = true;
 	this.sprite.anchor.setTo(0.5, 0.5);
 	this.bulletSprite = 0;
+	this.bulletBlendMode = 1;
 	this.parts = [];
 
 	this.sprite.body.setSize(Math.sqrt(this.ship.length)*16,Math.sqrt(this.ship.length)*16,0,0);
@@ -540,11 +541,12 @@ enemyShip.prototype.spawnBullet = function () {
 		bullet.reset(this.sprite.x + (Math.cos(this.sprite.rotation)*(this.sprite.body.width)), this.sprite.y + (Math.sin(this.sprite.rotation)*(this.sprite.body.width)));
 		bullet.lifespan = this.fireRange; 
 		bullet.alpha=1;
+		bullet.blendMode=this.bulletBlendMode;
 		bullet.scale.setTo(1,1);
 		bullet.bulletHitBehavior=this.bulletHitBehavior;
 		bullet.angularVelocity=0;
 		bullet.loadTexture('bullet', this.bulletSprite);
-		bullet.bulletSprite=this.bulletSprite;
+		bullet.bulletSprite=this.bulletSprite;		
 		bullet.fireVelocity=this.fireVelocity;
 		bullet.owner=this.sprite;
 		game.physics.arcade.velocityFromRotation(bullet.rotation, bullet.fireVelocity, bullet.body.velocity);
@@ -558,6 +560,23 @@ enemyShip.prototype.spawnBullet = function () {
 		return bullet;
 	}
 }
+
+
+enemyShip.prototype.emitThrust = function() {
+				this.thrust.x=this.sprite.x-(Math.cos(this.sprite.rotation)*(this.sprite.body.width)*0.5);
+				this.thrust.y=this.sprite.y-(Math.sin(this.sprite.rotation)*(this.sprite.body.width)*0.5);
+				this.thrust.minParticleSpeed.setTo(0,0);
+				this.thrust.maxParticleSpeed.setTo(0,0);
+				this.thrust.lifespan=(1-Math.cos(randomRange(0,0.5*Math.PI)))*500;
+				this.thrust.lifespan+=200;
+				var tempX = randomRange(-18,18);
+				var tempY = randomRange(-18,18);
+				this.thrust.minParticleSpeed.setTo(tempX,tempY);
+				this.thrust.maxParticleSpeed.setTo(tempX,tempY);
+				this.thrust.emitParticle();
+
+}
+
 enemyShip.prototype.update = function() {
 	if(!this.built && onscreen(this.sprite.x,this.sprite.y))
 	{
@@ -699,13 +718,12 @@ enemyShip.prototype.update = function() {
 
 		if (this.speed > 0){
 			if(game.time.now>(this.nextThrust||0)){
-				this.thrust.x=this.sprite.x-(Math.cos(this.sprite.rotation)*(this.sprite.body.width)*0.5);
-				this.thrust.y=this.sprite.y-(Math.sin(this.sprite.rotation)*(this.sprite.body.width)*0.5);
-				this.thrust.minParticleSpeed.setTo(0,0);
-				this.thrust.maxParticleSpeed.setTo(0,0);
-								this.thrust.lifespan=(1-Math.cos(randomRange(0,0.5*Math.PI)))*500;
-				this.thrust.lifespan+=200;
-this.thrust.emitParticle();
+
+
+				for(var i=0;i<5;i++){
+					this.emitThrust();
+				}
+
 				partsToTop(this);	
 				this.nextThrust = game.time.now + 15; 
 			}
@@ -775,7 +793,7 @@ var playerShip = function(ship) {
 	this.sprite = game.add.sprite(0, 0, 'parts', 1023);
 	game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
 	this.initPlayerShip(ship);
-	this.thrust = game.add.emitter(0,0,20); //this is the right number for continuous thrust
+	this.thrust = game.add.emitter(0,0,50); //this is the right number for continuous thrust
 	this.thrust.makeParticles('thrust',[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]);
 	this.thrust.alpha = 0.7;
 	this.thrust.blendMode = 1;
@@ -827,6 +845,7 @@ playerShip.prototype.initPlayerShip = function (ship) {
 	this.alive=true;
 	this.sprite.alive=true;
 	this.bulletSprite=0;
+	this.bulletBlendMode=1;
 	this.bulletHitBehavior=[];
 	this.bulletBehavior=[];
 	this.destroyParts();
@@ -955,6 +974,7 @@ playerShip.prototype.spawnBullet = function(){
 		bullet.angularVelocity=0;
 		bullet.bulletHitBehavior=this.bulletHitBehavior;
 		bullet.alpha=1;
+		bullet.blendMode=this.bulletBlendMode;
 		bullet.scale.setTo(1,1);
 		bullet.reset(this.sprite.x + (Math.cos(this.sprite.rotation)*(this.sprite.body.width)*0.75), this.sprite.y + (Math.sin(this.sprite.rotation)*(this.sprite.body.width)*0.75));
 		bullet.rotation = this.sprite.rotation;
@@ -970,6 +990,23 @@ playerShip.prototype.spawnBullet = function(){
 		return bullet;
 	}
 }
+
+playerShip.prototype.emitThrust = function() {
+				this.thrust.x=this.sprite.x-(Math.cos(this.sprite.rotation)*(this.sprite.body.width)*0.5);
+				this.thrust.y=this.sprite.y-(Math.sin(this.sprite.rotation)*(this.sprite.body.width)*0.5);
+				this.thrust.minParticleSpeed.setTo(0,0);
+				this.thrust.maxParticleSpeed.setTo(0,0);
+				this.thrust.lifespan=(1-Math.cos(randomRange(0,0.5*Math.PI)))*500;
+				this.thrust.lifespan+=200;
+				var tempX = randomRange(-18,18);
+				var tempY = randomRange(-18,18);
+				this.thrust.minParticleSpeed.setTo(tempX,tempY);
+				this.thrust.maxParticleSpeed.setTo(tempX,tempY);
+				this.thrust.emitParticle();
+
+}
+
+
 playerShip.prototype.update = function(){
 	if(this.alive){
 
@@ -1012,15 +1049,11 @@ playerShip.prototype.update = function(){
 
 		if (this.speed > 0){
 			if(game.time.now>(this.nextThrust||0)){
-				this.thrust.x=this.sprite.x-(Math.cos(this.sprite.rotation)*(this.sprite.body.width)*0.5);
-				this.thrust.y=this.sprite.y-(Math.sin(this.sprite.rotation)*(this.sprite.body.width)*0.5);
-				this.thrust.minParticleSpeed.setTo(0,0);
-				this.thrust.maxParticleSpeed.setTo(0,0);
-				this.thrust.lifespan=(1-Math.cos(randomRange(0,0.5*Math.PI)))*500;
-				this.thrust.lifespan+=200;
-				this.thrust.emitParticle();
+				for(var i=0;i<5;i++){
+					this.emitThrust();
+				}
 				partsToTop(this);	
-				this.nextThrust = game.time.now + 15; 
+				this.nextThrust = game.time.now + (300/this.acceleration); 
 			}
 			addVelocity(this.sprite.rotation, this.speed, this.sprite.body.velocity);
 			this.speed=0;
@@ -1951,9 +1984,10 @@ loots.setAll('anchor.x',0.5);
 }
 function explosionAnimate(s) {
 	if(s.alive){
-	s.alpha-=game.time.physicsElapsed*0.5;
-	s.alpha-=game.time.physicsElapsed*(9/s.scale.x);
-        s.rotation += (s.angularVelocity * game.time.physicsElapsed);
+	s.alpha-=game.time.physicsElapsed*2;
+		//	s.alpha=Math.cos((s.alpha-game.time.physicsElapsed)*0.5*Math.PI);
+
+	      	      s.rotation += (s.angularVelocity * game.time.physicsElapsed);
 	s.scale.setTo(s.scale.x+(48*game.time.physicsElapsed),s.scale.y+(48*game.time.physicsElapsed));
 	if(s.alpha<=0){s.kill()};
 	};
@@ -2331,7 +2365,7 @@ function boom(explosionsGroup, bulletSprite, x, y){
 				explosion.lifespan=700;
 				r=randomRange(0.3,0.5);
 				explosion.scale.setTo(r,r);
-				explosion.alpha=1.1;
+				explosion.alpha=0.9;
 				game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
 			}
 		}

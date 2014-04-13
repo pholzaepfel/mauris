@@ -377,13 +377,14 @@ var cmp = [
 					bullet.reset(this.sprite.x - (Math.cos(this.sprite.rotation)*(this.sprite.body.width)), this.sprite.y - (Math.sin(this.sprite.rotation)*(this.sprite.body.width)));
 					boom(explosions,2,bullet.x,bullet.y);
 					bullet.rotation=Math.random()*Math.PI;
-					bullet.alpha=0.4;
-					bullet.damage=6;
+					bullet.alpha=0.8;
+					bullet.blendMode=1;
+					bullet.damage=10;
 					bullet.body.velocity.x=0;
 					bullet.body.velocity.y=0;
 					bullet.scale.setTo(2,2);
-					bullet.lifespan=1666;
-					bullet.body.angularVelocity=666;
+					bullet.lifespan=1333;
+					bullet.body.angularVelocity=999;
 					this.altCooldown=game.time.now+100;
 				}
 
@@ -1614,6 +1615,8 @@ var cmp = [
 	'flavor':'high damage, unreliable speed',
 	'bonus':function(target){
 		target.bulletSprite=2;
+
+					target.bulletBlendMode=0;
 		target.fireDamage+=4;
 		target.fireSound=ui.sound_missile;
 		target.bulletBehavior.push(function(bullet){bullet.body.velocity.x*=.75+Math.random()*.5;
@@ -1641,6 +1644,7 @@ var cmp = [
 	'flavor':'erratic fire rate',
 	'bonus':function(target){
 		target.bulletSprite=1;
+					target.bulletBlendMode=0;
 		target.bulletBehavior.push(function(bullet){				
 			var tgt = ownerFromName(bullet.owner.name);
 			tgt.nextFire = game.time.now + (randomRange(0.25,1.5) * tgt.fireRate);
@@ -1659,6 +1663,7 @@ var cmp = [
 	'flavor':'liberate your opponents. higher damage and energy cost.',
 	'bonus':function(target){
 		target.bulletSprite=2;
+					target.bulletBlendMode=0;
 		target.fireSound=ui.sound_missile;
 		target.fireDamage+=2;
 		target.fireEnergy+=2;
@@ -1682,6 +1687,7 @@ var cmp = [
 	'flavor':'BRRRRRRAAAAAAPPPPPP',
 	'bonus':function(target){
 		target.bulletSprite=1;
+					target.bulletBlendMode=0;
 		target.fireRate*=0.7;
 		target.fireSound=ui.sound_bullet;
 		target.fireDamage+=1;
