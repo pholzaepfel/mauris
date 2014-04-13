@@ -84,9 +84,7 @@ function applyBonuses(target){
 			target.sprite.body.maxVelocity.x-=5;
 			target.sprite.body.maxVelocity.y-=5;
 			target.sprite.profile+=25;
-			if(i>9){
-				target.turnRate-=0.02; //gimp larger ships a bit
-			}
+			target.turnRate-=0.2; //gimp larger ships a bit
 			components[target.ship[i]].bonus(target);
 		}
 	}
@@ -402,7 +400,7 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 	this.bulletSprite = 0;
 	this.parts = [];
 
-	this.sprite.body.setSize(Math.sqrt(this.ship.length)*16,Math.sqrt(this.ship.length)*16,Math.sqrt(this.ship.length)*-8,Math.sqrt(this.ship.length)*-8);
+	this.sprite.body.setSize(Math.sqrt(this.ship.length)*16,Math.sqrt(this.ship.length)*16,0,0);
 
 	this.sprite.body.mass = shipWithoutVoid(this.ship).length*10000
 
@@ -1200,7 +1198,7 @@ gameUI.prototype.resetRadar = function() {
 }
 gameUI.prototype.initCombatUi = function() {
 
-	this.partsSelector = game.add.sprite(-300,-100,'parts',0);
+	this.partsSelector = game.add.sprite(-292,-92,'parts',0);
 	this.partsSelector.visible = false;
 
 	this.tempStation = game.add.sprite(0,0,'station');
@@ -1577,7 +1575,8 @@ gameUI.prototype.partsUI = function (ship) {
 	this.partswindow.visible=true;
 	this.partswindow.bringToTop();
 	this.partsSelector.bringToTop();
-	this.partsSelector.scale.setTo(4,4);
+	this.partsSelector.scale.setTo(3,3);
+	this.partsSelector.smoothed=false;
 	this.partsSelector.inputEnabled = true;
 	this.partsSelector.events.onInputDown.add(selectPart);
 	if(typeof(ship)!='undefined'){
