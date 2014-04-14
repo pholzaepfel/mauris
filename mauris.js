@@ -23,10 +23,6 @@ var blackOut = function(){
 
 	ui.tempStation.visible=false;
 	station.visible=false;
-	backdrop1.visible=false;
-	backdrop2.visible=false;
-	backdrop3.visible=false;
-	backdrop4.visible=false;
 	hazeRed.visible=false;
 	hazeWhite.visible=false;
 	hazePurple.visible=false;
@@ -428,7 +424,6 @@ enemyShip.prototype.destroyParts = function() {
 	if(typeof(this.parts)!='undefined'){
 		for(var i=0; i<this.parts.length;i++)
 		{
-			boom(explosions,1,this.parts[i].sprite.x,this.parts[i].sprite.y);
 			this.parts[i].sprite.kill();
 		}
 	}
@@ -1094,7 +1089,7 @@ var frob1;
 var profileExponent=0.9;
 var lootDropRate = 0.09;
 var componentDropRate = 0.06;
-var backdrop1, backdrop2,backdrop3,backdrop4,hazeWhite,hazeRed,hazePurple;
+var hazeWhite,hazeRed,hazePurple;
 var foredrop;
 var numBaddies = 9;
 var numAsteroids = 19;
@@ -1811,23 +1806,9 @@ function create () {
 	}
 	if (gamemode == 'init'){
 		game.world.setBounds(-100000, -100000, 200000, 200000);
-		backdrop1 = game.add.tileSprite(0, 0, resolutionX, resolutionY, 'starfield2');
 
-		backdrop1.fixedToCamera = true;
-		backdrop1.scale.x=4;	
-		backdrop1.scale.y=4;	
-		backdrop1.alpha=0.8;
-		backdrop1.offsetx = Math.random()*resolutionX;
-		backdrop1.offsety = Math.random()*resolutionY;
-		backdrop2 = game.add.tileSprite(0, 0, resolutionX, resolutionY, 'starfield3');
-		backdrop2.fixedToCamera = true;
-		backdrop2.alpha=1;
-		backdrop2.scale.x=8;
-		backdrop2.scale.y=8;	
-		backdrop2.offsetx = Math.random()*resolutionX;
-		backdrop2.offsety = Math.random()*resolutionY;
 
-		hazeWhite = game.add.tileSprite(0, 0, resolutionX * 1.2, resolutionY * 1.2, 'starfield3');
+		hazeWhite = game.add.tileSprite(0, 0, resolutionX/4, resolutionY/4, 'starfield3');
 		hazeWhite.fixedToCamera = true;
 		hazeWhite.scale.x=4;
 		hazeWhite.scale.y=4;
@@ -1835,27 +1816,16 @@ function create () {
 		hazeWhite.offsetx = Math.random()*resolutionX;
 		hazeWhite.offsety = Math.random()*resolutionY;
 		hazeWhite.speed = 70;
-		backdrop3 = game.add.tileSprite(0, 0, resolutionX, resolutionY, 'starfield4');
-		backdrop3.fixedToCamera = true;
-		backdrop3.offsetx = Math.random()*resolutionX;
-		backdrop3.offsety = Math.random()*resolutionY;
-		backdrop3.alpha=0.666;
-		backdrop4 = game.add.tileSprite(0, 0, resolutionX*1.5, resolutionY*1.5, 'starfield4');
-		backdrop4.offsetx = Math.random()*resolutionX;
-		backdrop4.offsety = Math.random()*resolutionY;
-		backdrop4.fixedToCamera = true;
-		backdrop4.scale.x=0.75;
-		backdrop4.scale.y=0.75;
-		backdrop4.alpha=0.4;
-		hazeRed = game.add.tileSprite(0, 0, resolutionX, resolutionY, 'haze');
+		hazeRed = game.add.tileSprite(0, 0, resolutionX/3, resolutionY/3, 'haze');
 		hazeRed.offsetx = Math.random()*resolutionX;
 		hazeRed.offsety = Math.random()*resolutionY;
 		hazeRed.fixedToCamera = true;
 		hazeRed.scale.x=3;
 		hazeRed.scale.y=3;
-		hazeRed.alpha=0.7; //randomRange(0,0.8)-0.2;
+		hazeRed.alpha=1; //randomRange(0,0.8)-0.2;
+		hazeRed.blendMode=1;
 		hazeRed.speed = 160;
-		hazePurple = game.add.tileSprite(0, 0, resolutionX, resolutionY, 'haze2');
+		hazePurple = game.add.tileSprite(0, 0, resolutionX/3, resolutionY/3, 'haze2');
 		hazePurple.offsetx = Math.random()*resolutionX;
 		hazePurple.offsety = Math.random()*resolutionY;
 		hazePurple.fixedToCamera = true;
@@ -2205,18 +2175,10 @@ function update () {
 
 	}	
 	// scrolling
-	backdrop1.tilePosition.x = backdrop1.offsetx + ( -0.11*game.camera.x / backdrop1.scale.x) + (game.time.now / (4000));
-	backdrop1.tilePosition.y = backdrop1.offsety + ( -0.11*game.camera.y / backdrop1.scale.y);
-	backdrop2.tilePosition.x = backdrop2.offsetx + ( -0.22*game.camera.x / backdrop2.scale.x) + (game.time.now / (80));
-	backdrop2.tilePosition.y = backdrop2.offsety + ( -0.22*game.camera.y / backdrop2.scale.y);
 	hazeWhite.tilePosition.x = hazeWhite.offsetx + ( -0.26*game.camera.x / hazeWhite.scale.x) + (game.time.now / (hazeWhite.speed));
 	hazeWhite.tilePosition.y = hazeWhite.offsety + ( -0.26*game.camera.y / hazeWhite.scale.y);
-	backdrop3.tilePosition.x = backdrop3.offsetx + ( -0.30*game.camera.x / backdrop3.scale.x) + (game.time.now / (60));
-	backdrop3.tilePosition.y = backdrop3.offsety + ( -0.30*game.camera.y / backdrop3.scale.y);
-	backdrop4.tilePosition.x = backdrop4.offsetx + ( -0.5*game.camera.x / backdrop4.scale.x) + (game.time.now / (40));
-	backdrop4.tilePosition.y = backdrop4.offsety + ( -0.5*game.camera.y / backdrop4.scale.y);
-	hazeRed.tilePosition.x = hazeRed.offsetx + ( -0.5*game.camera.x / hazeRed.scale.x) + (game.time.now / (hazeRed.speed));
-	hazeRed.tilePosition.y = hazeRed.offsety + ( -0.5*game.camera.y / hazeRed.scale.y);
+	hazeRed.tilePosition.x = hazeRed.offsetx + ( -0.11*game.camera.x / hazeRed.scale.x) + (game.time.now / (hazeRed.speed));
+	hazeRed.tilePosition.y = hazeRed.offsety + ( -0.11*game.camera.y / hazeRed.scale.y);
 	hazePurple.tilePosition.x = hazePurple.offsetx + ( -1.5*game.camera.x / hazePurple.scale.x) + (game.time.now / (hazePurple.speed));
 	hazePurple.tilePosition.y = hazePurple.offsety + ( -1.5*game.camera.y / hazePurple.scale.y);
 	//hazePurple.bringToTop();	
@@ -2345,7 +2307,7 @@ function sparkleBoom(explosionsGroup, minSprite, maxSprite, x, y){
 			explosion.lifespan=700;
 			r=randomRange(0.7,1.2);
 			explosion.scale.setTo(r,r);
-			explosion.alpha=1.8-r;
+			explosion.alpha=3.1-r;
 			game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
 		}
 	}
