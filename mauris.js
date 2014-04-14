@@ -713,7 +713,7 @@ enemyShip.prototype.update = function() {
 		}
 
 		if (this.speed > 0){
-			if(onscreen(this.sprite.body.x && this.sprite.body.y) && game.time.now>(this.nextThrust||0)){
+			if(game.time.now>(this.nextThrust||0)){
 				
 				for(var i=0;i<5;i++){
 					this.emitThrust();
@@ -1608,7 +1608,6 @@ gameUI.prototype.partsUI = function (ship) {
 	this.partswindow.bringToTop();
 	this.partsSelector.bringToTop();
 	this.partsSelector.scale.setTo(3,3);
-	this.partsSelector.smoothed=false;
 	this.partsSelector.inputEnabled = true;
 	this.partsSelector.events.onInputDown.add(selectPart);
 	if(typeof(ship)!='undefined'){
@@ -1792,6 +1791,13 @@ function initMission (missionId) {
 		frob1.body.velocity.x=randomRange(-20,20);
 		frob1.body.velocity.y=randomRange(-20,20);
 	}
+	hazeRed.alpha=playerStats.mission.hazeRed;
+	hazeWhite.alpha=playerStats.mission.hazeWhite;
+	hazePurple.alpha=playerStats.mission.hazePurple;
+	hazeRed.speed=playerStats.mission.hazeRedSpeed;
+	hazeWhite.speed=playerStats.mission.hazeWhiteSpeed;
+	hazePurple.speed=playerStats.mission.hazePurpleSpeed;
+	hazePurple.blendMode=playerStats.mission.hazePurpleBlendMode;
 }
 
 function create () {
@@ -1808,21 +1814,22 @@ function create () {
 		game.world.setBounds(-100000, -100000, 200000, 200000);
 
 
-		hazeWhite = game.add.tileSprite(0, 0, resolutionX/4, resolutionY/4, 'starfield3');
+		hazeWhite = game.add.tileSprite(0, 0, resolutionX/2, resolutionY/2, 'starfield3');
 		hazeWhite.fixedToCamera = true;
-		hazeWhite.scale.x=4;
-		hazeWhite.scale.y=4;
-		hazeWhite.alpha=0.5; //random()
+		hazeWhite.scale.x=2;
+		hazeWhite.scale.y=2;
+		hazeWhite.alpha=1; //random()
+		hazeWhite.blendMode=0;
 		hazeWhite.offsetx = Math.random()*resolutionX;
 		hazeWhite.offsety = Math.random()*resolutionY;
-		hazeWhite.speed = 70;
+		hazeWhite.speed = 600;
 		hazeRed = game.add.tileSprite(0, 0, resolutionX/3, resolutionY/3, 'haze');
 		hazeRed.offsetx = Math.random()*resolutionX;
 		hazeRed.offsety = Math.random()*resolutionY;
 		hazeRed.fixedToCamera = true;
 		hazeRed.scale.x=3;
 		hazeRed.scale.y=3;
-		hazeRed.alpha=1; //randomRange(0,0.8)-0.2;
+		hazeRed.alpha=0.7; //randomRange(0,0.8)-0.2;
 		hazeRed.blendMode=1;
 		hazeRed.speed = 160;
 		hazePurple = game.add.tileSprite(0, 0, resolutionX/3, resolutionY/3, 'haze2');
@@ -1831,8 +1838,9 @@ function create () {
 		hazePurple.fixedToCamera = true;
 		hazePurple.scale.x=3;
 		hazePurple.scale.y=3;
-		hazePurple.alpha=0; //randomRange(0,0.6)-0.2;
-		hazePurple.speed=160;
+		hazePurple.alpha=0.8; //randomRange(0,0.6)-0.2;
+		hazePurple.blendMode=2;
+		hazePurple.speed=17;
 		station = game.add.sprite(0,0,'station');
 		station.anchor.setTo(0.5,0.5)
 			asteroids.sort(lengthSort);
@@ -2175,12 +2183,12 @@ function update () {
 
 	}	
 	// scrolling
-	hazeWhite.tilePosition.x = hazeWhite.offsetx + ( -0.26*game.camera.x / hazeWhite.scale.x) + (game.time.now / (hazeWhite.speed));
-	hazeWhite.tilePosition.y = hazeWhite.offsety + ( -0.26*game.camera.y / hazeWhite.scale.y);
-	hazeRed.tilePosition.x = hazeRed.offsetx + ( -0.11*game.camera.x / hazeRed.scale.x) + (game.time.now / (hazeRed.speed));
-	hazeRed.tilePosition.y = hazeRed.offsety + ( -0.11*game.camera.y / hazeRed.scale.y);
-	hazePurple.tilePosition.x = hazePurple.offsetx + ( -1.5*game.camera.x / hazePurple.scale.x) + (game.time.now / (hazePurple.speed));
-	hazePurple.tilePosition.y = hazePurple.offsety + ( -1.5*game.camera.y / hazePurple.scale.y);
+	hazeWhite.tilePosition.x = hazeWhite.offsetx + ( -0.05*game.camera.x / hazeWhite.scale.x) + (game.time.now / (hazeWhite.speed));
+	hazeWhite.tilePosition.y = hazeWhite.offsety + ( -0.05*game.camera.y / hazeWhite.scale.y);
+	hazeRed.tilePosition.x = hazeRed.offsetx + ( -0.26*game.camera.x / hazeRed.scale.x) + (game.time.now / (hazeRed.speed));
+	hazeRed.tilePosition.y = hazeRed.offsety + ( -0.26*game.camera.y / hazeRed.scale.y);
+	hazePurple.tilePosition.x = hazePurple.offsetx + ( -.9*game.camera.x / hazePurple.scale.x) + (game.time.now / (hazePurple.speed));
+	hazePurple.tilePosition.y = hazePurple.offsety + ( -.9*game.camera.y / hazePurple.scale.y);
 	//hazePurple.bringToTop();	
 
 	ui.update();
@@ -2212,15 +2220,6 @@ function update () {
 		  }
 	}
 
-/*	if(hazeRed.alpha < playerStats.mission.hazeRed){		hazeRed.alpha+=0.001;	}
-	if(hazeRed.alpha > playerStats.mission.hazeRed){		hazeRed.alpha-=0.001;	}
-
-	if(hazeWhite.alpha < playerStats.mission.hazeWhite){		hazeWhite.alpha+=0.001;	}
-	if(hazeWhite.alpha > playerStats.mission.hazeWhite){		hazeWhite.alpha-=0.001;	}
-
-	if(hazePurple.alpha < playerStats.mission.hazePurple){		hazePurple.alpha+=0.001;	}
-	if(hazePurple.alpha > playerStats.mission.hazePurple){		hazePurple.alpha-=0.001;	}
-*/
 	}
 }
 
@@ -2375,6 +2374,7 @@ function spawnLoots(_count, x, y){
 		loot.scale.setTo(scale,scale);
 		loot.averageCounter=50;
 		loot.acceleration=200;
+		loot.blendMode=0;
 		loot.lootType='ore';
 		loot.acceleration=0;
 		game.physics.arcade.velocityFromRotation(loot.rotation, randomRange(100,300), loot.body.velocity);
@@ -2390,6 +2390,7 @@ function spawnComponent(component,x,y){
 		loot.averageCounter=50;
 		loot.rotation=0;
 		loot.acceleration=200;
+		loot.blendMode=1;
 		loot.lootType='component';
 		loot.component = component;
 		loot.acceleration=0;
