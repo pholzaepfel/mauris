@@ -377,7 +377,6 @@ var cmp = [
 					bullet.reset(this.sprite.x - (Math.cos(this.sprite.rotation)*(this.sprite.body.width)), this.sprite.y - (Math.sin(this.sprite.rotation)*(this.sprite.body.width)));
 					boom(explosions,2,bullet.x,bullet.y);
 					bullet.rotation=Math.random()*Math.PI;
-					bullet.alpha=0.8;
 					bullet.blendMode=1;
 					bullet.damage=10;
 					bullet.body.velocity.x=0;

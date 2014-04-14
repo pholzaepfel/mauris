@@ -353,6 +353,7 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 
 	var x = this.target.body.x + (randomSign() * randomRange(750,2000)) + player.sprite.body.velocity.x*3;
 	var y = this.target.body.y + (randomSign() * randomRange(750,2000)) + player.sprite.body.velocity.y*3;
+	this.nextThrust=0;
 	this.fireSound=ui.sound_pew3;
 	this.built=false;
 	this.sprite.reset(x,y);
@@ -717,9 +718,8 @@ enemyShip.prototype.update = function() {
 		}
 
 		if (this.speed > 0){
-			if(game.time.now>(this.nextThrust||0)){
-
-
+			if(onscreen(this.sprite.body.x && this.sprite.body.y) && game.time.now>(this.nextThrust||0)){
+				
 				for(var i=0;i<5;i++){
 					this.emitThrust();
 				}
@@ -795,7 +795,7 @@ var playerShip = function(ship) {
 	this.initPlayerShip(ship);
 	this.thrust = game.add.emitter(0,0,50); //this is the right number for continuous thrust
 	this.thrust.makeParticles('thrust',[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]);
-	this.thrust.alpha = 0.7;
+	this.thrust.setAlpha(1.5,0,1500,Phaser.Easing.Sinusoidal.Out);
 	this.thrust.blendMode = 1;
 	this.thrust.gravity=0;
 }
@@ -1898,7 +1898,7 @@ function create () {
 
 		enemyThrust = game.add.emitter(0,0,100);
 		enemyThrust.makeParticles('thrust',[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]);
-		enemyThrust.alpha = 0.7;
+	enemyThrust.setAlpha(1.5,0,1500,Phaser.Easing.Sinusoidal.Out);
 		enemyThrust.blendMode = 1;
 		enemyThrust.gravity=0;
 
@@ -1923,6 +1923,7 @@ function create () {
 		pew = game.add.emitter(0,0,200);
 		pew.makeParticles('sparks');
 		pew.blendMode=1;
+		pew.setAlpha(2,0,900,Phaser.Easing.Sinusoidal.Out);
 		pew.gravity=0;
 
 		bullets = game.add.group();
@@ -1945,7 +1946,7 @@ loots.setAll('anchor.x',0.5);
 
 		sparkles = game.add.emitter(0,0,100);
 		sparkles.makeParticles('sparkles',[0,1,2,3,4,5,6,7]);
-		sparkles.alpha= 0.5;
+		sparkles.setAlpha(1,0,2000);
 		sparkles.blendMode = 1;
 		sparkles.lifespan=200;
 
@@ -2023,9 +2024,12 @@ function pullLootToPlayer(s) {
 			var halfWidth = s.width * 0.5;
 			sparkles.x=s.x+randomRange(-1 * halfWidth,halfWidth);
 			sparkles.y=s.y+randomRange(-1 * halfWidth,halfWidth);
-			sparkles.alpha=randomRange(0.3,0.6);
-			sparkles.minParticleSpeed.setTo(0,0);
-			sparkles.maxParticleSpeed.setTo(0,0);
+			var tempC;
+			tempC = (Math.sin(randomRange(0,-0.5*Math.PI)));
+			tempC*=0.5;
+			sparkles.minParticleSpeed.setTo(tempC*s.body.velocity.x,tempC*s.body.velocity.y);
+			sparkles.maxParticleSpeed.setTo(tempC*s.body.velocity.x,tempC*s.body.velocity.y);
+			sparkles.lifespan=(Math.sin(randomRange(0,0.5*Math.PI)))*500;
 			sparkles.emitParticle();
 		}
 		if(game.physics.arcade.distanceBetween(s, player.sprite) < player.lootRange){
