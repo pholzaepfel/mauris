@@ -26,10 +26,15 @@ var cmp = [
 		target.bulletSprite=3;
 		target.fireEnergy+=1;
 		target.fireRange+=1000;
-		target.fireDamage+=1;
+		target.fireDamage+=3;
 		target.fireSound=ui.sound_bullet;
-		target.fireRate+=200;
-		target.fireVelocity+=150;
+		target.fireRate+=0;
+		target.fireVelocity+=600;
+		target.bulletBehavior.push(function(bullet){
+if(bullet.scale.x<1.5){
+			bullet.scale.setTo(bullet.scale.x+0.5,bullet.scale.y+0.5);
+}
+});
 		target.sprite.profile+=25;
 	}
 },
@@ -169,12 +174,11 @@ var cmp = [
 	'flavor':'covered in warnings in multiple languages',
 	'bonus':function(target){
 		target.bulletSprite=5; 
-		target.fireEnergy*=2;
 		target.fireDamage*=2;
 
 		target.fireSound=ui.sound_boom2;
 		target.fireRate*=1.5;
-		target.fireVelocity*=2;
+		target.fireVelocity*=1.6;
 		target.sprite.profile+=200;
 	}
 },
@@ -1025,8 +1029,7 @@ var cmp = [
 	'flavor':'increases the size of your shots',
 	'bonus':function(target){
 		target.bulletBehavior.push(function(bullet){
-			bullet.scale.setTo(bullet.scale.x+1,bullet.scale.y+1);
-			bullet.body.angularVelocity+=800;
+			bullet.scale.setTo(bullet.scale.x+0.5,bullet.scale.y+0.5);
 			bullet.blendMode=1;
 		});
 
@@ -1039,8 +1042,7 @@ var cmp = [
 	'flavor':'increases the size of your shots',
 	'bonus':function(target){
 		target.bulletBehavior.push(function(bullet){
-			bullet.scale.setTo(bullet.scale.x+1,bullet.scale.y+1);
-			bullet.body.angularVelocity+=800;
+			bullet.scale.setTo(bullet.scale.x+0.5,bullet.scale.y+0.5);
 			bullet.blendMode=1;
 		});
 
@@ -1184,7 +1186,7 @@ var cmp = [
 					bullet.alpha=0.8;
 					bullet.damage=12;
 					bullet.bulletSprite=4;
-					bullet.scale.setTo(2,2);
+					bullet.scale.setTo(4,4);
 					bullet.lifespan=400;
 					bullet.body.angularVelocity=999;
 					bullet.blendMode=1;
@@ -1496,8 +1498,7 @@ var cmp = [
 	'flavor':'increases the size of your shots',
 	'bonus':function(target){
 		target.bulletBehavior.push(function(bullet){
-			bullet.scale.setTo(bullet.scale.x+1,bullet.scale.y+1);
-			bullet.body.angularVelocity+=800;
+			bullet.scale.setTo(bullet.scale.x+0.5,bullet.scale.y+0.5);
 			bullet.blendMode=1;
 		});
 
@@ -1511,7 +1512,7 @@ var cmp = [
 	'flavor':'increases the size of your shots',
 	'bonus':function(target){
 		target.bulletBehavior.push(function(bullet){
-			bullet.scale.setTo(bullet.scale.x+1,bullet.scale.y+1);
+			bullet.scale.setTo(bullet.scale.x+0.5,bullet.scale.y+0.5);
 			bullet.body.angularVelocity+=800;
 			bullet.blendMode=1;
 		});
