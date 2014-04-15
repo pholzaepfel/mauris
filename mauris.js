@@ -77,15 +77,14 @@ function applyBonuses(target){
 
 	for(var i=0;i<target.ship.length;i++){
 		if (target.ship[i]!=-1){
-			target.sprite.body.maxVelocity.x-=5;
-			target.sprite.body.maxVelocity.y-=5;
+			target.sprite.body.maxVelocity.x-=10;
+			target.sprite.body.maxVelocity.y-=10;
 			target.sprite.profile+=25;
 			target.turnRate-=0.1;
 			components[target.ship[i]].bonus(target);
 		}
 	}
-	target.acceleration = (target.sprite.body.maxVelocity.x * target.sprite.body.maxVelocity.x * target.acceleration)/90000;
-	target.acceleration*=4;
+	target.acceleration =target.acceleration*48/(i+3);
 	target.turnRate*=2.5;
 
 	//apply some minimums
@@ -100,6 +99,20 @@ function applyBonuses(target){
 }
 
 function addVelocity (a,b,c){return"undefined"==typeof b&&(b=60),	c=c||new d.Point,c.setTo(c.x+Math.cos(a)*b,c.y+Math.sin(a)*b)};
+function getHypo(a,b){return Math.sqrt(a*a+b*b)};
+function clampVelocity (sprite){
+				
+				var hypo = getHypo(sprite.body.velocity.x,sprite.body.velocity.y);
+
+				if(hypo > sprite.body.maxVelocity.x){
+					var foo = hypo / sprite.body.maxVelocity.x;
+					sprite.body.velocity.setTo(
+							sprite.body.velocity.x/foo,
+							sprite.body.velocity.y/foo
+							);
+				}
+
+}
 function randomRange (a,b){var c,d; if(a>b){c=a;d=b;}else{d=a;c=b};return (Math.random()*(c-d))+d};
 function randomSign (){return Math.random()>.5?1:-1};
 function shipWithoutVoid (ship) {
@@ -405,7 +418,7 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 		this.sprite.body.collideWorldBounds = true;
 	this.sprite.angle = game.rnd.angle();
 
-	this.sprite.body.maxVelocity.setTo(300,300);
+	this.sprite.body.maxVelocity.setTo(500,500);
 
 	applyBonuses(this);
 
@@ -559,17 +572,17 @@ enemyShip.prototype.spawnBullet = function () {
 
 
 enemyShip.prototype.emitThrust = function() {
-				this.thrust.x=this.sprite.x-(Math.cos(this.sprite.rotation)*(this.sprite.body.width)*0.5);
-				this.thrust.y=this.sprite.y-(Math.sin(this.sprite.rotation)*(this.sprite.body.width)*0.5);
-				this.thrust.minParticleSpeed.setTo(0,0);
-				this.thrust.maxParticleSpeed.setTo(0,0);
-				this.thrust.lifespan=(1-Math.cos(randomRange(0,0.5*Math.PI)))*500;
-				this.thrust.lifespan+=200;
-				var tempX = randomRange(-18,18);
-				var tempY = randomRange(-18,18);
-				this.thrust.minParticleSpeed.setTo(tempX,tempY);
-				this.thrust.maxParticleSpeed.setTo(tempX,tempY);
-				this.thrust.emitParticle();
+	this.thrust.x=this.sprite.x-(Math.cos(this.sprite.rotation)*(this.sprite.body.width)*0.5);
+	this.thrust.y=this.sprite.y-(Math.sin(this.sprite.rotation)*(this.sprite.body.width)*0.5);
+	this.thrust.minParticleSpeed.setTo(0,0);
+	this.thrust.maxParticleSpeed.setTo(0,0);
+	this.thrust.lifespan=(1-Math.cos(randomRange(0,0.5*Math.PI)))*500;
+	this.thrust.lifespan+=200;
+	var tempX = randomRange(-18,18);
+	var tempY = randomRange(-18,18);
+	this.thrust.minParticleSpeed.setTo(tempX,tempY);
+	this.thrust.maxParticleSpeed.setTo(tempX,tempY);
+	this.thrust.emitParticle();
 
 }
 
@@ -643,48 +656,32 @@ enemyShip.prototype.update = function() {
 
 					}
 		} else {
-			var targetLocation = {
-				x:this.target.x,
-				y:this.target.y
-			};
 			//TODO add some kind of fleeing behavior
 
 			var targetDistance = this.game.physics.arcade.distanceBetween(this.sprite, this.target);
 			var targetAngle = this.game.physics.arcade.angleBetween(this.sprite, this.target); 
 
 
-			if(this.behavior=='strafing'){
-				if(targetDistance > this.fireRange){
-					this.behavior='chasing';
-				}
-				//to dramatically increase difficulty, put the below target location adjustment here
-				if(this.ai==4){
-					targetLocation.x += this.target.body.velocity.x * 0.95 * Math.abs(targetDistance/this.fireVelocity);			
-					targetLocation.y += this.target.body.velocity.y * 0.95 * Math.abs(targetDistance/this.fireVelocity);			
-					var targetDistance = this.game.math.distance(this.sprite.x, this.sprite.y, targetLocation.x, targetLocation.y);
-					var targetAngle = this.game.math.angleBetween(this.sprite.x, this.sprite.y, targetLocation.x, targetLocation.y);
-
-				}
-			}
 			if(this.behavior=='chasing'){
-				if(targetDistance < 0.75 * this.fireRange){
-					this.behavior='strafing';
-				}
-
-				targetLocation.x += this.target.body.velocity.x * 0.95 * Math.abs(targetDistance/this.fireVelocity);			
-				targetLocation.y += this.target.body.velocity.y * 0.95 * Math.abs(targetDistance/this.fireVelocity);			
-				var targetDistance = this.game.math.distance(this.sprite.x, this.sprite.y, targetLocation.x, targetLocation.y);
-				var targetAngle = this.game.math.angleBetween(this.sprite.x, this.sprite.y, targetLocation.x, targetLocation.y);
-
+				var c = targetDistance / this.fireVelocity;
+				var tempX = c * this.target.body.velocity.x;
+				var tempY = c * this.target.body.velocity.y;
+				this.sprite.x-=tempX;
+				this.sprite.y-=tempY;
+					targetDistance = this.game.physics.arcade.distanceBetween(this.sprite, this.target);
+					targetAngle = this.game.physics.arcade.angleBetween(this.sprite, this.target); 
+			
+				this.sprite.x+=tempX;
+				this.sprite.y+=tempY;
 			}
 
 			var diffAngle = compareAngles(this.sprite.rotation,targetAngle);
-				if(diffAngle*60>this.turnRate)
-				{
-					this.left();
-				}else if(diffAngle*60<-this.turnRate){
-					this.right();
-				}
+			if(diffAngle*60>this.turnRate)
+			{
+				this.left();
+			}else if(diffAngle*60<-this.turnRate){
+				this.right();
+			}
 
 
 
@@ -698,12 +695,12 @@ enemyShip.prototype.update = function() {
 			}
 
 			if (this.target!= player.sprite || (targetDistance < adjustedProfile * 2 && this.behavior!='neutral')){
-				if(Math.abs(diffAngle)<Math.PI){
+				if(Math.abs(diffAngle)<0.25*Math.PI){
 					this.up();
 				}
 			}
-			if (targetDistance < this.fireRange * 0.75 &&
-					targetDistance < adjustedProfile){
+			if (targetDistance < this.fireRange * (this.fireVelocity/1000) && 
+					targetDistance < adjustedProfile * 1.5){
 						if(Math.abs(diffAngle) < 0.5){
 							this.fire(); 
 						}
@@ -714,15 +711,16 @@ enemyShip.prototype.update = function() {
 
 		if (this.speed > 0){
 			if(game.time.now>(this.nextThrust||0)){
-				
+
 				for(var i=0;i<5;i++){
 					this.emitThrust();
 				}
 
 				partsToTop(this);	
-				this.nextThrust = game.time.now + 15; 
+								this.nextThrust = game.time.now + (500/this.acceleration); 
+				addVelocity(this.sprite.rotation, this.sprite.body.maxVelocity.x/12, this.sprite.body.velocity);
+				clampVelocity(this.sprite);
 			}
-			addVelocity(this.sprite.rotation, this.speed, this.sprite.body.velocity);
 			this.speed=0;
 		}
 
@@ -749,13 +747,13 @@ var game = new Phaser.Game(resolutionX, resolutionY, Phaser.AUTO, 'phaser-exampl
 
 function preload () {
 	hello =	game.add.text(resolutionX*0.5,resolutionY*0.4, 'LOADING',{ font:'12px monospace', fill: 'rgb(196,150,255)', align: 'center' })
-	game.load.spritesheet('parts', 'assets/parts.png', 16, 16);
+		game.load.spritesheet('parts', 'assets/parts.png', 16, 16);
 	game.load.image('station', 'assets/station.png');
 	game.load.image('frob1', 'assets/frob1.png');
 	game.load.image('partswindow', 'assets/partswindow.png');
 	game.load.spritesheet('bullet', 'assets/bullets.png',16,16);
 	game.load.image('starfield2', 'assets/starfield2.png');
-	game.load.image('starfield3', 'assets/starfield3.png');
+	game.load.image('starfield6', 'assets/starfield6.png');
 	game.load.image('starfield4', 'assets/starfield4.png');
 	game.load.image('haze', 'assets/haze.png');
 	game.load.image('haze2', 'assets/haze2.png');
@@ -866,7 +864,7 @@ playerShip.prototype.initPlayerShip = function (ship) {
 	this.cooldown114=0;
 	this.sprite.visible=true;
 	this.sprite.anchor.setTo(0.5, 0.5);
-	this.sprite.body.maxVelocity.setTo(300,300);
+	this.sprite.body.maxVelocity.setTo(500,500);
 	this.sprite.profile=250;	//max range at which opponents will attack. this will change dynamically
 	this.sprite.body.linearDamping=0;
 	this.sprite.body.collideWorldBounds = true; 
@@ -987,17 +985,17 @@ playerShip.prototype.spawnBullet = function(){
 }
 
 playerShip.prototype.emitThrust = function() {
-				this.thrust.x=this.sprite.x-(Math.cos(this.sprite.rotation)*(this.sprite.body.width)*0.5);
-				this.thrust.y=this.sprite.y-(Math.sin(this.sprite.rotation)*(this.sprite.body.width)*0.5);
-				this.thrust.minParticleSpeed.setTo(0,0);
-				this.thrust.maxParticleSpeed.setTo(0,0);
-				this.thrust.lifespan=(1-Math.cos(randomRange(0,0.5*Math.PI)))*500;
-				this.thrust.lifespan+=200;
-				var tempX = randomRange(-18,18);
-				var tempY = randomRange(-18,18);
-				this.thrust.minParticleSpeed.setTo(tempX,tempY);
-				this.thrust.maxParticleSpeed.setTo(tempX,tempY);
-				this.thrust.emitParticle();
+	this.thrust.x=this.sprite.x-(Math.cos(this.sprite.rotation)*(this.sprite.body.width)*0.5);
+	this.thrust.y=this.sprite.y-(Math.sin(this.sprite.rotation)*(this.sprite.body.width)*0.5);
+	this.thrust.minParticleSpeed.setTo(0,0);
+	this.thrust.maxParticleSpeed.setTo(0,0);
+	this.thrust.lifespan=(1-Math.cos(randomRange(0,0.5*Math.PI)))*500;
+	this.thrust.lifespan+=200;
+	var tempX = randomRange(-18,18);
+	var tempY = randomRange(-18,18);
+	this.thrust.minParticleSpeed.setTo(tempX,tempY);
+	this.thrust.maxParticleSpeed.setTo(tempX,tempY);
+	this.thrust.emitParticle();
 
 }
 
@@ -1048,9 +1046,13 @@ playerShip.prototype.update = function(){
 					this.emitThrust();
 				}
 				partsToTop(this);	
-				this.nextThrust = game.time.now + (300/this.acceleration); 
+				this.nextThrust = game.time.now + (500/this.acceleration); 
+				addVelocity(this.sprite.rotation, this.sprite.body.maxVelocity.x/12, this.sprite.body.velocity);
+
+				clampVelocity(this.sprite);
+
+
 			}
-			addVelocity(this.sprite.rotation, this.speed, this.sprite.body.velocity);
 			this.speed=0;
 		}
 
@@ -1206,8 +1208,8 @@ gameUI.prototype.partAt = function(x,y){
 	for(var i=0;i<this.parts.length;i++){
 		if(this.parts[i].sprite.alive &&
 				this.parts[i].sprite.x==x &&
-					this.parts[i].sprite.y==y){
-				count++;
+				this.parts[i].sprite.y==y){
+					count++;
 				}
 	}
 	return count;
@@ -1616,7 +1618,7 @@ gameUI.prototype.partsUI = function (ship) {
 	ui.partsArray();
 }
 gameUI.prototype.destroyParts = function() {
-		if(typeof(this.parts)!='undefined'){
+	if(typeof(this.parts)!='undefined'){
 		for(var i=0; i<this.parts.length;i++)
 		{
 			this.parts[i].sprite.kill();
@@ -1646,11 +1648,11 @@ gameUI.prototype.partsArray = function () {
 		var shipSize = 0;
 		for(var i=0;i<this.parts.length;i++){
 			if(this.parts[i].sprite.alive){
-	
+
 				//prevent overlapping parts	
 				if(ui.partAt(this.parts[i].sprite.x,this.parts[i].sprite.y)>1){
 					var newPosition = this.calculatePartPosition();
-				       this.parts[i].sprite.reset(newPosition.x,newPosition.y);
+					this.parts[i].sprite.reset(newPosition.x,newPosition.y);
 				}	       
 
 				if(this.parts[i].sprite.x < minx){
@@ -1797,6 +1799,7 @@ function initMission (missionId) {
 	hazeRed.speed=playerStats.mission.hazeRedSpeed;
 	hazeWhite.speed=playerStats.mission.hazeWhiteSpeed;
 	hazePurple.speed=playerStats.mission.hazePurpleSpeed;
+	hazeRed.blendMode=playerStats.mission.hazeRedBlendMode;
 	hazePurple.blendMode=playerStats.mission.hazePurpleBlendMode;
 }
 
@@ -1814,7 +1817,7 @@ function create () {
 		game.world.setBounds(-100000, -100000, 200000, 200000);
 
 
-		hazeWhite = game.add.tileSprite(0, 0, resolutionX/2, resolutionY/2, 'starfield3');
+		hazeWhite = game.add.tileSprite(0, 0, resolutionX/2, resolutionY/2, 'starfield6');
 		hazeWhite.fixedToCamera = true;
 		hazeWhite.scale.x=2;
 		hazeWhite.scale.y=2;
@@ -1872,11 +1875,11 @@ function create () {
 		enemyBullets.setAll('anchor.x', 0.5);
 		enemyBullets.setAll('anchor.y', 0.5);
 		enemyBullets.setAll('lifespan',5000)
-		enemyBullets.setAll('outOfBoundsKill', true);
+			enemyBullets.setAll('outOfBoundsKill', true);
 
 		enemyThrust = game.add.emitter(0,0,100);
 		enemyThrust.makeParticles('thrust',[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]);
-	enemyThrust.setAlpha(1.5,0,1500,Phaser.Easing.Sinusoidal.Out);
+		enemyThrust.setAlpha(1.5,0,1500,Phaser.Easing.Sinusoidal.Out);
 		enemyThrust.blendMode = 1;
 		enemyThrust.gravity=0;
 
@@ -1906,16 +1909,16 @@ function create () {
 
 		bullets = game.add.group();
 		bullets.createMultiple(30, 'bullet');
-game.physics.enable(bullets, Phaser.Physics.ARCADE);
-bullets.setAll('anchor.x', 0.5);
+		game.physics.enable(bullets, Phaser.Physics.ARCADE);
+		bullets.setAll('anchor.x', 0.5);
 		bullets.setAll('anchor.y', 0.5);
 		bullets.setAll('outOfBoundsKill', true);
 		bullets.setAll('lifespan', 1000);
 
 		loots = game.add.group();
 		loots.createMultiple(30, 'parts');
-game.physics.enable(loots, Phaser.Physics.ARCADE);
-loots.setAll('anchor.x',0.5);
+		game.physics.enable(loots, Phaser.Physics.ARCADE);
+		loots.setAll('anchor.x',0.5);
 		loots.setAll('anchor.y', 0.5);
 		loots.setAll('outOfBoundsKill', true);
 		loots.setAll('lifespan', 60000);
@@ -1950,7 +1953,7 @@ loots.setAll('anchor.x',0.5);
 	if(cheatmode){
 		initMission(1);
 	}else{
-	initMission(0);
+		initMission(0);
 	}
 	for(var i=0;i<startParts;i++)
 	{
@@ -1964,14 +1967,14 @@ loots.setAll('anchor.x',0.5);
 }
 function explosionAnimate(s) {
 	if(s.alive){
-//	s.alpha+=s.alpha;
-	s.alpha-=game.time.physicsElapsed*(Math.min(Math.pow(s.alpha,1.7),1.5))*15;
+		//	s.alpha+=s.alpha;
+		s.alpha-=game.time.physicsElapsed*(Math.min(Math.pow(s.alpha,1.7),1.5))*15;
 		//	s.alpha=Math.cos((s.alpha-game.time.physicsElapsed)*0.5*Math.PI);
 
-	      	      s.rotation += (s.angularVelocity * game.time.physicsElapsed);
-	s.scale.setTo(s.scale.x+((game.time.physicsElapsed*16)),s.scale.y+((game.time.physicsElapsed*16)));
-	s.scale.setTo(s.scale.x*(1+(game.time.physicsElapsed*2)),s.scale.y*(1+(game.time.physicsElapsed*2)));
-	if(s.alpha<=0){s.kill()};
+		s.rotation += (s.angularVelocity * game.time.physicsElapsed);
+		s.scale.setTo(s.scale.x+((game.time.physicsElapsed*16)),s.scale.y+((game.time.physicsElapsed*16)));
+		s.scale.setTo(s.scale.x*(1+(game.time.physicsElapsed*2)),s.scale.y*(1+(game.time.physicsElapsed*2)));
+		if(s.alpha<=0){s.kill()};
 	};
 }
 
@@ -2075,150 +2078,150 @@ function adjustHaze(haze, target){
 }
 function update () {
 	if(gamemode!='init'){
-	if(gamemode=='?build'){
+		if(gamemode=='?build'){
 
-		for (var i = 0; i < ui.parts.length; i++){
-			ui.parts[i].update();
-		}
-	}
-	if(gamemode=='war' ){
-
-		handleMission();
-
-		if(nextSpawn<game.time.now||nextSpawn==0){
-			if(!player.alive){
-				player.initPlayerShip(defaultPlayerShip);
-				if(contextTutorialDeath){
-					ui.texts.push(contextTutorialDeath);
-					contextTutorialDeath='';
-				}
-			}
-			for(var c = 0; c < enemies.length ; c++) {
-				if (enemies[c].alive==false && enemies[c].respawn && game.time.now > enemies[c].died){
-					enemies[c].initEnemyShip();
-					break;
-				};
-			}
-			nextSpawn=game.time.now+randomRange(100,200);
-		}	
-
-
-		if(loots.getFirstAlive() != null) {
-
-			for (var i = 0; i < player.parts.length; i++) {
-				game.physics.arcade.overlap(loots, player.parts[i].sprite, playerGotLoot, null, this);
-			}
-			loots.forEachAlive(pullLootToPlayer, this);
-		}
-		if(explosions.getFirstAlive() != null) {
-
-			explosions.forEachAlive(explosionAnimate, this);
-		};
-		if(sparkleExplosions.getFirstAlive != null){
-
-			sparkleExplosions.forEachAlive(explosionAnimate,this);
-
-		};
-		if(enemyBullets.getFirstAlive() != null) {
-
-			for (var i = 0; i < player.parts.length; i++) {
-				game.physics.arcade.overlap(enemyBullets, player.parts[i].sprite, bulletHitPlayer, null, this);
-			}
-			for (var i = 0; i < enemies.length; i++) {
-				game.physics.arcade.overlap(enemyBullets, enemies[i].sprite, bulletHitEnemy, null, this);
+			for (var i = 0; i < ui.parts.length; i++){
+				ui.parts[i].update();
 			}
 		}
+		if(gamemode=='war' ){
 
-		for (var i = 0; i < enemies.length; i++){
-			if (enemies[i].alive){
-				enemies[i].update();
-				for (var j = 0; j < player.parts.length; j++) {
-					game.physics.arcade.overlap(enemies[i].sprite, player.parts[j].sprite, enemyTouchPlayer, null, this);
-				}
-				game.physics.arcade.overlap(bullets, enemies[i].sprite, bulletHitEnemy, null, this);
-				for (var j = 0; j < enemies[i].parts.length; j++) {
+			handleMission();
 
-					enemies[i].parts[j].update();
-
-				}	
-
-			}
-		}
-
-		for (var i = 0; i < player.parts.length; i++){
-			player.parts[i].update();
-		};
-
-		if (cursors.left.isDown || cursors.left2.isDown){
-			player.left();
-		}
-		if (cursors.right.isDown || cursors.right2.isDown){
-			player.right()
-		}
-		if (cursors.up.isDown || cursors.up2.isDown){
-			player.up();
-		}
-		if (cursors.down.isDown || cursors.down2.isDown){
-			//player at station
-			if(game.time.now > nextUIDelay + 2000 && Math.abs(player.sprite.x)<100 &&
-					Math.abs(player.sprite.y)<100){
-						winMission(); 
-						ui.partsUI(player.ship);
-						nextUIDelay=game.time.now+1000;
+			if(nextSpawn<game.time.now||nextSpawn==0){
+				if(!player.alive){
+					player.initPlayerShip(defaultPlayerShip);
+					if(contextTutorialDeath){
+						ui.texts.push(contextTutorialDeath);
+						contextTutorialDeath='';
 					}
-		}
-		if(player.alive && mouseState[2]){
-			player.alt();
-		}
-		player.update();
+				}
+				for(var c = 0; c < enemies.length ; c++) {
+					if (enemies[c].alive==false && enemies[c].respawn && game.time.now > enemies[c].died){
+						enemies[c].initEnemyShip();
+						break;
+					};
+				}
+				nextSpawn=game.time.now+randomRange(100,200);
+			}	
 
-		if(!mouseState[2]){
-			player.cooldown114=0;
-		}
+
+			if(loots.getFirstAlive() != null) {
+
+				for (var i = 0; i < player.parts.length; i++) {
+					game.physics.arcade.overlap(loots, player.parts[i].sprite, playerGotLoot, null, this);
+				}
+				loots.forEachAlive(pullLootToPlayer, this);
+			}
+			if(explosions.getFirstAlive() != null) {
+
+				explosions.forEachAlive(explosionAnimate, this);
+			};
+			if(sparkleExplosions.getFirstAlive != null){
+
+				sparkleExplosions.forEachAlive(explosionAnimate,this);
+
+			};
+			if(enemyBullets.getFirstAlive() != null) {
+
+				for (var i = 0; i < player.parts.length; i++) {
+					game.physics.arcade.overlap(enemyBullets, player.parts[i].sprite, bulletHitPlayer, null, this);
+				}
+				for (var i = 0; i < enemies.length; i++) {
+					game.physics.arcade.overlap(enemyBullets, enemies[i].sprite, bulletHitEnemy, null, this);
+				}
+			}
+
+			for (var i = 0; i < enemies.length; i++){
+				if (enemies[i].alive){
+					enemies[i].update();
+					for (var j = 0; j < player.parts.length; j++) {
+						game.physics.arcade.overlap(enemies[i].sprite, player.parts[j].sprite, enemyTouchPlayer, null, this);
+					}
+					game.physics.arcade.overlap(bullets, enemies[i].sprite, bulletHitEnemy, null, this);
+					for (var j = 0; j < enemies[i].parts.length; j++) {
+
+						enemies[i].parts[j].update();
+
+					}	
+
+				}
+			}
+
+			for (var i = 0; i < player.parts.length; i++){
+				player.parts[i].update();
+			};
+
+			if (cursors.left.isDown || cursors.left2.isDown){
+				player.left();
+			}
+			if (cursors.right.isDown || cursors.right2.isDown){
+				player.right()
+			}
+			if (cursors.up.isDown || cursors.up2.isDown){
+				player.up();
+			}
+			if (cursors.down.isDown || cursors.down2.isDown){
+				//player at station
+				if(game.time.now > nextUIDelay + 2000 && Math.abs(player.sprite.x)<100 &&
+						Math.abs(player.sprite.y)<100){
+							winMission(); 
+							ui.partsUI(player.ship);
+							nextUIDelay=game.time.now+1000;
+						}
+			}
+			if(player.alive && mouseState[2]){
+				player.alt();
+			}
+			player.update();
+
+			if(!mouseState[2]){
+				player.cooldown114=0;
+			}
 
 
-		if (mouseState[0]){
-			player.fire();
-		}
+			if (mouseState[0]){
+				player.fire();
+			}
 
-	}	
-	// scrolling
-	hazeWhite.tilePosition.x = hazeWhite.offsetx + ( -0.05*game.camera.x / hazeWhite.scale.x) + (game.time.now / (hazeWhite.speed));
-	hazeWhite.tilePosition.y = hazeWhite.offsety + ( -0.05*game.camera.y / hazeWhite.scale.y);
-	hazeRed.tilePosition.x = hazeRed.offsetx + ( -0.26*game.camera.x / hazeRed.scale.x) + (game.time.now / (hazeRed.speed));
-	hazeRed.tilePosition.y = hazeRed.offsety + ( -0.26*game.camera.y / hazeRed.scale.y);
-	hazePurple.tilePosition.x = hazePurple.offsetx + ( -.9*game.camera.x / hazePurple.scale.x) + (game.time.now / (hazePurple.speed));
-	hazePurple.tilePosition.y = hazePurple.offsety + ( -.9*game.camera.y / hazePurple.scale.y);
-	//hazePurple.bringToTop();	
+		}	
+		// scrolling
+		hazeWhite.tilePosition.x = hazeWhite.offsetx + ( -0.05*game.camera.x / hazeWhite.scale.x) + (game.time.now / (hazeWhite.speed));
+		hazeWhite.tilePosition.y = hazeWhite.offsety + ( -0.05*game.camera.y / hazeWhite.scale.y);
+		hazeRed.tilePosition.x = hazeRed.offsetx + ( -0.26*game.camera.x / hazeRed.scale.x) + (game.time.now / (hazeRed.speed));
+		hazeRed.tilePosition.y = hazeRed.offsety + ( -0.26*game.camera.y / hazeRed.scale.y);
+		hazePurple.tilePosition.x = hazePurple.offsetx + ( -.9*game.camera.x / hazePurple.scale.x) + (game.time.now / (hazePurple.speed));
+		hazePurple.tilePosition.y = hazePurple.offsety + ( -.9*game.camera.y / hazePurple.scale.y);
+		//hazePurple.bringToTop();	
 
-	ui.update();
-	if (gamemode == '?build' && !game.input.activePointer.isDown) {
-		if (game.time.now > nextUIDelay && (cursors.left.isDown || cursors.left2.isDown)){
-			ui.previousPart();
-			nextUIDelay = game.time.now+1000;
+		ui.update();
+		if (gamemode == '?build' && !game.input.activePointer.isDown) {
+			if (game.time.now > nextUIDelay && (cursors.left.isDown || cursors.left2.isDown)){
+				ui.previousPart();
+				nextUIDelay = game.time.now+1000;
+			}
+			if (game.time.now > nextUIDelay && (cursors.right.isDown || cursors.right2.isDown)){
+				ui.nextPart();	
+				nextUIDelay = game.time.now+1000;
+			}
+			if (game.time.now > nextUIDelay && (cursors.up.isDown || cursors.up2.isDown)){
+				ui.buyPart();
+				ui.newestPart();
+				nextUIDelay = game.time.now+1000;
+				//somethin' clever!
+			}
+			if (game.time.now > nextUIDelay + 2000 && (cursors.down.isDown || cursors.down2.isDown)){
+				ui.endPartsUI();
+				nextUIDelay=game.time.now+1000;
+			}
+			if(!cursors.left.isDown && !cursors.left2.isDown &&
+					!cursors.right.isDown && !cursors.right2.isDown &&
+					!cursors.up.isDown && !cursors.up2.isDown &&
+					!cursors.down.isDown && !cursors.down2.isDown 
+			  ){
+				  nextUIDelay = 0;
+			  }
 		}
-		if (game.time.now > nextUIDelay && (cursors.right.isDown || cursors.right2.isDown)){
-			ui.nextPart();	
-			nextUIDelay = game.time.now+1000;
-		}
-		if (game.time.now > nextUIDelay && (cursors.up.isDown || cursors.up2.isDown)){
-			ui.buyPart();
-			ui.newestPart();
-			nextUIDelay = game.time.now+1000;
-			//somethin' clever!
-		}
-		if (game.time.now > nextUIDelay + 2000 && (cursors.down.isDown || cursors.down2.isDown)){
-			ui.endPartsUI();
-			nextUIDelay=game.time.now+1000;
-		}
-		if(!cursors.left.isDown && !cursors.left2.isDown &&
-				!cursors.right.isDown && !cursors.right2.isDown &&
-				!cursors.up.isDown && !cursors.up2.isDown &&
-				!cursors.down.isDown && !cursors.down2.isDown 
-		  ){
-			  nextUIDelay = 0;
-		  }
-	}
 
 	}
 }

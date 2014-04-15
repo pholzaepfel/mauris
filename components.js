@@ -545,13 +545,12 @@ var cmp = [
 {
 	'id':45,
 	'drops':true,
-	'name':'Secure Dormitory',
-	'flavor':'heavily armored, but leeches energy',
+	'name':'Advanced Damage Control',
+	'flavor':'improves health, but leeches energy',
 	'bonus':function(target){
-		target.health+=10;
-		target.energyRate*=1.2;
+		target.health+=12;
+		target.energyRate*=1.3;
 		target.fireDamage+=1;
-		target.acceleration-=0.2;
 	}
 },
 {
