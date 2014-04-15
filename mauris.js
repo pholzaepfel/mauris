@@ -663,16 +663,6 @@ enemyShip.prototype.update = function() {
 
 
 			if(this.behavior=='chasing'){
-				var c = targetDistance / this.fireVelocity;
-				var tempX = c * this.target.body.velocity.x;
-				var tempY = c * this.target.body.velocity.y;
-				this.sprite.x-=tempX;
-				this.sprite.y-=tempY;
-					targetDistance = this.game.physics.arcade.distanceBetween(this.sprite, this.target);
-					targetAngle = this.game.physics.arcade.angleBetween(this.sprite, this.target); 
-			
-				this.sprite.x+=tempX;
-				this.sprite.y+=tempY;
 			}
 
 			var diffAngle = compareAngles(this.sprite.rotation,targetAngle);
