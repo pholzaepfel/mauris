@@ -451,6 +451,8 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 			this.parts[i].sprite.kill();
 			this.cullParts();
 		}	
+		this.alive = false;
+		this.died=game.time.now+10000;
 	}
 
 	if(this.shield){
@@ -467,7 +469,7 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 		this.aggroList.push(aggro);
 		this.target = aggro;
 	}
-	if (this.health <= 0 && this.health + dmg > 0){
+	if (this.health <= 0 && this.health + dmg >= 0){
 		this.alive = false;
 		this.died=game.time.now+10000;
 
@@ -483,7 +485,9 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 				this.parts[j].sprite.kill();
 			}else if(Math.random() < (componentDropRate) && components[this.parts[j].component].drops){ 
 				spawnComponent(this.parts[j].component, this.sprite.x, this.sprite.y);
-				this.parts[j].sprite.kill();	
+				this.parts[j].sprite.kill();					
+			}else if(this.health == 0 && dmg == 0){
+				this.parts[j].sprite.kill();
 			}else{
 				this.parts[j].sprite.body.velocity = game.physics.arcade.velocityFromRotation(this.game.physics.arcade.angleBetween(this.sprite, this.parts[j].sprite), 200+randomRange(0,10*dmg));
 				this.parts[j].sprite.body.angularVelocity=randomRange((dmg+2*14),(dmg+2)*62);					
