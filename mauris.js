@@ -3,7 +3,6 @@ var defaultBehavior='neutral';
 var cheatmode = 0;
 // container for stuff that might persist between games
 var playerMeta = function () {
-	this.credits=0;
 	this.inventory=[];
 	if(cheatmode){
 		for(var i=0; i<components.length; i++){
@@ -846,7 +845,6 @@ playerShip.prototype.initPlayerShip = function (ship) {
 	this.energyMax=12;
 	this.energyRate=1000;
 	this.energyAmount=2;
-	this.ore=0;
 	this.nextProfileDecay =0;
 	this.nextEnergy = 0;
 	this.nextFire = 0;
@@ -1231,11 +1229,6 @@ gameUI.prototype.initCombatUi = function() {
 	this.partswindow = game.add.sprite(-364,-132,'partswindow');
 	this.partswindow.anchor.setTo(0,0);
 	this.partswindow.visible = false;
-	destroyIfExists(this.creditLine);
-	this.creditLine = game.add.text(200,100, '',{ font:'14px monospace', fill: 'rgb(64,255,16)', align: 'right' });
-	this.creditLine.alpha = 0.75;
-	this.creditLine.lastOre=0;
-	this.creditLine.lastCredits=0;
 	destroyIfExists(this.profileLine);
 	this.profileLine = game.add.text(200,100, '',{ font:'14px monospace', fill: 'rgb(255,64,16)', align: 'right' });
 	this.profileLine.alpha = 0.75;
@@ -1482,29 +1475,7 @@ gameUI.prototype.profileLinePing = function() {
 		this.profileLine.setText('');
 	}
 }
-gameUI.prototype.creditLinePing = function() {
-
-	if(this.creditLine.lastOre!=player.ore || this.creditLine.lastCredits!=playerStats.credits){
-		this.creditLine.style.fill="rgb(232,255,232)";
-	}else{
-		this.creditLine.style.fill="rgb(64,255,16)";
-	}
-	var targetDistance=game.physics.arcade.distanceBetween(player.sprite, station);
-	if(targetDistance>1000){
-		this.creditLine.setText('O' + player.ore);
-	}else{
-		this.creditLine.setText('$' + playerStats.credits + '  O' + player.ore);
-	}
-	this.creditLine.x = player.sprite.body.x-this.creditLine.width;
-	this.creditLine.y = player.sprite.body.height+player.sprite.body.y+35;
-	if(gamemode=='?build'){
-		this.creditLine.y=210;
-	}
-	this.creditLine.lastOre = player.ore;
-	this.creditLine.lastCredits = playerStats.credits;
-}
 gameUI.prototype.update = function() {
-	this.creditLinePing();
 	this.commsPing();
 	if (gamemode == 'war'){
 		this.profileLinePing();
@@ -1530,7 +1501,7 @@ gameUI.prototype.updatePart = function () {
 	}else{
 		this.partsSelector.loadTexture('parts',0)
 			this.partText.setText('Drag a component to the X to store it in your inventory.')
-			this.partFlavorText.setText('Press UP to buy a component for $' + ui.partCost);
+			this.partFlavorText.setText('');
 	}
 
 }
@@ -1545,16 +1516,13 @@ gameUI.prototype.previousPart = function () {
 }
 
 gameUI.prototype.buyPart = function () {
-	if(playerStats.credits >= ui.partCost) {
-		playerStats.credits-=ui.partCost;
-		var n=0;
-		while(n==0){
-			var q;
-			q = Math.floor(Math.random()*components.length);
-			if(components[q].drops){
-				n=q;
-				playerStats.inventory.push(q);
-			}
+	var n=0;
+	while(n==0){
+		var q;
+		q = Math.floor(Math.random()*components.length);
+		if(components[q].drops){
+			n=q;
+			playerStats.inventory.push(q);
 		}
 	}
 }
@@ -1572,8 +1540,6 @@ gameUI.prototype.newestPart = function() {
 }
 gameUI.prototype.partsUI = function (ship) {
 	this.sound_dock.play();
-	playerStats.credits+=player.ore; //ore is reset with the new ship 
-	player.ore=0;
 	player.sprite.reset(0,0);
 	player.sprite.rotation=0;
 	this.newestPart();
@@ -1949,7 +1915,6 @@ function create () {
 	}
 	for(var i=0;i<startParts;i++)
 	{
-		playerStats.credits+=ui.partCost;
 		ui.buyPart();
 	}
 
@@ -2053,10 +2018,6 @@ function winMission(){
 		if(playerStats.mission.componentsReward.length){
 			playerStats.inventory.push(playerStats.mission.componentsReward[Math.floor(randomRange(0,playerStats.mission.componentsReward.length))]);
 			s+='got '+ components[playerStats.inventory[playerStats.inventory.length-1]].name +'. '
-		}
-		playerStats.credits+=playerStats.mission.creditsReward;
-		if(playerStats.mission.creditsReward){
-			s+='got $' + playerStats.mission.creditsReward + '. ';
 		}
 		ui.skipText();
 		ui.texts.push(s);
@@ -2182,23 +2143,29 @@ function update () {
 
 		ui.update();
 		if (gamemode == '?build' && !game.input.activePointer.isDown) {
-			if (game.time.now > nextUIDelay && (cursors.left.isDown || cursors.left2.isDown)){
-				ui.previousPart();
-				nextUIDelay = game.time.now+1000;
-			}
-			if (game.time.now > nextUIDelay && (cursors.right.isDown || cursors.right2.isDown)){
-				ui.nextPart();	
-				nextUIDelay = game.time.now+1000;
-			}
-			if (game.time.now > nextUIDelay && (cursors.up.isDown || cursors.up2.isDown)){
-				ui.buyPart();
-				ui.newestPart();
-				nextUIDelay = game.time.now+1000;
-				//somethin' clever!
-			}
-			if (game.time.now > nextUIDelay + 2000 && (cursors.down.isDown || cursors.down2.isDown)){
-				ui.endPartsUI();
-				nextUIDelay=game.time.now+1000;
+			if(game.time.now > nextUIDelay){ 
+				if ((cursors.left.isDown || cursors.left2.isDown)){
+					ui.previousPart();
+					nextUIDelay = game.time.now+1000;
+				}
+				if ((cursors.right.isDown || cursors.right2.isDown)){
+					ui.nextPart();	
+					nextUIDelay = game.time.now+1000;
+				}
+				if ((cursors.up.isDown || cursors.up2.isDown)){
+					//ui.buyPart();
+					ui.newestPart();
+					nextUIDelay = game.time.now+1000;
+					//somethin' clever!
+				}
+				if(cursors.fire.isDown){
+					selectPart();
+
+				}
+				if (game.time.now > nextUIDelay + 2000 && (cursors.down.isDown || cursors.down2.isDown)){
+					ui.endPartsUI();
+					nextUIDelay=game.time.now+1000;
+				}
 			}
 			if(!cursors.left.isDown && !cursors.left2.isDown &&
 					!cursors.right.isDown && !cursors.right2.isDown &&
