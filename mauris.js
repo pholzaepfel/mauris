@@ -1,4 +1,5 @@
 var gamemode;
+var buildMode='select';
 var defaultBehavior='neutral';
 var cheatmode = 0;
 // container for stuff that might persist between games
@@ -1668,7 +1669,7 @@ function selectPart() {
 function createPart(n){
 
 	var partPosition = ui.calculatePartPosition(); 
-	ui.parts.push(dragPool.get(partPosition.x,partPosition.y,'parts',n));
+	ui.parts.push(dragPool.get(partPosition.x,partPosition.y,'parts',n));	
 
 }
 // assumes that the incoming parts list is a square
@@ -2144,6 +2145,9 @@ function update () {
 		ui.update();
 		if (gamemode == '?build' && !game.input.activePointer.isDown) {
 			if(game.time.now > nextUIDelay){ 
+
+			if(buildMode=='select')
+			{
 				if ((cursors.left.isDown || cursors.left2.isDown)){
 					ui.previousPart();
 					nextUIDelay = game.time.now+1000;
@@ -2160,12 +2164,46 @@ function update () {
 				}
 				if(cursors.fire.isDown){
 					selectPart();
-
+					buildMode='move';
+					nextUIDelay = game.time.now+2000;
 				}
 				if (game.time.now > nextUIDelay + 2000 && (cursors.down.isDown || cursors.down2.isDown)){
 					ui.endPartsUI();
 					nextUIDelay=game.time.now+1000;
 				}
+			}else if(buildMode=='move'){
+				var pl = ui.parts.length-1;
+				if ((cursors.left.isDown || cursors.left2.isDown)){
+					ui.parts[pl].sprite.reset(ui.parts[pl].sprite.x-16,ui.parts[pl].sprite.y)	
+					nextUIDelay = game.time.now+500;
+				}
+				if ((cursors.right.isDown || cursors.right2.isDown)){
+					ui.parts[pl].sprite.reset(ui.parts[pl].sprite.x+16,ui.parts[pl].sprite.y)	
+					nextUIDelay = game.time.now+500;
+				}
+				if ((cursors.up.isDown || cursors.up2.isDown)){
+					ui.parts[pl].sprite.reset(ui.parts[pl].sprite.x,ui.parts[pl].sprite.y-16)	
+					nextUIDelay = game.time.now+500;
+				}
+				if(cursors.fire.isDown){
+					buildMode='select';
+					nextUIDelay = game.time.now+2000;
+				}
+				if(cursors.alt.isDown){
+					buildMode='select';
+					nextUIDelay = game.time.now+2000;
+					playerStats.inventory.push(ui.parts[pl].index);
+					ui.parts[pl].sprite.kill();							
+					ui.updatePart();
+					ui.partsArray(); //recalc rectangle
+
+				}
+				if (cursors.down.isDown || cursors.down2.isDown){
+					ui.parts[pl].sprite.reset(ui.parts[pl].sprite.x,ui.parts[pl].sprite.y+16)	
+					nextUIDelay=game.time.now+500;
+				}
+
+			}
 			}
 			if(!cursors.left.isDown && !cursors.left2.isDown &&
 					!cursors.right.isDown && !cursors.right2.isDown &&
