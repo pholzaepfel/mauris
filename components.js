@@ -32,7 +32,7 @@ var cmp = [
 		target.fireVelocity+=600;
 		target.bulletBehavior.push(function(bullet){
 if(bullet.scale.x<1.5){
-			bullet.scale.setTo(bullet.scale.x+0.5,bullet.scale.y+0.5);
+			bullet.scale.setTo(1.5,1.5);
 }
 });
 		target.sprite.profile+=25;
@@ -180,7 +180,12 @@ if(bullet.scale.x<1.5){
 		target.fireRate*=1.5;
 		target.fireVelocity*=1.6;
 		target.sprite.profile+=200;
-	}
+		target.bulletBehavior.push(function(bullet){
+if(bullet.scale.x<2){
+			bullet.scale.setTo(bullet.scale.x+0.5,bullet.scale.y+0.5);
+}
+});
+}
 },
 {
 	'id':14,
@@ -379,7 +384,7 @@ if(bullet.scale.x<1.5){
 					bullet.loadTexture('explosions',2);
 					bullet.bulletSprite=2;
 					bullet.reset(this.sprite.x - (Math.cos(this.sprite.rotation)*(this.sprite.body.width)), this.sprite.y - (Math.sin(this.sprite.rotation)*(this.sprite.body.width)));
-					boom(explosions,2,bullet.x,bullet.y);
+					midBoom(explosions,2,bullet.x,bullet.y);
 					bullet.rotation=Math.random()*Math.PI;
 					bullet.blendMode=1;
 					bullet.damage=10;
@@ -580,8 +585,11 @@ if(bullet.scale.x<1.5){
 			bullet.alpha=randomRange(0.8,0.9);
 			bullet.blendMode=1;
 			game.physics.arcade.velocityFromRotation(bullet.rotation, bullet.fireVelocity, bullet.body.velocity);
+if(bullet.scale.x<2){
+			bullet.scale.setTo(bullet.scale.x+0.5,bullet.scale.y+0.5);
+}
 		});
-		target.bulletSprite=5;
+target.bulletSprite=5;
 		target.fireDamage+=2;
 		target.fireSound=ui.sound_plasma;
 		target.fireRate*=0.4;
@@ -992,7 +1000,7 @@ if(bullet.scale.x<1.5){
 			if(game.time.now > target.altCooldown){	
 				ui.sound_boop.play();
 				var amt = Math.floor(target.energyMax - target.energy);
-				boom(explosions,0,this.sprite.x,this.sprite.y);
+				midBoo(explosions,0,this.sprite.x,this.sprite.y);
 				if(target.ore < amt){
 					amt = target.ore;
 				}
@@ -1219,7 +1227,7 @@ if(bullet.scale.x<1.5){
 			if(this.energy>=0.4){
 				this.energy-=0.4;
 				if(game.time.now>this.altCooldown){
-					boom(explosions,1,this.sprite.x,this.sprite.y);
+					midBoom(explosions,1,this.sprite.x,this.sprite.y);
 					ui.sound_boop.play();
 				}
 				if(this.sprite.profile>100){
@@ -1367,7 +1375,7 @@ if(bullet.scale.x<1.5){
 			var tgt = ownerFromName(bullet.owner.name);
 			if(Math.random()<0.1 && tgt.health > 1){
 				tgt.damage(1);
-				boom(explosions,4,tgt.sprite.x,tgt.sprite.y);
+				midBoom(explosions,4,tgt.sprite.x,tgt.sprite.y);
 			}
 		});
 
@@ -1436,11 +1444,11 @@ if(bullet.scale.x<1.5){
 				this.energy-=12;
 				ui.sound_boop.play();
 
-				boom(explosions,1,this.sprite.x,this.sprite.y);
-				boom(explosions,3,this.sprite.x,this.sprite.y);
+				midBoom(explosions,1,this.sprite.x,this.sprite.y);
+				midBoom(explosions,3,this.sprite.x,this.sprite.y);
 				this.sprite.reset(this.sprite.x+randomRange(-2000,2000),this.sprite.y+randomRange(-2000,2000));
-				boom(explosions,1,this.sprite.x,this.sprite.y);
-				boom(explosions,3,this.sprite.x,this.sprite.y);
+				midBoom(explosions,1,this.sprite.x,this.sprite.y);
+				midBoom(explosions,3,this.sprite.x,this.sprite.y);
 				this.altCooldown=game.time.now+2000;
 
 			}
