@@ -101,16 +101,16 @@ function applyBonuses(target){
 function addVelocity (a,b,c){return"undefined"==typeof b&&(b=60),	c=c||new d.Point,c.setTo(c.x+Math.cos(a)*b,c.y+Math.sin(a)*b)};
 function getHypo(a,b){return Math.sqrt(a*a+b*b)};
 function clampVelocity (sprite){
-				
-				var hypo = getHypo(sprite.body.velocity.x,sprite.body.velocity.y);
 
-				if(hypo > sprite.body.maxVelocity.x){
-					var foo = hypo / sprite.body.maxVelocity.x;
-					sprite.body.velocity.setTo(
-							sprite.body.velocity.x/foo,
-							sprite.body.velocity.y/foo
-							);
-				}
+	var hypo = getHypo(sprite.body.velocity.x,sprite.body.velocity.y);
+
+	if(hypo > sprite.body.maxVelocity.x){
+		var foo = hypo / sprite.body.maxVelocity.x;
+		sprite.body.velocity.setTo(
+				sprite.body.velocity.x/foo,
+				sprite.body.velocity.y/foo
+				);
+	}
 
 }
 function randomRange (a,b){var c,d; if(a>b){c=a;d=b;}else{d=a;c=b};return (Math.random()*(c-d))+d};
@@ -467,7 +467,7 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 		this.aggroList.push(aggro);
 		this.target = aggro;
 	}
-	if (this.health <= 0){
+	if (this.health <= 0 && this.health + dmg > 0){
 		this.alive = false;
 		this.died=game.time.now+10000;
 
@@ -707,7 +707,7 @@ enemyShip.prototype.update = function() {
 				}
 
 				partsToTop(this);	
-								this.nextThrust = game.time.now + (500/this.acceleration); 
+				this.nextThrust = game.time.now + (500/this.acceleration); 
 				addVelocity(this.sprite.rotation, this.sprite.body.maxVelocity.x/12, this.sprite.body.velocity);
 				clampVelocity(this.sprite);
 			}
@@ -1931,7 +1931,9 @@ function create () {
 		up2: game.input.keyboard.addKey(Phaser.Keyboard.W),
 		down2: game.input.keyboard.addKey(Phaser.Keyboard.S),
 		left2: game.input.keyboard.addKey(Phaser.Keyboard.A),
-		right2: game.input.keyboard.addKey(Phaser.Keyboard.D)
+		right2: game.input.keyboard.addKey(Phaser.Keyboard.D),
+		fire: game.input.keyboard.addKey(Phaser.Keyboard.X),
+		alt: game.input.keyboard.addKey(Phaser.Keyboard.Z)
 	}
 
 	game.input.mouse.mouseUpCallback=mouseUpHandle;
@@ -2110,14 +2112,15 @@ function update () {
 				for (var i = 0; i < player.parts.length; i++) {
 					game.physics.arcade.overlap(enemyBullets, player.parts[i].sprite, bulletHitPlayer, null, this);
 				}
-				for (var i = 0; i < enemies.length; i++) {
-					game.physics.arcade.overlap(enemyBullets, enemies[i].sprite, bulletHitEnemy, null, this);
-				}
 			}
 
 			for (var i = 0; i < enemies.length; i++){
 				if (enemies[i].alive){
 					enemies[i].update();
+					if(enemyBullets.getFirstAlive() != null) {
+
+						game.physics.arcade.overlap(enemyBullets, enemies[i].sprite, bulletHitEnemy, null, this);
+					}
 					for (var j = 0; j < player.parts.length; j++) {
 						game.physics.arcade.overlap(enemies[i].sprite, player.parts[j].sprite, enemyTouchPlayer, null, this);
 					}
@@ -2153,17 +2156,17 @@ function update () {
 							nextUIDelay=game.time.now+1000;
 						}
 			}
-			if(player.alive && mouseState[2]){
+			if(player.alive && (mouseState[2] || cursors.alt.isDown)){
 				player.alt();
 			}
 			player.update();
 
-			if(!mouseState[2]){
+			if(!mouseState[2] && !cursors.alt.isDown){
 				player.cooldown114=0;
 			}
 
 
-			if (mouseState[0]){
+			if (mouseState[0] || cursors.fire.isDown){
 				player.fire();
 			}
 
@@ -2200,7 +2203,8 @@ function update () {
 			if(!cursors.left.isDown && !cursors.left2.isDown &&
 					!cursors.right.isDown && !cursors.right2.isDown &&
 					!cursors.up.isDown && !cursors.up2.isDown &&
-					!cursors.down.isDown && !cursors.down2.isDown 
+					!cursors.down.isDown && !cursors.down2.isDown &&
+					!cursors.fire.isDown && !cursors.alt.isDown 
 			  ){
 				  nextUIDelay = 0;
 			  }
@@ -2305,8 +2309,8 @@ function sparkleBoom(explosionsGroup, minSprite, maxSprite, x, y){
 			r=randomRange(1.2,1.6);
 			explosion.scale.setTo(r,r);
 			explosion.alpha=1.5;
-				explosion.blendMode=1;
-				boomTween(explosion);
+			explosion.blendMode=1;
+			boomTween(explosion);
 			game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
 		}
 	}
@@ -2315,7 +2319,7 @@ function sparkleBoom(explosionsGroup, minSprite, maxSprite, x, y){
 
 function boomTween(sprite){
 	game.add.tween(sprite.scale).to({x:sprite.scale.x*8,y:sprite.scale.y*8},sprite.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
-	
+
 	game.add.tween(sprite).to({alpha:0},sprite.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
 }
 function midBoom(explosionsGroup, bulletSprite, x, y){

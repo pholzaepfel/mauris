@@ -394,7 +394,10 @@ if(bullet.scale.x<2){
 					bullet.lifespan=1333;
 					bullet.body.angularVelocity=999;
 					this.altCooldown=game.time.now+100;
-				}
+							game.add.tween(bullet.scale).to({x:0,y:0},bullet.lifespan, Phaser.Easing.Linear.None, true, 0, false);
+
+					game.add.tween(bullet).to({alpha:0},bullet.lifespan, Phaser.Easing.Linear.None, true, 0, false);
+		}
 
 			}
 		}
@@ -1194,10 +1197,13 @@ target.bulletSprite=5;
 					bullet.alpha=0.8;
 					bullet.damage=12;
 					bullet.bulletSprite=4;
-					bullet.scale.setTo(4,4);
+					bullet.scale.setTo(1,1);
 					bullet.lifespan=400;
 					bullet.body.angularVelocity=999;
 					bullet.blendMode=1;
+					game.add.tween(bullet.scale).to({x:bullet.scale.x*4,y:bullet.scale.y*4},bullet.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
+
+					game.add.tween(bullet).to({alpha:0.3},bullet.lifespan, Phaser.Easing.Linear.None, true, 0, false);
 				}
 				this.altCooldown=game.time.now+2000;
 
