@@ -1134,6 +1134,7 @@ gameUI.prototype.initInventory = function () {
 
 	for(var i=0;i<16;i++){
 		this.inventory.push(pool.get(-292+((i%4)*16),-92+(Math.floor(i/4)*16),0));
+		this.inventory[i].sprite.rotation=0;
 	}
 
 }
