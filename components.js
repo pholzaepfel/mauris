@@ -811,27 +811,11 @@ target.bulletSprite=5;
 {
 	'id':70,
 	'drops':true,
-	'name':'Flimsy Wing',
-	'flavor':'increases turn rate, but turns will require correction on smaller ships',
+	'name':'Stealth Wing',
+	'flavor':'increases acceleration, makes you harder to detect',
 	'bonus':function(target){
-		target.turnRate+=0.6;
-		target.acceleration+=0.2;
-		if(target.ai==-1)
-		{
-			target.left=function(){
-				this.sprite.angle-=this.turnRate;
-				var av = 50-(this.ship.length);
-				if(av<0){av=0};
-				this.sprite.body.angularVelocity=this.turnRate*-av;
-			}
-			target.right=function(){
-				this.sprite.angle+=this.turnRate;
-				var av = 50-(this.ship.length);
-				if(av<0){av=0};
-				this.sprite.body.angularVelocity=this.turnRate*av;
-			}
-
-		}
+		target.acceleration+=0.6;
+		target.profileDecay+=200;
 	}
 },
 {
@@ -930,7 +914,9 @@ target.bulletSprite=5;
 		target.fireRate*=0.9;
 		target.bulletHitBehavior.push(function(sprite,bullet){
 			var tgt = ownerFromName(sprite.name);
+			if(tgt.energy>0){
 			tgt.energy-=4;
+			};
 
 		});
 	}
@@ -958,7 +944,7 @@ target.bulletSprite=5;
 		target.fireRate*=1.1;
 		target.fireDamage+=1;
 		target.fireSound=ui.sound_pew1;
-		target.fireEnergy*=0.5;
+		target.fireEnergy*=0.8;
 		target.fireVelocity*=1.3;
 		target.bulletSprite=4;
 	}
@@ -997,21 +983,9 @@ target.bulletSprite=5;
 	'id':82,
 	'drops':true,
 	'name':'External Power Plant',
-	'flavor':'press RIGHT MOUSE to convert ore into energy',
+	'flavor':'ore pickups also give energy',
 	'bonus':function(target){
-		target.alt=function(){
-			if(game.time.now > target.altCooldown){	
-				ui.sound_boop.play();
-				var amt = Math.floor(target.energyMax - target.energy);
-				midBoo(explosions,0,this.sprite.x,this.sprite.y);
-				if(target.ore < amt){
-					amt = target.ore;
-				}
-				target.ore-=amt;
-				target.energy+=amt;	
-				target.altCooldown = game.time.now + 2000;
-			}
-		}
+			target.oreEnergy+=2;
 	}
 },
 {
@@ -1265,27 +1239,11 @@ target.bulletSprite=5;
 {
 	'id':102,
 	'drops':true,
-	'name':'Flimsy Wing',
-	'flavor':'increases turn rate, but turns will require correction',
+	'name':'Stealth Wing',
+	'flavor':'increases turn rate, makes you harder to detect',
 	'bonus':function(target){
-		target.turnRate+=0.3;
-		target.acceleration+=0.5;
-		if(target.ai==-1)
-		{
-			target.left=function(){
-				this.sprite.angle-=this.turnRate;
-				var av = 50-(this.ship.length);
-				if(av<0){av=0};
-				this.sprite.body.angularVelocity=this.turnRate*-av;
-			}
-			target.right=function(){
-				this.sprite.angle+=this.turnRate;
-				var av = 50-(this.ship.length);
-				if(av<0){av=0};
-				this.sprite.body.angularVelocity=this.turnRate*av;
-			}
-
-		}
+		target.turnRate+=0.5;
+		target.profileDecay+=100;
 	}
 },
 {
@@ -1305,11 +1263,11 @@ target.bulletSprite=5;
 	'id':104,
 	'drops':true,
 	'name':'Inline Warp Thrust',
-	'flavor':'high speed, low profile',
+	'flavor':'high speed, decreases energy',
 	'bonus':function(target){
 		target.acceleration+=0.8;
 		target.energyRate*=1.1;
-		target.profile-=20;
+		target.energyMax-=1;
 	}
 },
 {
@@ -1327,26 +1285,26 @@ target.bulletSprite=5;
 	'id':106,
 	'drops':true,
 	'name':'Habitat Module',
-	'flavor':'light and tough, with a bonus capacitor',
+	'flavor':'light and tough',
 	'bonus':function(target){
 
 		target.health+=4;
 		target.acceleration-=0.1;
-		target.energyRate*=1.05;
-		target.energyMax+=3;
+		target.energyRate*=0.9;
+		target.energyMax+=2;
 	}
 },
 {
 	'id':107,
 	'drops':true,
 	'name':'Habitat Module',
-	'flavor':'light and tough, with a bonus capacitor',
+	'flavor':'light and tough',
 	'bonus':function(target){
 
 		target.health+=4;
 		target.acceleration-=0.1;
-		target.energyRate*=1.05;
-		target.energyMax+=3;
+		target.energyRate*=0.9;
+		target.energyMax+=2;
 	}
 },
 {

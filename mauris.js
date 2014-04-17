@@ -232,6 +232,7 @@ dragPart.prototype.update = function(){
 								playerStats.inventory.push(this.index);
 							}
 							this.sprite.kill();							
+							ui.cullParts();
 							ui.updatePart();
 							ui.partsArray(); //recalc rectangle
 						}
@@ -254,9 +255,8 @@ dragPartsPool.prototype.get = function (x,y,sheet, index){
 	}
 	if(i==this.parts.length){
 		this.parts.push(new dragPart(x,y,'parts',index));
-	}else{
-		this.parts[i].initDragPart(x,y,'parts',index);
 	}
+	this.parts[i].initDragPart(x,y,'parts',index);
 	return this.parts[i];
 }
 partsPool = function(){
@@ -376,6 +376,7 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 	this.rotation=Math.random()*2*Math.PI;
 	this.aggroList = [];
 	this.holdThrust=0;
+	this.oreEnergy=0;
 	this.acceleration=1;
 	this.health = 3;
 	this.bulletHitBehavior=[];
@@ -820,6 +821,7 @@ playerShip.prototype.initPlayerShip = function (ship) {
 	this.radarShowInRange=false;
 	this.radarShowInEnemyRange=false;
 	this.radarOreTargets=4;
+	this.oreEnergy=0;
 	this.acceleration=1;
 	this.lootRange=250;
 	this.sprite.reset(0,0);
@@ -1114,8 +1116,10 @@ var partShip;
 var ui;
 var gameUI = function () {
 	this.parts = [];
+	this.inventory = [];
 	this.partCost=20;
 	this.currentPart = 0;
+	this.currentPlayerPart = 0;
 	this.texts = [];
 	this.nextComms=0;
 	this.nextCommsPing=false;
@@ -1124,6 +1128,13 @@ var gameUI = function () {
 	this.textIndex = 0;
 	this.textLineIndex = 0;
 	this.nextError=0;
+
+}
+gameUI.prototype.initInventory = function () {
+
+	for(var i=0;i<16;i++){
+		this.inventory.push(pool.get(-292+((i%4)*16),-92+(Math.floor(i/4)*16),0));
+	}
 
 }
 gameUI.prototype.initSound = function(){
@@ -1220,12 +1231,14 @@ gameUI.prototype.resetRadar = function() {
 		this.clearRadar();
 		for (var i = 0; i < player.radarTargets; i++){
 			this.radar.push(game.add.text(200,100, '*',{ font:'12px monospace', fill: 'rgb(255,130,130)', align: 'center' }));
+			this.radar[i].anchor.setTo(0.5,0.5);
+			this.radar[i].blendMode=1
 		}
 	}
 }
 gameUI.prototype.initCombatUi = function() {
 
-	this.partsSelector = game.add.sprite(-292,-92,'parts',0);
+	this.partsSelector = game.add.sprite(-292,150,'parts',0);
 	this.partsSelector.visible = false;
 
 	this.tempStation = game.add.sprite(0,0,'station');
@@ -1239,12 +1252,14 @@ gameUI.prototype.initCombatUi = function() {
 	this.profileLine.alpha = 0.75;
 	destroyIfExists(this.healthLine);
 	this.healthLine = game.add.text(200,100, '',{ font:'14px monospace', fill: 'rgb(96,96,240)', align: 'left' });
-	this.healthLine.alpha = 1.3;
+	this.healthLine.alpha = 1;
+	this.healthLine.blendMode = 1;
 
 	destroyIfExists(this.energyLine);
 	this.energyLine = game.add.text(200,100, '',{ font:'14px monospace', fill: 'rgb(240,64,255)', align: 'left' });
-	this.energyLine.alpha = 1.5;
+	this.energyLine.alpha = 1;
 
+	this.energyLine.blendMode = 1;
 	destroyIfExists(this.comms);
 	this.comms = game.add.text(0,0,'',{font:'1.5em monospace', fill: 'rgb(240,255,183)', align: 'left'});
 
@@ -1257,7 +1272,9 @@ gameUI.prototype.initCombatUi = function() {
 	this.resetRadar();
 
 	this.stationRadar = game.add.text(200,100,'*',{font:'30px monospace', fill: 'rgb(130,255,130)', align: 'center'});
+	this.stationRadar.anchor.setTo(0.5,0.5);
 	this.frobRadar = game.add.text(200,100,'*',{font:'30px monospace', fill: 'rgb(255,255,130)', align: 'center'});
+	this.frobRadar.anchor.setTo(0.5,0.5);
 }
 gameUI.prototype.bar = function (targetText, offset, numerator, denominator) {
 	if(typeof(targetText.lastValue)=='undefined'){
@@ -1273,11 +1290,11 @@ gameUI.prototype.bar = function (targetText, offset, numerator, denominator) {
 	s+=repeat('\u25cb',barSize-n);
 	targetText.setText(s);
 	if(numerator>targetText.lastValue){
-		targetText.alpha=1;
+		targetText.alpha=2;
+		game.add.tween(targetText).to({alpha: 1},500, Phaser.Easing.Exponential.Out, true, 0, false);
 	}else if(numerator<targetText.lastValue){
 		targetText.alpha=0.2;		
-	}else{
-		targetText.alpha=0.7;
+		game.add.tween(targetText).to({alpha: 1},500, Phaser.Easing.Exponential.Out, true, 0, false);
 	}
 	targetText.lastValue=numerator;
 }
@@ -1406,9 +1423,8 @@ gameUI.prototype.radarPing = function() {
 		var range = targetDistance;
 		if(range>180){range=180};	
 		this.radar[i].setText(s);
-		this.radar[i].alpha=range/280;
-		this.radar[i].x = player.sprite.body.x + Math.cos(targetAngle) * range - 0.5 * this.radar[i].width;
-		this.radar[i].y = player.sprite.body.y + Math.sin(targetAngle) * range;	
+		this.radar[i].x = player.sprite.body.x + (0.5 * player.sprite.body.width) + Math.cos(targetAngle) * range;
+		this.radar[i].y = player.sprite.body.y + (0.5 * player.sprite.body.width) + Math.sin(targetAngle) * range;	
 	}
 }
 //follow this with a push!
@@ -1509,6 +1525,28 @@ gameUI.prototype.updatePart = function () {
 			this.partFlavorText.setText('');
 	}
 
+	var j=ui.currentPart-(ui.currentPart%16);
+	for(var i=0;i<this.inventory.length;i++){
+		if(i+j<playerStats.inventory.length){
+			this.inventory[i].sprite.loadTexture('parts',playerStats.inventory[i+j]);
+			this.inventory[i].sprite.visible=true;
+			this.inventory[i].sprite.bringToTop();
+		}else{
+			this.inventory[i].sprite.visible=false;
+		}
+		if(i==ui.currentPart%16)
+		{
+			this.inventory[i].sprite.blendMode=1;
+			this.inventory[i].sprite.alpha=3;
+		}
+		else{
+
+			this.inventory[i].sprite.blendMode=0;
+			this.inventory[i].sprite.alpha=1;
+		}
+
+	}
+
 }
 
 gameUI.prototype.previousPart = function () {
@@ -1539,15 +1577,20 @@ gameUI.prototype.nextPart = function () {
 	}
 	this.updatePart();
 }
+gameUI.prototype.firstPart = function() {
+	this.currentPart=0;
+	this.updatePart();
+}
 gameUI.prototype.newestPart = function() {
 	this.currentPart=playerStats.inventory.length>0?playerStats.inventory.length-1:0;
 	this.updatePart();
 }
 gameUI.prototype.partsUI = function (ship) {
 	this.sound_dock.play();
+	this.initInventory();
 	player.sprite.reset(0,0);
 	player.sprite.rotation=0;
-	this.newestPart();
+	this.firstPart();
 	game.camera.follow=null;
 	if(gamemode != '?build'){
 		gamemode = '?build';
@@ -1564,7 +1607,6 @@ gameUI.prototype.partsUI = function (ship) {
 	this.profileLine.setText('');
 	this.stationRadar.visible=false;
 	this.clearRadar();
-	this.updatePart();
 	this.tempStation.visible=true;
 	this.tempStation.bringToTop();
 	this.partswindow.visible=true;
@@ -1576,12 +1618,40 @@ gameUI.prototype.partsUI = function (ship) {
 	if(typeof(ship)!='undefined'){
 		this.parts = createBuildParts(ship,player.sprite.x,player.sprite.y);
 	}
-	ui.partsArray();
+	this.partsArray();
+	this.updatePart();
+}
+gameUI.prototype.cullInventory = function() {
+	for(var j = 0; j < this.inventory.length; j++) {
+		if(!this.inventory[j].sprite.alive){
+			this.inventory.splice(j,1);
+			j-=1;
+		}
+	}	
+}
+gameUI.prototype.destroyInventory = function() {
+	if(typeof(this.inventory)!='undefined'){
+		for(var i=0; i<this.inventory.length;i++)
+		{
+			this.inventory[i].sprite.kill();
+		}
+		this.inventory=[];
+	}
+}
+gameUI.prototype.cullParts = function() {
+	for(var j = 0; j < this.parts.length; j++) {
+		if(!this.parts[j].sprite.alive){
+			this.parts.splice(j,1);
+			j-=1;
+		}
+	}	
 }
 gameUI.prototype.destroyParts = function() {
 	if(typeof(this.parts)!='undefined'){
 		for(var i=0; i<this.parts.length;i++)
 		{
+			this.parts[i].sprite.blendMode=0;
+			this.parts[i].sprite.alpha=1;
 			this.parts[i].sprite.kill();
 		}
 		this.parts=[];
@@ -1591,6 +1661,7 @@ gameUI.prototype.endPartsUI = function () {
 	this.partswindow.visible = false;
 	this.tempStation.visible = false;
 	this.partsSelector.visible=false;
+	this.destroyInventory();
 	var ship = this.partsArray();
 	this.destroyParts();
 	this.stationRadar.visible=true;
@@ -1904,7 +1975,8 @@ function create () {
 		left2: game.input.keyboard.addKey(Phaser.Keyboard.A),
 		right2: game.input.keyboard.addKey(Phaser.Keyboard.D),
 		fire: game.input.keyboard.addKey(Phaser.Keyboard.X),
-		alt: game.input.keyboard.addKey(Phaser.Keyboard.Z)
+		alt: game.input.keyboard.addKey(Phaser.Keyboard.Z),
+		enter: game.input.keyboard.addKey(Phaser.Keyboard.ENTER)
 	}
 
 	game.input.mouse.mouseUpCallback=mouseUpHandle;
@@ -2006,6 +2078,8 @@ function handleMission() {
 	if(playerStats.mission.complete && playerStats.mission.outro.length){
 		ui.sound_complete.play();
 		ui.skipText();
+		ui.stationRadar.scale.setTo(4,4);
+		game.add.tween(ui.stationRadar.scale).to({x:1,y:1},1500, Phaser.Easing.Bounce.Out, true, 0, false);
 		for(var i=0;i<playerStats.mission.outro.length;i++){
 			ui.texts.push(playerStats.mission.outro[i]);
 		}
@@ -2170,40 +2244,46 @@ function update () {
 					selectPart();
 					buildMode='move';
 					nextUIDelay = game.time.now+2000;
+					ui.currentPlayerPart = ui.parts.length-1;
 				}
 				if (game.time.now > nextUIDelay + 2000 && (cursors.down.isDown || cursors.down2.isDown)){
 					ui.endPartsUI();
 					nextUIDelay=game.time.now+1000;
 				}
 			}else if(buildMode=='move'){
-				var pl = ui.parts.length-1;
+
+				ui.parts[ui.currentPlayerPart].sprite.alpha=2;
+				ui.parts[ui.currentPlayerPart].sprite.blendMode=1;
 				if ((cursors.left.isDown || cursors.left2.isDown)){
-					ui.parts[pl].sprite.reset(ui.parts[pl].sprite.x-16,ui.parts[pl].sprite.y)	
+					ui.parts[ui.currentPlayerPart].sprite.reset(ui.parts[ui.currentPlayerPart].sprite.x-16,ui.parts[ui.currentPlayerPart].sprite.y)	
 					nextUIDelay = game.time.now+500;
 				}
 				if ((cursors.right.isDown || cursors.right2.isDown)){
-					ui.parts[pl].sprite.reset(ui.parts[pl].sprite.x+16,ui.parts[pl].sprite.y)	
+					ui.parts[ui.currentPlayerPart].sprite.reset(ui.parts[ui.currentPlayerPart].sprite.x+16,ui.parts[ui.currentPlayerPart].sprite.y)	
 					nextUIDelay = game.time.now+500;
 				}
 				if ((cursors.up.isDown || cursors.up2.isDown)){
-					ui.parts[pl].sprite.reset(ui.parts[pl].sprite.x,ui.parts[pl].sprite.y-16)	
+					ui.parts[ui.currentPlayerPart].sprite.reset(ui.parts[ui.currentPlayerPart].sprite.x,ui.parts[ui.currentPlayerPart].sprite.y-16)	
 					nextUIDelay = game.time.now+500;
 				}
 				if(cursors.fire.isDown){
 					buildMode='select';
+					ui.parts[ui.currentPlayerPart].sprite.alpha=1;
+					ui.parts[ui.currentPlayerPart].sprite.blendMode=0;
 					nextUIDelay = game.time.now+2000;
 				}
-				if(cursors.alt.isDown){
-					buildMode='select';
+				if(cursors.alt.isDown && ui.currentPlayerPart > 0){
 					nextUIDelay = game.time.now+2000;
-					playerStats.inventory.push(ui.parts[pl].index);
-					ui.parts[pl].sprite.kill();							
+					playerStats.inventory.push(ui.parts[ui.currentPlayerPart].index);
+					ui.parts[ui.currentPlayerPart].sprite.kill();							
+					ui.cullParts();
 					ui.updatePart();
 					ui.partsArray(); //recalc rectangle
+					ui.currentPlayerPart = ui.parts.length-1;
 
 				}
 				if (cursors.down.isDown || cursors.down2.isDown){
-					ui.parts[pl].sprite.reset(ui.parts[pl].sprite.x,ui.parts[pl].sprite.y+16)	
+					ui.parts[ui.currentPlayerPart].sprite.reset(ui.parts[ui.currentPlayerPart].sprite.x,ui.parts[ui.currentPlayerPart].sprite.y+16)	
 					nextUIDelay=game.time.now+500;
 				}
 
@@ -2311,7 +2391,7 @@ function sparkleBoom(explosionsGroup, minSprite, maxSprite, x, y){
 			explosion.loadTexture('sparkles', Math.floor(randomRange(minSprite,maxSprite)));
 			explosion.reset(x+randomRange(-8,8),y+randomRange(-8,8));
 			explosion.rotation = Math.random()*Math.PI;
-			explosion.angularVelocity=randomRange(-40,40);
+			explosion.angularVelocity=randomRange(500,1000);
 			explosion.linearDamping=-10;
 			explosion.fireVelocity=randomRange(-20,20);
 			explosion.lifespan=700;
@@ -2452,6 +2532,7 @@ function playerGotLoot (sprite, loot) {
 			player.health=player.healthMax;
 		}
 		player.health+=1;
+		player.energy+=player.oreEnergy;
 		ui.sound_beep.play();
 	}else if(loot.lootType=='component'){
 		playerStats.inventory.push(loot.component);
