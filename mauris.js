@@ -570,6 +570,7 @@ enemyShip.prototype.spawnBullet = function () {
 		for (var i = 0; i < this.bulletBehavior.length; i++) {
 			this.bulletBehavior[i](bullet);
 		}
+		fireBoom(explosions,bullet.bulletSprite,bullet.x,bullet.y);
 
 		return bullet;
 	}
@@ -975,6 +976,9 @@ playerShip.prototype.spawnBullet = function(){
 		for (var i = 0; i < this.bulletBehavior.length; i++) {
 			this.bulletBehavior[i](bullet);
 		}
+		
+		fireBoom(explosions,bullet.bulletSprite,bullet.x,bullet.y);
+		
 		return bullet;
 	}
 }
@@ -1535,7 +1539,7 @@ gameUI.prototype.updatePart = function () {
 		}else{
 			this.inventory[i].sprite.visible=false;
 		}
-		if(i==ui.currentPart%16)
+		if(i==ui.currentPart%16 && buildMode == 'select')
 		{
 			this.inventory[i].sprite.blendMode=1;
 			this.inventory[i].sprite.alpha=3;
@@ -1634,6 +1638,8 @@ gameUI.prototype.destroyInventory = function() {
 	if(typeof(this.inventory)!='undefined'){
 		for(var i=0; i<this.inventory.length;i++)
 		{
+			this.inventory[i].sprite.blendMode=0;
+			this.inventory[i].sprite.alpha=1;
 			this.inventory[i].sprite.kill();
 		}
 		this.inventory=[];
@@ -2037,7 +2043,7 @@ function pullLootToPlayer(s) {
 		s.kill();
 	}
 	if(s.alive){
-		if(Math.random() > 0.1){
+		if(Math.random() > 0.1 && onscreen(s.x,s.y)){
 			var halfWidth = s.width * 0.5;
 			sparkles.x=s.x+randomRange(-1 * halfWidth,halfWidth);
 			sparkles.y=s.y+randomRange(-1 * halfWidth,halfWidth);
@@ -2435,6 +2441,51 @@ function midBoom(explosionsGroup, bulletSprite, x, y){
 				explosion.blendMode=1;
 				boomTween(explosion);
 			}
+		}
+	}
+}
+function fireBoom(explosionsGroup, bulletSprite, x, y){
+
+	if(onscreen(x,y)){
+
+		var r = Math.random();
+
+		for(var i=0; i < 3 + (r * 2) ; i ++) { 
+			if(explosionsGroup.countDead()){
+				var explosion = explosionsGroup.getFirstDead();
+				explosion.loadTexture('explosions', bulletSprite || 0);
+				explosion.reset(x,y);
+				explosion.rotation = Math.random()*2*Math.PI;
+				explosion.angularVelocity=randomRange(-5,5);
+				explosion.linearDamping=-4;
+				explosion.fireVelocity=randomRange(250,500)*randomSign();
+				explosion.lifespan=randomRange(250,500);
+				explosion.scale.setTo(0.05,0.05);
+				explosion.alpha=2;
+				game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
+				explosion.blendMode=1;
+				game.add.tween(explosion.scale).to({x:1.2,y:1.2},explosion.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
+
+				game.add.tween(explosion).to({alpha:0},explosion.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);		}
+		}
+
+		for(var i=0; i < 3; i ++) { 
+			if(explosionsGroup.countDead()){
+				var explosion = explosionsGroup.getFirstDead();
+				explosion.loadTexture('explosions', bulletSprite || 0);
+				explosion.reset(x,y);
+				explosion.rotation = Math.random()*2*Math.PI;
+				explosion.angularVelocity=randomRange(-5,5);
+				explosion.linearDamping=-4;
+				explosion.fireVelocity=randomRange(0,10)*randomSign();
+				explosion.lifespan=randomRange(400,700);
+				explosion.scale.setTo(1,1);
+				explosion.alpha=1.5;
+				game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
+				explosion.blendMode=1;
+				game.add.tween(explosion.scale).to({x:2,y:2},explosion.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
+
+				game.add.tween(explosion).to({alpha:0},explosion.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);		}
 		}
 	}
 }

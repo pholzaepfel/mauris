@@ -585,12 +585,13 @@ if(bullet.scale.x<2){
 			bullet.rotation+=Math.random()*0.5-0.25;
 			bullet.loadTexture('explosions',2);
 			bullet.body.angularVelocity=randomRange(600,900);
-			bullet.alpha=randomRange(0.8,0.9);
+			bullet.alpha=1.5;
 			bullet.blendMode=1;
 			game.physics.arcade.velocityFromRotation(bullet.rotation, bullet.fireVelocity, bullet.body.velocity);
-if(bullet.scale.x<2){
-			bullet.scale.setTo(bullet.scale.x+0.5,bullet.scale.y+0.5);
-}
+			bullet.scale.setTo(.25,.25);
+				game.add.tween(bullet.scale).to({x:3,y:3},bullet.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
+
+	game.add.tween(bullet).to({alpha:0},bullet.lifespan, Phaser.Easing.Linear.Out, true, 0, false);
 		});
 target.bulletSprite=5;
 		target.fireDamage+=2;
