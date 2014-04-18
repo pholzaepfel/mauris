@@ -1486,7 +1486,6 @@ target.bulletSprite=5;
 	'bonus':function(target){
 		target.bulletBehavior.push(function(bullet){
 			bullet.scale.setTo(bullet.scale.x+0.5,bullet.scale.y+0.5);
-			bullet.body.angularVelocity+=800;
 			bullet.blendMode=1;
 		});
 

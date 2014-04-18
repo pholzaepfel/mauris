@@ -2349,18 +2349,25 @@ function bigBoom(explosionsGroup, x, y){
 				explosion.fireVelocity=randomRange(30,80) * (2-rand2);
 				explosion.lifespan=700 * (6 - 2*rand2);
 				explosion.linearDamping=-1;
-				r=randomRange(0.9,3.1);
-				explosion.angularVelocity=randomRange(-5,5)*Math.sin(randomRange(0,0.5*Math.PI));
+				r=randomRange(0.5,1.7);
+				explosion.body.angularVelocity=0;
 				explosion.scale.setTo(r,r);
-				explosion.alpha=1;
-
+				explosion.alpha=1.3;
+	
 				explosion.blendMode=1;
 				if(rand2==1){
 					explosion.blendMode=0;
 					explosion.alpha=0.1;
-					explosion.scale.setTo(r*2,r*2);
+					explosion.scale.setTo(explosion.scale.x*2,explosion.scale.y*2);
 				};
-				boomTween(explosion);
+				if(rand2==2){
+
+				explosion.body.angularVelocity=randomRange(100,150)*randomSign()*Math.sin(randomRange(0,0.5*Math.PI));
+				}
+				game.add.tween(explosion.scale).to({x:explosion.scale.x*12,y:explosion.scale.y*12},explosion.lifespan*0.3, Phaser.Easing.Quadratic.Out, true, 0, false);
+				game.add.tween(explosion).to({alpha:0},explosion.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
+
+
 				game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
 			}
 		}
@@ -2415,7 +2422,6 @@ function sparkleBoom(explosionsGroup, minSprite, maxSprite, x, y){
 
 function boomTween(sprite){
 	game.add.tween(sprite.scale).to({x:sprite.scale.x*8,y:sprite.scale.y*8},sprite.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
-
 	game.add.tween(sprite).to({alpha:0},sprite.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
 }
 function midBoom(explosionsGroup, bulletSprite, x, y){
@@ -2460,13 +2466,13 @@ function fireBoom(explosionsGroup, bulletSprite, x, y, rot){
 				explosion.linearDamping=-4;
 				explosion.fireVelocity=randomRange(350,600);
 				explosion.lifespan=randomRange(350,600);
-				explosion.scale.setTo(0.05,0.05);
+				explosion.scale.setTo(1.2,1.2);
 				explosion.alpha=2;
 				game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
 				explosion.blendMode=1;
-				game.add.tween(explosion.scale).to({x:1.2,y:1.2},explosion.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
+				game.add.tween(explosion.scale).to({x:0.01,y:0.01},explosion.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
 
-				game.add.tween(explosion).to({alpha:0},explosion.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);		}
+				game.add.tween(explosion).to({alpha:0},explosion.lifespan, Phaser.Easing.Quadratic.Out, true, 0, false);		}
 		}
 
 		for(var i=0; i < 3; i ++) { 
@@ -2483,7 +2489,7 @@ function fireBoom(explosionsGroup, bulletSprite, x, y, rot){
 				explosion.alpha=1.5;
 				game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
 				explosion.blendMode=1;
-				game.add.tween(explosion.scale).to({x:2,y:2},explosion.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
+				game.add.tween(explosion.scale).to({x:1,y:1},explosion.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
 
 				game.add.tween(explosion).to({alpha:0},explosion.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);		}
 		}
