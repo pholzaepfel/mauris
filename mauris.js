@@ -570,7 +570,7 @@ enemyShip.prototype.spawnBullet = function () {
 		for (var i = 0; i < this.bulletBehavior.length; i++) {
 			this.bulletBehavior[i](bullet);
 		}
-		fireBoom(explosions,bullet.bulletSprite,bullet.x,bullet.y);
+		fireBoom(explosions,bullet.bulletSprite,bullet.x,bullet.y,bullet.rotation);
 
 		return bullet;
 	}
@@ -977,7 +977,7 @@ playerShip.prototype.spawnBullet = function(){
 			this.bulletBehavior[i](bullet);
 		}
 		
-		fireBoom(explosions,bullet.bulletSprite,bullet.x,bullet.y);
+		fireBoom(explosions,bullet.bulletSprite,bullet.x,bullet.y,bullet.rotation);
 		
 		return bullet;
 	}
@@ -2444,7 +2444,7 @@ function midBoom(explosionsGroup, bulletSprite, x, y){
 		}
 	}
 }
-function fireBoom(explosionsGroup, bulletSprite, x, y){
+function fireBoom(explosionsGroup, bulletSprite, x, y, rot){
 
 	if(onscreen(x,y)){
 
@@ -2455,11 +2455,11 @@ function fireBoom(explosionsGroup, bulletSprite, x, y){
 				var explosion = explosionsGroup.getFirstDead();
 				explosion.loadTexture('explosions', bulletSprite || 0);
 				explosion.reset(x,y);
-				explosion.rotation = Math.random()*2*Math.PI;
+				explosion.rotation = rot + randomSign() * randomRange(0.3,1);
 				explosion.angularVelocity=randomRange(-5,5);
 				explosion.linearDamping=-4;
-				explosion.fireVelocity=randomRange(250,500)*randomSign();
-				explosion.lifespan=randomRange(250,500);
+				explosion.fireVelocity=randomRange(350,600);
+				explosion.lifespan=randomRange(350,600);
 				explosion.scale.setTo(0.05,0.05);
 				explosion.alpha=2;
 				game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
@@ -2474,11 +2474,11 @@ function fireBoom(explosionsGroup, bulletSprite, x, y){
 				var explosion = explosionsGroup.getFirstDead();
 				explosion.loadTexture('explosions', bulletSprite || 0);
 				explosion.reset(x,y);
-				explosion.rotation = Math.random()*2*Math.PI;
+				explosion.rotation = rot ;
 				explosion.angularVelocity=randomRange(-5,5);
 				explosion.linearDamping=-4;
-				explosion.fireVelocity=randomRange(0,10)*randomSign();
-				explosion.lifespan=randomRange(400,700);
+				explosion.fireVelocity=randomRange(200,230);
+				explosion.lifespan=randomRange(500,800);
 				explosion.scale.setTo(1,1);
 				explosion.alpha=1.5;
 				game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
