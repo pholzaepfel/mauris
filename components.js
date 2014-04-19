@@ -1351,9 +1351,9 @@ target.bulletSprite=5;
 	'id':111,
 	'drops':true,
 	'name':'Transporter',
-	'flavor':'press [Z] to board an enemy vessel. this will destroy your ship if successful',
+	'flavor':'press [Z] to board a nearby enemy vessel. this will destroy your ship if successful',
 	'bonus':function(target){
-		if(target.ai==-1){ //no baddie should EVER have this - too frustrating
+		if(target.ai==-1){ //no baddie should EVER have this
 			target.altTexts=['the captain\'s screams are silenced by the void',
 				'the control room is littered with pictures of a life long forgotten',
 					'why the hell is everything pink?'];
@@ -1361,23 +1361,28 @@ target.bulletSprite=5;
 				if(this.energy>=6 || this.energy == this.energyMax){
 					this.energy-=6;	//if player has < 0 energy, it's effectively an extra recharge delay
 					if(game.time.now>this.altCooldown){
-						var bullet=this.spawnBullet(true);
-						bullet.bulletHitBehavior.push(function(sprite,bullet){
-							if(sprite.name!='player'){
-								if(enemies[sprite.name].ai!=3){
+						
+						for(var i=0;i<ui.enemies.length;i++){		
+
+							var targetDistance = game.physics.arcade.distanceBetween(this.sprite, ui.enemies[i].sprite);
+
+
+								if(ui.enemies[i].ai!=3 && targetDistance < 500){
+
+									var idx = ui.enemies[i].sprite.name;
 									ui.sound_boop.play();
-									enemies[sprite.name].health=0;
-									player.initPlayerShip(enemies[sprite.name].ship);
+									enemies[idx].health=0;
 									bigBoom(explosions,player.x,player.y);
-									player.sprite.reset(enemies[sprite.name].sprite.x,enemies[sprite.name].sprite.y);
-									player.rotation = enemies[sprite.name].rotation;
+									player.initPlayerShip(enemies[idx].ship);
+									player.sprite.reset(enemies[idx].sprite.x,enemies[idx].sprite.y);
+									player.rotation = enemies[idx].rotation;
 									ui.texts.push(player.altTexts[Math.floor(randomRange(0,player.altTexts.length))]);
+									enemies[idx].damage(9);
+									break;
 								}
 
-							}
-						});
+						}
 						this.altCooldown=game.time.now+2000;
-
 					}
 
 				}

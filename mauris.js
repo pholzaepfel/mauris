@@ -962,6 +962,7 @@ playerShip.prototype.spawnBullet = function(showFlash){
 		bullet.lifespan = this.fireRange;
 		bullet.body.mass = this.fireMass;
 		bullet.angularVelocity=0;
+		bullet.bulletHitBehavior=[];
 		bullet.bulletHitBehavior=this.bulletHitBehavior;
 		bullet.alpha=1;
 		bullet.blendMode=this.bulletBlendMode;
