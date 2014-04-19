@@ -1,5 +1,4 @@
 var gamemode;
-var buildMode='select';
 var defaultBehavior='neutral';
 var cheatmode = 0;
 // container for stuff that might persist between games
@@ -1273,6 +1272,8 @@ gameUI.prototype.initCombatUi = function() {
 	this.partText = game.add.text(-200,150,'',{font:'1.5em monospace', fill: 'rgb(255,255,255)', align: 'left'});
 	destroyIfExists(this.partFlavorText);
 	this.partFlavorText = game.add.text(-180,180,'',{font:'1.1em monospace', fill: 'rgb(255,255,255)', align: 'left'});
+	destroyIfExists(this.explainerText);
+	this.explainerText = game.add.text(-200,210,'',{font:'1.2em monospace', fill: 'rgb(255,255,220)', align: 'left'});
 
 	this.radar = [];
 	this.resetRadar();
@@ -1540,7 +1541,7 @@ gameUI.prototype.updatePart = function () {
 		}else{
 			this.inventory[i].sprite.visible=false;
 		}
-		if(i==ui.currentPart%16 && buildMode == 'select')
+		if(i==ui.currentPart%16 && ui.buildMode == 'select')
 		{
 			this.inventory[i].sprite.blendMode=1;
 			this.inventory[i].sprite.alpha=3;
@@ -1583,22 +1584,90 @@ gameUI.prototype.findDeletePartIndex = function () {
 	}
 
 }
+gameUI.prototype.rowUpDeletePart = function () {
+
+	this.parts[this.currentPlayerPart].sprite.alpha=1;
+	this.parts[this.currentPlayerPart].sprite.blendMode=0;
+
+	var p = this.findDeletePartIndex();
+
+	p-=Math.sqrt(this.partsIndex.length)-1;
+	while(this.partsIndex[(--p + this.partsIndex.length) % this.partsIndex.length] == -1){}
+
+	this.currentPlayerPart=this.partsIndex[p % this.partsIndex.length];
+	this.updatePart();
+
+	this.parts[this.currentPlayerPart].sprite.alpha=2;
+	this.parts[this.currentPlayerPart].sprite.blendMode=1;
+}
+gameUI.prototype.rowDownDeletePart = function () {
+
+	this.parts[this.currentPlayerPart].sprite.alpha=1;
+	this.parts[this.currentPlayerPart].sprite.blendMode=0;
+
+	var p = this.findDeletePartIndex();
+
+	p+=Math.sqrt(this.partsIndex.length)-1;
+	while(this.partsIndex[(++p + this.partsIndex.length) % this.partsIndex.length] == -1){}
+
+	this.currentPlayerPart=this.partsIndex[p % this.partsIndex.length];
+	this.updatePart();
+
+	this.parts[this.currentPlayerPart].sprite.alpha=2;
+	this.parts[this.currentPlayerPart].sprite.blendMode=1;
+}
 gameUI.prototype.nextDeletePart = function () {
+
+	this.parts[this.currentPlayerPart].sprite.alpha=1;
+	this.parts[this.currentPlayerPart].sprite.blendMode=0;
+
 	var p = this.findDeletePartIndex();
 	while(this.partsIndex[(++p + this.partsIndex.length) % this.partsIndex.length] == -1){}
 
 	this.currentPlayerPart=this.partsIndex[p % this.partsIndex.length];
 	this.updatePart();
+
+	this.parts[this.currentPlayerPart].sprite.alpha=2;
+	this.parts[this.currentPlayerPart].sprite.blendMode=1;
 }
 gameUI.prototype.previousDeletePart = function () {
+					this.parts[this.currentPlayerPart].sprite.alpha=1;
+					this.parts[this.currentPlayerPart].sprite.blendMode=0;
+
 	var p = this.findDeletePartIndex();
 	while(this.partsIndex[(--p + this.partsIndex.length) % this.partsIndex.length] == -1){}
 
 	this.currentPlayerPart=this.partsIndex[(p + this.partsIndex.length)% this.partsIndex.length];
 	this.updatePart();
+					this.parts[this.currentPlayerPart].sprite.alpha=2;
+					this.parts[this.currentPlayerPart].sprite.blendMode=1;
 }
 
 
+gameUI.prototype.rowUpPart = function (c) {
+	if(typeof(c)=='undefined'){c=4};
+	if(playerStats.inventory.length){
+		var n = this.currentPart;
+		if (n==0){n=1}
+		if (n>c){n=c}
+		this.currentPart = (this.currentPart - n + playerStats.inventory.length) % playerStats.inventory.length;	
+	}else{
+		this.currentPart = 0;
+	}
+	this.updatePart();
+}
+gameUI.prototype.rowDownPart = function (c) {
+	if(typeof(c)=='undefined'){c=4};
+	if(playerStats.inventory.length){
+		var n = playerStats.inventory.length - this.currentPart;
+		if (n==0){n=1}
+		if (n>c){n=c}
+		this.currentPart = (this.currentPart + n ) % playerStats.inventory.length;	
+	}else{
+		this.currentPart = 0;
+	}
+	this.updatePart();
+}
 gameUI.prototype.nextPart = function () {
 	if(playerStats.inventory.length){
 		this.currentPart = (this.currentPart  + 1 ) % playerStats.inventory.length;	
@@ -1649,7 +1718,20 @@ gameUI.prototype.partsUI = function (ship) {
 		this.parts = createBuildParts(ship,player.sprite.x,player.sprite.y);
 	}
 	this.partsArray();
+	this.setMode('select');
 	this.updatePart();
+}
+gameUI.prototype.setMode = function(mode){
+	this.buildMode = mode;
+	if(mode=='select'){
+		this.explainerText.setText('[SELECT] X: select part   Z: remove parts   ENTER: launch');
+	}else if(mode=='move'){
+		this.explainerText.setText('[CONFIG] X: place part    Z: cancel         ARROWS: move part');
+
+	}else if(mode=='delete'){
+		this.explainerText.setText('[REMOVE] X: remove part   Z: done removing  Removed parts are returned to inventory.');
+
+	}
 }
 gameUI.prototype.cullInventory = function() {
 	for(var j = 0; j < this.inventory.length; j++) {
@@ -1673,8 +1755,12 @@ gameUI.prototype.destroyInventory = function() {
 gameUI.prototype.cullParts = function() {
 	for(var j = 0; j < this.parts.length; j++) {
 		if(!this.parts[j].sprite.alive){
+			if(this.currentPlayerPart>=j){
+				this.currentPlayerPart-=1;
+			}
 			this.parts.splice(j,1);
 			j-=1;
+			
 		}
 	}	
 }
@@ -1699,6 +1785,7 @@ gameUI.prototype.endPartsUI = function () {
 	this.stationRadar.visible=true;
 	this.partText.setText('');
 	this.partFlavorText.setText('');
+	this.explainerText.setText('');
 	player.initPlayerShip(ship);
 	gamemode = 'war';
 }
@@ -2016,6 +2103,8 @@ function create () {
 		right2: game.input.keyboard.addKey(Phaser.Keyboard.D),
 		fire: game.input.keyboard.addKey(Phaser.Keyboard.X),
 		alt: game.input.keyboard.addKey(Phaser.Keyboard.Z),
+		pgup: game.input.keyboard.addKey(Phaser.Keyboard.PAGE_UP),
+		pgdn: game.input.keyboard.addKey(Phaser.Keyboard.PAGE_DOWN),
 		enter: game.input.keyboard.addKey(Phaser.Keyboard.ENTER)
 	}
 
@@ -2264,7 +2353,7 @@ function update () {
 		if (gamemode == '?build' && !game.input.activePointer.isDown) {
 			if(game.time.now > nextUIDelay){ 
 
-				if(buildMode=='select')
+				if(ui.buildMode=='select')
 				{
 					if ((cursors.left.isDown || cursors.left2.isDown)){
 						ui.previousPart();
@@ -2274,31 +2363,40 @@ function update () {
 						ui.nextPart();	
 						nextUIDelay = game.time.now+1000;
 					}
-					if ((cursors.up.isDown || cursors.up2.isDown)){
-						//ui.buyPart();
-						ui.newestPart();
+					if ((cursors.pgdn.isDown)){
+						ui.rowDownPart(16);	
 						nextUIDelay = game.time.now+1000;
-						//somethin' clever!
+					}
+					if ((cursors.pgup.isDown)){
+						ui.rowUpPart(16);	
+						nextUIDelay = game.time.now+1000;
+					}
+					if ((cursors.down.isDown || cursors.down2.isDown)){
+						ui.rowDownPart();	
+						nextUIDelay = game.time.now+1000;
+					}
+					if ((cursors.up.isDown || cursors.up2.isDown)){
+						ui.rowUpPart();	
+						nextUIDelay = game.time.now+1000;
 					}
 					if(cursors.fire.isDown){
 						selectPart();
-						buildMode='move';
+						ui.setMode('move');
 						nextUIDelay = game.time.now+2000;
 						ui.currentPlayerPart = ui.parts.length-1;
 					}
 					if(cursors.alt.isDown){
-						ui.currentPlayerPart = ui.partsIndex[0];
+						ui.currentPlayerPart = 0;
+						ui.nextDeletePart();
 						nextUIDelay = game.time.now+2000;
-						buildMode='delete'
+						ui.setMode('delete');
 					}
-					if (game.time.now > nextUIDelay + 2000 && (cursors.down.isDown || cursors.down2.isDown)){
+					if (game.time.now > nextUIDelay + 2000 && (cursors.enter.isDown)){
 						ui.endPartsUI();
 						nextUIDelay=game.time.now+1000;
 					}
-				}else if(buildMode=='move'){
+				}else if(ui.buildMode=='move'){
 
-					ui.parts[ui.currentPlayerPart].sprite.alpha=2;
-					ui.parts[ui.currentPlayerPart].sprite.blendMode=1;
 					if ((cursors.left.isDown || cursors.left2.isDown)){
 						ui.parts[ui.currentPlayerPart].sprite.reset(ui.parts[ui.currentPlayerPart].sprite.x-16,ui.parts[ui.currentPlayerPart].sprite.y)	
 							nextUIDelay = game.time.now+500;
@@ -2312,7 +2410,7 @@ function update () {
 							nextUIDelay = game.time.now+500;
 					}
 					if(cursors.fire.isDown){
-						buildMode='select';
+						ui.setMode('select');
 						ui.parts[ui.currentPlayerPart].sprite.alpha=1;
 						ui.parts[ui.currentPlayerPart].sprite.blendMode=0;
 						nextUIDelay = game.time.now+2000;
@@ -2320,7 +2418,7 @@ function update () {
 						ui.partsArray();
 					}
 					if(cursors.alt.isDown && ui.currentPlayerPart > 0){
-						buildMode='select';
+						ui.setMode('select');
 						nextUIDelay = game.time.now+2000;
 						playerStats.inventory.push(ui.parts[ui.currentPlayerPart].index);
 						ui.parts[ui.currentPlayerPart].sprite.kill();							
@@ -2335,29 +2433,28 @@ function update () {
 							nextUIDelay=game.time.now+500;
 					}
 
-				}else if(buildMode=='delete'){
+				}else if(ui.buildMode=='delete'){
 
-					ui.parts[ui.currentPlayerPart].sprite.alpha=2;
-					ui.parts[ui.currentPlayerPart].sprite.blendMode=1;
 					if ((cursors.left.isDown || cursors.left2.isDown)){
-					ui.parts[ui.currentPlayerPart].sprite.alpha=1;
-					ui.parts[ui.currentPlayerPart].sprite.blendMode=0;
 
 						ui.previousDeletePart();	
 						nextUIDelay = game.time.now+500;
 						
 					}
 					if ((cursors.right.isDown || cursors.right2.isDown)){
-					ui.parts[ui.currentPlayerPart].sprite.alpha=1;
-					ui.parts[ui.currentPlayerPart].sprite.blendMode=0;
 						ui.nextDeletePart();	
 							nextUIDelay = game.time.now+500;
 					}
 					if ((cursors.up.isDown || cursors.up2.isDown)){
+						ui.rowUpDeletePart();	
 							nextUIDelay = game.time.now+500;
 					}
+					if (cursors.down.isDown || cursors.down2.isDown){
+						ui.rowDownDeletePart();	
+							nextUIDelay=game.time.now+500;
+					}
 					if(cursors.alt.isDown){
-						buildMode='select';
+						ui.setMode('select');
 						ui.parts[ui.currentPlayerPart].sprite.alpha=1;
 						ui.parts[ui.currentPlayerPart].sprite.blendMode=0;
 						nextUIDelay = game.time.now+2000;
@@ -2366,15 +2463,15 @@ function update () {
 					}
 					if(cursors.fire.isDown){
 						nextUIDelay = game.time.now+2000;
-						playerStats.inventory.push(ui.parts[ui.currentPlayerPart].index);
-						ui.parts[ui.currentPlayerPart].sprite.kill();							
+						var t = ui.currentPlayerPart;
+						ui.previousDeletePart();j
+						playerStats.inventory.push(ui.parts[t].index);
+						ui.parts[t].sprite.kill();							
 						ui.cullParts();
 						ui.updatePart();
 						ui.partsArray(); //recalc rectangle
-						ui.currentPlayerPart-=1;
-						ui.nextDeletePart();	
 						if(ui.parts.length==1){
-							buildMode='select';
+							ui.setMode('select');
 							ui.parts[ui.currentPlayerPart].sprite.alpha=1;
 							ui.parts[ui.currentPlayerPart].sprite.blendMode=0;
 							nextUIDelay = game.time.now+2000;
@@ -2383,9 +2480,6 @@ function update () {
 						}
 
 					}
-					if (cursors.down.isDown || cursors.down2.isDown){
-							nextUIDelay=game.time.now+500;
-					}
 
 				}
 			}
@@ -2393,7 +2487,8 @@ function update () {
 					!cursors.right.isDown && !cursors.right2.isDown &&
 					!cursors.up.isDown && !cursors.up2.isDown &&
 					!cursors.down.isDown && !cursors.down2.isDown &&
-					!cursors.fire.isDown && !cursors.alt.isDown 
+					!cursors.fire.isDown && !cursors.alt.isDown &&
+					!cursors.pgup.isDown && !cursors.pgdn.isDown
 			  ){
 				  nextUIDelay = 0;
 			  }
