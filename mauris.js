@@ -2390,6 +2390,7 @@ function update () {
 						ui.nextDeletePart();
 						nextUIDelay = game.time.now+2000;
 						ui.setMode('delete');
+						ui.updatePart();
 					}
 					if (game.time.now > nextUIDelay + 2000 && (cursors.enter.isDown)){
 						ui.endPartsUI();
