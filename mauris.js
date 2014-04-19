@@ -1478,7 +1478,7 @@ gameUI.prototype.commsPing = function() {
 			this.textIndex+=1;
 			this.textLineIndex=0;
 		}else{
-			this.nextComms=game.time.now+20;
+			this.nextComms=game.time.now+10;
 		}
 		if(this.textLine.substr(-1)=='\n'){
 			this.nextComms+=1000;
@@ -2291,6 +2291,9 @@ function update () {
 						ui.texts.push(contextTutorialDeath);
 						contextTutorialDeath='';
 					}
+					winMission(); 
+					ui.partsUI(player.ship);
+					nextUIDelay=game.time.now+1000;
 				}
 				for(var c = 0; c < enemies.length ; c++) {
 					if (enemies[c].alive==false && enemies[c].respawn && game.time.now > enemies[c].died){
@@ -2413,7 +2416,7 @@ function update () {
 						ui.rowUpPart();	
 						nextUIDelay = game.time.now+1000;
 					}
-					if(cursors.fire.isDown){
+					if(cursors.fire.isDown && playerStats.inventory.length){
 						selectPart();
 						nextUIDelay = game.time.now+2000;
 						ui.currentPlayerPart = ui.parts.length-1;

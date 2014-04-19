@@ -23,7 +23,7 @@ var missions = [
 	'let\'s get started. [LEFT] and [RIGHT] turn your ship.\ntry it now.',
 	'press [X] to fire.\nyou\'ll notice the pink ENERGY BAR decrease as you shoot.\nenergy will recharge over time.',
 	'i think you\'re ready.\npress [UP] to thrust... gently.\nyou probably aren\'t used to dealing with inertia.\nto slow down, TURN AROUND and THRUST.',
-	'see if you can clear 5 of the rocks around the station.\nwe\'ve got a surprise for you when you get back.\nwe\'ll contact you when ready.'],
+	'see if you can clear some of the asteroids around the station.'],
 	'outro':['great job. now, you\'ll need to head back to the station.\nthe green HOME ICON always points home. when you get here...',
 	'press [DOWN] to dock in the REPAIR BAY.'],
 	'win':{
@@ -151,8 +151,7 @@ var missions = [
 	'hazePurpleSpeed':40,
 	'hazePurpleBlendMode':2,
 	'hazeRedBlendMode':1,
-	'intro':['we have COMPONENTS for you.\nCLICK the picture to add a part to your ship.\nthen, DRAG the component wherever you like on your ship.',
-	'LEFT/RIGHT or A/D will cycle through your inventory.\ndifferent components will have different effects, some good, some bad.','... drifting into a sector with some mining drones. we can take the asteroids for\nourselves and scrap the drones for parts.','kill 4 drones and report back.\nwatch out for bandits, visibility is poor here.'],
+	'intro':['... drifting into a sector with some mining drones. we can take the asteroids for\nourselves and scrap the drones for parts.','kill 4 drones and report back.\nwatch out for bandits.'],
 	'outro':['nice job. hurry back, there are alliance warships coming in!'],
 	'win':{
 		'condition':'kill',
