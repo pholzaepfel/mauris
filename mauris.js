@@ -1539,11 +1539,14 @@ gameUI.prototype.updatePart = function () {
 			this.partFlavorText.setText('');
 	}
 	}else{
-
-
-		this.partsSelector.loadTexture('parts',ui.parts[ui.currentPlayerPart].index);
-		this.partText.setText(components[ui.parts[ui.currentPlayerPart].index].name);
-		this.partFlavorText.setText(components[ui.parts[ui.currentPlayerPart].index].flavor);
+		//workaround
+		if(this.currentPlayerPart > this.parts.length){
+			console.log(this.currentPlayerPart);
+			this.currentPlayerPart = 0;
+		}
+		this.partsSelector.loadTexture('parts',this.parts[this.currentPlayerPart].index);
+		this.partText.setText(components[this.parts[this.currentPlayerPart].index].name);
+		this.partFlavorText.setText(components[this.parts[this.currentPlayerPart].index].flavor);
 
 	}
 
@@ -2497,7 +2500,7 @@ function update () {
 					if(cursors.fire.isDown){
 						nextUIDelay = game.time.now+2000;
 						var t = ui.currentPlayerPart;
-						ui.previousDeletePart();j
+						ui.previousDeletePart();
 						playerStats.inventory.push(ui.parts[t].index);
 						ui.parts[t].sprite.kill();							
 						ui.cullParts();
