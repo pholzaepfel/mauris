@@ -1585,7 +1585,6 @@ gameUI.prototype.updatePart = function () {
 			this.inventory[i].sprite.blendMode=0;
 			this.inventory[i].sprite.alpha=1;
 		}
-		this.inventory[i].sprite.reset(this.inventory[i].offsetx,this.inventory[i].offsety);
 	}
 
 }
