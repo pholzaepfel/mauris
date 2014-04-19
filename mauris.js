@@ -1528,7 +1528,7 @@ gameUI.prototype.updatePart = function () {
 		this.partFlavorText.setText(components[playerStats.inventory[this.currentPart]].flavor);
 	}else{
 		this.partsSelector.loadTexture('parts',0)
-			this.partText.setText('Drag a component to the X to store it in your inventory.')
+			this.partText.setText('Your inventory is empty.')
 			this.partFlavorText.setText('');
 	}
 
@@ -2382,6 +2382,7 @@ function update () {
 					if(cursors.fire.isDown){
 						selectPart();
 						ui.setMode('move');
+						ui.updatePart();
 						nextUIDelay = game.time.now+2000;
 						ui.currentPlayerPart = ui.parts.length-1;
 					}
