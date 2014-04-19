@@ -542,11 +542,11 @@ enemyShip.prototype.fire = function () {
 				this.fireSound.play();
 				this.nextFire = this.game.time.now + this.fireRate;
 				this.energy-=this.fireEnergy;
-				this.spawnBullet();
+				this.spawnBullet(true);
 			}
 
 }
-enemyShip.prototype.spawnBullet = function () {
+enemyShip.prototype.spawnBullet = function (showFlash) {
 	if(this.bullets.countDead()){
 		var bullet = this.bullets.getFirstDead();
 		bullet.rotation=this.sprite.rotation;
@@ -569,8 +569,10 @@ enemyShip.prototype.spawnBullet = function () {
 		for (var i = 0; i < this.bulletBehavior.length; i++) {
 			this.bulletBehavior[i](bullet);
 		}
+		
+		if(showFlash){
 		fireBoom(explosions,bullet.bulletSprite,bullet.x,bullet.y,bullet.rotation);
-
+		}	
 		return bullet;
 	}
 }
@@ -942,7 +944,7 @@ playerShip.prototype.fire = function(){
 		}
 		this.nextFire = game.time.now + this.fireRate;
 		this.energy -= this.fireEnergy;
-		this.spawnBullet();
+		this.spawnBullet(true);
 	}
 
 	if(contextTutorialProfile && this.sprite.profile > 1200){
@@ -950,7 +952,7 @@ playerShip.prototype.fire = function(){
 		contextTutorialProfile='';
 	}
 };
-playerShip.prototype.spawnBullet = function(){
+playerShip.prototype.spawnBullet = function(showFlash){
 	if(bullets.countDead()){
 
 		var bullet = bullets.getFirstDead();
@@ -976,7 +978,9 @@ playerShip.prototype.spawnBullet = function(){
 			this.bulletBehavior[i](bullet);
 		}
 
-		fireBoom(explosions,bullet.bulletSprite,bullet.x,bullet.y,bullet.rotation);
+		if (showFlash){
+			fireBoom(explosions,bullet.bulletSprite,bullet.x,bullet.y,bullet.rotation);
+		}
 
 		return bullet;
 	}

@@ -52,7 +52,7 @@ if(bullet.scale.x<1.5){
 	'id':4,
 	'drops':true,
 	'name':'VariJet',
-	'flavor':'press RIGHT MOUSE to rocket backwards',
+	'flavor':'press [Z] to rocket backwards',
 	'bonus':function(target){
 		target.ai=4; //accurate
 		target.turnRate+=0.3;
@@ -108,7 +108,7 @@ if(bullet.scale.x<1.5){
 	'id':8,
 	'drops':true,
 	'name':'Shield Generator',
-	'flavor':'press RIGHT MOUSE for invincibility',
+	'flavor':'press [Z] for invincibility',
 	'bonus':function(target){
 		target.alt=function(){
 			if(this.energy>=0.1){				
@@ -369,7 +369,7 @@ if(bullet.scale.x<2){
 	'id':31,
 	'drops':true,
 	'name':'Reeunk Afterburner',
-	'flavor':'hold RIGHT MOUSE to blaze forward and burn enemies in your wake',
+	'flavor':'hold [Z] to blaze forward and burn enemies in your wake',
 	'bonus':function(target){
 		target.acceleration+=0.2;
 		target.alt=function(){
@@ -380,7 +380,7 @@ if(bullet.scale.x<2){
 					this.sprite.body.velocity.x+=Math.cos(this.sprite.rotation)*150;
 					this.sprite.body.velocity.y+=Math.sin(this.sprite.rotation)*150;
 					this.speed=this.acceleration;
-					var bullet=this.spawnBullet();
+					var bullet=this.spawnBullet(false);
 					bullet.loadTexture('explosions',2);
 					bullet.bulletSprite=2;
 					bullet.reset(this.sprite.x - (Math.cos(this.sprite.rotation)*(this.sprite.body.width)), this.sprite.y - (Math.sin(this.sprite.rotation)*(this.sprite.body.width)));
@@ -888,7 +888,7 @@ target.bulletSprite=5;
 	'id':76,
 	'drops':true,
 	'name':'AWSM',
-	'flavor':'press RIGHT MOUSE to self-destruct, destroying nearby ships',
+	'flavor':'press [Z] to self-destruct, destroying nearby ships',
 	'bonus':function(target){
 		target.alt=function(){
 			ui.sound_boom1.play();
@@ -1139,7 +1139,7 @@ target.bulletSprite=5;
 	'id':97,
 	'drops':true,
 	'name':'Thermal Resonator',
-	'flavor':'press RIGHT MOUSE to alert nearby enemies!',
+	'flavor':'press [Z] to alert nearby enemies!',
 	'bonus':function(target){
 		target.alt=function(){
 			if(this.energy>=6 && game.time.now>this.altCooldown){
@@ -1157,14 +1157,15 @@ target.bulletSprite=5;
 	'id':98,
 	'drops':true,
 	'name':'Destroyed Airlock',
-	'flavor':'press RIGHT MOUSE to unleash a damaging halo of contagion',
+	'flavor':'press [Z] to unleash a damaging halo of contagion',
 	'bonus':function(target){
 		target.alt=function(){
 			if(game.time.now>this.altCooldown && (this.energy>=6 || this.energy == this.energyMax)){
 				this.energy-=6;	//if player has < 0 energy, it's effectively an extra recharge delay
+				this.profile+=200; //cheap!
 				ui.sound_missile.play();
 				for(var n=0; n<1;n+=0.075){
-					var bullet=this.spawnBullet();
+					var bullet=this.spawnBullet(false);
 					bullet.loadTexture('explosions',4);
 					bullet.reset(this.sprite.x, this.sprite.y);
 					bullet.rotation=n*2*Math.PI;
@@ -1202,7 +1203,7 @@ target.bulletSprite=5;
 	'id':100,
 	'drops':true,
 	'name':'Cloaking Device',
-	'flavor':'hold RIGHT MOUSE to throw off attackers',
+	'flavor':'hold [Z] to throw off attackers',
 	'bonus':function(target){
 		target.alt=function(){
 			if(this.energy>=0.4){
@@ -1350,7 +1351,7 @@ target.bulletSprite=5;
 	'id':111,
 	'drops':true,
 	'name':'Transporter',
-	'flavor':'press RIGHT MOUSE to board an enemy vessel. this will destroy your ship if successful',
+	'flavor':'press [Z] to board an enemy vessel. this will destroy your ship if successful',
 	'bonus':function(target){
 		if(target.ai==-1){ //no baddie should EVER have this - too frustrating
 			target.altTexts=['the captain\'s screams are silenced by the void',
@@ -1360,7 +1361,7 @@ target.bulletSprite=5;
 				if(this.energy>=6 || this.energy == this.energyMax){
 					this.energy-=6;	//if player has < 0 energy, it's effectively an extra recharge delay
 					if(game.time.now>this.altCooldown){
-						var bullet=this.spawnBullet();
+						var bullet=this.spawnBullet(true);
 						bullet.bulletHitBehavior.push(function(sprite,bullet){
 							if(sprite.name!='player'){
 								if(enemies[sprite.name].ai!=3){
@@ -1401,7 +1402,7 @@ target.bulletSprite=5;
 	'id':113,
 	'drops':true,
 	'name':'Mechanoid Jumpdrive',
-	'flavor':'press RIGHT MOUSE to teleport',
+	'flavor':'press [Z] to teleport',
 	'bonus':function(target){
 
 		target.alt=function(){
@@ -1425,13 +1426,13 @@ target.bulletSprite=5;
 	'id':114,
 	'drops':true,
 	'name':'Secured Container',
-	'flavor':'recharge energy by rapidly pressing RIGHT MOUSE. inhibits normal recharge',
+	'flavor':'recharge energy by rapidly pressing [Z]. inhibits normal recharge',
 	'bonus':function(target){
 		if(target.ai==-1){
 		target.energyRate=60000; //slow enough
 		target.alt=function(){
 			//this guy has his own cooldown timer, so the user
-			//has to repeatedly press RIGHT MOUSE; there should
+			//has to repeatedly press [Z]; there should
 			//be something in update() that resets this to 0
 			//if mouse2 is up
 			if(this.cooldown114<game.time.now){
