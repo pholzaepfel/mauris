@@ -1143,8 +1143,7 @@ var gameUI = function () {
 gameUI.prototype.initInventory = function () {
 
 	for(var i=0;i<16;i++){
-		this.inventory.push(pool.get(-292+((i%4)*16),-92+(Math.floor(i/4)*16),0));
-		this.inventory[i].sprite.rotation=0;
+		this.inventory.push(game.add.sprite(-300+((i%4)*16),-100+(Math.floor(i/4)*16),'parts',0));
 	}
 
 }
@@ -1569,21 +1568,21 @@ gameUI.prototype.updatePart = function () {
 	var j=ui.currentPart-(ui.currentPart%16);
 	for(var i=0;i<this.inventory.length;i++){
 		if(i+j<playerStats.inventory.length){
-			this.inventory[i].sprite.loadTexture('parts',playerStats.inventory[i+j]);
-			this.inventory[i].sprite.visible=true;
-			this.inventory[i].sprite.bringToTop();
+			this.inventory[i].loadTexture('parts',playerStats.inventory[i+j]);
+			this.inventory[i].visible=true;
+			this.inventory[i].bringToTop();
 		}else{
-			this.inventory[i].sprite.visible=false;
+			this.inventory[i].visible=false;
 		}
 		if(i==ui.currentPart%16 && ui.buildMode == 'select')
 		{
-			this.inventory[i].sprite.blendMode=1;
-			this.inventory[i].sprite.alpha=3;
+			this.inventory[i].blendMode=1;
+			this.inventory[i].alpha=3;
 		}
 		else{
 
-			this.inventory[i].sprite.blendMode=0;
-			this.inventory[i].sprite.alpha=1;
+			this.inventory[i].blendMode=0;
+			this.inventory[i].alpha=1;
 		}
 	}
 
@@ -1767,20 +1766,12 @@ gameUI.prototype.setMode = function(mode){
 	}
 }
 gameUI.prototype.cullInventory = function() {
-	for(var j = 0; j < this.inventory.length; j++) {
-		if(!this.inventory[j].sprite.alive){
-			this.inventory.splice(j,1);
-			j-=1;
-		}
-	}	
 }
 gameUI.prototype.destroyInventory = function() {
 	if(typeof(this.inventory)!='undefined'){
 		for(var i=0; i<this.inventory.length;i++)
 		{
-			this.inventory[i].sprite.blendMode=0;
-			this.inventory[i].sprite.alpha=1;
-			this.inventory[i].sprite.kill();
+			this.inventory[i].visible=false;
 		}
 		this.inventory=[];
 	}
