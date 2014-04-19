@@ -1136,6 +1136,7 @@ var gameUI = function () {
 	this.textIndex = 0;
 	this.textLineIndex = 0;
 	this.nextError=0;
+	this.buildMode = 'select';
 
 }
 gameUI.prototype.initInventory = function () {
@@ -1526,6 +1527,7 @@ gameUI.prototype.update = function() {
 gameUI.prototype.updatePart = function () {
 	this.partsSelector.visible=true;
 	this.partsSelector.bringToTop();
+	if(ui.buildMode == 'select'){
 	if(playerStats.inventory.length){
 		this.partsSelector.loadTexture('parts',playerStats.inventory[this.currentPart]);
 		this.partText.setText(components[playerStats.inventory[this.currentPart]].name);
@@ -1534,6 +1536,14 @@ gameUI.prototype.updatePart = function () {
 		this.partsSelector.loadTexture('parts',0)
 			this.partText.setText('Your inventory is empty.')
 			this.partFlavorText.setText('');
+	}
+	}else{
+
+
+		this.partsSelector.loadTexture('parts',ui.parts[ui.currentPlayerPart].index);
+		this.partText.setText(components[ui.parts[ui.currentPlayerPart].index].name);
+		this.partFlavorText.setText(components[ui.parts[ui.currentPlayerPart].index].flavor);
+
 	}
 
 	var j=ui.currentPart-(ui.currentPart%16);
@@ -2385,12 +2395,12 @@ function update () {
 					}
 					if(cursors.fire.isDown){
 						selectPart();
-						ui.setMode('move');
-						ui.updatePart();
 						nextUIDelay = game.time.now+2000;
 						ui.currentPlayerPart = ui.parts.length-1;
+						ui.setMode('move');
+						ui.updatePart();
 					}
-					if(cursors.alt.isDown){
+					if(cursors.alt.isDown && ui.parts.length > 1){
 						ui.currentPlayerPart = 0;
 						ui.nextDeletePart();
 						nextUIDelay = game.time.now+2000;
@@ -2429,10 +2439,10 @@ function update () {
 						playerStats.inventory.push(ui.parts[ui.currentPlayerPart].index);
 						ui.parts[ui.currentPlayerPart].sprite.kill();							
 						ui.cullParts();
-						ui.updatePart();
-						ui.partsArray(); //recalc rectangle
 						ui.currentPlayerPart = ui.parts.length-1;
 
+						ui.updatePart();
+						ui.partsArray(); //recalc rectangle
 					}
 					if (cursors.down.isDown || cursors.down2.isDown){
 						ui.parts[ui.currentPlayerPart].sprite.reset(ui.parts[ui.currentPlayerPart].sprite.x,ui.parts[ui.currentPlayerPart].sprite.y+16)	
