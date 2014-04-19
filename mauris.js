@@ -1546,6 +1546,22 @@ gameUI.prototype.updatePart = function () {
 
 	}
 
+	for(var i=0;i<this.parts.length;i++)
+	{
+		if((this.buildMode=='move' || this.buildMode=='delete') && i== ui.currentPlayerPart)
+		{
+						ui.parts[i].sprite.alpha=2;
+						ui.parts[i].sprite.blendMode=1;
+
+		}
+		else
+		{
+						ui.parts[i].sprite.alpha=1;
+						ui.parts[i].sprite.blendMode=0;
+
+		}	
+	}
+
 	var j=ui.currentPart-(ui.currentPart%16);
 	for(var i=0;i<this.inventory.length;i++){
 		if(i+j<playerStats.inventory.length){
