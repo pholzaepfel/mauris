@@ -1148,6 +1148,7 @@ var gameUI = function () {
 	this.textLineIndex = 0;
 	this.nextError=0;
 	this.buildMode = 'select';
+				this.nextFrobRadarPulse=0;
 
 }
 gameUI.prototype.initInventory = function () {
@@ -1293,7 +1294,7 @@ gameUI.prototype.initCombatUi = function() {
 	this.radar = [];
 	this.resetRadar();
 
-	this.frobRadar = game.add.text(200,100,'*',{font:'42px monospace', fill: 'rgb(255,255,130)', align: 'center'});
+	this.frobRadar = game.add.text(200,100,'*',{font:'28px monospace', fill: 'rgb(255,255,130)', align: 'center'});
 	this.frobRadar.anchor.setTo(0.5,0.5);
 }
 gameUI.prototype.bar = function (targetText, offset, numerator, denominator) {
@@ -1327,21 +1328,23 @@ gameUI.prototype.frobRadarPing = function() {
 		var targetAngle=game.physics.arcade.angleBetween(player.sprite, frob1);
 		var targetDistance=game.physics.arcade.distanceBetween(player.sprite, frob1);
 		var s='\u25C6'; 
-		var n=Math.floor(255-(targetDistance/2-900));
+		var n=Math.floor(255-(targetDistance/8-225));
 		if(n<64){n=64;}if(n>255){n=255};
 		this.frobRadar.style.fill="rgb("+(Math.floor(n))+","+n+","+(Math.floor(n/2))+")";
-		if(targetDistance<1000){
-			if (game.time.now % 200 < 50)  {
+		if(playerStats.mission.complete) {
+			if (game.time.now > this.nextFrobRadarPulse)  {
 				this.frobRadar.style.fill="rgb("+(n+72)+","+(n+72)+","+(n)+")";
-
+				ui.frobRadar.scale.setTo(3,3);
+				game.add.tween(ui.frobRadar.scale).to({x:1,y:1},500, Phaser.Easing.Quadratic.InOut, true, 0, true, true);
+				this.nextFrobRadarPulse=game.time.now+1000;
 			}
-
 		}else{
+				ui.frobRadar.scale.setTo(1,1);
 			if (game.time.now % 1000 < 50)  {
 				this.frobRadar.style.fill="rgb("+(n+64)+","+(n+64)+","+(n+32)+")";
 
 			}
-
+		
 		}
 
 		if (targetDistance < 300){
@@ -2235,10 +2238,10 @@ function handleMission() {
 		}
 	}
 
-	if((true || playerStats.mission.win.condition=='frob') &&
+	if((playerStats.mission.complete || playerStats.mission.win.condition=='frob') &&
 			game.physics.arcade.overlap(player.sprite,frob1))
 	{
-		playerStats.mission.complete=true;
+		playerStats.mission.complete=true; //just for frob-only missions
 		winMission(); 
 		ui.partsUI(player.ship);
 		nextUIDelay=game.time.now+1000;
@@ -2246,8 +2249,6 @@ function handleMission() {
 	if(playerStats.mission.complete && playerStats.mission.outro.length){
 		ui.sound_complete.play();
 		ui.skipText();
-		ui.frobRadar.scale.setTo(4,4);
-		game.add.tween(ui.frobRadar.scale).to({x:1,y:1},1500, Phaser.Easing.Bounce.Out, true, 0, false);
 		for(var i=0;i<playerStats.mission.outro.length;i++){
 			ui.texts.push(playerStats.mission.outro[i]);
 		}
