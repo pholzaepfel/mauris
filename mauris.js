@@ -1283,9 +1283,7 @@ gameUI.prototype.initCombatUi = function() {
 	this.radar = [];
 	this.resetRadar();
 
-	this.stationRadar = game.add.text(200,100,'*',{font:'30px monospace', fill: 'rgb(130,255,130)', align: 'center'});
-	this.stationRadar.anchor.setTo(0.5,0.5);
-	this.frobRadar = game.add.text(200,100,'*',{font:'30px monospace', fill: 'rgb(255,255,130)', align: 'center'});
+	this.frobRadar = game.add.text(200,100,'*',{font:'42px monospace', fill: 'rgb(255,255,130)', align: 'center'});
 	this.frobRadar.anchor.setTo(0.5,0.5);
 }
 gameUI.prototype.bar = function (targetText, offset, numerator, denominator) {
@@ -1312,7 +1310,7 @@ gameUI.prototype.bar = function (targetText, offset, numerator, denominator) {
 }
 
 gameUI.prototype.frobRadarPing = function() {
-	if(playerStats.mission.win.condition!='frob' || playerStats.mission.complete){
+	if(false && (playerStats.mission.win.condition!='frob' || playerStats.mission.complete)){
 		this.frobRadar.setText('');
 	}else{
 		var s='';
@@ -1343,35 +1341,6 @@ gameUI.prototype.frobRadarPing = function() {
 		this.frobRadar.x = player.sprite.body.x + Math.cos(targetAngle) * 240 - 0.5 * this.frobRadar.width;
 		this.frobRadar.y = player.sprite.body.y + Math.sin(targetAngle) * 240;	
 	}
-}
-gameUI.prototype.stationRadarPing = function() {
-	var s='';
-	var targetAngle=game.physics.arcade.angleBetween(player.sprite, station);
-	var targetDistance=game.physics.arcade.distanceBetween(player.sprite, station);
-	var s='\u2302'; //I cannot believe this circle renders in my terminal
-	var n=Math.floor(255-(targetDistance/2-900));
-	if(n<64){n=64;}if(n>255){n=255};
-	this.stationRadar.style.fill="rgb("+(Math.floor(n/2))+","+n+","+(Math.floor(n/2))+")";
-	if(playerStats.mission.complete){
-		if (game.time.now % 200 < 50)  {
-			this.stationRadar.style.fill="rgb("+(n+72)+","+(n+72)+","+(n)+")";
-
-		}
-
-	}else{
-		if (game.time.now % 1000 < 50)  {
-			this.stationRadar.style.fill="rgb("+(n+32)+","+(n+64)+","+(n+32)+")";
-
-		}
-
-	}
-
-	if (targetDistance < 300){
-		s='';
-	}
-	this.stationRadar.setText(s);
-	this.stationRadar.x = player.sprite.body.x + Math.cos(targetAngle) * 240 - 0.5 * this.stationRadar.width;
-	this.stationRadar.y = player.sprite.body.y + Math.sin(targetAngle) * 240;	
 }
 gameUI.prototype.radarPing = function() {
 	var s='';
@@ -1519,7 +1488,6 @@ gameUI.prototype.update = function() {
 		this.asteroids=enemies.slice(0);
 		this.asteroids.sort(asteroidSort);
 		this.radarPing();
-		this.stationRadarPing();
 		this.frobRadarPing();
 	}
 }
@@ -1736,7 +1704,6 @@ gameUI.prototype.partsUI = function (ship) {
 	this.healthLine.setText('');
 	this.energyLine.setText('');
 	this.profileLine.setText('');
-	this.stationRadar.visible=false;
 	this.clearRadar();
 	this.tempStation.visible=true;
 	this.tempStation.bringToTop();
@@ -1806,7 +1773,6 @@ gameUI.prototype.endPartsUI = function () {
 	this.destroyInventory();
 	var ship = this.partsArray();
 	this.destroyParts();
-	this.stationRadar.visible=true;
 	this.partText.setText('');
 	this.partFlavorText.setText('');
 	this.explainerText.setText('');
@@ -1969,16 +1935,17 @@ function initMission (missionId) {
 		enemies[index].damage(9);
 		index++;
 	}
-	if(playerStats.mission.win.condition=='frob'){
+	if(true || playerStats.mission.win.condition=='frob'){
 		frob1.visible=true;
-		frob1.reset(randomSign()*randomRange(2000,5000),randomSign()*randomRange(2000,5000));
-		frob1.body.angularVelocity=randomRange(-30,30);
+		frob1.reset(randomSign()*randomRange(playerStats.mission.distanceMin,playerStats.mission.distanceMax),randomSign()*randomRange(playerStats.mission.distanceMin,playerStats.mission.distanceMax));
 		frob1.body.velocity.x=randomRange(-20,20);
 		frob1.body.velocity.y=randomRange(-20,20);
 	}
-	hazeRed.alpha=playerStats.mission.hazeRed;
-	hazeWhite.alpha=playerStats.mission.hazeWhite;
-	hazePurple.alpha=playerStats.mission.hazePurple;
+
+	game.add.tween(hazeRed).to({alpha:playerStats.mission.hazeRed},10000, Phaser.Easing.Quadratic.Out, true, 0, false);
+	game.add.tween(hazeWhite).to({alpha:playerStats.mission.hazeWhite},10000, Phaser.Easing.Quadratic.Out, true, 0, false);
+	game.add.tween(hazePurple).to({alpha:playerStats.mission.hazePurple},10000, Phaser.Easing.Quadratic.Out, true, 0, false);
+
 	hazeRed.speed=playerStats.mission.hazeRedSpeed;
 	hazeWhite.speed=playerStats.mission.hazeWhiteSpeed;
 	hazePurple.speed=playerStats.mission.hazePurpleSpeed;
@@ -2004,7 +1971,7 @@ function create () {
 		hazeWhite.fixedToCamera = true;
 		hazeWhite.scale.x=2;
 		hazeWhite.scale.y=2;
-		hazeWhite.alpha=1; //random()
+		hazeWhite.alpha=0.6; //random()
 		hazeWhite.blendMode=0;
 		hazeWhite.offsetx = Math.random()*resolutionX;
 		hazeWhite.offsety = Math.random()*resolutionY;
@@ -2015,7 +1982,7 @@ function create () {
 		hazeRed.fixedToCamera = true;
 		hazeRed.scale.x=3;
 		hazeRed.scale.y=3;
-		hazeRed.alpha=0.7; //randomRange(0,0.8)-0.2;
+		hazeRed.alpha=1; //randomRange(0,0.8)-0.2;
 		hazeRed.blendMode=1;
 		hazeRed.speed = 160;
 		hazePurple = game.add.tileSprite(0, 0, resolutionX/3, resolutionY/3, 'haze2');
@@ -2024,14 +1991,14 @@ function create () {
 		hazePurple.fixedToCamera = true;
 		hazePurple.scale.x=3;
 		hazePurple.scale.y=3;
-		hazePurple.alpha=0.8; //randomRange(0,0.6)-0.2;
+		hazePurple.alpha=1.0; //randomRange(0,0.6)-0.2;
 		hazePurple.blendMode=2;
 		hazePurple.speed=17;
 		station = game.add.sprite(0,0,'station');
 		station.anchor.setTo(0.5,0.5)
 			asteroids.sort(lengthSort);
 
-		frob1 = game.add.sprite(-200,-200,'frob1');
+		frob1 = game.add.sprite(-200,-200,'station');
 		game.physics.enable(frob1, Phaser.Physics.ARCADE);
 		frob1.anchor.setTo(0.5,0.5);
 		frob1.visible=false;
@@ -2223,16 +2190,19 @@ function handleMission() {
 		}
 	}
 
-	if(playerStats.mission.win.condition=='frob' &&
+	if((true || playerStats.mission.win.condition=='frob') &&
 			game.physics.arcade.overlap(player.sprite,frob1))
 	{
 		playerStats.mission.complete=true;
+		winMission(); 
+		ui.partsUI(player.ship);
+		nextUIDelay=game.time.now+1000;
 	}
 	if(playerStats.mission.complete && playerStats.mission.outro.length){
 		ui.sound_complete.play();
 		ui.skipText();
-		ui.stationRadar.scale.setTo(4,4);
-		game.add.tween(ui.stationRadar.scale).to({x:1,y:1},1500, Phaser.Easing.Bounce.Out, true, 0, false);
+		ui.frobRadar.scale.setTo(4,4);
+		game.add.tween(ui.frobRadar.scale).to({x:1,y:1},1500, Phaser.Easing.Bounce.Out, true, 0, false);
 		for(var i=0;i<playerStats.mission.outro.length;i++){
 			ui.texts.push(playerStats.mission.outro[i]);
 		}
@@ -2259,9 +2229,6 @@ function winMission(){
 		playerStats.kills=0;
 	}
 }
-function adjustHaze(haze, target){
-
-}
 function update () {
 	if(gamemode!='init'){
 		if(gamemode=='?build'){
@@ -2269,6 +2236,12 @@ function update () {
 			for (var i = 0; i < ui.parts.length; i++){
 				ui.parts[i].update();
 			}
+	
+			player.sprite.body.velocity.x=0;
+			player.lastVelocityX=0;
+			player.sprite.body.velocity.y=0;
+			player.lastVelocityY=0;
+
 		}
 		if(gamemode=='war' ){
 
@@ -2342,15 +2315,6 @@ function update () {
 			}
 			if (cursors.up.isDown || cursors.up2.isDown){
 				player.up();
-			}
-			if (cursors.down.isDown || cursors.down2.isDown){
-				//player at station
-				if(game.time.now > nextUIDelay + 2000 && Math.abs(player.sprite.x)<100 &&
-						Math.abs(player.sprite.y)<100){
-							winMission(); 
-							ui.partsUI(player.ship);
-							nextUIDelay=game.time.now+1000;
-						}
 			}
 			if(player.alive && (mouseState[2] || cursors.alt.isDown)){
 				player.alt();
