@@ -31,10 +31,10 @@ var cmp = [
 		target.fireRate+=0;
 		target.fireVelocity+=600;
 		target.bulletBehavior.push(function(bullet){
-if(bullet.scale.x<1.5){
-			bullet.scale.setTo(1.5,1.5);
-}
-});
+			if(bullet.scale.x<1.5){
+				bullet.scale.setTo(1.5,1.5);
+			}
+		});
 		target.sprite.profile+=25;
 	}
 },
@@ -59,14 +59,14 @@ if(bullet.scale.x<1.5){
 		target.acceleration+=0.2;
 		target.alt=function(){
 			if(this.energy>=6 &&
-				this.altCooldown<game.time.now){
-				ui.sound_plasma.play();
-				this.altCooldown=game.time.now+1000;
-				this.energy-=6;
-				this.sprite.body.velocity.x=Math.cos(this.sprite.rotation+Math.PI)*this.sprite.body.maxVelocity.x;
-				this.sprite.body.velocity.y=Math.sin(this.sprite.rotation+Math.PI)*this.sprite.body.maxVelocity.y;
-				this.speed=0.01;
-			}
+					this.altCooldown<game.time.now){
+						ui.sound_plasma.play();
+						this.altCooldown=game.time.now+1000;
+						this.energy-=6;
+						this.sprite.body.velocity.x=Math.cos(this.sprite.rotation+Math.PI)*this.sprite.body.maxVelocity.x;
+						this.sprite.body.velocity.y=Math.sin(this.sprite.rotation+Math.PI)*this.sprite.body.maxVelocity.y;
+						this.speed=0.01;
+					}
 		}
 	}
 },
@@ -181,11 +181,11 @@ if(bullet.scale.x<1.5){
 		target.fireVelocity*=1.6;
 		target.sprite.profile+=200;
 		target.bulletBehavior.push(function(bullet){
-if(bullet.scale.x<2){
-			bullet.scale.setTo(bullet.scale.x+0.5,bullet.scale.y+0.5);
-}
-});
-}
+			if(bullet.scale.x<2){
+				bullet.scale.setTo(bullet.scale.x+0.5,bullet.scale.y+0.5);
+			}
+		});
+	}
 },
 {
 	'id':14,
@@ -394,10 +394,10 @@ if(bullet.scale.x<2){
 					bullet.lifespan=1333;
 					bullet.body.angularVelocity=999;
 					this.altCooldown=game.time.now+100;
-							game.add.tween(bullet.scale).to({x:0,y:0},bullet.lifespan, Phaser.Easing.Linear.None, true, 0, false);
+					game.add.tween(bullet.scale).to({x:0,y:0},bullet.lifespan, Phaser.Easing.Linear.None, true, 0, false);
 
 					game.add.tween(bullet).to({alpha:0},bullet.lifespan, Phaser.Easing.Linear.None, true, 0, false);
-		}
+				}
 
 			}
 		}
@@ -589,11 +589,11 @@ if(bullet.scale.x<2){
 			bullet.blendMode=1;
 			game.physics.arcade.velocityFromRotation(bullet.rotation, bullet.fireVelocity, bullet.body.velocity);
 			bullet.scale.setTo(.25,.25);
-				game.add.tween(bullet.scale).to({x:3,y:3},bullet.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
+			game.add.tween(bullet.scale).to({x:3,y:3},bullet.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
 
-	game.add.tween(bullet).to({alpha:0},bullet.lifespan, Phaser.Easing.Linear.Out, true, 0, false);
+			game.add.tween(bullet).to({alpha:0},bullet.lifespan, Phaser.Easing.Linear.Out, true, 0, false);
 		});
-target.bulletSprite=5;
+		target.bulletSprite=5;
 		target.fireDamage+=2;
 		target.fireSound=ui.sound_plasma;
 		target.fireRate*=0.4;
@@ -916,7 +916,7 @@ target.bulletSprite=5;
 		target.bulletHitBehavior.push(function(sprite,bullet){
 			var tgt = ownerFromName(sprite.name);
 			if(tgt.energy>0){
-			tgt.energy-=4;
+				tgt.energy-=4;
 			};
 
 		});
@@ -943,7 +943,6 @@ target.bulletSprite=5;
 	'flavor':'very cheap shots',
 	'bonus':function(target){
 		target.fireRate*=1.1;
-		target.fireDamage+=1;
 		target.fireSound=ui.sound_pew1;
 		target.fireEnergy*=0.8;
 		target.fireVelocity*=1.3;
@@ -986,7 +985,7 @@ target.bulletSprite=5;
 	'name':'External Power Plant',
 	'flavor':'ore pickups also give energy',
 	'bonus':function(target){
-			target.oreEnergy+=2;
+		target.oreEnergy+=2;
 	}
 },
 {
@@ -1002,11 +1001,11 @@ target.bulletSprite=5;
 			addVelocity(bullet.rotation+Math.PI,100, bullet.owner.body.velocity);
 		});
 
-			target.bulletHitBehavior.push(function(sprite,bullet){
-			
-				addVelocity(bullet.rotation, 100, sprite.body.velocity);
+		target.bulletHitBehavior.push(function(sprite,bullet){
+
+			addVelocity(bullet.rotation, 100, sprite.body.velocity);
 		});
-}
+	}
 },
 {
 	'id':84,
@@ -1361,25 +1360,25 @@ target.bulletSprite=5;
 				if(this.energy>=6 || this.energy == this.energyMax){
 					this.energy-=6;	//if player has < 0 energy, it's effectively an extra recharge delay
 					if(game.time.now>this.altCooldown){
-						
+
 						for(var i=0;i<ui.enemies.length;i++){		
 
 							var targetDistance = game.physics.arcade.distanceBetween(this.sprite, ui.enemies[i].sprite);
 
 
-								if(ui.enemies[i].ai!=3 && targetDistance < 500){
+							if(ui.enemies[i].ai!=3 && targetDistance < 500){
 
-									var idx = ui.enemies[i].sprite.name;
-									ui.sound_boop.play();
-									enemies[idx].health=0;
-									bigBoom(explosions,player.x,player.y);
-									player.initPlayerShip(enemies[idx].ship);
-									player.sprite.reset(enemies[idx].sprite.x,enemies[idx].sprite.y);
-									player.rotation = enemies[idx].rotation;
-									ui.texts.push(player.altTexts[Math.floor(randomRange(0,player.altTexts.length))]);
-									enemies[idx].damage(9);
-									break;
-								}
+								var idx = ui.enemies[i].sprite.name;
+								ui.sound_boop.play();
+								enemies[idx].health=0;
+								bigBoom(explosions,player.x,player.y);
+								player.initPlayerShip(enemies[idx].ship);
+								player.sprite.reset(enemies[idx].sprite.x,enemies[idx].sprite.y);
+								player.rotation = enemies[idx].rotation;
+								ui.texts.push(player.altTexts[Math.floor(randomRange(0,player.altTexts.length))]);
+								enemies[idx].damage(9);
+								break;
+							}
 
 						}
 						this.altCooldown=game.time.now+2000;
@@ -1434,24 +1433,24 @@ target.bulletSprite=5;
 	'flavor':'recharge energy by rapidly pressing [Z]. inhibits normal recharge',
 	'bonus':function(target){
 		if(target.ai==-1){
-		target.energyRate=60000; //slow enough
-		target.alt=function(){
-			//this guy has his own cooldown timer, so the user
-			//has to repeatedly press [Z]; there should
-			//be something in update() that resets this to 0
-			//if mouse2 is up
-			if(this.cooldown114<game.time.now){
-				ui.sound_beep.play();
-				if(this.energy+this.energyAmount>this.energyMax){
-					this.energy=this.energyMax;	
-				}else{
-					this.energy+=this.energyAmount;
-				}
-				this.nextEnergy = game.time.now + this.energyRate;
+			target.energyRate=60000; //slow enough
+			target.alt=function(){
+				//this guy has his own cooldown timer, so the user
+				//has to repeatedly press [Z]; there should
+				//be something in update() that resets this to 0
+				//if mouse2 is up
+				if(this.cooldown114<game.time.now){
+					ui.sound_beep.play();
+					if(this.energy+this.energyAmount>this.energyMax){
+						this.energy=this.energyMax;	
+					}else{
+						this.energy+=this.energyAmount;
+					}
+					this.nextEnergy = game.time.now + this.energyRate;
 
-			this.cooldown114=game.time.now+60000;
-			}
-		};
+					this.cooldown114=game.time.now+60000;
+				}
+			};
 		}else{
 			target.energyRate*=0.6; //baddies get all the love
 		}
@@ -1467,7 +1466,7 @@ target.bulletSprite=5;
 		target.health+=5;
 		target.acceleration-=0.1;
 		target.turnRate-=0.3;
-		
+
 	}
 },
 {
@@ -1595,7 +1594,7 @@ target.bulletSprite=5;
 	'bonus':function(target){
 		target.bulletSprite=2;
 
-					target.bulletBlendMode=0;
+		target.bulletBlendMode=0;
 		target.fireDamage+=4;
 		target.fireSound=ui.sound_missile;
 		target.bulletBehavior.push(function(bullet){bullet.body.velocity.x*=.75+Math.random()*.5;
@@ -1611,9 +1610,9 @@ target.bulletSprite=5;
 	'name':'Scavenged Exoskeleton',
 	'flavor':'light frame fitted with thrusters',
 	'bonus':function(target){
-		target.acceleration+=1;
+		target.acceleration+=0.7;
 		target.turnrate+=0.1;
-		target.health+=1;
+		target.health+=2;
 	}
 },
 {
@@ -1623,10 +1622,10 @@ target.bulletSprite=5;
 	'flavor':'erratic fire rate',
 	'bonus':function(target){
 		target.bulletSprite=1;
-					target.bulletBlendMode=0;
+		target.bulletBlendMode=0;
 		target.bulletBehavior.push(function(bullet){				
 			var tgt = ownerFromName(bullet.owner.name);
-			tgt.nextFire = game.time.now + (randomRange(0.25,1.5) * tgt.fireRate);
+			tgt.nextFire = game.time.now + (randomRange(0.7,1.2) * tgt.fireRate);
 		});
 		target.fireRange*=0.7;
 		target.fireSound=ui.sound_bullet;
@@ -1642,7 +1641,7 @@ target.bulletSprite=5;
 	'flavor':'liberate your opponents. higher damage and energy cost.',
 	'bonus':function(target){
 		target.bulletSprite=2;
-					target.bulletBlendMode=0;
+		target.bulletBlendMode=0;
 		target.fireSound=ui.sound_missile;
 		target.fireDamage+=2;
 		target.fireEnergy+=2;
@@ -1666,7 +1665,7 @@ target.bulletSprite=5;
 	'flavor':'BRRRRRRAAAAAAPPPPPP',
 	'bonus':function(target){
 		target.bulletSprite=1;
-					target.bulletBlendMode=0;
+		target.bulletBlendMode=0;
 		target.fireRate*=0.7;
 		target.fireSound=ui.sound_bullet;
 		target.fireDamage+=1;

@@ -17,7 +17,9 @@ var playerMeta = function () {
 	this.kills=0;
 	this.deaths=0;
 };
-
+function queryComponent(id){
+return components[id].bonus.toString().replace(/target\./g,'').replace(/function.*{/,'').replace(/}/g,'').replace(/bulletBehavior.*/,'CHANGE BULLET BEHAVIOR').replace(/alt=.*/,'ALTERNATE FIRE').replace(/this.*body\./g,'').replace(/this.*sprite\./g,'').replace(/this\./g,'').replace(/[();\[\]{}]/g,'').replace(/\t\t\t.*\n/g,'').replace(/[\t ]*/g,'').replace(/^\n/g,'');
+}
 var blackOut = function(){
 
 	ui.tempStation.visible=false;
@@ -1438,9 +1440,7 @@ gameUI.prototype.commsPing = function() {
 			ui.sound_comms.play();
 			this.nextCommsPing=false;
 		}
-		this.comms.alpha+=randomRange(-0.1,0.1);
-		this.comms.alpha=Math.min(0.8,this.comms.alpha);
-		this.comms.alpha=Math.max(0.7,this.comms.alpha);
+		this.comms.alpha=1;
 		this.textLine = this.texts[this.textIndex].substr(0, this.textLineIndex++);
 		var s ='';
 		if(!this.textLine.substr(-1)=='\n'){
@@ -1455,24 +1455,18 @@ gameUI.prototype.commsPing = function() {
 		this.textLine=s;
 		this.comms.setText(this.textLine);
 		if(this.textLineIndex>this.texts[this.textIndex].length){
-			this.nextComms=game.time.now+5000;
+			this.nextComms=game.time.now+1000+this.textLineIndex*50;
 			this.textIndex+=1;
 			this.textLineIndex=0;
 		}else{
 			this.nextComms=game.time.now+10;
 		}
 		if(this.textLine.substr(-1)=='\n'){
-			this.nextComms+=1000;
-			this.nextCommsPing=true;
+			this.nextComms+=10;
 		}
-	} else if (game.time.now > this.nextComms) {
+	}else if (game.time.now > this.nextComms) {
 		this.comms.alpha-=randomRange(0,0.05);
-	} else {
-		this.comms.alpha+=randomRange(-0.1,0.1);
-		this.comms.alpha=Math.min(0.8,this.comms.alpha);
-		this.comms.alpha=Math.max(0.7,this.comms.alpha);
-
-	}
+	}  
 	if(this.textLine.length>0 && game.time.now % 200 > 100){
 		this.comms.setText(this.textLine + '_');
 	}else{

@@ -65,9 +65,7 @@ var missions = [
 	'hazeRedBlendMode':1,
 	'intro':['er... go kill things'],
 	'win':{
-		'condition':'kill',
-		'killCount':999,
-		'killType': ships
+		'condition':'frob'
 	},
 	'enemies': [{
 		'ships': ships,
@@ -107,7 +105,7 @@ var missions = [
 	'hazePurpleBlendMode':1,
 	'hazeRedBlendMode':1,
 	'intro':['uh, captain... there\'s a big nasty incoming.\nlooks like a bandit warship.\nalright, we\'ve got an AWSM bomb here...','it will obliterate your ship,\nbut if you can get close enough, you can take the warship out with you.','pull in close and press [Z] with the AWSM equipped.'],
-	'outro':['BOOoooom! that was amazing!\ncome on back.'],
+	'outro':['BOOoooom! that was amazing!\nhead to the next waystation.'],
 	'win':{
 		'condition':'kill',
 		'killCount':1,
