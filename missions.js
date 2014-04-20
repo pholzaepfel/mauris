@@ -106,7 +106,7 @@ var missions = [
 	'distanceMax':12000,
 	'hazePurpleBlendMode':1,
 	'hazeRedBlendMode':1,
-	'intro':['uh, captain... there\'s a big nasty incoming.\nlooks like a bandit warship.\nalright, we\'ve got an AWSM bomb here...','it will obliterate your ship,\nbut if you can get close enough, you can take the warship out with you.','pull in close and RIGHT CLICK with the AWSM equipped.'],
+	'intro':['uh, captain... there\'s a big nasty incoming.\nlooks like a bandit warship.\nalright, we\'ve got an AWSM bomb here...','it will obliterate your ship,\nbut if you can get close enough, you can take the warship out with you.','pull in close and press [Z] with the AWSM equipped.'],
 	'outro':['BOOoooom! that was amazing!\ncome on back.'],
 	'win':{
 		'condition':'kill',
