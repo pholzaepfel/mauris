@@ -1,4 +1,4 @@
-var contextTutorialDeath = 'wake up, captain. we managed to recover you from the wreckage.\nif you had any ore collected, it\'s gone, but any parts\nyou collect will remain.';
+var contextTutorialDeath = 'wake up, captain. we managed to recover you from the wreckage.\nyour ship is a lost cause, but we can recover parts you were carrying.';
 var contextTutorialProfile = 'going in guns blazing and/or with a huge warship will attract attention.\nyou can use this to your advantage. provoke attacks!\nenemies will be caught in the crossfire and' +
 '\nturn on each other.';
 var contextTutorialBlink = 'your HUD tracks the biggest threats,\nand will blink furiously as enemies approach.\nmission targets will be marked GOLD.';

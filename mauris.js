@@ -614,9 +614,11 @@ enemyShip.prototype.update = function() {
 	if (this.game.physics.arcade.distanceBetween(this.sprite, player.sprite) > 5000 ||
 			this.game.physics.arcade.distanceBetween(this.sprite, player.sprite) > 2500 && this.ai == 3){
 
+				if(Math.random()>0.5){
 				this.target=player.sprite;
-				var x = this.target.x + (randomSign() * randomRange(1000,1500) + player.sprite.body.velocity.x);
-				var y = this.target.y + (randomSign() * randomRange(1000,1500) + player.sprite.body.velocity.y);
+				}
+				var x = this.target.x + (randomSign() * randomRange(960,1500) + player.sprite.body.velocity.x);
+				var y = this.target.y + (randomSign() * randomRange(540,1500) + player.sprite.body.velocity.y);
 				this.sprite.reset(x,y);				
 				midBoom(explosions,4,x,y);
 				if(this.ai==3){
