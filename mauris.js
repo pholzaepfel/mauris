@@ -1539,7 +1539,7 @@ gameUI.prototype.updatePart = function () {
 	}
 	}else{
 		//workaround
-		if(typeof(this.currentPlayerPart == undefined) || this.currentPlayerPart > this.parts.length){
+		if(typeof(this.currentPlayerPart) == 'undefined' || this.currentPlayerPart > this.parts.length){
 			console.log(this.currentPlayerPart);
 			this.currentPlayerPart = 0;
 		}
