@@ -1039,7 +1039,7 @@ playerShip.prototype.update = function(){
 			}else if (this.sprite.profile < this.sprite.profileMax){
 				this.sprite.profile+=this.profileDecay;
 			}
-
+			this.sprite.profileMax+=10;
 			this.nextProfileDecay=game.time.now+1000;
 		}
 
@@ -1942,9 +1942,9 @@ function initMission (missionId) {
 		frob1.body.velocity.y=randomRange(-20,20);
 	}
 
-	game.add.tween(hazeRed).to({alpha:playerStats.mission.hazeRed},10000, Phaser.Easing.Quadratic.Out, true, 0, false);
-	game.add.tween(hazeWhite).to({alpha:playerStats.mission.hazeWhite},10000, Phaser.Easing.Quadratic.Out, true, 0, false);
-	game.add.tween(hazePurple).to({alpha:playerStats.mission.hazePurple},10000, Phaser.Easing.Quadratic.Out, true, 0, false);
+	game.add.tween(hazeRed).to({alpha:playerStats.mission.hazeRed},10000, Phaser.Easing.Exponential.Out, true, 0, false);
+	game.add.tween(hazeWhite).to({alpha:playerStats.mission.hazeWhite},10000, Phaser.Easing.Exponential.Out, true, 0, false);
+	game.add.tween(hazePurple).to({alpha:playerStats.mission.hazePurple},10000, Phaser.Easing.Exponential.Out, true, 0, false);
 
 	hazeRed.speed=playerStats.mission.hazeRedSpeed;
 	hazeWhite.speed=playerStats.mission.hazeWhiteSpeed;
