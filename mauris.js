@@ -1331,7 +1331,7 @@ gameUI.prototype.frobRadarPing = function() {
 		var n=Math.floor(255-(targetDistance/8-225));
 		if(n<64){n=64;}if(n>255){n=255};
 		this.frobRadar.style.fill="rgb("+(Math.floor(n))+","+n+","+(Math.floor(n/2))+")";
-		if(playerStats.mission.complete) {
+		if(playerStats.mission.complete || playerStats.mission.win.condition=='frob') {
 			if (game.time.now > this.nextFrobRadarPulse)  {
 				this.frobRadar.style.fill="rgb("+(n+72)+","+(n+72)+","+(n)+")";
 				ui.frobRadar.scale.setTo(3,3);
