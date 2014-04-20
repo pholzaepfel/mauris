@@ -74,6 +74,7 @@ function destroyIfExists(sprite){
 
 function applyBonuses(target){
 
+	var n=0;
 	for(var i=0;i<target.ship.length;i++){
 		if (target.ship[i]!=-1){
 			target.sprite.body.maxVelocity.x-=10;
@@ -81,9 +82,10 @@ function applyBonuses(target){
 			target.sprite.profile+=25;
 			target.turnRate-=0.1;
 			components[target.ship[i]].bonus(target);
+			n++;
 		}
 	}
-	target.acceleration =target.acceleration*48/(i+3);
+	target.acceleration =target.acceleration*48/(n+3);
 	target.turnRate*=2.5;
 
 	//apply some minimums
@@ -359,8 +361,11 @@ enemyShip = function (index, game, targetSprite, bullets, shipList, thrust) {
 
 enemyShip.prototype.initEnemyShip = function(ship) {
 
-	var x = this.target.body.x + (randomSign() * randomRange(750,2000)) + player.sprite.body.velocity.x*3;
-	var y = this.target.body.y + (randomSign() * randomRange(750,2000)) + player.sprite.body.velocity.y*3;
+	this.sprite.rotation=Math.random()*2*Math.PI;
+	
+	var x = this.target.x + (Math.cos(-1 * this.sprite.rotation) * (randomRange(960,1500) + player.sprite.body.velocity.x));
+	var y = this.target.y + (Math.sin(-1 * this.sprite.rotation) * (randomRange(540,1500) + player.sprite.body.velocity.y));
+	
 	this.nextThrust=0;
 	this.fireSound=ui.sound_pew3;
 	this.built=false;
@@ -372,7 +377,6 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 	this.sawDamage=0;
 	this.sprite.profileDecay = 166;
 	this.nextProfileDecay = 0;
-	this.rotation=Math.random()*2*Math.PI;
 	this.aggroList = [];
 	this.holdThrust=0;
 	this.oreEnergy=0;
@@ -610,9 +614,10 @@ enemyShip.prototype.update = function() {
 	if (this.game.physics.arcade.distanceBetween(this.sprite, player.sprite) > 5000 ||
 			this.game.physics.arcade.distanceBetween(this.sprite, player.sprite) > 2500 && this.ai == 3){
 
-				var x = this.target.x + (randomSign() * randomRange(750,2000)) + player.sprite.body.velocity.x*3;
-				var y = this.target.y + (randomSign() * randomRange(750,2000)) + player.sprite.body.velocity.y*3;
-				this.sprite.reset(x,y);
+				this.target=player.sprite;
+				var x = this.target.x + (randomSign() * randomRange(1000,1500) + player.sprite.body.velocity.x);
+				var y = this.target.y + (randomSign() * randomRange(1000,1500) + player.sprite.body.velocity.y);
+				this.sprite.reset(x,y);				
 				midBoom(explosions,4,x,y);
 				if(this.ai==3){
 
@@ -628,7 +633,9 @@ enemyShip.prototype.update = function() {
 
 	if(this.ai==2){
 		//init asteroid stuff
-		this.sprite.body.velocity = game.physics.arcade.velocityFromRotation(game.physics.arcade.angleBetween(this.sprite, player.sprite), randomRange(25,100));	
+		this.sprite.body.velocity = game.physics.arcade.velocityFromRotation(game.physics.arcade.angleBetween(this.sprite, player.sprite), randomRange(30,130));	
+		this.sprite.body.velocity.x*=Math.random();
+		this.sprite.body.velocity.y*=Math.random();
 		this.sprite.body.angularVelocity=randomRange(25,100)*randomSign();
 		this.sprite.profile=0;
 		this.sprite.profileMax=0;
@@ -899,7 +906,7 @@ playerShip.prototype.damage = function(dmg, aggro) {
 		this.health -= damageCoef * dmg;
 	}
 
-	if (this.health <= 0){
+	if (this.health <= 0 && this.health + dmg >= 0){
 		sparkExplosion(pew, this.sprite);	
 		bigBoom(explosions,this.sprite.x,this.sprite.y);
 		this.died=game.time.now+10000;
@@ -914,6 +921,7 @@ playerShip.prototype.damage = function(dmg, aggro) {
 		this.cullParts();	//defensive programming, in case I ever decide to do something that will kill a player sprite early :P
 		nextSpawn = game.time.now+5000;
 		playerStats.deaths+=1; //hahahahahhahahahahahahahhahahahahahaha
+		fadeOut();
 		return true;
 	}
 
@@ -1942,15 +1950,50 @@ function initMission (missionId) {
 		frob1.body.velocity.y=randomRange(-20,20);
 	}
 
-	game.add.tween(hazeRed).to({alpha:playerStats.mission.hazeRed},10000, Phaser.Easing.Exponential.Out, true, 0, false);
-	game.add.tween(hazeWhite).to({alpha:playerStats.mission.hazeWhite},10000, Phaser.Easing.Exponential.Out, true, 0, false);
-	game.add.tween(hazePurple).to({alpha:playerStats.mission.hazePurple},10000, Phaser.Easing.Exponential.Out, true, 0, false);
+	fadeIn();
+}
+
+function fadeOut () {
+	station.alpha=1;
+	ui.tempStation.alpha=1;
+	game.add.tween(station).to({alpha:1},5000, Phaser.Easing.Exponential.Out, true, 0, false);
+	game.add.tween(ui.tempStation).to({alpha:1},5000, Phaser.Easing.Exponential.Out, true, 0, false);
+
+
+	hazeRed.alpha=playerStats.mission.hazeRed;
+	hazeWhite.alpha=playerStats.mission.hazeWhite;
+	hazePurple.alpha=playerStats.mission.hazePurple;
+	game.add.tween(hazeRed).to({alpha:0},5000, Phaser.Easing.Linear.Out, true, 0, false);
+	game.add.tween(hazeWhite).to({alpha:0},5000, Phaser.Easing.Exponential.Out, true, 0, false);
+	game.add.tween(hazePurple).to({alpha:0},5000, Phaser.Easing.Exponential.Out, true, 0, false);
 
 	hazeRed.speed=playerStats.mission.hazeRedSpeed;
 	hazeWhite.speed=playerStats.mission.hazeWhiteSpeed;
 	hazePurple.speed=playerStats.mission.hazePurpleSpeed;
 	hazeRed.blendMode=playerStats.mission.hazeRedBlendMode;
 	hazePurple.blendMode=playerStats.mission.hazePurpleBlendMode;
+
+}
+function fadeIn () {
+	station.alpha=0;
+	ui.tempStation.alpha=0;
+	game.add.tween(station).to({alpha:1},1000, Phaser.Easing.Linear.None, true, 0, false);
+	game.add.tween(ui.tempStation).to({alpha:1},1000, Phaser.Easing.Linear.None, true, 0, false);
+
+
+	hazeRed.alpha=0;
+	hazeWhite.alpha=0;
+	hazePurple.alpha=0;
+	game.add.tween(hazeRed).to({alpha:playerStats.mission.hazeRed},1000, Phaser.Easing.Linear.None, true, 0, false);
+	game.add.tween(hazeWhite).to({alpha:playerStats.mission.hazeWhite},5000, Phaser.Easing.Linear.None, true, 0, false);
+	game.add.tween(hazePurple).to({alpha:playerStats.mission.hazePurple},1000, Phaser.Easing.Linear.None, true, 0, false);
+
+	hazeRed.speed=playerStats.mission.hazeRedSpeed;
+	hazeWhite.speed=playerStats.mission.hazeWhiteSpeed;
+	hazePurple.speed=playerStats.mission.hazePurpleSpeed;
+	hazeRed.blendMode=playerStats.mission.hazeRedBlendMode;
+	hazePurple.blendMode=playerStats.mission.hazePurpleBlendMode;
+
 }
 
 function create () {
@@ -2255,6 +2298,7 @@ function update () {
 						contextTutorialDeath='';
 					}
 					winMission(); 
+					fadeIn();
 					ui.partsUI(player.ship);
 					nextUIDelay=game.time.now+1000;
 				}
