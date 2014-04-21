@@ -392,7 +392,7 @@ var cmp = [
 					bullet.scale.setTo(2,2);
 					bullet.lifespan=1333;
 					bullet.body.angularVelocity=999;
-					bullet.tracking=0; //doesn't play with angularvel
+					bullet.tracking=-999; //doesn't play with angularvel
 					this.altCooldown=game.time.now+100;
 					game.add.tween(bullet.scale).to({x:0,y:0},bullet.lifespan, Phaser.Easing.Linear.None, true, 0, false);
 
@@ -585,7 +585,7 @@ var cmp = [
 			bullet.rotation+=Math.random()*0.5-0.25;
 			bullet.loadTexture('explosions',2);
 			bullet.body.angularVelocity=randomRange(600,900);
-			bullet.tracking=0;
+			bullet.tracking=-999;
 			bullet.alpha=1.5;
 			bullet.blendMode=1;
 			game.physics.arcade.velocityFromRotation(bullet.rotation, bullet.fireVelocity, bullet.body.velocity);
@@ -1170,7 +1170,7 @@ var cmp = [
 					bullet.scale.setTo(1,1);
 					bullet.lifespan=400;
 					bullet.body.angularVelocity=999;
-					bullet.tracking=0;
+					bullet.tracking=-999;
 					bullet.blendMode=1;
 					game.add.tween(bullet.scale).to({x:bullet.scale.x*4,y:bullet.scale.y*4},bullet.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
 

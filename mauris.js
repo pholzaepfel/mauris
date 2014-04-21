@@ -2282,7 +2282,7 @@ function winMission(){
 }
 
 function enemyBulletTracking(bullet){
-	if(bullet.tracking && game.time.now > bullet.nextTrack){
+	if(bullet.tracking > 0 && game.time.now > bullet.nextTrack){
 		var angle = compareAngles(bullet.rotation, game.physics.arcade.angleBetween(bullet, ownerFromName(bullet.owner.name).target));
 		if(Math.abs(angle)>bullet.tracking * 0.04){
 		bullet.rotation -= angle * bullet.tracking * 0.02 / Math.abs(angle);
@@ -2293,7 +2293,7 @@ function enemyBulletTracking(bullet){
 	}
 }
 function playerBulletTracking(bullet){
-	if(bullet.tracking && game.time.now > bullet.nextTrack){
+	if(bullet.tracking > 0 && game.time.now > bullet.nextTrack){
 		var angle = compareAngles(bullet.rotation, game.physics.arcade.angleBetween(bullet, ui.enemies[0].sprite));
 		if(Math.abs(angle)>bullet.tracking * 0.04){
 		bullet.rotation -= angle * bullet.tracking * 0.02 / Math.abs(angle);
