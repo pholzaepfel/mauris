@@ -175,10 +175,9 @@ var cmp = [
 	'bonus':function(target){
 		target.bulletSprite=5; 
 		target.fireDamage*=2;
-
+		target.fireEnergy*=1.5;
 		target.fireSound=ui.sound_boom2;
 		target.fireRate*=1.5;
-		target.fireVelocity*=1.6;
 		target.sprite.profile+=200;
 		target.bulletBehavior.push(function(bullet){
 			if(bullet.scale.x<2){
@@ -393,6 +392,7 @@ var cmp = [
 					bullet.scale.setTo(2,2);
 					bullet.lifespan=1333;
 					bullet.body.angularVelocity=999;
+					bullet.tracking=0; //doesn't play with angularvel
 					this.altCooldown=game.time.now+100;
 					game.add.tween(bullet.scale).to({x:0,y:0},bullet.lifespan, Phaser.Easing.Linear.None, true, 0, false);
 
@@ -585,6 +585,7 @@ var cmp = [
 			bullet.rotation+=Math.random()*0.5-0.25;
 			bullet.loadTexture('explosions',2);
 			bullet.body.angularVelocity=randomRange(600,900);
+			bullet.tracking=0;
 			bullet.alpha=1.5;
 			bullet.blendMode=1;
 			game.physics.arcade.velocityFromRotation(bullet.rotation, bullet.fireVelocity, bullet.body.velocity);
@@ -965,18 +966,12 @@ var cmp = [
 	'id':81,
 	'drops':true,
 	'name':'Mechanoid Turret',
-	'flavor':'target with mouse!',
+	'flavor':'strong tracking ability',
 	'bonus':function(target){
-		if(target.ai==-1){
-			target.bulletBehavior.push(function(bullet){
-				bullet.reset(bullet.owner.x,bullet.owner.y);
-				bullet.rotation=game.physics.arcade.angleToPointer(bullet);
-				game.physics.arcade.velocityFromRotation(bullet.rotation,bullet.fireVelocity,bullet.body.velocity);
-			});
-		}else{
-			target.fireDamage+=2;
-			target.fireRate-=100;
-		};
+		target.fireDamage+=1;
+		target.fireRate-=100;
+		target.fireEnergy+=1;
+		target.fireTracking+=2;
 	}
 },
 {
@@ -1175,6 +1170,7 @@ var cmp = [
 					bullet.scale.setTo(1,1);
 					bullet.lifespan=400;
 					bullet.body.angularVelocity=999;
+					bullet.tracking=0;
 					bullet.blendMode=1;
 					game.add.tween(bullet.scale).to({x:bullet.scale.x*4,y:bullet.scale.y*4},bullet.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
 
@@ -1638,11 +1634,13 @@ var cmp = [
 	'id':131,
 	'drops':true,
 	'name':'Freedom Missiles',
-	'flavor':'liberate your opponents. higher damage and energy cost.',
+	'flavor':'guided, long-range',
 	'bonus':function(target){
 		target.bulletSprite=2;
 		target.bulletBlendMode=0;
 		target.fireSound=ui.sound_missile;
+		target.fireTracking+=1.5;
+		target.fireRange+=200;
 		target.fireDamage+=2;
 		target.fireEnergy+=2;
 		target.sprite.profile+=15;

@@ -96,7 +96,7 @@ function applyBonuses(target){
 	if(target.turnRate < 1){target.turnRate=1}
 	if(target.energyRate < 400){target.energyAmount+=(400-target.energyRate)/100}		
 	if(target.fireEnergy < 1){target.fireEnergy=1}	
-
+	if(target.fireTracking > 5){target.fireTracking=5;}
 	target.healthMax = target.health;
 	target.sprite.profileMax=target.sprite.profile; 
 }
@@ -399,6 +399,7 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 	this.fireRange = 1000;
 	this.fireMass = 0.1;
 	this.fireEnergy = 2;
+	this.fireTracking = 0;
 	this.speed = 0;
 	this.energy=0;
 	this.energyMax=10;
@@ -562,6 +563,8 @@ enemyShip.prototype.spawnBullet = function (showFlash) {
 		bullet.alpha=1;
 		bullet.blendMode=this.bulletBlendMode;
 		bullet.scale.setTo(1,1);
+		bullet.tracking = this.fireTracking;
+		bullet.nextTrack = 0;
 		bullet.bulletHitBehavior=this.bulletHitBehavior;
 		bullet.angularVelocity=0;
 		bullet.loadTexture('bullet', this.bulletSprite);
@@ -859,6 +862,7 @@ playerShip.prototype.initPlayerShip = function (ship) {
 	this.fireRange = 1000;
 	this.fireMass = 0.1;
 	this.fireEnergy = 2;
+	this.fireTracking = 0;
 	this.profileDecay = 166;
 	this.profileShow = false;
 	this.energy=0;
@@ -974,6 +978,8 @@ playerShip.prototype.spawnBullet = function(showFlash){
 		bullet.lifespan = this.fireRange;
 		bullet.body.mass = this.fireMass;
 		bullet.angularVelocity=0;
+		bullet.tracking = this.fireTracking;
+		bullet.nextTrack = 0;
 		bullet.bulletHitBehavior=[];
 		bullet.bulletHitBehavior=this.bulletHitBehavior;
 		bullet.alpha=1;
@@ -2274,6 +2280,29 @@ function winMission(){
 		playerStats.kills=0;
 	}
 }
+
+function enemyBulletTracking(bullet){
+	if(bullet.tracking && game.time.now > bullet.nextTrack){
+		var angle = compareAngles(bullet.rotation, game.physics.arcade.angleBetween(bullet, ownerFromName(bullet.owner.name).target));
+		if(Math.abs(angle)>bullet.tracking * 0.04){
+		bullet.rotation -= angle * bullet.tracking * 0.02 / Math.abs(angle);
+		}
+		game.physics.arcade.velocityFromRotation(bullet.rotation, getHypo(bullet.body.velocity.x,bullet.body.velocity.y), bullet.body.velocity);
+		
+		bullet.nextTrack = game.time.now+20;
+	}
+}
+function playerBulletTracking(bullet){
+	if(bullet.tracking && game.time.now > bullet.nextTrack){
+		var angle = compareAngles(bullet.rotation, game.physics.arcade.angleBetween(bullet, ui.enemies[0].sprite));
+		if(Math.abs(angle)>bullet.tracking * 0.04){
+		bullet.rotation -= angle * bullet.tracking * 0.02 / Math.abs(angle);
+		}
+		game.physics.arcade.velocityFromRotation(bullet.rotation, getHypo(bullet.body.velocity.x,bullet.body.velocity.y), bullet.body.velocity);
+		
+		bullet.nextTrack = game.time.now+20;
+	}
+}
 function update () {
 	if(gamemode!='init'){
 		if(gamemode=='?build'){
@@ -2348,6 +2377,9 @@ function update () {
 
 				}
 			}
+
+			bullets.forEachAlive(playerBulletTracking);
+			enemyBullets.forEachAlive(enemyBulletTracking);
 
 			for (var i = 0; i < player.parts.length; i++){
 				player.parts[i].update();
