@@ -10,7 +10,7 @@ var missions = [
 	'name':'tutorial',
 	'complete':false,
 	'componentsReward':banditGear,
-	'creditsReward':10,
+	'componentsCount':1,
 	'hazeRed':0.7,
 	'hazeWhite':0.4,
 	'hazePurple':0.8,
@@ -48,11 +48,11 @@ var missions = [
 
 },
 {	'id':1,
-	'next':[1],
+	'next':[1,5],
 	'name':'random warzone',
 	'complete':false,
 	'componentsReward':banditGear,
-	'creditsReward':10,
+	'componentsCount':2,
 	'hazeRed':0.7,
 	'hazeWhite':0.5,
 	'hazePurple':1.0,
@@ -93,7 +93,7 @@ var missions = [
 	'name':'obligatory kill quest',
 	'complete':false,
 	'componentsReward':banditGear,
-	'creditsReward':20,
+	'componentsCount':4,
 	'hazeRed':0.7,
 	'hazeWhite':0.2,
 	'hazePurple':0.2,
@@ -145,7 +145,7 @@ var missions = [
 	'name':'shots in the dark',
 	'complete':false,
 	'componentsReward':[64],
-	'creditsReward':20,
+	'componentsCount':2,
 	'hazeRed':0.2,
 	'hazeWhite':0.7,
 	'hazePurple':1.0,
@@ -198,7 +198,7 @@ var missions = [
 	'name':'smuggling',
 	'complete':false,
 	'componentsReward':[76],
-	'creditsReward':20,
+	'componentsCount':1,
 	'hazeRed':1,
 	'hazeWhite':2,
 	'hazePurple':0.7,
@@ -237,5 +237,97 @@ var missions = [
 
 
 
+},
+{
+	'id':5,
+	'next':[1,5],
+	'name':'5',
+	'complete':false,
+	'componentsReward':allianceGear,
+	'componentsCount':2,
+	'hazeRed':1,
+	'hazeWhite':0.1,
+	'hazePurple':0.3,
+	'hazeRedSpeed':4,
+	'hazeWhiteSpeed':4,
+	'hazePurpleSpeed':2,
+	'distanceMin':9000,
+	'distanceMax':14000,
+	'hazePurpleBlendMode':2,
+	'hazeRedBlendMode':1,
+	'intro':['messages go here'],
+	'outro':['captain. try to make it back in one piece.'],
+	'win':{
+		'condition':'kill', //could be 'frob'
+		'killCount':10,
+		'killType': alliance
+	},
+	'enemies':
+		[{
+			'ships': asteroids,
+			'respawn':true,
+			'count':17, 
+			'missionTarget':false,
+			'taunts':[],
+			'deaths':[]
+		},
+	{
+			'ships': alliance,
+			'respawn':true,
+			'count':14, 
+			'missionTarget':true,
+			'taunts':[],
+			'deaths':[]
+		}]
 }
 ];
+
+
+
+/*
+ * mission template
+ */
+/*
+{
+	'id':TODO,
+	'next':[TODO],
+	'name':'TODO',
+	'complete':false,
+	'componentsReward':TODO,
+	'componentsCount':1,
+	'hazeRed':0.7,
+	'hazeWhite':0.4,
+	'hazePurple':0.8,
+	'hazeRedSpeed':160,
+	'hazeWhiteSpeed':600,
+	'hazePurpleSpeed':80,
+	'distanceMin':2000,
+	'distanceMax':3000,
+	'hazePurpleBlendMode':2,
+	'hazeRedBlendMode':1,
+	'intro':['messages go here'],
+	'outro':['captain. try to make it back in one piece.'],
+	'win':{
+		'condition':'kill', //could be 'frob'
+		'killCount':5,
+		'killType': asteroids
+	},
+	'enemies':
+		[{
+			'ships': asteroids,
+			'respawn':true,
+			'count':17, 
+			'missionTarget':false,
+			'taunts':[],
+			'deaths':[]
+		},
+	{
+			'ships': TODO,
+			'respawn':true,
+			'count':13, 
+			'missionTarget':false,
+			'taunts':[],
+			'deaths':[]
+		}]
+}
+*/

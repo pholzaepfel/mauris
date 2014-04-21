@@ -2258,8 +2258,13 @@ function winMission(){
 		ui.sound_ominous.play();
 		var s = 'completed ' + playerStats.mission.name + '. ';
 		if(playerStats.mission.componentsReward.length){
+			for(var i =0;i<playerStats.mission.componentsCount;i++)
+			{
 			playerStats.inventory.push(playerStats.mission.componentsReward[Math.floor(randomRange(0,playerStats.mission.componentsReward.length))]);
-			s+='got '+ components[playerStats.inventory[playerStats.inventory.length-1]].name +'. '
+			if(i%2==1){
+				s+='\n';
+			}
+			}
 		}
 		ui.skipText();
 		ui.texts.push(s);
