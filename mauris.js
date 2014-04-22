@@ -1152,8 +1152,13 @@ var gameUI = function () {
 	this.textLineIndex = 0;
 	this.nextError=0;
 	this.buildMode = 'select';
-				this.nextFrobRadarPulse=0;
+	this.nextFrobRadarPulse=0;
 
+}
+gameUI.prototype.toTop = function(c){	
+	var p = c.parent;
+	p.remove(c);
+	p.add(c);
 }
 gameUI.prototype.initInventory = function () {
 
@@ -1257,7 +1262,7 @@ gameUI.prototype.resetRadar = function() {
 		for (var i = 0; i < player.radarTargets; i++){
 			this.radar.push(game.add.text(200,100, '*',{ font:'12px acknowledge', fill: 'rgb(255,130,130)', align: 'center' }));
 			this.radar[i].anchor.setTo(0.5,0.5);
-			this.radar[i].alpha=0.7;
+			this.radar[i].alpha=0.85;
 			this.radar[i].blendMode=1
 		}
 	}
@@ -1278,12 +1283,12 @@ gameUI.prototype.initCombatUi = function() {
 	this.profileLine.alpha = 0.75;
 	destroyIfExists(this.healthLine);
 	this.healthLine = game.add.text(200,100, '',{ font:'18px acknowledge', fill: 'rgb(96,96,240)', align: 'left' });
-	this.healthLine.alpha = 0.8;
+	this.healthLine.alpha = 0.9;
 	this.healthLine.blendMode = 1;
 
 	destroyIfExists(this.energyLine);
 	this.energyLine = game.add.text(200,100, '',{ font:'18px acknowledge', fill: 'rgb(240,64,255)', align: 'left' });
-	this.energyLine.alpha = 0.8;
+	this.energyLine.alpha = 0.9;
 
 	this.energyLine.blendMode = 1;
 	destroyIfExists(this.comms);
@@ -1302,7 +1307,7 @@ gameUI.prototype.initCombatUi = function() {
 	this.frobRadar = game.add.text(200,100,'*',{font:'28px acknowledge', fill: 'rgb(255,255,130)', align: 'center'});
 	this.frobRadar.anchor.setTo(0.5,0.5);
 	this.frobRadar.blendMode=1;
-	this.frobRadar.alpha=0.8;
+	this.frobRadar.alpha=0.92;
 }
 gameUI.prototype.bar = function (targetText, offset, numerator, denominator) {
 	if(typeof(targetText.lastValue)=='undefined'){
@@ -1310,6 +1315,7 @@ gameUI.prototype.bar = function (targetText, offset, numerator, denominator) {
 	}
 	targetText.x = player.sprite.body.x+(player.sprite.body.width/2);
 	targetText.y = player.sprite.body.y+player.sprite.body.height+30+offset;
+	this.toTop(targetText);
 	var barSize=Math.floor(denominator/2);	
 	var s = '';
 	var n=Math.floor(numerator/2);
@@ -1319,10 +1325,10 @@ gameUI.prototype.bar = function (targetText, offset, numerator, denominator) {
 	targetText.setText(s);
 	if(numerator>targetText.lastValue){
 		targetText.alpha=2;
-		game.add.tween(targetText).to({alpha: 0.8},500, Phaser.Easing.Exponential.Out, true, 0, false);
+		game.add.tween(targetText).to({alpha: 0.9},500, Phaser.Easing.Exponential.Out, true, 0, false);
 	}else if(numerator<targetText.lastValue){
 		targetText.alpha=0.2;		
-		game.add.tween(targetText).to({alpha: 0.8},500, Phaser.Easing.Exponential.Out, true, 0, false);
+		game.add.tween(targetText).to({alpha: 0.9},500, Phaser.Easing.Exponential.Out, true, 0, false);
 	}
 	targetText.lastValue=numerator;
 }
@@ -1330,6 +1336,7 @@ gameUI.prototype.bar = function (targetText, offset, numerator, denominator) {
 gameUI.prototype.frobRadarPing = function() {
 	if(false && (playerStats.mission.win.condition!='frob' || playerStats.mission.complete)){
 		this.frobRadar.setText('');
+		this.toTop(this.frobRadar);
 	}else{
 		var s='';
 		var targetAngle=game.physics.arcade.angleBetween(player.sprite, frob1);
@@ -1422,6 +1429,7 @@ gameUI.prototype.radarPing = function() {
 		this.radar[i].setText(s);
 		this.radar[i].x = player.sprite.body.x + (0.5 * player.sprite.body.width) + Math.cos(targetAngle) * range;
 		this.radar[i].y = player.sprite.body.y + (0.5 * player.sprite.body.width) + Math.sin(targetAngle) * range;	
+		this.toTop(this.radar[i]);
 	}
 }
 //follow this with a push!
@@ -1432,6 +1440,7 @@ gameUI.prototype.skipText = function() {
 gameUI.prototype.commsPing = function() {
 	this.comms.x = player.sprite.body.x - 268;
 	this.comms.y = player.sprite.body.y + 200;
+	this.toTop(this.comms);
 	if(resolutionY>720){
 		this.comms.y+=(resolutionY-720)/2
 	}else if(gamemode=='?build'){
@@ -1483,6 +1492,7 @@ gameUI.prototype.profileLinePing = function() {
 		this.profileLine.setText(player.sprite.profile);
 		this.profileLine.x = player.sprite.body.x-this.profileLine.width;
 		this.profileLine.y = player.sprite.body.height+player.sprite.body.y+55;
+		this.toTop(this.profileLine);
 	}else{
 		this.profileLine.setText('');
 	}

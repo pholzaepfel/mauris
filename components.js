@@ -77,6 +77,7 @@ var cmp = [
 	'flavor':'flashy and attracts attention',
 	'bonus':function(target){
 		target.fireVelocity+=200;
+		target.fireSound=ui.sound_pew1;
 		target.fireRate*=0.25;
 		target.bulletSprite=3;
 		target.sprite.profile+=50;
