@@ -2325,6 +2325,22 @@ function update () {
 			var alt = 0;
 			var enter = 0;
 
+			if (pad1.axis(6) < -0.3) //dpad x
+			{
+				left = 1;
+			}
+			if (pad1.axis(6) > 0.3)
+			{
+				right = 1;
+			}
+			if (pad1.axis(7) < -0.3) //dpad y
+			{
+				up = 1;
+			}
+			if (pad1.axis(7) > 0.3)
+			{
+				down = 1;
+			}
 			if (pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) < -0.3)
 			{
 				left = pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X);
@@ -2333,7 +2349,7 @@ function update () {
 			{
 				right = pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X);
 			}
-			if (pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y) < 0.3)
+			if (pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y) < -0.3)
 			{
 				up = pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y);
 			}
@@ -2345,7 +2361,19 @@ function update () {
 			{
 				fire = 1;
 			}
+			if (pad1.buttonValue(Phaser.Gamepad.XBOX360_A))
+			{
+				up = 1;
+			}
 
+			if (pad1.buttonValue(Phaser.Gamepad.XBOX360_B))
+			{
+				alt = 1;
+			}
+			if (pad1.buttonValue(7)) //start
+			{
+				enter = 1;
+			}	
 			if (cursors.left.isDown || cursors.left2.isDown){
 				left = 1;
 			}
@@ -2360,6 +2388,12 @@ function update () {
 			}
 			if (cursors.fire.isDown){
 				fire = 1;
+			}
+			if (cursors.alt.isDown){
+				alt = 1;
+			}
+			if (cursors.enter.isDown){
+				enter = 1;
 			}
 
 ////
@@ -2444,6 +2478,9 @@ function update () {
 				player.parts[i].update();
 			};
 
+			if(enter){
+			}
+
 			if (left){
 				player.left(left);
 			}
@@ -2453,12 +2490,12 @@ function update () {
 			if (up){
 				player.up(up);
 			}
-			if(player.alive && (cursors.alt.isDown)){
+			if(player.alive && alt){
 				player.alt();
 			}
 			player.update();
 
-			if(!cursors.alt.isDown){
+			if(alt==0){
 				player.cooldown114=0;
 			}
 
@@ -2507,21 +2544,21 @@ function update () {
 						ui.rowUpPart();	
 						nextUIDelay = game.time.now+1000;
 					}
-					if(cursors.fire.isDown && playerStats.inventory.length){
+					if(fire && playerStats.inventory.length){
 						selectPart();
 						nextUIDelay = game.time.now+2000;
 						ui.currentPlayerPart = ui.parts.length-1;
 						ui.setMode('move');
 						ui.updatePart();
 					}
-					if(cursors.alt.isDown && ui.parts.length > 1){
+					if(alt && ui.parts.length > 1){
 						ui.currentPlayerPart = 0;
 						ui.nextDeletePart();
 						nextUIDelay = game.time.now+2000;
 						ui.setMode('delete');
 						ui.updatePart();
 					}
-					if (game.time.now > nextUIDelay + 2000 && (cursors.enter.isDown)){
+					if (enter && game.time.now > nextUIDelay + 2000){
 						ui.endPartsUI();
 						nextUIDelay=game.time.now+1000;
 					}
@@ -2539,7 +2576,7 @@ function update () {
 						ui.parts[ui.currentPlayerPart].sprite.reset(ui.parts[ui.currentPlayerPart].sprite.x,ui.parts[ui.currentPlayerPart].sprite.y-16)	
 							nextUIDelay = game.time.now+500;
 					}
-					if(cursors.fire.isDown){
+					if(fire){
 						ui.setMode('select');
 						ui.parts[ui.currentPlayerPart].sprite.alpha=1;
 						ui.parts[ui.currentPlayerPart].sprite.blendMode=0;
@@ -2547,7 +2584,7 @@ function update () {
 						ui.updatePart();
 						ui.partsArray();
 					}
-					if(cursors.alt.isDown && ui.currentPlayerPart > 0){
+					if(alt && ui.currentPlayerPart > 0){
 						ui.setMode('select');
 						nextUIDelay = game.time.now+2000;
 						playerStats.inventory.push(ui.parts[ui.currentPlayerPart].index);
@@ -2565,25 +2602,25 @@ function update () {
 
 				}else if(ui.buildMode=='delete'){
 
-					if ((cursors.left.isDown || cursors.left2.isDown)){
+					if (left){
 
 						ui.previousDeletePart();	
 						nextUIDelay = game.time.now+500;
 
 					}
-					if ((cursors.right.isDown || cursors.right2.isDown)){
+					if (right){
 						ui.nextDeletePart();	
 						nextUIDelay = game.time.now+500;
 					}
-					if ((cursors.up.isDown || cursors.up2.isDown)){
+					if (up){
 						ui.rowUpDeletePart();	
 						nextUIDelay = game.time.now+500;
 					}
-					if (cursors.down.isDown || cursors.down2.isDown){
+					if (down){
 						ui.rowDownDeletePart();	
 						nextUIDelay=game.time.now+500;
 					}
-					if(cursors.alt.isDown){
+					if(alt){
 						ui.setMode('select');
 						ui.parts[ui.currentPlayerPart].sprite.alpha=1;
 						ui.parts[ui.currentPlayerPart].sprite.blendMode=0;
@@ -2591,7 +2628,7 @@ function update () {
 						ui.updatePart();
 						ui.partsArray();
 					}
-					if(cursors.fire.isDown){
+					if(fire){
 						nextUIDelay = game.time.now+2000;
 						var t = ui.currentPlayerPart;
 						ui.previousDeletePart();
@@ -2614,7 +2651,7 @@ function update () {
 				}
 			}
 			if(left==0 && right==0 && up == 0 && down ==0 &&
-					!cursors.fire.isDown && !cursors.alt.isDown &&
+					fire == 0 && alt == 0 &&
 					!cursors.pgup.isDown && !cursors.pgdn.isDown
 			  ){
 				  nextUIDelay = 0;
