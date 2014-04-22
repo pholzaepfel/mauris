@@ -1257,6 +1257,7 @@ gameUI.prototype.resetRadar = function() {
 		for (var i = 0; i < player.radarTargets; i++){
 			this.radar.push(game.add.text(200,100, '*',{ font:'12px acknowledge', fill: 'rgb(255,130,130)', align: 'center' }));
 			this.radar[i].anchor.setTo(0.5,0.5);
+			this.radar[i].alpha=0.7;
 			this.radar[i].blendMode=1
 		}
 	}
@@ -1277,16 +1278,16 @@ gameUI.prototype.initCombatUi = function() {
 	this.profileLine.alpha = 0.75;
 	destroyIfExists(this.healthLine);
 	this.healthLine = game.add.text(200,100, '',{ font:'18px acknowledge', fill: 'rgb(96,96,240)', align: 'left' });
-	this.healthLine.alpha = 1;
+	this.healthLine.alpha = 0.8;
 	this.healthLine.blendMode = 1;
 
 	destroyIfExists(this.energyLine);
 	this.energyLine = game.add.text(200,100, '',{ font:'18px acknowledge', fill: 'rgb(240,64,255)', align: 'left' });
-	this.energyLine.alpha = 1;
+	this.energyLine.alpha = 0.8;
 
 	this.energyLine.blendMode = 1;
 	destroyIfExists(this.comms);
-	this.comms = game.add.text(0,0,'',{font:'2em acknowledge', fill: 'rgb(240,255,183)', align: 'left'});
+	this.comms = game.add.text(0,0,'',{font:'2em acknowledge', fill: 'rgb(40,190,240)', align: 'left'});
 
 	destroyIfExists(this.partText);
 	this.partText = game.add.text(-200,150,'',{font:'2.2em acknowledge', fill: 'rgb(255,255,255)', align: 'left'});
@@ -1300,6 +1301,8 @@ gameUI.prototype.initCombatUi = function() {
 
 	this.frobRadar = game.add.text(200,100,'*',{font:'28px acknowledge', fill: 'rgb(255,255,130)', align: 'center'});
 	this.frobRadar.anchor.setTo(0.5,0.5);
+	this.frobRadar.blendMode=1;
+	this.frobRadar.alpha=0.8;
 }
 gameUI.prototype.bar = function (targetText, offset, numerator, denominator) {
 	if(typeof(targetText.lastValue)=='undefined'){
@@ -1316,10 +1319,10 @@ gameUI.prototype.bar = function (targetText, offset, numerator, denominator) {
 	targetText.setText(s);
 	if(numerator>targetText.lastValue){
 		targetText.alpha=2;
-		game.add.tween(targetText).to({alpha: 1},500, Phaser.Easing.Exponential.Out, true, 0, false);
+		game.add.tween(targetText).to({alpha: 0.8},500, Phaser.Easing.Exponential.Out, true, 0, false);
 	}else if(numerator<targetText.lastValue){
 		targetText.alpha=0.2;		
-		game.add.tween(targetText).to({alpha: 1},500, Phaser.Easing.Exponential.Out, true, 0, false);
+		game.add.tween(targetText).to({alpha: 0.8},500, Phaser.Easing.Exponential.Out, true, 0, false);
 	}
 	targetText.lastValue=numerator;
 }
@@ -1331,7 +1334,7 @@ gameUI.prototype.frobRadarPing = function() {
 		var s='';
 		var targetAngle=game.physics.arcade.angleBetween(player.sprite, frob1);
 		var targetDistance=game.physics.arcade.distanceBetween(player.sprite, frob1);
-		var s='¤'; 
+		s='<>'; 
 		var n=Math.floor(255-(targetDistance/8-225));
 		if(n<64){n=64;}if(n>255){n=255};
 		this.frobRadar.style.fill="rgb("+(Math.floor(n))+","+n+","+(Math.floor(n/2))+")";
@@ -1378,7 +1381,7 @@ gameUI.prototype.radarPing = function() {
 			this.blinkDistance=adjustedProfile*2.1;
 			if(targetDistance<0.5*blinkDistance){
 				bracketLeft='>';
-				s='\u203c';
+				s='!';
 				bracketRight='<';
 			}else{
 				bracketLeft='(';
@@ -1427,9 +1430,11 @@ gameUI.prototype.skipText = function() {
 	this.textLineIndex=0;
 }
 gameUI.prototype.commsPing = function() {
-	this.comms.x = player.sprite.body.x - 200;
+	this.comms.x = player.sprite.body.x - 268;
 	this.comms.y = player.sprite.body.y + 200;
-	if(gamemode=='?build'){
+	if(resolutionY>720){
+		this.comms.y+=(resolutionY-720)/2
+	}else if(gamemode=='?build'){
 		this.comms.y+=50;
 	}
 
