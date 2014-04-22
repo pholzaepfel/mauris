@@ -757,7 +757,7 @@ var resolutionY=Math.max(document.documentElement.clientHeight, window.innerHeig
 var game = new Phaser.Game(resolutionX, resolutionY, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update, render: render });
 
 function preload () {
-	hello =	game.add.text(resolutionX*0.5,resolutionY*0.4, 'LOADING',{ font:'12px monospace', fill: 'rgb(196,150,255)', align: 'center' })
+	hello =	game.add.text(resolutionX*0.5,resolutionY*0.4, 'LOADING',{ font:'12px acknowledge', fill: 'rgb(196,150,255)', align: 'center' })
 		game.load.spritesheet('parts', 'assets/parts.png', 16, 16);
 	game.load.image('station', 'assets/station.png');
 	game.load.image('frob1', 'assets/frob1.png');
@@ -963,10 +963,6 @@ playerShip.prototype.fire = function(){
 		this.spawnBullet(true);
 	}
 
-	if(contextTutorialProfile && this.sprite.profile > 1200){
-		ui.texts.push(contextTutorialProfile);
-		contextTutorialProfile='';
-	}
 };
 playerShip.prototype.spawnBullet = function(showFlash){
 	if(bullets.countDead()){
@@ -1259,7 +1255,7 @@ gameUI.prototype.resetRadar = function() {
 	if(this.radar.length!=player.radarTargets){
 		this.clearRadar();
 		for (var i = 0; i < player.radarTargets; i++){
-			this.radar.push(game.add.text(200,100, '*',{ font:'12px monospace', fill: 'rgb(255,130,130)', align: 'center' }));
+			this.radar.push(game.add.text(200,100, '*',{ font:'12px acknowledge', fill: 'rgb(255,130,130)', align: 'center' }));
 			this.radar[i].anchor.setTo(0.5,0.5);
 			this.radar[i].blendMode=1
 		}
@@ -1277,32 +1273,32 @@ gameUI.prototype.initCombatUi = function() {
 	this.partswindow.anchor.setTo(0,0);
 	this.partswindow.visible = false;
 	destroyIfExists(this.profileLine);
-	this.profileLine = game.add.text(200,100, '',{ font:'14px monospace', fill: 'rgb(255,64,16)', align: 'right' });
+	this.profileLine = game.add.text(200,100, '',{ font:'24px acknowledge', fill: 'rgb(255,64,16)', align: 'right' });
 	this.profileLine.alpha = 0.75;
 	destroyIfExists(this.healthLine);
-	this.healthLine = game.add.text(200,100, '',{ font:'14px monospace', fill: 'rgb(96,96,240)', align: 'left' });
+	this.healthLine = game.add.text(200,100, '',{ font:'18px acknowledge', fill: 'rgb(96,96,240)', align: 'left' });
 	this.healthLine.alpha = 1;
 	this.healthLine.blendMode = 1;
 
 	destroyIfExists(this.energyLine);
-	this.energyLine = game.add.text(200,100, '',{ font:'14px monospace', fill: 'rgb(240,64,255)', align: 'left' });
+	this.energyLine = game.add.text(200,100, '',{ font:'18px acknowledge', fill: 'rgb(240,64,255)', align: 'left' });
 	this.energyLine.alpha = 1;
 
 	this.energyLine.blendMode = 1;
 	destroyIfExists(this.comms);
-	this.comms = game.add.text(0,0,'',{font:'1.5em monospace', fill: 'rgb(240,255,183)', align: 'left'});
+	this.comms = game.add.text(0,0,'',{font:'2em acknowledge', fill: 'rgb(240,255,183)', align: 'left'});
 
 	destroyIfExists(this.partText);
-	this.partText = game.add.text(-200,150,'',{font:'1.5em monospace', fill: 'rgb(255,255,255)', align: 'left'});
+	this.partText = game.add.text(-200,150,'',{font:'2.2em acknowledge', fill: 'rgb(255,255,255)', align: 'left'});
 	destroyIfExists(this.partFlavorText);
-	this.partFlavorText = game.add.text(-180,180,'',{font:'1.1em monospace', fill: 'rgb(255,255,255)', align: 'left'});
+	this.partFlavorText = game.add.text(-180,180,'',{font:'1.7em acknowledge', fill: 'rgb(255,255,255)', align: 'left'});
 	destroyIfExists(this.explainerText);
-	this.explainerText = game.add.text(-200,210,'',{font:'1.2em monospace', fill: 'rgb(255,255,220)', align: 'left'});
+	this.explainerText = game.add.text(-200,210,'',{font:'1.7em acknowledge', fill: 'rgb(255,255,220)', align: 'left'});
 
 	this.radar = [];
 	this.resetRadar();
 
-	this.frobRadar = game.add.text(200,100,'*',{font:'28px monospace', fill: 'rgb(255,255,130)', align: 'center'});
+	this.frobRadar = game.add.text(200,100,'*',{font:'28px acknowledge', fill: 'rgb(255,255,130)', align: 'center'});
 	this.frobRadar.anchor.setTo(0.5,0.5);
 }
 gameUI.prototype.bar = function (targetText, offset, numerator, denominator) {
@@ -1315,8 +1311,8 @@ gameUI.prototype.bar = function (targetText, offset, numerator, denominator) {
 	var s = '';
 	var n=Math.floor(numerator/2);
 	if(n<0){n=0;}
-	s+=repeat('\u25cf',n);
-	s+=repeat('\u25cb',barSize-n);
+	s+=repeat('\u2026',n);
+	s+=repeat('\u201A',barSize-n);
 	targetText.setText(s);
 	if(numerator>targetText.lastValue){
 		targetText.alpha=2;
@@ -1335,7 +1331,7 @@ gameUI.prototype.frobRadarPing = function() {
 		var s='';
 		var targetAngle=game.physics.arcade.angleBetween(player.sprite, frob1);
 		var targetDistance=game.physics.arcade.distanceBetween(player.sprite, frob1);
-		var s='\u25C6'; 
+		var s='¤'; 
 		var n=Math.floor(255-(targetDistance/8-225));
 		if(n<64){n=64;}if(n>255){n=255};
 		this.frobRadar.style.fill="rgb("+(Math.floor(n))+","+n+","+(Math.floor(n/2))+")";
@@ -1369,7 +1365,7 @@ gameUI.prototype.radarPing = function() {
 	for(var i=0;i<this.radar.length;i++){
 		var targetAngle=game.physics.arcade.angleBetween(player.sprite, this.enemies[i].sprite);
 		var targetDistance=game.physics.arcade.distanceBetween(player.sprite, this.enemies[i].sprite);
-		var s='●'; //I cannot believe this circle renders in my terminal
+		var s='\u2026';
 		var n=Math.floor(255-(targetDistance/2-900));
 		var blinkDistance = 1000;
 		var bracketLeft = '[';
@@ -1393,20 +1389,16 @@ gameUI.prototype.radarPing = function() {
 		if(n<0){n=0;}if(n>255){n=255};
 		this.radar[i].style.fill="rgb("+n+","+(96+missionTarget)+",96)";
 		if(this.enemies[i].sprite.profile>player.sprite.profileMax*2){
-			this.radar[i].style.font='28px monospace';
+			this.radar[i].style.font='36px acknowledge';
 		}else if(this.enemies[i].sprite.profile>player.sprite.profileMax){
-			this.radar[i].style.font='22px monospace';
+			this.radar[i].style.font='30px acknowledge';
 		}else if(this.enemies[i].sprite.profile>player.sprite.profileMax*0.5){
-			this.radar[i].style.font='16px monospace';
+			this.radar[i].style.font='24px acknowledge';
 		}else{
-			this.radar[i].style.font='12px monospace';
+			this.radar[i].style.font='18px acknowledge';
 		}
 
 
-		if(contextTutorialBlink && targetDistance < 0.5 * blinkDistance && this.enemies[i].sprite.profile > 200){
-			ui.texts.push(contextTutorialBlink);
-			contextTutorialBlink='';
-		}
 		if(game.time.now>this.nextRadarSound && targetDistance < 0.75 * blinkDistance && this.enemies[i].sprite.profile > 200){
 			this.nextRadarSound=game.time.now+3333;
 			this.sound_redalert.play()
