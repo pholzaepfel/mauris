@@ -1088,17 +1088,10 @@ playerShip.prototype.update = function(){
 		}
 	}
 };
-function mouseUpHandle(event){
-	mouseState[event.button]=false;
-}
-function mouseDownHandle(event){
-	mouseState[event.button]=true;
-}
 var player;
 var pad1;
 var hello;
 var startParts = 1; //extra parts given to player at beginning!
-var mouseState=[false,false,false];
 var pool;
 var dragPool;
 var dummy;
@@ -2164,9 +2157,6 @@ function create () {
 		enter: game.input.keyboard.addKey(Phaser.Keyboard.ENTER)
 	}
 
-	game.input.mouse.mouseUpCallback=mouseUpHandle;
-
-	game.input.mouse.mouseDownCallback=mouseDownHandle;
 
 
 	ui.initCombatUi();
@@ -2351,6 +2341,10 @@ function update () {
 			{
 				down = pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y);
 			}
+			if (pad1.buttonValue(Phaser.Gamepad.XBOX360_X))
+			{
+				fire = 1;
+			}
 
 			if (cursors.left.isDown || cursors.left2.isDown){
 				left = 1;
@@ -2363,6 +2357,9 @@ function update () {
 			}
 			if (cursors.down.isDown || cursors.down2.isDown){
 				down = 1;
+			}
+			if (cursors.fire.isDown){
+				fire = 1;
 			}
 
 ////
@@ -2456,17 +2453,17 @@ function update () {
 			if (up){
 				player.up(up);
 			}
-			if(player.alive && (mouseState[2] || cursors.alt.isDown)){
+			if(player.alive && (cursors.alt.isDown)){
 				player.alt();
 			}
 			player.update();
 
-			if(!mouseState[2] && !cursors.alt.isDown){
+			if(!cursors.alt.isDown){
 				player.cooldown114=0;
 			}
 
 
-			if (mouseState[0] || cursors.fire.isDown){
+			if (fire){
 				player.fire();
 			}
 
