@@ -1286,14 +1286,14 @@ gameUI.prototype.initCombatUi = function() {
 
 	this.energyLine.blendMode = 1;
 	destroyIfExists(this.comms);
-	this.comms = game.add.text(0,0,'',{font:'2em acknowledge', fill: 'rgb(40,190,240)', align: 'left'});
+	this.comms = game.add.text(0,0,'',{font:'24px pixeltwist', fill: 'rgb(40,190,240)', align: 'left'});
 
 	destroyIfExists(this.partText);
-	this.partText = game.add.text(-200,150,'',{font:'2.2em acknowledge', fill: 'rgb(255,255,255)', align: 'left'});
+	this.partText = game.add.text(-200,150,'',{font:'2.2em pixeltwist', fill: 'rgb(255,255,255)', align: 'left'});
 	destroyIfExists(this.partFlavorText);
-	this.partFlavorText = game.add.text(-180,180,'',{font:'1.7em acknowledge', fill: 'rgb(255,255,255)', align: 'left'});
+	this.partFlavorText = game.add.text(-180,180,'',{font:'1.7em pixeltwist', fill: 'rgb(255,255,255)', align: 'left'});
 	destroyIfExists(this.explainerText);
-	this.explainerText = game.add.text(-200,210,'',{font:'1.7em acknowledge', fill: 'rgb(255,255,220)', align: 'left'});
+	this.explainerText = game.add.text(-200,210,'',{font:'1.7em pixeltwist', fill: 'rgb(255,255,220)', align: 'left'});
 
 	this.radar = [];
 	this.resetRadar();
