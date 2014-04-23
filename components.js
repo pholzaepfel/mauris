@@ -851,14 +851,26 @@ var cmp = [
 	'id':73,
 	'drops':true,
 	'name':'Mining Laser',
-	'flavor':'increases chance to get loots',
+	'flavor':'extracts ore from asteroids',
 	'bonus':function(target){
-		target.fireDamage+=2;
+		target.fireDamage+=1;
 		target.fireSound=ui.sound_pew2;
 		target.fireRate+=100;
 		target.sprite.profile+=20;	
-		target.dropRate+=0.008;
 		target.bulletSprite=4;
+		target.bulletHitBehavior.push(function(sprite,bullet){
+			
+			var tgt = ownerFromName(sprite.name);
+
+			if(tgt.ai == 3 && Math.random()>0.125){
+				spawnLoots(1,bullet.x,bullet.y)
+				
+		
+				bullet.damage=0;
+			}
+		}
+
+		);
 	}
 },
 {
@@ -988,18 +1000,19 @@ var cmp = [
 	'id':83,
 	'drops':true,
 	'name':'Force Cannon',
-	'flavor':'high damage with knockback',
+	'flavor':'adds knockback',
 	'bonus':function(target){
 		target.bulletSprite=3;
-		target.bulletDamage+=2;
-		target.fireEnergy+=2;
+		target.fireEnergy+=1;
 		target.bulletBehavior.push(function(bullet){
 			addVelocity(bullet.rotation+Math.PI,100, bullet.owner.body.velocity);
+			clampVelocity(bullet.owner);
 		});
 
 		target.bulletHitBehavior.push(function(sprite,bullet){
 
-			addVelocity(bullet.rotation, 100, sprite.body.velocity);
+			addVelocity(bullet.rotation, 300, sprite.body.velocity);
+			clampVelocity(sprite);
 		});
 	}
 },

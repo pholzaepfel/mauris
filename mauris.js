@@ -487,10 +487,10 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 
 		bigBoom(explosions,this.sprite.x,this.sprite.y);
 		for (var j = 0; j < this.parts.length; j++) {
-			if(Math.random() < lootDropRate + player.dropRate){
+			if(Math.random() < lootDropRate){
 				spawnLoots(Math.floor(randomRange(0,4)), this.sprite.x, this.sprite.y);
 				this.parts[j].sprite.kill();
-			}else if(Math.random() < (componentDropRate) && components[this.parts[j].component].drops){ 
+			}else if(Math.random() < (componentDropRate + player.dropRate) && components[this.parts[j].component].drops){ 
 				spawnComponent(this.parts[j].component, this.sprite.x, this.sprite.y);
 				this.parts[j].sprite.kill();					
 			}else if(this.health == 0 && dmg == 0){
@@ -1101,7 +1101,7 @@ var frob1;
 
 var profileExponent=0.9;
 var lootDropRate = 0.09;
-var componentDropRate = 0.06;
+var componentDropRate = 0.12;
 var hazeWhite,hazeRed,hazePurple;
 var foredrop;
 var numBaddies = 9;
