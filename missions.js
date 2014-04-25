@@ -19,7 +19,7 @@ var missions = [
 	'hazePurpleBlendMode':2,
 	'hazeRedBlendMode':1,
 	'intro':['[INCOMING COMMUNICATION]',
-	'[LEFT] and [RIGHT] turn your ship.\n',
+	'[LEFT] and [RIGHT] turn your ship.',
 	'press [X] to fire.\nfiring takes energy (PINK) which will recharge over time.',
 	'press [UP] to thrust. \nto slow down, TURN AROUND and THRUST.',
 	'see if you can clear some of the asteroids around the station.'],

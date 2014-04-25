@@ -462,6 +462,13 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 		this.died=game.time.now+10000;
 	}
 
+	if(typeof(aggro)!='undefined'){
+		if(ownerFromName(aggro.name).shipList != this.shipList || Math.random()>dmg/this.health){
+		this.aggroList.push(aggro);
+		this.target = aggro;
+		}
+	}
+
 	if(this.shield){
 		midBoom(explosions,4,this.sprite.x,this.sprite.y);
 	}else{
@@ -472,10 +479,6 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 		this.behavior='chasing';
 	}
 
-	if(typeof(aggro)!='undefined'){
-		this.aggroList.push(aggro);
-		this.target = aggro;
-	}
 	if (this.health <= 0 && this.health + dmg >= 0){
 		this.alive = false;
 		this.died=game.time.now+10000;
@@ -1138,6 +1141,7 @@ var gameUI = function () {
 	this.currentPart = 0;
 	this.currentPlayerPart = 0;
 	this.texts = [];
+	this.graphics = game.add.graphics(0,0);
 	this.nextComms=0;
 	this.nextCommsPing=false;
 	this.nextRadarSound=0; 
@@ -1309,6 +1313,7 @@ gameUI.prototype.bar = function (targetText, offset, numerator, denominator) {
 	}
 	targetText.x = player.sprite.body.x+(player.sprite.body.width/2);
 	targetText.y = player.sprite.body.y+player.sprite.body.height+30+offset;
+	
 	this.toTop(targetText);
 	var barSize=Math.floor(denominator/2);	
 	var s = '';
@@ -1439,7 +1444,6 @@ gameUI.prototype.skipText = function() {
 gameUI.prototype.commsPing = function() {
 	this.comms.x = player.sprite.body.x - 268;
 	this.comms.y = player.sprite.body.y + 200;
-	this.toTop(this.comms);
 	if(resolutionY>720){
 		this.comms.y+=(resolutionY-720)/2
 	}else if(gamemode=='?build'){
@@ -1481,8 +1485,14 @@ gameUI.prototype.commsPing = function() {
 	if(this.textLine.length>0 && game.time.now % 200 > 100){
 		this.comms.setText(this.textLine + '_');
 	}else{
-		this.comms.setText(this.textLine);
+		this.comms.setText(this.textLine + ' ');
 	}
+	this.graphics.lineStyle(1, 0x9988AA, ui.comms.alpha);
+	this.graphics.beginFill(0x7669A0, ui.comms.alpha/2);
+	this.graphics.drawRect(this.comms.x - 15, this.comms.y - 15, this.comms.width + 30, this.comms.height + 30);
+	
+
+	this.toTop(this.comms);
 }
 gameUI.prototype.profileLinePing = function() {
 
@@ -1497,6 +1507,7 @@ gameUI.prototype.profileLinePing = function() {
 	}
 }
 gameUI.prototype.update = function() {
+	this.graphics.clear();
 	this.commsPing();
 	if (gamemode == 'war'){
 		this.profileLinePing();
