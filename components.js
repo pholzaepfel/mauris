@@ -388,7 +388,7 @@ var cmp = [
 			}
 			if(this.energy>this.energyMax-4 && this.speed > 0)
 			{
-//				ret = true;
+				ret = true;
 			}
 			return ret;
 		}
