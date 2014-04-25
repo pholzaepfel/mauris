@@ -1101,7 +1101,7 @@ var frob1;
 
 var profileExponent=0.9;
 var lootDropRate = 0.09;
-var componentDropRate = 0.12;
+var componentDropRate = 0.08;
 var hazeWhite,hazeRed,hazePurple;
 var foredrop;
 var numBaddies = 9;
@@ -1286,14 +1286,14 @@ gameUI.prototype.initCombatUi = function() {
 
 	this.energyLine.blendMode = 1;
 	destroyIfExists(this.comms);
-	this.comms = game.add.text(0,0,'',{font:'24px pixeltwist', fill: 'rgb(40,190,240)', align: 'left'});
+	this.comms = game.add.text(0,0,'',{font:'24px hardpixel', fill: 'rgb(40,190,240)', align: 'left'});
 
 	destroyIfExists(this.partText);
-	this.partText = game.add.text(-200,150,'',{font:'2.2em pixeltwist', fill: 'rgb(255,255,255)', align: 'left'});
+	this.partText = game.add.text(-200,150,'',{font:'2.2em hardpixel', fill: 'rgb(255,255,255)', align: 'left'});
 	destroyIfExists(this.partFlavorText);
-	this.partFlavorText = game.add.text(-180,180,'',{font:'1.7em pixeltwist', fill: 'rgb(255,255,255)', align: 'left'});
+	this.partFlavorText = game.add.text(-180,180,'',{font:'1.7em hardpixel', fill: 'rgb(255,255,255)', align: 'left'});
 	destroyIfExists(this.explainerText);
-	this.explainerText = game.add.text(-200,210,'',{font:'1.7em pixeltwist', fill: 'rgb(255,255,220)', align: 'left'});
+	this.explainerText = game.add.text(-200,210,'',{font:'1.7em hardpixel', fill: 'rgb(255,255,220)', align: 'left'});
 
 	this.radar = [];
 	this.resetRadar();
@@ -2325,6 +2325,14 @@ function update () {
 			var alt = 0;
 			var enter = 0;
 
+			if (pad1.axis(2) > 0.3) //left trigger
+			{
+				alt = 1;
+			}
+			if (pad1.axis(5) > 0.3) //right trigger
+			{
+				fire = 1;
+			}
 			if (pad1.axis(6) < -0.3) //dpad x
 			{
 				left = 1;

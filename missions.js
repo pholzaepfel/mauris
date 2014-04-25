@@ -45,7 +45,7 @@ var missions = [
 
 },
 {	'id':1,
-	'next':[1,5],
+	'next':[1,5,6],
 	'name':'random warzone',
 	'complete':false,
 	'componentsReward':banditGear,
@@ -61,6 +61,7 @@ var missions = [
 	'hazePurpleBlendMode':2,
 	'hazeRedBlendMode':1,
 	'intro':['er... go kill things'],
+	'outro':['congrats'],
 	'win':{
 		'condition':'frob'
 	},
@@ -86,7 +87,7 @@ var missions = [
 
 },
 {	'id':2,
-	'next':[1],
+	'next':[1,5,6,7],
 	'name':'obligatory kill quest',
 	'complete':false,
 	'componentsReward':banditGear,
@@ -237,7 +238,7 @@ var missions = [
 },
 {
 	'id':5,
-	'next':[1,5],
+	'next':[1,5,6,7],
 	'name':'5',
 	'complete':false,
 	'componentsReward':allianceGear,
@@ -252,7 +253,7 @@ var missions = [
 	'distanceMax':14000,
 	'hazePurpleBlendMode':2,
 	'hazeRedBlendMode':1,
-	'intro':['messages go here'],
+	'intro':['init new quest. kill yellow things.\ngo to waypoint. reconfigure. repeat'],
 	'outro':['captain. try to make it back in one piece.'],
 	'win':{
 		'condition':'kill', //could be 'frob'
@@ -276,7 +277,100 @@ var missions = [
 			'taunts':[],
 			'deaths':[]
 		}]
+},
+{
+	'id':6,
+	'next':[5,1,7],
+	'name':'bandits',
+	'complete':false,
+	'componentsReward':allianceGear,
+	'componentsCount':1,
+	'hazeRed':1,
+	'hazeWhite':0.4,
+	'hazePurple':0.9,
+	'hazeRedSpeed':160,
+	'hazeWhiteSpeed':600,
+	'hazePurpleSpeed':80,
+	'distanceMin':2000,
+	'distanceMax':5000,
+	'hazePurpleBlendMode':2,
+	'hazeRedBlendMode':1,
+	'intro':['init new quest. kill yellow things.\ngo to waypoint. reconfigure. repeat'],
+	'outro':['captain. try to make it back in one piece.'],
+	'win':{
+		'condition':'kill', //could be 'frob'
+		'killCount':5,
+		'killType': banditsMedium
+	},
+	'enemies':
+		[{
+			'ships': asteroids,
+			'respawn':true,
+			'count':17, 
+			'missionTarget':false,
+			'taunts':[],
+			'deaths':[]
+		},
+	{
+			'ships': alliance,
+			'respawn':true,
+			'count':13, 
+			'missionTarget':false,
+			'taunts':[],
+			'deaths':[]
+		},{
+			'ships': banditsMedium,
+			'respawn':true,
+			'count':3, 
+			'missionTarget':true,
+			'taunts':[],
+			'deaths':[]
+		}]
+},
+{
+	'id':7,
+	'next':[6,1,5],
+	'name':'zombies',
+	'complete':false,
+	'componentsReward':droneGear,
+	'componentsCount':2,
+	'hazeRed':0.8,
+	'hazeWhite':0.1,
+	'hazePurple':0.7,
+	'hazeRedSpeed':160,
+	'hazeWhiteSpeed':600,
+	'hazePurpleSpeed':160,
+	'distanceMin':3000,
+	'distanceMax':4000,
+	'hazePurpleBlendMode':1,
+	'hazeRedBlendMode':0,
+	'intro':['init new quest. kill yellow things.\ngo to waypoint. reconfigure. repeat'],
+	'outro':['captain. try to make it back in one piece.'],
+	'win':{
+		'condition':'kill', //could be 'frob'
+		'killCount':10,
+		'killType': zombies
+	},
+	'enemies':
+		[{
+			'ships': asteroids,
+			'respawn':true,
+			'count':13, 
+			'missionTarget':false,
+			'taunts':[],
+			'deaths':[]
+		},
+	{
+			'ships': zombies,
+			'respawn':true,
+			'count':15, 
+			'missionTarget':true,
+			'taunts':[],
+			'deaths':[]
+		}]
 }
+
+
 ];
 
 
@@ -302,7 +396,7 @@ var missions = [
 	'distanceMax':3000,
 	'hazePurpleBlendMode':2,
 	'hazeRedBlendMode':1,
-	'intro':['messages go here'],
+	'intro':['init new quest. kill yellow things.\ngo to waypoint. reconfigure. repeat'],
 	'outro':['captain. try to make it back in one piece.'],
 	'win':{
 		'condition':'kill', //could be 'frob'
