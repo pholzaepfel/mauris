@@ -417,10 +417,6 @@ var cmp = [
 			{
 				ret = true;
 			}
-			if(this.energy>this.energyMax-4 && this.speed > 0)
-			{
-				ret = true;
-			}
 			return ret;
 		}
 		target.alt=function(){
@@ -648,10 +644,9 @@ var cmp = [
 			game.add.tween(bullet).to({alpha:0},bullet.lifespan, Phaser.Easing.Linear.Out, true, 0, false);
 		});
 		target.bulletSprite=5;
-		target.fireDamage+=2;
 		target.fireSound=ui.sound_plasma;
 		target.fireRate*=0.4;
-		target.fireEnergy*=0.6;
+		target.fireEnergy*=0.5;
 		target.fireRange*=0.6;
 		target.sprite.profile+=88;
 	}
