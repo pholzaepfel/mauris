@@ -600,6 +600,8 @@ enemyShip.prototype.spawnBullet = function (showFlash) {
 
 
 enemyShip.prototype.emitThrust = function() {
+	if(this.parts[0].sprite.alpha>0.5){
+
 	this.thrust.x=this.sprite.x-(Math.cos(this.sprite.rotation)*(this.sprite.body.width)*0.5);
 	this.thrust.y=this.sprite.y-(Math.sin(this.sprite.rotation)*(this.sprite.body.width)*0.5);
 	this.thrust.minParticleSpeed.setTo(0,0);
@@ -611,7 +613,7 @@ enemyShip.prototype.emitThrust = function() {
 	this.thrust.minParticleSpeed.setTo(tempX,tempY);
 	this.thrust.maxParticleSpeed.setTo(tempX,tempY);
 	this.thrust.emitParticle();
-
+	}
 }
 
 enemyShip.prototype.update = function() {
@@ -648,6 +650,16 @@ enemyShip.prototype.update = function() {
 
 	if(game.time.now>this.altCooldown){
 		this.shield=false;
+	}
+	if(game.time.now>this.altCooldown+666){
+			if(this.parts.length){
+				if(this.parts[0].sprite.alpha<1){
+					for(var i=0;i<this.parts.length;i++){
+						this.parts[i].sprite.alpha+=0.02;
+					}
+
+				}
+			}
 	}
 
 	if(this.ai==2){

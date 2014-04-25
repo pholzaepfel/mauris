@@ -57,6 +57,22 @@ var cmp = [
 		target.ai=4; //accurate
 		target.turnRate+=0.3;
 		target.acceleration+=0.2;
+		target.altCheck=function(){
+		var ret = false;
+		this.energyReserve=0;
+			var targetDistance = game.physics.arcade.distanceBetween(this.sprite, this.target);
+			var targetAngle = game.physics.arcade.angleBetween(this.target, this.sprite);
+
+			if(this.targetDistance < 1600 && this.altCooldown < game.time.now + 5000){
+				this.energyReserve=6;
+			}
+			if(Math.abs(compareAngles(this.target.rotation, targetAngle))<0.2)
+			{
+				ret = true;
+			}
+			return ret;
+		}
+
 		target.alt=function(){
 			if(this.energy>=6 &&
 					this.altCooldown<game.time.now){
@@ -111,7 +127,22 @@ var cmp = [
 	'name':'Shield Generator',
 	'flavor':'press [Z] for invincibility',
 	'bonus':function(target){
-		target.alt=function(){
+		target.altCheck=function(){
+		var ret = false;
+		this.energyReserve=0;
+			var targetDistance = game.physics.arcade.distanceBetween(this.sprite, this.target);
+			var targetAngle = game.physics.arcade.angleBetween(this.target, this.sprite);
+
+			if(this.targetDistance < 1600 && this.altCooldown < game.time.now + 5000){
+				this.energyReserve=this.energyMax*0.2;
+			}
+			if(Math.abs(compareAngles(this.target.rotation, targetAngle))<0.2)
+			{
+				ret = true;
+			}
+			return ret;
+		}
+	target.alt=function(){
 			if(this.energy>=0.1){				
 				this.energy-=0.1;
 				if(game.time.now > this.altCooldown){
@@ -1188,6 +1219,24 @@ var cmp = [
 	'name':'Destroyed Airlock',
 	'flavor':'press [Z] to unleash a damaging halo of contagion',
 	'bonus':function(target){
+
+		target.altCheck=function(){
+			var ret = false;
+			this.energyReserve=0;
+			var targetDistance = game.physics.arcade.distanceBetween(this.sprite, this.target);
+
+			if(targetDistance < 600 && this.altCooldown < game.time.now + 5000){
+				this.energyReserve=6;
+			}
+			if(targetDistance < 250)
+			{
+				ret = true;
+			}
+			return ret;
+		}
+
+
+
 		target.alt=function(){
 			if(game.time.now>this.altCooldown && (this.energy>=6 || this.energy == this.energyMax)){
 				this.energy-=6;	//if player has < 0 energy, it's effectively an extra recharge delay
@@ -1204,6 +1253,7 @@ var cmp = [
 					bullet.bulletSprite=4;
 					bullet.scale.setTo(1,1);
 					bullet.lifespan=400;
+					bullet.owner=undefined;
 					bullet.body.angularVelocity=999;
 					bullet.tracking=-999;
 					bullet.blendMode=1;
@@ -1235,21 +1285,43 @@ var cmp = [
 	'name':'Cloaking Device',
 	'flavor':'hold [Z] to throw off attackers',
 	'bonus':function(target){
+		target.altCheck=function(){
+		var ret = false;
+		this.energyReserve=0;
+			var targetDistance = game.physics.arcade.distanceBetween(this.sprite, this.target);
+			var targetAngle = game.physics.arcade.angleBetween(this.target, this.sprite);
+
+			if(targetDistance < 1500 && targetDistance > 400 && this.energy > this.energyMax * 0.5){
+				ret = true;
+			}
+			return ret;
+		}
+
+
+
 		target.alt=function(){
-			if(this.energy>=0.4){
-				this.energy-=0.4;
+			if(this.energy>=1){
+				this.energy-=1;
 				if(game.time.now>this.altCooldown){
+					if(typeof(this.parts[0])!='undefined'){
+					if(this.ai==-1 || this.parts[0].sprite.alpha>.5){
 					midBoom(explosions,1,this.sprite.x,this.sprite.y);
 					ui.sound_boop.play();
-				}
-				if(this.sprite.profile>100){
-					this.sprite.profile-=100;
-				}else{
-					this.sprite.profile=0;
-				}
+					if(this.sprite.profile>100){
+						this.sprite.profile-=100;
+					}else{
+						this.sprite.profile=0;
+					}
+					}
+					}
+			
 				for(var i=0;i<this.parts.length;i++){
 					this.altCooldown=game.time.now+250;
 					this.parts[i].sprite.alpha=0.35;
+					if(this.ai!=-1){
+						this.parts[i].sprite.alpha=0;
+					}
+				}
 				}
 			}
 
