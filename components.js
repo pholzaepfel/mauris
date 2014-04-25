@@ -1274,7 +1274,6 @@ var cmp = [
 					bullet.bulletSprite=4;
 					bullet.scale.setTo(1,1);
 					bullet.lifespan=400;
-					bullet.owner=undefined;
 					bullet.body.angularVelocity=999;
 					bullet.tracking=-999;
 					bullet.blendMode=1;
