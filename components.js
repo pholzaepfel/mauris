@@ -133,10 +133,10 @@ var cmp = [
 			var targetDistance = game.physics.arcade.distanceBetween(this.sprite, this.target);
 			var targetAngle = game.physics.arcade.angleBetween(this.target, this.sprite);
 
-			if(this.targetDistance < 1600 && this.altCooldown < game.time.now + 5000){
+			if(targetDistance < 1600 && this.altCooldown < game.time.now + 5000){
 				this.energyReserve=this.energyMax*0.2;
 			}
-			if(Math.abs(compareAngles(this.target.rotation, targetAngle))<0.2)
+			if(targetDistance < (target.fireRange * 0.001 * target.fireVelocity) && Math.abs(compareAngles(this.target.rotation, targetAngle))<0.2)
 			{
 				ret = true;
 			}
@@ -413,7 +413,7 @@ var cmp = [
 				this.energyReserve=2;
 			}
 
-			if(Math.abs(compareAngles(this.sprite.rotation, targetAngle))<1 && targetDistance < 750)
+			if(Math.abs(compareAngles(this.sprite.rotation, targetAngle))<0.5*Math.PI && targetDistance < 750)
 			{
 				ret = true;
 			}
@@ -1539,7 +1539,7 @@ var cmp = [
 			var targetDistance = game.physics.arcade.distanceBetween(this.sprite, this.target);
 			var targetAngle = game.physics.arcade.angleBetween(this.target, this.sprite);
 
-			if(this.targetDistance < 1600 && this.altCooldown < game.time.now + 5000){
+			if(targetDistance < 1600 && this.altCooldown < game.time.now + 5000){
 				this.energyReserve=12;
 			}
 			if(Math.abs(compareAngles(this.target.rotation, targetAngle))<0.2)

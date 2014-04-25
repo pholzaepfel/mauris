@@ -713,6 +713,10 @@ enemyShip.prototype.update = function() {
 			}
 
 			var diffAngle = compareAngles(this.sprite.rotation,targetAngle);
+
+			if(this.energy<this.energyReserve){
+				diffAngle = compareAngles(this.sprite.rotation+Math.PI,targetAngle);
+			}
 			if(diffAngle*60>this.turnRate)
 			{
 				this.left(1);
@@ -735,6 +739,9 @@ enemyShip.prototype.update = function() {
 				if(Math.abs(diffAngle)<0.25*Math.PI){
 					this.up(1);
 				}
+			}
+			if (this.energy < this.energyReserve){
+				this.up(1);
 			}
 			if (this.altCheck()){
 				this.alt();
