@@ -601,7 +601,8 @@ enemyShip.prototype.spawnBullet = function (showFlash) {
 
 
 enemyShip.prototype.emitThrust = function() {
-	if(this.parts[0].sprite.alpha>0.5){
+	
+	if(typeof(this.parts[0])!='undefined' && this.parts[0].sprite.alpha>0.5){
 
 	this.thrust.x=this.sprite.x-(Math.cos(this.sprite.rotation)*(this.sprite.body.width)*0.5);
 	this.thrust.y=this.sprite.y-(Math.sin(this.sprite.rotation)*(this.sprite.body.width)*0.5);
