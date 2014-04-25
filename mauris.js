@@ -1141,7 +1141,7 @@ var frob1;
 
 var profileExponent=0.9;
 var lootDropRate = 0.09;
-var componentDropRate = 0.08;
+var componentDropRate = 0.067;
 var hazeWhite,hazeRed,hazePurple;
 var foredrop;
 var numBaddies = 9;
