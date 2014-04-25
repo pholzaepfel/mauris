@@ -372,6 +372,26 @@ var cmp = [
 	'flavor':'hold [Z] to blaze forward and burn enemies in your wake',
 	'bonus':function(target){
 		target.acceleration+=0.2;
+		target.altCheck=function(){
+			var ret = false;
+			this.energyReserve=0;
+			var targetDistance = game.physics.arcade.distanceBetween(this.sprite, this.target);
+			var targetAngle = game.physics.arcade.angleBetween(this.target, this.sprite);
+
+			if(targetDistance < 750){
+				this.energyReserve=2;
+			}
+
+			if(Math.abs(compareAngles(this.sprite.rotation, targetAngle))<1 && targetDistance < 750)
+			{
+				ret = true;
+			}
+			if(this.energy>this.energyMax-4 && this.speed > 0)
+			{
+//				ret = true;
+			}
+			return ret;
+		}
 		target.alt=function(){
 			if(this.energy>=1){
 				if(game.time.now>this.altCooldown){
@@ -392,6 +412,7 @@ var cmp = [
 					bullet.body.velocity.y=0;
 					bullet.scale.setTo(2,2);
 					bullet.lifespan=1333;
+					bullet.owner=undefined;
 					bullet.body.angularVelocity=999;
 					bullet.tracking=-999; //doesn't play with angularvel
 					this.altCooldown=game.time.now+100;
@@ -1423,9 +1444,9 @@ var cmp = [
 		var ret = false;
 		this.energyReserve=0;
 			var targetDistance = game.physics.arcade.distanceBetween(this.sprite, this.target);
-			var targetAngle = game.physics.arcade.distanceBetween(this.target, this.sprite);
+			var targetAngle = game.physics.arcade.angleBetween(this.target, this.sprite);
 
-			if(this.targetDistance < 1600 && this.altCooldown > game.time.now + 5000){
+			if(this.targetDistance < 1600 && this.altCooldown < game.time.now + 5000){
 				this.energyReserve=12;
 			}
 			if(Math.abs(compareAngles(this.target.rotation, targetAngle))<0.2)
