@@ -1333,8 +1333,8 @@ var cmp = [
 					if(this.ai==-1 || this.parts[0].sprite.alpha>.5){
 					midBoom(explosions,1,this.sprite.x,this.sprite.y);
 					ui.sound_boop.play();
-					if(this.sprite.profile>100){
-						this.sprite.profile-=100;
+					if(this.sprite.profile>500){
+						this.sprite.profile-=500;
 					}else{
 						this.sprite.profile=0;
 					}
