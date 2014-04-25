@@ -1212,13 +1212,28 @@ var cmp = [
 	'name':'Thermal Resonator',
 	'flavor':'press [Z] to alert nearby enemies!',
 	'bonus':function(target){
+		target.altCheck=function(){
+			var ret = false;
+			this.energyReserve=0;
+			var targetDistance = game.physics.arcade.distanceBetween(this.sprite, this.target);
+
+			if(targetDistance < 1200 && game.time.now>this.altCooldown + 5000)
+			{
+				ret = true;
+			}
+			return ret;
+		}
 		target.alt=function(){
 			if(this.energy>=6 && game.time.now>this.altCooldown){
 				ui.sound_plasma.play();
 				this.energy-=6;
 				this.altCooldown=game.time.now+2000;
 				bigBoom(explosions,this.sprite.x,this.sprite.y);
+				if(this.ai==-1){
 				this.sprite.profile=this.sprite.profileMax*8;
+				}else{
+				player.radarError=8;
+				}
 			}
 
 		}

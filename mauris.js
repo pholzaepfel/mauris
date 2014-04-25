@@ -369,6 +369,7 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 	var y = this.target.y + (Math.sin(-1 * this.sprite.rotation) * (randomRange(540,1500) + player.sprite.body.velocity.y));
 
 	this.nextThrust=0;
+	this.radarError=0;
 	this.fireSound=ui.sound_pew3;
 	this.built=false;
 	this.sprite.reset(x,y);
@@ -860,6 +861,7 @@ playerShip.prototype.initPlayerShip = function (ship) {
 	this.ai=-1; //natural intelligence
 	this.radarTargets=1;
 	this.dropRate=0;
+	this.radarError=0;
 	this.sawDamage=0;
 	this.radarShowInRange=false;
 	this.radarShowInEnemyRange=false;
@@ -1399,8 +1401,22 @@ gameUI.prototype.frobRadarPing = function() {
 gameUI.prototype.radarPing = function() {
 	var s='';
 	this.resetRadar();
+	if(player.radarError > 0){
+		player.radarError-=game.time.physicsElapsed*2;
+	}
+	if(player.radarError < 0){
+		player.radarError=0;
+	}
 	for(var i=0;i<this.radar.length;i++){
 		var targetAngle=game.physics.arcade.angleBetween(player.sprite, this.enemies[i].sprite);
+		targetAngle+=Math.random()*(player.radarError/3)*randomSign();
+		
+		this.radar[i].alpha=0.85
+		if(player.radarError > 0)
+		{
+			this.radar[i].alpha*=Math.random()-(player.radarError/20);
+		}
+		
 		var targetDistance=game.physics.arcade.distanceBetween(player.sprite, this.enemies[i].sprite);
 		var s='\u2026';
 		var n=Math.floor(255-(targetDistance/2-900));
