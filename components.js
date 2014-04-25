@@ -1155,7 +1155,7 @@ var cmp = [
 				this.energy-=6;
 				this.altCooldown=game.time.now+2000;
 				bigBoom(explosions,this.sprite.x,this.sprite.y);
-				this.sprite.profile=this.sprite.profileMax*5;
+				this.sprite.profile=this.sprite.profileMax*8;
 			}
 
 		}
@@ -1343,12 +1343,12 @@ var cmp = [
 	'id':110,
 	'drops':true,
 	'name':'Antimatter Furnace',
-	'flavor':'faster energy return, but occasionally damages you when firing',
+	'flavor':'faster energy return, very unsafe',
 	'bonus':function(target){
 		target.energyAmount+=2;
 		target.bulletBehavior.push(function(bullet){
 			var tgt = ownerFromName(bullet.owner.name);
-			if(Math.random()<0.1 && tgt.health > 1){
+			if(Math.random()<0.2 && tgt.health > 1){
 				tgt.damage(1);
 				midBoom(explosions,4,tgt.sprite.x,tgt.sprite.y);
 			}
@@ -1360,7 +1360,7 @@ var cmp = [
 	'id':111,
 	'drops':true,
 	'name':'Transporter',
-	'flavor':'press [Z] to board a nearby enemy vessel. this will destroy your ship if successful',
+	'flavor':'press [Z] to steal a nearby enemy vessel',
 	'bonus':function(target){
 		if(target.ai==-1){ //no baddie should EVER have this
 			target.altTexts=['the captain\'s screams are silenced by the void',
@@ -1419,6 +1419,21 @@ var cmp = [
 	'flavor':'press [Z] to teleport',
 	'bonus':function(target){
 
+		target.altCheck=function(){
+		var ret = false;
+		this.energyReserve=0;
+			var targetDistance = game.physics.arcade.distanceBetween(this.sprite, this.target);
+			var targetAngle = game.physics.arcade.distanceBetween(this.target, this.sprite);
+
+			if(this.targetDistance < 1600 && this.altCooldown > game.time.now + 5000){
+				this.energyReserve=12;
+			}
+			if(Math.abs(compareAngles(this.target.rotation, targetAngle))<0.2)
+			{
+				ret = true;
+			}
+			return ret;
+		}
 		target.alt=function(){
 			if((this.energy>=12 || this.energy==this.energyMax)&&this.altCooldown<game.time.now){
 				this.energy-=12;
@@ -1440,7 +1455,7 @@ var cmp = [
 	'id':114,
 	'drops':true,
 	'name':'Secured Container',
-	'flavor':'recharge energy by rapidly pressing [Z]. inhibits normal recharge',
+	'flavor':'recharge energy by rapidly pressing [Z].',
 	'bonus':function(target){
 		if(target.ai==-1){
 			target.energyRate=60000; //slow enough

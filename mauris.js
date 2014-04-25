@@ -421,6 +421,15 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 
 	this.sprite.body.mass = shipWithoutVoid(this.ship).length*10000
 
+	this.altCheck = function(){return false;};
+	this.energyReserve = 0;
+	this.alt = function(){
+		if(game.time.now>this.altCooldown){
+			sparks(pew,this.sprite);
+			this.altCooldown=game.time.now+1000;
+		}
+	}
+
 
 		this.sprite.body.collideWorldBounds = true;
 	this.sprite.angle = game.rnd.angle();
@@ -713,7 +722,10 @@ enemyShip.prototype.update = function() {
 					this.up(1);
 				}
 			}
-			if (targetDistance < this.fireRange * (this.fireVelocity/1000) && 
+			if (this.altCheck()){
+				this.alt();
+			}
+			if (this.energy - this.fireEnergy > this.energyReserve && targetDistance < this.fireRange * (this.fireVelocity/1000) && 
 					targetDistance < adjustedProfile * 1.5){
 						if(Math.abs(diffAngle) < 0.5){
 							this.fire(); 
@@ -883,6 +895,8 @@ playerShip.prototype.initPlayerShip = function (ship) {
 	this.sprite.profile=250;	//max range at which opponents will attack. this will change dynamically
 	this.sprite.body.linearDamping=0;
 	this.sprite.body.collideWorldBounds = true; 
+	this.altCheck = function(){return false;};
+	this.energyReserve = 0;
 	this.alt = function(){
 		if(game.time.now>this.altCooldown){
 			sparks(pew,this.sprite);
@@ -1092,6 +1106,7 @@ playerShip.prototype.update = function(){
 	}
 };
 var player;
+var joystickUsed = false;
 var pad1;
 var hello;
 var startParts = 1; //extra parts given to player at beginning!
@@ -1267,7 +1282,7 @@ gameUI.prototype.resetRadar = function() {
 }
 gameUI.prototype.initCombatUi = function() {
 
-	this.partsSelector = game.add.sprite(-292,150,'parts',0);
+	this.partsSelector = game.add.sprite(-284,158,'parts',0);
 	this.partsSelector.visible = false;
 
 	this.tempStation = game.add.sprite(0,0,'station');
@@ -1487,11 +1502,17 @@ gameUI.prototype.commsPing = function() {
 	}else{
 		this.comms.setText(this.textLine + ' ');
 	}
-	this.graphics.lineStyle(1, 0x9988AA, ui.comms.alpha);
-	this.graphics.beginFill(0x7669A0, ui.comms.alpha/2);
+	this.graphics.beginFill(0x000000, ui.comms.alpha/3);
 	this.graphics.drawRect(this.comms.x - 15, this.comms.y - 15, this.comms.width + 30, this.comms.height + 30);
 	
-
+	//color coding!
+	if(this.comms.text.match(/^got/)){
+		this.comms.fill="rgb(255,240,32)"
+	}else if (this.comms.text.match(/^>/)){
+		this.comms.fill="rgb(200,255,230)"
+	}else{
+			this.comms.fill='rgb(40,190,240)';
+	}	
 	this.toTop(this.comms);
 }
 gameUI.prototype.profileLinePing = function() {
@@ -1506,9 +1527,22 @@ gameUI.prototype.profileLinePing = function() {
 		this.profileLine.setText('');
 	}
 }
+gameUI.prototype.partPing = function () {
+	this.graphics.beginFill(0x000000, 0.5);
+	this.graphics.drawRect(-300,142, 666, 96);
+	this.toTop(this.partText);
+	this.toTop(this.partFlavorText);
+	this.toTop(this.explainerText);
+	this.partsSelector.bringToTop();
+	
+}
 gameUI.prototype.update = function() {
 	this.graphics.clear();
+	this.toTop(this.graphics);
 	this.commsPing();
+	if (gamemode == '?build'){
+		this.partPing();
+	}
 	if (gamemode == 'war'){
 		this.profileLinePing();
 		this.bar(this.healthLine, 0, player.health, player.healthMax);
@@ -1521,10 +1555,8 @@ gameUI.prototype.update = function() {
 		this.frobRadarPing();
 	}
 }
-
 gameUI.prototype.updatePart = function () {
 	this.partsSelector.visible=true;
-	this.partsSelector.bringToTop();
 	if(ui.buildMode == 'select'){
 		if(playerStats.inventory.length){
 			this.partsSelector.loadTexture('parts',playerStats.inventory[this.currentPart]);
@@ -1752,6 +1784,19 @@ gameUI.prototype.partsUI = function (ship) {
 }
 gameUI.prototype.setMode = function(mode){
 	this.buildMode = mode;
+	if(joystickUsed)
+	{
+	if(mode=='select'){
+		this.explainerText.setText('[SELECT] X: select part   B: remove parts   START: launch');
+	}else if(mode=='move'){
+		this.explainerText.setText('[CONFIG] X: place part    B: cancel         D-PAD: move part');
+
+	}else if(mode=='delete'){
+		this.explainerText.setText('[REMOVE] X: remove part   B: done removing  Removed parts are returned to inventory.');
+
+	}
+
+	}else{
 	if(mode=='select'){
 		this.explainerText.setText('[SELECT] X: select part   Z: remove parts   ENTER: launch');
 	}else if(mode=='move'){
@@ -1760,6 +1805,7 @@ gameUI.prototype.setMode = function(mode){
 	}else if(mode=='delete'){
 		this.explainerText.setText('[REMOVE] X: remove part   Z: done removing  Removed parts are returned to inventory.');
 
+	}
 	}
 }
 gameUI.prototype.cullInventory = function() {
@@ -2338,59 +2384,73 @@ function update () {
 
 			if (pad1.axis(2) > 0.3) //left trigger
 			{
-				alt = 1;
+			joystickUsed=true;
+			alt = 1;
 			}
 			if (pad1.axis(5) > 0.3) //right trigger
 			{
+			joystickUsed=true;
 				fire = 1;
 			}
 			if (pad1.axis(6) < -0.3) //dpad x
 			{
+			joystickUsed=true;
 				left = 1;
 			}
 			if (pad1.axis(6) > 0.3)
 			{
+			joystickUsed=true;
 				right = 1;
 			}
 			if (pad1.axis(7) < -0.3) //dpad y
 			{
+			joystickUsed=true;
 				up = 1;
 			}
 			if (pad1.axis(7) > 0.3)
 			{
+			joystickUsed=true;
 				down = 1;
 			}
 			if (pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) < -0.3)
 			{
+			joystickUsed=true;
 				left = pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X);
 			}
 			if (pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) > 0.3)
 			{
+			joystickUsed=true;
 				right = pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X);
 			}
 			if (pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y) < -0.3)
 			{
+			joystickUsed=true;
 				up = pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y);
 			}
 			if (pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y) > 0.3)
 			{
+			joystickUsed=true;
 				down = pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y);
 			}
 			if (pad1.buttonValue(Phaser.Gamepad.XBOX360_X))
 			{
+			joystickUsed=true;
 				fire = 1;
 			}
 			if (pad1.buttonValue(Phaser.Gamepad.XBOX360_A))
 			{
+			joystickUsed=true;
 				up = 1;
 			}
 
 			if (pad1.buttonValue(Phaser.Gamepad.XBOX360_B))
 			{
+			joystickUsed=true;
 				alt = 1;
 			}
 			if (pad1.buttonValue(7)) //start
 			{
+			joystickUsed=true;
 				enter = 1;
 			}	
 			if (cursors.left.isDown || cursors.left2.isDown){

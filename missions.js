@@ -20,10 +20,10 @@ var missions = [
 	'hazeRedBlendMode':1,
 	'intro':['[INCOMING COMMUNICATION]',
 	'[LEFT] and [RIGHT] turn your ship.',
-	'press [X] to fire.\nfiring takes energy (PINK) which will recharge over time.',
+	'press [X] to fire.\nfiring takes energy which will recharge over time.',
 	'press [UP] to thrust. \nto slow down, TURN AROUND and THRUST.',
 	'see if you can clear some of the asteroids around the station.'],
-	'outro':['did you see the (GREEN) ore? pick it up to repair your ship.','great job. now, follow the GOLD DIAMOND to the next station.\nyou\'ll get new orders there.'],
+	'outro':['did you see the GREEN ore? pick it up to repair your ship.','great job. now, follow the GOLD DIAMOND to the next station.\nyou\'ll get new orders there.'],
 	'win':{
 		'condition':'kill',
 		'killCount':5,
@@ -45,7 +45,7 @@ var missions = [
 
 },
 {	'id':1,
-	'next':[1,5,6],
+	'next':[1,5,6,7,8],
 	'name':'random warzone',
 	'complete':false,
 	'componentsReward':banditGear,
@@ -87,7 +87,7 @@ var missions = [
 
 },
 {	'id':2,
-	'next':[1,5,6,7],
+	'next':[5,6,7,8],
 	'name':'obligatory kill quest',
 	'complete':false,
 	'componentsReward':banditGear,
@@ -238,7 +238,7 @@ var missions = [
 },
 {
 	'id':5,
-	'next':[1,5,6,7],
+	'next':[5,6,7,8],
 	'name':'5',
 	'complete':false,
 	'componentsReward':allianceGear,
@@ -280,7 +280,7 @@ var missions = [
 },
 {
 	'id':6,
-	'next':[5,1,7],
+	'next':[5,7,6,8],
 	'name':'bandits',
 	'complete':false,
 	'componentsReward':allianceGear,
@@ -329,7 +329,7 @@ var missions = [
 },
 {
 	'id':7,
-	'next':[6,1,5],
+	'next':[6,5,7,8],
 	'name':'zombies',
 	'complete':false,
 	'componentsReward':droneGear,
@@ -368,7 +368,58 @@ var missions = [
 			'taunts':[],
 			'deaths':[]
 		}]
+},
+	{
+	'id':8,
+	'next':[5,6,7,8],
+	'name':'dron2',
+	'complete':false,
+	'componentsReward':droneGear,
+	'componentsCount':4,
+	'hazeRed':0.8,
+	'hazeWhite':1.5,
+	'hazePurple':1.0,
+	'hazeRedSpeed':160,
+	'hazeWhiteSpeed':600,
+	'hazePurpleSpeed':10,
+	'distanceMin':2000,
+	'distanceMax':3000,
+	'hazePurpleBlendMode':2,
+	'hazeRedBlendMode':2,
+	'intro':['init new quest. kill yellow things.\ngo to waypoint. reconfigure. repeat'],
+	'outro':['captain. try to make it back in one piece.'],
+	'win':{
+		'condition':'kill', //could be 'frob'
+		'killCount':3,
+		'killType': droneBoss1
+	},
+	'enemies':
+		[{
+			'ships': asteroids,
+			'respawn':true,
+			'count':17, 
+			'missionTarget':false,
+			'taunts':[],
+			'deaths':[]
+		},
+	{
+			'ships': droneBoss1,
+			'respawn':false,
+			'count':3, 
+			'missionTarget':true,
+			'taunts':[],
+			'deaths':[]
+		},
+	{
+			'ships': drones2,
+			'respawn':true,
+			'count':13, 
+			'missionTarget':false,
+			'taunts':[],
+			'deaths':[]
+		}]
 }
+
 
 
 ];
