@@ -134,9 +134,9 @@ var cmp = [
 			var targetAngle = game.physics.arcade.angleBetween(this.target, this.sprite);
 
 			if(targetDistance < 1600 && this.altCooldown < game.time.now + 5000){
-				this.energyReserve=this.energyMax*0.2;
+				this.energyReserve=this.energyMax*0.3;
 			}
-			if(targetDistance < (target.fireRange * 0.001 * target.fireVelocity) && Math.abs(compareAngles(this.target.rotation, targetAngle))<0.4)
+			if(targetDistance < (target.fireRange * 0.001 * target.fireVelocity) && Math.abs(compareAngles(this.target.rotation, targetAngle))<0.6)
 			{
 				ret = true;
 			}
