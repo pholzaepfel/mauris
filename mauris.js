@@ -2484,7 +2484,7 @@ function update () {
 			joystickUsed=true;
 				alt = 1;
 			}
-			if (pad1.buttonValue(7)) //start
+			if (pad1.buttonValue(7) || pad1.buttonValue(Phaser.Gamepad.XBOX360_START)) //start
 			{
 			joystickUsed=true;
 				enter = 1;
