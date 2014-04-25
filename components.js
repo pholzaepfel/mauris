@@ -956,6 +956,17 @@ var cmp = [
 	'name':'AWSM',
 	'flavor':'press [Z] to self-destruct, destroying nearby ships',
 	'bonus':function(target){
+
+		target.altCheck=function(){
+		var ret = false;
+			var targetDistance = game.physics.arcade.distanceBetween(this.sprite, this.target);
+
+			if(targetDistance < 250 && Math.random()<0.01+(0.04*((this.healthMax-this.health)/this.healthMax))){
+				ret = true;
+			}
+			return ret;
+		}
+
 		target.alt=function(){
 			ui.sound_boom1.play();
 			ui.sound_boom2.play();
@@ -966,7 +977,7 @@ var cmp = [
 				}
 			}
 			if(game.physics.arcade.distanceBetween(this.sprite,player.sprite)<500 && player.alive){
-				player.damage(500);
+				player.damage(player.healthMax); //won't actually kill the player unless damagecoef = 1
 			}
 		}
 	}
