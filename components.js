@@ -136,7 +136,7 @@ var cmp = [
 			if(targetDistance < 1600 && this.altCooldown < game.time.now + 5000){
 				this.energyReserve=this.energyMax*0.2;
 			}
-			if(targetDistance < (target.fireRange * 0.001 * target.fireVelocity) && Math.abs(compareAngles(this.target.rotation, targetAngle))<0.2)
+			if(targetDistance < (target.fireRange * 0.001 * target.fireVelocity) && Math.abs(compareAngles(this.target.rotation, targetAngle))<0.4)
 			{
 				ret = true;
 			}
