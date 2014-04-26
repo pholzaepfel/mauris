@@ -951,6 +951,7 @@ playerShip.prototype.damage = function(dmg, aggro) {
 		midBoom(explosions,4,this.sprite.x,this.sprite.y);
 	}else{
 		this.health -= damageCoef * dmg;
+		this.radarError=Math.max(this.radarError,this.radarTargets+0.5)
 	}
 
 	if (this.health <= 0 && this.health + dmg >= 0){
@@ -1417,12 +1418,10 @@ gameUI.prototype.radarPing = function() {
 	}
 	for(var i=0;i<this.radar.length;i++){
 		var targetAngle=game.physics.arcade.angleBetween(player.sprite, this.enemies[i].sprite);
-		targetAngle+=Math.random()*(player.radarError/3)*randomSign();
-		
 		this.radar[i].alpha=0.85
-		if(player.radarError > 0)
-		{
-			this.radar[i].alpha*=Math.random()-(player.radarError/20);
+		if(player.radarError>player.radarTargets){
+			this.radar[i].alpha*=Math.random()-((player.radarError-player.radarTargets)/20);
+			targetAngle+=Math.random()*((player.radarError-player.radarTargets)/5)*randomSign();
 		}
 		
 		var targetDistance=game.physics.arcade.distanceBetween(player.sprite, this.enemies[i].sprite);
