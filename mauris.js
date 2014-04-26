@@ -2417,7 +2417,32 @@ function update () {
 			var fire = 0;
 			var alt = 0;
 			var enter = 0;
-
+			
+			//
+			if(pad1.buttonValue(Phaser.Gamepad.XBOX360_DPAD_UP)){
+				joystickUsed=true;
+				up=1;
+			}
+			if(pad1.buttonValue(Phaser.Gamepad.XBOX360_DPAD_DOWN)){
+				joystickUsed=true;
+				down=1;
+			}
+			if(pad1.buttonValue(Phaser.Gamepad.XBOX360_DPAD_LEFT)){
+				joystickUsed=true;
+				left=1;
+			}
+			if(pad1.buttonValue(Phaser.Gamepad.XBOX360_DPAD_RIGHT)){
+				joystickUsed=true;
+				right=1;
+			}
+			if(pad1.buttonValue(Phaser.Gamepad.XBOX360_LEFT_TRIGGER)){
+				joystickUsed=true;
+				alt=1;
+			}
+			if(pad1.buttonValue(Phaser.Gamepad.XBOX360_RIGHT_TRIGGER)){
+				joystickUsed=true;
+				fire=1;
+			}	
 			if (pad1.axis(2) > 0.3) //left trigger
 			{
 			joystickUsed=true;
