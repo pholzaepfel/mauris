@@ -1034,7 +1034,7 @@ playerShip.prototype.fire = function(){
 
 		this.fireSound.play();
 
-		this.sprite.profile+=Math.floor(this.fireDamage*80);
+		this.sprite.profile+=Math.floor(this.fireDamage*60);
 
 		if(this.sprite.profile>this.sprite.profileMax*10){
 			this.sprite.profile=this.sprite.profileMax*10;
@@ -1345,7 +1345,7 @@ gameUI.prototype.resetRadar = function() {
 }
 gameUI.prototype.initCombatUi = function() {
 
-	this.partsSelector = game.add.sprite(-284,158,'parts',0);
+	this.partsSelector = game.add.sprite(-384,158,'parts',0);
 	this.partsSelector.visible = false;
 
 	this.tempStation = game.add.sprite(0,0,'station');
@@ -1371,11 +1371,11 @@ gameUI.prototype.initCombatUi = function() {
 	this.comms = game.add.text(0,0,'',{font:'32px mozart', fill: 'rgb(40,190,240)', align: 'left'});
 
 	destroyIfExists(this.partText);
-	this.partText = game.add.text(-200,150,'',{font:'42px mozart', fill: 'rgb(255,255,255)', align: 'left'});
+	this.partText = game.add.text(-300,150,'',{font:'42px mozart', fill: 'rgb(255,255,255)', align: 'left'});
 	destroyIfExists(this.partFlavorText);
-	this.partFlavorText = game.add.text(-180,180,'',{font:'28px mozart', fill: 'rgb(255,255,255)', align: 'left'});
+	this.partFlavorText = game.add.text(-280,180,'',{font:'28px mozart', fill: 'rgb(255,255,255)', align: 'left'});
 	destroyIfExists(this.explainerText);
-	this.explainerText = game.add.text(-200,210,'',{font:'24px mozart', fill: 'rgb(255,255,220)', align: 'left'});
+	this.explainerText = game.add.text(-300,210,'',{font:'24px mozart', fill: 'rgb(255,255,220)', align: 'left'});
 
 	this.radar = [];
 	this.resetRadar();
@@ -1470,7 +1470,7 @@ gameUI.prototype.radarPing = function() {
 		this.radar[i].alpha=0.85
 		if(player.radarError>player.radarTargets){
 			this.radar[i].alpha*=Math.random()-((player.radarError-player.radarTargets)/20);
-			targetAngle+=Math.random()*((player.radarError-player.radarTargets)/5)*randomSign();
+			targetAngle+=Math.random()*((player.radarError-player.radarTargets)/2)*randomSign();
 		}
 		
 		var targetDistance=game.physics.arcade.distanceBetween(player.sprite, this.enemies[i].sprite);
@@ -1613,7 +1613,7 @@ gameUI.prototype.profileLinePing = function() {
 }
 gameUI.prototype.partPing = function () {
 	this.graphics.beginFill(0x000000, 0.5);
-	this.graphics.drawRect(-300,142, 666, 96);
+	this.graphics.drawRect(-400,142, 800, 96);
 	this.toTop(this.partText);
 	this.toTop(this.partFlavorText);
 	this.toTop(this.explainerText);
@@ -1871,23 +1871,23 @@ gameUI.prototype.setMode = function(mode){
 	if(joystickUsed)
 	{
 	if(mode=='select'){
-		this.explainerText.setText('[SELECT] X: select part   B: remove parts   START: launch');
+		this.explainerText.setText('[SELECT] X: select part   B: unequip parts   START: launch');
 	}else if(mode=='move'){
 		this.explainerText.setText('[CONFIG] X: place part    B: cancel         D-PAD: move part');
 
 	}else if(mode=='delete'){
-		this.explainerText.setText('[REMOVE] X: remove part   B: done removing  Removed parts are returned to inventory.');
+		this.explainerText.setText('[REMOVE] X: unequip part   B: done');
 
 	}
 
 	}else{
 	if(mode=='select'){
-		this.explainerText.setText('[SELECT] X: select part   Z: remove parts   ENTER: launch');
+		this.explainerText.setText('[SELECT] X: select part   Z: unequip parts   ENTER: launch');
 	}else if(mode=='move'){
 		this.explainerText.setText('[CONFIG] X: place part    Z: cancel         ARROWS: move part');
 
 	}else if(mode=='delete'){
-		this.explainerText.setText('[REMOVE] X: remove part   Z: done removing  Removed parts are returned to inventory.');
+		this.explainerText.setText('[REMOVE] X: unequip part   Z: done');
 
 	}
 	}
@@ -2487,19 +2487,10 @@ function update () {
 				joystickUsed=true;
 				alt=1;
 			}
-			if(pad1.buttonValue(Phaser.Gamepad.XBOX360_RIGHT_TRIGGER)){
-				joystickUsed=true;
-				fire=1;
-			}	
 			if (pad1.axis(2) > 0.3) //left trigger
 			{
 			joystickUsed=true;
 			alt = 1;
-			}
-			if (pad1.axis(5) > 0.3) //right trigger
-			{
-			joystickUsed=true;
-				fire = 1;
 			}
 			if (pad1.axis(6) < -0.3) //dpad x
 			{

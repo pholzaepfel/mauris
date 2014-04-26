@@ -34,7 +34,7 @@ var missions = [
 			'ships': asteroids,
 			'respawn':true,
 			'count':30, 
-			'missionTarget':false,
+			'missionTarget':true,
 			'count':30, 
 			'taunts':[],
 			'deaths':[]

@@ -440,7 +440,7 @@ var cmp = [
 					this.altCooldown=game.time.now+100;
 					game.add.tween(bullet.scale).to({x:0,y:0},bullet.lifespan, Phaser.Easing.Linear.None, true, 0, false);
 
-					game.add.tween(bullet).to({alpha:0},bullet.lifespan, Phaser.Easing.Linear.None, true, 0, false);
+					game.add.tween(bullet).to({alpha:0},bullet.lifespan, Phaser.Easing.Exponential.In, true, 0, false);
 
 			}
 		}
@@ -1213,9 +1213,8 @@ var cmp = [
 			return ret;
 		}
 		target.alt=function(){
-			if(this.energy>=6 && game.time.now>this.altCooldown){
+			if(game.time.now>this.altCooldown && this.takeEnergy(6)){
 				ui.sound_plasma.play();
-				this.energy-=6;
 				this.altCooldown=game.time.now+2000;
 				bigBoom(explosions,this.sprite.x,this.sprite.y);
 				if(this.ai==-1){
@@ -1253,8 +1252,7 @@ var cmp = [
 
 
 		target.alt=function(){
-			if(game.time.now>this.altCooldown && (this.energy>=6 || this.energy == this.energyMax)){
-				this.energy-=6;	//if player has < 0 energy, it's effectively an extra recharge delay
+			if(game.time.now>this.altCooldown && this.takeEnergy(6,true)){
 				this.profile+=200; //cheap!
 				ui.sound_missile.play();
 				for(var n=0; n<1;n+=0.075){
@@ -1273,7 +1271,7 @@ var cmp = [
 					bullet.blendMode=1;
 					game.add.tween(bullet.scale).to({x:bullet.scale.x*4,y:bullet.scale.y*4},bullet.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
 
-					game.add.tween(bullet).to({alpha:0.3},bullet.lifespan, Phaser.Easing.Linear.None, true, 0, false);
+					game.add.tween(bullet).to({alpha:0},bullet.lifespan, Phaser.Easing.Exponential.In, true, 0, false);
 				}
 				this.altCooldown=game.time.now+2000;
 
@@ -1314,8 +1312,7 @@ var cmp = [
 
 
 		target.alt=function(){
-			if(this.energy>=1){
-				this.energy-=1;
+			if(this.takeEnergy(1)){
 				if(game.time.now>this.altCooldown){
 					if(typeof(this.parts[0])!='undefined'){
 					if(this.ai==-1 || this.parts[0].sprite.alpha>.5){
@@ -1474,8 +1471,7 @@ var cmp = [
 				'the control room is littered with pictures of a life long forgotten',
 					'why the hell is everything pink?'];
 			target.alt=function(){
-				if(this.energy>=6 || this.energy == this.energyMax){
-					this.energy-=6;	//if player has < 0 energy, it's effectively an extra recharge delay
+				if(this.takeEnergy(6,true)){
 					if(game.time.now>this.altCooldown){
 
 						for(var i=0;i<ui.enemies.length;i++){		
@@ -1533,7 +1529,7 @@ var cmp = [
 			var targetAngle = game.physics.arcade.angleBetween(this.target, this.sprite);
 
 			if(targetDistance < 1600 && this.altCooldown < game.time.now + 5000){
-				this.energyReserve=12;
+				this.energyReserve=0.5*this.energyMax;
 			}
 			if(Math.abs(compareAngles(this.target.rotation, targetAngle))<0.2)
 			{
@@ -1542,8 +1538,7 @@ var cmp = [
 			return ret;
 		}
 		target.alt=function(){
-			if((this.energy>=12 || this.energy==this.energyMax)&&this.altCooldown<game.time.now){
-				this.energy-=12;
+			if(this.altCooldown<game.time.now && this.takeEnergy(0.5*this.energyMax)){
 				ui.sound_boop.play();
 
 				midBoom(explosions,1,this.sprite.x,this.sprite.y);
