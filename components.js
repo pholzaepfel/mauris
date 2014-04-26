@@ -103,7 +103,6 @@ var cmp = [
 	'name':'Alien Pustule',
 	'flavor':'-',
 	'bonus':function(target){
-		target.fireDamage+=1;
 		target.energyMax+=2;
 		target.sprite.profile+=10;
 	}
@@ -114,7 +113,6 @@ var cmp = [
 	'name':'Alien Pustule',
 	'flavor':'-',
 	'bonus':function(target){
-		target.fireDamage+=1;
 		target.energyMax+=2;
 		target.sprite.profile+=10;
 	}
@@ -520,7 +518,6 @@ var cmp = [
 	'name':'Alien Pustule',
 	'flavor':'-',
 	'bonus':function(target){
-		target.fireDamage+=1;
 		target.energyMax+=2;
 		target.sprite.profile+=10;
 	}
@@ -531,7 +528,6 @@ var cmp = [
 	'name':'Alien Pustule',
 	'flavor':'-',
 	'bonus':function(target){
-		target.fireDamage+=1;
 		target.energyMax+=2;
 		target.sprite.profile+=10;
 	}
