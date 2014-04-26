@@ -361,6 +361,25 @@ enemyShip = function (index, game, targetSprite, bullets, shipList, thrust) {
 
 };
 
+enemyShip.prototype.takeEnergy = function (amt, forgive){
+
+	var ret;
+	ret=false;
+
+	if(typeof(forgive)=='undefined'){
+		forgive=false;
+	}
+	if(this.energy >= amt){
+		this.energy-=amt;
+		ret=true;
+	}
+	if(forgive && this.energy == this.energyMax){
+		this.energy-=amt;
+		ret=true;
+	}
+	return ret;
+}
+
 enemyShip.prototype.initEnemyShip = function(ship) {
 
 	this.sprite.rotation=Math.random()*2*Math.PI;
@@ -558,10 +577,9 @@ enemyShip.prototype.up = function(a){
 };
 enemyShip.prototype.fire = function () {
 	if (this.game.time.now > this.nextFire && this.bullets.countDead() > 0 &&
-			this.energy>=this.fireEnergy){
+			this.takeEnergy(this.fireEnergy)){
 				this.fireSound.play();
 				this.nextFire = this.game.time.now + this.fireRate;
-				this.energy-=this.fireEnergy;
 				this.spawnBullet(true);
 			}
 
@@ -862,6 +880,28 @@ playerShip.prototype.destroyParts = function() {
 		this.parts=[];
 	}
 }
+playerShip.prototype.takeEnergy = function (amt, forgive){
+
+	var ret;
+	ret=false;
+
+	if(typeof(forgive)=='undefined'){
+		forgive=false;
+	}
+	if(this.energy >= amt){
+		this.energy-=amt;
+		ret=true;
+	}
+	if(forgive && this.energy == this.energyMax){
+		this.energy-=amt;
+		ret=true;
+	}
+
+	if(!ret){
+		ui.energyLine.shudder=5;
+	}
+	return ret;
+}
 playerShip.prototype.initPlayerShip = function (ship) {
 
 	this.target={};
@@ -952,6 +992,7 @@ playerShip.prototype.damage = function(dmg, aggro) {
 	}else{
 		this.health -= damageCoef * dmg;
 		this.radarError=Math.max(this.radarError,this.radarTargets+0.5)
+		ui.healthLine.shudder = 5;
 	}
 
 	if (this.health <= 0 && this.health + dmg >= 0){
@@ -989,7 +1030,7 @@ playerShip.prototype.fire = function(){
 	}
 
 
-	if (game.time.now > this.nextFire && bullets.countDead() > 0 && this.energy >= this.fireEnergy && this.alive){
+	if (game.time.now > this.nextFire && bullets.countDead() > 0 && this.alive && this.takeEnergy(this.fireEnergy)){
 
 		this.fireSound.play();
 
@@ -999,7 +1040,6 @@ playerShip.prototype.fire = function(){
 			this.sprite.profile=this.sprite.profileMax*10;
 		}
 		this.nextFire = game.time.now + this.fireRate;
-		this.energy -= this.fireEnergy;
 		this.spawnBullet(true);
 	}
 
@@ -1328,14 +1368,14 @@ gameUI.prototype.initCombatUi = function() {
 
 	this.energyLine.blendMode = 1;
 	destroyIfExists(this.comms);
-	this.comms = game.add.text(0,0,'',{font:'24px hardpixel', fill: 'rgb(40,190,240)', align: 'left'});
+	this.comms = game.add.text(0,0,'',{font:'32px mozart', fill: 'rgb(40,190,240)', align: 'left'});
 
 	destroyIfExists(this.partText);
-	this.partText = game.add.text(-200,150,'',{font:'2.2em hardpixel', fill: 'rgb(255,255,255)', align: 'left'});
+	this.partText = game.add.text(-200,150,'',{font:'42px mozart', fill: 'rgb(255,255,255)', align: 'left'});
 	destroyIfExists(this.partFlavorText);
-	this.partFlavorText = game.add.text(-180,180,'',{font:'1.7em hardpixel', fill: 'rgb(255,255,255)', align: 'left'});
+	this.partFlavorText = game.add.text(-180,180,'',{font:'28px mozart', fill: 'rgb(255,255,255)', align: 'left'});
 	destroyIfExists(this.explainerText);
-	this.explainerText = game.add.text(-200,210,'',{font:'1.7em hardpixel', fill: 'rgb(255,255,220)', align: 'left'});
+	this.explainerText = game.add.text(-200,210,'',{font:'24px mozart', fill: 'rgb(255,255,220)', align: 'left'});
 
 	this.radar = [];
 	this.resetRadar();
@@ -1351,7 +1391,16 @@ gameUI.prototype.bar = function (targetText, offset, numerator, denominator) {
 	}
 	targetText.x = player.sprite.body.x+(player.sprite.body.width/2);
 	targetText.y = player.sprite.body.y+player.sprite.body.height+30+offset;
-	
+	targetText.tint=16777215;
+	if(targetText.shudder){
+		targetText.x+=((targetText.shudder)*Math.random())*randomSign();
+		targetText.y+=((targetText.shudder)*Math.random())*randomSign();
+		targetText.shudder-=game.time.physicsElapsed*15;
+		if(targetText.shudder<0){
+		targetText.shudder = 0;
+		}
+		targetText.tint*=Math.random();
+	}	
 	this.toTop(targetText);
 	var barSize=Math.floor(denominator/2);	
 	var s = '';
@@ -1364,8 +1413,8 @@ gameUI.prototype.bar = function (targetText, offset, numerator, denominator) {
 		targetText.alpha=2;
 		game.add.tween(targetText).to({alpha: 0.9},500, Phaser.Easing.Exponential.Out, true, 0, false);
 	}else if(numerator<targetText.lastValue){
-		targetText.alpha=0.2;		
-		game.add.tween(targetText).to({alpha: 0.9},500, Phaser.Easing.Exponential.Out, true, 0, false);
+		targetText.alpha=0.6;		
+		game.add.tween(targetText).to({alpha: 0.9},500, Phaser.Easing.Exponential.Out, true, 0, false);	
 	}
 	targetText.lastValue=numerator;
 }

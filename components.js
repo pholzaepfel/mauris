@@ -74,11 +74,9 @@ var cmp = [
 		}
 
 		target.alt=function(){
-			if(this.energy>=6 &&
-					this.altCooldown<game.time.now){
+			if(this.altCooldown<game.time.now && this.takeEnergy(6)){
 						ui.sound_plasma.play();
 						this.altCooldown=game.time.now+1000;
-						this.energy-=6;
 						this.sprite.body.velocity.x=Math.cos(this.sprite.rotation+Math.PI)*this.sprite.body.maxVelocity.x;
 						this.sprite.body.velocity.y=Math.sin(this.sprite.rotation+Math.PI)*this.sprite.body.maxVelocity.y;
 						this.speed=0.01;
@@ -143,8 +141,7 @@ var cmp = [
 			return ret;
 		}
 	target.alt=function(){
-			if(this.energy>=0.1){				
-				this.energy-=0.1;
+			if(this.takeEnergy(0.1)){				
 				if(game.time.now > this.altCooldown){
 					ui.sound_boop.play();
 					this.altCooldown=game.time.now+100;
@@ -420,10 +417,8 @@ var cmp = [
 			return ret;
 		}
 		target.alt=function(){
-			if(this.energy>=1){
-				if(game.time.now>this.altCooldown){
+			if(game.time.now>this.altCooldown && this.takeEnergy(1)){
 					ui.sound_plasma.play();
-					this.energy-=1;
 					this.sprite.body.velocity.x+=Math.cos(this.sprite.rotation)*150;
 					this.sprite.body.velocity.y+=Math.sin(this.sprite.rotation)*150;
 					this.speed=this.acceleration;
@@ -446,7 +441,6 @@ var cmp = [
 					game.add.tween(bullet.scale).to({x:0,y:0},bullet.lifespan, Phaser.Easing.Linear.None, true, 0, false);
 
 					game.add.tween(bullet).to({alpha:0},bullet.lifespan, Phaser.Easing.Linear.None, true, 0, false);
-				}
 
 			}
 		}
@@ -987,8 +981,8 @@ var cmp = [
 		target.fireRate*=0.9;
 		target.bulletHitBehavior.push(function(sprite,bullet){
 			var tgt = ownerFromName(sprite.name);
-			if(tgt.energy>0){
-				tgt.energy-=4;
+			if(tgt.energy>0){				
+				tgt.takeEnergy(Math.min(4,tgt.energy));
 			};
 
 		});
