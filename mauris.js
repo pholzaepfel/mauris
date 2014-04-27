@@ -404,6 +404,7 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 	this.aggroList = [];
 	this.holdThrust=0;
 	this.oreEnergy=0;
+	this.oreChance=0.09;
 	this.acceleration=1;
 	this.health = 3;
 	this.bulletHitBehavior=[];
@@ -541,7 +542,7 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 
 		bigBoom(explosions,this.sprite.x,this.sprite.y);
 		for (var j = 0; j < this.parts.length; j++) {
-			if(Math.random() < lootDropRate){
+			if(Math.random() < this.oreChance){
 				spawnLoots(Math.floor(randomRange(0,4)), this.sprite.x, this.sprite.y);
 				this.parts[j].sprite.kill();
 			}else if(Math.random() < (componentDropRate + player.dropRate) && components[this.parts[j].component].drops){ 
@@ -717,6 +718,10 @@ enemyShip.prototype.update = function() {
 		this.sprite.body.velocity.x*=Math.random();
 		this.sprite.body.velocity.y*=Math.random();
 		this.sprite.body.angularVelocity=randomRange(25,100)*randomSign();
+		if(this.oreChance<1){
+			this.sprite.profile=0;
+			this.sprite.profileMax=0;
+		}
 		this.ai=3;
 	}
 	if(this.ai!=3){
@@ -942,6 +947,7 @@ playerShip.prototype.initPlayerShip = function (ship) {
 	this.radarShowInEnemyRange=false;
 	this.radarOreTargets=4;
 	this.oreEnergy=0;
+	this.oreChance=0.09;
 	this.acceleration=1;
 	this.lootRange=250;
 	this.sprite.reset(0,0);
@@ -1210,7 +1216,6 @@ var station; //we're going to keep this pretty much as a non-interactive sprite 
 var frob1;
 
 var profileExponent=0.9;
-var lootDropRate = 0.09;
 var componentDropRate = 0.067;
 var hazeWhite,hazeRed,hazePurple;
 var foredrop;

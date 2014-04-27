@@ -222,7 +222,6 @@ var cmp = [
 	'flavor':'-',
 	'bonus':function(target){
 		target.ai=2;
-		target.profile-=25;
 	}
 },
 {
@@ -233,7 +232,6 @@ var cmp = [
 	'bonus':function(target){
 
 		target.ai=2;
-		target.profile-=25;
 	}
 },
 {
@@ -243,7 +241,6 @@ var cmp = [
 	'flavor':'-',
 	'bonus':function(target){
 		target.ai=2;
-		target.profile-=25;
 
 	}
 },
@@ -254,7 +251,6 @@ var cmp = [
 	'flavor':'-',
 	'bonus':function(target){
 		target.ai=2;
-		target.profile-=25;
 
 	}
 },
@@ -265,7 +261,6 @@ var cmp = [
 	'flavor':'-',
 	'bonus':function(target){
 		target.ai=2;
-		target.profile-=25;
 
 	}
 },
@@ -276,7 +271,6 @@ var cmp = [
 	'flavor':'-',
 	'bonus':function(target){
 		target.ai=2;
-		target.profile-=25;
 
 	}
 },
@@ -287,7 +281,6 @@ var cmp = [
 	'flavor':'-',
 	'bonus':function(target){
 		target.ai=2;
-		target.profile-=25;
 
 	}
 },
@@ -298,7 +291,6 @@ var cmp = [
 	'flavor':'-',
 	'bonus':function(target){
 		target.ai=2;
-		target.profile-=25;
 
 	}
 },
@@ -309,7 +301,6 @@ var cmp = [
 	'flavor':'-',
 	'bonus':function(target){
 		target.ai=2;
-		target.profile-=25;
 
 	}
 },
@@ -320,7 +311,6 @@ var cmp = [
 	'flavor':'-',
 	'bonus':function(target){
 		target.ai=2;
-		target.profile-=25;
 
 	}
 },
@@ -331,7 +321,6 @@ var cmp = [
 	'flavor':'-',
 	'bonus':function(target){
 		target.ai=2;
-		target.profile-=25;
 
 	}
 },
@@ -342,8 +331,6 @@ var cmp = [
 	'flavor':'-',
 	'bonus':function(target){
 		target.ai=2;
-		target.profile-=25;
-
 	}
 },
 {
@@ -436,7 +423,6 @@ var cmp = [
 					bullet.body.velocity.y=0;
 					bullet.scale.setTo(2,2);
 					bullet.lifespan=1333;
-					bullet.owner=undefined;
 					bullet.body.angularVelocity=999;
 					bullet.tracking=-999; //doesn't play with angularvel
 					this.altCooldown=game.time.now+100;
@@ -9834,9 +9820,11 @@ var cmp = [
 	'id':1023,
 	'drops':false,
 	'name':'Component1023',
-	'flavor':'Invisible, extra profile tag. Use so quest objects show on radar.',
+	'flavor':'Container tag. Use so containers show on radar, and also gives more ore. ',
 	'bonus':function(target){
-		target.sprite.profile+=999999;
+		target.sprite.profile=200;
+		target.ai=2;
+		target.oreChance=1;
 	}
 }	
 ];

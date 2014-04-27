@@ -25,8 +25,8 @@ var missions = [
 	'[LEFT] and [RIGHT] turn your ship.',
 	'press [X] to fire.\nfiring takes energy which will recharge over time.',
 	'press [UP] to thrust. \nto slow down, TURN AROUND and THRUST.',
-	'destroy the containers near the station\nfor some target practice. if it blinks yellow, shoot it!'],
-	'outro':['did you see the GREEN ore? pick it up to repair your ship.','great job. now, follow the GOLD DIAMOND to the next station.\nyou\'ll get new orders there.'],
+	'destroy some containers near the station\nfor some target practice. if it blinks yellow, shoot it!'],
+	'outro':['did you see the GREEN ore? pick it up to repair your ship.\nthe best sources of ore are containers and asteroids.','great job. now, follow the GOLD DIAMOND to the next station.\nyou\'ll get new orders there.'],
 	'win':{
 		'condition':'kill',
 		'killCount':5,
@@ -37,17 +37,13 @@ var missions = [
 			'ships': asteroids,
 			'respawn':true,
 			'count':25, 
-			'missionTarget':false,
-			'taunts':[],
-			'deaths':[]
+			'missionTarget':false
 		},
 		{
 			'ships': containers,
 			'respawn':true,
 			'count':5, 
-			'missionTarget':true,
-			'taunts':[],
-			'deaths':["$empty? again?"]
+			'missionTarget':true
 		}
 		]
 
@@ -84,7 +80,6 @@ var missions = [
 		'respawn':true,
 		'missionTarget':false,
 		'count':9, 
-		'taunts':['test message'],
 		'deaths':['I SMELL DELICIOUS!']
 	},
 	{
@@ -92,7 +87,6 @@ var missions = [
 		'respawn':true,
 		'missionTarget':false,
 		'count':20, 
-		'taunts':[],
 		'deaths':[]
 	}
 	]
@@ -131,7 +125,6 @@ var missions = [
 		'respawn':true,
 		'missionTarget':false,
 		'count':12, 
-		'taunts':['test message'],
 		'deaths':['I SMELL DELICIOUS!']
 	},
 	{
@@ -139,7 +132,6 @@ var missions = [
 		'respawn':false,
 		'missionTarget':true,
 		'count':1, 
-		'taunts':[],
 		'deaths':[]
 	},
 	{
@@ -147,7 +139,6 @@ var missions = [
 		'respawn':true,
 		'missionTarget':false,
 		'count':15, 
-		'taunts':[],
 		'deaths':[]
 	}
 	]
@@ -186,7 +177,6 @@ var missions = [
 		'respawn':true,
 		'missionTarget':false,
 		'count': 6, 
-		'taunts':['test message'],
 		'deaths':['I SMELL DELICIOUS!']
 	},
 	{
@@ -194,7 +184,6 @@ var missions = [
 		'respawn':true,
 		'missionTarget':true,
 		'count':8, 
-		'taunts':[],
 		'deaths':[]
 	},
 	{
@@ -202,7 +191,6 @@ var missions = [
 		'respawn':true,
 		'missionTarget':false,
 		'count':15, 
-		'taunts':[],
 		'deaths':[]
 	}
 	]
@@ -240,17 +228,13 @@ var missions = [
 			'ships': asteroids,
 			'respawn':true,
 			'count':17, 
-			'missionTarget':false,
-			'taunts':[],
-			'deaths':[]
+			'missionTarget':false
 		},
 	{
 			'ships': cops,
 			'respawn':true,
 			'count':13, 
-			'missionTarget':false,
-			'taunts':[],
-			'deaths':[]
+			'missionTarget':false
 		}]
 
 
@@ -291,17 +275,13 @@ var missions = [
 			'ships': asteroids,
 			'respawn':true,
 			'count':17, 
-			'missionTarget':false,
-			'taunts':[],
-			'deaths':[]
+			'missionTarget':false
 		},
 	{
 			'ships': alliance,
 			'respawn':true,
 			'count':14, 
-			'missionTarget':true,
-			'taunts':[],
-			'deaths':[]
+			'missionTarget':true
 		}]
 },
 {
@@ -336,24 +316,18 @@ var missions = [
 			'ships': asteroids,
 			'respawn':true,
 			'count':17, 
-			'missionTarget':false,
-			'taunts':[],
-			'deaths':[]
+			'missionTarget':false
 		},
 	{
 			'ships': alliance,
 			'respawn':true,
 			'count':13, 
-			'missionTarget':false,
-			'taunts':[],
-			'deaths':[]
+			'missionTarget':false
 		},{
 			'ships': banditsMedium,
 			'respawn':true,
 			'count':3, 
-			'missionTarget':true,
-			'taunts':[],
-			'deaths':[]
+			'missionTarget':true
 		}]
 },
 {
@@ -388,17 +362,13 @@ var missions = [
 			'ships': asteroids,
 			'respawn':true,
 			'count':13, 
-			'missionTarget':false,
-			'taunts':[],
-			'deaths':[]
+			'missionTarget':false
 		},
 	{
 			'ships': zombies,
 			'respawn':true,
 			'count':15, 
-			'missionTarget':true,
-			'taunts':[],
-			'deaths':[]
+			'missionTarget':true
 		}]
 },
 	{
@@ -433,25 +403,19 @@ var missions = [
 			'ships': asteroids,
 			'respawn':true,
 			'count':17, 
-			'missionTarget':false,
-			'taunts':[],
-			'deaths':[]
+			'missionTarget':false
 		},
 	{
 			'ships': droneBoss1,
 			'respawn':false,
 			'count':3, 
-			'missionTarget':true,
-			'taunts':[],
-			'deaths':[]
+			'missionTarget':true
 		},
 	{
 			'ships': drones2,
 			'respawn':true,
 			'count':13, 
-			'missionTarget':false,
-			'taunts':[],
-			'deaths':[]
+			'missionTarget':false
 		}]
 },
 {	'id':9,
@@ -486,23 +450,20 @@ var missions = [
 		'respawn':true,
 		'missionTarget':false,
 		'count':7, 
-		'taunts':[],
 		'deaths':[]
 	},
 	{
 		'ships': asteroids,
 		'respawn':true,
 		'missionTarget':false,
-		'count':15, 
-		'taunts':[],
+		'count':18, 
 		'deaths':[]
 	},
 	{
 		'ships': containers,
 		'respawn':true,
 		'missionTarget':true,
-		'count':5, 
-		'taunts':[],
+		'count':3, 
 		'deaths':[]
 	}
 	]
@@ -554,17 +515,13 @@ var missions = [
 			'ships': asteroids,
 			'respawn':true,
 			'count':17, 
-			'missionTarget':false,
-			'taunts':[],
-			'deaths':[]
+			'missionTarget':false
 		},
 	{
 			'ships': TODO,
 			'respawn':true,
 			'count':13, 
-			'missionTarget':false,
-			'taunts':[],
-			'deaths':[]
+			'missionTarget':false
 		}]
 }
 */
