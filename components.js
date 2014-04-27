@@ -9822,7 +9822,7 @@ var cmp = [
 	'name':'Component1023',
 	'flavor':'Container tag. Use so containers show on radar, and also gives more ore. ',
 	'bonus':function(target){
-		target.sprite.profile=200;
+		target.sprite.profile=500;
 		target.ai=2;
 		target.oreChance=1;
 	}
