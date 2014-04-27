@@ -504,17 +504,15 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 		}
 
 		if(aggroShip.ship == this.ship){
-			if(Math.random()>0.01){
+			if(Math.random()<0.01){
 				retarget=true;
 			}
 		}else if(aggroShip.shiplist == this.shiplist){
-			if(Math.random()>(0.3*dmg)/this.health){
+			if(Math.random()<dmg/this.health){
 				retarget=true;
 			}
 		}else{
-			if(Math.random()>dmg/this.health){
 				retarget=true;	
-			}
 		}
 		if(retarget){
 		this.aggroList.push(aggro);
@@ -560,12 +558,9 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 					this.parts[j].sprite.body.velocity.x = this.parts[j].sprite.body.velocity.x + (bulletVelocity.x*.05);
 					this.parts[j].sprite.body.velocity.y = this.parts[j].sprite.body.velocity.y + (bulletVelocity.y*.05);
 				}
-				var velX = this.parts[j].sprite.body.velocity.x;
-				var velY = this.parts[j].sprite.body.velocity.y;
-				this.parts[j].sprite.body.velocity.x = tempX;
-				this.parts[j].sprite.body.velocity.y = tempY;
+				this.parts[j].sprite.body.velocity.x += tempX;
+				this.parts[j].sprite.body.velocity.y += tempY;
 				game.add.tween(this.parts[j].sprite.body).to({angularVelocity:randomRange(75,400)},700,Phaser.Easing.Exponential.Out, true, 0, false);
-				game.add.tween(this.parts[j].sprite.body.velocity).to({x:velX+tempX,y:velY+tempY},700, Phaser.Easing.Exponential.Out, true, 0, false);
 			}
 		}	
 		this.cullParts();
