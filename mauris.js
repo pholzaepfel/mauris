@@ -677,7 +677,9 @@ enemyShip.prototype.update = function() {
 		this.sprite.body.velocity.x = this.lastVelocityX;
 		this.sprite.body.velocity.y = this.lastVelocityY;
 	}
-	if (this.game.physics.arcade.distanceBetween(this.sprite, player.sprite) > 5000 ||
+
+	//rubberbanding
+	if (this.game.physics.arcade.distanceBetween(this.sprite, player.sprite) > 3000 ||
 			this.game.physics.arcade.distanceBetween(this.sprite, player.sprite) > 2500 && this.ai == 3){
 
 				if(Math.random()>0.5){
@@ -1365,10 +1367,12 @@ gameUI.prototype.resetRadar = function() {
 	if(this.radar.length!=player.radarTargets){
 		this.clearRadar();
 		for (var i = 0; i < player.radarTargets; i++){
+			if(typeof(enemies[i])!='undefined'){
 			this.radar.push(game.add.text(200,100, '*',{ font:'12px acknowledge', fill: 'rgb(255,130,130)', align: 'center' }));
 			this.radar[i].anchor.setTo(0.5,0.5);
 			this.radar[i].alpha=0.85;
 			this.radar[i].blendMode=1
+			};
 		}
 	}
 }
@@ -1479,10 +1483,11 @@ gameUI.prototype.frobRadarPing = function() {
 		if (targetDistance < 300){
 			s='';
 		}
-
+		if(targetDistance>180){targetDistance=180+Math.pow(targetDistance-180,0.6)};
+		if(targetDistance>0.5*resolutionY-50){targetDistance=0.5*resolutionY-50};	
 		this.frobRadar.setText(s);
-		this.frobRadar.x = player.sprite.body.x + Math.cos(targetAngle) * 240 - 0.5 * this.frobRadar.width;
-		this.frobRadar.y = player.sprite.body.y + Math.sin(targetAngle) * 240;	
+		this.frobRadar.x = player.sprite.body.x + Math.cos(targetAngle) * targetDistance - 0.5 * this.frobRadar.width;
+		this.frobRadar.y = player.sprite.body.y + Math.sin(targetAngle) * targetDistance;	
 	}
 }
 gameUI.prototype.radarPing = function() {
@@ -1558,6 +1563,7 @@ gameUI.prototype.radarPing = function() {
 
 		var range = targetDistance;
 		if(range>180){range=180+Math.pow(targetDistance-180,0.6)};	
+		if(range>0.5*resolutionY-50){range=0.5*resolutionY-50};	
 		this.radar[i].setText(s);
 		this.radar[i].x = player.sprite.body.x + (0.5 * player.sprite.body.width) + Math.cos(targetAngle) * range;
 		this.radar[i].y = player.sprite.body.y + (0.5 * player.sprite.body.width) + Math.sin(targetAngle) * range;	
