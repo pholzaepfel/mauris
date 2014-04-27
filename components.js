@@ -222,6 +222,7 @@ var cmp = [
 	'flavor':'-',
 	'bonus':function(target){
 		target.ai=2;
+		target.profile-=25;
 	}
 },
 {
@@ -232,6 +233,7 @@ var cmp = [
 	'bonus':function(target){
 
 		target.ai=2;
+		target.profile-=25;
 	}
 },
 {
@@ -241,6 +243,7 @@ var cmp = [
 	'flavor':'-',
 	'bonus':function(target){
 		target.ai=2;
+		target.profile-=25;
 
 	}
 },
@@ -251,6 +254,7 @@ var cmp = [
 	'flavor':'-',
 	'bonus':function(target){
 		target.ai=2;
+		target.profile-=25;
 
 	}
 },
@@ -261,6 +265,7 @@ var cmp = [
 	'flavor':'-',
 	'bonus':function(target){
 		target.ai=2;
+		target.profile-=25;
 
 	}
 },
@@ -271,6 +276,7 @@ var cmp = [
 	'flavor':'-',
 	'bonus':function(target){
 		target.ai=2;
+		target.profile-=25;
 
 	}
 },
@@ -281,6 +287,7 @@ var cmp = [
 	'flavor':'-',
 	'bonus':function(target){
 		target.ai=2;
+		target.profile-=25;
 
 	}
 },
@@ -291,6 +298,7 @@ var cmp = [
 	'flavor':'-',
 	'bonus':function(target){
 		target.ai=2;
+		target.profile-=25;
 
 	}
 },
@@ -301,6 +309,7 @@ var cmp = [
 	'flavor':'-',
 	'bonus':function(target){
 		target.ai=2;
+		target.profile-=25;
 
 	}
 },
@@ -311,6 +320,7 @@ var cmp = [
 	'flavor':'-',
 	'bonus':function(target){
 		target.ai=2;
+		target.profile-=25;
 
 	}
 },
@@ -321,6 +331,7 @@ var cmp = [
 	'flavor':'-',
 	'bonus':function(target){
 		target.ai=2;
+		target.profile-=25;
 
 	}
 },
@@ -331,6 +342,7 @@ var cmp = [
 	'flavor':'-',
 	'bonus':function(target){
 		target.ai=2;
+		target.profile-=25;
 
 	}
 },
@@ -9822,9 +9834,9 @@ var cmp = [
 	'id':1023,
 	'drops':false,
 	'name':'Component1023',
-	'flavor':'Void. Fearful dark void.',
+	'flavor':'Invisible, extra profile tag. Use so quest objects show on radar.',
 	'bonus':function(target){
-
+		target.sprite.profile+=999999;
 	}
 }	
 ];

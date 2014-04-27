@@ -3,7 +3,7 @@ var contextTutorialDeath = 'wake up, captain. we managed to recover you from the
 var missions = [
 
 {	'id':0,
-	'next':[3],
+	'next':[9],
 	'name':'tutorial',
 	'complete':false,
 	'componentsReward':banditGear,
@@ -25,23 +25,31 @@ var missions = [
 	'[LEFT] and [RIGHT] turn your ship.',
 	'press [X] to fire.\nfiring takes energy which will recharge over time.',
 	'press [UP] to thrust. \nto slow down, TURN AROUND and THRUST.',
-	'see if you can clear some of the asteroids around the station.'],
+	'destroy the containers near the station\nfor some target practice. if it blinks yellow, shoot it!'],
 	'outro':['did you see the GREEN ore? pick it up to repair your ship.','great job. now, follow the GOLD DIAMOND to the next station.\nyou\'ll get new orders there.'],
 	'win':{
 		'condition':'kill',
 		'killCount':5,
-		'killType': asteroids
+		'killType': containers
 	},
 	'enemies':
 		[{
 			'ships': asteroids,
 			'respawn':true,
-			'count':30, 
-			'missionTarget':true,
-			'count':30, 
+			'count':25, 
+			'missionTarget':false,
 			'taunts':[],
 			'deaths':[]
-		}]
+		},
+		{
+			'ships': containers,
+			'respawn':true,
+			'count':5, 
+			'missionTarget':true,
+			'taunts':[],
+			'deaths':["$empty? again?"]
+		}
+		]
 
 
 
@@ -166,8 +174,8 @@ var missions = [
 	'distanceMax':10000,
 	'hazePurpleBlendMode':2,
 	'hazeRedBlendMode':1,
-	'intro':['take these components and add them to your ship.\ncomponents will improve your ship, but will weigh it down.','this sector has some mining drones. destroy them for parts\nand proceed to the next waypoint.'],
-	'outro':['nice job. hurry, there are alliance warships coming in!'],
+	'intro':['looks like the drones were reprogrammed\nby an old rebel group, the Rats.','destroy as many drones as you can.\nthe Rats will come chasing, but they\'re a secondary target.'],
+	'outro':['uh-oh. hurry to the next waypoint. there are alliance warships coming in!'],
 	'win':{
 		'condition':'kill',
 		'killCount':10,
@@ -445,7 +453,64 @@ var missions = [
 			'taunts':[],
 			'deaths':[]
 		}]
-}
+},
+{	'id':9,
+	'next':[3],
+	'name':'more tutorial',
+	'complete':false,
+	'componentsReward':banditGear,
+	'componentsCount':2,
+	'hazeRed':0.3,
+	'hazeWhite':0.6,
+	'hazePurple':1.0,
+	'hazeRedTint':16777215,
+	'hazeWhiteTint':16777215,
+	'hazePurpleTint':16777215,
+	'hazeRedSpeed':160,
+	'hazeWhiteSpeed':600,
+	'hazePurpleSpeed':30,
+	'distanceMin':2000,
+	'distanceMax':4000,
+	'hazePurpleBlendMode':2,
+	'hazeRedBlendMode':1,
+	'intro':['take these components and add them to your ship.\ncomponents will improve your ship, but will weigh it down.','crack open some more containers, but watch\nout for the haywire mining drones here.'],
+	'outro':['nice job. come on to the next station'],
+	'win':{
+		'condition':'kill',
+		'killCount':5,
+		'killType': containers
+	},
+	'enemies': [
+	{
+		'ships': drones,
+		'respawn':true,
+		'missionTarget':false,
+		'count':7, 
+		'taunts':[],
+		'deaths':[]
+	},
+	{
+		'ships': asteroids,
+		'respawn':true,
+		'missionTarget':false,
+		'count':15, 
+		'taunts':[],
+		'deaths':[]
+	},
+	{
+		'ships': containers,
+		'respawn':true,
+		'missionTarget':true,
+		'count':5, 
+		'taunts':[],
+		'deaths':[]
+	}
+	]
+
+
+
+},
+
 
 
 

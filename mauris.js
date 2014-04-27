@@ -717,8 +717,6 @@ enemyShip.prototype.update = function() {
 		this.sprite.body.velocity.x*=Math.random();
 		this.sprite.body.velocity.y*=Math.random();
 		this.sprite.body.angularVelocity=randomRange(25,100)*randomSign();
-		this.sprite.profile=0;
-		this.sprite.profileMax=0;
 		this.ai=3;
 	}
 	if(this.ai!=3){
@@ -1627,8 +1625,10 @@ gameUI.prototype.commsPing = function() {
 	//color coding!
 	if(this.comms.text.match(/^got/)){
 		this.comms.fill="rgb(255,240,32)"
-	}else if (this.comms.text.match(/^>/)){
+	}else if (this.comms.text.match(/^\$/)){
 		this.comms.fill="rgb(200,255,230)"
+	}else if (this.comms.text.match(/^>/)){
+		this.comms.fill="rgb(255,96,64)"	
 	}else{
 			this.comms.fill='rgb(40,190,240)';
 	}	
