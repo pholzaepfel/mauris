@@ -530,7 +530,7 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 		this.behavior='chasing';
 	}
 
-	if (this.health <= 0 && this.health + dmg >= 0){
+	if (this.health <= 0 && this.health + (damageCoef*dmg) >= 0){
 		this.alive = false;
 		this.died=game.time.now+10000;
 
@@ -1023,7 +1023,7 @@ playerShip.prototype.damage = function(dmg, aggro) {
 		ui.healthLine.shudder = 5;
 	}
 
-	if (this.health <= 0 && this.health + dmg >= 0){
+	if (this.health <= 0 && this.health + (damageCoef * dmg) >= 0){
 		sparkExplosion(pew, this.sprite);	
 		bigBoom(explosions,this.sprite.x,this.sprite.y);
 		this.died=game.time.now+10000;
