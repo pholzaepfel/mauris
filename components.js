@@ -1246,7 +1246,7 @@ var cmp = [
 			var targetDistance = game.physics.arcade.distanceBetween(this.sprite, this.target);
 
 			if(targetDistance < 600 && this.altCooldown < game.time.now + 5000){
-				this.energyReserve=6;
+				this.energyReserve=this.fireEnergy*4;
 			}
 			if(targetDistance < 250)
 			{
@@ -1258,7 +1258,7 @@ var cmp = [
 
 
 		target.alt=function(){
-			if(game.time.now>this.altCooldown && this.takeEnergy(6,true)){
+			if(game.time.now>this.altCooldown && this.takeEnergy(this.fireEnergy*4,true)){
 				this.profile+=200; //cheap!
 				ui.sound_missile.play();
 				for(var n=0; n<1;n+=0.075){
@@ -1268,7 +1268,7 @@ var cmp = [
 					bullet.rotation=n*2*Math.PI;
 					game.physics.arcade.velocityFromRotation(bullet.rotation, 600, bullet.body.velocity);
 					bullet.alpha=0.8;
-					bullet.damage=12;
+					bullet.damage=this.fireDamage*3;
 					bullet.bulletSprite=4;
 					bullet.scale.setTo(1,1);
 					bullet.lifespan=400;
