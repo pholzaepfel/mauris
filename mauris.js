@@ -76,6 +76,7 @@ function destroyIfExists(sprite){
 
 function applyBonuses(target){
 
+	target.health-=1;
 	var n=0;
 	for(var i=0;i<target.ship.length;i++){
 		if (target.ship[i]!=-1){
@@ -83,6 +84,7 @@ function applyBonuses(target){
 			target.sprite.body.maxVelocity.y-=10;
 			target.sprite.profile+=25;
 			target.turnRate-=0.1;
+			target.health+=0.5;
 			components[target.ship[i]].bonus(target);
 			n++;
 		}
@@ -409,6 +411,8 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 	this.ai = 1;
 	this.alive=true;
 	this.behavior=defaultBehavior;
+	this.sprite.body.drag.x=0;
+	this.sprite.body.drag.y=0;
 	this.altCooldown=0;
 	this.cooldown114=0;
 	this.died=0;
@@ -492,7 +496,27 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 	}
 
 	if(typeof(aggro)!='undefined'){
-		if(ownerFromName(aggro.name).shipList != this.shipList || Math.random()>dmg/this.health){
+		var aggroShip = ownerFromName(aggro.name);
+		var retarget = false;
+
+		if(confusionCooldown > game.time.now && Math.random() > 0.4){
+			retarget=true;
+		}
+
+		if(aggroShip.ship == this.ship){
+			if(Math.random()>0.01){
+				retarget=true;
+			}
+		}else if(aggroShip.shiplist == this.shiplist){
+			if(Math.random()>(0.3*dmg)/this.health){
+				retarget=true;
+			}
+		}else{
+			if(Math.random()>dmg/this.health){
+				retarget=true;	
+			}
+		}
+		if(retarget){
 		this.aggroList.push(aggro);
 		this.target = aggro;
 		}
@@ -528,12 +552,20 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 			}else if(this.health == 0 && dmg == 0){
 				this.parts[j].sprite.kill();
 			}else{
-				this.parts[j].sprite.body.velocity = game.physics.arcade.velocityFromRotation(this.game.physics.arcade.angleBetween(this.sprite, this.parts[j].sprite), 200+randomRange(0,10*dmg));
-				this.parts[j].sprite.body.angularVelocity=randomRange((dmg+2*14),(dmg+2)*62);					
+				var tempX = this.parts[j].sprite.body.velocity.x;
+				var tempY = this.parts[j].sprite.body.velocity.y;
+
+				this.parts[j].sprite.body.velocity = game.physics.arcade.velocityFromRotation(this.game.physics.arcade.angleBetween(this.sprite, this.parts[j].sprite), 400+randomRange(0,50));
 				if(typeof(bulletVelocity)!='undefined'){
-					this.parts[j].sprite.body.velocity.x = this.parts[j].sprite.body.velocity.x + (bulletVelocity.x*.01*dmg);
-					this.parts[j].sprite.body.velocity.y = this.parts[j].sprite.body.velocity.y + (bulletVelocity.y*.01*dmg);
+					this.parts[j].sprite.body.velocity.x = this.parts[j].sprite.body.velocity.x + (bulletVelocity.x*.05);
+					this.parts[j].sprite.body.velocity.y = this.parts[j].sprite.body.velocity.y + (bulletVelocity.y*.05);
 				}
+				var velX = this.parts[j].sprite.body.velocity.x;
+				var velY = this.parts[j].sprite.body.velocity.y;
+				this.parts[j].sprite.body.velocity.x = tempX;
+				this.parts[j].sprite.body.velocity.y = tempY;
+				game.add.tween(this.parts[j].sprite.body).to({angularVelocity:randomRange(75,400)},700,Phaser.Easing.Exponential.Out, true, 0, false);
+				game.add.tween(this.parts[j].sprite.body.velocity).to({x:velX+tempX,y:velY+tempY},700, Phaser.Easing.Exponential.Out, true, 0, false);
 			}
 		}	
 		this.cullParts();
@@ -955,7 +987,8 @@ playerShip.prototype.initPlayerShip = function (ship) {
 	this.sprite.anchor.setTo(0.5, 0.5);
 	this.sprite.body.maxVelocity.setTo(500,500);
 	this.sprite.profile=250;	//max range at which opponents will attack. this will change dynamically
-	this.sprite.body.linearDamping=0;
+	this.sprite.body.drag.x=0;
+	this.sprite.body.drag.y=0;
 	this.sprite.body.collideWorldBounds = true; 
 	this.altCheck = function(){return false;};
 	this.energyReserve = 0;
@@ -1169,6 +1202,7 @@ playerShip.prototype.update = function(){
 	}
 };
 var player;
+var confusionCooldown = 0;
 var joystickUsed = false;
 var pad1;
 var hello;
@@ -2854,7 +2888,6 @@ function hugeBoom(explosionsGroup, x, y){
 				explosion.angularVelocity=randomRange(-3,3);
 				explosion.fireVelocity=randomRange(600,890);
 				explosion.lifespan=2000;
-				explosion.linearDamping=-1;
 				r=randomRange(4,8);
 				explosion.scale.setTo(r,r);
 				explosion.alpha=1;
@@ -2879,7 +2912,6 @@ function bigBoom(explosionsGroup, x, y){
 				explosion.rotation = Math.random()*Math.PI;
 				explosion.fireVelocity=randomRange(30,80) * (2-rand2);
 				explosion.lifespan=700 * (6 - 2*rand2);
-				explosion.linearDamping=-1;
 				r=randomRange(0.5,1.7);
 				explosion.body.angularVelocity=0;
 				explosion.scale.setTo(r,r);
@@ -2937,7 +2969,6 @@ function sparkleBoom(explosionsGroup, minSprite, maxSprite, x, y){
 			explosion.reset(x+randomRange(-8,8),y+randomRange(-8,8));
 			explosion.rotation = Math.random()*Math.PI;
 			explosion.angularVelocity=randomRange(500,1000);
-			explosion.linearDamping=-10;
 			explosion.fireVelocity=randomRange(-20,20);
 			explosion.lifespan=700;
 			r=randomRange(1.2,1.6);
@@ -2968,7 +2999,6 @@ function midBoom(explosionsGroup, bulletSprite, x, y){
 				explosion.reset(x+randomRange(-8,8),y+randomRange(-8,8));
 				explosion.rotation = Math.random()*Math.PI;
 				explosion.angularVelocity=randomRange(-5,5);
-				explosion.linearDamping=-4;
 				explosion.fireVelocity=randomRange(-10,10);
 				explosion.lifespan=800;
 				r=randomRange(1.2,1.7);
@@ -2994,7 +3024,6 @@ function fireBoom(explosionsGroup, bulletSprite, x, y, rot){
 				explosion.reset(x,y);
 				explosion.rotation = rot + randomSign() * randomRange(0.3,1);
 				explosion.angularVelocity=randomRange(-5,5);
-				explosion.linearDamping=-4;
 				explosion.fireVelocity=randomRange(350,600);
 				explosion.lifespan=randomRange(350,600);
 				explosion.scale.setTo(1.2,1.2);
@@ -3013,7 +3042,6 @@ function fireBoom(explosionsGroup, bulletSprite, x, y, rot){
 				explosion.reset(x,y);
 				explosion.rotation = rot ;
 				explosion.angularVelocity=randomRange(-5,5);
-				explosion.linearDamping=-4;
 				explosion.fireVelocity=randomRange(200,230);
 				explosion.lifespan=randomRange(500,800);
 				explosion.scale.setTo(1,1);
@@ -3039,7 +3067,6 @@ function boom(explosionsGroup, bulletSprite, x, y){
 				explosion.reset(x+randomRange(-8,8),y+randomRange(-8,8));
 				explosion.rotation = Math.random()*Math.PI;
 				explosion.angularVelocity=randomRange(-5,5);
-				explosion.linearDamping=-4;
 				explosion.fireVelocity=randomRange(-10,10);
 				explosion.lifespan=1000;
 				r=randomRange(0.5,0.7);

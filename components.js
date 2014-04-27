@@ -14,6 +14,8 @@ var cmp = [
 	'bonus':function(target){
 		target.turnRate+=0.3;
 		target.acceleration+=0.3;
+		target.sprite.body.maxVelocity.x+=15;
+		target.sprite.body.maxVelocity.y+=15;
 		target.energyRate+=100;
 	}
 },
@@ -220,7 +222,6 @@ var cmp = [
 	'flavor':'-',
 	'bonus':function(target){
 		target.ai=2;
-		target.health+=0.25;
 	}
 },
 {
@@ -231,7 +232,6 @@ var cmp = [
 	'bonus':function(target){
 
 		target.ai=2;
-		target.health+=0.25;
 	}
 },
 {
@@ -241,7 +241,6 @@ var cmp = [
 	'flavor':'-',
 	'bonus':function(target){
 		target.ai=2;
-		target.health+=0.25;
 
 	}
 },
@@ -252,7 +251,6 @@ var cmp = [
 	'flavor':'-',
 	'bonus':function(target){
 		target.ai=2;
-		target.health+=0.25;
 
 	}
 },
@@ -263,7 +261,6 @@ var cmp = [
 	'flavor':'-',
 	'bonus':function(target){
 		target.ai=2;
-		target.health+=0.25;
 
 	}
 },
@@ -274,7 +271,6 @@ var cmp = [
 	'flavor':'-',
 	'bonus':function(target){
 		target.ai=2;
-		target.health+=0.25;
 
 	}
 },
@@ -285,7 +281,6 @@ var cmp = [
 	'flavor':'-',
 	'bonus':function(target){
 		target.ai=2;
-		target.health+=0.25;
 
 	}
 },
@@ -296,7 +291,6 @@ var cmp = [
 	'flavor':'-',
 	'bonus':function(target){
 		target.ai=2;
-		target.health+=0.25;
 
 	}
 },
@@ -307,7 +301,6 @@ var cmp = [
 	'flavor':'-',
 	'bonus':function(target){
 		target.ai=2;
-		target.health+=0.25;
 
 	}
 },
@@ -318,7 +311,6 @@ var cmp = [
 	'flavor':'-',
 	'bonus':function(target){
 		target.ai=2;
-		target.health+=0.25;
 
 	}
 },
@@ -329,7 +321,6 @@ var cmp = [
 	'flavor':'-',
 	'bonus':function(target){
 		target.ai=2;
-		target.health+=0.25;
 
 	}
 },
@@ -340,7 +331,6 @@ var cmp = [
 	'flavor':'-',
 	'bonus':function(target){
 		target.ai=2;
-		target.health+=0.25;
 
 	}
 },
@@ -398,6 +388,8 @@ var cmp = [
 	'flavor':'hold [Z] to blaze forward and burn enemies in your wake',
 	'bonus':function(target){
 		target.acceleration+=0.2;
+		target.sprite.body.maxVelocity.x+=10;
+		target.sprite.body.maxVelocity.y+=10;
 		target.altCheck=function(){
 			var ret = false;
 			this.energyReserve=0;
@@ -454,7 +446,9 @@ var cmp = [
 		target.acceleration+=1;
 		target.turnRate+=0.2;
 		target.health-=1;
-	}
+		target.sprite.body.maxVelocity.x+=15;
+		target.sprite.body.maxVelocity.y+=15;
+}
 },
 {
 	'id':33,
@@ -475,8 +469,8 @@ var cmp = [
 	'flavor':'still reliable and fast!',
 	'bonus':function(target){
 		target.turnRate+=0.2;
-		target.acceleration+=0.2;
 		target.health+=4;
+		target.energyRate*=1.1;
 	}
 },
 {
@@ -486,6 +480,10 @@ var cmp = [
 	'flavor':'clean energy thruster',
 	'bonus':function(target){
 		target.acceleration+=0.7;
+
+		target.sprite.body.maxVelocity.x+=15;
+		target.sprite.body.maxVelocity.y+=15;
+
 		target.health+=1;
 	}
 },
@@ -590,6 +588,8 @@ var cmp = [
 	'bonus':function(target){
 		target.fireDamage+=1;
 		target.acceleration+=0.6;
+		target.sprite.body.maxVelocity.x+=15;
+		target.sprite.body.maxVelocity.y+=15;
 		target.sprite.profile+=50;
 	}
 },
@@ -815,6 +815,8 @@ var cmp = [
 	'bonus':function(target){
 		target.turnRate+=0.6;
 		target.acceleration+=0.2;
+		target.sprite.body.maxVelocity.x+=5;
+		target.sprite.body.maxVelocity.y+=5;
 		target.energyMax-=2;
 	}
 },
@@ -855,6 +857,8 @@ var cmp = [
 	'flavor':'increases acceleration, makes you harder to detect',
 	'bonus':function(target){
 		target.acceleration+=0.6;
+		target.sprite.body.maxVelocity.x+=10;
+		target.sprite.body.maxVelocity.y+=10;
 		target.profileDecay+=200;
 	}
 },
@@ -994,7 +998,9 @@ var cmp = [
 		target.acceleration+=0.5;
 		target.energyMax+=4;
 		if(target.ai!=2){
-			target.sprite.body.linearDamping=0.8;
+			target.sprite.body.drag.x=target.sprite.body.maxVelocity.x/5;
+			target.sprite.body.drag.y=target.sprite.body.maxVelocity.y/5;
+
 		}
 	}
 },
@@ -1002,12 +1008,13 @@ var cmp = [
 	'id':79,
 	'drops':true,
 	'name':'Xenoid Pulse Laser',
-	'flavor':'very cheap shots',
+	'flavor':'cheap, strong shots',
 	'bonus':function(target){
 		target.fireRate*=1.1;
+		target.fireDamage+=1;
 		target.fireSound=ui.sound_pew1;
 		target.fireEnergy*=0.8;
-		target.fireVelocity*=1.3;
+		target.fireVelocity*=1.2;
 		target.bulletSprite=4;
 	}
 },
@@ -1019,6 +1026,8 @@ var cmp = [
 	'bonus':function(target){
 		target.health+=4;
 		target.acceleration+=0.4;
+		target.sprite.body.maxVelocity.x+=10;
+		target.sprite.body.maxVelocity.y+=10;
 		target.turnRate+=0.2;
 		target.profile+=30;
 	}
@@ -1195,7 +1204,7 @@ var cmp = [
 	'id':97,
 	'drops':true,
 	'name':'Thermal Resonator',
-	'flavor':'press [Z] to alert nearby enemies!',
+	'flavor':'press [Z] to cause utter chaos',
 	'bonus':function(target){
 		target.altCheck=function(){
 			var ret = false;
@@ -1214,7 +1223,8 @@ var cmp = [
 				this.altCooldown=game.time.now+2000;
 				bigBoom(explosions,this.sprite.x,this.sprite.y);
 				if(this.ai==-1){
-				this.sprite.profile=this.sprite.profileMax*8;
+				this.sprite.profile+=this.sprite.profileMax*3;
+				confusionCooldown=game.time.now+8000;	
 				}else{
 				player.radarError=8;
 				}
@@ -1379,6 +1389,9 @@ var cmp = [
 		target.acceleration+=0.8;
 		target.energyRate*=1.1;
 		target.energyMax-=1;
+		target.sprite.body.maxVelocity.x+=20;
+		target.sprite.body.maxVelocity.y+=20;
+
 	}
 },
 {
@@ -1506,6 +1519,8 @@ var cmp = [
 	'bonus':function(target){
 		target.health+=4;
 		target.acceleration+=0.4;
+		target.sprite.body.maxVelocity.x+=10;
+		target.sprite.body.maxVelocity.y+=10;
 		target.turnRate+=0.2;
 		target.energyMax+=2;
 		target.profile+=40;
@@ -1736,6 +1751,9 @@ var cmp = [
 		target.acceleration+=0.7;
 		target.turnrate+=0.1;
 		target.health+=2;
+		target.sprite.body.maxVelocity.x+=12;
+		target.sprite.body.maxVelocity.y+=12;
+
 	}
 },
 {
@@ -1781,6 +1799,9 @@ var cmp = [
 	'bonus':function(target){
 		target.health+=2;
 		target.acceleration+=0.5;
+		target.sprite.body.maxVelocity.x+=20;
+		target.sprite.body.maxVelocity.y+=20;
+
 	}
 },
 {
