@@ -2148,6 +2148,10 @@ function fadeOut () {
 	game.add.tween(hazeWhite).to({alpha:0},5000, Phaser.Easing.Exponential.Out, true, 0, false);
 	game.add.tween(hazePurple).to({alpha:0},5000, Phaser.Easing.Exponential.Out, true, 0, false);
 
+	hazeRed.tint=playerStats.mission.hazeRedTint;
+	hazeWhite.tint=playerStats.mission.hazeWhiteTint;
+	hazePurple.tint=playerStats.mission.hazePurpleTint;
+
 	hazeRed.speed=playerStats.mission.hazeRedSpeed;
 	hazeWhite.speed=playerStats.mission.hazeWhiteSpeed;
 	hazePurple.speed=playerStats.mission.hazePurpleSpeed;
@@ -2168,6 +2172,10 @@ function fadeIn () {
 	game.add.tween(hazeRed).to({alpha:playerStats.mission.hazeRed},1000, Phaser.Easing.Linear.None, true, 0, false);
 	game.add.tween(hazeWhite).to({alpha:playerStats.mission.hazeWhite},5000, Phaser.Easing.Linear.None, true, 0, false);
 	game.add.tween(hazePurple).to({alpha:playerStats.mission.hazePurple},1000, Phaser.Easing.Linear.None, true, 0, false);
+
+	hazeRed.tint=playerStats.mission.hazeRedTint;
+	hazeWhite.tint=playerStats.mission.hazeWhiteTint;
+	hazePurple.tint=playerStats.mission.hazePurpleTint;
 
 	hazeRed.speed=playerStats.mission.hazeRedSpeed;
 	hazeWhite.speed=playerStats.mission.hazeWhiteSpeed;

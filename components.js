@@ -1318,10 +1318,9 @@ var cmp = [
 
 
 		target.alt=function(){
-			if(this.takeEnergy(1)){
-				if(game.time.now>this.altCooldown){
+			if(game.time.now>this.altCooldown && this.takeEnergy(1)){
 					if(typeof(this.parts[0])!='undefined'){
-					if(this.ai==-1 || this.parts[0].sprite.alpha>.5){
+					if(this.parts[0].sprite.alpha>.5){
 					midBoom(explosions,1,this.sprite.x,this.sprite.y);
 					ui.sound_boop.play();
 					if(this.sprite.profile>500){
@@ -1338,7 +1337,6 @@ var cmp = [
 					if(this.ai!=-1){
 						this.parts[i].sprite.alpha=0;
 					}
-				}
 				}
 			}
 
