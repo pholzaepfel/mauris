@@ -1557,7 +1557,7 @@ gameUI.prototype.radarPing = function() {
 		}
 
 		var range = targetDistance;
-		if(range>180){range=180};	
+		if(range>180){range=180+Math.pow(targetDistance-180,0.6)};	
 		this.radar[i].setText(s);
 		this.radar[i].x = player.sprite.body.x + (0.5 * player.sprite.body.width) + Math.cos(targetAngle) * range;
 		this.radar[i].y = player.sprite.body.y + (0.5 * player.sprite.body.width) + Math.sin(targetAngle) * range;	
