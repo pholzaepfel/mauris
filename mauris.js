@@ -680,7 +680,7 @@ enemyShip.prototype.update = function() {
 	}
 
 	//rubberbanding
-	if (this.game.physics.arcade.distanceBetween(this.sprite, player.sprite) > 3000 ||
+	if (this.game.physics.arcade.distanceBetween(this.sprite, player.sprite) > 4000 ||
 			this.game.physics.arcade.distanceBetween(this.sprite, player.sprite) > 2500 && this.ai == 3){
 
 				if(Math.random()>0.5){
@@ -2997,7 +2997,7 @@ function sparkleBoom(explosionsGroup, minSprite, maxSprite, x, y){
 
 
 function boomTween(sprite){
-	game.add.tween(sprite.scale).to({x:sprite.scale.x*8,y:sprite.scale.y*8},sprite.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
+	game.add.tween(sprite.scale).to({x:sprite.scale.x*8,y:sprite.scale.y*8},sprite.lifespan-100, Phaser.Easing.Exponential.Out, true, 0, false);
 	game.add.tween(sprite).to({alpha:0},sprite.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
 }
 function midBoom(explosionsGroup, bulletSprite, x, y){

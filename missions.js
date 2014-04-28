@@ -52,7 +52,7 @@ var missions = [
 
 },
 {	'id':1,
-	'next':[1,5,6,7,8],
+	'next':[5,6,7,8],
 	'name':'random warzone',
 	'complete':false,
 	'componentsReward':banditGear,
@@ -140,7 +140,13 @@ var missions = [
 		'missionTarget':false,
 		'count':15, 
 		'deaths':[]
-	}
+	},{
+		'ships': containers,
+		'respawn':true,
+		'missionTarget':true,
+		'count':2, 
+		'deaths':[]
+	}	
 	]
 
 
@@ -192,7 +198,13 @@ var missions = [
 		'missionTarget':false,
 		'count':15, 
 		'deaths':[]
-	}
+	},{
+		'ships': containers,
+		'respawn':true,
+		'missionTarget':true,
+		'count':2, 
+		'deaths':[]
+	}	
 	]
 
 
@@ -245,7 +257,7 @@ var missions = [
 },
 {
 	'id':5,
-	'next':[5,6,7,8],
+	'next':[6,7,8],
 	'name':'5',
 	'complete':false,
 	'componentsReward':allianceGear,
@@ -282,11 +294,18 @@ var missions = [
 			'respawn':true,
 			'count':14, 
 			'missionTarget':true
-		}]
+		},{
+		'ships': containers,
+		'respawn':true,
+		'missionTarget':true,
+		'count':2, 
+		'deaths':[]
+		}
+	]
 },
 {
 	'id':6,
-	'next':[5,7,6,8],
+	'next':[5,7,8],
 	'name':'bandits',
 	'complete':false,
 	'componentsReward':allianceGear,
@@ -328,11 +347,18 @@ var missions = [
 			'respawn':true,
 			'count':3, 
 			'missionTarget':true
-		}]
+		},{
+		'ships': containers,
+		'respawn':true,
+		'missionTarget':true,
+		'count':2, 
+		'deaths':[]
+		}
+	]
 },
 {
 	'id':7,
-	'next':[6,5,7,8],
+	'next':[6,5,8],
 	'name':'zombies',
 	'complete':false,
 	'componentsReward':droneGear,
@@ -369,11 +395,17 @@ var missions = [
 			'respawn':true,
 			'count':15, 
 			'missionTarget':true
-		}]
+		},{
+		'ships': containers,
+		'respawn':true,
+		'missionTarget':true,
+		'count':2, 
+		'deaths':[]
+	}]
 },
 	{
 	'id':8,
-	'next':[5,6,7,8],
+	'next':[5,6,7],
 	'name':'dron2',
 	'complete':false,
 	'componentsReward':droneGear,
@@ -416,7 +448,14 @@ var missions = [
 			'respawn':true,
 			'count':13, 
 			'missionTarget':false
-		}]
+		},{
+		'ships': containers,
+		'respawn':true,
+		'missionTarget':true,
+		'count':2, 
+		'deaths':[]
+		}
+	]
 },
 {	'id':9,
 	'next':[3],

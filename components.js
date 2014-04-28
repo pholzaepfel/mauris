@@ -642,10 +642,12 @@ var cmp = [
 {
 	'id':48,
 	'drops':false,
-	'name':'Component48',
-	'flavor':'--',
+	'name':'Container',
+	'flavor':'Containers show on radar, and also give buckets of ore.',
 	'bonus':function(target){
-
+		target.sprite.profile=500;
+		target.ai=2;
+		target.oreChance=1;
 	}
 },
 {
@@ -901,7 +903,7 @@ var cmp = [
 			
 			var tgt = ownerFromName(sprite.name);
 
-			if(tgt.ai == 3 && Math.random()>0.125){
+			if(tgt.ai == 3 && tgt.oreChance < 1 && Math.random()>0.125){
 				spawnLoots(1,bullet.x,bullet.y)
 				
 		
@@ -1733,6 +1735,7 @@ var cmp = [
 		target.fireSound=ui.sound_missile;
 		target.bulletBehavior.push(function(bullet){bullet.body.velocity.x*=.75+Math.random()*.5;
 			bullet.body.velocity.y*=.75+Math.random()*.5});
+
 		target.fireVelocity+=100;
 		target.fireEnergy+=1;
 		target.sprite.profile+=25;
@@ -9820,11 +9823,8 @@ var cmp = [
 	'id':1023,
 	'drops':false,
 	'name':'Component1023',
-	'flavor':'Container tag. Use so containers show on radar, and also gives more ore. ',
+	'flavor':'void',
 	'bonus':function(target){
-		target.sprite.profile=500;
-		target.ai=2;
-		target.oreChance=1;
 	}
 }	
 ];
