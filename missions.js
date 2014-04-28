@@ -143,7 +143,7 @@ var missions = [
 	},{
 		'ships': containers,
 		'respawn':true,
-		'missionTarget':true,
+		'missionTarget':false,
 		'count':2, 
 		'deaths':[]
 	}	
@@ -201,7 +201,7 @@ var missions = [
 	},{
 		'ships': containers,
 		'respawn':true,
-		'missionTarget':true,
+		'missionTarget':false,
 		'count':2, 
 		'deaths':[]
 	}	
@@ -297,7 +297,7 @@ var missions = [
 		},{
 		'ships': containers,
 		'respawn':true,
-		'missionTarget':true,
+		'missionTarget':false,
 		'count':2, 
 		'deaths':[]
 		}
@@ -327,7 +327,7 @@ var missions = [
 	'outro':['captain. try to make it back in one piece.'],
 	'win':{
 		'condition':'kill', //could be 'frob'
-		'killCount':5,
+		'killCount':3,
 		'killType': banditsMedium
 	},
 	'enemies':
@@ -350,7 +350,7 @@ var missions = [
 		},{
 		'ships': containers,
 		'respawn':true,
-		'missionTarget':true,
+		'missionTarget':false,
 		'count':2, 
 		'deaths':[]
 		}
@@ -398,8 +398,8 @@ var missions = [
 		},{
 		'ships': containers,
 		'respawn':true,
-		'missionTarget':true,
-		'count':2, 
+		'missionTarget':false,
+		'count':3, 
 		'deaths':[]
 	}]
 },
@@ -451,7 +451,7 @@ var missions = [
 		},{
 		'ships': containers,
 		'respawn':true,
-		'missionTarget':true,
+		'missionTarget':false,
 		'count':2, 
 		'deaths':[]
 		}
