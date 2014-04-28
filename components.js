@@ -648,6 +648,12 @@ var cmp = [
 		target.sprite.profile=500;
 		target.ai=2;
 		target.oreChance=1;
+		target.effects=function(){
+
+		if(Math.random() < 0.2 && onscreen(this.sprite.x,this.sprite.y)){
+			lootSparkle(this.sprite);
+		}
+		};
 	}
 },
 {

@@ -397,7 +397,8 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 	midBoom(explosions,4,x,y);
 	this.ship = this.shipList[Math.floor(randomRange(0,this.shipList.length))];
 	this.destroyParts()
-		this.sprite.profile = 250;
+	this.effects=function(){};
+	this.sprite.profile = 250;
 	this.sawDamage=0;
 	this.sprite.profileDecay = 166;
 	this.nextProfileDecay = 0;
@@ -741,6 +742,8 @@ enemyShip.prototype.update = function() {
 				}
 	}
 
+	this.effects();
+
 	if(this.ai!=3 && this.alive && this.target.alive){
 
 
@@ -805,6 +808,7 @@ enemyShip.prototype.update = function() {
 					}
 
 		}
+
 
 		if (this.speed > 0){
 			if(game.time.now>(this.nextThrust||0)){
@@ -941,6 +945,7 @@ playerShip.prototype.initPlayerShip = function (ship) {
 	this.ai=-1; //natural intelligence
 	this.radarTargets=1;
 	this.dropRate=0;
+	this.effects=function(){};
 	this.radarError=0;
 	this.sawDamage=0;
 	this.radarShowInRange=false;
@@ -2395,12 +2400,8 @@ function fade(s) {
 	}
 }
 
-function pullLootToPlayer(s) {
-	if (!player.alive){
-		s.kill();
-	}
-	if(s.alive){
-		if(Math.random() > 0.1 && onscreen(s.x,s.y)){
+function lootSparkle(s){
+
 			var halfWidth = s.width * 0.5;
 			sparkles.x=s.x+randomRange(-1 * halfWidth,halfWidth);
 			sparkles.y=s.y+randomRange(-1 * halfWidth,halfWidth);
@@ -2411,6 +2412,16 @@ function pullLootToPlayer(s) {
 			sparkles.maxParticleSpeed.setTo(tempC*s.body.velocity.x,tempC*s.body.velocity.y);
 			sparkles.lifespan=(Math.sin(randomRange(0,0.5*Math.PI)))*500;
 			sparkles.emitParticle();
+
+}
+
+function pullLootToPlayer(s) {
+	if (!player.alive){
+		s.kill();
+	}
+	if(s.alive){
+		if(Math.random() < 0.3 && onscreen(s.x,s.y)){
+			lootSparkle(s);
 		}
 		if(game.physics.arcade.distanceBetween(s, player.sprite) < player.lootRange){
 			var targetAngle = game.physics.arcade.angleBetween(s, player.sprite); 
