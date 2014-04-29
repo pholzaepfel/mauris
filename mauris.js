@@ -2510,6 +2510,20 @@ function playerBulletTracking(bullet){
 		bullet.nextTrack = game.time.now+20;
 	}
 }
+
+function revertGroup(group){
+
+	for(var i=0;i<group.length;i++){
+		var sprite=group.getAt(i);
+		sprite.x-=sprite.body.velocity.x*game.time.physicsElapsed;
+				sprite.y-=sprite.body.velocity.y*game.time.physicsElapsed;
+				sprite.lifespan+=game.time.physicsElapsed*1000;	
+				sprite.angle-=sprite.body.angularVelocity*game.time.physicsElapsed;
+
+
+	}
+}
+
 function update () {
 	if(gamemode!='init'){
 		//
@@ -2647,113 +2661,6 @@ function update () {
 			player.sprite.body.velocity.y=0;
 			player.lastVelocityY=0;
 
-		}
-		if(gamemode=='war' ){
-
-			handleMission();
-
-			if(nextSpawn<game.time.now||nextSpawn==0){
-				if(!player.alive){
-					player.initPlayerShip(defaultPlayerShip);
-					if(contextTutorialDeath){
-						ui.texts.push(contextTutorialDeath);
-						contextTutorialDeath='';
-					}
-					winMission(); 
-					fadeIn();
-					ui.partsUI(player.ship);
-					nextUIDelay=game.time.now+1000;
-				}
-				for(var c = 0; c < enemies.length ; c++) {
-					if (enemies[c].alive==false && enemies[c].respawn && game.time.now > enemies[c].died){
-						enemies[c].initEnemyShip();
-						break;
-					};
-				}
-				nextSpawn=game.time.now+randomRange(100,200);
-			}	
-
-
-			if(loots.getFirstAlive() != null) {
-
-				for (var i = 0; i < player.parts.length; i++) {
-					game.physics.arcade.overlap(loots, player.parts[i].sprite, playerGotLoot, null, this);
-				}
-				loots.forEachAlive(pullLootToPlayer, this);
-			}
-
-			if(enemyBullets.getFirstAlive() != null) {
-
-				for (var i = 0; i < player.parts.length; i++) {
-					game.physics.arcade.overlap(enemyBullets, player.parts[i].sprite, bulletHitPlayer, null, this);
-				}
-			}
-
-			for (var i = 0; i < enemies.length; i++){
-				if (enemies[i].alive){
-					enemies[i].update();
-					if(enemyBullets.getFirstAlive() != null) {
-
-						game.physics.arcade.overlap(enemyBullets, enemies[i].sprite, bulletHitEnemy, null, this);
-					}
-					for (var j = 0; j < player.parts.length; j++) {
-						game.physics.arcade.overlap(enemies[i].sprite, player.parts[j].sprite, enemyTouchPlayer, null, this);
-					}
-					game.physics.arcade.overlap(bullets, enemies[i].sprite, bulletHitEnemy, null, this);
-					for (var j = 0; j < enemies[i].parts.length; j++) {
-
-						enemies[i].parts[j].update();
-
-					}	
-
-				}
-			}
-
-			bullets.forEachAlive(playerBulletTracking);
-			enemyBullets.forEachAlive(enemyBulletTracking);
-
-			for (var i = 0; i < player.parts.length; i++){
-				player.parts[i].update();
-			};
-
-			if(enter){
-			}
-
-			if (left){
-				player.left(left);
-			}
-			if (right){
-				player.right(right)
-			}
-			if (up){
-				player.up(up);
-			}
-			if(player.alive && alt){
-				player.alt();
-			}
-			player.update();
-
-			if(alt==0){
-				player.cooldown114=0;
-			}
-
-
-			if (fire){
-				player.fire();
-			}
-
-		}	
-		// scrolling
-		hazeWhite.tilePosition.x = hazeWhite.offsetx + ( -0.05*game.camera.x / hazeWhite.scale.x) + (game.time.now / (hazeWhite.speed));
-		hazeWhite.tilePosition.y = hazeWhite.offsety + ( -0.05*game.camera.y / hazeWhite.scale.y);
-		hazeRed.tilePosition.x = hazeRed.offsetx + ( -0.26*game.camera.x / hazeRed.scale.x) + (game.time.now / (hazeRed.speed));
-		hazeRed.tilePosition.y = hazeRed.offsety + ( -0.26*game.camera.y / hazeRed.scale.y);
-		hazePurple.tilePosition.x = hazePurple.offsetx + ( -.9*game.camera.x / hazePurple.scale.x) + (game.time.now / (hazePurple.speed));
-		hazePurple.tilePosition.y = hazePurple.offsety + ( -.9*game.camera.y / hazePurple.scale.y);
-		//hazePurple.bringToTop();	
-
-		ui.update();
-		if (gamemode == '?build' && !game.input.activePointer.isDown) {
 			if(game.time.now > nextUIDelay){ 
 
 				if(ui.buildMode=='select')
@@ -2890,10 +2797,178 @@ function update () {
 			}
 			if(left==0 && right==0 && up == 0 && down ==0 &&
 					fire == 0 && alt == 0 &&
-					!cursors.pgup.isDown && !cursors.pgdn.isDown
+					!cursors.pgup.isDown && !cursors.pgdn.isDown && enter == 0
 			  ){
 				  nextUIDelay = 0;
 			  }
+		}
+		if(gamemode=='paused'){
+		ui.graphics.clear();
+		ui.comms.fill="rgb(21," + Math.floor((1+Math.sin(game.time.now/1000))*100) + ",142)";
+
+		ui.comms.setText('paused');
+		ui.comms.alpha=1;
+		ui.graphics.beginFill(0x000000, ui.comms.alpha/3);
+		ui.graphics.drawRect(ui.comms.x - 15, ui.comms.y - 6, ui.comms.width + 30, ui.comms.height + 12);
+
+		frob1.x-=frob1.body.velocity.x*game.time.physicsElapsed;
+		frob1.y-=frob1.body.velocity.y*game.time.physicsElapsed;
+		frob1.angle-=frob1.body.angularVelocity*game.time.physicsElapsed;
+
+				player.sprite.x-=player.sprite.body.velocity.x*game.time.physicsElapsed;
+				player.sprite.y-=player.sprite.body.velocity.y*game.time.physicsElapsed;
+			for(var i=0;i<player.parts.length;i++){
+				player.parts[i].update();
+			}	
+			for(var i=0;i<enemies.length;i++){
+				enemies[i].sprite.body.x-=enemies[i].sprite.body.velocity.x*game.time.physicsElapsed;	
+				enemies[i].sprite.body.y-=enemies[i].sprite.body.velocity.y*game.time.physicsElapsed;	
+				enemies[i].sprite.angle-=enemies[i].sprite.body.angularVelocity*game.time.physicsElapsed;
+				if(enemies[i].alive && enemies[i].parts.length){
+				for(var j=0;j<enemies[i].parts.length;j++){
+					enemies[i].parts[j].update();
+				}
+				}
+			}
+			revertGroup(loots);
+			revertGroup(enemyBullets);
+			revertGroup(bullets);
+			revertGroup(explosions);
+			if(enter && game.time.now >= nextUIDelay){
+				
+				gamemode='war';
+				nextUIDelay=game.time.now+2000;
+				ui.comms.setText('');
+				ui.comms.alpha=0;
+
+				var tweens = game.tweens.getAll()	
+				for(var i=0;i<tweens.length;i++){
+					tweens[i].resume();
+				}
+			}
+			
+			if(left==0 && right==0 && up == 0 && down ==0 &&
+					fire == 0 && alt == 0 &&
+					!cursors.pgup.isDown && !cursors.pgdn.isDown && enter == 0
+			  ){
+				  nextUIDelay = 0;
+			  }
+		}
+
+		if(gamemode=='war' ){
+
+			handleMission();
+
+			if(nextSpawn<game.time.now||nextSpawn==0){
+				if(!player.alive){
+					player.initPlayerShip(defaultPlayerShip);
+					if(contextTutorialDeath){
+						ui.texts.push(contextTutorialDeath);
+						contextTutorialDeath='';
+					}
+					winMission(); 
+					fadeIn();
+					ui.partsUI(player.ship);
+					nextUIDelay=game.time.now+1000;
+				}
+				for(var c = 0; c < enemies.length ; c++) {
+					if (enemies[c].alive==false && enemies[c].respawn && game.time.now > enemies[c].died){
+						enemies[c].initEnemyShip();
+						break;
+					};
+				}
+				nextSpawn=game.time.now+randomRange(100,200);
+			}	
+
+
+			if(loots.getFirstAlive() != null) {
+
+				for (var i = 0; i < player.parts.length; i++) {
+					game.physics.arcade.overlap(loots, player.parts[i].sprite, playerGotLoot, null, this);
+				}
+				loots.forEachAlive(pullLootToPlayer, this);
+			}
+
+			if(enemyBullets.getFirstAlive() != null) {
+
+				for (var i = 0; i < player.parts.length; i++) {
+					game.physics.arcade.overlap(enemyBullets, player.parts[i].sprite, bulletHitPlayer, null, this);
+				}
+			}
+
+			for (var i = 0; i < enemies.length; i++){
+				if (enemies[i].alive){
+					enemies[i].update();
+					if(enemyBullets.getFirstAlive() != null) {
+
+						game.physics.arcade.overlap(enemyBullets, enemies[i].sprite, bulletHitEnemy, null, this);
+					}
+					for (var j = 0; j < player.parts.length; j++) {
+						game.physics.arcade.overlap(enemies[i].sprite, player.parts[j].sprite, enemyTouchPlayer, null, this);
+					}
+					game.physics.arcade.overlap(bullets, enemies[i].sprite, bulletHitEnemy, null, this);
+					for (var j = 0; j < enemies[i].parts.length; j++) {
+
+						enemies[i].parts[j].update();
+
+					}	
+
+				}
+			}
+
+			bullets.forEachAlive(playerBulletTracking);
+			enemyBullets.forEachAlive(enemyBulletTracking);
+
+			for (var i = 0; i < player.parts.length; i++){
+				player.parts[i].update();
+			};
+			if(enter && game.time.now >= nextUIDelay && player.alive){
+				gamemode='paused';
+				nextUIDelay=game.time.now+2000;
+
+				var tweens = game.tweens.getAll()	
+				for(var i=0;i<tweens.length;i++){
+					tweens[i].pause();
+				}
+
+			}
+
+
+			if (left){
+				player.left(left);
+			}
+			if (right){
+				player.right(right)
+			}
+			if (up){
+				player.up(up);
+			}
+			if(player.alive && alt){
+				player.alt();
+			}
+			player.update();
+
+			if(alt==0){
+				player.cooldown114=0;
+			}
+
+
+			if (fire){
+				player.fire();
+			}
+
+		}	
+		// scrolling
+		hazeWhite.tilePosition.x = hazeWhite.offsetx + ( -0.05*game.camera.x / hazeWhite.scale.x) + (game.time.now / (hazeWhite.speed));
+		hazeWhite.tilePosition.y = hazeWhite.offsety + ( -0.05*game.camera.y / hazeWhite.scale.y);
+		hazeRed.tilePosition.x = hazeRed.offsetx + ( -0.26*game.camera.x / hazeRed.scale.x) + (game.time.now / (hazeRed.speed));
+		hazeRed.tilePosition.y = hazeRed.offsety + ( -0.26*game.camera.y / hazeRed.scale.y);
+		hazePurple.tilePosition.x = hazePurple.offsetx + ( -.9*game.camera.x / hazePurple.scale.x) + (game.time.now / (hazePurple.speed));
+		hazePurple.tilePosition.y = hazePurple.offsety + ( -.9*game.camera.y / hazePurple.scale.y);
+		//hazePurple.bringToTop();	
+
+		if(gamemode!='paused'){
+			ui.update();
 		}
 
 	}
