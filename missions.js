@@ -364,7 +364,7 @@ var missions = [
 	'componentsReward':droneGear,
 	'componentsCount':2,
 	'hazeRed':0.8,
-	'hazeWhite':0.1,
+	'hazeWhite':0.4,
 	'hazePurple':0.7,
 	'hazeRedTint':16777215,
 	'hazeWhiteTint':16777215,

@@ -1138,7 +1138,7 @@ var cmp = [
 	'name':'Chainsaw-front',
 	'flavor':'--',
 	'bonus':function(target){
-
+		
 	}
 },
 {
