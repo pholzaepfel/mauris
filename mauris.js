@@ -844,7 +844,7 @@ enemyShip.prototype.update = function() {
 ;
 var resolutionX=Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
 var resolutionY=Math.max(document.documentElement.clientHeight, window.innerHeight || 0)-20;
-var game = new Phaser.Game(resolutionX, resolutionY, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update, render: render });
+var game = new Phaser.Game(resolutionX, resolutionY, Phaser.WEBGL, 'phaser-example', { preload: preload, create: create, update: update, render: render });
 
 function preload () {
 	hello =	game.add.text(resolutionX*0.5,resolutionY*0.4, 'LOADING',{ font:'12px acknowledge', fill: 'rgb(196,150,255)', align: 'center' })

@@ -1126,7 +1126,7 @@ var cmp = [
 {
 	'id':88,
 	'drops':false,
-	'name':'Component88',
+	'name':'Chainsaw-back',
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -1135,7 +1135,7 @@ var cmp = [
 {
 	'id':89,
 	'drops':false,
-	'name':'Component89',
+	'name':'Chainsaw-front',
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -1144,7 +1144,7 @@ var cmp = [
 {
 	'id':90,
 	'drops':false,
-	'name':'Component90',
+	'name':'Green Reactor',
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -1153,7 +1153,7 @@ var cmp = [
 {
 	'id':91,
 	'drops':false,
-	'name':'Component91',
+	'name':'Extended Life Support',
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -1162,7 +1162,7 @@ var cmp = [
 {
 	'id':92,
 	'drops':false,
-	'name':'Component92',
+	'name':'Ancient Technology',
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -1171,7 +1171,7 @@ var cmp = [
 {
 	'id':93,
 	'drops':false,
-	'name':'Component93',
+	'name':'Ancient Technology',
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -1659,25 +1659,25 @@ var cmp = [
 {
 	'id':120,
 	'drops':false,
-	'name':'Component120',
+	'name':'Annihilator Trebuchet',
 	'flavor':'--',
 	'bonus':function(target){
-
+		target.TODO=1;
 	}
 },
 {
 	'id':121,
 	'drops':false,
-	'name':'Component121',
+	'name':'Flux Capacitors',
 	'flavor':'--',
 	'bonus':function(target){
-
+		target.TODO=1;
 	}
 },
 {
 	'id':122,
 	'drops':false,
-	'name':'Component122',
+	'name':'Orb of Duplication',
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -1686,7 +1686,7 @@ var cmp = [
 {
 	'id':123,
 	'drops':false,
-	'name':'Component123',
+	'name':'Quantum Turbine',
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -1695,7 +1695,7 @@ var cmp = [
 {
 	'id':124,
 	'drops':false,
-	'name':'Component124',
+	'name':'Ancient Technology',
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -1704,7 +1704,7 @@ var cmp = [
 {
 	'id':125,
 	'drops':false,
-	'name':'Component125',
+	'name':'Ancient Technology',
 	'flavor':'--',
 	'bonus':function(target){
 

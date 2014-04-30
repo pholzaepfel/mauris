@@ -48482,7 +48482,7 @@ Phaser.Particles.Arcade.Emitter.prototype.setAlpha = function (min, max, rate, e
     if (rate > 0 && min !== max)
     {
         var tweenData = { v: min };
-        var tween = this.game.add.tween(tweenData).to( { v: max }, rate, ease);
+        var tween = this.game.make.tween(tweenData).to( { v: max }, rate, ease);
         tween.yoyo(yoyo);
 
         this.alphaData = tween.generateData(60);
