@@ -400,7 +400,12 @@ var missions = [
 		'respawn':true,
 		'missionTarget':false,
 		'count':3, 
-		'deaths':[]
+	},{
+		'ships': chainsaw,
+		'respawn':true,
+		'missionTarget':false,
+		'count':1, 
+		
 	}]
 },
 	{

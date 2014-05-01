@@ -60,8 +60,8 @@ var cmp = [
 		target.turnRate+=0.3;
 		target.acceleration+=0.2;
 		target.altCheck=function(){
-		var ret = false;
-		this.energyReserve=0;
+			var ret = false;
+			this.energyReserve=0;
 			var targetDistance = game.physics.arcade.distanceBetween(this.sprite, this.target);
 			var targetAngle = game.physics.arcade.angleBetween(this.target, this.sprite);
 
@@ -77,12 +77,12 @@ var cmp = [
 
 		target.alt=function(){
 			if(this.altCooldown<game.time.now && this.takeEnergy(6)){
-						ui.sound_plasma.play();
-						this.altCooldown=game.time.now+1000;
-						this.sprite.body.velocity.x=Math.cos(this.sprite.rotation+Math.PI)*this.sprite.body.maxVelocity.x;
-						this.sprite.body.velocity.y=Math.sin(this.sprite.rotation+Math.PI)*this.sprite.body.maxVelocity.y;
-						this.speed=0.01;
-					}
+				ui.sound_plasma.play();
+				this.altCooldown=game.time.now+1000;
+				this.sprite.body.velocity.x=Math.cos(this.sprite.rotation+Math.PI)*this.sprite.body.maxVelocity.x;
+				this.sprite.body.velocity.y=Math.sin(this.sprite.rotation+Math.PI)*this.sprite.body.maxVelocity.y;
+				this.speed=0.01;
+			}
 		}
 	}
 },
@@ -126,8 +126,8 @@ var cmp = [
 	'flavor':'press [Z] for invincibility',
 	'bonus':function(target){
 		target.altCheck=function(){
-		var ret = false;
-		this.energyReserve=0;
+			var ret = false;
+			this.energyReserve=0;
 			var targetDistance = game.physics.arcade.distanceBetween(this.sprite, this.target);
 			var targetAngle = game.physics.arcade.angleBetween(this.target, this.sprite);
 
@@ -140,10 +140,11 @@ var cmp = [
 			}
 			return ret;
 		}
-	target.alt=function(){
+		target.alt=function(){
 			if(this.takeEnergy(0.1)){				
 				if(game.time.now > this.altCooldown){
 					ui.sound_boop.play();
+					this.shieldCooldown=game.time.now+100;
 					this.altCooldown=game.time.now+100;
 					this.shield=true;
 					shieldEffect(explosions, 4, this.sprite.x, this.sprite.y, this.sprite.body.velocity.x, this.sprite.body.velocity.y);
@@ -407,28 +408,28 @@ var cmp = [
 		}
 		target.alt=function(){
 			if(game.time.now>this.altCooldown && this.takeEnergy(1)){
-					ui.sound_plasma.play();
-					this.sprite.body.velocity.x+=Math.cos(this.sprite.rotation)*150;
-					this.sprite.body.velocity.y+=Math.sin(this.sprite.rotation)*150;
-					this.speed=this.acceleration;
-					var bullet=this.spawnBullet(false);
-					bullet.loadTexture('explosions',2);
-					bullet.bulletSprite=2;
-					bullet.reset(this.sprite.x - (Math.cos(this.sprite.rotation)*(this.sprite.body.width)), this.sprite.y - (Math.sin(this.sprite.rotation)*(this.sprite.body.width)));
-					midBoom(explosions,2,bullet.x,bullet.y);
-					bullet.rotation=Math.random()*Math.PI;
-					bullet.blendMode=1;
-					bullet.damage=10;
-					bullet.body.velocity.x=0;
-					bullet.body.velocity.y=0;
-					bullet.scale.setTo(2,2);
-					bullet.lifespan=1333;
-					bullet.body.angularVelocity=999;
-					bullet.tracking=-999; //doesn't play with angularvel
-					this.altCooldown=game.time.now+100;
-					game.add.tween(bullet.scale).to({x:0,y:0},bullet.lifespan, Phaser.Easing.Linear.None, true, 0, false);
+				ui.sound_plasma.play();
+				this.sprite.body.velocity.x+=Math.cos(this.sprite.rotation)*150;
+				this.sprite.body.velocity.y+=Math.sin(this.sprite.rotation)*150;
+				this.speed=this.acceleration;
+				var bullet=this.spawnBullet(false);
+				bullet.loadTexture('explosions',2);
+				bullet.bulletSprite=2;
+				bullet.reset(this.sprite.x - (Math.cos(this.sprite.rotation)*(this.sprite.body.width)), this.sprite.y - (Math.sin(this.sprite.rotation)*(this.sprite.body.width)));
+				midBoom(explosions,2,bullet.x,bullet.y);
+				bullet.rotation=Math.random()*Math.PI;
+				bullet.blendMode=1;
+				bullet.damage=10;
+				bullet.body.velocity.x=0;
+				bullet.body.velocity.y=0;
+				bullet.scale.setTo(2,2);
+				bullet.lifespan=1333;
+				bullet.body.angularVelocity=999;
+				bullet.tracking=-999; //doesn't play with angularvel
+				this.altCooldown=game.time.now+100;
+				game.add.tween(bullet.scale).to({x:0,y:0},bullet.lifespan, Phaser.Easing.Linear.None, true, 0, false);
 
-					game.add.tween(bullet).to({alpha:0},bullet.lifespan, Phaser.Easing.Exponential.In, true, 0, false);
+				game.add.tween(bullet).to({alpha:0},bullet.lifespan, Phaser.Easing.Exponential.In, true, 0, false);
 
 			}
 		}
@@ -446,7 +447,7 @@ var cmp = [
 		target.health-=1;
 		target.sprite.body.maxVelocity.x+=15;
 		target.sprite.body.maxVelocity.y+=15;
-}
+	}
 },
 {
 	'id':33,
@@ -650,9 +651,9 @@ var cmp = [
 		target.oreChance=1;
 		target.effects=function(){
 
-		if(Math.random() < 0.2 && onscreen(this.sprite.x,this.sprite.y)){
-			lootSparkle(this.sprite);
-		}
+			if(Math.random() < 0.2 && onscreen(this.sprite.x,this.sprite.y)){
+				lootSparkle(this.sprite);
+			}
 		};
 	}
 },
@@ -906,14 +907,14 @@ var cmp = [
 		target.sprite.profile+=20;	
 		target.bulletSprite=4;
 		target.bulletHitBehavior.push(function(sprite,bullet){
-			
+
 			var tgt = ownerFromName(sprite.name);
 
 			if(tgt.ai == 3 && tgt.oreChance < 1 && Math.random()>0.125){
 				spawnLoots(1,bullet.x,bullet.y)
-				
-		
-				bullet.damage=0;
+
+
+			bullet.damage=0;
 			}
 		}
 
@@ -953,7 +954,7 @@ var cmp = [
 	'bonus':function(target){
 
 		target.altCheck=function(){
-		var ret = false;
+			var ret = false;
 			var targetDistance = game.physics.arcade.distanceBetween(this.sprite, this.target);
 
 			if(targetDistance < 250 && Math.random()<0.01+(0.04*((this.healthMax-this.health)/this.healthMax))){
@@ -1126,19 +1127,44 @@ var cmp = [
 {
 	'id':88,
 	'drops':false,
-	'name':'Chainsaw-back',
-	'flavor':'--',
+	'name':'Petroleum Engine',
+	'flavor':'pulls you to enemies as you hit them, moar damage',
 	'bonus':function(target){
+
+		target.fireDamage+=2;
+		target.health+=6;
+		target.bulletHitBehavior.push(function(sprite,bullet){
+
+			var hyp = getHypo(sprite.body.velocity.x,sprite.body.velocity.y); 
+
+			var dist = game.physics.arcade.distanceBetween(bullet.owner,sprite)/2;	
+			var angle = game.physics.arcade.angleBetween(bullet.owner, sprite); 
+
+			bullet.owner.body.velocity.x+=Math.cos(angle)*bullet.owner.body.maxVelocity.x;
+			bullet.owner.body.velocity.y+=Math.sin(angle)*bullet.owner.body.maxVelocity.y;
+			clampVelocity(bullet.owner);
+
+		});
 
 	}
 },
 {
 	'id':89,
 	'drops':false,
-	'name':'Chainsaw-front',
-	'flavor':'--',
+	'name':'Mars Logging Ripsaw',
+	'flavor':'',
 	'bonus':function(target){
-		
+
+		target.acceleration-=0.7;
+		target.fireRate*=0.7;
+		target.bulletHitBehavior.push(function(sprite,bullet){
+			var own = ownerFromName(bullet.owner.name)
+			if(game.time.now>own.shieldCooldown){
+				shieldEffect(explosions, 4, own.sprite.x, own.sprite.y, own.sprite.body.velocity.x, own.sprite.body.velocity.y);
+			}
+		own.shieldCooldown=game.time.now+250;
+		own.shield=true;
+		});
 	}
 },
 {
@@ -1229,10 +1255,10 @@ var cmp = [
 				this.altCooldown=game.time.now+2000;
 				bigBoom(explosions,this.sprite.x,this.sprite.y);
 				if(this.ai==-1){
-				this.sprite.profile+=this.sprite.profileMax*3;
-				confusionCooldown=game.time.now+8000;	
+					this.sprite.profile+=this.sprite.profileMax*3;
+					confusionCooldown=game.time.now+8000;	
 				}else{
-				player.radarError=8;
+					player.radarError=8;
 				}
 			}
 
@@ -1310,8 +1336,8 @@ var cmp = [
 	'flavor':'hold [Z] to throw off attackers',
 	'bonus':function(target){
 		target.altCheck=function(){
-		var ret = false;
-		this.energyReserve=0;
+			var ret = false;
+			this.energyReserve=0;
 			var targetDistance = game.physics.arcade.distanceBetween(this.sprite, this.target);
 			var targetAngle = game.physics.arcade.angleBetween(this.target, this.sprite);
 
@@ -1325,18 +1351,18 @@ var cmp = [
 
 		target.alt=function(){
 			if(game.time.now>this.altCooldown && this.takeEnergy(1)){
-					if(typeof(this.parts[0])!='undefined'){
+				if(typeof(this.parts[0])!='undefined'){
 					if(this.parts[0].sprite.alpha>.5){
-					midBoom(explosions,1,this.sprite.x,this.sprite.y);
-					ui.sound_boop.play();
-					if(this.sprite.profile>500){
-						this.sprite.profile-=500;
-					}else{
-						this.sprite.profile=0;
+						midBoom(explosions,1,this.sprite.x,this.sprite.y);
+						ui.sound_boop.play();
+						if(this.sprite.profile>500){
+							this.sprite.profile-=500;
+						}else{
+							this.sprite.profile=0;
+						}
 					}
-					}
-					}
-			
+				}
+
 				for(var i=0;i<this.parts.length;i++){
 					this.altCooldown=game.time.now+250;
 					this.parts[i].sprite.alpha=0.35;
@@ -1538,8 +1564,8 @@ var cmp = [
 	'bonus':function(target){
 
 		target.altCheck=function(){
-		var ret = false;
-		this.energyReserve=0;
+			var ret = false;
+			this.energyReserve=0;
 			var targetDistance = game.physics.arcade.distanceBetween(this.sprite, this.target);
 			var targetAngle = game.physics.arcade.angleBetween(this.target, this.sprite);
 

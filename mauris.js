@@ -416,6 +416,7 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 	this.sprite.body.drag.x=0;
 	this.sprite.body.drag.y=0;
 	this.altCooldown=0;
+	this.shieldCooldown=0;
 	this.cooldown114=0;
 	this.died=0;
 	this.turnRate=0.5;
@@ -699,7 +700,7 @@ enemyShip.prototype.update = function() {
 			}
 	this.sprite.profile = this.sprite.profileMax; //tracking this in detail is hard and unnecessary
 
-	if(game.time.now>this.altCooldown){
+	if(game.time.now>this.shieldCooldown){
 		this.shield=false;
 	}
 	if(game.time.now>this.altCooldown+666){
@@ -988,6 +989,7 @@ playerShip.prototype.initPlayerShip = function (ship) {
 	this.nextEnergy = 0;
 	this.nextFire = 0;
 	this.altCooldown=0;
+	this.shieldCooldown=0;
 	this.cooldown114=0;
 	this.sprite.visible=true;
 	this.sprite.anchor.setTo(0.5, 0.5);
@@ -1152,7 +1154,7 @@ playerShip.prototype.update = function(){
 			this.sprite.body.angularVelocity = (this.sprite.body.angularVelocity>0?1:-1)*this.turnRate*100;
 		}
 
-		if(game.time.now>this.altCooldown){
+		if(game.time.now>this.shieldCooldown){
 			this.shield=false;
 			if(this.parts.length){
 				if(this.parts[0].sprite.alpha<1 && this.sprite.profile > 0.5 * this.sprite.profileMax){
