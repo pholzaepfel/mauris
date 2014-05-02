@@ -547,11 +547,23 @@ var cmp = [
 	'flavor':'spray \'n pray',
 	'bonus':function(target){
 		target.bulletBehavior.push(function(bullet){
-			bullet.rotation+=Math.random()*0.4-0.2;
-			game.physics.arcade.velocityFromRotation(bullet.rotation, bullet.fireVelocity, bullet.body.velocity);
+
+			var tgt = ownerFromName(bullet.owner.name);
+			
+			if(tgt.takeEnergy(tgt.fireEnergy/3)){
+			var bulletBehavior = tgt.bulletBehavior;
+			tgt.bulletBehavior=[];
+			var bullet2 = tgt.spawnBullet(false);
+			
+			if(typeof(bullet2)!='undefined'){
+			bullet2.rotation+=Math.random()*0.8-0.4;
+			game.physics.arcade.velocityFromRotation(bullet2.rotation, bullet2.fireVelocity, bullet2.body.velocity);
+			}else{
+				tgt.energy+=tgt.fireEnergy/3;
+			}
+			tgt.bulletBehavior=bulletBehavior;
+			}
 		});
-		target.fireRate*=0.7;
-		target.fireEnergy*=0.8;
 		target.sprite.profile+=40;
 	}
 },
@@ -636,7 +648,8 @@ var cmp = [
 		target.fireSound=ui.sound_plasma;
 		target.fireRate*=0.4;
 		target.fireEnergy*=0.5;
-		target.fireRange*=0.6;
+		target.fireVelocity*=0.8;
+		target.fireRange*=0.8;
 		target.sprite.profile+=88;
 	}
 },
@@ -1126,45 +1139,39 @@ var cmp = [
 },
 {
 	'id':88,
-	'drops':false,
+	'drops':true,
 	'name':'Petroleum Engine',
-	'flavor':'pulls you to enemies as you hit them, moar damage',
-	'bonus':function(target){
-
-		target.fireDamage+=2;
-		target.health+=6;
-		target.bulletHitBehavior.push(function(sprite,bullet){
-
-			var hyp = getHypo(sprite.body.velocity.x,sprite.body.velocity.y); 
-
-			var dist = game.physics.arcade.distanceBetween(bullet.owner,sprite)/2;	
-			var angle = game.physics.arcade.angleBetween(bullet.owner, sprite); 
-
-			bullet.owner.body.velocity.x+=Math.cos(angle)*bullet.owner.body.maxVelocity.x;
-			bullet.owner.body.velocity.y+=Math.sin(angle)*bullet.owner.body.maxVelocity.y;
-			clampVelocity(bullet.owner);
-
-		});
-
-	}
-},
-{
-	'id':89,
-	'drops':false,
-	'name':'Mars Logging Ripsaw',
-	'flavor':'',
+	'flavor':'shields you when you hit enemies',
 	'bonus':function(target){
 
 		target.acceleration-=0.7;
 		target.fireRate*=0.7;
-		target.bulletHitBehavior.push(function(sprite,bullet){
-			var own = ownerFromName(bullet.owner.name)
+		target.bulletHitBehavior.push(
+				function(sprite,bullet){
+					var own = ownerFromName(bullet.owner.name)
 			if(game.time.now>own.shieldCooldown){
 				shieldEffect(explosions, 4, own.sprite.x, own.sprite.y, own.sprite.body.velocity.x, own.sprite.body.velocity.y);
 			}
-		own.shieldCooldown=game.time.now+250;
+		own.shieldCooldown=game.time.now+own.fireRate;
 		own.shield=true;
 		});
+	}
+},
+{
+	'id':89,
+	'drops':true,
+	'name':'Mars Logging Ripsaw',
+	'flavor':'grapple with foes',
+	'bonus':function(target){
+		target.fireDamage+=2;
+		target.fireRange*=0.6;
+		target.fireVelocity*=1.4;
+		target.bulletHitBehavior.push(
+			function(sprite,bullet){
+				bullet.owner.body.velocity.x=sprite.body.velocity.x
+				bullet.owner.body.velocity.y=sprite.body.velocity.y
+			}
+		);		
 	}
 },
 {
