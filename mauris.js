@@ -1219,6 +1219,17 @@ var pool;
 var dragPool;
 var dummy;
 var defaultPlayerShip = [66, 34, -1, -1];
+var spawnShips=[
+[35,36,-1,-1],
+[71,-1,102,-1],
+	[100,101,-1,-1],
+	[80,85,-1,-1],
+	[74,160,-1,-1],
+	[131,37,-1,-1],
+	[69,111,-1,-1],
+	[118,-1,129,-1],
+	[66,34,-1,-1]
+];
 var station; //we're going to keep this pretty much as a non-interactive sprite for now... it doesn't actually need to do anything
 var frob1;
 
@@ -2863,7 +2874,7 @@ function update () {
 
 			if(nextSpawn<game.time.now||nextSpawn==0){
 				if(!player.alive){
-					player.initPlayerShip(defaultPlayerShip);
+					player.initPlayerShip(spawnShips[Math.floor(Math.random()*spawnShips.length)]);
 					if(contextTutorialDeath){
 						ui.texts.push(contextTutorialDeath);
 						contextTutorialDeath='';
