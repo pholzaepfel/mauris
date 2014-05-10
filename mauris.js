@@ -3226,9 +3226,9 @@ function spawnLoots(_count, x, y){
 		var loot = loots.getFirstDead();
 		loot.loadTexture('parts', Math.floor(randomRange(0,4))+26);
 		loot.lifespan = 60000;
-		loot.body.angularVelocity = randomRange(-300,300);
 		loot.reset(x + randomRange(-16,16), y+randomRange(-16,16));
 		loot.rotation = Math.random()*2*Math.PI;
+				game.add.tween(loot).to({rotation:Math.PI*30},loot.lifespan,Phaser.Easing.Exponential.Out, true, 0, false);
 		var scale = randomRange(0.8,1.1);
 		loot.scale.setTo(scale,scale);
 		loot.averageCounter=50;
@@ -3248,6 +3248,7 @@ function spawnComponent(component,x,y){
 		loot.reset(x + randomRange(-16,16), y+randomRange(-16,16));
 		loot.averageCounter=50;
 		loot.rotation=0;
+		game.add.tween(loot).to({rotation:Math.PI*10},loot.lifespan,Phaser.Easing.Exponential.Out, true, 0, false);
 		loot.acceleration=200;
 		loot.blendMode=1;
 		loot.lootType='component';
