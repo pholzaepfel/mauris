@@ -33,9 +33,7 @@ var cmp = [
 		target.fireRate+=0;
 		target.fireVelocity+=600;
 		target.bulletBehavior.push(function(bullet){
-			if(bullet.scale.x<1.5){
-				bullet.scale.setTo(1.5,1.5);
-			}
+				bullet.scale.setTo(bullet.scale.x+.5,bullet.scale.y);
 		});
 		target.sprite.profile+=25;
 	}
@@ -210,9 +208,7 @@ var cmp = [
 		target.fireRate*=1.5;
 		target.sprite.profile+=200;
 		target.bulletBehavior.push(function(bullet){
-			if(bullet.scale.x<2){
-				bullet.scale.setTo(bullet.scale.x+0.5,bullet.scale.y+0.5);
-			}
+				bullet.scale.setTo(bullet.scale.x+.1,bullet.scale.y+.1);
 		});
 	}
 },
