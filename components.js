@@ -1254,7 +1254,7 @@ var cmp = [
 		}
 		target.alt=function(){
 			if(game.time.now>this.altCooldown && this.takeEnergy(6)){
-				ui.sound_plasma.play();
+				ui.sound_blur.play();
 				this.altCooldown=game.time.now+2000;
 				bigBoom(explosions,this.sprite.x,this.sprite.y);
 				if(this.ai==-1){

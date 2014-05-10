@@ -875,6 +875,7 @@ function preload () {
 	game.load.audio('comms','assets/comms.wav');
 	game.load.audio('pew2','assets/pew2.wav');
 	game.load.audio('pew3','assets/pew3.wav');
+	game.load.audio('blur','assets/blur.wav');
 	game.load.audio('dock','assets/dock.wav');
 	game.load.audio('ominous','assets/ominous.wav');
 	game.load.audio('powerup','assets/powerup.wav');
@@ -1302,6 +1303,7 @@ gameUI.prototype.initSound = function(){
 	this.sound_powerup = game.add.audio('powerup');
 	this.sound_ominous = game.add.audio('ominous');
 	this.sound_pew3 = game.add.audio('pew3');
+	this.sound_blur = game.add.audio('blur');
 	this.sound_missile = game.add.audio('missile');
 
 	this.sound_hit1 = game.add.audio('hit1');
