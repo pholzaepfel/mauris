@@ -1227,7 +1227,7 @@ var spawnShips=[
 	[74,160,-1,-1],
 	[131,37,-1,-1],
 	[69,111,-1,-1],
-	[118,-1,129,-1],
+	[128,-1,129,-1],
 	[66,34,-1,-1]
 ];
 var station; //we're going to keep this pretty much as a non-interactive sprite for now... it doesn't actually need to do anything
