@@ -2709,7 +2709,7 @@ function update () {
 						ui.setMode('move');
 						ui.updatePart();
 					}
-					if(alt && ui.parts.length > 1){
+					if(alt && ui.parts.length > 2){
 						ui.currentPlayerPart = 0;
 						ui.nextDeletePart();
 						nextUIDelay = game.time.now+2000;
@@ -2795,7 +2795,7 @@ function update () {
 						ui.cullParts();
 						ui.updatePart();
 						ui.partsArray(); //recalc rectangle
-						if(ui.parts.length==1){
+						if(ui.parts.length==2){
 							ui.setMode('select');
 							ui.parts[ui.currentPlayerPart].sprite.alpha=1;
 							ui.parts[ui.currentPlayerPart].sprite.blendMode=0;
