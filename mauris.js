@@ -614,7 +614,7 @@ enemyShip.prototype.fire = function () {
 			}
 
 }
-enemyShip.prototype.spawnBullet = function (showFlash) {
+enemyShip.prototype.spawnBullet = function (playerFired) {
 	if(this.bullets.countDead()){
 		var bullet = this.bullets.getFirstDead();
 		bullet.rotation=this.sprite.rotation;
@@ -637,10 +637,10 @@ enemyShip.prototype.spawnBullet = function (showFlash) {
 		bullet.body.velocity.y += 0.5 * this.sprite.body.velocity.y;
 		bullet.target=player;
 		for (var i = 0; i < this.bulletBehavior.length; i++) {
-			this.bulletBehavior[i](bullet);
+			this.bulletBehavior[i](bullet, playerFired);
 		}
 
-		if(showFlash){
+		if(playerFired){
 			fireBoom(explosions,bullet.bulletSprite,bullet.x,bullet.y,bullet.rotation);
 		}	
 		return bullet;
@@ -1085,7 +1085,7 @@ playerShip.prototype.fire = function(){
 	}
 
 };
-playerShip.prototype.spawnBullet = function(showFlash){
+playerShip.prototype.spawnBullet = function(playerFired){
 	if(bullets.countDead()){
 
 		var bullet = bullets.getFirstDead();
@@ -1111,10 +1111,10 @@ playerShip.prototype.spawnBullet = function(showFlash){
 		bullet.body.velocity.y += 0.5 * this.sprite.body.velocity.y;
 
 		for (var i = 0; i < this.bulletBehavior.length; i++) {
-			this.bulletBehavior[i](bullet);
+			this.bulletBehavior[i](bullet, playerFired);
 		}
 
-		if (showFlash){
+		if (playerFired){
 			fireBoom(explosions,bullet.bulletSprite,bullet.x,bullet.y,bullet.rotation);
 		}
 

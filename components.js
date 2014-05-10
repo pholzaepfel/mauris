@@ -542,13 +542,13 @@ var cmp = [
 	'name':'Force Multiplier',
 	'flavor':'spray \'n pray',
 	'bonus':function(target){
-		target.bulletBehavior.push(function(bullet){
+		target.bulletBehavior.push(function(bullet, playerFired){
 
+			if(playerFired){
 			var tgt = ownerFromName(bullet.owner.name);
-			
+			bullet.rotation+=Math.random()*0.4-0.2;
+			game.physics.arcade.velocityFromRotation(bullet.rotation, getHypo(bullet.body.velocity.x,bullet.body.velocity.y), bullet.body.velocity);	
 			if(tgt.takeEnergy(tgt.fireEnergy/3)){
-			var bulletBehavior = tgt.bulletBehavior;
-			tgt.bulletBehavior=[];
 			var bullet2 = tgt.spawnBullet(false);
 			
 			if(typeof(bullet2)!='undefined'){
@@ -557,7 +557,7 @@ var cmp = [
 			}else{
 				tgt.energy+=tgt.fireEnergy/3;
 			}
-			tgt.bulletBehavior=bulletBehavior;
+			}
 			}
 		});
 		target.sprite.profile+=40;
@@ -627,7 +627,7 @@ var cmp = [
 	'name':'Gargantuan Plasma Thrower',
 	'flavor':'burn, baby',
 	'bonus':function(target){
-		target.bulletBehavior.push(function(bullet){
+		target.bulletBehavior.push(function(bullet,playerFired){
 			bullet.rotation+=Math.random()*0.5-0.25;
 			bullet.loadTexture('explosions',2);
 			bullet.body.angularVelocity=randomRange(600,900);
