@@ -1410,6 +1410,9 @@ gameUI.prototype.initCombatUi = function() {
 	this.partswindow = game.add.sprite(-364,-132,'partswindow');
 	this.partswindow.anchor.setTo(0,0);
 	this.partswindow.visible = false;
+	destroyIfExists(this.missionLine);
+	this.missionLine = game.add.text(200,100, '',{ font:'24px acknowledge', fill: 'rgb(255,192,64)', align: 'right' });
+	this.missionLine.alpha = 0.69;
 	destroyIfExists(this.profileLine);
 	this.profileLine = game.add.text(200,100, '',{ font:'24px acknowledge', fill: 'rgb(255,64,16)', align: 'right' });
 	this.profileLine.alpha = 0.75;
@@ -1659,6 +1662,17 @@ gameUI.prototype.commsPing = function() {
 	}	
 	this.toTop(this.comms);
 }
+gameUI.prototype.missionLinePing = function() {
+
+		if(playerStats.mission.win.condition=='kill' && playerStats.mission.win.killCount > playerStats.kills){
+		this.missionLine.setText(playerStats.kills + '/' + playerStats.mission.win.killCount);
+		this.missionLine.x = player.sprite.body.x+(player.sprite.body.width/2);
+		this.missionLine.y = player.sprite.body.height+player.sprite.body.y+55;
+		this.toTop(this.missionLine);
+		} else {
+		this.missionLine.setText('');
+		}
+}
 gameUI.prototype.profileLinePing = function() {
 
 	if(player.profileShow){
@@ -1688,6 +1702,7 @@ gameUI.prototype.update = function() {
 		this.partPing();
 	}
 	if (gamemode == 'war'){
+		this.missionLinePing();
 		this.profileLinePing();
 		this.bar(this.healthLine, 0, player.health, player.healthMax);
 		this.bar(this.energyLine, 10, player.energy, player.energyMax);
@@ -1909,6 +1924,7 @@ gameUI.prototype.partsUI = function (ship) {
 	}
 	this.healthLine.setText('');
 	this.energyLine.setText('');
+	this.missionLine.setText('');
 	this.profileLine.setText('');
 	this.clearRadar();
 	this.tempStation.visible=true;
