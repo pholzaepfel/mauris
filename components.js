@@ -139,14 +139,12 @@ var cmp = [
 			return ret;
 		}
 		target.alt=function(){
-			if(this.takeEnergy(0.1)){				
-				if(game.time.now > this.altCooldown){
+			if(game.time.now > this.altCooldown && this.takeEnergy(0.8)){				
 					ui.sound_boop.play();
 					this.shieldCooldown=game.time.now+100;
 					this.altCooldown=game.time.now+100;
 					this.shield=true;
-					shieldEffect(explosions, 4, this.sprite.x, this.sprite.y, this.sprite.body.velocity.x, this.sprite.body.velocity.y);
-				}
+					shieldEffect(explosions, 4, this.sprite.x, this.sprite.y, this.sprite.body.velocity.x, this.sprite.body.velocity.y, this.ship.length);
 			}
 		}
 	}
@@ -1146,7 +1144,7 @@ var cmp = [
 				function(sprite,bullet){
 					var own = ownerFromName(bullet.owner.name)
 			if(game.time.now>own.shieldCooldown){
-				shieldEffect(explosions, 4, own.sprite.x, own.sprite.y, own.sprite.body.velocity.x, own.sprite.body.velocity.y);
+					shieldEffect(explosions, 4, this.sprite.x, this.sprite.y, this.sprite.body.velocity.x, this.sprite.body.velocity.y, this.ship.length);
 			}
 		own.shieldCooldown=game.time.now+own.fireRate;
 		own.shield=true;
