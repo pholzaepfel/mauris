@@ -1144,7 +1144,7 @@ var cmp = [
 				function(sprite,bullet){
 					var own = ownerFromName(bullet.owner.name)
 			if(game.time.now>own.shieldCooldown){
-					shieldEffect(explosions, 4, this.sprite.x, this.sprite.y, this.sprite.body.velocity.x, this.sprite.body.velocity.y, this.ship.length);
+					shieldEffect(explosions, 4, own.sprite.x, own.sprite.y, own.sprite.body.velocity.x, own.sprite.body.velocity.y, own.ship.length);
 			}
 		own.shieldCooldown=game.time.now+own.fireRate;
 		own.shield=true;
