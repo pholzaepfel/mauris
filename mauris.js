@@ -540,8 +540,8 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 		this.sprite.r=255 * (1 - (this.health/this.healthMax));
 		this.sprite.g=255 * (this.health/this.healthMax);
 		this.sprite.b=0;
-		this.sprite.alpha=4;
-		game.add.tween(this.sprite).to({r:255,g:255,b:255,alpha:1},700, Phaser.Easing.Exponential.Out, true, 0, false);
+		this.sprite.alpha=6;
+		game.add.tween(this.sprite).to({r:255,g:255,b:255,alpha:1},400, Phaser.Easing.Exponential.Out, true, 0, false);
 
 }
 
@@ -1057,8 +1057,8 @@ playerShip.prototype.damage = function(dmg, aggro) {
 		this.sprite.r=255 * (1 - (this.health/this.healthMax));
 		this.sprite.g=255 * (this.health/this.healthMax);
 		this.sprite.b=0;
-		this.sprite.alpha=4;
-		game.add.tween(this.sprite).to({r:255,g:255,b:255,alpha:1},700, Phaser.Easing.Exponential.Out, true, 0, false);
+		this.sprite.alpha=6;
+		game.add.tween(this.sprite).to({r:255,g:255,b:255,alpha:1},400, Phaser.Easing.Exponential.Out, true, 0, false);
 	}
 
 	if (this.health <= 0 && this.health + (damageCoef * dmg) >= 0){
