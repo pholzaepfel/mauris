@@ -3315,6 +3315,9 @@ function playerGotLoot (sprite, loot) {
 		player.health+=1;
 		player.energy+=player.oreEnergy;
 		ui.sound_beep.play();
+		player.sprite.alpha=6;
+
+		game.add.tween(player.sprite).to({alpha:1},700, Phaser.Easing.Circular.Out, true, 0, false);
 	}else if(loot.lootType=='component'){
 		playerStats.inventory.push(loot.component);
 		ui.texts.push('got ' + components[loot.component].name);
