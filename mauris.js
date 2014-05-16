@@ -320,6 +320,13 @@ shipPart.prototype.initShipPart = function (x,y,index,targetSprite){
 shipPart.prototype.update = function(){
 
 	this.sprite.exists=true;
+	if(this.target.alive){
+	this.sprite.tint = (this.target.r << 16) + (this.target.g << 8) + this.target.b;
+	this.sprite.alpha=this.target.alpha;
+	}else{
+	this.sprite.tint = 16777215;
+	this.sprite.alpha=1;
+	}
 	var ons = onscreen(this.target.x,this.target.y);
 	this.sprite.visible=this.sprite.alive && ons;
 	if (this.target.alive && this.alive && ons) {
@@ -388,6 +395,10 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 
 	var x = this.target.x + (Math.cos(-1 * this.sprite.rotation) * (randomRange(960,1500) + player.sprite.body.velocity.x));
 	var y = this.target.y + (Math.sin(-1 * this.sprite.rotation) * (randomRange(540,1500) + player.sprite.body.velocity.y));
+
+	this.sprite.r=255;
+	this.sprite.g=255;
+	this.sprite.b=255;
 
 	this.nextThrust=0;
 	this.radarError=0;
@@ -458,7 +469,6 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 	}
 
 
-		this.sprite.body.collideWorldBounds = true;
 	this.sprite.angle = game.rnd.angle();
 
 	this.sprite.body.maxVelocity.setTo(500,500);
@@ -527,7 +537,13 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 		midBoom(explosions,4,this.sprite.x,this.sprite.y);
 	}else{
 		this.health -= damageCoef * dmg;
-	}
+		this.sprite.r=255 * (1 - (this.health/this.healthMax));
+		this.sprite.g=255 * (this.health/this.healthMax);
+		this.sprite.b=0;
+		this.sprite.alpha=4;
+		game.add.tween(this.sprite).to({r:255,g:255,b:255,alpha:1},700, Phaser.Easing.Exponential.Out, true, 0, false);
+
+}
 
 	if(this.behavior=='neutral'){
 		this.behavior='chasing';
@@ -942,6 +958,9 @@ playerShip.prototype.takeEnergy = function (amt, forgive){
 }
 playerShip.prototype.initPlayerShip = function (ship) {
 
+	this.sprite.r=255;
+	this.sprite.g=255;
+	this.sprite.b=255;
 	this.target={};
 	this.fireSound=ui.sound_pew3;
 	this.ai=-1; //natural intelligence
@@ -1035,6 +1054,11 @@ playerShip.prototype.damage = function(dmg, aggro) {
 		this.health -= damageCoef * dmg;
 		this.radarError=Math.max(this.radarError,this.radarTargets+0.5)
 		ui.healthLine.shudder = 5;
+		this.sprite.r=255 * (1 - (this.health/this.healthMax));
+		this.sprite.g=255 * (this.health/this.healthMax);
+		this.sprite.b=0;
+		this.sprite.alpha=4;
+		game.add.tween(this.sprite).to({r:255,g:255,b:255,alpha:1},700, Phaser.Easing.Exponential.Out, true, 0, false);
 	}
 
 	if (this.health <= 0 && this.health + (damageCoef * dmg) >= 0){
