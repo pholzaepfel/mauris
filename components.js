@@ -1357,7 +1357,7 @@ var cmp = [
 				if(typeof(this.cloakTween)!='undefined'){
 					this.cloakTween.stop();
 				}
-				this.cloakTween = game.add.tween(this.sprite).to({alpha:targetAlpha},600, Phaser.Easing.Linear.None,true,0,false)
+				this.cloakTween = game.add.tween(this.sprite).to({alpha:targetAlpha},800, Phaser.Easing.Linear.None,true,0,false)
 					.to({alpha:1},600, Phaser.Easing.Linear.None,true,0,false);
 				if(typeof(this.parts[0])!='undefined'){
 					if(this.parts[0].sprite.alpha>.5){
