@@ -3261,6 +3261,9 @@ function spawnLoots(_count, x, y){
 	for(var i = 0; i < lootCount; i++)
 	{
 		var loot = loots.getFirstDead();
+		if(typeof(loot.pulseTween)!='undefined'){
+			loot.pulseTween.stop();
+		}
 		loot.loadTexture('parts', Math.floor(randomRange(0,4))+26);
 		loot.lifespan = 60000;
 		loot.reset(x + randomRange(-16,16), y+randomRange(-16,16));
@@ -3269,6 +3272,9 @@ function spawnLoots(_count, x, y){
 		var scale = randomRange(0.8,1.1);
 		loot.scale.setTo(scale,scale);
 		loot.averageCounter=50;
+		loot.alpha=2.5;
+
+		loot.pulseTween = game.add.tween(loot).to({alpha:1},randomRange(200,400),Phaser.Easing.Exponential.Out,true,0,Number.MAX_VALUE,true);
 		loot.acceleration=200;
 		loot.blendMode=0;
 		loot.lootType='ore';
@@ -3279,6 +3285,9 @@ function spawnLoots(_count, x, y){
 function spawnComponent(component,x,y){
 	if(loots.countDead()){
 		var loot = loots.getFirstDead();
+		if(typeof(loot.pulseTween)!='undefined'){
+			loot.pulseTween.stop();
+		}
 		loot.loadTexture('parts', component);
 		loot.lifespan = 120000;
 		loot.scale.setTo(2,2);
@@ -3287,7 +3296,9 @@ function spawnComponent(component,x,y){
 		loot.rotation=0;
 		game.add.tween(loot).to({rotation:Math.PI*10},loot.lifespan,Phaser.Easing.Exponential.Out, true, 0, false);
 		loot.acceleration=200;
-		loot.blendMode=1;
+		loot.blendMode=0;
+		loot.alpha=2.5;
+		loot.pulseTween = game.add.tween(loot).to({alpha:1},250,Phaser.Easing.Circular.InOut,true,0,Number.MAX_VALUE,true);
 		loot.lootType='component';
 		loot.component = component;
 		loot.acceleration=0;
