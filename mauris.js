@@ -572,7 +572,7 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 				var tempX = this.parts[j].sprite.body.velocity.x;
 				var tempY = this.parts[j].sprite.body.velocity.y;
 
-				this.parts[j].sprite.body.velocity = game.physics.arcade.velocityFromRotation(this.game.physics.arcade.angleBetween(this.sprite, this.parts[j].sprite), 400+randomRange(0,50));
+				this.parts[j].sprite.body.velocity = game.physics.arcade.velocityFromRotation(this.game.physics.arcade.angleBetween(this.sprite, this.parts[j].sprite), 200+randomRange(0,250));
 				if(typeof(bulletVelocity)!='undefined'){
 					this.parts[j].sprite.body.velocity.x = this.parts[j].sprite.body.velocity.x + (bulletVelocity.x*.05);
 					this.parts[j].sprite.body.velocity.y = this.parts[j].sprite.body.velocity.y + (bulletVelocity.y*.05);
