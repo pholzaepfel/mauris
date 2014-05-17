@@ -1351,21 +1351,25 @@ var cmp = [
 
 
 		target.alt=function(){
-			if(game.time.now>this.altCooldown && this.takeEnergy(1)){
+			if(game.time.now>this.altCooldown && this.takeEnergy(2)){
+				var targetAlpha = this.ai==-1 ? 0.4 : 0;
+				this.sprite.alpha=targetAlpha;
+				if(typeof(this.cloakTween)!='undefined'){
+					this.cloakTween.stop();
+				}
+				this.cloakTween = game.add.tween(this.sprite).to({alpha:targetAlpha},600, Phaser.Easing.Linear.None,true,0,false)
+					.to({alpha:1},600, Phaser.Easing.Linear.None,true,0,false);
 				if(typeof(this.parts[0])!='undefined'){
 					if(this.parts[0].sprite.alpha>.5){
 						midBoom(explosions,1,this.sprite.x,this.sprite.y);
 						ui.sound_boop.play();
-						if(this.sprite.profile>500){
-							this.sprite.profile-=500;
-						}else{
-							this.sprite.profile=0;
-						}
 					}
+					this.sprite.profile*=0.5;
+					this.sprite.profile=Math.floor(this.sprite.profile);
 				}
 
 				for(var i=0;i<this.parts.length;i++){
-					this.altCooldown=game.time.now+250;
+					this.altCooldown=game.time.now+500;
 					this.parts[i].sprite.alpha=0.35;
 					if(this.ai!=-1){
 						this.parts[i].sprite.alpha=0;

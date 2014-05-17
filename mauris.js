@@ -719,16 +719,6 @@ enemyShip.prototype.update = function() {
 	if(game.time.now>this.shieldCooldown){
 		this.shield=false;
 	}
-	if(game.time.now>this.altCooldown+666){
-			if(this.parts.length){
-				if(this.parts[0].sprite.alpha<1){
-					for(var i=0;i<this.parts.length;i++){
-						this.parts[i].sprite.alpha+=0.02;
-					}
-
-				}
-			}
-	}
 
 	if(this.ai==2){
 		//init asteroid stuff
@@ -744,6 +734,12 @@ enemyShip.prototype.update = function() {
 	}
 	if(this.ai!=3){
 		var adjustedProfile = 200 + Math.pow(this.target.profile,profileExponent);
+		
+		if(this.target.alpha<0.5){
+			adjustedProfile-=200;
+		};
+
+		
 		if(!this.target.alive || 
 				(game.physics.arcade.distanceBetween(this.sprite,this.target) > adjustedProfile * 1.5 && this.behavior=='chasing')){
 					for(var i=0;i<this.aggroList.length;i++){
@@ -1180,14 +1176,6 @@ playerShip.prototype.update = function(){
 
 		if(game.time.now>this.shieldCooldown){
 			this.shield=false;
-			if(this.parts.length){
-				if(this.parts[0].sprite.alpha<1 && this.sprite.profile > 0.5 * this.sprite.profileMax){
-					for(var i=0;i<this.parts.length;i++){
-						this.parts[i].sprite.alpha+=0.02;
-					}
-
-				}
-			}
 		}
 		if(game.time.now>this.nextProfileDecay){
 			if (Math.abs(this.sprite.profile-this.sprite.profileMax) < this.profileDecay)	{	
