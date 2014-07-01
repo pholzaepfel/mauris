@@ -101,9 +101,12 @@ var cmp = [
 	'id':6,
 	'drops':false,
 	'name':'Alien Pustule',
-	'flavor':'-',
+	'flavor':'crippling but tough',
 	'bonus':function(target){
-		target.energyMax+=2;
+		target.health+=4;
+		target.turnRate-=0.1;
+		target.sprite.body.maxVelocity.x-=10;
+		target.sprite.body.maxVelocity.y-=10;
 		target.sprite.profile+=10;
 	}
 },
@@ -111,9 +114,12 @@ var cmp = [
 	'id':7,
 	'drops':false,
 	'name':'Alien Pustule',
-	'flavor':'-',
+	'flavor':'crippling but tough',
 	'bonus':function(target){
-		target.energyMax+=2;
+		target.health+=4;
+		target.turnRate-=0.1;
+		target.sprite.body.maxVelocity.x-=10;
+		target.sprite.body.maxVelocity.y-=10;
 		target.sprite.profile+=10;
 	}
 },
@@ -507,9 +513,12 @@ var cmp = [
 	'id':38,
 	'drops':false,
 	'name':'Alien Pustule',
-	'flavor':'-',
+	'flavor':'crippling but tough',
 	'bonus':function(target){
-		target.energyMax+=2;
+		target.health+=4;
+		target.turnRate-=0.1;
+		target.sprite.body.maxVelocity.x-=10;
+		target.sprite.body.maxVelocity.y-=10;
 		target.sprite.profile+=10;
 	}
 },
@@ -517,9 +526,12 @@ var cmp = [
 	'id':39,
 	'drops':false,
 	'name':'Alien Pustule',
-	'flavor':'-',
+	'flavor':'crippling but tough',
 	'bonus':function(target){
-		target.energyMax+=2;
+		target.health+=4;
+		target.turnRate-=0.1;
+		target.sprite.body.maxVelocity.x-=10;
+		target.sprite.body.maxVelocity.y-=10;
 		target.sprite.profile+=10;
 	}
 },
@@ -917,7 +929,7 @@ var cmp = [
 
 			var tgt = ownerFromName(sprite.name);
 
-			if(tgt.ai == 3 && tgt.oreChance < 1 && Math.random()>0.125){
+			if(tgt.ai == 3 && tgt.oreChance < 1){
 				spawnLoots(1,bullet.x,bullet.y)
 
 
@@ -1074,15 +1086,10 @@ var cmp = [
 	'flavor':'adds knockback',
 	'bonus':function(target){
 		target.bulletSprite=3;
-		target.fireEnergy+=1;
-		target.bulletBehavior.push(function(bullet){
-			addVelocity(bullet.rotation+Math.PI,100, bullet.owner.body.velocity);
-			clampVelocity(bullet.owner);
-		});
 
 		target.bulletHitBehavior.push(function(sprite,bullet){
 
-			addVelocity(bullet.rotation, 300, sprite.body.velocity);
+			addVelocity(bullet.rotation, 400, sprite.body.velocity);
 			clampVelocity(sprite);
 		});
 	}
@@ -1094,7 +1101,7 @@ var cmp = [
 	'flavor':'increases the size of your shots',
 	'bonus':function(target){
 		target.bulletBehavior.push(function(bullet){
-			bullet.scale.setTo(bullet.scale.x+0.5,bullet.scale.y+0.5);
+			bullet.scale.setTo(bullet.scale.x+0.7,bullet.scale.y+0.7);
 			bullet.blendMode=1;
 		});
 
@@ -1107,7 +1114,7 @@ var cmp = [
 	'flavor':'increases the size of your shots',
 	'bonus':function(target){
 		target.bulletBehavior.push(function(bullet){
-			bullet.scale.setTo(bullet.scale.x+0.5,bullet.scale.y+0.5);
+			bullet.scale.setTo(bullet.scale.x+0.7,bullet.scale.y+0.7);
 			bullet.blendMode=1;
 		});
 
@@ -1593,7 +1600,7 @@ var cmp = [
 				midBoom(explosions,1,this.sprite.x,this.sprite.y);
 				midBoom(explosions,3,this.sprite.x,this.sprite.y);
 				this.altCooldown=game.time.now+2000;
-
+				this.sprite.profile-=500;
 			}
 		}
 		;
@@ -1649,7 +1656,7 @@ var cmp = [
 	'flavor':'increases the size of your shots',
 	'bonus':function(target){
 		target.bulletBehavior.push(function(bullet){
-			bullet.scale.setTo(bullet.scale.x+0.5,bullet.scale.y+0.5);
+			bullet.scale.setTo(bullet.scale.x+0.7,bullet.scale.y+0.7);
 			bullet.blendMode=1;
 		});
 
@@ -1663,7 +1670,7 @@ var cmp = [
 	'flavor':'increases the size of your shots',
 	'bonus':function(target){
 		target.bulletBehavior.push(function(bullet){
-			bullet.scale.setTo(bullet.scale.x+0.5,bullet.scale.y+0.5);
+			bullet.scale.setTo(bullet.scale.x+0.7,bullet.scale.y+0.7);
 			bullet.blendMode=1;
 		});
 
@@ -1673,8 +1680,11 @@ var cmp = [
 	'id':118,
 	'drops':false,
 	'name':'Propelling Fruit',
-	'flavor':'--',
+	'flavor':'increase max velocity, slow acceleration',
 	'bonus':function(target){
+		target.acceleration*=0.8;
+		target.sprite.body.maxVelocity.x+=50;
+		target.sprite.body.maxVelocity.y+=50;
 
 	}
 },
@@ -1682,8 +1692,17 @@ var cmp = [
 	'id':119,
 	'drops':false,
 	'name':'Roots',
-	'flavor':'--',
+	'flavor':'degrade opponent\'s acceleration',
 	'bonus':function(target){
+		target.bulletHitBehavior.push(function(sprite,bullet){
+			var tgt = ownerFromName(sprite.name);
+			if(tgt.acceleration>0.5){				
+				tgt.acceleration-=0.5;
+				tgt.sprite.body.velocity.x*=0.8;
+				tgt.sprite.body.velocity.y*=0.8;
+			};
+
+		});
 
 	}
 },
@@ -1691,18 +1710,37 @@ var cmp = [
 	'id':120,
 	'drops':false,
 	'name':'Annihilator Trebuchet',
-	'flavor':'--',
+	'flavor':'moar damage',
 	'bonus':function(target){
-		target.TODO=1;
+		target.fireVelocity*=0.8;
+		target.fireRange*=1.4;
+		target.fireEnergy*=1.2;
+		target.fireDamage+=2;
+		target.bulletSprite=6;
 	}
 },
 {
 	'id':121,
 	'drops':false,
-	'name':'Flux Capacitors',
-	'flavor':'--',
+	'name':'Spear of Destiny',
+	'flavor':'shots pierce enemies',
 	'bonus':function(target){
-		target.TODO=1;
+		target.bulletHitBehavior.push(function(sprite,bullet){
+
+			var tgt = ownerFromName(sprite.name);
+			
+			var newBullet=tgt.spawnBullet(false);
+			newBullet.loadTexture('bullet', bullet.bulletSprite);
+			newBullet.damage=bullet.damage;
+			newBullet.body.velocity.x=bullet.body.velocity.x;
+			newBullet.body.velocity.y=bullet.body.velocity.y;
+			newBullet.x=bullet.x;
+			newBullet.y=bullet.y;
+			if(Math.random()>0.5){
+				newBullet.bulletHitBehavior = bullet.bulletHitBehavior;
+			};
+		});
+
 	}
 },
 {
@@ -1711,15 +1749,29 @@ var cmp = [
 	'name':'Orb of Duplication',
 	'flavor':'--',
 	'bonus':function(target){
-
+		target.TODO=1;
 	}
 },
 {
 	'id':123,
 	'drops':false,
-	'name':'Quantum Turbine',
-	'flavor':'--',
+	'name':'Heisenberg Turbine',
+	'flavor':'indeterminate position in combat',
 	'bonus':function(target){
+		target.acceleration+=0.3;
+		target.sprite.body.maxVelocity.x+=10;
+		target.sprite.body.maxVelocity.y+=10;
+		target.bulletBehavior.push(function(bullet){
+			var tgt = ownerFromName(bullet.owner.name);
+			if(Math.random()<0.2){
+				midBoom(explosions,3,tgt.sprite.x,tgt.sprite.y);
+				target.sprite.x+=randomRange(40,160)*randomSign();
+				target.sprite.y+=randomRange(40,160)*randomSign();
+				midBoom(explosions,3,tgt.sprite.x,tgt.sprite.y);
+			}
+		});
+
+
 
 	}
 },
@@ -1729,6 +1781,7 @@ var cmp = [
 	'name':'Ancient Technology',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO=1;
 
 	}
 },
@@ -1738,6 +1791,7 @@ var cmp = [
 	'name':'Ancient Technology',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO=1;
 
 	}
 },
@@ -1785,7 +1839,7 @@ var cmp = [
 	'flavor':'light frame fitted with thrusters',
 	'bonus':function(target){
 		target.acceleration+=0.7;
-		target.turnrate+=0.1;
+		target.turnRate+=0.1;
 		target.health+=2;
 		target.sprite.body.maxVelocity.x+=12;
 		target.sprite.body.maxVelocity.y+=12;
