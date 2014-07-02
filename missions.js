@@ -257,7 +257,7 @@ var missions = [
 },
 {
 	'id':5,
-	'next':[6,7,8],
+	'next':[6,7,8,10],
 	'name':'5',
 	'complete':false,
 	'componentsReward':allianceGear,
@@ -305,7 +305,7 @@ var missions = [
 },
 {
 	'id':6,
-	'next':[5,7,8],
+	'next':[5,7,8,10],
 	'name':'bandits',
 	'complete':false,
 	'componentsReward':allianceGear,
@@ -358,7 +358,7 @@ var missions = [
 },
 {
 	'id':7,
-	'next':[6,5,8],
+	'next':[6,5,8,10],
 	'name':'zombies',
 	'complete':false,
 	'componentsReward':droneGear,
@@ -410,7 +410,7 @@ var missions = [
 },
 	{
 	'id':8,
-	'next':[5,6,7],
+	'next':[5,6,7,10],
 	'name':'dron2',
 	'complete':false,
 	'componentsReward':droneGear,
@@ -515,7 +515,53 @@ var missions = [
 
 
 },
-
+{
+	'id':10,
+	'next':[5,6,7,8],
+	'name':'mechanoids',
+	'complete':false,
+	'componentsReward':mechanoidGear,
+	'componentsCount':2,
+	'hazeRed':0.7,
+	'hazeWhite':0.7,
+	'hazePurple':0.8,
+	'hazeRedTint':16777215,
+	'hazeWhiteTint':16777215,
+	'hazePurpleTint':16777215,
+	'hazeRedSpeed':160,
+	'hazeWhiteSpeed':600,
+	'hazePurpleSpeed':80,
+	'distanceMin':3000,
+	'distanceMax':4000,
+	'hazePurpleBlendMode':2,
+	'hazeRedBlendMode':2,
+	'intro':['init new quest. kill yellow things.\ngo to waypoint. reconfigure. repeat'],
+	'outro':['captain. try to make it back in one piece.'],
+	'win':{
+		'condition':'kill', //could be 'frob'
+		'killCount':1,
+		'killType': mechanoidMiniBoss1
+	},
+	'enemies':
+		[{
+			'ships': asteroids,
+			'respawn':true,
+			'count':17, 
+			'missionTarget':false
+		},
+	{
+			'ships': mechanoids,
+			'respawn':true,
+			'count':13, 
+			'missionTarget':false
+		},
+	{
+			'ships': mechanoidMiniBoss1,
+			'respawn':true,
+			'count':1, 
+			'missionTarget':true
+		}]
+}
 
 
 

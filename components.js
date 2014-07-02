@@ -161,7 +161,7 @@ var cmp = [
 	'name':'Mineral Scanner',
 	'flavor':'track more enemies and find more loot',
 	'bonus':function(target){
-		target.radarTargets+=1;
+		target.radarTargets+=2;
 		target.dropRate+=0.008;
 	}
 },
@@ -818,7 +818,7 @@ var cmp = [
 	'flavor':'warns when in enemy sensor range',
 	'bonus':function(target){
 		target.profileShow=true;
-		target.radarTargets+=1;
+		target.radarTargets+=3;
 	}
 },
 {
@@ -850,9 +850,9 @@ var cmp = [
 	'id':67,
 	'drops':true,
 	'name':'Long Range Sensor',
-	'flavor':'track 2 more targets',
+	'flavor':'track many more targets',
 	'bonus':function(target){
-		target.radarTargets+=2;
+		target.radarTargets+=5;
 	}
 },
 {
@@ -1717,6 +1717,44 @@ var cmp = [
 		target.fireEnergy*=1.2;
 		target.fireDamage+=2;
 		target.bulletSprite=6;
+		if(target.ai==-1){
+			target.updateBehavior.push(function(targ){
+				if(targ.fireTracking==0){
+				bullets.forEachAlive(function(bullet){
+					bullet.x+=Math.cos(bullet.rotation)*10;
+					bullet.y+=Math.sin(bullet.rotation)*10;
+					bullet.rotation+=game.time.physicsElapsed*20;
+				});	
+				}else{
+				bullets.forEachAlive(function(bullet){
+					var tempAngle = bullet.rotation + (Math.PI * 0.5);					
+					bullet.x+=Math.cos(tempAngle)*Math.cos(bullet.lifespan/60)*500*game.time.physicsElapsed;
+					bullet.y+=Math.sin(tempAngle)*Math.cos(bullet.lifespan/60)*500*game.time.physicsElapsed;
+					});	
+				}
+			});
+		}else{
+			target.updateBehavior.push(function(targ){
+				if(targ.fireTracking==0){
+				targ.bullets.forEachAlive(function(bullet){
+					if(bullet.owner==targ.sprite){
+					bullet.x+=Math.cos(bullet.rotation)*10;
+					bullet.y+=Math.sin(bullet.rotation)*10;
+					bullet.rotation+=game.time.physicsElapsed*20;
+					}
+				});
+				}else{	
+				targ.bullets.forEachAlive(function(bullet){
+					if(bullet.owner==targ.sprite){
+					var tempAngle = bullet.rotation + (Math.PI * 0.5);					
+					bullet.x+=Math.cos(tempAngle)*Math.cos(bullet.lifespan/60)*500*game.time.physicsElapsed;
+					bullet.y+=Math.sin(tempAngle)*Math.cos(bullet.lifespan/60)*500*game.time.physicsElapsed;
+					}
+					});	
+				}
+			});
+
+		}
 	}
 },
 {
@@ -1731,9 +1769,11 @@ var cmp = [
 			
 			var newBullet=tgt.spawnBullet(false);
 			newBullet.loadTexture('bullet', bullet.bulletSprite);
+			newBullet.bulletSprite=bullet.bulletSprite;
 			newBullet.damage=bullet.damage;
 			newBullet.body.velocity.x=bullet.body.velocity.x;
 			newBullet.body.velocity.y=bullet.body.velocity.y;
+			newBullet.rotation = bullet.rotation;
 			newBullet.x=bullet.x;
 			newBullet.y=bullet.y;
 			if(Math.random()>0.5){
@@ -1763,7 +1803,7 @@ var cmp = [
 		target.sprite.body.maxVelocity.y+=10;
 		target.bulletBehavior.push(function(bullet){
 			var tgt = ownerFromName(bullet.owner.name);
-			if(Math.random()<0.2){
+			if(Math.random()<0.2*(tgt.fireRate/200)){
 				midBoom(explosions,3,tgt.sprite.x,tgt.sprite.y);
 				target.sprite.x+=randomRange(40,160)*randomSign();
 				target.sprite.y+=randomRange(40,160)*randomSign();

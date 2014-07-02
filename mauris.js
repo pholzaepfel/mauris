@@ -420,6 +420,7 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 	this.acceleration=1;
 	this.health = 3;
 	this.bulletHitBehavior=[];
+	this.updateBehavior=[];
 	this.bulletBehavior=[];
 	this.ai = 1;
 	this.alive=true;
@@ -685,6 +686,9 @@ enemyShip.prototype.emitThrust = function() {
 }
 
 enemyShip.prototype.update = function() {
+	for (var i = 0; i < this.updateBehavior.length; i++) {
+			this.updateBehavior[i](this);
+	}
 	if(!this.built && onscreen(this.sprite.x,this.sprite.y))
 	{
 		this.parts=createShip(this.ship,this.sprite);
@@ -987,6 +991,7 @@ playerShip.prototype.initPlayerShip = function (ship) {
 	this.bulletBlendMode=1;
 	this.bulletHitBehavior=[];
 	this.bulletBehavior=[];
+	this.updateBehavior=[];
 	this.destroyParts();
 	this.parts=[];
 	this.speed = 0; //current
@@ -1162,6 +1167,10 @@ playerShip.prototype.emitThrust = function() {
 
 playerShip.prototype.update = function(){
 	if(this.alive){
+
+		for (var i = 0; i < this.updateBehavior.length; i++) {
+			this.updateBehavior[i](this);
+		}
 
 		//fugly hack to get around mysterious loss of velocity
 		if(this.sprite.body.velocity.x != 0 || this.sprite.body.velocity.y != 0){
