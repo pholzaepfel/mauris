@@ -33,7 +33,7 @@ var cmp = [
 		target.fireRate+=0;
 		target.fireVelocity+=600;
 		target.bulletBehavior.push(function(bullet){
-				bullet.scale.setTo(bullet.scale.x+.5,bullet.scale.y);
+			bullet.scale.setTo(bullet.scale.x+.5,bullet.scale.y);
 		});
 		target.sprite.profile+=25;
 	}
@@ -92,7 +92,7 @@ var cmp = [
 	'bonus':function(target){
 		target.fireVelocity+=200;
 		target.fireSound=ui.sound_pew1;
-		target.fireRate*=0.25;
+		target.fireRate*=0.50;
 		target.bulletSprite=3;
 		target.sprite.profile+=50;
 	}
@@ -146,11 +146,11 @@ var cmp = [
 		}
 		target.alt=function(){
 			if(game.time.now > this.altCooldown && this.takeEnergy(0.8)){				
-					ui.sound_boop.play();
-					this.shieldCooldown=game.time.now+100;
-					this.altCooldown=game.time.now+100;
-					this.shield=true;
-					shieldEffect(explosions, 4, this.sprite.x, this.sprite.y, this.sprite.body.velocity.x, this.sprite.body.velocity.y, this.ship.length);
+				ui.sound_boop.play();
+				this.shieldCooldown=game.time.now+100;
+				this.altCooldown=game.time.now+100;
+				this.shield=true;
+				shieldEffect(explosions, 4, this.sprite.x, this.sprite.y, this.sprite.body.velocity.x, this.sprite.body.velocity.y, this.ship.length);
 			}
 		}
 	}
@@ -212,7 +212,7 @@ var cmp = [
 		target.fireRate*=1.5;
 		target.sprite.profile+=200;
 		target.bulletBehavior.push(function(bullet){
-				bullet.scale.setTo(bullet.scale.x+.1,bullet.scale.y+.1);
+			bullet.scale.setTo(bullet.scale.x+.1,bullet.scale.y+.1);
 		});
 	}
 },
@@ -555,19 +555,19 @@ var cmp = [
 		target.bulletBehavior.push(function(bullet, playerFired){
 
 			if(playerFired){
-			var tgt = ownerFromName(bullet.owner.name);
-			bullet.rotation+=Math.random()*0.4-0.2;
-			game.physics.arcade.velocityFromRotation(bullet.rotation, getHypo(bullet.body.velocity.x,bullet.body.velocity.y), bullet.body.velocity);	
-			if(tgt.takeEnergy(tgt.fireEnergy/3)){
-			var bullet2 = tgt.spawnBullet(false);
-			
-			if(typeof(bullet2)!='undefined'){
-			bullet2.rotation+=Math.random()*0.8-0.4;
-			game.physics.arcade.velocityFromRotation(bullet2.rotation, bullet2.fireVelocity, bullet2.body.velocity);
-			}else{
-				tgt.energy+=tgt.fireEnergy/3;
-			}
-			}
+				var tgt = ownerFromName(bullet.owner.name);
+				bullet.rotation+=Math.random()*0.4-0.2;
+				game.physics.arcade.velocityFromRotation(bullet.rotation, getHypo(bullet.body.velocity.x,bullet.body.velocity.y), bullet.body.velocity);	
+				if(tgt.takeEnergy(tgt.fireEnergy/3)){
+					var bullet2 = tgt.spawnBullet(false);
+
+					if(typeof(bullet2)!='undefined'){
+						bullet2.rotation+=Math.random()*0.8-0.4;
+						game.physics.arcade.velocityFromRotation(bullet2.rotation, bullet2.fireVelocity, bullet2.body.velocity);
+					}else{
+						tgt.energy+=tgt.fireEnergy/3;
+					}
+				}
 			}
 		});
 		target.sprite.profile+=40;
@@ -1151,11 +1151,11 @@ var cmp = [
 				function(sprite,bullet){
 					var own = ownerFromName(bullet.owner.name)
 			if(game.time.now>own.shieldCooldown){
-					shieldEffect(explosions, 4, own.sprite.x, own.sprite.y, own.sprite.body.velocity.x, own.sprite.body.velocity.y, own.ship.length);
+				shieldEffect(explosions, 4, own.sprite.x, own.sprite.y, own.sprite.body.velocity.x, own.sprite.body.velocity.y, own.ship.length);
 			}
 		own.shieldCooldown=game.time.now+own.fireRate;
 		own.shield=true;
-		});
+				});
 	}
 },
 {
@@ -1168,11 +1168,11 @@ var cmp = [
 		target.fireRange*=0.6;
 		target.fireVelocity*=1.4;
 		target.bulletHitBehavior.push(
-			function(sprite,bullet){
-				bullet.owner.body.velocity.x=sprite.body.velocity.x
-				bullet.owner.body.velocity.y=sprite.body.velocity.y
-			}
-		);		
+				function(sprite,bullet){
+					bullet.owner.body.velocity.x=sprite.body.velocity.x
+			bullet.owner.body.velocity.y=sprite.body.velocity.y
+				}
+				);		
 	}
 },
 {
@@ -1181,7 +1181,7 @@ var cmp = [
 	'name':'Green Reactor',
 	'flavor':'--',
 	'bonus':function(target){
-
+		target.TODO=1;
 	}
 },
 {
@@ -1190,26 +1190,61 @@ var cmp = [
 	'name':'Extended Life Support',
 	'flavor':'--',
 	'bonus':function(target){
-
+		target.TODO=1;
 	}
 },
 {
 	'id':92,
-	'drops':false,
-	'name':'Ancient Technology',
-	'flavor':'--',
+	'drops':true,
+	'name':'Organic Armor',
+	'flavor':'damage heals over time',
 	'bonus':function(target){
-
+		target.turnRate+=0.1;
+		if(typeof(target.organicArmor)=='undefined'){
+			target.organicArmor=4;
+			target.nextOrganicArmorPing=game.time.now;
+		}else{
+			target.organicArmor+=4; 
+		}
+		target.updateBehavior.push(
+				function(targ){
+					if(target.organicArmor>target.healthMax){
+						target.healthMax=target.organicArmor;
+					}	
+					if(game.time.now>target.nextOrganicArmorPing && targ.health < targ.organicArmor){
+						targ.health+=0.25;
+						targ.nextOrganicArmorPing=game.time.now+250;
+					}	
+				}
+				);
 	}
 },
 {
 	'id':93,
-	'drops':false,
-	'name':'Ancient Technology',
-	'flavor':'--',
+	'drops':true,
+	'name':'Organic Armor',
+	'flavor':'damage heals over time',
 	'bonus':function(target){
-
+		target.turnRate+=0.1;
+		if(typeof(target.organicArmor)=='undefined'){
+			target.organicArmor=4;
+			target.nextOrganicArmorPing=game.time.now;
+		}else{
+			target.organicArmor+=4;
+		}
+		target.updateBehavior.push(
+				function(targ){
+					if(target.organicArmor>target.healthMax){
+						target.healthMax=target.organicArmor;
+					}	
+					if(game.time.now>target.nextOrganicArmorPing && targ.health < targ.organicArmor){
+						targ.health+=0.25;
+						targ.nextOrganicArmorPing=game.time.now+250;
+					}	
+				}
+				);
 	}
+
 },
 {
 	'id':94,
@@ -1710,46 +1745,47 @@ var cmp = [
 	'id':120,
 	'drops':false,
 	'name':'Annihilator Trebuchet',
-	'flavor':'moar damage',
+	'flavor':'spiraling shots',
 	'bonus':function(target){
 		target.fireVelocity*=0.8;
 		target.fireRange*=1.4;
 		target.fireEnergy*=1.2;
 		target.fireDamage+=2;
 		target.bulletSprite=6;
+		target.fireSound=ui.sound_bullet;
 		if(target.ai==-1){
 			target.updateBehavior.push(function(targ){
 				if(targ.fireTracking==0){
-				bullets.forEachAlive(function(bullet){
-					bullet.x+=Math.cos(bullet.rotation)*10;
-					bullet.y+=Math.sin(bullet.rotation)*10;
-					bullet.rotation+=game.time.physicsElapsed*20;
-				});	
+					bullets.forEachAlive(function(bullet){
+						bullet.x+=Math.cos(bullet.rotation)*10;
+						bullet.y+=Math.sin(bullet.rotation)*10;
+						bullet.rotation+=game.time.physicsElapsed*20;
+					});	
 				}else{
-				bullets.forEachAlive(function(bullet){
-					var tempAngle = bullet.rotation + (Math.PI * 0.5);					
-					bullet.x+=Math.cos(tempAngle)*Math.cos(bullet.lifespan/60)*500*game.time.physicsElapsed;
-					bullet.y+=Math.sin(tempAngle)*Math.cos(bullet.lifespan/60)*500*game.time.physicsElapsed;
+					bullets.forEachAlive(function(bullet){
+						var tempAngle = bullet.rotation + (Math.PI * 0.5);					
+						bullet.x+=Math.cos(tempAngle)*Math.cos(bullet.lifespan/60)*500*game.time.physicsElapsed;
+						bullet.y+=Math.sin(tempAngle)*Math.cos(bullet.lifespan/60)*500*game.time.physicsElapsed;
 					});	
 				}
 			});
 		}else{
 			target.updateBehavior.push(function(targ){
 				if(targ.fireTracking==0){
-				targ.bullets.forEachAlive(function(bullet){
-					if(bullet.owner==targ.sprite){
-					bullet.x+=Math.cos(bullet.rotation)*10;
-					bullet.y+=Math.sin(bullet.rotation)*10;
-					bullet.rotation+=game.time.physicsElapsed*20;
-					}
-				});
+					targ.bullets.forEachAlive(function(bullet){
+						if(bullet.owner==targ.sprite){
+							bullet.x+=Math.cos(bullet.rotation)*10;
+							bullet.y+=Math.sin(bullet.rotation)*10;
+							bullet.rotation+=game.time.physicsElapsed*20;
+						}
+					});
 				}else{	
-				targ.bullets.forEachAlive(function(bullet){
-					if(bullet.owner==targ.sprite){
-					var tempAngle = bullet.rotation + (Math.PI * 0.5);					
-					bullet.x+=Math.cos(tempAngle)*Math.cos(bullet.lifespan/60)*500*game.time.physicsElapsed;
-					bullet.y+=Math.sin(tempAngle)*Math.cos(bullet.lifespan/60)*500*game.time.physicsElapsed;
-					}
+					targ.bullets.forEachAlive(function(bullet){
+						if(bullet.owner==targ.sprite){
+							var tempAngle = bullet.rotation + (Math.PI * 0.5);					
+							bullet.x+=Math.cos(tempAngle)*Math.cos(bullet.lifespan/60)*500*game.time.physicsElapsed;
+							bullet.y+=Math.sin(tempAngle)*Math.cos(bullet.lifespan/60)*500*game.time.physicsElapsed;
+						}
 					});	
 				}
 			});
@@ -1766,7 +1802,7 @@ var cmp = [
 		target.bulletHitBehavior.push(function(sprite,bullet){
 
 			var tgt = ownerFromName(sprite.name);
-			
+
 			var newBullet=tgt.spawnBullet(false);
 			newBullet.loadTexture('bullet', bullet.bulletSprite);
 			newBullet.bulletSprite=bullet.bulletSprite;
@@ -1786,11 +1822,20 @@ var cmp = [
 {
 	'id':122,
 	'drops':false,
-	'name':'Orb of Duplication',
-	'flavor':'--',
+	'name':'Orb of Damage',
+	'flavor':'no aiming required',
 	'bonus':function(target){
-		target.TODO=1;
-	}
+		target.bulletBehavior.push(
+				function(bullet){
+					bullet.body.velocity.x=0;
+					bullet.body.velocity.y=0;
+					bullet.alpha=0;
+					game.add.tween(bullet.scale).to({x:bullet.lifespan/20,y:bullet.lifespan/20},bullet.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
+		
+				}
+				);
+	}	
+
 },
 {
 	'id':123,
@@ -1817,23 +1862,57 @@ var cmp = [
 },
 {
 	'id':124,
-	'drops':false,
-	'name':'Ancient Technology',
-	'flavor':'--',
+	'drops':true,
+	'name':'Organic Armor',
+	'flavor':'damage heals over time',
 	'bonus':function(target){
-		target.TODO=1;
-
+		target.turnRate+=0.1;
+		if(typeof(target.organicArmor)=='undefined'){
+			target.organicArmor=4;
+			target.nextOrganicArmorPing=game.time.now;
+		}else{
+			target.organicArmor+=4;
+		}
+		target.updateBehavior.push(
+				function(targ){
+					if(target.organicArmor>target.healthMax){
+						target.healthMax=target.organicArmor;
+					}	
+					if(game.time.now>target.nextOrganicArmorPing && targ.health < targ.organicArmor){
+						targ.health+=0.25;
+						targ.nextOrganicArmorPing=game.time.now+250;
+					}	
+				}
+				);
 	}
+
 },
 {
 	'id':125,
-	'drops':false,
-	'name':'Ancient Technology',
-	'flavor':'--',
+	'drops':true,
+	'name':'Organic Armor',
+	'flavor':'damage heals over time',
 	'bonus':function(target){
-		target.TODO=1;
-
+		target.turnRate+=0.1;
+		if(typeof(target.organicArmor)=='undefined'){
+			target.organicArmor=4;
+			target.nextOrganicArmorPing=game.time.now;
+		}else{
+			target.organicArmor+=4;
+		}
+		target.updateBehavior.push(
+				function(targ){
+					if(target.organicArmor>target.healthMax){
+						target.healthMax=target.organicArmor;
+					}	
+					if(game.time.now>target.nextOrganicArmorPing && targ.health < targ.organicArmor){
+						targ.health+=0.25;
+						targ.nextOrganicArmorPing=game.time.now+250;
+					}	
+				}
+				);
 	}
+
 },
 {
 	'id':126,
@@ -1950,37 +2029,52 @@ var cmp = [
 },
 {
 	'id':134,
-	'drops':false,
-	'name':'Component134',
-	'flavor':'--',
+	'drops':true,
+	'name':'Elite Wing',
+	'flavor':'finest technology',
 	'bonus':function(target){
-
-	}
+		target.acceleration+=1;
+		target.turnRate+=0.7;
+		target.profile+=30;
+		target.sprite.body.maxVelocity.x+=25;
+		target.sprite.body.maxVelocity.y+=25;
+}
 },
 {
 	'id':135,
-	'drops':false,
-	'name':'Component135',
-	'flavor':'--',
+	'drops':true,
+	'name':'Elite Laser',
+	'flavor':'superior accuracy',
 	'bonus':function(target){
-
-	}
+		target.fireVelocity+=800;
+		target.fireSound=ui.sound_pew1;
+		target.fireRate*=0.75;
+		target.energyMax+=4;
+		target.energyRate*=0.95;
+		target.bulletSprite=4;
+		target.sprite.profile+=50;
+			target.bulletBehavior.push(function(bullet){
+			bullet.scale.setTo(bullet.scale.x+2,bullet.scale.y);
+		});
+}
 },
 {
 	'id':136,
-	'drops':false,
-	'name':'Component136',
+	'drops':true,
+	'name':'Elite Item',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO=1;
 
 	}
 },
 {
 	'id':137,
-	'drops':false,
-	'name':'Component137',
+	'drops':true,
+	'name':'Elite Item',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO=1;
 
 	}
 },
@@ -2240,37 +2334,47 @@ var cmp = [
 },
 {
 	'id':166,
-	'drops':false,
-	'name':'Component166',
-	'flavor':'--',
+	'drops':true,
+	'name':'Elite Wing',
+	'flavor':'finest technology',
 	'bonus':function(target){
+		target.acceleration+=1;
+		target.turnRate+=0.7;
+		target.profile+=30;
+		target.sprite.body.maxVelocity.x+=25;
+		target.sprite.body.maxVelocity.y+=25;
 
 	}
 },
 {
 	'id':167,
-	'drops':false,
-	'name':'Component167',
-	'flavor':'--',
+	'drops':true,
+	'name':'Elite Command',
+	'flavor':'energy, health, firerate',
 	'bonus':function(target){
+		target.health+=4;
+		target.fireRate*=0.9;
+		target.energyMax+=6;
 
 	}
 },
 {
 	'id':168,
-	'drops':false,
-	'name':'Component168',
+	'drops':true,
+	'name':'Elite Item',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO=1;
 
 	}
 },
 {
 	'id':169,
-	'drops':false,
-	'name':'Component169',
+	'drops':true,
+	'name':'Elite Item',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO=1;
 
 	}
 },
