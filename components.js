@@ -1200,12 +1200,7 @@ var cmp = [
 	'flavor':'damage heals over time',
 	'bonus':function(target){
 		target.turnRate+=0.1;
-		if(typeof(target.organicArmor)=='undefined'){
-			target.organicArmor=4;
-			target.nextOrganicArmorPing=game.time.now;
-		}else{
 			target.organicArmor+=4; 
-		}
 		target.updateBehavior.push(
 				function(targ){
 					if(target.organicArmor>target.healthMax){
@@ -1226,12 +1221,7 @@ var cmp = [
 	'flavor':'damage heals over time',
 	'bonus':function(target){
 		target.turnRate+=0.1;
-		if(typeof(target.organicArmor)=='undefined'){
-			target.organicArmor=4;
-			target.nextOrganicArmorPing=game.time.now;
-		}else{
 			target.organicArmor+=4;
-		}
 		target.updateBehavior.push(
 				function(targ){
 					if(target.organicArmor>target.healthMax){
@@ -1732,7 +1722,10 @@ var cmp = [
 		target.bulletHitBehavior.push(function(sprite,bullet){
 			var tgt = ownerFromName(sprite.name);
 			if(tgt.acceleration>0.5){				
-				tgt.acceleration-=0.5;
+				tgt.acceleration-=1;
+				if(tgt.acceleration>0.5){				
+					tgt.acceleration=0.5;
+				}
 				tgt.sprite.body.velocity.x*=0.8;
 				tgt.sprite.body.velocity.y*=0.8;
 			};
@@ -1831,7 +1824,7 @@ var cmp = [
 					bullet.body.velocity.y=0;
 					bullet.alpha=0;
 					game.add.tween(bullet.scale).to({x:bullet.lifespan/20,y:bullet.lifespan/20},bullet.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
-		
+
 				}
 				);
 	}	
@@ -1867,12 +1860,7 @@ var cmp = [
 	'flavor':'damage heals over time',
 	'bonus':function(target){
 		target.turnRate+=0.1;
-		if(typeof(target.organicArmor)=='undefined'){
-			target.organicArmor=4;
-			target.nextOrganicArmorPing=game.time.now;
-		}else{
 			target.organicArmor+=4;
-		}
 		target.updateBehavior.push(
 				function(targ){
 					if(target.organicArmor>target.healthMax){
@@ -1894,12 +1882,7 @@ var cmp = [
 	'flavor':'damage heals over time',
 	'bonus':function(target){
 		target.turnRate+=0.1;
-		if(typeof(target.organicArmor)=='undefined'){
-			target.organicArmor=4;
-			target.nextOrganicArmorPing=game.time.now;
-		}else{
 			target.organicArmor+=4;
-		}
 		target.updateBehavior.push(
 				function(targ){
 					if(target.organicArmor>target.healthMax){
@@ -2038,7 +2021,7 @@ var cmp = [
 		target.profile+=30;
 		target.sprite.body.maxVelocity.x+=25;
 		target.sprite.body.maxVelocity.y+=25;
-}
+	}
 },
 {
 	'id':135,
@@ -2053,28 +2036,34 @@ var cmp = [
 		target.energyRate*=0.95;
 		target.bulletSprite=4;
 		target.sprite.profile+=50;
-			target.bulletBehavior.push(function(bullet){
+		target.bulletBehavior.push(function(bullet){
 			bullet.scale.setTo(bullet.scale.x+2,bullet.scale.y);
 		});
-}
+	}
 },
 {
 	'id':136,
 	'drops':true,
-	'name':'Elite Item',
-	'flavor':'--',
+	'name':'Ancient Armor',
+	'flavor':'brimming with random technology',
 	'bonus':function(target){
-		target.TODO=1;
-
+		target.health+=8;
+		target.turnRate-=0.2;
+		target.acceleration-=0.3;
+		target.energyRate*=0.8;
 	}
 },
 {
 	'id':137,
 	'drops':true,
-	'name':'Elite Item',
-	'flavor':'--',
+	'name':'Ancient Armor',
+	'flavor':'brimming with random technology',
 	'bonus':function(target){
-		target.TODO=1;
+		target.fireDamage+=2;
+		target.fireEnergy*=1.2;
+		target.turnRate-=0.2;
+		target.acceleration-=0.3;
+		target.energyRate*=0.7;
 
 	}
 },
@@ -2361,20 +2350,25 @@ var cmp = [
 {
 	'id':168,
 	'drops':true,
-	'name':'Elite Item',
-	'flavor':'--',
+	'name':'Ancient Armor',
+	'flavor':'brimming with random technology',
 	'bonus':function(target){
-		target.TODO=1;
+		target.health+=8;
+		target.turnRate-=0.2;
+		target.acceleration-=0.3;
+		target.energyRate*=0.8;
 
 	}
 },
 {
 	'id':169,
 	'drops':true,
-	'name':'Elite Item',
-	'flavor':'--',
+	'name':'Ancient Armor',
+	'flavor':'brimming with random technology',
 	'bonus':function(target){
-		target.TODO=1;
+		target.health+=16;
+		target.turnRate-=0.2;
+		target.acceleration-=0.4;
 
 	}
 },

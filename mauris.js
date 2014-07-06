@@ -381,10 +381,12 @@ enemyShip.prototype.takeEnergy = function (amt, forgive){
 	if(this.energy >= amt){
 		this.energy-=amt;
 		ret=true;
+	this.nextEnergy = game.time.now + this.energyRate;
 	}
 	if(forgive && this.energy == this.energyMax){
 		this.energy-=amt;
 		ret=true;
+	this.nextEnergy = game.time.now + this.energyRate;
 	}
 	return ret;
 }
@@ -399,7 +401,8 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 	this.sprite.r=255;
 	this.sprite.g=255;
 	this.sprite.b=255;
-
+	this.organicArmor=0;
+	this.nextOrganicArmorPing=0;
 	this.nextThrust=0;
 	this.radarError=0;
 	this.fireSound=ui.sound_pew3;
@@ -949,15 +952,18 @@ playerShip.prototype.takeEnergy = function (amt, forgive){
 	if(this.energy >= amt){
 		this.energy-=amt;
 		ret=true;
+	this.nextEnergy = game.time.now + this.energyRate;
 	}
 	if(forgive && this.energy == this.energyMax){
 		this.energy-=amt;
 		ret=true;
+	this.nextEnergy = game.time.now + this.energyRate;
 	}
 
 	if(!ret){
 		ui.energyLine.shudder=5;
 	}
+	
 	return ret;
 }
 playerShip.prototype.initPlayerShip = function (ship) {
@@ -965,6 +971,8 @@ playerShip.prototype.initPlayerShip = function (ship) {
 	this.sprite.r=255;
 	this.sprite.g=255;
 	this.sprite.b=255;
+	this.organicArmor=0;
+	this.nextOrganicArmorPing=0;
 	this.target={};
 	this.fireSound=ui.sound_pew3;
 	this.ai=-1; //natural intelligence
