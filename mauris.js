@@ -1188,16 +1188,28 @@ var firingSolution = function(attacker, target, fireRange, fireVelocity) {
 
 	var rt = fireRange / 1000;
 
-	var attackerEndX = attacker.body.x + (Math.cos(attacker.rotation) * rt * fireVelocity) ;
-	var attackerEndY = attacker.body.y + (Math.sin(attacker.rotation) * rt * fireVelocity) ;
+	var attackerEndX = attacker.x + (Math.cos(attacker.rotation) * 2 * fireVelocity) ;
+	var attackerEndY = attacker.y + (Math.sin(attacker.rotation) * 2 * fireVelocity) ;
+		attackerEndX += attacker.body.velocity.x;
+		attackerEndY += attacker.body.velocity.y;
+	
+	var targetEndX = target.x + (target.body.velocity.x * 4);
+	var targetEndY = target.y + (target.body.velocity.y * 4);
 
-	var targetEndX = target.body.x + target.body.velocity.x * rt;
-	var targetEndY = target.body.y + target.body.velocity.y * rt;
+	var attackerLine = new Phaser.Line(attacker.x, attacker.y, attackerEndX, attackerEndY);
+	var targetLine = new Phaser.Line(target.x, target.y, targetEndX, targetEndY);
 
-	var attackerLine = new Phaser.Line(attacker.body.x, attacker.body.y, attackerEndX, attackerEndY);
-	var targetLine = new Phaser.Line(target.body.x, target.body.y, targetEndX, targetEndY);
-
-	return attackerLine.intersects(targetLine);
+	var intersectPoint = attackerLine.intersects(targetLine);
+	if (typeof(intersectPoint)=='undefined' || intersectPoint == null){
+	return false;
+	}
+	var targetDistance = game.physics.arcade.distanceBetween(target, intersectPoint);
+	var attackerDistance = game.physics.arcade.distanceBetween(attacker, intersectPoint);
+	var targetVelocity = Math.abs(target.body.velocity.x) + Math.abs(target.body.velocity.y);	
+	var attackerVelocity = Math.abs(attacker.body.velocity.x + (Math.cos(attacker.rotation)*fireVelocity))
+			      + Math.abs(attacker.body.velocity.y + (Math.sin(attacker.rotation)*fireVelocity))	
+	var offset = Math.abs((targetDistance/targetVelocity) - (attackerDistance/fireVelocity));	
+	return offset < attackTreshold;
 }
 playerShip.prototype.update = function(){
 	if(this.alive){
@@ -1306,7 +1318,8 @@ playerShip.prototype.update = function(){
 
 			if(this.target != this.sprite){
 				var targetDistance = this.game.physics.arcade.distanceBetween(this.sprite, this.target);
-				var targetAngle = this.game.physics.arcade.angleBetween(this.sprite, this.target); 
+				var adjTarget = new Phaser.Point(this.target.x+this.target.body.velocity.x*(targetDistance/1200),this.target.y+this.target.body.velocity.y*(targetDistance/800));
+				var targetAngle = this.game.physics.arcade.angleBetween(this.sprite, adjTarget); 
 
 
 				var diffAngle = compareAngles(this.sprite.rotation,targetAngle);
@@ -1349,6 +1362,7 @@ playerShip.prototype.update = function(){
 	}
 };
 var player;
+var attackTreshold = 100;
 var attemptTarget;
 var confusionCooldown = 0;
 var joystickUsed = false;
