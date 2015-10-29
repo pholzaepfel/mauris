@@ -162,10 +162,10 @@ function asteroidSort(a, b) {
 	}
 	if(game.physics.arcade.distanceBetween(a.sprite,player.sprite)>
 			game.physics.arcade.distanceBetween(b.sprite,player.sprite)){
-				return -1;
-			}else{
-				return 1;
-			}
+		return -1;
+	}else{
+		return 1;
+	}
 }
 function threatSort(a, b) {
 	if(!a.alive && !b.alive){
@@ -178,10 +178,10 @@ function threatSort(a, b) {
 
 	if(a.sprite.profile/game.physics.arcade.distanceBetween(a.sprite,player.sprite)>
 			b.sprite.profile/game.physics.arcade.distanceBetween(b.sprite,player.sprite)){
-				return -1;
-			}else{
-				return 1;
-			}
+		return -1;
+	}else{
+		return 1;
+	}
 }
 //////
 //
@@ -222,26 +222,26 @@ dragPart.prototype.update = function(){
 					this.sprite.x <= ui.partswindow.x + ui.partswindow.width &&	
 					this.sprite.y >= ui.partswindow.y &&
 					this.sprite.y <= ui.partswindow.y + ui.partswindow.height){
-						var n=0;
-						//prevent player from destroying the last part	
-						for (var i=0;i<ui.parts.length;i++){
-							if(ui.parts[i].sprite.alive){
-								n+=1;
-							}
-						}
-						if (n == 1){
-							this.sprite.reset(0,0);
-							ui.partsArray();
-						}else{
-							if (!cheatmode){
-								playerStats.inventory.push(this.index);
-							}
-							this.sprite.kill();							
-							ui.cullParts();
-							ui.updatePart();
-							ui.partsArray(); //recalc rectangle
-						}
+				var n=0;
+				//prevent player from destroying the last part	
+				for (var i=0;i<ui.parts.length;i++){
+					if(ui.parts[i].sprite.alive){
+						n+=1;
 					}
+				}
+				if (n == 1){
+					this.sprite.reset(0,0);
+					ui.partsArray();
+				}else{
+					if (!cheatmode){
+						playerStats.inventory.push(this.index);
+					}
+					this.sprite.kill();							
+					ui.cullParts();
+					ui.updatePart();
+					ui.partsArray(); //recalc rectangle
+				}
+			}
 		}
 	}
 }
@@ -321,11 +321,11 @@ shipPart.prototype.update = function(){
 
 	this.sprite.exists=true;
 	if(this.target.alive){
-	this.sprite.tint = (this.target.r << 16) + (this.target.g << 8) + this.target.b;
-	this.sprite.alpha=this.target.alpha;
+		this.sprite.tint = (this.target.r << 16) + (this.target.g << 8) + this.target.b;
+		this.sprite.alpha=this.target.alpha;
 	}else{
-	this.sprite.tint = 16777215;
-	this.sprite.alpha=1;
+		this.sprite.tint = 16777215;
+		this.sprite.alpha=1;
 	}
 	var ons = onscreen(this.target.x,this.target.y);
 	this.sprite.visible=this.sprite.alive && ons;
@@ -381,12 +381,12 @@ enemyShip.prototype.takeEnergy = function (amt, forgive){
 	if(this.energy >= amt){
 		this.energy-=amt;
 		ret=true;
-	this.nextEnergy = game.time.now + this.energyRate;
+		this.nextEnergy = game.time.now + this.energyRate;
 	}
 	if(forgive && this.energy == this.energyMax){
 		this.energy-=amt;
 		ret=true;
-	this.nextEnergy = game.time.now + this.energyRate;
+		this.nextEnergy = game.time.now + this.energyRate;
 	}
 	return ret;
 }
@@ -411,7 +411,7 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 	midBoom(explosions,4,x,y);
 	this.ship = this.shipList[Math.floor(randomRange(0,this.shipList.length))];
 	this.destroyParts()
-	this.effects=function(){};
+		this.effects=function(){};
 	this.sprite.profile = 250;
 	this.sawDamage=0;
 	this.sprite.profileDecay = 166;
@@ -435,6 +435,8 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 	this.cooldown114=0;
 	this.died=0;
 	this.turnRate=0.5;
+	this.fireCounter = 0;
+	this.fireCounterReset = 0;
 	this.fireRate = 300;
 	this.fireVelocity = 400;
 	this.fireDamage = 2;
@@ -463,7 +465,7 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 
 	this.sprite.body.mass = shipWithoutVoid(this.ship).length*10000
 
-	this.altCheck = function(){return false;};
+		this.altCheck = function(){return false;};
 	this.energyReserve = 0;
 	this.alt = function(){
 		if(game.time.now>this.altCooldown){
@@ -529,11 +531,11 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 				retarget=true;
 			}
 		}else{
-				retarget=true;	
+			retarget=true;	
 		}
 		if(retarget){
-		this.aggroList.push(aggro);
-		this.target = aggro;
+			this.aggroList.push(aggro);
+			this.target = aggro;
 		}
 	}
 
@@ -547,7 +549,7 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 		this.sprite.alpha=6;
 		game.add.tween(this.sprite).to({r:255,g:255,b:255,alpha:1},400, Phaser.Easing.Exponential.Out, true, 0, false);
 
-}
+	}
 
 	if(this.behavior=='neutral'){
 		this.behavior='chasing';
@@ -630,10 +632,10 @@ enemyShip.prototype.up = function(a){
 enemyShip.prototype.fire = function () {
 	if (this.game.time.now > this.nextFire && this.bullets.countDead() > 0 &&
 			this.takeEnergy(this.fireEnergy)){
-				this.fireSound.play();
-				this.nextFire = this.game.time.now + this.fireRate;
-				this.spawnBullet(true);
-			}
+		this.fireSound.play();
+		this.nextFire = this.game.time.now + this.fireRate;
+		this.spawnBullet(true);
+	}
 
 }
 enemyShip.prototype.spawnBullet = function (playerFired) {
@@ -673,26 +675,26 @@ enemyShip.prototype.spawnBullet = function (playerFired) {
 
 
 enemyShip.prototype.emitThrust = function() {
-	
+
 	if(typeof(this.parts[0])!='undefined' && this.parts[0].sprite.alpha>0.5){
 
-	this.thrust.x=this.sprite.x-(Math.cos(this.sprite.rotation)*(this.sprite.body.width)*0.5);
-	this.thrust.y=this.sprite.y-(Math.sin(this.sprite.rotation)*(this.sprite.body.width)*0.5);
-	this.thrust.minParticleSpeed.setTo(0,0);
-	this.thrust.maxParticleSpeed.setTo(0,0);
-	this.thrust.lifespan=(1-Math.cos(randomRange(0,0.5*Math.PI)))*500;
-	this.thrust.lifespan+=200;
-	var tempX = randomRange(-18,18);
-	var tempY = randomRange(-18,18);
-	this.thrust.minParticleSpeed.setTo(tempX,tempY);
-	this.thrust.maxParticleSpeed.setTo(tempX,tempY);
-	this.thrust.emitParticle();
+		this.thrust.x=this.sprite.x-(Math.cos(this.sprite.rotation)*(this.sprite.body.width)*0.5);
+		this.thrust.y=this.sprite.y-(Math.sin(this.sprite.rotation)*(this.sprite.body.width)*0.5);
+		this.thrust.minParticleSpeed.setTo(0,0);
+		this.thrust.maxParticleSpeed.setTo(0,0);
+		this.thrust.lifespan=(1-Math.cos(randomRange(0,0.5*Math.PI)))*500;
+		this.thrust.lifespan+=200;
+		var tempX = randomRange(-18,18);
+		var tempY = randomRange(-18,18);
+		this.thrust.minParticleSpeed.setTo(tempX,tempY);
+		this.thrust.maxParticleSpeed.setTo(tempX,tempY);
+		this.thrust.emitParticle();
 	}
 }
 
 enemyShip.prototype.update = function() {
 	for (var i = 0; i < this.updateBehavior.length; i++) {
-			this.updateBehavior[i](this);
+		this.updateBehavior[i](this);
 	}
 	if(!this.built && onscreen(this.sprite.x,this.sprite.y))
 	{
@@ -712,19 +714,19 @@ enemyShip.prototype.update = function() {
 	if (this.game.physics.arcade.distanceBetween(this.sprite, player.sprite) > 4000 ||
 			this.game.physics.arcade.distanceBetween(this.sprite, player.sprite) > 2500 && this.ai == 3){
 
-				if(Math.random()>0.5){
-					this.target=player.sprite;
-				}
-				var x = this.target.x + (randomSign() * randomRange(960,1500) + player.sprite.body.velocity.x);
-				var y = this.target.y + (randomSign() * randomRange(540,1500) + player.sprite.body.velocity.y);
-				this.sprite.reset(x,y);				
-				midBoom(explosions,4,x,y);
-				if(this.ai==3){
+		if(Math.random()>0.5){
+			this.target=player.sprite;
+		}
+		var x = this.target.x + (randomSign() * randomRange(960,1500) + player.sprite.body.velocity.x);
+		var y = this.target.y + (randomSign() * randomRange(540,1500) + player.sprite.body.velocity.y);
+		this.sprite.reset(x,y);				
+		midBoom(explosions,4,x,y);
+		if(this.ai==3){
 
-					this.sprite.body.velocity = game.physics.arcade.velocityFromRotation(game.physics.arcade.angleBetween(this.sprite, player.sprite), randomRange(25,100));	
-					this.sprite.body.angularVelocity=randomRange(25,100)*randomSign();
-				}
-			}
+			this.sprite.body.velocity = game.physics.arcade.velocityFromRotation(game.physics.arcade.angleBetween(this.sprite, player.sprite), randomRange(25,100));	
+			this.sprite.body.angularVelocity=randomRange(25,100)*randomSign();
+		}
+	}
 	this.sprite.profile = this.sprite.profileMax; //tracking this in detail is hard and unnecessary
 
 	if(game.time.now>this.shieldCooldown){
@@ -745,25 +747,25 @@ enemyShip.prototype.update = function() {
 	}
 	if(this.ai!=3){
 		var adjustedProfile = 200 + Math.pow(this.target.profile,profileExponent);
-		
+
 		if(this.target.alpha<0.5){
 			adjustedProfile-=200;
 		};
 
-		
+
 		if(!this.target.alive || 
 				(game.physics.arcade.distanceBetween(this.sprite,this.target) > adjustedProfile * 1.5 && this.behavior=='chasing')){
-					for(var i=0;i<this.aggroList.length;i++){
-						if(this.aggroList[i].alive){		//this will cause the enemy to keep chasing the player if they were fired upon.
-							this.target=this.aggroList[i]; // I believe this may cause a 'feature' where grudges are kept beyond the grave. 
-							break;
-						}
-					}
-					if(i>=this.aggroList.length){			
-						this.target=player.sprite;
-						this.behavior='neutral';
-					}
+			for(var i=0;i<this.aggroList.length;i++){
+				if(this.aggroList[i].alive){		//this will cause the enemy to keep chasing the player if they were fired upon.
+					this.target=this.aggroList[i]; // I believe this may cause a 'feature' where grudges are kept beyond the grave. 
+					break;
 				}
+			}
+			if(i>=this.aggroList.length){			
+				this.target=player.sprite;
+				this.behavior='neutral';
+			}
+		}
 	}
 
 	this.effects();
@@ -776,9 +778,9 @@ enemyShip.prototype.update = function() {
 
 			if (this.game.physics.arcade.distanceBetween(this.sprite, this.target) < this.fireRange * 0.75 &&
 					this.game.physics.arcade.distanceBetween(this.sprite, this.target) < adjustedProfile * (this.behavior=='neutral'? 1 : 2)){
-						this.fire(); 
+				this.fire(); 
 
-					}
+			}
 		} else {
 			//TODO add some kind of fleeing behavior
 
@@ -812,7 +814,7 @@ enemyShip.prototype.update = function() {
 				}
 			}
 
-			if (this.target!= player.sprite || (targetDistance < adjustedProfile * 2 && this.behavior!='neutral')){
+			if ((targetDistance < adjustedProfile * 2 && this.behavior!='neutral')){
 				if(Math.abs(diffAngle)<0.25*Math.PI){
 					this.up(1);
 				}
@@ -825,11 +827,11 @@ enemyShip.prototype.update = function() {
 			}
 			if (this.energy - this.fireEnergy > this.energyReserve && targetDistance < this.fireRange * (this.fireVelocity/1000) && 
 					targetDistance < adjustedProfile * 1.5){
-						if(Math.abs(diffAngle) < 0.5){
-							this.fire(); 
-						}
+				if(Math.abs(diffAngle) < 0.5){
+					this.fire(); 
+				}
 
-					}
+			}
 
 		}
 
@@ -877,6 +879,7 @@ function preload () {
 	game.load.image('frob1', 'assets/frob1.png');
 	game.load.image('partswindow', 'assets/partswindow.png');
 	game.load.spritesheet('bullet', 'assets/bullets.png',16,16);
+	game.load.image('planets', 'assets/planets.png');
 	game.load.image('starfield2', 'assets/starfield2.png');
 	game.load.image('starfield6', 'assets/starfield6.png');
 	game.load.image('starfield4', 'assets/starfield4.png');
@@ -911,6 +914,7 @@ function preload () {
 var playerShip = function(ship) {
 	this.sprite = game.add.sprite(0, 0, 'parts', 1023);
 	game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
+	this.game = game;
 	this.initPlayerShip(ship);
 	this.thrust = game.add.emitter(0,0,50); //this is the right number for continuous thrust
 	this.thrust.makeParticles('thrust',[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]);
@@ -952,18 +956,18 @@ playerShip.prototype.takeEnergy = function (amt, forgive){
 	if(this.energy >= amt){
 		this.energy-=amt;
 		ret=true;
-	this.nextEnergy = game.time.now + this.energyRate;
+		this.nextEnergy = game.time.now + this.energyRate;
 	}
 	if(forgive && this.energy == this.energyMax){
 		this.energy-=amt;
 		ret=true;
-	this.nextEnergy = game.time.now + this.energyRate;
+		this.nextEnergy = game.time.now + this.energyRate;
 	}
 
 	if(!ret){
 		ui.energyLine.shudder=5;
 	}
-	
+
 	return ret;
 }
 playerShip.prototype.initPlayerShip = function (ship) {
@@ -973,7 +977,7 @@ playerShip.prototype.initPlayerShip = function (ship) {
 	this.sprite.b=255;
 	this.organicArmor=0;
 	this.nextOrganicArmorPing=0;
-	this.target={};
+	this.target=this.sprite;
 	this.fireSound=ui.sound_pew3;
 	this.ai=-1; //natural intelligence
 	this.radarTargets=1;
@@ -1005,6 +1009,8 @@ playerShip.prototype.initPlayerShip = function (ship) {
 	this.destroyParts();
 	this.parts=[];
 	this.speed = 0; //current
+	this.fireCounter = 0;
+	this.fireCounterReset = 0;
 	this.fireRate = 300;
 	this.fireVelocity = 400;
 	this.fireDamage = 2;
@@ -1033,6 +1039,8 @@ playerShip.prototype.initPlayerShip = function (ship) {
 	this.sprite.body.collideWorldBounds = true; 
 	this.altCheck = function(){return false;};
 	this.energyReserve = 0;
+	this.targetAngle=-666;
+	this.behavior="manual";
 	this.alt = function(){
 		if(game.time.now>this.altCooldown){
 			sparks(pew,this.sprite);
@@ -1066,7 +1074,7 @@ playerShip.prototype.damage = function(dmg, aggro) {
 	}else{
 		this.health -= damageCoef * dmg;
 		this.radarError=Math.max(this.radarError,this.radarTargets+0.5)
-		ui.healthLine.shudder = 5;
+			ui.healthLine.shudder = 5;
 		this.sprite.r=255 * (1 - (this.health/this.healthMax));
 		this.sprite.g=255 * (this.health/this.healthMax);
 		this.sprite.b=0;
@@ -1242,9 +1250,94 @@ playerShip.prototype.update = function(){
 				sparks(pew,this.sprite);
 			}
 		}
+		if(this.behavior=='move'){
+			var diffAngle = compareAngles(this.sprite.rotation,this.targetAngle);
+			if(diffAngle*60>this.turnRate)
+			{
+				this.left(1);
+			}else if(diffAngle*60<-this.turnRate){
+				this.right(1);
+			}
+			if(game.input.activePointer.isDown){
+				this.up(1);
+			}
+			if(!this.target.alive){
+				this.target = this.sprite;
+			}
+			if(this.target != this.sprite){
+				var targetDistance = this.game.physics.arcade.distanceBetween(this.sprite, this.target);
+				var targetAngle = this.game.physics.arcade.angleBetween(this.sprite, this.target); 
+
+
+				var diffAngle = compareAngles(this.sprite.rotation,targetAngle);
+
+				if (this.altCheck()){
+					this.alt();
+				}
+				if (this.energy - this.fireEnergy > this.energyReserve && targetDistance < this.fireRange * (this.fireVelocity/1000)){
+					if(Math.abs(diffAngle) < 0.5){
+						this.fire(); 
+					}
+
+				}
+			}
+
+	
+		}
+		if(this.behavior=='target'){
+
+			if(!this.target.alive){
+				this.target = this.sprite;
+			}
+
+			if(this.target != this.sprite){
+				var targetDistance = this.game.physics.arcade.distanceBetween(this.sprite, this.target);
+				var targetAngle = this.game.physics.arcade.angleBetween(this.sprite, this.target); 
+
+
+				var diffAngle = compareAngles(this.sprite.rotation,targetAngle);
+
+				if(this.energy<this.energyReserve){
+					diffAngle = compareAngles(this.sprite.rotation+Math.PI,targetAngle);
+				}
+				if(diffAngle*60>this.turnRate)
+				{
+					this.left(1);
+				}else if(diffAngle*60<-this.turnRate){
+					this.right(1);
+				}
+
+
+
+					if(Math.abs(diffAngle)<0.5 && targetDistance > (this.fireRange * (this.fireVelocity / 1200))){
+						this.up(1);
+					}
+				
+				if (this.energy < this.energyReserve){
+					this.up(1);
+				}
+				if (this.altCheck()){
+					this.alt();
+				}
+				if (this.energy - this.fireEnergy > this.energyReserve && targetDistance < this.fireRange * (this.fireVelocity/1000)){
+					if(Math.abs(diffAngle) < 0.5){
+						this.fire(); 
+					}
+
+				}
+			}
+		}
+		if(this.behavior != 'manual'){
+			if(this.target == this.sprite){
+				this.behavior='move';
+				}else{
+				this.behavior='target';
+				}
+		}
 	}
 };
 var player;
+var attemptTarget;
 var confusionCooldown = 0;
 var joystickUsed = false;
 var pad1;
@@ -1255,8 +1348,8 @@ var dragPool;
 var dummy;
 var defaultPlayerShip = [66, 34, -1, -1];
 var spawnShips=[
-[35,36,-1,-1],
-[71,-1,102,-1],
+	[35,36,-1,-1],
+	[71,-1,102,-1],
 	[100,101,-1,-1],
 	[80,85,-1,-1],
 	[74,160,-1,-1],
@@ -1271,6 +1364,7 @@ var frob1;
 var profileExponent=0.9;
 var componentDropRate = 0.067;
 var hazeWhite,hazeRed,hazePurple;
+var planet;
 var foredrop;
 var numBaddies = 9;
 var numAsteroids = 19;
@@ -1367,7 +1461,7 @@ gameUI.prototype.error = function(msg) {
 
 }
 gameUI.prototype.calculatePartPosition = function(x, y) {
-		
+
 	var outx = x | 0;
 	var outy = y | 0;
 
@@ -1394,8 +1488,8 @@ gameUI.prototype.partAt = function(x,y){
 		if(this.parts[i].sprite.alive &&
 				this.parts[i].sprite.x==x &&
 				this.parts[i].sprite.y==y){
-					count++;
-				}
+			count++;
+		}
 	}
 	return count;
 }
@@ -1412,10 +1506,10 @@ gameUI.prototype.resetRadar = function() {
 		this.clearRadar();
 		for (var i = 0; i < player.radarTargets; i++){
 			if(typeof(enemies[i])!='undefined'){
-			this.radar.push(game.add.text(200,100, '*',{ font:'12px acknowledge', fill: 'rgb(255,130,130)', align: 'center' }));
-			this.radar[i].anchor.setTo(0.5,0.5);
-			this.radar[i].alpha=0.85;
-			this.radar[i].blendMode=1
+				this.radar.push(game.add.text(200,100, '*',{ font:'12px acknowledge', fill: 'rgb(255,130,130)', align: 'center' }));
+				this.radar[i].anchor.setTo(0.5,0.5);
+				this.radar[i].alpha=0.85;
+				this.radar[i].blendMode=1
 			};
 		}
 	}
@@ -1477,7 +1571,7 @@ gameUI.prototype.bar = function (targetText, offset, numerator, denominator) {
 		targetText.y+=((targetText.shudder)*Math.random())*randomSign();
 		targetText.shudder-=game.time.physicsElapsed*15;
 		if(targetText.shudder<0){
-		targetText.shudder = 0;
+			targetText.shudder = 0;
 		}
 		targetText.tint*=Math.random();
 	}	
@@ -1549,11 +1643,11 @@ gameUI.prototype.radarPing = function() {
 	for(var i=0;i<this.radar.length;i++){
 		var targetAngle=game.physics.arcade.angleBetween(player.sprite, this.enemies[i].sprite);
 		this.radar[i].alpha=0.85
-		if(player.radarError>player.radarTargets){
-			this.radar[i].alpha*=Math.random()-((player.radarError-player.radarTargets)/20);
-			targetAngle+=Math.random()*((player.radarError-player.radarTargets)/2)*randomSign();
-		}
-		
+			if(player.radarError>player.radarTargets){
+				this.radar[i].alpha*=Math.random()-((player.radarError-player.radarTargets)/20);
+				targetAngle+=Math.random()*((player.radarError-player.radarTargets)/2)*randomSign();
+			}
+
 		var targetDistance=game.physics.arcade.distanceBetween(player.sprite, this.enemies[i].sprite);
 		var s='\u2026';
 		var n=Math.floor(255-(targetDistance/2-900));
@@ -1588,7 +1682,11 @@ gameUI.prototype.radarPing = function() {
 			this.radar[i].style.font='18px acknowledge';
 		}
 
-
+		if(this.enemies[i].sprite==player.target){
+			this.radar[i].style.font='48px acknowledge';
+			this.radar[i].style.fill="rgb(255,255,255)";
+			s='['+s+']';
+		}
 		if(game.time.now>this.nextRadarSound && targetDistance < 0.75 * blinkDistance && this.enemies[i].sprite.profile > 200){
 			this.nextRadarSound=game.time.now+3333;
 			this.sound_redalert.play()
@@ -1609,8 +1707,10 @@ gameUI.prototype.radarPing = function() {
 		}
 
 		var range = targetDistance;
+		if(!this.enemies[i].sprite==player.target){
 		if(range>180){range=180+Math.pow(targetDistance-180,0.6)};	
 		if(range>0.5*resolutionY-50){range=0.5*resolutionY-50};	
+		}
 		this.radar[i].setText(s);
 		this.radar[i].x = player.sprite.body.x + (0.5 * player.sprite.body.width) + Math.cos(targetAngle) * range;
 		this.radar[i].y = player.sprite.body.y + (0.5 * player.sprite.body.width) + Math.sin(targetAngle) * range;	
@@ -1670,7 +1770,7 @@ gameUI.prototype.commsPing = function() {
 	}
 	this.graphics.beginFill(0x000000, ui.comms.alpha/3);
 	this.graphics.drawRect(this.comms.x - 15, this.comms.y - 6, this.comms.width + 30, this.comms.height + 12);
-	
+
 	//color coding!
 	if(this.comms.text.match(/^got/)){
 		this.comms.fill="rgb(255,240,32)"
@@ -1679,20 +1779,20 @@ gameUI.prototype.commsPing = function() {
 	}else if (this.comms.text.match(/^>/)){
 		this.comms.fill="rgb(255,96,64)"	
 	}else{
-			this.comms.fill='rgb(40,190,240)';
+		this.comms.fill='rgb(40,190,240)';
 	}	
 	this.toTop(this.comms);
 }
 gameUI.prototype.missionLinePing = function() {
 
-		if(playerStats.mission.win.condition=='kill' && playerStats.mission.win.killCount > playerStats.kills){
+	if(playerStats.mission.win.condition=='kill' && playerStats.mission.win.killCount > playerStats.kills){
 		this.missionLine.setText(playerStats.kills + '/' + playerStats.mission.win.killCount);
 		this.missionLine.x = player.sprite.body.x+(player.sprite.body.width/2);
 		this.missionLine.y = player.sprite.body.height+player.sprite.body.y+55;
 		this.toTop(this.missionLine);
-		} else {
+	} else {
 		this.missionLine.setText('');
-		}
+	}
 }
 gameUI.prototype.profileLinePing = function() {
 
@@ -1713,7 +1813,7 @@ gameUI.prototype.partPing = function () {
 	this.toTop(this.partFlavorText);
 	this.toTop(this.explainerText);
 	this.partsSelector.bringToTop();
-	
+
 }
 gameUI.prototype.update = function() {
 	this.graphics.clear();
@@ -1967,26 +2067,26 @@ gameUI.prototype.setMode = function(mode){
 	this.buildMode = mode;
 	if(joystickUsed)
 	{
-	if(mode=='select'){
-		this.explainerText.setText('[SELECT] X: select part   B: unequip parts   START: launch');
-	}else if(mode=='move'){
-		this.explainerText.setText('[CONFIG] X: place part    B: cancel         D-PAD: move part');
+		if(mode=='select'){
+			this.explainerText.setText('[SELECT] X: select part   B: unequip parts   START: launch');
+		}else if(mode=='move'){
+			this.explainerText.setText('[CONFIG] X: place part    B: cancel         D-PAD: move part');
 
-	}else if(mode=='delete'){
-		this.explainerText.setText('[REMOVE] X: unequip part   B: done');
+		}else if(mode=='delete'){
+			this.explainerText.setText('[REMOVE] X: unequip part   B: done');
 
-	}
+		}
 
 	}else{
-	if(mode=='select'){
-		this.explainerText.setText('[SELECT] X: select part   Z: unequip parts   ENTER: launch');
-	}else if(mode=='move'){
-		this.explainerText.setText('[CONFIG] X: place part    Z: cancel         ARROWS: move part');
+		if(mode=='select'){
+			this.explainerText.setText('[SELECT] X: select part   Z: unequip parts   ENTER: launch');
+		}else if(mode=='move'){
+			this.explainerText.setText('[CONFIG] X: place part    Z: cancel         ARROWS: move part');
 
-	}else if(mode=='delete'){
-		this.explainerText.setText('[REMOVE] X: unequip part   Z: done');
+		}else if(mode=='delete'){
+			this.explainerText.setText('[REMOVE] X: unequip part   Z: done');
 
-	}
+		}
 	}
 }
 gameUI.prototype.cullInventory = function() {
@@ -2233,7 +2333,11 @@ function fadeIn () {
 	game.add.tween(station).to({alpha:1},1000, Phaser.Easing.Linear.None, true, 0, false);
 	game.add.tween(ui.tempStation).to({alpha:1},1000, Phaser.Easing.Linear.None, true, 0, false);
 
-
+	planet.baseX=randomRange(-400,400);
+	planet.baseY=randomRange(-400,400);
+	planet.anchor.setTo(0.5,0.5);
+	planet.scale.x=4;
+	planet.scale.y=4;
 	hazeRed.alpha=0;
 	hazeWhite.alpha=0;
 	hazePurple.alpha=0;
@@ -2276,6 +2380,9 @@ function create () {
 		hazeWhite.offsetx = Math.random()*resolutionX;
 		hazeWhite.offsety = Math.random()*resolutionY;
 		hazeWhite.speed = 600;
+		planet = game.add.sprite(resolutionX/1.6, resolutionY/1.6, 'planets');
+		planet.baseX=randomRange(-100,100);
+		planet.baseY=randomRange(-100,100);
 		hazeRed = game.add.tileSprite(0, 0, resolutionX/3, resolutionY/3, 'haze');
 		hazeRed.offsetx = Math.random()*resolutionX;
 		hazeRed.offsety = Math.random()*resolutionY;
@@ -2386,21 +2493,20 @@ function create () {
 	pad1 = game.input.gamepad.pad1;	
 	game.input.gamepad.start();
 	game.input.gamepad.setDeadZones(0.25);
-
 	cursors =	{
-		up: game.input.keyboard.addKey(Phaser.Keyboard.UP),
-		down: game.input.keyboard.addKey(Phaser.Keyboard.DOWN),
-		left: game.input.keyboard.addKey(Phaser.Keyboard.LEFT),
-		right: game.input.keyboard.addKey(Phaser.Keyboard.RIGHT),
-		up2: game.input.keyboard.addKey(Phaser.Keyboard.W),
-		down2: game.input.keyboard.addKey(Phaser.Keyboard.S),
-		left2: game.input.keyboard.addKey(Phaser.Keyboard.A),
-		right2: game.input.keyboard.addKey(Phaser.Keyboard.D),
-		fire: game.input.keyboard.addKey(Phaser.Keyboard.X),
-		alt: game.input.keyboard.addKey(Phaser.Keyboard.Z),
-		pgup: game.input.keyboard.addKey(Phaser.Keyboard.PAGE_UP),
-		pgdn: game.input.keyboard.addKey(Phaser.Keyboard.PAGE_DOWN),
-		enter: game.input.keyboard.addKey(Phaser.Keyboard.ENTER)
+up: game.input.keyboard.addKey(Phaser.Keyboard.UP),
+    down: game.input.keyboard.addKey(Phaser.Keyboard.DOWN),
+    left: game.input.keyboard.addKey(Phaser.Keyboard.LEFT),
+    right: game.input.keyboard.addKey(Phaser.Keyboard.RIGHT),
+    up2: game.input.keyboard.addKey(Phaser.Keyboard.W),
+    down2: game.input.keyboard.addKey(Phaser.Keyboard.S),
+    left2: game.input.keyboard.addKey(Phaser.Keyboard.A),
+    right2: game.input.keyboard.addKey(Phaser.Keyboard.D),
+    fire: game.input.keyboard.addKey(Phaser.Keyboard.X),
+    alt: game.input.keyboard.addKey(Phaser.Keyboard.Z),
+    pgup: game.input.keyboard.addKey(Phaser.Keyboard.PAGE_UP),
+    pgdn: game.input.keyboard.addKey(Phaser.Keyboard.PAGE_DOWN),
+    enter: game.input.keyboard.addKey(Phaser.Keyboard.ENTER)
 	}
 
 
@@ -2454,16 +2560,16 @@ function fade(s) {
 
 function lootSparkle(s){
 
-			var halfWidth = s.width * 0.5;
-			sparkles.x=s.x+randomRange(-1 * halfWidth,halfWidth);
-			sparkles.y=s.y+randomRange(-1 * halfWidth,halfWidth);
-			var tempC;
-			tempC = (Math.sin(randomRange(0,-0.5*Math.PI)));
-			tempC*=0.5;
-			sparkles.minParticleSpeed.setTo(tempC*s.body.velocity.x,tempC*s.body.velocity.y);
-			sparkles.maxParticleSpeed.setTo(tempC*s.body.velocity.x,tempC*s.body.velocity.y);
-			sparkles.lifespan=(Math.sin(randomRange(0,0.5*Math.PI)))*500;
-			sparkles.emitParticle();
+	var halfWidth = s.width * 0.5;
+	sparkles.x=s.x+randomRange(-1 * halfWidth,halfWidth);
+	sparkles.y=s.y+randomRange(-1 * halfWidth,halfWidth);
+	var tempC;
+	tempC = (Math.sin(randomRange(0,-0.5*Math.PI)));
+	tempC*=0.5;
+	sparkles.minParticleSpeed.setTo(tempC*s.body.velocity.x,tempC*s.body.velocity.y);
+	sparkles.maxParticleSpeed.setTo(tempC*s.body.velocity.x,tempC*s.body.velocity.y);
+	sparkles.lifespan=(Math.sin(randomRange(0,0.5*Math.PI)))*500;
+	sparkles.emitParticle();
 
 }
 
@@ -2568,9 +2674,9 @@ function revertGroup(group){
 	for(var i=0;i<group.length;i++){
 		var sprite=group.getAt(i);
 		sprite.x-=sprite.body.velocity.x*game.time.physicsElapsed;
-				sprite.y-=sprite.body.velocity.y*game.time.physicsElapsed;
-				sprite.lifespan+=game.time.physicsElapsed*1000;	
-				sprite.angle-=sprite.body.angularVelocity*game.time.physicsElapsed;
+		sprite.y-=sprite.body.velocity.y*game.time.physicsElapsed;
+		sprite.lifespan+=game.time.physicsElapsed*1000;	
+		sprite.angle-=sprite.body.angularVelocity*game.time.physicsElapsed;
 
 
 	}
@@ -2583,124 +2689,146 @@ function update () {
 		//
 
 
-			var left = 0;
-			var right = 0;
-			var up = 0;
-			var down = 0;
-			var fire = 0;
-			var alt = 0;
-			var enter = 0;
-			
-			//
-			if(pad1.buttonValue(Phaser.Gamepad.XBOX360_DPAD_UP)){
-				joystickUsed=true;
-				up=1;
-			}
-			if(pad1.buttonValue(Phaser.Gamepad.XBOX360_DPAD_DOWN)){
-				joystickUsed=true;
-				down=1;
-			}
-			if(pad1.buttonValue(Phaser.Gamepad.XBOX360_DPAD_LEFT)){
-				joystickUsed=true;
-				left=1;
-			}
-			if(pad1.buttonValue(Phaser.Gamepad.XBOX360_DPAD_RIGHT)){
-				joystickUsed=true;
-				right=1;
-			}
-			if(pad1.buttonValue(Phaser.Gamepad.XBOX360_LEFT_TRIGGER)){
-				joystickUsed=true;
-				alt=1;
-			}
-			if (pad1.axis(2) > 0.3) //left trigger
-			{
+		var left = 0;
+		var right = 0;
+		var up = 0;
+		var down = 0;
+		var fire = 0;
+		var alt = 0;
+		var enter = 0;
+
+		//
+		if(pad1.buttonValue(Phaser.Gamepad.XBOX360_DPAD_UP)){
+			joystickUsed=true;
+			up=1;
+		}
+		if(pad1.buttonValue(Phaser.Gamepad.XBOX360_DPAD_DOWN)){
+			joystickUsed=true;
+			down=1;
+		}
+		if(pad1.buttonValue(Phaser.Gamepad.XBOX360_DPAD_LEFT)){
+			joystickUsed=true;
+			left=1;
+		}
+		if(pad1.buttonValue(Phaser.Gamepad.XBOX360_DPAD_RIGHT)){
+			joystickUsed=true;
+			right=1;
+		}
+		if(pad1.buttonValue(Phaser.Gamepad.XBOX360_LEFT_TRIGGER)){
+			joystickUsed=true;
+			alt=1;
+		}
+		if (pad1.axis(2) > 0.3) //left trigger
+		{
 			joystickUsed=true;
 			alt = 1;
-			}
-			if (pad1.axis(6) < -0.3) //dpad x
-			{
+		}
+		if (pad1.axis(6) < -0.3) //dpad x
+		{
 			joystickUsed=true;
-				left = 1;
-			}
-			if (pad1.axis(6) > 0.3)
-			{
+			left = 1;
+		}
+		if (pad1.axis(6) > 0.3)
+		{
 			joystickUsed=true;
-				right = 1;
-			}
-			if (pad1.axis(7) < -0.3) //dpad y
-			{
+			right = 1;
+		}
+		if (pad1.axis(7) < -0.3) //dpad y
+		{
 			joystickUsed=true;
-				up = 1;
-			}
-			if (pad1.axis(7) > 0.3)
-			{
+			up = 1;
+		}
+		if (pad1.axis(7) > 0.3)
+		{
 			joystickUsed=true;
-				down = 1;
-			}
-			if (pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) < -0.3)
-			{
+			down = 1;
+		}
+		if (pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) < -0.3)
+		{
 			joystickUsed=true;
-				left = pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X);
-			}
-			if (pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) > 0.3)
-			{
+			left = pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X);
+		}
+		if (pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) > 0.3)
+		{
 			joystickUsed=true;
-				right = pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X);
-			}
-			if (pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y) < -0.3)
-			{
+			right = pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X);
+		}
+		if (pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y) < -0.3)
+		{
 			joystickUsed=true;
-				up = pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y);
-			}
-			if (pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y) > 0.3)
-			{
+			up = pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y);
+		}
+		if (pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y) > 0.3)
+		{
 			joystickUsed=true;
-				down = pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y);
-			}
-			if (pad1.buttonValue(Phaser.Gamepad.XBOX360_X))
-			{
+			down = pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y);
+		}
+		if (pad1.buttonValue(Phaser.Gamepad.XBOX360_X))
+		{
 			joystickUsed=true;
-				fire = 1;
-			}
-			if (pad1.buttonValue(Phaser.Gamepad.XBOX360_A))
-			{
+			fire = 1;
+		}
+		if (pad1.buttonValue(Phaser.Gamepad.XBOX360_A))
+		{
 			joystickUsed=true;
-				up = 1;
-			}
+			up = 1;
+		}
 
-			if (pad1.buttonValue(Phaser.Gamepad.XBOX360_B))
-			{
+		if (pad1.buttonValue(Phaser.Gamepad.XBOX360_B))
+		{
 			joystickUsed=true;
-				alt = 1;
-			}
-			if (pad1.buttonValue(7) || pad1.buttonValue(Phaser.Gamepad.XBOX360_START)) //start
-			{
+			alt = 1;
+		}
+		if (pad1.buttonValue(7) || pad1.buttonValue(Phaser.Gamepad.XBOX360_START)) //start
+		{
 			joystickUsed=true;
-				enter = 1;
+			enter = 1;
+		}	
+		if (cursors.left.isDown || cursors.left2.isDown){
+			left = 1;
+		}
+		if (cursors.right.isDown || cursors.right2.isDown){
+			right = 1;
+		}
+		if (cursors.up.isDown || cursors.up2.isDown){
+			up = 1;
+		}
+		if (cursors.down.isDown || cursors.down2.isDown){
+			down = 1;
+		}
+		if (cursors.fire.isDown){
+			fire = 1;
+		}
+		if (cursors.alt.isDown){
+			alt = 1;
+		}
+		if (cursors.enter.isDown){
+			enter = 1;
+		}
+		if (left || right || up || down || fire || alt || enter) {
+			player.behavior='manual';
+		}
+		if (!game.input.activePointer.isDown) {
+			attemptTarget=true;
+		}
+		if (game.input.activePointer.isDown) {
+			player.behavior='move';
+			player.targetAngle=game.physics.arcade.angleToPointer(player.sprite);
+			if(attemptTarget){
+			for (var i = 0; i < enemies.length; i++){
+				if (enemies[i].alive){
+					if(Math.abs(game.input.activePointer.worldX - enemies[i].sprite.x) < 50 &&
+							Math.abs(game.input.activePointer.worldY - enemies[i].sprite.y) < 50) {
+						player.behavior='target';
+						player.target=enemies[i].sprite;
+					}
+				}
+
 			}	
-			if (cursors.left.isDown || cursors.left2.isDown){
-				left = 1;
+			attemptTarget=false;
 			}
-			if (cursors.right.isDown || cursors.right2.isDown){
-				right = 1;
-			}
-			if (cursors.up.isDown || cursors.up2.isDown){
-				up = 1;
-			}
-			if (cursors.down.isDown || cursors.down2.isDown){
-				down = 1;
-			}
-			if (cursors.fire.isDown){
-				fire = 1;
-			}
-			if (cursors.alt.isDown){
-				alt = 1;
-			}
-			if (cursors.enter.isDown){
-				enter = 1;
-			}
-
-////
+		}
+		////
 
 		if(gamemode=='?build'){
 
@@ -2851,24 +2979,24 @@ function update () {
 					fire == 0 && alt == 0 &&
 					!cursors.pgup.isDown && !cursors.pgdn.isDown && enter == 0
 			  ){
-				  nextUIDelay = 0;
-			  }
+				nextUIDelay = 0;
+			}
 		}
 		if(gamemode=='paused'){
-		ui.graphics.clear();
-		ui.comms.fill="rgb(21," + Math.floor((1+Math.sin(game.time.now/1000))*100) + ",142)";
+			ui.graphics.clear();
+			ui.comms.fill="rgb(21," + Math.floor((1+Math.sin(game.time.now/1000))*100) + ",142)";
 
-		ui.comms.setText('paused');
-		ui.comms.alpha=1;
-		ui.graphics.beginFill(0x000000, ui.comms.alpha/3);
-		ui.graphics.drawRect(ui.comms.x - 15, ui.comms.y - 6, ui.comms.width + 30, ui.comms.height + 12);
+			ui.comms.setText('paused');
+			ui.comms.alpha=1;
+			ui.graphics.beginFill(0x000000, ui.comms.alpha/3);
+			ui.graphics.drawRect(ui.comms.x - 15, ui.comms.y - 6, ui.comms.width + 30, ui.comms.height + 12);
 
-		frob1.x-=frob1.body.velocity.x*game.time.physicsElapsed;
-		frob1.y-=frob1.body.velocity.y*game.time.physicsElapsed;
-		frob1.angle-=frob1.body.angularVelocity*game.time.physicsElapsed;
+			frob1.x-=frob1.body.velocity.x*game.time.physicsElapsed;
+			frob1.y-=frob1.body.velocity.y*game.time.physicsElapsed;
+			frob1.angle-=frob1.body.angularVelocity*game.time.physicsElapsed;
 
-				player.sprite.x-=player.sprite.body.velocity.x*game.time.physicsElapsed;
-				player.sprite.y-=player.sprite.body.velocity.y*game.time.physicsElapsed;
+			player.sprite.x-=player.sprite.body.velocity.x*game.time.physicsElapsed;
+			player.sprite.y-=player.sprite.body.velocity.y*game.time.physicsElapsed;
 			for(var i=0;i<player.parts.length;i++){
 				player.parts[i].update();
 			}	
@@ -2877,9 +3005,9 @@ function update () {
 				enemies[i].sprite.body.y-=enemies[i].sprite.body.velocity.y*game.time.physicsElapsed;	
 				enemies[i].sprite.angle-=enemies[i].sprite.body.angularVelocity*game.time.physicsElapsed;
 				if(enemies[i].alive && enemies[i].parts.length){
-				for(var j=0;j<enemies[i].parts.length;j++){
-					enemies[i].parts[j].update();
-				}
+					for(var j=0;j<enemies[i].parts.length;j++){
+						enemies[i].parts[j].update();
+					}
 				}
 			}
 			revertGroup(loots);
@@ -2887,24 +3015,24 @@ function update () {
 			revertGroup(bullets);
 			revertGroup(explosions);
 			if(enter && game.time.now >= nextUIDelay){
-				
+
 				gamemode='war';
 				nextUIDelay=game.time.now+2000;
 				ui.comms.setText('');
 				ui.comms.alpha=0;
 
 				var tweens = game.tweens.getAll()	
-				for(var i=0;i<tweens.length;i++){
-					tweens[i].resume();
-				}
+					for(var i=0;i<tweens.length;i++){
+						tweens[i].resume();
+					}
 			}
-			
+
 			if(left==0 && right==0 && up == 0 && down ==0 &&
 					fire == 0 && alt == 0 &&
 					!cursors.pgup.isDown && !cursors.pgdn.isDown && enter == 0
 			  ){
-				  nextUIDelay = 0;
-			  }
+				nextUIDelay = 0;
+			}
 		}
 
 		if(gamemode=='war' ){
@@ -2979,9 +3107,9 @@ function update () {
 				nextUIDelay=game.time.now+2000;
 
 				var tweens = game.tweens.getAll()	
-				for(var i=0;i<tweens.length;i++){
-					tweens[i].pause();
-				}
+					for(var i=0;i<tweens.length;i++){
+						tweens[i].pause();
+					}
 
 			}
 
@@ -3011,8 +3139,9 @@ function update () {
 
 		}	
 		// scrolling
-		hazeWhite.tilePosition.x = hazeWhite.offsetx + ( -0.05*game.camera.x / hazeWhite.scale.x) + (game.time.now / (hazeWhite.speed));
-		hazeWhite.tilePosition.y = hazeWhite.offsety + ( -0.05*game.camera.y / hazeWhite.scale.y);
+		hazeWhite.tilePosition.x = hazeWhite.offsetx + ( -0.03*game.camera.x / hazeWhite.scale.x) + (game.time.now / (hazeWhite.speed));
+		hazeWhite.tilePosition.y = hazeWhite.offsety + ( -0.03*game.camera.y / hazeWhite.scale.y);
+		planet.reset(player.sprite.body.x + planet.baseX + -0.04*game.camera.x,  player.sprite.body.y + planet.baseY + -0.04*game.camera.y);
 		hazeRed.tilePosition.x = hazeRed.offsetx + ( -0.26*game.camera.x / hazeRed.scale.x) + (game.time.now / (hazeRed.speed));
 		hazeRed.tilePosition.y = hazeRed.offsety + ( -0.26*game.camera.y / hazeRed.scale.y);
 		hazePurple.tilePosition.x = hazePurple.offsetx + ( -.9*game.camera.x / hazePurple.scale.x) + (game.time.now / (hazePurple.speed));
@@ -3111,8 +3240,8 @@ function shieldEffect(explosionsGroup, bulletSprite, x, y, velx, vely,scale)
 		explosion.body.velocity.y=vely;
 		explosion.blendMode=1;
 		game.add.tween(explosion).to({rotation:explosion.rotation+0.2},explosion.lifespan, Phaser.Easing.Linear.None, true, 0, false);
-			game.add.tween(explosion.scale).to({x:explosion.scale.x*8,y:explosion.scale.y*8},explosion.lifespan-100, Phaser.Easing.Exponential.Out, true, 0, false);
-	game.add.tween(explosion).to({alpha:0},explosion.lifespan, Phaser.Easing.Linear.InOut, true, 0, false);
+		game.add.tween(explosion.scale).to({x:explosion.scale.x*8,y:explosion.scale.y*8},explosion.lifespan-100, Phaser.Easing.Exponential.Out, true, 0, false);
+		game.add.tween(explosion).to({alpha:0},explosion.lifespan, Phaser.Easing.Linear.InOut, true, 0, false);
 	}
 	if(explosionsGroup.countDead()){
 		var explosion = explosionsGroup.getFirstDead();
@@ -3291,7 +3420,7 @@ function spawnLoots(_count, x, y){
 		loot.lifespan = 60000;
 		loot.reset(x + randomRange(-16,16), y+randomRange(-16,16));
 		loot.rotation = Math.random()*2*Math.PI;
-				game.add.tween(loot).to({rotation:Math.PI*30},loot.lifespan,Phaser.Easing.Exponential.Out, true, 0, false);
+		game.add.tween(loot).to({rotation:Math.PI*30},loot.lifespan,Phaser.Easing.Exponential.Out, true, 0, false);
 		var scale = randomRange(0.8,1.1);
 		loot.scale.setTo(scale,scale);
 		loot.averageCounter=50;

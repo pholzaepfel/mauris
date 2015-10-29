@@ -92,10 +92,31 @@ var cmp = [
 	'bonus':function(target){
 		target.fireVelocity+=200;
 		target.fireSound=ui.sound_pew1;
-		target.fireRate*=0.50;
+		/*var coef = target.fireRate / 50;
+		if(target.fireCounterReset > 0) {
+			target.fireCounterReset *= coef/2
+			} else {
+			target.fireCounterReset = coef;
+			};
+		target.fireRate=50;
+		target.fireDamage/=coef/2;
+		*/
 		target.bulletSprite=3;
 		target.sprite.profile+=50;
-	}
+		target.fireRange*=0.75 * (target.fireVelocity / (target.fireVelocity < 2000 ? 2000 : target.fireVelocity));
+		target.fireVelocity=target.fireVelocity < 2000 ? 2000 : target.fireVelocity;
+		target.bulletBehavior.push(function(bullet){
+			var tgt = ownerFromName(bullet.owner.name);
+			if(tgt.fireCounter++ < tgt.fireCounterReset){
+			tgt.energy+=tgt.fireEnergy;
+			}else{
+			tgt.fireCounter=0;
+			}
+			bullet.scale.setTo(4,bullet.scale.y*1.5);
+			bullet.blendMode=1;
+		});
+
+}
 },
 {
 	'id':6,
@@ -920,12 +941,19 @@ var cmp = [
 	'name':'Mining Laser',
 	'flavor':'extracts ore from asteroids',
 	'bonus':function(target){
-		target.fireDamage+=1;
+		target.fireDamage+=0.2;
 		target.fireSound=ui.sound_pew2;
 		target.fireRate+=100;
+		target.fireRange*=0.8*(target.fireVelocity / (target.fireVelocity < 1000 ? 1000 : target.fireVelocity));
+		target.fireVelocity=target.fireVelocity < 1000 ? 1000 : target.fireVelocity;
 		target.sprite.profile+=20;	
 		target.bulletSprite=4;
-		target.bulletHitBehavior.push(function(sprite,bullet){
+		target.bulletBehavior.push(function(bullet){
+			bullet.scale.setTo(4,bullet.scale.y);
+			bullet.blendMode=1;
+		});
+
+target.bulletHitBehavior.push(function(sprite,bullet){
 
 			var tgt = ownerFromName(sprite.name);
 
@@ -2069,8 +2097,8 @@ var cmp = [
 },
 {
 	'id':138,
-	'drops':false,
-	'name':'Component138',
+	'drops':true,
+	'name':'Tank',
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -2078,8 +2106,8 @@ var cmp = [
 },
 {
 	'id':139,
-	'drops':false,
-	'name':'Component139',
+	'drops':true,
+	'name':'Tank',
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -2087,8 +2115,8 @@ var cmp = [
 },
 {
 	'id':140,
-	'drops':false,
-	'name':'Component140',
+	'drops':true,
+	'name':'Armor',
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -2096,8 +2124,8 @@ var cmp = [
 },
 {
 	'id':141,
-	'drops':false,
-	'name':'Component141',
+	'drops':true,
+	'name':'Armor',
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -2105,8 +2133,8 @@ var cmp = [
 },
 {
 	'id':142,
-	'drops':false,
-	'name':'Component142',
+	'drops':true,
+	'name':'Hauler',
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -2114,8 +2142,8 @@ var cmp = [
 },
 {
 	'id':143,
-	'drops':false,
-	'name':'Component143',
+	'drops':true,
+	'name':'Hauler',
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -2123,8 +2151,8 @@ var cmp = [
 },
 {
 	'id':144,
-	'drops':false,
-	'name':'Component144',
+	'drops':true,
+	'name':'Shiny',
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -2132,8 +2160,8 @@ var cmp = [
 },
 {
 	'id':145,
-	'drops':false,
-	'name':'Component145',
+	'drops':true,
+	'name':'Shiny',
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -2278,8 +2306,8 @@ var cmp = [
 },
 {
 	'id':161,
-	'drops':false,
-	'name':'Component161',
+	'drops':true,
+	'name':'Armor',
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -2287,8 +2315,8 @@ var cmp = [
 },
 {
 	'id':162,
-	'drops':false,
-	'name':'Component162',
+	'drops':true,
+	'name':'Armor',
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -2374,8 +2402,8 @@ var cmp = [
 },
 {
 	'id':170,
-	'drops':false,
-	'name':'Component170',
+	'drops':true,
+	'name':'Tank',
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -2383,8 +2411,8 @@ var cmp = [
 },
 {
 	'id':171,
-	'drops':false,
-	'name':'Component171',
+	'drops':true,
+	'name':'Tank',
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -2392,8 +2420,8 @@ var cmp = [
 },
 {
 	'id':172,
-	'drops':false,
-	'name':'Component172',
+	'drops':true,
+	'name':'Armor',
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -2401,8 +2429,8 @@ var cmp = [
 },
 {
 	'id':173,
-	'drops':false,
-	'name':'Component173',
+	'drops':true,
+	'name':'Armor',
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -2410,8 +2438,8 @@ var cmp = [
 },
 {
 	'id':174,
-	'drops':false,
-	'name':'Component174',
+	'drops':true,
+	'name':'Hauler',
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -2419,8 +2447,8 @@ var cmp = [
 },
 {
 	'id':175,
-	'drops':false,
-	'name':'Component175',
+	'drops':true,
+	'name':'Hauler',
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -2428,8 +2456,8 @@ var cmp = [
 },
 {
 	'id':176,
-	'drops':false,
-	'name':'Component176',
+	'drops':true,
+	'name':'Shiny',
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -2437,8 +2465,8 @@ var cmp = [
 },
 {
 	'id':177,
-	'drops':false,
-	'name':'Component177',
+	'drops':true,
+	'name':'Shiny',
 	'flavor':'--',
 	'bonus':function(target){
 
