@@ -1184,7 +1184,21 @@ playerShip.prototype.emitThrust = function() {
 	this.thrust.emitParticle();
 
 }
+var firingSolution = function(attacker, target, fireRange, fireVelocity) {
 
+	var rt = fireRange / 1000;
+
+	var attackerEndX = attacker.body.x + (Math.cos(attacker.rotation) * rt * fireVelocity) ;
+	var attackerEndY = attacker.body.y + (Math.sin(attacker.rotation) * rt * fireVelocity) ;
+
+	var targetEndX = target.body.x + target.body.velocity.x * rt;
+	var targetEndY = target.body.y + target.body.velocity.y * rt;
+
+	var attackerLine = new Phaser.Line(attacker.body.x, attacker.body.y, attackerEndX, attackerEndY);
+	var targetLine = new Phaser.Line(target.body.x, target.body.y, targetEndX, targetEndY);
+
+	return attackerLine.intersects(targetLine);
+}
 playerShip.prototype.update = function(){
 	if(this.alive){
 
@@ -1258,7 +1272,7 @@ playerShip.prototype.update = function(){
 			}else if(diffAngle*60<-this.turnRate){
 				this.right(1);
 			}
-			if(game.input.activePointer.isDown){
+			if(game.input.activePointer.isDown && Math.abs(diffAngle < 0.3)){
 				this.up(1);
 			}
 			if(!this.target.alive){
@@ -1309,7 +1323,7 @@ playerShip.prototype.update = function(){
 
 
 
-					if(Math.abs(diffAngle)<0.5 && targetDistance > (this.fireRange * (this.fireVelocity / 1200))){
+					if(Math.abs(diffAngle)<0.3 && targetDistance > (this.fireRange * (this.fireVelocity / 1200))){
 						this.up(1);
 					}
 				
@@ -1319,8 +1333,8 @@ playerShip.prototype.update = function(){
 				if (this.altCheck()){
 					this.alt();
 				}
-				if (this.energy - this.fireEnergy > this.energyReserve && targetDistance < this.fireRange * (this.fireVelocity/1000)){
-					if(Math.abs(diffAngle) < 0.5){
+				if (this.energy - this.fireEnergy > this.energyReserve && targetDistance < this.fireRange * (this.fireVelocity/1000)){					
+					if(firingSolution(this.sprite, this.target, this.fireRange, this.fireVelocity)){
 						this.fire(); 
 					}
 
@@ -2810,9 +2824,9 @@ function update () {
 			attemptTarget=true;
 		}
 		if (game.input.activePointer.isDown) {
-			player.behavior='move';
 			player.targetAngle=game.physics.arcade.angleToPointer(player.sprite);
 			if(attemptTarget){
+			player.behavior='move';
 			for (var i = 0; i < enemies.length; i++){
 				if (enemies[i].alive){
 					if(Math.abs(game.input.activePointer.worldX - enemies[i].sprite.x) < 50 &&
