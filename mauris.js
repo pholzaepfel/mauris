@@ -1330,8 +1330,6 @@ playerShip.prototype.update = function(){
 		if(this.behavior != 'manual'){
 			if(this.target == this.sprite){
 				this.behavior='move';
-				}else{
-				this.behavior='target';
 				}
 		}
 	}
