@@ -619,14 +619,14 @@ enemyShip.prototype.cullParts = function() {
 
 }
 enemyShip.prototype.left = function(a){
-	this.sprite.angle-=this.turnRate*Math.abs(a);
+	this.sprite.angle-=this.turnRate*Math.abs(a)*game.time.physicsElapsed*shipSpeed;
 };
 enemyShip.prototype.right = function(a){
-	this.sprite.angle+=this.turnRate*Math.abs(a);
+	this.sprite.angle+=this.turnRate*Math.abs(a)*game.time.physicsElapsed*shipSpeed;
 };
 enemyShip.prototype.up = function(a){
 
-	this.speed = this.acceleration * Math.abs(a);
+	this.speed = this.acceleration * Math.abs(a)*game.time.physicsElapsed*shipSpeed;
 
 };
 enemyShip.prototype.fire = function () {
@@ -1058,10 +1058,10 @@ playerShip.prototype.initPlayerShip = function (ship) {
 	}	
 	this.sprite.body.setSize(Math.sqrt(this.ship.length)*16,Math.sqrt(this.ship.length)*16,0,0);
 	this.left = function(a){
-		this.sprite.angle-=this.turnRate*Math.abs(a);
+		this.sprite.angle-=this.turnRate*Math.abs(a)*game.time.physicsElapsed*shipSpeed;
 	};
 	this.right = function(a){
-		this.sprite.angle+=this.turnRate*Math.abs(a);
+		this.sprite.angle+=this.turnRate*Math.abs(a)*game.time.physicsElapsed*shipSpeed;
 	};
 
 	applyBonuses(this);
@@ -1107,7 +1107,7 @@ playerShip.prototype.damage = function(dmg, aggro) {
 
 playerShip.prototype.up = function(a){
 
-	this.speed = this.acceleration * Math.abs(a);
+	this.speed = this.acceleration * Math.abs(a) * game.time.physicsElapsed * shipSpeed;
 
 };
 playerShip.prototype.fire = function(){
@@ -1184,32 +1184,52 @@ playerShip.prototype.emitThrust = function() {
 	this.thrust.emitParticle();
 
 }
-var firingSolution = function(attacker, target, fireRange, fireVelocity) {
+var firingSolution = function(attacker, target, fireRange, fireVelocity, angleModifier, turnRate) {
 
 	var rt = fireRange / 1000;
 
-	var attackerEndX = attacker.x + (Math.cos(attacker.rotation) * 2 * fireVelocity) ;
-	var attackerEndY = attacker.y + (Math.sin(attacker.rotation) * 2 * fireVelocity) ;
-		attackerEndX += attacker.body.velocity.x;
-		attackerEndY += attacker.body.velocity.y;
-	
+	var attackerStartX = attacker.x + (Math.cos(attacker.rotation)*(attacker.body.width));
+	var attackerStartY = attacker.y + (Math.sin(attacker.rotation)*(attacker.body.height));
+	attackerStartX += attacker.body.velocity.x * Math.abs(angleModifier / Phaser.Math.radToDeg(turnRate));
+	attackerStartY += attacker.body.velocity.y * Math.abs(angleModifier / Phaser.Math.radToDeg(turnRate));
+
+	var attackerEndX = attackerStartX + (Math.cos(attacker.rotation + angleModifier) * 2 * fireVelocity) ;
+	var attackerEndY = attackerStartY + (Math.sin(attacker.rotation + angleModifier) * 2 * fireVelocity) ;
+	attackerEndX += attacker.body.velocity.x;
+	attackerEndY += attacker.body.velocity.y;
+
+	var targetStartX = target.x - (target.body.velocity.x * 0.5);
+	var targetStartY = target.y - (target.body.velocity.y * 0.5);
+
 	var targetEndX = target.x + (target.body.velocity.x * 4);
 	var targetEndY = target.y + (target.body.velocity.y * 4);
 
-	var attackerLine = new Phaser.Line(attacker.x, attacker.y, attackerEndX, attackerEndY);
-	var targetLine = new Phaser.Line(target.x, target.y, targetEndX, targetEndY);
+	var attackerLine = new Phaser.Line(attackerStartX, attackerStartY, attackerEndX, attackerEndY);
+	var targetLine = new Phaser.Line(targetStartX, targetStartY, targetEndX, targetEndY);
+	//debugGraphics.lineStyle(2, 0x0000FF, 1);
+	//debugGraphics.moveTo(attackerStartX, attackerStartY);
+	//debugGraphics.lineTo(attackerEndX,attackerEndY);
+	//debugGraphics.lineStyle(4, 0xFF00FF, 1);
+	//debugGraphics.moveTo(targetStartX, targetStartY);
+	//debugGraphics.lineTo(targetEndX,targetEndY);
 
 	var intersectPoint = attackerLine.intersects(targetLine);
 	if (typeof(intersectPoint)=='undefined' || intersectPoint == null){
-	return false;
+		return false;
 	}
+
 	var targetDistance = game.physics.arcade.distanceBetween(target, intersectPoint);
 	var attackerDistance = game.physics.arcade.distanceBetween(attacker, intersectPoint);
 	var targetVelocity = Math.abs(target.body.velocity.x) + Math.abs(target.body.velocity.y);	
-	var attackerVelocity = Math.abs(attacker.body.velocity.x + (Math.cos(attacker.rotation)*fireVelocity))
-			      + Math.abs(attacker.body.velocity.y + (Math.sin(attacker.rotation)*fireVelocity))	
+	var attackerVelocity = Math.abs((attacker.body.velocity.x * 0.5)) + Math.abs(Math.cos(attacker.rotation)*fireVelocity)
+		+ Math.abs((attacker.body.velocity.y * 0.5)) + Math.abs(Math.sin(attacker.rotation)*fireVelocity);
 	var offset = Math.abs((targetDistance/targetVelocity) - (attackerDistance/fireVelocity));	
-	return offset < attackTreshold;
+
+	//debugGraphics.lineStyle(4, '0x00' + parseInt(100-(100*offset))+ 'FF', 1);
+	//debugGraphics.moveTo(attackerStartX, attackerStartY);
+	//debugGraphics.lineTo(attackerEndX,attackerEndY);
+
+	return Math.abs(offset);
 }
 playerShip.prototype.update = function(){
 	if(this.alive){
@@ -1284,7 +1304,7 @@ playerShip.prototype.update = function(){
 			}else if(diffAngle*60<-this.turnRate){
 				this.right(1);
 			}
-			if(game.input.activePointer.isDown && Math.abs(diffAngle < 0.3)){
+			if(game.input.activePointer.isDown && Math.abs(diffAngle < 0.2)){
 				this.up(1);
 			}
 			if(!this.target.alive){
@@ -1308,7 +1328,7 @@ playerShip.prototype.update = function(){
 				}
 			}
 
-	
+
 		}
 		if(this.behavior=='target'){
 
@@ -1318,15 +1338,24 @@ playerShip.prototype.update = function(){
 
 			if(this.target != this.sprite){
 				var targetDistance = this.game.physics.arcade.distanceBetween(this.sprite, this.target);
-				var adjTarget = new Phaser.Point(this.target.x+this.target.body.velocity.x*(targetDistance/1200),this.target.y+this.target.body.velocity.y*(targetDistance/800));
+				var adjTarget = new Phaser.Point(this.target.x+this.target.body.velocity.x*(targetDistance/600),this.target.y+this.target.body.velocity.y*(targetDistance/600));
 				var targetAngle = this.game.physics.arcade.angleBetween(this.sprite, adjTarget); 
 
 
+				var closestFSMatch = false;
+				var fs = false;
+				for(var i = 0; i < Math.PI * 2; i+=0.03){
+					fs = firingSolution(this.sprite, this.target, this.fireRange, this.fireVelocity,i, this.turnRate)
+						if((fs && !closestFSMatch) || fs < closestFSMatch){
+							closestFSMatch=fs;
+							if (closestFSMatch<attackTreshold){
+								targetAngle=(this.sprite.rotation + i);
+							}
+						}
+				}
+
 				var diffAngle = compareAngles(this.sprite.rotation,targetAngle);
 
-				if(this.energy<this.energyReserve){
-					diffAngle = compareAngles(this.sprite.rotation+Math.PI,targetAngle);
-				}
 				if(diffAngle*60>this.turnRate)
 				{
 					this.left(1);
@@ -1334,20 +1363,34 @@ playerShip.prototype.update = function(){
 					this.right(1);
 				}
 
+				if(enemies[this.target.name].ai==3){
+					if(Math.abs(diffAngle)<0.1 && targetDistance > (this.fireRange * (this.fireVelocity / 1500))){
+						if(this.sprite.body.velocity.x * Math.cos(targetAngle) < 0 ||
+								this.sprite.body.velocity.y * Math.sin(targetAngle) < 0 ||
+								Math.abs(this.sprite.body.velocity.x) + 
+								Math.abs(this.sprite.body.velocity.y) < 2 * (Math.abs(this.target.body.velocity.x) + 
+								Math.abs(this.target.body.velocity.y))){
+							this.up(1);
+						}
+					}
 
+				}else{
 
-					if(Math.abs(diffAngle)<0.3 && targetDistance > (this.fireRange * (this.fireVelocity / 1200))){
+					if(Math.abs(diffAngle)<0.1 && targetDistance > (this.fireRange * (this.fireVelocity / 1200))){
 						this.up(1);
 					}
-				
-				if (this.energy < this.energyReserve){
-					this.up(1);
-				}
-				if (this.altCheck()){
-					this.alt();
+
+					if (this.energy < this.energyReserve){
+						this.up(1);
+					}
+
+					if (this.altCheck()){
+						this.alt();
+					}
 				}
 				if (this.energy - this.fireEnergy > this.energyReserve && targetDistance < this.fireRange * (this.fireVelocity/1000)){					
-					if(firingSolution(this.sprite, this.target, this.fireRange, this.fireVelocity)){
+					var fireFS=firingSolution(this.sprite, this.target, this.fireRange, this.fireVelocity,0,this.turnRate);
+					if(fireFS && fireFS < attackTreshold){
 						this.fire(); 
 					}
 
@@ -1357,12 +1400,14 @@ playerShip.prototype.update = function(){
 		if(this.behavior != 'manual'){
 			if(this.target == this.sprite){
 				this.behavior='move';
-				}
+			}
 		}
 	}
 };
 var player;
-var attackTreshold = 100;
+var shipSpeed = 1/0.015;
+var debugGraphics;
+var attackTreshold = 0.5;
 var attemptTarget;
 var confusionCooldown = 0;
 var joystickUsed = false;
@@ -1734,8 +1779,8 @@ gameUI.prototype.radarPing = function() {
 
 		var range = targetDistance;
 		if(!this.enemies[i].sprite==player.target){
-		if(range>180){range=180+Math.pow(targetDistance-180,0.6)};	
-		if(range>0.5*resolutionY-50){range=0.5*resolutionY-50};	
+			if(range>180){range=180+Math.pow(targetDistance-180,0.6)};	
+			if(range>0.5*resolutionY-50){range=0.5*resolutionY-50};	
 		}
 		this.radar[i].setText(s);
 		this.radar[i].x = player.sprite.body.x + (0.5 * player.sprite.body.width) + Math.cos(targetAngle) * range;
@@ -2513,7 +2558,7 @@ function create () {
 		sparkles.setAlpha(1,0,2000);
 		sparkles.blendMode = 1;
 		sparkles.lifespan=200;
-
+		debugGraphics = game.add.graphics(0,0);
 	}
 
 	pad1 = game.input.gamepad.pad1;	
@@ -2840,22 +2885,22 @@ function update () {
 		if (game.input.activePointer.isDown) {
 			player.targetAngle=game.physics.arcade.angleToPointer(player.sprite);
 			if(attemptTarget){
-			player.behavior='move';
-			for (var i = 0; i < enemies.length; i++){
-				if (enemies[i].alive){
-					if(Math.abs(game.input.activePointer.worldX - enemies[i].sprite.x) < 50 &&
-							Math.abs(game.input.activePointer.worldY - enemies[i].sprite.y) < 50) {
-						player.behavior='target';
-						player.target=enemies[i].sprite;
+				player.behavior='move';
+				for (var i = 0; i < enemies.length; i++){
+					if (enemies[i].alive){
+						if(Math.abs(game.input.activePointer.worldX - enemies[i].sprite.x) < 50 &&
+								Math.abs(game.input.activePointer.worldY - enemies[i].sprite.y) < 50) {
+							player.behavior='target';
+							player.target=enemies[i].sprite;
+						}
 					}
-				}
 
-			}	
-			attemptTarget=false;
+				}	
+				attemptTarget=false;
 			}
 		}
 		////
-
+		debugGraphics.clear();
 		if(gamemode=='?build'){
 
 			for (var i = 0; i < ui.parts.length; i++){
