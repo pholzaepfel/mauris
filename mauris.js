@@ -1368,7 +1368,7 @@ playerShip.prototype.update = function(){
 						if(this.sprite.body.velocity.x * Math.cos(targetAngle) < 0 ||
 								this.sprite.body.velocity.y * Math.sin(targetAngle) < 0 ||
 								Math.abs(this.sprite.body.velocity.x) + 
-								Math.abs(this.sprite.body.velocity.y) < 2 * (Math.abs(this.target.body.velocity.x) + 
+								Math.abs(this.sprite.body.velocity.y) < 50 + (Math.abs(this.target.body.velocity.x) + 
 								Math.abs(this.target.body.velocity.y))){
 							this.up(1);
 						}
