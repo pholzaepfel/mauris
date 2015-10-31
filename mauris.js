@@ -175,6 +175,11 @@ function threatSort(a, b) {
 	}else if (!b.alive){
 		return -1;
 	}
+	if (player.target==a.sprite) { //ensure player target is always #0
+		return -1;
+	}else if (player.target==b.sprite) {
+		return 1;
+	}
 
 	if(a.sprite.profile/game.physics.arcade.distanceBetween(a.sprite,player.sprite)>
 			b.sprite.profile/game.physics.arcade.distanceBetween(b.sprite,player.sprite)){
@@ -1405,6 +1410,13 @@ playerShip.prototype.update = function(){
 	}
 };
 var player;
+var buttonLeft=0;
+var buttonRight=0;
+var buttonUp=0;
+var buttonDown=0;
+var buttonFire=0;
+var buttonAlt=0;
+var buttonEnter=0;
 var shipSpeed = 1/0.015;
 var debugGraphics;
 var attackTreshold = 0.5;
@@ -1481,7 +1493,7 @@ var gameUI = function () {
 	this.nextError=0;
 	this.buildMode = 'select';
 	this.nextFrobRadarPulse=0;
-
+	this.buttons = [];
 }
 gameUI.prototype.toTop = function(c){	
 	var p = c.parent;
@@ -1495,6 +1507,78 @@ gameUI.prototype.initInventory = function () {
 	}
 
 }
+gameUI.prototype.initButtons = function() {
+
+
+this.buttons= [
+			{'name':'left',
+			 'downCallback':function(){buttonLeft=1;},
+			 'upCallback':function(){buttonLeft=0;},
+			 'x':0,
+			 'y':7,
+			 'label':'<'},
+			{'name':'right',
+			 'downCallback':function(){buttonRight=1;},
+			 'upCallback':function(){buttonRight=0;},
+			 'x':2,
+			 'y':7,
+			 'label':'>'},
+			{'name':'up',
+			 'downCallback':function(){buttonUp=1;},
+			 'upCallback':function(){buttonUp=0;},
+			 'x':1,
+			 'y':6,
+			 'label':'^'},
+			{'name':'down',
+			 'downCallback':function(){buttonDown=1;},
+			 'upCallback':function(){buttonDown=0;},
+			 'x':1,
+			 'y':7,
+			 'label':'V'},
+			{'name':'fire',
+			 'downCallback':function(){buttonFire=1;},
+			 'upCallback':function(){buttonFire=0;},
+			 'x':7,
+			 'y':7,
+			 'label':'fire'},
+			{'name':'alt',
+			 'downCallback':function(){buttonAlt=1;},
+			 'upCallback':function(){buttonAlt=0;},
+			 'x':7,
+			 'y':6,
+			 'label':'alt'},
+			{'name':'enter',
+			 'downCallback':function(){buttonEnter=1;},
+			 'upCallback':function(){buttonEnter=0;},
+			 'x':5,
+			 'y':7,
+			 'label':'pause'}
+			];
+			
+			var chunkX = resolutionX / 8;
+			var chunkY = resolutionY / 8;
+				this.chunkX = chunkX;
+				this.chunkY = chunkY;
+				var offsetX = chunkX / 8;
+			var offsetY = chunkY / 8;
+			for(var i=0;i<this.buttons.length;i++){
+				this.buttons[i].x = offsetX + (chunkX * this.buttons[i].x);
+				this.buttons[i].y = offsetY + (chunkY * this.buttons[i].y);
+				this.buttons[i].button=(game.add.text(0,0,this.buttons[i].label,{ font:'64px acknowledge', fill: 'rgb(130,255,255)', align: 'center' }));
+			}
+}
+
+gameUI.prototype.buttonsPing = function(){
+			
+			var upperLeftCornerX = player.sprite.body.x - (resolutionX / 2);
+			var upperLeftCornerY = player.sprite.body.y - (resolutionY / 2);
+			for(var i=0;i<this.buttons.length;i++){
+				this.buttons[i].button.x=upperLeftCornerX + this.buttons[i].x;
+				this.buttons[i].button.y=upperLeftCornerY + this.buttons[i].y;
+				this.toTop(this.buttons[i].button);
+			}
+}
+
 gameUI.prototype.initSound = function(){
 	this.sound_pew1 = game.add.audio('pew1');
 	this.sound_pew2 = game.add.audio('pew2');
@@ -1753,11 +1837,6 @@ gameUI.prototype.radarPing = function() {
 			this.radar[i].style.font='18px acknowledge';
 		}
 
-		if(this.enemies[i].sprite==player.target){
-			this.radar[i].style.font='48px acknowledge';
-			this.radar[i].style.fill="rgb(255,255,255)";
-			s='['+s+']';
-		}
 		if(game.time.now>this.nextRadarSound && targetDistance < 0.75 * blinkDistance && this.enemies[i].sprite.profile > 200){
 			this.nextRadarSound=game.time.now+3333;
 			this.sound_redalert.play()
@@ -1777,6 +1856,21 @@ gameUI.prototype.radarPing = function() {
 			s+='\nLOCKED';
 		}
 
+		if(this.enemies[i].sprite==player.target){
+			this.radar[i].style.font='64px mozart';
+			this.radar[i].style.fill="rgb(255,255,255)";
+			if(Math.random()<0.955 ){
+					s='[  ';
+				}else{
+					s=String.fromCharCode(Math.floor(Math.random()*255))+'  ';
+				}
+			if(Math.random()<0.955 ){
+					s+=']';
+				}else{
+					s+=String.fromCharCode(Math.floor(Math.random()*255));
+				}
+			}
+	
 		var range = targetDistance;
 		if(!this.enemies[i].sprite==player.target){
 			if(range>180){range=180+Math.pow(targetDistance-180,0.6)};	
@@ -1905,6 +1999,7 @@ gameUI.prototype.update = function() {
 		this.radarPing();
 		this.frobRadarPing();
 	}
+		this.buttonsPing();
 }
 gameUI.prototype.updatePart = function () {
 	this.partsSelector.visible=true;
@@ -2433,6 +2528,7 @@ function create () {
 
 	ui = new gameUI();
 	ui.initSound();
+	ui.initButtons();
 	gamemode = location.search||'init';
 	if (gamemode == '?cheat'){
 		gamemode = 'init';
@@ -2767,8 +2863,9 @@ function update () {
 		var fire = 0;
 		var alt = 0;
 		var enter = 0;
+		var touchPressed = 0;
 
-		//
+	//
 		if(pad1.buttonValue(Phaser.Gamepad.XBOX360_DPAD_UP)){
 			joystickUsed=true;
 			up=1;
@@ -2883,15 +2980,40 @@ function update () {
 			attemptTarget=true;
 		}
 		if (game.input.activePointer.isDown) {
+		
 			player.targetAngle=game.physics.arcade.angleToPointer(player.sprite);
-			if(attemptTarget){
+		
+				for(var i=0;i<ui.buttons.length;i++){
+					var btn = ui.buttons[i].button;
+					if(Math.abs(btn.x - game.input.activePointer.worldX) < ui.chunkX / 2 &&	
+					Math.abs(btn.y - game.input.activePointer.worldY) < ui.chunkY / 2)	
+					{
+						console.log(btn.x - game.input.activePointer.worldX);
+						ui.buttons[i].downCallback();
+					}
+}
+		if (buttonLeft) {left=1};
+		if (buttonRight) {right=1};
+		if (buttonUp) {up=1};
+		if (buttonDown) {down=1};
+		if (buttonFire) {fire=1};
+		if (buttonAlt) {alt=1};
+		if (buttonEnter) {enter=1};
+		var touchPressed = buttonLeft || buttonRight || buttonUp || buttonDown || buttonFire || buttonAlt || buttonEnter;
+		buttonLeft =0; buttonRight =0; buttonUp =0; buttonDown =0; buttonFire =0; buttonAlt =0; buttonEnter =0;
+		if (touchPressed) {
+				player.behavior='manual';
+				}
+			if(attemptTarget && !touchPressed){
 				player.behavior='move';
 				for (var i = 0; i < enemies.length; i++){
 					if (enemies[i].alive){
-						if(Math.abs(game.input.activePointer.worldX - enemies[i].sprite.x) < 50 &&
-								Math.abs(game.input.activePointer.worldY - enemies[i].sprite.y) < 50) {
+						if(Math.abs(game.input.activePointer.worldX - enemies[i].sprite.x) < 80 &&
+								Math.abs(game.input.activePointer.worldY - enemies[i].sprite.y) < 80) {
 							player.behavior='target';
 							player.target=enemies[i].sprite;
+							ui.radar[0].scale.setTo(3,3);
+							game.add.tween(ui.radar[0].scale).to({x:1,y:1},250, Phaser.Easing.Quadratic.Out, true, 0, false);
 						}
 					}
 
