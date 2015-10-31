@@ -1,22 +1,225 @@
 var gamemode;
 var defaultBehavior='neutral';
 var cheatmode = 0;
-// container for stuff that might persist between games
-var playerMeta = function () {
-	this.inventory=[];
-	if(cheatmode){
-		for(var i=0; i<components.length; i++){
-			if(typeof(components[i].name)=='undefined'){
-			}else{
-				if(!components[i].name.match(/Component/)){
-					this.inventory.push(i);
+	var legacyButtons = [
+{'name':'left',
+	'downCallback':function(){buttonLeft=1;},
+	'upCallback':function(){buttonLeft=0;},
+	'x':0,
+	'y':7,
+	'label':'<'},
+{'name':'right',
+	'downCallback':function(){buttonRight=1;},
+	'upCallback':function(){buttonRight=0;},
+	'x':2,
+	'y':7,
+	'label':'>'},
+{'name':'up',
+	'downCallback':function(){buttonUp=1;},
+	'upCallback':function(){buttonUp=0;},
+	'x':1,
+	'y':6,
+	'label':'A'},
+{'name':'down',
+	'downCallback':function(){buttonDown=1;},
+	'upCallback':function(){buttonDown=0;},
+	'x':1,
+	'y':7,
+	'label':'v'},
+{'name':'fire',
+	'downCallback':function(){buttonFire=1;},
+	'upCallback':function(){buttonFire=0;},
+	'x':7,
+	'y':7,
+	'label':'X'},
+{'name':'alt',
+	'downCallback':function(){buttonAlt=1;},
+	'upCallback':function(){buttonAlt=0;},
+	'x':7,
+	'y':6,
+	'label':'Z'},
+{'name':'enter2',
+	'downCallback':function(){buttonEnter=1;},
+	'upCallback':function(){buttonEnter=0;},
+	'x':6,
+	'y':7,
+	'label':''},
+{'name':'enter',
+	'downCallback':function(){buttonEnter=1;},
+	'upCallback':function(){buttonEnter=0;},
+	'x':5,
+	'y':7,
+	'label':'ENTER'}
+	];
+var selectButtons = [
+{'name':'left',
+	'downCallback':function(){buttonLeft=1;},
+	'upCallback':function(){buttonLeft=0;},
+	'x':2,
+	'y':5,
+	'label':'<'},
+{'name':'right',
+	'downCallback':function(){buttonRight=1;},
+	'upCallback':function(){buttonRight=0;},
+	'x':5,
+	'y':5,
+	'label':'>'},
+{'name':'fire',
+	'downCallback':function(){buttonFire=1;},
+	'upCallback':function(){buttonFire=0;},
+	'x':3.5,
+	'y':7,
+	'label':'del mode'},
+{'name':'alt',
+	'downCallback':function(){buttonAlt=1;},
+	'upCallback':function(){buttonAlt=0;},
+	'x':3.5,
+	'y':6,
+	'label':'add?'},
+{'name':'enter',
+	'downCallback':function(){buttonEnter=1;},
+	'upCallback':function(){buttonEnter=0;},
+	'x':3.5,
+	'y':1,
+	'label':'launch'}
+	];
+	var deleteButtons = [
+{'name':'left',
+	'downCallback':function(){buttonLeft=1;},
+	'upCallback':function(){buttonLeft=0;},
+	'x':0,
+	'y':7,
+	'label':'<'},
+{'name':'right',
+	'downCallback':function(){buttonRight=1;},
+	'upCallback':function(){buttonRight=0;},
+	'x':2,
+	'y':7,
+	'label':'>'},
+{'name':'up',
+	'downCallback':function(){buttonUp=1;},
+	'upCallback':function(){buttonUp=0;},
+	'x':1,
+	'y':6,
+	'label':'^'},
+{'name':'down',
+	'downCallback':function(){buttonDown=1;},
+	'upCallback':function(){buttonDown=0;},
+	'x':1,
+	'y':7,
+	'label':'V'},
+{'name':'fire',
+	'downCallback':function(){buttonFire=1;},
+	'upCallback':function(){buttonFire=0;},
+	'x':7,
+	'y':7,
+	'label':'DEL!'},
+{'name':'alt',
+	'downCallback':function(){buttonAlt=1;},
+	'upCallback':function(){buttonAlt=0;},
+	'x':7,
+	'y':6,
+	'label':'done'}
+	];
+	var moveButtons = [
+{'name':'left',
+	'downCallback':function(){buttonLeft=1;},
+	'upCallback':function(){buttonLeft=0;},
+	'x':0,
+	'y':7,
+	'label':'<'},
+{'name':'right',
+	'downCallback':function(){buttonRight=1;},
+	'upCallback':function(){buttonRight=0;},
+	'x':2,
+	'y':7,
+	'label':'>'},
+{'name':'up',
+	'downCallback':function(){buttonUp=1;},
+	'upCallback':function(){buttonUp=0;},
+	'x':1,
+	'y':6,
+	'label':'^'},
+{'name':'down',
+	'downCallback':function(){buttonDown=1;},
+	'upCallback':function(){buttonDown=0;},
+	'x':1,
+	'y':7,
+	'label':'V'},
+{'name':'fire',
+	'downCallback':function(){buttonFire=1;},
+	'upCallback':function(){buttonFire=0;},
+	'x':7,
+	'y':7,
+	'label':'add'},
+{'name':'alt',
+	'downCallback':function(){buttonAlt=1;},
+	'upCallback':function(){buttonAlt=0;},
+	'x':7,
+	'y':6,
+	'label':'remove'},
+{'name':'enter',
+	'downCallback':function(){buttonEnter=1;},
+	'upCallback':function(){buttonEnter=0;},
+	'x':5,
+	'y':7,
+	'label':'launch'}
+	];
+	var warButtons = [
+{'name':'left',
+	'downCallback':function(){buttonLeft=1;},
+	'upCallback':function(){buttonLeft=0;},
+	'x':0,
+	'y':7,
+	'label':'<'},
+{'name':'right',
+	'downCallback':function(){buttonRight=1;},
+	'upCallback':function(){buttonRight=0;},
+	'x':2,
+	'y':7,
+	'label':'>'},
+{'name':'up',
+	'downCallback':function(){buttonDown=1;},
+	'upCallback':function(){buttonDown=0;},
+	'x':1,
+	'y':7,
+	'label':'V'},
+{'name':'fire',
+	'downCallback':function(){buttonFire=1;},
+	'upCallback':function(){buttonFire=0;},
+	'x':7,
+	'y':7,
+	'label':'fire'},
+{'name':'alt',
+	'downCallback':function(){buttonAlt=1;},
+	'upCallback':function(){buttonAlt=0;},
+	'x':7,
+	'y':6,
+	'label':'alt'},
+{'name':'enter',
+	'downCallback':function(){buttonEnter=1;},
+	'upCallback':function(){buttonEnter=0;},
+	'x':5,
+	'y':7,
+	'label':'pause'}
+	];
+	// container for stuff that might persist between games
+	// TODO: persist stuff between games
+	var playerMeta = function () {
+		this.inventory=[];
+		if(cheatmode){
+			for(var i=0; i<components.length; i++){
+				if(typeof(components[i].name)=='undefined'){
+				}else{
+					if(!components[i].name.match(/Component/)){
+						this.inventory.push(i);
+					}
 				}
 			}
 		}
-	}
-	this.kills=0;
-	this.deaths=0;
-};
+		this.kills=0;
+		this.deaths=0;
+	};
 function queryComponent(id){
 	return components[id].bonus.toString().replace(/target\./g,'').replace(/function.*{/,'').replace(/}/g,'').replace(/bulletBehavior.*/,'CHANGE BULLET BEHAVIOR').replace(/alt=.*/,'ALTERNATE FIRE').replace(/this.*body\./g,'').replace(/this.*sprite\./g,'').replace(/this\./g,'').replace(/[();\[\]{}]/g,'').replace(/\t\t\t.*\n/g,'').replace(/[\t ]*/g,'').replace(/^\n/g,'');
 }
@@ -1374,7 +1577,7 @@ playerShip.prototype.update = function(){
 								this.sprite.body.velocity.y * Math.sin(targetAngle) < 0 ||
 								Math.abs(this.sprite.body.velocity.x) + 
 								Math.abs(this.sprite.body.velocity.y) < 50 + (Math.abs(this.target.body.velocity.x) + 
-								Math.abs(this.target.body.velocity.y))){
+									Math.abs(this.target.body.velocity.y))){
 							this.up(1);
 						}
 					}
@@ -1507,76 +1710,34 @@ gameUI.prototype.initInventory = function () {
 	}
 
 }
-gameUI.prototype.initButtons = function() {
+gameUI.prototype.initButtons = function(selectedButtons) {
 
+	this.clearButtons();
 
-this.buttons= [
-			{'name':'left',
-			 'downCallback':function(){buttonLeft=1;},
-			 'upCallback':function(){buttonLeft=0;},
-			 'x':0,
-			 'y':7,
-			 'label':'<'},
-			{'name':'right',
-			 'downCallback':function(){buttonRight=1;},
-			 'upCallback':function(){buttonRight=0;},
-			 'x':2,
-			 'y':7,
-			 'label':'>'},
-			{'name':'up',
-			 'downCallback':function(){buttonUp=1;},
-			 'upCallback':function(){buttonUp=0;},
-			 'x':1,
-			 'y':6,
-			 'label':'^'},
-			{'name':'down',
-			 'downCallback':function(){buttonDown=1;},
-			 'upCallback':function(){buttonDown=0;},
-			 'x':1,
-			 'y':7,
-			 'label':'V'},
-			{'name':'fire',
-			 'downCallback':function(){buttonFire=1;},
-			 'upCallback':function(){buttonFire=0;},
-			 'x':7,
-			 'y':7,
-			 'label':'fire'},
-			{'name':'alt',
-			 'downCallback':function(){buttonAlt=1;},
-			 'upCallback':function(){buttonAlt=0;},
-			 'x':7,
-			 'y':6,
-			 'label':'alt'},
-			{'name':'enter',
-			 'downCallback':function(){buttonEnter=1;},
-			 'upCallback':function(){buttonEnter=0;},
-			 'x':5,
-			 'y':7,
-			 'label':'pause'}
-			];
-			
-			var chunkX = resolutionX / 8;
-			var chunkY = resolutionY / 8;
-				this.chunkX = chunkX;
-				this.chunkY = chunkY;
-				var offsetX = chunkX / 8;
-			var offsetY = chunkY / 8;
-			for(var i=0;i<this.buttons.length;i++){
-				this.buttons[i].x = offsetX + (chunkX * this.buttons[i].x);
-				this.buttons[i].y = offsetY + (chunkY * this.buttons[i].y);
-				this.buttons[i].button=(game.add.text(0,0,this.buttons[i].label,{ font:'64px acknowledge', fill: 'rgb(130,255,255)', align: 'center' }));
-			}
+	this.buttons=selectedButtons.slice(0);
+
+	var chunkX = resolutionX / 8;
+	var chunkY = resolutionY / 8;
+	this.chunkX = chunkX;
+	this.chunkY = chunkY;
+	var offsetX = chunkX / 8;
+	var offsetY = chunkY / 8;
+	for(var i=0;i<this.buttons.length;i++){
+		this.buttons[i].x = offsetX + (chunkX * this.buttons[i].x);
+		this.buttons[i].y = offsetY + (chunkY * this.buttons[i].y);
+		this.buttons[i].button=(game.add.text(0,0,this.buttons[i].label,{ font: parseInt(chunkY) + 'px acknowledge', fill: 'rgb(130,255,255)', align: 'center' }));
+	}
 }
 
 gameUI.prototype.buttonsPing = function(){
-			
-			var upperLeftCornerX = player.sprite.body.x - (resolutionX / 2);
-			var upperLeftCornerY = player.sprite.body.y - (resolutionY / 2);
-			for(var i=0;i<this.buttons.length;i++){
-				this.buttons[i].button.x=upperLeftCornerX + this.buttons[i].x;
-				this.buttons[i].button.y=upperLeftCornerY + this.buttons[i].y;
-				this.toTop(this.buttons[i].button);
-			}
+
+	var upperLeftCornerX = player.sprite.body.x - (resolutionX / 2);
+	var upperLeftCornerY = player.sprite.body.y - (resolutionY / 2);
+	for(var i=0;i<this.buttons.length;i++){
+		this.buttons[i].button.x=upperLeftCornerX + this.buttons[i].x;
+		this.buttons[i].button.y=upperLeftCornerY + this.buttons[i].y;
+		this.toTop(this.buttons[i].button);
+	}
 }
 
 gameUI.prototype.initSound = function(){
@@ -1648,6 +1809,15 @@ gameUI.prototype.partAt = function(x,y){
 	}
 	return count;
 }
+gameUI.prototype.clearButtons = function() {
+	for (var i = 0; i < this.buttons.length; i++){
+		this.buttons[i].button.destroy();	
+	}
+	if(this.buttons.length){
+		this.buttons=[];
+	}
+}
+
 gameUI.prototype.clearRadar = function() {
 	for (var i = 0; i < this.radar.length; i++){
 		this.radar[i].destroy();	
@@ -1860,17 +2030,17 @@ gameUI.prototype.radarPing = function() {
 			this.radar[i].style.font='64px mozart';
 			this.radar[i].style.fill="rgb(255,255,255)";
 			if(Math.random()<0.955 ){
-					s='[  ';
-				}else{
-					s=String.fromCharCode(Math.floor(Math.random()*255))+'  ';
-				}
-			if(Math.random()<0.955 ){
-					s+=']';
-				}else{
-					s+=String.fromCharCode(Math.floor(Math.random()*255));
-				}
+				s='[  ';
+			}else{
+				s=String.fromCharCode(Math.floor(Math.random()*255))+'  ';
 			}
-	
+			if(Math.random()<0.955 ){
+				s+=']';
+			}else{
+				s+=String.fromCharCode(Math.floor(Math.random()*255));
+			}
+		}
+
 		var range = targetDistance;
 		if(!this.enemies[i].sprite==player.target){
 			if(range>180){range=180+Math.pow(targetDistance-180,0.6)};	
@@ -1999,7 +2169,7 @@ gameUI.prototype.update = function() {
 		this.radarPing();
 		this.frobRadarPing();
 	}
-		this.buttonsPing();
+	this.buttonsPing();
 }
 gameUI.prototype.updatePart = function () {
 	this.partsSelector.visible=true;
@@ -2251,8 +2421,15 @@ gameUI.prototype.setMode = function(mode){
 
 		}else if(mode=='delete'){
 			this.explainerText.setText('[REMOVE] X: unequip part   Z: done');
-
 		}
+	}
+	if(mode=='select'){
+//		this.initButtons(selectButtons);
+	}else if(mode=='move'){
+//		this.initButtons(moveButtons);
+	}
+	else if (mode=='delete'){
+//		this.initButtons(deleteButtons);
 	}
 }
 gameUI.prototype.cullInventory = function() {
@@ -2300,6 +2477,7 @@ gameUI.prototype.endPartsUI = function () {
 	this.partFlavorText.setText('');
 	this.explainerText.setText('');
 	player.initPlayerShip(ship);
+//	this.initButtons(warButtons);
 	gamemode = 'war';
 }
 
@@ -2528,7 +2706,7 @@ function create () {
 
 	ui = new gameUI();
 	ui.initSound();
-	ui.initButtons();
+	ui.initButtons(legacyButtons);
 	gamemode = location.search||'init';
 	if (gamemode == '?cheat'){
 		gamemode = 'init';
@@ -2865,7 +3043,7 @@ function update () {
 		var enter = 0;
 		var touchPressed = 0;
 
-	//
+		//
 		if(pad1.buttonValue(Phaser.Gamepad.XBOX360_DPAD_UP)){
 			joystickUsed=true;
 			up=1;
@@ -2980,34 +3158,34 @@ function update () {
 			attemptTarget=true;
 		}
 		if (game.input.activePointer.isDown) {
-		
+
 			player.targetAngle=game.physics.arcade.angleToPointer(player.sprite);
-		
-				for(var i=0;i<ui.buttons.length;i++){
-					var btn = ui.buttons[i].button;
-					if(Math.abs(btn.x - game.input.activePointer.worldX) < ui.chunkX / 2 &&	
-					Math.abs(btn.y - game.input.activePointer.worldY) < ui.chunkY / 2)	
-					{
-						console.log(btn.x - game.input.activePointer.worldX);
-						ui.buttons[i].downCallback();
-					}
-}
-		if (buttonLeft) {left=1};
-		if (buttonRight) {right=1};
-		if (buttonUp) {up=1};
-		if (buttonDown) {down=1};
-		if (buttonFire) {fire=1};
-		if (buttonAlt) {alt=1};
-		if (buttonEnter) {enter=1};
-		var touchPressed = buttonLeft || buttonRight || buttonUp || buttonDown || buttonFire || buttonAlt || buttonEnter;
-		buttonLeft =0; buttonRight =0; buttonUp =0; buttonDown =0; buttonFire =0; buttonAlt =0; buttonEnter =0;
-		if (touchPressed) {
-				player.behavior='manual';
+
+			
+			for(var i=0;i<ui.buttons.length;i++){
+				var btn = ui.buttons[i].button;
+				var ptr = game.input.activePointer;
+				if(ptr.worldX > btn.x && ptr.worldX < btn.x + ui.chunkX &&
+ptr.worldY > btn.y && ptr.worldY < btn.y + ui.chunkY){
+					ui.buttons[i].downCallback();
 				}
+			}
+			if (buttonLeft) {left=1};
+			if (buttonRight) {right=1};
+			if (buttonUp) {up=1};
+			if (buttonDown) {down=1};
+			if (buttonFire) {fire=1};
+			if (buttonAlt) {alt=1};
+			if (buttonEnter) {enter=1};
+			var touchPressed = buttonLeft || buttonRight || buttonUp || buttonDown || buttonFire || buttonAlt || buttonEnter;
+			buttonLeft =0; buttonRight =0; buttonUp =0; buttonDown =0; buttonFire =0; buttonAlt =0; buttonEnter =0;
+			if (touchPressed) {
+				player.behavior='manual';
+			}
 			if(attemptTarget && !touchPressed){
 				player.behavior='move';
 				for (var i = 0; i < enemies.length; i++){
-					if (enemies[i].alive){
+					if (enemies[i].alive && gamemode=='war'){
 						if(Math.abs(game.input.activePointer.worldX - enemies[i].sprite.x) < 80 &&
 								Math.abs(game.input.activePointer.worldY - enemies[i].sprite.y) < 80) {
 							player.behavior='target';
