@@ -1,7 +1,7 @@
 var gamemode;
 var defaultBehavior='neutral';
 var cheatmode = 0;
-	var legacyButtons = [
+var legacyButtons = [
 {'name':'left',
 	'downCallback':function(){buttonLeft=1;},
 	'upCallback':function(){buttonLeft=0;},
@@ -51,7 +51,7 @@ var cheatmode = 0;
 	'y':7,
 	'label':'ENTER'}
 	];
-var selectButtons = [
+	var selectButtons = [
 {'name':'left',
 	'downCallback':function(){buttonLeft=1;},
 	'upCallback':function(){buttonLeft=0;},
@@ -1394,23 +1394,22 @@ playerShip.prototype.emitThrust = function() {
 }
 var firingSolution = function(attacker, target, fireRange, fireVelocity, angleModifier, turnRate) {
 
-	var rt = fireRange / 1000;
-
 	var attackerStartX = attacker.x + (Math.cos(attacker.rotation)*(attacker.body.width));
 	var attackerStartY = attacker.y + (Math.sin(attacker.rotation)*(attacker.body.height));
-	attackerStartX += attacker.body.velocity.x * Math.abs(angleModifier / Phaser.Math.radToDeg(turnRate));
-	attackerStartY += attacker.body.velocity.y * Math.abs(angleModifier / Phaser.Math.radToDeg(turnRate));
+	attackerStartX += attacker.body.velocity.x * Math.abs(angleModifier / (turnRate * shipSpeed));
+	attackerStartY += attacker.body.velocity.y * Math.abs(angleModifier / (turnRate * shipSpeed));
 
-	var attackerEndX = attackerStartX + (Math.cos(attacker.rotation + angleModifier) * 2 * fireVelocity) ;
-	var attackerEndY = attackerStartY + (Math.sin(attacker.rotation + angleModifier) * 2 * fireVelocity) ;
-	attackerEndX += attacker.body.velocity.x;
-	attackerEndY += attacker.body.velocity.y;
+	var attackerStart = new Phaser.Point(attackerStartX,attackerStartY);
+	var attackerEndX = attackerStartX + (Math.cos(attacker.rotation + angleModifier) * (fireRange/1000) * fireVelocity) ;
+	var attackerEndY = attackerStartY + (Math.sin(attacker.rotation + angleModifier) * (fireRange/1000) * fireVelocity) ;
+	attackerEndX += attacker.body.velocity.x * 0.5 * (fireVelocity/1000);
+	attackerEndY += attacker.body.velocity.y * 0.5 * (fireVelocity/1000);
 
-	var targetStartX = target.x - (target.body.velocity.x * 0.5);
-	var targetStartY = target.y - (target.body.velocity.y * 0.5);
+	var targetStartX = target.x;
+	var targetStartY = target.y;
 
-	var targetEndX = target.x + (target.body.velocity.x * 4);
-	var targetEndY = target.y + (target.body.velocity.y * 4);
+	var targetEndX = target.x + (target.body.velocity.x * (fireRange/1000));
+	var targetEndY = target.y + (target.body.velocity.y * (fireRange/1000));
 
 	var attackerLine = new Phaser.Line(attackerStartX, attackerStartY, attackerEndX, attackerEndY);
 	var targetLine = new Phaser.Line(targetStartX, targetStartY, targetEndX, targetEndY);
@@ -1427,17 +1426,24 @@ var firingSolution = function(attacker, target, fireRange, fireVelocity, angleMo
 	}
 
 	var targetDistance = game.physics.arcade.distanceBetween(target, intersectPoint);
-	var attackerDistance = game.physics.arcade.distanceBetween(attacker, intersectPoint);
+	var attackerDistance = game.physics.arcade.distanceBetween(attackerStart, intersectPoint);
 	var targetVelocity = Math.abs(target.body.velocity.x) + Math.abs(target.body.velocity.y);	
 	var attackerVelocity = Math.abs((attacker.body.velocity.x * 0.5)) + Math.abs(Math.cos(attacker.rotation)*fireVelocity)
 		+ Math.abs((attacker.body.velocity.y * 0.5)) + Math.abs(Math.sin(attacker.rotation)*fireVelocity);
 	var offset = Math.abs((targetDistance/targetVelocity) - (attackerDistance/fireVelocity));	
 
-	//debugGraphics.lineStyle(4, '0x00' + parseInt(100-(100*offset))+ 'FF', 1);
-	//debugGraphics.moveTo(attackerStartX, attackerStartY);
-	//debugGraphics.lineTo(attackerEndX,attackerEndY);
+	debugGraphics.lineStyle(4, '0x' + (offset<target.body.width*attackerStartX/fireVelocity?'FF':'00') + parseInt(100-(90*offset))+ 'FF', 1);
 
-	return Math.abs(offset);
+	if(Math.abs(angleModifier)<attackAngleThreshold && offset<attackThreshold){
+		debugGraphics.lineStyle(4, '0xFFFF00', 1);
+	}
+	else if(Math.abs(angleModifier)<attackAngleThreshold){
+		debugGraphics.lineStyle(4, '0x00FF00', 1);
+	}
+	debugGraphics.moveTo(attackerStartX, attackerStartY);
+	debugGraphics.lineTo(attackerEndX,attackerEndY);
+
+	return offset;
 }
 playerShip.prototype.update = function(){
 	if(this.alive){
@@ -1546,62 +1552,51 @@ playerShip.prototype.update = function(){
 
 			if(this.target != this.sprite){
 				var targetDistance = this.game.physics.arcade.distanceBetween(this.sprite, this.target);
-				var adjTarget = new Phaser.Point(this.target.x+this.target.body.velocity.x*(targetDistance/600),this.target.y+this.target.body.velocity.y*(targetDistance/600));
-				var targetAngle = this.game.physics.arcade.angleBetween(this.sprite, adjTarget); 
+				var adjTarget = new Phaser.Point(this.target.x+this.target.body.velocity.x*(targetDistance/this.fireVelocity),this.target.y+this.target.body.velocity.y*(targetDistance/this.fireVelocity));
+				var targetAngle = this.game.physics.arcade.angleBetween(this.sprite, this.target); 
+				var adjTargetAngle = this.game.physics.arcade.angleBetween(this.sprite, adjTarget); 
 
 
 				var closestFSMatch = false;
 				var fs = false;
-				for(var i = 0; i < Math.PI * 2; i+=0.03){
+				for(var i = 0; i < Math.PI * 2; i+=0.01){
 					fs = firingSolution(this.sprite, this.target, this.fireRange, this.fireVelocity,i, this.turnRate)
-						if((fs && !closestFSMatch) || fs < closestFSMatch){
-							closestFSMatch=fs;
-							if (closestFSMatch<attackTreshold){
-								targetAngle=(this.sprite.rotation + i);
+						if((fs && !closestFSMatch) || Math.abs(fs) < closestFSMatch){
+							closestFSMatch=Math.abs(fs);
+							if (closestFSMatch<(this.target.body.width*attackerTargetSizeThreshold)/this.fireVelocity){
+								adjTargetAngle=(this.sprite.rotation + i);
+								if (this.energy - this.fireEnergy > this.energyReserve && targetDistance < this.fireRange * (this.fireVelocity/900)){		
+									if(Math.abs(i)<attackAngleThreshold){
+										this.fire(); 
+									}
+									if(Math.abs(targetAngle-player.sprite.rotation)<0.1 && fs < 0){
+										this.fire();
+									}
+								}
 							}
 						}
 				}
 
-				var diffAngle = compareAngles(this.sprite.rotation,targetAngle);
+				var diffAngle = compareAngles(this.sprite.rotation,adjTargetAngle);
 
-				if(diffAngle*60>this.turnRate)
+				if(diffAngle*45>this.turnRate)
 				{
 					this.left(1);
-				}else if(diffAngle*60<-this.turnRate){
+				}else if(diffAngle*45<-this.turnRate){
 					this.right(1);
 				}
 
-				if(enemies[this.target.name].ai==3){
-					if(Math.abs(diffAngle)<0.1 && targetDistance > (this.fireRange * (this.fireVelocity / 1500))){
-						if(this.sprite.body.velocity.x * Math.cos(targetAngle) < 0 ||
-								this.sprite.body.velocity.y * Math.sin(targetAngle) < 0 ||
-								Math.abs(this.sprite.body.velocity.x) + 
-								Math.abs(this.sprite.body.velocity.y) < 50 + (Math.abs(this.target.body.velocity.x) + 
-									Math.abs(this.target.body.velocity.y))){
-							this.up(1);
-						}
-					}
 
-				}else{
-
-					if(Math.abs(diffAngle)<0.1 && targetDistance > (this.fireRange * (this.fireVelocity / 1200))){
-						this.up(1);
-					}
-
-					if (this.energy < this.energyReserve){
-						this.up(1);
-					}
-
-					if (this.altCheck()){
-						this.alt();
-					}
+				if(Math.abs(diffAngle)<1.2 && targetDistance > (this.fireRange * (this.fireVelocity / 2500))){
+					this.up(1);
 				}
-				if (this.energy - this.fireEnergy > this.energyReserve && targetDistance < this.fireRange * (this.fireVelocity/1000)){					
-					var fireFS=firingSolution(this.sprite, this.target, this.fireRange, this.fireVelocity,0,this.turnRate);
-					if(fireFS && fireFS < attackTreshold){
-						this.fire(); 
-					}
 
+				if (this.energy < this.energyReserve){
+					this.up(1);
+				}
+
+				if (this.altCheck()){
+					this.alt();
 				}
 			}
 		}
@@ -1613,6 +1608,7 @@ playerShip.prototype.update = function(){
 	}
 };
 var player;
+var attackerTargetSizeThreshold = 1.1;
 var buttonLeft=0;
 var buttonRight=0;
 var buttonUp=0;
@@ -1622,7 +1618,8 @@ var buttonAlt=0;
 var buttonEnter=0;
 var shipSpeed = 1/0.015;
 var debugGraphics;
-var attackTreshold = 0.5;
+var attackThreshold = 0.1;
+var attackAngleThreshold = 0.05;
 var attemptTarget;
 var confusionCooldown = 0;
 var joystickUsed = false;
@@ -2424,12 +2421,12 @@ gameUI.prototype.setMode = function(mode){
 		}
 	}
 	if(mode=='select'){
-//		this.initButtons(selectButtons);
+		//		this.initButtons(selectButtons);
 	}else if(mode=='move'){
-//		this.initButtons(moveButtons);
+		//		this.initButtons(moveButtons);
 	}
 	else if (mode=='delete'){
-//		this.initButtons(deleteButtons);
+		//		this.initButtons(deleteButtons);
 	}
 }
 gameUI.prototype.cullInventory = function() {
@@ -2477,7 +2474,7 @@ gameUI.prototype.endPartsUI = function () {
 	this.partFlavorText.setText('');
 	this.explainerText.setText('');
 	player.initPlayerShip(ship);
-//	this.initButtons(warButtons);
+	//	this.initButtons(warButtons);
 	gamemode = 'war';
 }
 
@@ -3161,12 +3158,12 @@ function update () {
 
 			player.targetAngle=game.physics.arcade.angleToPointer(player.sprite);
 
-			
+
 			for(var i=0;i<ui.buttons.length;i++){
 				var btn = ui.buttons[i].button;
 				var ptr = game.input.activePointer;
 				if(ptr.worldX > btn.x && ptr.worldX < btn.x + ui.chunkX &&
-ptr.worldY > btn.y && ptr.worldY < btn.y + ui.chunkY){
+						ptr.worldY > btn.y && ptr.worldY < btn.y + ui.chunkY){
 					ui.buttons[i].downCallback();
 				}
 			}
