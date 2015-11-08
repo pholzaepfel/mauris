@@ -2903,7 +2903,7 @@ function pullLootToPlayer(s) {
 												var tempx, tempy;
 												tempx = s.body.velocity.x;
 												tempy = s.body.velocity.y;
-												game.physics.arcade.velocityFromRotation(targetAngle, 500, s.body.velocity);
+												game.physics.arcade.velocityFromRotation(targetAngle, 500 * game.time.physicsElapsed * shipSpeed, s.body.velocity);
 												s.body.velocity.x+=tempx*s.averageCounter;
 												s.body.velocity.x/=s.averageCounter+1;
 												s.body.velocity.y+=tempy*s.averageCounter;
