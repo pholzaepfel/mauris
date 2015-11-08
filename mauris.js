@@ -1396,10 +1396,10 @@ var firingSolution = function(attacker, target, fireRange, fireVelocity, angleMo
 
 				var bulletStartX = attacker.x + (Math.cos(attacker.rotation)*(attacker.body.width));
 				var bulletStartY = attacker.y + (Math.sin(attacker.rotation)*(attacker.body.height));
-// TODO make this work one day. Adjust firing location
-// for drift incurred while turning
-//								bulletStartX += attacker.body.velocity.x * Math.abs((angleModifier / game.math.degToRad(turnRate)));
-//								bulletStartY += attacker.body.velocity.y * Math.abs((angleModifier / game.math.degToRad(turnRate)));
+				// TODO make this work one day. Adjust firing location
+				// for drift incurred while turning
+//												bulletStartX += attacker.body.velocity.x * Math.abs((angleModifier / turnRate));
+	//											bulletStartY += attacker.body.velocity.y * Math.abs((angleModifier / turnRate));
 				var bulletVelX = Math.cos(attacker.rotation + angleModifier) * fireVelocity ;
 				var bulletVelY = Math.sin(attacker.rotation + angleModifier) * fireVelocity ;
 				bulletVelX += attacker.body.velocity.x * 0.5 ;
@@ -1408,13 +1408,13 @@ var firingSolution = function(attacker, target, fireRange, fireVelocity, angleMo
 				bulletVelY-=target.body.velocity.y;
 				var bulletStart = new Phaser.Point(bulletStartX,bulletStartY);
 				var targetDistance = game.physics.arcade.distanceBetween(target, bulletStart);
-var adjVelocity=getHypo(bulletVelX,bulletVelY);
+				var adjVelocity=getHypo(bulletVelX,bulletVelY);
 				if(targetDistance > adjVelocity * (fireRange / 1000)){
 								return null;
 				}
 				var interceptTime = targetDistance/adjVelocity;
 
-				for(var j=interceptTime/2;j<interceptTime*2;j+=interceptTime/8){
+				for(var j=interceptTime*0.7;j<interceptTime*1.3;j+=0.01){
 
 								var bulletEndX = bulletStartX + (bulletVelX * j);
 								var bulletEndY = bulletStartY + (bulletVelY * j);
@@ -1529,44 +1529,42 @@ playerShip.prototype.update = function(){
 																this.target = this.sprite;
 												}
 
-																var fs = false;
+												var fs = false;
 												if(this.target != this.sprite){
 																var targetDistance = this.game.physics.arcade.distanceBetween(this.sprite, this.target);
 																var adjTarget = new Phaser.Point(this.target.x+this.target.body.velocity.x*(targetDistance/this.fireVelocity),this.target.y+this.target.body.velocity.y*(targetDistance/this.fireVelocity));
 																var targetAngle = this.game.physics.arcade.angleBetween(this.sprite, this.target); 
-																var adjTargetAngle = this.game.physics.arcade.angleBetween(this.sprite, adjTarget); 
+																var adjTargetAngle = this.game.physics.arcade.angleBetween(this.sprite, this.target); 
 
 
-																var closestFSMatch = false;
+																var closestFSMatch = false; 
 																for(var i = -1 * Math.PI; i < Math.PI; i+=0.03){
-																				fs = firingSolution(this.sprite, this.target, this.fireRange, this.fireVelocity,i, this.turnRate)
-																								if((fs && !closestFSMatch) || Math.abs(fs) < closestFSMatch){
-																												closestFSMatch=Math.abs(fs);
+																				fs = firingSolution(this.sprite, this.target, this.fireRange, this.fireVelocity,i, this.turnRate);
+																				if(fs && (!closestFSMatch || Math.abs(i) < closestFSMatch)){
+																								closestFSMatch=Math.abs(i);
 
-																												adjTargetAngle=(this.sprite.rotation + i);
-																																if(Math.abs(i)<attackAngleThreshold){
-																												if (this.energy - this.fireEnergy > this.energyReserve ){		
-																																				this.fire(); 
-																																}
-adjTargetAngle=this.sprite.rotation;
-i=Math.PI;
-
-																												}
-
+																								adjTargetAngle=(this.sprite.rotation + i);
+																				}
+																				if(fs && Math.abs(i)<attackAngleThreshold){
+																								if (this.energy - this.fireEnergy > this.energyReserve ){		
+																												this.fire(); 
 																								}
+
+
+																				}
 																}
 
 																var diffAngle = compareAngles(this.sprite.rotation,adjTargetAngle);
 
-																if(diffAngle*45>this.turnRate)
+																if(diffAngle*60>this.turnRate)
 																{
 																				this.left(1);
-																}else if(diffAngle*45<-this.turnRate){
+																}else if(diffAngle*60<-this.turnRate){
 																				this.right(1);
 																}
 
 
-																if(!fs && Math.abs(diffAngle)<1.2){
+																if(!closestFSMatch && Math.abs(diffAngle)<0.5){
 																				this.up(1);
 																}
 
@@ -1594,7 +1592,7 @@ var buttonEnter=0;
 var shipSpeed = 1/0.015;
 var debugGraphics;
 var attackThreshold = 0.1;
-var attackAngleThreshold = 0.07;
+var attackAngleThreshold = 0.03;
 var attemptTarget;
 var confusionCooldown = 0;
 var joystickUsed = false;
