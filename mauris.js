@@ -1396,14 +1396,14 @@ var firingSolution = function(attacker, target, fireRange, fireVelocity, angleMo
 
 	var attackerStartX = attacker.x + (Math.cos(attacker.rotation)*(attacker.body.width));
 	var attackerStartY = attacker.y + (Math.sin(attacker.rotation)*(attacker.body.height));
-	attackerStartX += attacker.body.velocity.x * Math.abs(angleModifier / (turnRate * shipSpeed));
-	attackerStartY += attacker.body.velocity.y * Math.abs(angleModifier / (turnRate * shipSpeed));
+	attackerStartX += attacker.body.velocity.x * Math.abs((angleModifier / turnRate * shipSpeed));
+	attackerStartY += attacker.body.velocity.y * Math.abs((angleModifier / turnRate * shipSpeed));
 
 	var attackerStart = new Phaser.Point(attackerStartX,attackerStartY);
 	var attackerEndX = attackerStartX + (Math.cos(attacker.rotation + angleModifier) * (fireRange/1000) * fireVelocity) ;
 	var attackerEndY = attackerStartY + (Math.sin(attacker.rotation + angleModifier) * (fireRange/1000) * fireVelocity) ;
-	attackerEndX += attacker.body.velocity.x * 0.5 * (fireVelocity/1000);
-	attackerEndY += attacker.body.velocity.y * 0.5 * (fireVelocity/1000);
+	attackerEndX += attacker.body.velocity.x * 0.5 * (fireRange/1000);
+	attackerEndY += attacker.body.velocity.y * 0.5 * (fireRange/1000);
 
 	var targetStartX = target.x;
 	var targetStartY = target.y;
@@ -1432,16 +1432,16 @@ var firingSolution = function(attacker, target, fireRange, fireVelocity, angleMo
 		+ Math.abs((attacker.body.velocity.y * 0.5)) + Math.abs(Math.sin(attacker.rotation)*fireVelocity);
 	var offset = Math.abs((targetDistance/targetVelocity) - (attackerDistance/fireVelocity));	
 
-	debugGraphics.lineStyle(4, '0x' + (offset<target.body.width*attackerStartX/fireVelocity?'FF':'00') + parseInt(100-(90*offset))+ 'FF', 1);
+	//debugGraphics.lineStyle(4, '0x' + (offset<target.body.width*attackerStartX/fireVelocity?'FF':'00') + parseInt(100-(90*offset))+ 'FF', 1);
 
 	if(Math.abs(angleModifier)<attackAngleThreshold && offset<attackThreshold){
-		debugGraphics.lineStyle(4, '0xFFFF00', 1);
+		//debugGraphics.lineStyle(4, '0xFFFF00', 1);
 	}
 	else if(Math.abs(angleModifier)<attackAngleThreshold){
-		debugGraphics.lineStyle(4, '0x00FF00', 1);
+		//debugGraphics.lineStyle(4, '0x00FF00', 1);
 	}
-	debugGraphics.moveTo(attackerStartX, attackerStartY);
-	debugGraphics.lineTo(attackerEndX,attackerEndY);
+	//debugGraphics.moveTo(attackerStartX, attackerStartY);
+	//debugGraphics.lineTo(attackerEndX,attackerEndY);
 
 	return offset;
 }
@@ -1559,7 +1559,7 @@ playerShip.prototype.update = function(){
 
 				var closestFSMatch = false;
 				var fs = false;
-				for(var i = 0; i < Math.PI * 2; i+=0.01){
+				for(var i = 0; i < Math.PI * 2; i+=0.03){
 					fs = firingSolution(this.sprite, this.target, this.fireRange, this.fireVelocity,i, this.turnRate)
 						if((fs && !closestFSMatch) || Math.abs(fs) < closestFSMatch){
 							closestFSMatch=Math.abs(fs);
@@ -1608,7 +1608,7 @@ playerShip.prototype.update = function(){
 	}
 };
 var player;
-var attackerTargetSizeThreshold = 1.1;
+var attackerTargetSizeThreshold = 0.5;
 var buttonLeft=0;
 var buttonRight=0;
 var buttonUp=0;
