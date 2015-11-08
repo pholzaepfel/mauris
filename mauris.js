@@ -857,8 +857,8 @@ enemyShip.prototype.spawnBullet = function (playerFired) {
 		bullet.blendMode=this.bulletBlendMode;
 		bullet.scale.setTo(1,1);
 		bullet.tracking = this.fireTracking;
-		bullet.body.width=bullet.width;
-		bullet.body.height=bullet.height;
+		bullet.body.width=16;
+		bullet.body.height=16;
 		bullet.nextTrack = 0;
 		bullet.bulletHitBehavior=this.bulletHitBehavior;
 		bullet.angularVelocity=0;
@@ -1356,8 +1356,8 @@ playerShip.prototype.spawnBullet = function(playerFired){
 		bullet.alpha=1;
 		bullet.blendMode=this.bulletBlendMode;
 		bullet.scale.setTo(1,1);
-		bullet.body.width=bullet.width;
-		bullet.body.height=bullet.height;
+		bullet.body.width=16;
+		bullet.body.height=16;
 		bullet.reset(this.sprite.x + (Math.cos(this.sprite.rotation)*(this.sprite.body.width)*0.75), this.sprite.y + (Math.sin(this.sprite.rotation)*(this.sprite.body.width)*0.75));
 		bullet.rotation = this.sprite.rotation;
 		bullet.owner=this.sprite;
