@@ -1414,7 +1414,7 @@ var adjVelocity=getHypo(bulletVelX,bulletVelY);
 				}
 				var interceptTime = targetDistance/adjVelocity;
 
-				for(var j=interceptTime/2;j<interceptTime*2;j+=game.time.physicsElapsed){
+				for(var j=interceptTime/2;j<interceptTime*2;j+=interceptTime/8){
 
 								var bulletEndX = bulletStartX + (bulletVelX * j);
 								var bulletEndY = bulletStartY + (bulletVelY * j);
@@ -1544,10 +1544,13 @@ playerShip.prototype.update = function(){
 																												closestFSMatch=Math.abs(fs);
 
 																												adjTargetAngle=(this.sprite.rotation + i);
-																												if (this.energy - this.fireEnergy > this.energyReserve ){		
 																																if(Math.abs(i)<attackAngleThreshold){
+																												if (this.energy - this.fireEnergy > this.energyReserve ){		
 																																				this.fire(); 
 																																}
+adjTargetAngle=this.sprite.rotation;
+i=Math.PI;
+
 																												}
 
 																								}
