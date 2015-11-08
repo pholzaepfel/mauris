@@ -1396,8 +1396,10 @@ var firingSolution = function(attacker, target, fireRange, fireVelocity, angleMo
 
 				var bulletStartX = attacker.x + (Math.cos(attacker.rotation)*(attacker.body.width));
 				var bulletStartY = attacker.y + (Math.sin(attacker.rotation)*(attacker.body.height));
-		//						bulletStartX += attacker.body.velocity.x * Math.abs((angleModifier / turnRate * shipSpeed));
-		//						bulletStartY += attacker.body.velocity.y * Math.abs((angleModifier / turnRate * shipSpeed));
+// TODO make this work one day. Adjust firing location
+// for drift incurred while turning
+//								bulletStartX += attacker.body.velocity.x * Math.abs((angleModifier / game.math.degToRad(turnRate)));
+//								bulletStartY += attacker.body.velocity.y * Math.abs((angleModifier / game.math.degToRad(turnRate)));
 				var bulletVelX = Math.cos(attacker.rotation + angleModifier) * fireVelocity ;
 				var bulletVelY = Math.sin(attacker.rotation + angleModifier) * fireVelocity ;
 				bulletVelX += attacker.body.velocity.x * 0.5 ;
@@ -1406,10 +1408,11 @@ var firingSolution = function(attacker, target, fireRange, fireVelocity, angleMo
 				bulletVelY-=target.body.velocity.y;
 				var bulletStart = new Phaser.Point(bulletStartX,bulletStartY);
 				var targetDistance = game.physics.arcade.distanceBetween(target, bulletStart);
-				if(targetDistance > fireVelocity * (fireRange / 1000)){
+var adjVelocity=getHypo(bulletVelX,bulletVelY);
+				if(targetDistance > adjVelocity * (fireRange / 1000)){
 								return null;
 				}
-				var interceptTime = targetDistance/fireVelocity;
+				var interceptTime = targetDistance/adjVelocity;
 
 				for(var j=interceptTime/2;j<interceptTime*2;j+=game.time.physicsElapsed){
 
@@ -1419,7 +1422,7 @@ var firingSolution = function(attacker, target, fireRange, fireVelocity, angleMo
 								var bulletProjection = new Phaser.Rectangle(bulletEndX,bulletEndY,16,16);
 								var targetRectangle = new Phaser.Rectangle(target.x, target.y, target.width, target.height);	
 								if(targetRectangle.intersects(bulletProjection) ){
-												return 1/j;
+												return 1/targetDistance;
 								}
 				}
 
