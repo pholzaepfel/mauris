@@ -1,54 +1,63 @@
 var gamemode;
 var defaultBehavior='neutral';
 var cheatmode = 0;
+
 var legacyButtons = [
 {'name':'left',
 				'downCallback':function(){buttonLeft=1;},
 				'upCallback':function(){buttonLeft=0;},
 				'x':0,
 				'y':7,
+				'rotation':0,
 				'label':'<'},
 {'name':'right',
 				'downCallback':function(){buttonRight=1;},
 				'upCallback':function(){buttonRight=0;},
 				'x':2,
 				'y':7,
+				'rotation':0,
 				'label':'>'},
 {'name':'up',
 				'downCallback':function(){buttonUp=1;},
 				'upCallback':function(){buttonUp=0;},
 				'x':1,
 				'y':6,
-				'label':'A'},
+				'rotation':Math.PI,
+				'label':'V'},
 {'name':'down',
 				'downCallback':function(){buttonDown=1;},
 				'upCallback':function(){buttonDown=0;},
 				'x':1,
 				'y':7,
-				'label':'v'},
+				'rotation':0,
+				'label':'V'},
 {'name':'fire',
 				'downCallback':function(){buttonFire=1;},
 				'upCallback':function(){buttonFire=0;},
 				'x':7,
 				'y':7,
+				'rotation':0,
 				'label':'X'},
 {'name':'alt',
 				'downCallback':function(){buttonAlt=1;},
 				'upCallback':function(){buttonAlt=0;},
 				'x':7,
 				'y':6,
+				'rotation':0,
 				'label':'Z'},
 {'name':'enter2',
 				'downCallback':function(){buttonEnter=1;},
 				'upCallback':function(){buttonEnter=0;},
 				'x':6,
 				'y':7,
+				'rotation':0,
 				'label':''},
 {'name':'enter',
 				'downCallback':function(){buttonEnter=1;},
 				'upCallback':function(){buttonEnter=0;},
 				'x':5,
 				'y':7,
+				'rotation':0,
 				'label':'ENTER'}
 				];
 				var selectButtons = [
@@ -56,31 +65,36 @@ var legacyButtons = [
 				'downCallback':function(){buttonLeft=1;},
 				'upCallback':function(){buttonLeft=0;},
 				'x':2,
-				'y':5,
+				'y':4,
+				'rotation':0,
 				'label':'<'},
 {'name':'right',
 				'downCallback':function(){buttonRight=1;},
 				'upCallback':function(){buttonRight=0;},
 				'x':5,
-				'y':5,
+				'y':4,
+				'rotation':0,
 				'label':'>'},
 {'name':'fire',
 				'downCallback':function(){buttonFire=1;},
 				'upCallback':function(){buttonFire=0;},
 				'x':3.5,
-				'y':7,
-				'label':'del mode'},
+				'y':6,
+				'rotation':0,
+				'label':'connect'},
 {'name':'alt',
 				'downCallback':function(){buttonAlt=1;},
 				'upCallback':function(){buttonAlt=0;},
 				'x':3.5,
-				'y':6,
-				'label':'add?'},
+				'y':7,
+				'rotation':0,
+				'label':'remove?'},
 {'name':'enter',
 				'downCallback':function(){buttonEnter=1;},
 				'upCallback':function(){buttonEnter=0;},
 				'x':3.5,
 				'y':1,
+				'rotation':0,
 				'label':'launch'}
 				];
 				var deleteButtons = [
@@ -88,37 +102,43 @@ var legacyButtons = [
 				'downCallback':function(){buttonLeft=1;},
 				'upCallback':function(){buttonLeft=0;},
 				'x':0,
-				'y':7,
+				'y':6,
+				'rotation':0,
 				'label':'<'},
 {'name':'right',
 				'downCallback':function(){buttonRight=1;},
 				'upCallback':function(){buttonRight=0;},
 				'x':2,
-				'y':7,
+				'y':6,
+				'rotation':0,
 				'label':'>'},
 {'name':'up',
 				'downCallback':function(){buttonUp=1;},
 				'upCallback':function(){buttonUp=0;},
 				'x':1,
-				'y':6,
-				'label':'^'},
+				'y':5,
+				'rotation':Math.PI,
+				'label':'V'},
 {'name':'down',
 				'downCallback':function(){buttonDown=1;},
 				'upCallback':function(){buttonDown=0;},
 				'x':1,
 				'y':7,
+				'rotation':0,
 				'label':'V'},
 {'name':'fire',
 				'downCallback':function(){buttonFire=1;},
 				'upCallback':function(){buttonFire=0;},
-				'x':7,
+				'x':6,
 				'y':7,
-				'label':'DEL!'},
+				'rotation':0,
+				'label':'remove'},
 {'name':'alt',
 				'downCallback':function(){buttonAlt=1;},
 				'upCallback':function(){buttonAlt=0;},
-				'x':7,
-				'y':6,
+				'x':6,
+				'y':5,
+				'rotation':0,
 				'label':'done'}
 				];
 				var moveButtons = [
@@ -126,82 +146,88 @@ var legacyButtons = [
 				'downCallback':function(){buttonLeft=1;},
 				'upCallback':function(){buttonLeft=0;},
 				'x':0,
-				'y':7,
+				'y':6,
+				'rotation':0,
 				'label':'<'},
 {'name':'right',
 				'downCallback':function(){buttonRight=1;},
 				'upCallback':function(){buttonRight=0;},
 				'x':2,
-				'y':7,
+				'y':6,
+				'rotation':0,
 				'label':'>'},
 {'name':'up',
 				'downCallback':function(){buttonUp=1;},
 				'upCallback':function(){buttonUp=0;},
 				'x':1,
-				'y':6,
-				'label':'^'},
+				'y':5,
+				'rotation':Math.PI,
+				'label':'V'},
 {'name':'down',
 				'downCallback':function(){buttonDown=1;},
 				'upCallback':function(){buttonDown=0;},
 				'x':1,
 				'y':7,
+				'rotation':0,
 				'label':'V'},
 {'name':'fire',
 				'downCallback':function(){buttonFire=1;},
 				'upCallback':function(){buttonFire=0;},
-				'x':7,
+				'x':6,
 				'y':7,
+				'rotation':0,
 				'label':'add'},
 {'name':'alt',
 				'downCallback':function(){buttonAlt=1;},
 				'upCallback':function(){buttonAlt=0;},
-				'x':7,
-				'y':6,
-				'label':'remove'},
-{'name':'enter',
-				'downCallback':function(){buttonEnter=1;},
-				'upCallback':function(){buttonEnter=0;},
-				'x':5,
-				'y':7,
-				'label':'launch'}
+				'x':6,
+				'y':5,
+				'rotation':0,
+				'label':'cancel'},
 				];
-				var warButtons = [
+var warButtons = [
 {'name':'left',
 				'downCallback':function(){buttonLeft=1;},
 				'upCallback':function(){buttonLeft=0;},
 				'x':0,
 				'y':7,
+				'rotation':0,
 				'label':'<'},
 {'name':'right',
 				'downCallback':function(){buttonRight=1;},
 				'upCallback':function(){buttonRight=0;},
 				'x':2,
 				'y':7,
+				'rotation':0,
 				'label':'>'},
 {'name':'up',
-				'downCallback':function(){buttonDown=1;},
-				'upCallback':function(){buttonDown=0;},
+				'downCallback':function(){buttonUp=1;},
+				'upCallback':function(){buttonUp=0;},
 				'x':1,
 				'y':7,
+				'rotation':Math.PI,
 				'label':'V'},
 {'name':'fire',
 				'downCallback':function(){buttonFire=1;},
 				'upCallback':function(){buttonFire=0;},
 				'x':7,
 				'y':7,
-				'label':'fire'},
+				'rotation':0,
+				'label':'Ÿ'},
 {'name':'alt',
 				'downCallback':function(){buttonAlt=1;},
 				'upCallback':function(){buttonAlt=0;},
 				'x':7,
 				'y':6,
-				'label':'alt'},
+				'rotation':0.5*Math.PI,
+				'label':'*'},
 {'name':'enter',
 				'downCallback':function(){buttonEnter=1;},
 				'upCallback':function(){buttonEnter=0;},
-				'x':5,
-				'y':7,
-				'label':'pause'}
+				'x':7,
+				'y':0,
+				'rotation':0,
+				'label':'"'}
 				];
 				// container for stuff that might persist between games
 				// TODO: persist stuff between games
@@ -345,6 +371,18 @@ function randomSort(a, b) {
 				} else{
 								return -1;
 				}
+}
+function alphaComponentSort(a, b) {
+				if(components[a].name>components[b].name){
+								return 1;
+				}else if(components[a].name<components[b].name){
+								return -1;
+				}else if(a>b){
+								return 1;
+				}else if(a<b){
+								return -1;
+				} 
+return 0;
 }
 function lengthSort(a, b) {
 				if(a.length>b.length){
@@ -1398,8 +1436,8 @@ var firingSolution = function(attacker, target, fireRange, fireVelocity, angleMo
 				var bulletStartY = attacker.y + (Math.sin(attacker.rotation)*(attacker.body.height));
 				// TODO make this work one day. Adjust firing location
 				// for drift incurred while turning
-//												bulletStartX += attacker.body.velocity.x * Math.abs((angleModifier / turnRate));
-	//											bulletStartY += attacker.body.velocity.y * Math.abs((angleModifier / turnRate));
+				//												bulletStartX += attacker.body.velocity.x * Math.abs((angleModifier / turnRate));
+				//											bulletStartY += attacker.body.velocity.y * Math.abs((angleModifier / turnRate));
 				var bulletVelX = Math.cos(attacker.rotation + angleModifier) * fireVelocity ;
 				var bulletVelY = Math.sin(attacker.rotation + angleModifier) * fireVelocity ;
 				bulletVelX += attacker.body.velocity.x * 0.5 ;
@@ -1693,9 +1731,14 @@ gameUI.prototype.initButtons = function(selectedButtons) {
 				var offsetX = chunkX / 8;
 				var offsetY = chunkY / 8;
 				for(var i=0;i<this.buttons.length;i++){
-								this.buttons[i].x = offsetX + (chunkX * this.buttons[i].x);
-								this.buttons[i].y = offsetY + (chunkY * this.buttons[i].y);
-								this.buttons[i].button=(game.add.text(0,0,this.buttons[i].label,{ font: parseInt(chunkY) + 'px acknowledge', fill: 'rgb(130,255,255)', align: 'center' }));
+								this.buttons[i].adjX = offsetX + (chunkX * this.buttons[i].x);
+								this.buttons[i].adjY = offsetY + (chunkY * this.buttons[i].y);
+								this.buttons[i].button=(game.add.text(0,0,this.buttons[i].label,{ font: parseInt(chunkY) + 'px acknowledge', fill: 'rgb(170,255,255)', alpha: '0.6'}));
+								this.buttons[i].flash=false;
+								this.buttons[i].button.anchor.setTo(0.5,0.5);
+								this.buttons[i].button.rotation=this.buttons[i].rotation;
+								this.buttons[i].button.adjX=(chunkX*.375);
+								this.buttons[i].button.adjY=(chunkY*.375);
 				}
 }
 
@@ -1704,8 +1747,18 @@ gameUI.prototype.buttonsPing = function(){
 				var upperLeftCornerX = player.sprite.body.x - (resolutionX / 2);
 				var upperLeftCornerY = player.sprite.body.y - (resolutionY / 2);
 				for(var i=0;i<this.buttons.length;i++){
-								this.buttons[i].button.x=upperLeftCornerX + this.buttons[i].x;
-								this.buttons[i].button.y=upperLeftCornerY + this.buttons[i].y;
+
+								//place button rectangle for hit indicators
+								var padX =upperLeftCornerX + (this.buttons[i].x * this.chunkX) + (this.chunkX/8);
+								var padY =upperLeftCornerY + (this.buttons[i].y * this.chunkY) + (this.chunkY/8);
+								var fill = this.buttons[i].flash ? '0x40FFFF' : '0x000040';
+								this.buttons[i].flash=false;
+								this.graphics.beginFill(fill, 0.6);
+								this.graphics.drawRect(padX, padY, this.chunkX * 0.75, this.chunkY * 0.75);
+								this.buttons[i].button.x=upperLeftCornerX + this.buttons[i].adjX;
+								this.buttons[i].button.y=upperLeftCornerY + this.buttons[i].adjY;
+								this.buttons[i].button.x+= this.buttons[i].button.adjX;
+								this.buttons[i].button.y+= this.buttons[i].button.adjY;
 								this.toTop(this.buttons[i].button);
 				}
 }
@@ -1839,6 +1892,7 @@ gameUI.prototype.initCombatUi = function() {
 				destroyIfExists(this.comms);
 				this.comms = game.add.text(0,0,'',{font:'32px mozart', fill: 'rgb(40,190,240)', align: 'left'});
 
+				this.comms.anchor.setTo(0.5,0.5);
 				destroyIfExists(this.partText);
 				this.partText = game.add.text(-300,150,'',{font:'42px mozart', fill: 'rgb(255,255,255)', align: 'left'});
 				destroyIfExists(this.partFlavorText);
@@ -2028,14 +2082,8 @@ gameUI.prototype.skipText = function() {
 				this.textLineIndex=0;
 }
 gameUI.prototype.commsPing = function() {
-				this.comms.x = player.sprite.body.x - 268;
-				this.comms.y = player.sprite.body.y + 200;
-				if(resolutionY>720){
-								this.comms.y+=(resolutionY-720)/2
-				}else if(gamemode=='?build'){
-								this.comms.y+=50;
-				}
-
+				this.comms.x = player.sprite.x;
+				this.comms.y = player.sprite.y - 200;
 				if (game.time.now > this.nextComms && this.textIndex < this.texts.length){
 								if(this.textLineIndex==0||this.nextCommsPing){
 												ui.sound_comms.play();
@@ -2056,11 +2104,11 @@ gameUI.prototype.commsPing = function() {
 								this.textLine=s;
 								this.comms.setText(this.textLine);
 								if(this.textLineIndex>this.texts[this.textIndex].length){
-												this.nextComms=game.time.now+1000+this.textLineIndex*50;
+												this.nextComms=game.time.now+2000+this.textLineIndex*50;
 												this.textIndex+=1;
 												this.textLineIndex=0;
 								}else{
-												this.nextComms=game.time.now+10;
+												this.nextComms=game.time.now+2;
 								}
 								if(this.textLine.substr(-1)=='\n'){
 												this.nextComms+=10;
@@ -2074,7 +2122,7 @@ gameUI.prototype.commsPing = function() {
 								this.comms.setText(this.textLine + '  ');
 				}
 				this.graphics.beginFill(0x000000, ui.comms.alpha/3);
-				this.graphics.drawRect(this.comms.x - 15, this.comms.y - 6, this.comms.width + 30, this.comms.height + 12);
+				this.graphics.drawRect(this.comms.x - 15 - (0.5 * this.comms.width), this.comms.y - 6 - (0.5 * this.comms.height), this.comms.width + 30, this.comms.height + 12);
 
 				//color coding!
 				if(this.comms.text.match(/^got/)){
@@ -2335,6 +2383,7 @@ gameUI.prototype.newestPart = function() {
 gameUI.prototype.partsUI = function (ship) {
 				this.sound_dock.play();
 				this.initInventory();
+				playerStats.inventory.sort(alphaComponentSort);
 				player.sprite.reset(0,0);
 				player.sprite.rotation=0;
 				this.firstPart();
@@ -2394,12 +2443,12 @@ gameUI.prototype.setMode = function(mode){
 								}
 				}
 				if(mode=='select'){
-								//		this.initButtons(selectButtons);
+								this.initButtons(selectButtons);
 				}else if(mode=='move'){
-								//		this.initButtons(moveButtons);
+								this.initButtons(moveButtons);
 				}
 				else if (mode=='delete'){
-								//		this.initButtons(deleteButtons);
+								this.initButtons(deleteButtons);
 				}
 }
 gameUI.prototype.cullInventory = function() {
@@ -2447,7 +2496,7 @@ gameUI.prototype.endPartsUI = function () {
 				this.partFlavorText.setText('');
 				this.explainerText.setText('');
 				player.initPlayerShip(ship);
-				//	this.initButtons(warButtons);
+				this.initButtons(warButtons);
 				gamemode = 'war';
 }
 
@@ -2676,7 +2725,7 @@ function create () {
 
 				ui = new gameUI();
 				ui.initSound();
-				ui.initButtons(legacyButtons);
+				ui.initButtons(warButtons);
 				gamemode = location.search||'init';
 				if (gamemode == '?cheat'){
 								gamemode = 'init';
@@ -3131,13 +3180,16 @@ function update () {
 
 												player.targetAngle=game.physics.arcade.angleToPointer(player.sprite);
 
-
+												//handleButtons
 												for(var i=0;i<ui.buttons.length;i++){
 																var btn = ui.buttons[i].button;
 																var ptr = game.input.activePointer;
-																if(ptr.worldX > btn.x && ptr.worldX < btn.x + ui.chunkX &&
-																								ptr.worldY > btn.y && ptr.worldY < btn.y + ui.chunkY){
+																if(ptr.worldX > btn.x - (0.5 * ui.chunkX) && ptr.worldX < btn.x + ui.chunkX - (0.5 * ui.chunkX) &&
+																								ptr.worldY > btn.y - (0.5 * ui.chunkY) && ptr.worldY < btn.y + ui.chunkY - (0.5 * ui.chunkY)){
 																				ui.buttons[i].downCallback();
+					ui.buttons[i].flash=true;
+																				
+																				
 																}
 												}
 												if (buttonLeft) {left=1};
