@@ -2033,7 +2033,6 @@ gameUI.prototype.radarPing = function() {
 
 								if(game.time.now>this.nextRadarSound && targetDistance < 0.75 * blinkDistance && this.enemies[i].sprite.profile > 200){
 												this.nextRadarSound=game.time.now+3333;
-												this.sound_redalert.play()
 								}
 								if (targetDistance < 0.5 * blinkDistance && game.time.now % 250 > 125){
 												s='['+s+']';
@@ -3210,6 +3209,7 @@ function update () {
 																				if (enemies[i].alive && gamemode=='war'){
 																								if(Math.abs(game.input.activePointer.worldX - enemies[i].sprite.x) < 80 &&
 																																Math.abs(game.input.activePointer.worldY - enemies[i].sprite.y) < 80) {
+												ui.sound_redalert.play()
 																												player.behavior='target';
 																												player.target=enemies[i].sprite;
 																												ui.radar[0].scale.setTo(3,3);
