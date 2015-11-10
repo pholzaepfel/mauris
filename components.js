@@ -10,13 +10,12 @@ var cmp = [
 	'id':1,
 	'drops':true,
 	'name':'Rusted Wing',
-	'flavor':'improves maneuverability, inhibits energy return',
+	'flavor':'improves maneuverability',
 	'bonus':function(target){
 		target.turnRate+=0.3;
 		target.acceleration+=0.3;
 		target.sprite.body.maxVelocity.x+=15;
 		target.sprite.body.maxVelocity.y+=15;
-		target.energyRate+=100;
 	}
 },
 {
@@ -26,14 +25,13 @@ var cmp = [
 	'flavor':'fires long-ranged slugs, slow rate of fire',
 	'bonus':function(target){
 		target.bulletSprite=3;
-		target.fireEnergy+=1;
+		target.fireEnergy+=3;
 		target.fireRange+=1000;
-		target.fireDamage+=3;
+		target.fireDamage+=4;
 		target.fireSound=ui.sound_bullet;
 		target.fireRate+=0;
-		target.fireVelocity+=600;
 		target.bulletBehavior.push(function(bullet){
-			bullet.scale.setTo(bullet.scale.x+.5,bullet.scale.y);
+			bullet.scale.setTo(2,bullet.scale.y);
 		});
 		target.sprite.profile+=25;
 	}
@@ -45,7 +43,6 @@ var cmp = [
 	'flavor':'basic energy storage',
 	'bonus':function(target){
 		target.energyMax+=6;
-		target.energyRate*=0.9;
 	}
 },
 {
@@ -103,8 +100,8 @@ var cmp = [
 		*/
 		target.bulletSprite=3;
 		target.sprite.profile+=50;
-		target.fireRange*=0.75 * (target.fireVelocity / (target.fireVelocity < 2000 ? 2000 : target.fireVelocity));
-		target.fireVelocity=target.fireVelocity < 2000 ? 2000 : target.fireVelocity;
+		target.fireRange*=0.75 * (target.fireVelocity / (target.fireVelocity < 750 ? 750 : target.fireVelocity));
+		target.fireVelocity=target.fireVelocity < 750 ? 750 : target.fireVelocity;
 		target.bulletBehavior.push(function(bullet){
 			var tgt = ownerFromName(bullet.owner.name);
 			if(tgt.fireCounter++ < tgt.fireCounterReset){
@@ -112,7 +109,7 @@ var cmp = [
 			}else{
 			tgt.fireCounter=0;
 			}
-			bullet.scale.setTo(4,bullet.scale.y*1.5);
+			bullet.scale.setTo(4,1.5);
 			bullet.blendMode=1;
 		});
 
@@ -193,7 +190,7 @@ var cmp = [
 	'flavor':'improves recharge speed and maneuverability',
 	'bonus':function(target){
 		target.energyMax+=2;
-		target.energyRate*=0.9;
+		target.energyAmount+=1;
 		target.acceleration+=0.2;
 		target.turnRate+=0.1;
 	}
@@ -205,7 +202,7 @@ var cmp = [
 	'flavor':'improves recharge speed and maneuverability',
 	'bonus':function(target){
 		target.energyMax+=2;
-		target.energyRate*=0.9;
+		target.energyAmount+=1;
 		target.acceleration+=0.2;
 		target.turnRate+=0.1;
 	}
@@ -216,7 +213,7 @@ var cmp = [
 	'name':'Xenoform Reactor',
 	'flavor':'hums with power. very valuable',
 	'bonus':function(target){
-		target.energyRate*=0.7;
+		target.energyAmount+=2;
 		target.sprite.profile+=100;
 	}
 },
@@ -228,7 +225,7 @@ var cmp = [
 	'bonus':function(target){
 		target.bulletSprite=5; 
 		target.fireDamage*=2;
-		target.fireEnergy*=1.5;
+		target.fireEnergy*=1.75;
 		target.fireSound=ui.sound_boom2;
 		target.fireRate*=1.5;
 		target.sprite.profile+=200;
@@ -399,6 +396,7 @@ var cmp = [
 	'bonus':function(target){
 		target.health+=6;
 		target.fireDamage+=1;
+		target.fireEnergy+=0.5;
 		target.acceleration*=0.7;
 	}
 },
@@ -477,7 +475,7 @@ var cmp = [
 	'flavor':'extra crewhands speed energy regeneration',
 	'bonus':function(target){
 		target.health+=2;
-		target.energyRate*=0.8;
+		target.energyRate+=1;
 		target.acceleration+=0.1;
 		target.sprite.profile+=10;
 	}
@@ -490,7 +488,6 @@ var cmp = [
 	'bonus':function(target){
 		target.turnRate+=0.2;
 		target.health+=4;
-		target.energyRate*=1.1;
 	}
 },
 {
@@ -563,8 +560,6 @@ var cmp = [
 	'flavor':'pull in loots from farther away',
 	'bonus':function(target){
 		target.lootRange+=300;
-		target.fireRate*=0.9;
-		target.energyRate*=0.95;
 	}
 },
 {
@@ -601,7 +596,7 @@ var cmp = [
 	'flavor':'improves recharge speed and maneuverability',
 	'bonus':function(target){
 		target.energyMax+=2;
-		target.energyRate*=0.9;
+		target.energyAmount+=1;
 		target.acceleration+=0.2;
 		target.turnRate+=0.1;
 	}
@@ -613,7 +608,7 @@ var cmp = [
 	'flavor':'improves recharge speed and maneuverability',
 	'bonus':function(target){
 		target.energyMax+=2;
-		target.energyRate*=0.9;
+		target.energyAmount+=1;
 		target.acceleration+=0.2;
 		target.turnRate+=0.1;
 	}
@@ -638,7 +633,8 @@ var cmp = [
 	'flavor':'improves health, but leeches energy',
 	'bonus':function(target){
 		target.health+=12;
-		target.energyRate*=1.3;
+		target.energyMax-=4;
+		target.fireEnergy+=0.5;
 		target.fireDamage+=1;
 	}
 },
@@ -688,6 +684,7 @@ var cmp = [
 	'bonus':function(target){
 		target.sprite.profile=500;
 		target.ai=2;
+		target.health-=4;
 		target.oreChance=1;
 		target.effects=function(){
 
@@ -918,7 +915,6 @@ var cmp = [
 		target.health+=5;
 		target.turnSpeed+=0.1;
 		target.acceleration+=0.1;
-		target.energyRate*=0.9;
 		target.energyMax+=4;
 		target.sprite.profile+=20;	
 	}
@@ -930,7 +926,6 @@ var cmp = [
 	'flavor':'improves health and energy recharge',
 	'bonus':function(target){
 		target.health+=6;
-		target.energyMax-=2;
 		target.energyRate*=0.95;
 		target.sprite.profile+=10;	
 	}
@@ -941,9 +936,10 @@ var cmp = [
 	'name':'Mining Laser',
 	'flavor':'extracts ore from asteroids',
 	'bonus':function(target){
-		target.fireDamage+=0.2;
 		target.fireSound=ui.sound_pew2;
-		target.fireRate+=100;
+		target.fireDamage+=2;
+		target.fireEnergy+=2;
+		target.fireRate+=200;
 		target.fireRange*=0.8*(target.fireVelocity / (target.fireVelocity < 1000 ? 1000 : target.fireVelocity));
 		target.fireVelocity=target.fireVelocity < 1000 ? 1000 : target.fireVelocity;
 		target.sprite.profile+=20;	
@@ -959,9 +955,6 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 
 			if(tgt.ai == 3 && tgt.oreChance < 1){
 				spawnLoots(1,bullet.x,bullet.y)
-
-
-			bullet.damage=0;
 			}
 		}
 
@@ -972,25 +965,23 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'id':74,
 	'drops':true,
 	'name':'Habitat Module',
-	'flavor':'light and tough, with a bonus capacitor',
+	'flavor':'light and tough',
 	'bonus':function(target){
 		target.health+=4;
 		target.acceleration-=0.1;
-		target.energyRate*=1.05;
-		target.energyMax+=3;
+		target.energyMax+=4;
 	}
 },
 {
 	'id':75,
 	'name':'Habitat Module',
-	'flavor':'light and tough, with a bonus capacitor',
+	'flavor':'light and tough',
 	'drops':true,
 	'bonus':function(target){
 
 		target.health+=4;
 		target.acceleration-=0.1;
-		target.energyRate*=1.05;
-		target.energyMax+=3;
+		target.energyMax+=4;
 	}
 },
 {
@@ -1067,7 +1058,6 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 		target.fireRate*=1.1;
 		target.fireDamage+=1;
 		target.fireSound=ui.sound_pew1;
-		target.fireEnergy*=0.8;
 		target.fireVelocity*=1.2;
 		target.bulletSprite=4;
 	}
@@ -1193,6 +1183,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'flavor':'grapple with foes',
 	'bonus':function(target){
 		target.fireDamage+=2;
+		target.fireEnergy+=1;
 		target.fireRange*=0.6;
 		target.fireVelocity*=1.4;
 		target.bulletHitBehavior.push(
@@ -1446,8 +1437,8 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'name':'Weapon Rotator',
 	'flavor':'greatly improves fire rate, but generates heat',
 	'bonus':function(target){
-		target.fireRate*=0.7;
-		target.fireEnergy*=0.9;
+		target.fireRate*=0.5;
+		target.fireEnergy*=0.75;
 		target.fireDamage+=1;
 		target.bulletBehavior.push(function(bullet){bullet.owner.profile+=10});
 	}
@@ -1469,9 +1460,10 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'flavor':'improves weapons and other critical systems',
 	'bonus':function(target){
 		target.fireDamage+=1;
+		target.fireEnergy+=0.5;
 		target.fireRate*=0.9;
 		target.turnRate+=0.2;
-		target.energyRate*=0.9;
+		target.energyMax+=2;
 		target.acceleration+=0.2;
 	}
 },
@@ -1482,8 +1474,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'flavor':'high speed, decreases energy',
 	'bonus':function(target){
 		target.acceleration+=0.8;
-		target.energyRate*=1.1;
-		target.energyMax-=1;
+		target.energyMax-=4;
 		target.sprite.body.maxVelocity.x+=20;
 		target.sprite.body.maxVelocity.y+=20;
 
@@ -1509,8 +1500,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 
 		target.health+=4;
 		target.acceleration-=0.1;
-		target.energyRate*=0.9;
-		target.energyMax+=2;
+		target.energyMax+=4;
 	}
 },
 {
@@ -1522,8 +1512,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 
 		target.health+=4;
 		target.acceleration-=0.1;
-		target.energyRate*=0.9;
-		target.energyMax+=2;
+		target.energyMax+=4;
 	}
 },
 {
@@ -1553,10 +1542,10 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'name':'Antimatter Furnace',
 	'flavor':'faster energy return, very unsafe',
 	'bonus':function(target){
-		target.energyAmount+=2;
+		target.energyAmount+=4;
 		target.bulletBehavior.push(function(bullet){
 			var tgt = ownerFromName(bullet.owner.name);
-			if(Math.random()<0.2 && tgt.health > 1){
+			if(Math.random()<0.3 && tgt.health > 1){
 				tgt.damage(1);
 				midBoom(explosions,4,tgt.sprite.x,tgt.sprite.y);
 			}
@@ -1952,8 +1941,10 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 		target.bulletSprite=2;
 
 		target.bulletBlendMode=0;
-		target.fireDamage+=4;
+		target.fireEnergy+=2;
+		target.fireDamage+=8;
 		target.fireSound=ui.sound_missile;
+		target.attackAngleThreshold+=0.15;
 		target.bulletBehavior.push(function(bullet){bullet.body.velocity.x*=.75+Math.random()*.5;
 			bullet.body.velocity.y*=.75+Math.random()*.5});
 
@@ -1988,10 +1979,11 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 			var tgt = ownerFromName(bullet.owner.name);
 			tgt.nextFire = game.time.now + (randomRange(0.7,1.2) * tgt.fireRate);
 		});
-		target.fireRange*=0.7;
+		var fireRateDiff=200/target.fireRate;
+		target.fireRate=200;
 		target.fireSound=ui.sound_bullet;
-		target.fireDamage*=0.9;
-		target.fireEnergy*=0.7;
+		target.fireDamage*=fireRateDiff;
+		target.fireEnergy*=fireRateDiff;
 		target.sprite.profile+=20;
 	}
 },
@@ -2061,7 +2053,6 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 		target.fireSound=ui.sound_pew1;
 		target.fireRate*=0.75;
 		target.energyMax+=4;
-		target.energyRate*=0.95;
 		target.bulletSprite=4;
 		target.sprite.profile+=50;
 		target.bulletBehavior.push(function(bullet){
@@ -2078,7 +2069,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 		target.health+=8;
 		target.turnRate-=0.2;
 		target.acceleration-=0.3;
-		target.energyRate*=0.8;
+		target.energyAmount+=1;
 	}
 },
 {
@@ -2088,10 +2079,10 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'flavor':'brimming with random technology',
 	'bonus':function(target){
 		target.fireDamage+=2;
-		target.fireEnergy*=1.2;
+		target.fireEnergy+=1;
 		target.turnRate-=0.2;
 		target.acceleration-=0.3;
-		target.energyRate*=0.7;
+		target.energyAmount+=1;
 
 	}
 },
@@ -2384,7 +2375,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 		target.health+=8;
 		target.turnRate-=0.2;
 		target.acceleration-=0.3;
-		target.energyRate*=0.8;
+		target.energyAmount+=1;
 
 	}
 },
