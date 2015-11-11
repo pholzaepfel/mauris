@@ -21,16 +21,11 @@ var missions = [
 	'distanceMax':3000,
 	'hazePurpleBlendMode':2,
 	'hazeRedBlendMode':1,
-	'intro':['[INCOMING COMMUNICATION]',
-	'[LEFT] and [RIGHT] turn your ship.',
-	'press [X] to fire.\nfiring takes energy which will recharge over time.',
-	'press [UP] to thrust. \nto slow down, TURN AROUND and THRUST.',
-	'destroy some containers near the station\nfor some target practice. if it blinks yellow, shoot it!'],
-	'outro':['did you see the GREEN ore? pick it up to repair your ship.\nthe best sources of ore are containers and asteroids.','great job. now, follow the GOLD DIAMOND to the next station.\nyou\'ll get new orders there.'],
+	'intro':['click to target. hold to move. try destroying some asteroids and cargo containers.',
+	'when you get the hang of it,\nfollow the GOLD <> indicator to the next station.'],
+	'outro':[''],
 	'win':{
-		'condition':'kill',
-		'killCount':5,
-		'killType': containers
+		'condition':'frob'
 	},
 	'enemies':
 		[{
@@ -43,7 +38,7 @@ var missions = [
 			'ships': containers,
 			'respawn':true,
 			'count':5, 
-			'missionTarget':true
+			'missionTarget':false
 		}
 		]
 
@@ -70,7 +65,7 @@ var missions = [
 	'distanceMax':10000,
 	'hazePurpleBlendMode':2,
 	'hazeRedBlendMode':1,
-	'intro':['er... go kill things'],
+	'intro':[''],
 	'outro':['congrats'],
 	'win':{
 		'condition':'frob'
@@ -113,8 +108,8 @@ var missions = [
 	'distanceMax':9000,
 	'hazePurpleBlendMode':1,
 	'hazeRedBlendMode':1,
-	'intro':['uh, captain... there\'s a big nasty incoming.\nlooks like a bandit warship.\nalright, we\'ve got an AWSM bomb here...','it will obliterate your ship,\nbut if you can get close enough, you can take the warship out with you.','pull in close and press [Z] with the AWSM equipped.'],
-	'outro':['BOOoooom! that was amazing!\nhead to the next waystation.'],
+	'intro':['!! BOSSFIGHT !!'],
+	'outro':['BOOoooom!'],
 	'win':{
 		'condition':'kill',
 		'killCount':1,
@@ -171,12 +166,10 @@ var missions = [
 	'distanceMax':10000,
 	'hazePurpleBlendMode':2,
 	'hazeRedBlendMode':1,
-	'intro':['looks like the drones were reprogrammed\nby an old rebel group, the Rats.','destroy as many drones as you can.\nthe Rats will come chasing, but they\'re a secondary target.'],
-	'outro':['uh-oh. hurry to the next waypoint. there are alliance warships coming in!'],
+	'intro':['good job. keep making things explode.'],
+	'outro':[''],
 	'win':{
-		'condition':'kill',
-		'killCount':10,
-		'killType': drones 
+		'condition':'frob'
 	},
 	'enemies': [{
 		'ships': bandits,
@@ -188,7 +181,7 @@ var missions = [
 	{
 		'ships': drones,
 		'respawn':true,
-		'missionTarget':true,
+		'missionTarget':false,
 		'count':8, 
 		'deaths':[]
 	},
@@ -230,8 +223,8 @@ var missions = [
 	'distanceMax':7000,
 	'hazePurpleBlendMode':2,
 	'hazeRedBlendMode':2,
-	'intro':['DO NOT engage the alliance warships here!\nstrip down your ship to lower your profile and hold your fire at all costs.\nthis THERMAL MONITORING SYSTEM will warn you when they\'re in range.'],
-	'outro':['appreciate it, captain. try to make it back in one piece.'],
+	'intro':['!! DO NOT ENGAGE !!'],
+	'outro':[''],
 	'win':{
 		'condition':'frob',
 	},
@@ -275,12 +268,10 @@ var missions = [
 	'distanceMax':10000,
 	'hazePurpleBlendMode':2,
 	'hazeRedBlendMode':1,
-	'intro':['init new quest. kill yellow things.\ngo to waypoint. reconfigure. repeat'],
-	'outro':['captain. try to make it back in one piece.'],
+	'intro':[''],
+	'outro':[''],
 	'win':{
-		'condition':'kill', //could be 'frob'
-		'killCount':10,
-		'killType': alliance
+		'condition':'frob'
 	},
 	'enemies':
 		[{
@@ -293,7 +284,7 @@ var missions = [
 			'ships': alliance,
 			'respawn':true,
 			'count':14, 
-			'missionTarget':true
+			'missionTarget':false
 		},{
 		'ships': containers,
 		'respawn':true,
@@ -323,12 +314,10 @@ var missions = [
 	'distanceMax':5000,
 	'hazePurpleBlendMode':2,
 	'hazeRedBlendMode':1,
-	'intro':['init new quest. kill yellow things.\ngo to waypoint. reconfigure. repeat'],
-	'outro':['captain. try to make it back in one piece.'],
+	'intro':[''],
+	'outro':[''],
 	'win':{
-		'condition':'kill', //could be 'frob'
-		'killCount':3,
-		'killType': banditsMedium
+		'condition':'frob'
 	},
 	'enemies':
 		[{
@@ -346,7 +335,7 @@ var missions = [
 			'ships': banditsMedium,
 			'respawn':true,
 			'count':3, 
-			'missionTarget':true
+			'missionTarget':false
 		},{
 		'ships': containers,
 		'respawn':true,
@@ -376,12 +365,10 @@ var missions = [
 	'distanceMax':4000,
 	'hazePurpleBlendMode':1,
 	'hazeRedBlendMode':0,
-	'intro':['init new quest. kill yellow things.\ngo to waypoint. reconfigure. repeat'],
-	'outro':['captain. try to make it back in one piece.'],
+	'intro':[''],
+	'outro':[''],
 	'win':{
-		'condition':'kill', //could be 'frob'
-		'killCount':10,
-		'killType': zombies
+		'condition':'frob'
 	},
 	'enemies':
 		[{
@@ -394,7 +381,7 @@ var missions = [
 			'ships': zombies,
 			'respawn':true,
 			'count':15, 
-			'missionTarget':true
+			'missionTarget':false
 		},{
 		'ships': containers,
 		'respawn':true,
@@ -428,12 +415,10 @@ var missions = [
 	'distanceMax':3000,
 	'hazePurpleBlendMode':2,
 	'hazeRedBlendMode':2,
-	'intro':['init new quest. kill yellow things.\ngo to waypoint. reconfigure. repeat'],
-	'outro':['captain. try to make it back in one piece.'],
+	'intro':[''],
+	'outro':[''],
 	'win':{
-		'condition':'kill', //could be 'frob'
-		'killCount':3,
-		'killType': droneBoss1
+		'condition':'frob'
 	},
 	'enemies':
 		[{
@@ -446,7 +431,7 @@ var missions = [
 			'ships': droneBoss1,
 			'respawn':false,
 			'count':3, 
-			'missionTarget':true
+			'missionTarget':false
 		},
 	{
 			'ships': drones2,
@@ -481,12 +466,10 @@ var missions = [
 	'distanceMax':4000,
 	'hazePurpleBlendMode':2,
 	'hazeRedBlendMode':1,
-	'intro':['take these components and add them to your ship.\ncomponents will improve your ship, but will weigh it down.','crack open some more containers, but watch\nout for the haywire mining drones here.'],
+	'intro':['take these components and add them to your ship.\ncomponents will upgrade your ship.'],
 	'outro':['nice job. come on to the next station'],
 	'win':{
-		'condition':'kill',
-		'killCount':5,
-		'killType': containers
+		'condition':'frob'
 	},
 	'enemies': [
 	{
@@ -506,7 +489,7 @@ var missions = [
 	{
 		'ships': containers,
 		'respawn':true,
-		'missionTarget':true,
+		'missionTarget':false,
 		'count':3, 
 		'deaths':[]
 	}
@@ -535,12 +518,10 @@ var missions = [
 	'distanceMax':4000,
 	'hazePurpleBlendMode':2,
 	'hazeRedBlendMode':2,
-	'intro':['init new quest. kill yellow things.\ngo to waypoint. reconfigure. repeat'],
-	'outro':['captain. try to make it back in one piece.'],
+	'intro':[''],
+	'outro':[''],
 	'win':{
-		'condition':'kill', //could be 'frob'
-		'killCount':1,
-		'killType': mechanoidMiniBoss1
+		'condition':'frob'
 	},
 	'enemies':
 		[{
@@ -559,7 +540,7 @@ var missions = [
 			'ships': mechanoidMiniBoss1,
 			'respawn':true,
 			'count':1, 
-			'missionTarget':true
+			'missionTarget':false
 		}]
 }
 
@@ -593,8 +574,8 @@ var missions = [
 	'distanceMax':3000,
 	'hazePurpleBlendMode':2,
 	'hazeRedBlendMode':1,
-	'intro':['init new quest. kill yellow things.\ngo to waypoint. reconfigure. repeat'],
-	'outro':['captain. try to make it back in one piece.'],
+	'intro':[''],
+	'outro':[''],
 	'win':{
 		'condition':'kill', //could be 'frob'
 		'killCount':5,
