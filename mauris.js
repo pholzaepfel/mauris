@@ -208,6 +208,18 @@ var warButtons = [
 				'rotation':Math.PI,
 				'label':'V'},
 */
+/*{'name':'lofi',
+				'downCallback':function(){
+					hazeWhite.blendMode = 1;
+
+hazeRed.visible=false;
+hazePurple.visible=false;
+},
+				'upCallback':function(){},
+				'x':0,
+				'y':0,
+				'rotation':0,
+				'label':':p'},*/
 {'name':'fire',
 				'downCallback':function(){buttonFire=1;},
 				'upCallback':function(){buttonFire=0;},
@@ -1655,7 +1667,7 @@ var buttonFire=0;
 var buttonAlt=0;
 var buttonEnter=0;
 var shipSpeed = 1/0.015;
-var debugGraphics;
+var otherGraphics;
 var attackThreshold = 0.1;
 var attemptTarget;
 var confusionCooldown = 0;
@@ -2203,6 +2215,7 @@ gameUI.prototype.update = function() {
 				this.graphics.clear();
 				this.toTop(this.graphics);
 				this.commsPing();
+				this.toTop(otherGraphics);
 				if (gamemode == '?build'){
 								this.partPing();
 				}
@@ -2885,7 +2898,7 @@ function create () {
 								sparkles.setAlpha(1,0,2000);
 								sparkles.blendMode = 1;
 								sparkles.lifespan=200;
-								debugGraphics = game.add.graphics(0,0);
+								otherGraphics = game.add.graphics(0,0);
 				}
 
 				pad1 = game.input.gamepad.pad1;	
@@ -2979,17 +2992,18 @@ function pullLootToPlayer(s) {
 								if(Math.random() < 0.3 && onscreen(s.x,s.y)){
 												lootSparkle(s);
 								}
-								if(game.physics.arcade.distanceBetween(s, player.sprite) < player.lootRange){
+												var targetDistance = game.physics.arcade.distanceBetween(s, player.sprite.body); 
+							
+								if(targetDistance < player.lootRange){
+												var targetVelocity = (player.lootRange*2)-targetDistance;// * (Math.floor(5000,game.time.now-s.pullTime)/5000);
 												var targetAngle = game.physics.arcade.angleBetween(s, player.sprite); 
-												var tempx, tempy;
-												tempx = s.body.velocity.x;
-												tempy = s.body.velocity.y;
-												game.physics.arcade.velocityFromRotation(targetAngle, 500 * game.time.physicsElapsed * shipSpeed, s.body.velocity);
-												s.body.velocity.x+=tempx*s.averageCounter;
-												s.body.velocity.x/=s.averageCounter+1;
-												s.body.velocity.y+=tempy*s.averageCounter;
-												s.body.velocity.y/=s.averageCounter+1;
-												if(s.averageCounter){s.averageCounter--};
+												game.physics.arcade.velocityFromRotation(targetAngle, targetVelocity, s.body.velocity);
+												s.body.velocity.x+=player.sprite.body.velocity.x;
+												s.body.velocity.y+=player.sprite.body.velocity.y;
+otherGraphics.lineStyle(parseInt(randomRange(1,3)), 0x00CcFF, randomRange(0.3,0.8));
+	otherGraphics.moveTo(s.x, s.y);
+	otherGraphics.lineTo(player.sprite.x,player.sprite.y);
+
 								}
 				}
 }
@@ -3258,7 +3272,7 @@ console.log(game.input.mouse.button);
 												}
 								}
 								////
-								debugGraphics.clear();
+								otherGraphics.clear();
 								if(gamemode=='?build'){
 
 												for (var i = 0; i < ui.parts.length; i++){
@@ -3852,7 +3866,7 @@ function spawnLoots(_count, x, y){
 								game.add.tween(loot).to({rotation:Math.PI*30},loot.lifespan,Phaser.Easing.Exponential.Out, true, 0, false);
 								var scale = randomRange(0.8,1.1);
 								loot.scale.setTo(scale,scale);
-								loot.averageCounter=50;
+								loot.pullTime=0;
 								loot.alpha=2.5;
 
 								loot.pulseTween = game.add.tween(loot).to({alpha:1},randomRange(200,400),Phaser.Easing.Exponential.Out,true,0,Number.MAX_VALUE,true);
@@ -3873,11 +3887,11 @@ function spawnComponent(component,x,y){
 								loot.lifespan = 120000;
 								loot.scale.setTo(2,2);
 								loot.reset(x + randomRange(-16,16), y+randomRange(-16,16));
-								loot.averageCounter=50;
 								loot.rotation=0;
 								game.add.tween(loot).to({rotation:Math.PI*10},loot.lifespan,Phaser.Easing.Exponential.Out, true, 0, false);
 								loot.acceleration=200;
 								loot.blendMode=0;
+								loot.pullTime=0;
 								loot.alpha=2.5;
 								loot.pulseTween = game.add.tween(loot).to({alpha:1},250,Phaser.Easing.Circular.InOut,true,0,Number.MAX_VALUE,true);
 								loot.lootType='component';

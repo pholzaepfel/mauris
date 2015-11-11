@@ -1094,7 +1094,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'name':'External Power Plant',
 	'flavor':'ore pickups also give energy',
 	'bonus':function(target){
-		target.oreEnergy+=2;
+		target.oreEnergy+=6;
 	}
 },
 {
