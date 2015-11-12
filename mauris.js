@@ -64,28 +64,42 @@ var legacyButtons = [
 {'name':'left',
 	'downCallback':function(){buttonLeft=1;},
 	'upCallback':function(){buttonLeft=0;},
-	'x':2,
-	'y':4,
+	'x':0,
+	'y':6,
 	'rotation':0,
 	'label':'<'},
 {'name':'right',
 	'downCallback':function(){buttonRight=1;},
 	'upCallback':function(){buttonRight=0;},
-	'x':5,
-	'y':4,
+	'x':2,
+	'y':6,
 	'rotation':0,
 	'label':'>'},
+{'name':'up',
+	'downCallback':function(){buttonUp=1;},
+	'upCallback':function(){buttonUp=0;},
+	'x':1,
+	'y':5,
+	'rotation':Math.PI,
+	'label':'V'},
+{'name':'down',
+	'downCallback':function(){buttonDown=1;},
+	'upCallback':function(){buttonDown=0;},
+	'x':1,
+	'y':7,
+	'rotation':0,
+	'label':'V'},
 {'name':'fire',
 	'downCallback':function(){buttonFire=1;},
 	'upCallback':function(){buttonFire=0;},
-	'x':3.5,
+	'x':5,
 	'y':6,
 	'rotation':0,
 	'label':'connect'},
 {'name':'alt',
 	'downCallback':function(){buttonAlt=1;},
 	'upCallback':function(){buttonAlt=0;},
-	'x':3.5,
+	'x':5,
 	'y':7,
 	'rotation':0,
 	'label':'remove?'},
@@ -1770,7 +1784,7 @@ gameUI.prototype.initButtons = function(selectedButtons) {
 	for(var i=0;i<this.buttons.length;i++){
 		this.buttons[i].adjX = offsetX + (chunkX * this.buttons[i].x);
 		this.buttons[i].adjY = offsetY + (chunkY * this.buttons[i].y);
-		this.buttons[i].button=(game.add.text(0,0,this.buttons[i].label,{ font: parseInt(chunkY) + 'px acknowledge', fill: 'rgb(170,255,255)', alpha: '0.6'}));
+		this.buttons[i].button=(game.add.text(0,0,this.buttons[i].label,{ font: parseInt(chunkY) + 'px acknowledge', fill: 'rgb(220,240,240)', alpha: '0.6'}));
 		this.buttons[i].flash=false;
 		this.buttons[i].button.anchor.setTo(0.5,0.5);
 		this.buttons[i].button.rotation=this.buttons[i].rotation;
@@ -1788,7 +1802,9 @@ gameUI.prototype.buttonsPing = function(){
 		//place button rectangle for hit indicators
 		var padX =upperLeftCornerX + (this.buttons[i].x * this.chunkX) + (this.chunkX/8);
 		var padY =upperLeftCornerY + (this.buttons[i].y * this.chunkY) + (this.chunkY/8);
-		var fill = this.buttons[i].flash ? '0x40FFFF' : '0x000040';
+		var fill = this.buttons[i].flash ? '0x326464' : '0x1278AC';
+		var textColor = this.buttons[i].flash ? 'rgb(240,255,255)' : 'rgb(220,240,240)';
+		this.buttons[i].button.fill = textColor;
 		this.buttons[i].flash=false;
 		this.graphics.beginFill(fill, 0.6);
 		this.graphics.drawRect(padX, padY, this.chunkX * 0.75, this.chunkY * 0.75);
@@ -3183,6 +3199,7 @@ function update () {
 		// get controls before any updates
 		//
 
+		otherGraphics.clear();
 
 		var left = 0;
 		var right = 0;
@@ -3356,7 +3373,6 @@ function update () {
 				touchPressed=0;
 		}
 		////
-		otherGraphics.clear();
 		if(gamemode=='?build'){
 
 			for (var i = 0; i < ui.parts.length; i++){
