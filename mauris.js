@@ -200,28 +200,6 @@ var legacyButtons = [
 	'label':'cancel'},
 	];
 var warButtons = [
-	/*{'name':'left',
-		'downCallback':function(){buttonLeft=1;},
-		'upCallback':function(){buttonLeft=0;},
-		'x':0,
-		'y':7,
-		'rotation':0,
-		'label':'<'},
-		{'name':'right',
-		'downCallback':function(){buttonRight=1;},
-		'upCallback':function(){buttonRight=0;},
-		'x':2,
-		'y':7,
-		'rotation':0,
-		'label':'>'},
-		{'name':'up',
-		'downCallback':function(){buttonUp=1;},
-		'upCallback':function(){buttonUp=0;},
-		'x':1,
-		'y':7,
-		'rotation':Math.PI,
-		'label':'V'},
-	 */
 	/*{'name':'lofi',
 		'downCallback':function(){
 		hazeWhite.blendMode = 1;
@@ -730,6 +708,7 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 
 
 	this.nextEnergy = 0;
+	this.nextEnergy4 = 0;
 	this.nextFire = game.time.now+randomRange(1000,8000);
 	this.alive = true;
 	this.parts = [];
@@ -1260,6 +1239,7 @@ playerShip.prototype.initPlayerShip = function (ship) {
 	this.nextOrganicArmorPing=0;
 	this.target=this.sprite;
 	this.fireSound=ui.sound_pew3;
+	this.firingSolution=standardFiringSolution;
 	this.ai=-1; //natural intelligence
 	this.radarTargets=1;
 	this.dropRate=0;
@@ -1307,6 +1287,7 @@ playerShip.prototype.initPlayerShip = function (ship) {
 	this.energyRate=1000;
 	this.energyAmount=2;
 	this.nextProfileDecay =0;
+	this.nextEnergy4 = 0;
 	this.nextEnergy = 0;
 	this.nextFire = 0;
 	this.altCooldown=0;
@@ -1476,7 +1457,28 @@ playerShip.prototype.emitThrust = function() {
 	this.thrust.emitParticle();
 
 }
-var firingSolution = function(attacker, target, fireRange, fireVelocity, angleModifier, turnRate) {
+var drawLine = function(graphics, line) {
+	graphics.moveTo(line.start.x,line.start.y);
+	graphics.lineTo(line.end.x,line.end.y);
+}
+var laserFiringSolution = function(attacker, target, fireRange, fireVelocity, angleModifier, turnRate) {
+			var adjFireRange = Math.max(fireRange*laserRangeModifier, laserRangeMinimum);
+			var bulletX = attacker.x + (Math.cos(attacker.rotation)*(attacker.body.width)*0.75);
+			var bulletY = attacker.y + (Math.sin(attacker.rotation)*(attacker.body.width)*0.75);
+			var laser = new Phaser.Line(bulletX,bulletY, bulletX + Math.cos(attacker.rotation)*adjFireRange,bulletY + Math.sin(attacker.rotation)*adjFireRange);
+			var body = target.body;
+			var topEdge = new Phaser.Line(body.x,body.y,body.x+body.width,body.y);
+			var bottomEdge = new Phaser.Line(body.x,body.y+body.height,body.x+body.width,body.y+body.height);
+			var leftEdge = new Phaser.Line(body.x,body.y,body.x,body.y+body.height);
+			var rightEdge = new Phaser.Line(body.x+body.height,body.y,body.x+body.height,body.y+body.height);
+		
+		if(laser.intersects(topEdge) || laser.intersects(bottomEdge) || laser.intersects(leftEdge)   || laser.intersects(rightEdge)){
+				return 1;
+			}
+			return null;
+
+}
+var standardFiringSolution = function(attacker, target, fireRange, fireVelocity, angleModifier, turnRate) {
 
 	var bulletStartX = attacker.x + (Math.cos(attacker.rotation)*(attacker.body.width));
 	var bulletStartY = attacker.y + (Math.sin(attacker.rotation)*(attacker.body.height));
@@ -1597,7 +1599,7 @@ playerShip.prototype.update = function(){
 
 				var diffAngle = compareAngles(this.sprite.rotation,targetAngle);
 
-				if (this.energy - this.fireEnergy > this.energyReserve && firingSolution(this.sprite, this.target, this.fireRange, this.fireVelocity,i, this.turnRate)){
+				if (this.energy - this.fireEnergy > this.energyReserve && this.firingSolution(this.sprite, this.target, this.fireRange, this.fireVelocity,i, this.turnRate)){
 					if(Math.abs(diffAngle) < 0.5){
 						this.fire(); 
 					}
@@ -1623,7 +1625,7 @@ playerShip.prototype.update = function(){
 
 				var closestFSMatch = false; 
 				for(var i = -1 * Math.PI; i < Math.PI; i+=0.03){
-					fs = firingSolution(this.sprite, this.target, this.fireRange, this.fireVelocity,i, this.turnRate);
+					fs = this.firingSolution(this.sprite, this.target, this.fireRange, this.fireVelocity,i, this.turnRate);
 					if(fs && (!closestFSMatch || Math.abs(i) < closestFSMatch)){
 						closestFSMatch=Math.abs(i);
 
@@ -1672,6 +1674,8 @@ playerShip.prototype.update = function(){
 		var touchPressed = 0;
 var player;
 var attackerTargetSizeThreshold = 0.5;
+var laserRangeModifier=0.2;
+var laserRangeMinimum=150;
 var buttonLeft=0;
 var buttonRight=0;
 var buttonUp=0;
@@ -2212,7 +2216,7 @@ gameUI.prototype.radarPing = function() {
 			}
 		} else {
 			if(range>180){range=180+Math.pow(targetDistance-180,0.6)};	
-			if(range>0.5*Math.floor(resolutionX,resolutionY)-50){range=0.5*Math.floor(resolutionX,resolutionY)-50};	
+			if(range>0.5*Math.min(resolutionX,resolutionY)-50){range=0.5*Math.min(resolutionX,resolutionY)-50};	
 		}
 		this.radar[i].setText(s);
 		this.radar[i].x = player.sprite.body.x + (0.5 * player.sprite.body.width) + Math.cos(targetAngle) * range;

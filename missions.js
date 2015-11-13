@@ -205,7 +205,7 @@ var missions = [
 },
 {
 	'id':4,
-	'next':[2],
+	'next':[11],
 	'name':'smuggling',
 	'complete':false,
 	'componentsReward':[76],
@@ -543,7 +543,54 @@ var missions = [
 			'missionTarget':false
 		}]
 }
-
+,
+{
+	'id':11,
+	'next':[5,6,7,8],
+	'name':'weakalliance',
+	'complete':false,
+	'componentsReward':banditGear,
+	'componentsCount':2,
+	'hazeRed':1.2,
+	'hazeWhite':1.1,
+	'hazePurple':0.4,
+	'hazeRedTint':16777215,
+	'hazeWhiteTint':16777215,
+	'hazePurpleTint':16777215,
+	'hazeRedSpeed':320,
+	'hazeWhiteSpeed':1200,
+	'hazePurpleSpeed':160,
+	'distanceMin':9000,
+	'distanceMax':15000,
+	'hazePurpleBlendMode':2,
+	'hazeRedBlendMode':2,
+	'intro':[''],
+	'outro':[''],
+	'win':{
+		'condition':'kill', //could be 'frob'
+		'killCount':5,
+		'killType': asteroids
+	},
+	'enemies':
+		[{
+			'ships': asteroids,
+			'respawn':true,
+			'count':17, 
+			'missionTarget':false
+		},
+{
+			'ships': containers,
+			'respawn':true,
+			'count':6, 
+			'missionTarget':false
+		},
+	{
+			'ships': allianceWeak,
+			'respawn':true,
+			'count':13, 
+			'missionTarget':false
+		}]
+}
 
 
 ];

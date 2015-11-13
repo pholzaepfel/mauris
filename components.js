@@ -68,7 +68,7 @@ var cmp = [
 			if(targetDistance < 800 && this.altCooldown < game.time.now + 5000){
 				this.energyReserve=6;
 			}
-			if(targetDistance < 250)
+			if(targetDistance < 250 && targetDistance < this.fireRange / 2)
 			{
 				ret = true;
 			}
@@ -98,37 +98,57 @@ var cmp = [
 		target.fireRate=50;
 		target.bulletSprite=3;
 		target.sprite.profile+=50;
-		target.fireRange=200;
-		target.fireEnergy+=1;
-		target.fireVelocity=1000;
+		target.fireEnergy+=2;
+		target.fireDamage+=3;
 		target.fireRate=10;
-		target.bulletBehavior.push(function(bullet){
+		target.firingSolution=laserFiringSolution;
+		target.bulletBehavior=[(function(bullet){
 				var tgt = ownerFromName(bullet.owner.name);
+				var adjFireRange=Math.max(tgt.fireRange*laserRangeModifier,laserRangeMinimum);
+				var modifier=Math.max(tgt.fireRate/1000,game.time.physicsElapsed);
+				if(typeof(tgt.fireEnergy4)=='undefined'){
+					tgt.fireEnergy4=tgt.fireEnergy*2.5;
+				}
+				tgt.fireEnergy=1;
+					
 				tgt.energy+=tgt.fireEnergy;
-				tgt.takeEnergy(tgt.fireEnergy*game.time.physicsElapsed, false);
+				tgt.takeEnergy(tgt.fireEnergy4*modifier, false);
 				otherGraphics.lineStyle(parseInt(randomRange(1,3)), 0xFF24ED, randomRange(0.3,1.8));
 				otherGraphics.moveTo(bullet.x,bullet.y);
-				contactX=bullet.x + Math.cos(tgt.sprite.rotation)*200;
-				contactY=bullet.y + Math.sin(tgt.sprite.rotation)*200;
+				contactX=bullet.x + Math.cos(tgt.sprite.rotation)*adjFireRange;
+				contactY=bullet.y + Math.sin(tgt.sprite.rotation)*adjFireRange;
 				otherGraphics.lineTo(contactX,contactY);
 				for (var i = 0; i < enemies.length; i++){
-				if (enemies[i].alive){
-				var laser = new Phaser.Line(bullet.x,bullet.y, bullet.x + Math.cos(tgt.sprite.rotation)*200,bullet.y + Math.sin(tgt.sprite.rotation)*200);
+				if (enemies[i].alive && bullet.owner.name!=enemies[i].name){
+				var laser = new Phaser.Line(bullet.x,bullet.y, bullet.x + Math.cos(tgt.sprite.rotation)*adjFireRange,bullet.y + Math.sin(tgt.sprite.rotation)*adjFireRange);
 				var body = enemies[i].sprite.body;
 				var topEdge = new Phaser.Line(body.x,body.y,body.x+body.width,body.y);
 				var bottomEdge = new Phaser.Line(body.x,body.y+body.height,body.x+body.width,body.y+body.height);
 				var leftEdge = new Phaser.Line(body.x,body.y,body.x,body.y+body.height);
 				var rightEdge = new Phaser.Line(body.x+body.height,body.y,body.x+body.height,body.y+body.height);
 				if(laser.intersects(topEdge) || laser.intersects(bottomEdge) || laser.intersects(leftEdge)   || laser.intersects(rightEdge)){
-				enemies[i].damage(tgt.fireDamage*10*game.time.physicsElapsed);
+				enemies[i].damage(tgt.fireDamage*25*modifier);
 				}
 				}	
+
+				}
+				if(player.alive && bullet.owner.name!='player'){
+								var laser = new Phaser.Line(bullet.x,bullet.y, bullet.x + Math.cos(tgt.sprite.rotation)*adjFireRange,bullet.y + Math.sin(tgt.sprite.rotation)*adjFireRange);
+								var body = player.sprite.body;
+								var topEdge = new Phaser.Line(body.x,body.y,body.x+body.width,body.y);
+								var bottomEdge = new Phaser.Line(body.x,body.y+body.height,body.x+body.width,body.y+body.height);
+								var leftEdge = new Phaser.Line(body.x,body.y,body.x,body.y+body.height);
+								var rightEdge = new Phaser.Line(body.x+body.height,body.y,body.x+body.height,body.y+body.height);
+								if(laser.intersects(topEdge) || laser.intersects(bottomEdge) || laser.intersects(leftEdge)   || laser.intersects(rightEdge)){
+												player.damage(tgt.fireDamage*10*game.time.physicsElapsed);
+								}
 
 				}
 				bullet.kill();
 
 
-		});
+		})];
+
 
 	}
 },
@@ -2259,41 +2279,52 @@ var cmp = [
 {
 	'id':140,
 	'drops':true,
-	'name':'Armor',
+	'name':'Generic Armor',
 	'match':'26',
-	'flavor':'--',
+	'flavor':'Lightweight and poor quality',
 	'bonus':function(target){
-
+		target.health+=4;
+		target.acceleration+=0.05;
+		target.turnRate+=0.05;
 	}
 },
 {
 	'id':141,
 	'drops':true,
-	'name':'Armor',
+	'name':'Generic Armor',
 	'match':'42',
-	'flavor':'--',
+	'flavor':'Lightweight and poor quality',
 	'bonus':function(target){
-
+		target.health+=4;
+		target.acceleration+=0.05;
+		target.turnRate+=0.05;
+	
 	}
 },
 {
 	'id':142,
 	'drops':true,
-	'name':'Hauler',
+	'name':'Hauler Obsolete Thruster',
 	'match':'426',
-	'flavor':'--',
+	'flavor':'slow, poor control',
 	'bonus':function(target){
-
+		target.acceleration+=0.3;
+		target.turnRate-=0.1;
 	}
 },
 {
 	'id':143,
 	'drops':true,
-	'name':'Hauler',
+	'name':'Hauler Modified Cannon',
 	'match':'4',
-	'flavor':'--',
+	'flavor':'still works?',
 	'bonus':function(target){
-
+		target.fireDamage+=1;
+		target.fireEnergy+=1;
+		target.bulletSprite=5;
+		target.bulletBehavior.push(function(bullet){
+				bullet.scale.setTo(2,bullet.scale.y*0.5);
+		});
 	}
 },
 {
@@ -2471,21 +2502,27 @@ var cmp = [
 {
 	'id':161,
 	'drops':true,
-	'name':'Armor',
+	'name':'Generic Armor',
 	'match':'486',
-	'flavor':'--',
+	'flavor':'Lightweight and poor quality',
 	'bonus':function(target){
-
+		target.health+=4;
+		target.acceleration+=0.05;
+		target.turnRate+=0.05;
+	
 	}
 },
 {
 	'id':162,
 	'drops':true,
-	'name':'Armor',
+	'name':'Generic Armor',
 	'match':'426',
-	'flavor':'--',
+	'flavor':'Lightweight and poor quality',
 	'bonus':function(target){
-
+		target.health+=4;
+		target.acceleration+=0.05;
+		target.turnRate+=0.05;
+	
 	}
 },
 {
@@ -2596,41 +2633,50 @@ var cmp = [
 {
 	'id':172,
 	'drops':true,
-	'name':'Armor',
+	'name':'Generic Armor',
 	'match':'86',
-	'flavor':'--',
+	'flavor':'Lightweight and poor quality',
 	'bonus':function(target){
-
+		target.health+=4;
+		target.acceleration+=0.05;
+		target.turnRate+=0.05;
+	
 	}
 },
 {
 	'id':173,
 	'drops':true,
-	'name':'Armor',
+	'name':'Generic Armor',
 	'match':'84',
-	'flavor':'--',
+	'flavor':'Lightweight and poor quality',
 	'bonus':function(target){
-
+		target.health+=4;
+		target.acceleration+=0.05;
+		target.turnRate+=0.05;
+	
 	}
 },
 {
 	'id':174,
 	'drops':true,
-	'name':'Hauler',
+	'name':'Hauler Living Quarters',
 	'match':'86',
-	'flavor':'--',
+	'flavor':'unsanitary',
 	'bonus':function(target){
-
+		target.energyAmount+=1;
+		target.health-=2;		
 	}
 },
 {
 	'id':175,
 	'drops':true,
-	'name':'Hauler',
+	'name':'Hauler Scanner Unit',
 	'match':'4',
-	'flavor':'--',
+	'flavor':'heavy, more targets and faster turns',
 	'bonus':function(target){
-
+		target.radarTargets+=3;
+		target.turnRate+=0.3;	
+		target.acceleration-=0.3;
 	}
 },
 {
