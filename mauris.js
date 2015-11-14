@@ -1,7 +1,15 @@
 var gamemode;
 var defaultBehavior='neutral';
 var cheatmode = 0;
-
+var touchPressed = 0;
+var aiModes = {
+'player':-1,
+'simple':0,
+'enemy':1,
+'asteroidInit':2,
+'asteroid':3,
+'accurateEnemy':4
+};
 var legacyButtons = [
 {'name':'left',
 	'downCallback':function(){buttonLeft=1;},
@@ -658,6 +666,7 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 	this.sprite.g=255;
 	this.sprite.b=255;
 	this.organicArmor=0;
+	this.nextOre=0;
 	this.nextOrganicArmorPing=0;
 	this.nextThrust=0;
 	this.radarError=0;
@@ -681,7 +690,7 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 	this.bulletHitBehavior=[];
 	this.updateBehavior=[];
 	this.bulletBehavior=[];
-	this.ai = 1;
+	this.ai = aiModes['enemy'];
 	this.alive=true;
 	this.behavior=defaultBehavior;
 	this.sprite.body.drag.x=0;
@@ -816,7 +825,7 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 		this.alive = false;
 		this.died=game.time.now+10000;
 
-		if (this.ai!=3){
+		if (this.ai!=aiModes['asteroid']){
 			sparkExplosion(pew, this.sprite);	
 		}
 
@@ -969,7 +978,7 @@ enemyShip.prototype.update = function() {
 
 	//rubberbanding
 	if (this.game.physics.arcade.distanceBetween(this.sprite, player.sprite) > 4000 ||
-			this.game.physics.arcade.distanceBetween(this.sprite, player.sprite) > 2500 && this.ai == 3){
+			this.game.physics.arcade.distanceBetween(this.sprite, player.sprite) > 2500 && this.ai == aiModes['asteroid']){
 
 		if(Math.random()>0.5){
 			this.target=player.sprite;
@@ -981,7 +990,7 @@ enemyShip.prototype.update = function() {
 			player.target=player.sprite;
 		}
 		midBoom(explosions,4,x,y);
-		if(this.ai==3){
+		if(this.ai==aiModes['asteroid']){
 
 			this.sprite.body.velocity = game.physics.arcade.velocityFromRotation(game.physics.arcade.angleBetween(this.sprite, player.sprite), randomRange(25,100));	
 			this.sprite.body.angularVelocity=randomRange(25,100)*randomSign();
@@ -993,7 +1002,7 @@ enemyShip.prototype.update = function() {
 		this.shield=false;
 	}
 
-	if(this.ai==2){
+	if(this.ai==aiModes['asteroidInit']){
 		//init asteroid stuff
 		this.sprite.body.velocity = game.physics.arcade.velocityFromRotation(game.physics.arcade.angleBetween(this.sprite, player.sprite), randomRange(30,130));	
 		this.sprite.body.velocity.x*=Math.random();
@@ -1003,9 +1012,9 @@ enemyShip.prototype.update = function() {
 			this.sprite.profile=0;
 			this.sprite.profileMax=0;
 		}
-		this.ai=3;
+		this.ai=aiModes['asteroid'];
 	}
-	if(this.ai!=3){
+	if(this.ai!=aiModes['asteroid']){
 		var adjustedProfile = 200 + Math.pow(this.target.profile,profileExponent);
 
 		if(this.target.alpha<0.5){
@@ -1030,10 +1039,10 @@ enemyShip.prototype.update = function() {
 
 	this.effects();
 
-	if(this.ai!=3 && this.alive && this.target.alive){
+	if(this.ai!=aiModes['asteroid'] && this.alive && this.target.alive){
 
 
-		if(this.ai==0){
+		if(this.ai==aiModes['simple']){
 			this.sprite.rotation = this.game.physics.arcade.angleBetween(this.sprite, this.target);
 
 			if (this.game.physics.arcade.distanceBetween(this.sprite, this.target) < this.fireRange * 0.75 &&
@@ -1119,7 +1128,7 @@ enemyShip.prototype.update = function() {
 			}
 			this.nextEnergy = game.time.now + this.energyRate;
 		}
-		if(this.ai != 3 && Math.random()>Math.cos((this.health-this.healthMax)/this.healthMax)){
+		if(this.ai != aiModes['asteroid'] && Math.random()>Math.cos((this.health-this.healthMax)/this.healthMax)){
 			if(Math.random()>(this.health/this.healthMax)){
 				sparks(pew,this.sprite);
 			}
@@ -1236,11 +1245,12 @@ playerShip.prototype.initPlayerShip = function (ship) {
 	this.sprite.g=255;
 	this.sprite.b=255;
 	this.organicArmor=0;
+	this.nextOre=0;
 	this.nextOrganicArmorPing=0;
 	this.target=this.sprite;
 	this.fireSound=ui.sound_pew3;
 	this.firingSolution=standardFiringSolution;
-	this.ai=-1; //natural intelligence
+	this.ai=aiModes['player']; //natural intelligence
 	this.radarTargets=1;
 	this.dropRate=0;
 	this.effects=function(){};
@@ -1461,6 +1471,97 @@ var drawLine = function(graphics, line) {
 	graphics.moveTo(line.start.x,line.start.y);
 	graphics.lineTo(line.end.x,line.end.y);
 }
+
+var laserBulletBehavior = function(bullet,thickness,alpha,color1,color2,color3,damageModifier,laserHitBehavior){
+				var tgt = ownerFromName(bullet.owner.name);
+				var adjFireRange=Math.max(tgt.fireRange*laserRangeModifier,laserRangeMinimum);
+				var modifier=Math.max(tgt.fireRate/1000,game.time.physicsElapsed);
+				if(typeof(tgt.fireEnergy4)=='undefined'){
+					tgt.fireEnergy4=tgt.fireEnergy*2.5;
+				}
+				tgt.fireEnergy=1;
+					
+				tgt.energy+=tgt.fireEnergy;
+				tgt.sprite.profile-=Math.floor(tgt.fireDamage*60);
+				tgt.sprite.profile+=Math.floor(tgt.fireDamage*60*modifier);
+				tgt.takeEnergy(tgt.fireEnergy4*modifier, false);
+				contactX=bullet.x + Math.cos(tgt.sprite.rotation)*adjFireRange;
+				contactY=bullet.y + Math.sin(tgt.sprite.rotation)*adjFireRange;
+	
+				otherGraphics.lineStyle(1, color1, alpha);
+				otherGraphics.moveTo(bullet.x,bullet.y);
+				otherGraphics.lineTo(contactX,contactY);
+	
+				tempLength=randomRange(0.7,0.9);
+				for(var i=2;i<=thickness-2;i++){
+				var segmentLength = 1-(((1-tempLength)/(thickness-4))*(i-1));
+				visualX=bullet.x + Math.cos(tgt.sprite.rotation)*adjFireRange*segmentLength;
+				visualY=bullet.y + Math.sin(tgt.sprite.rotation)*adjFireRange*segmentLength;
+				otherGraphics.lineStyle(i, color1, alpha);
+				otherGraphics.moveTo(bullet.x,bullet.y);
+				otherGraphics.lineTo(visualX,visualY);
+				}
+					visualX=bullet.x + Math.cos(tgt.sprite.rotation)*adjFireRange*tempLength;
+				visualY=bullet.y + Math.sin(tgt.sprite.rotation)*adjFireRange*tempLength;
+				otherGraphics.lineStyle(thickness-1, color1, alpha);
+				otherGraphics.moveTo(bullet.x,bullet.y);
+				otherGraphics.lineTo(visualX,visualY);
+				
+				otherGraphics.lineStyle(thickness-3, color2, alpha);
+				otherGraphics.moveTo(bullet.x,bullet.y);
+				otherGraphics.lineTo(visualX,visualY);
+	
+  			tempLength*=randomRange(0.5,0.99);
+				visualX=bullet.x + Math.cos(tgt.sprite.rotation)*adjFireRange*tempLength;
+				visualY=bullet.y + Math.sin(tgt.sprite.rotation)*adjFireRange*tempLength;
+	
+				visualX-=Math.cos(tgt.sprite.rotation)*tempLength;
+				visualY-=Math.sin(tgt.sprite.rotation)*tempLength;
+				otherGraphics.lineStyle(thickness, color1, alpha);
+				otherGraphics.moveTo(bullet.x,bullet.y);
+				otherGraphics.lineTo(visualX,visualY);
+				
+				otherGraphics.lineStyle(thickness-2, color2, alpha);
+				otherGraphics.moveTo(bullet.x,bullet.y);
+				otherGraphics.lineTo(visualX,visualY);
+						otherGraphics.lineStyle(thickness-3, color3, alpha);
+				otherGraphics.moveTo(bullet.x,bullet.y);
+				otherGraphics.lineTo(visualX,visualY);
+
+
+				for (var i = 0; i < enemies.length; i++){
+				if (enemies[i].alive && bullet.owner.name!=enemies[i].name){
+				var laser = new Phaser.Line(bullet.x,bullet.y, bullet.x + Math.cos(tgt.sprite.rotation)*adjFireRange,bullet.y + Math.sin(tgt.sprite.rotation)*adjFireRange);
+				var body = enemies[i].sprite.body;
+				var topEdge = new Phaser.Line(body.x,body.y,body.x+body.width,body.y);
+				var bottomEdge = new Phaser.Line(body.x,body.y+body.height,body.x+body.width,body.y+body.height);
+				var leftEdge = new Phaser.Line(body.x,body.y,body.x,body.y+body.height);
+				var rightEdge = new Phaser.Line(body.x+body.height,body.y,body.x+body.height,body.y+body.height);
+				if(laser.intersects(topEdge) || laser.intersects(bottomEdge) || laser.intersects(leftEdge)   || laser.intersects(rightEdge)){
+				enemies[i].damage(tgt.fireDamage*damageModifier*modifier);
+				laserHitBehavior(enemies[i]);
+				}
+				}	
+
+				}
+				if(player.alive && bullet.owner.name!='player'){
+								var laser = new Phaser.Line(bullet.x,bullet.y, bullet.x + Math.cos(tgt.sprite.rotation)*adjFireRange,bullet.y + Math.sin(tgt.sprite.rotation)*adjFireRange);
+								var body = player.sprite.body;
+								var topEdge = new Phaser.Line(body.x,body.y,body.x+body.width,body.y);
+								var bottomEdge = new Phaser.Line(body.x,body.y+body.height,body.x+body.width,body.y+body.height);
+								var leftEdge = new Phaser.Line(body.x,body.y,body.x,body.y+body.height);
+								var rightEdge = new Phaser.Line(body.x+body.height,body.y,body.x+body.height,body.y+body.height);
+								if(laser.intersects(topEdge) || laser.intersects(bottomEdge) || laser.intersects(leftEdge)   || laser.intersects(rightEdge)){
+												player.damage(tgt.fireDamage*damageModifier*0.5*game.time.physicsElapsed);
+laserHitBehavior(player);
+								}
+
+				}
+				bullet.kill();
+
+
+}
+
 var laserFiringSolution = function(attacker, target, fireRange, fireVelocity, angleModifier, turnRate) {
 			var adjFireRange = Math.max(fireRange*laserRangeModifier, laserRangeMinimum);
 			var bulletX = attacker.x + (Math.cos(attacker.rotation)*(attacker.body.width)*0.75);
@@ -1580,10 +1681,10 @@ playerShip.prototype.update = function(){
 		}
 		if(this.behavior=='move'){
 			var diffAngle = compareAngles(this.sprite.rotation,this.targetAngle);
-			if(diffAngle*60>this.turnRate)
+			if(diffAngle*60>this.turnRate && !touchPressed)
 			{
 				this.left(1);
-			}else if(diffAngle*60<-this.turnRate){
+			}else if(diffAngle*60<-this.turnRate && !touchPressed){
 				this.right(1);
 			}
 			if(game.input.activePointer.isDown && !touchPressed && Math.abs(diffAngle < 0.2)){
@@ -1905,7 +2006,6 @@ gameUI.prototype.calculatePartPosition2 = function (x,y,index) {
 		}
 	}
 }
-console.log(locations);
 	for(var i=locations.length;i>0;i--){
 		if(locations[i]){
 			return locations[i];
@@ -2802,7 +2902,7 @@ function initMission (missionId) {
 	while(index<enemies.length){	//cleanup if we haven't use the entired pool
 		enemies[index].respawn=false;
 		enemies[index].health=0;
-		enemies[index].damage(9);
+		enemies[index].damage(9999);
 		index++;
 	}
 	if(true || playerStats.mission.win.condition=='frob'){
@@ -3330,7 +3430,6 @@ function update () {
 		if (game.input.activePointer.isDown && game.input.mouse.button != Phaser.Mouse.RIGHT_BUTTON) {
 
 			player.targetAngle=game.physics.arcade.angleToPointer(player.sprite);
-			console.log(game.input.mouse.button);
 			//handleButtons
 			for(var i=0;i<ui.buttons.length;i++){
 				var btn = ui.buttons[i].button;
@@ -3354,7 +3453,7 @@ function update () {
 			if (manualPressed) {
 				player.behavior='manual';
 			}
-			var touchPressed = buttonLeft || buttonRight || buttonUp || buttonDown || buttonFire || buttonAlt || buttonEnter;
+			touchPressed = buttonLeft || buttonRight || buttonUp || buttonDown || buttonFire || buttonAlt || buttonEnter;
 			buttonLeft =0; buttonRight =0; buttonUp =0; buttonDown =0; buttonFire =0; buttonAlt =0; buttonEnter =0;
 			if(attemptTarget && !touchPressed){
 				player.behavior='move';
@@ -4039,7 +4138,7 @@ function bulletHitPlayer (sprite, bullet) {
 	bullet.kill();
 }
 function enemyTouchPlayer (enemySprite, playerSprite) {
-	if(player.sawDamage && enemies[enemySprite.name].ai==3)
+	if(player.sawDamage && enemies[enemySprite.name].ai==aiModes['asteroid'])
 	{
 
 		ui.sound_hit1.play();

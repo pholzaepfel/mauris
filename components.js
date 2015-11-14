@@ -32,7 +32,6 @@ var cmp = [
 		target.fireRange+=1000;
 		target.fireDamage+=4;
 		target.fireSound=ui.sound_bullet;
-		target.fireRate+=0;
 		target.bulletBehavior.push(function(bullet){
 				bullet.scale.setTo(2,bullet.scale.y);
 				});
@@ -56,7 +55,6 @@ var cmp = [
 	'match':'862',
 	'flavor':'press [Z] to rocket backwards',
 	'bonus':function(target){
-		target.ai=4; //accurate
 		target.turnRate+=0.3;
 		target.acceleration+=0.2;
 		target.altCheck=function(){
@@ -95,7 +93,6 @@ var cmp = [
 	'bonus':function(target){
 		target.fireVelocity+=200;
 		target.fireSound=ui.sound_pew1;
-		target.fireRate=50;
 		target.bulletSprite=3;
 		target.sprite.profile+=50;
 		target.fireEnergy+=2;
@@ -103,48 +100,8 @@ var cmp = [
 		target.fireRate=10;
 		target.firingSolution=laserFiringSolution;
 		target.bulletBehavior=[(function(bullet){
-				var tgt = ownerFromName(bullet.owner.name);
-				var adjFireRange=Math.max(tgt.fireRange*laserRangeModifier,laserRangeMinimum);
-				var modifier=Math.max(tgt.fireRate/1000,game.time.physicsElapsed);
-				if(typeof(tgt.fireEnergy4)=='undefined'){
-					tgt.fireEnergy4=tgt.fireEnergy*2.5;
-				}
-				tgt.fireEnergy=1;
-					
-				tgt.energy+=tgt.fireEnergy;
-				tgt.takeEnergy(tgt.fireEnergy4*modifier, false);
-				otherGraphics.lineStyle(parseInt(randomRange(1,3)), 0xFF24ED, randomRange(0.3,1.8));
-				otherGraphics.moveTo(bullet.x,bullet.y);
-				contactX=bullet.x + Math.cos(tgt.sprite.rotation)*adjFireRange;
-				contactY=bullet.y + Math.sin(tgt.sprite.rotation)*adjFireRange;
-				otherGraphics.lineTo(contactX,contactY);
-				for (var i = 0; i < enemies.length; i++){
-				if (enemies[i].alive && bullet.owner.name!=enemies[i].name){
-				var laser = new Phaser.Line(bullet.x,bullet.y, bullet.x + Math.cos(tgt.sprite.rotation)*adjFireRange,bullet.y + Math.sin(tgt.sprite.rotation)*adjFireRange);
-				var body = enemies[i].sprite.body;
-				var topEdge = new Phaser.Line(body.x,body.y,body.x+body.width,body.y);
-				var bottomEdge = new Phaser.Line(body.x,body.y+body.height,body.x+body.width,body.y+body.height);
-				var leftEdge = new Phaser.Line(body.x,body.y,body.x,body.y+body.height);
-				var rightEdge = new Phaser.Line(body.x+body.height,body.y,body.x+body.height,body.y+body.height);
-				if(laser.intersects(topEdge) || laser.intersects(bottomEdge) || laser.intersects(leftEdge)   || laser.intersects(rightEdge)){
-				enemies[i].damage(tgt.fireDamage*25*modifier);
-				}
-				}	
-
-				}
-				if(player.alive && bullet.owner.name!='player'){
-								var laser = new Phaser.Line(bullet.x,bullet.y, bullet.x + Math.cos(tgt.sprite.rotation)*adjFireRange,bullet.y + Math.sin(tgt.sprite.rotation)*adjFireRange);
-								var body = player.sprite.body;
-								var topEdge = new Phaser.Line(body.x,body.y,body.x+body.width,body.y);
-								var bottomEdge = new Phaser.Line(body.x,body.y+body.height,body.x+body.width,body.y+body.height);
-								var leftEdge = new Phaser.Line(body.x,body.y,body.x,body.y+body.height);
-								var rightEdge = new Phaser.Line(body.x+body.height,body.y,body.x+body.height,body.y+body.height);
-								if(laser.intersects(topEdge) || laser.intersects(bottomEdge) || laser.intersects(leftEdge)   || laser.intersects(rightEdge)){
-												player.damage(tgt.fireDamage*10*game.time.physicsElapsed);
-								}
-
-				}
-				bullet.kill();
+				
+				laserBulletBehavior(bullet,parseInt(randomRange(4,7)),randomRange(0.3,1.8),0xCB40AB,0xFF60ED,0xFFFFFF,22,function(){});
 
 
 		})];
@@ -286,7 +243,7 @@ var cmp = [
 	'match':'26',
 	'flavor':'-',
 	'bonus':function(target){
-		target.ai=2;
+		target.ai=aiModes['asteroidInit'];
 	}
 },
 {
@@ -297,7 +254,7 @@ var cmp = [
 	'flavor':'-',
 	'bonus':function(target){
 
-		target.ai=2;
+		target.ai=aiModes['asteroidInit'];
 	}
 },
 {
@@ -307,7 +264,7 @@ var cmp = [
 	'match':'86',
 	'flavor':'-',
 	'bonus':function(target){
-		target.ai=2;
+		target.ai=aiModes['asteroidInit'];
 
 	}
 },
@@ -318,7 +275,7 @@ var cmp = [
 	'match':'84',
 	'flavor':'-',
 	'bonus':function(target){
-		target.ai=2;
+		target.ai=aiModes['asteroidInit'];
 
 	}
 },
@@ -329,7 +286,7 @@ var cmp = [
 	'match':'26',
 	'flavor':'-',
 	'bonus':function(target){
-		target.ai=2;
+		target.ai=aiModes['asteroidInit'];
 
 	}
 },
@@ -340,7 +297,7 @@ var cmp = [
 	'match':'42',
 	'flavor':'-',
 	'bonus':function(target){
-		target.ai=2;
+		target.ai=aiModes['asteroidInit'];
 
 	}
 },
@@ -351,7 +308,7 @@ var cmp = [
 	'match':'86',
 	'flavor':'-',
 	'bonus':function(target){
-		target.ai=2;
+		target.ai=aiModes['asteroidInit'];
 
 	}
 },
@@ -362,7 +319,7 @@ var cmp = [
 	'match':'84',
 	'flavor':'-',
 	'bonus':function(target){
-		target.ai=2;
+		target.ai=aiModes['asteroidInit'];
 
 	}
 },
@@ -373,7 +330,7 @@ var cmp = [
 	'match':'4682',
 	'flavor':'-',
 	'bonus':function(target){
-		target.ai=2;
+		target.ai=aiModes['asteroidInit'];
 
 	}
 },
@@ -384,7 +341,7 @@ var cmp = [
 	'match':'4682',
 	'flavor':'-',
 	'bonus':function(target){
-		target.ai=2;
+		target.ai=aiModes['asteroidInit'];
 
 	}
 },
@@ -395,7 +352,7 @@ var cmp = [
 	'match':'4682',
 	'flavor':'-',
 	'bonus':function(target){
-		target.ai=2;
+		target.ai=aiModes['asteroidInit'];
 
 	}
 },
@@ -406,7 +363,7 @@ var cmp = [
 	'match':'4682',
 	'flavor':'-',
 	'bonus':function(target){
-		target.ai=2;
+		target.ai=aiModes['asteroidInit'];
 	}
 },
 {
@@ -764,7 +721,7 @@ var cmp = [
 	'flavor':'Containers show on radar, and also give buckets of ore.',
 	'bonus':function(target){
 		target.sprite.profile=500;
-		target.ai=2;
+		target.ai=aiModes['asteroidInit'];
 		target.health-=3;
 		target.oreChance=1;
 		target.effects=function(){
@@ -1043,28 +1000,27 @@ var cmp = [
 	'flavor':'extracts ore from asteroids',
 	'bonus':function(target){
 		target.fireSound=ui.sound_pew2;
-		target.fireDamage+=2;
+		target.fireDamage+=1;
 		target.fireEnergy+=2;
-		target.fireRate+=200;
-		target.fireRange*=0.8*(target.fireVelocity / (target.fireVelocity < 1000 ? 1000 : target.fireVelocity));
-		target.fireVelocity=target.fireVelocity < 1000 ? 1000 : target.fireVelocity;
+		target.fireRate=10;
 		target.sprite.profile+=20;	
 		target.bulletSprite=4;
-		target.bulletBehavior.push(function(bullet){
-				bullet.scale.setTo(4,bullet.scale.y);
-				bullet.blendMode=1;
-				});
-
-		target.bulletHitBehavior.push(function(sprite,bullet){
-
-				var tgt = ownerFromName(sprite.name);
-
-				if(tgt.ai == 3 && tgt.oreChance < 1){
-				spawnLoots(1,bullet.x,bullet.y)
+		target.firingSolution=laserFiringSolution;
+		target.bulletBehavior=[(function(bullet){
+					
+	laserBulletBehavior(bullet,parseInt(randomRange(4,7)),randomRange(0.3,1.8),0x20CF10,0xDDFF60,0xFFFFDD,13,
+function(tgt){
+				if(tgt.ai == aiModes['asteroid'] && tgt.oreChance < 1 && game.time.now>tgt.nextOre){
+				spawnLoots(1,tgt.sprite.x,tgt.sprite.y)
+				tgt.nextOre=game.time.now+500;
 				}
-				}
+		
+});
 
-				);
+
+		})];
+
+
 	}
 },
 {
@@ -1153,7 +1109,7 @@ var cmp = [
 		target.turnRate+=0.5;
 		target.acceleration+=0.5;
 		target.energyMax+=4;
-		if(target.ai!=2){
+		if(target.ai!=aiModes['asteroidInit']){
 			target.sprite.body.drag.x=target.sprite.body.maxVelocity.x/5;
 			target.sprite.body.drag.y=target.sprite.body.maxVelocity.y/5;
 
@@ -1436,7 +1392,7 @@ var cmp = [
 				ui.sound_blur.play();
 				this.altCooldown=game.time.now+2000;
 				bigBoom(explosions,this.sprite.x,this.sprite.y);
-				if(this.ai==-1){
+				if(this.ai==aiModes['player']){
 					this.sprite.profile+=this.sprite.profileMax*3;
 					confusionCooldown=game.time.now+8000;	
 				}else{
@@ -1536,7 +1492,7 @@ var cmp = [
 
 		target.alt=function(){
 			if(game.time.now>this.altCooldown && this.takeEnergy(2)){
-				var targetAlpha = this.ai==-1 ? 0.4 : 0;
+				var targetAlpha = this.ai==aiModes['player'] ? 0.4 : 0;
 				this.sprite.alpha=targetAlpha;
 				if(typeof(this.cloakTween)!='undefined'){
 					this.cloakTween.stop();
@@ -1555,7 +1511,7 @@ var cmp = [
 				for(var i=0;i<this.parts.length;i++){
 					this.altCooldown=game.time.now+500;
 					this.parts[i].sprite.alpha=0.35;
-					if(this.ai!=-1){
+					if(this.ai!=aiModes['player']){
 						this.parts[i].sprite.alpha=0;
 					}
 				}
@@ -1703,10 +1659,7 @@ var cmp = [
 	'match':'4',
 	'flavor':'press [Z] to steal a nearby enemy vessel',
 	'bonus':function(target){
-		if(target.ai==-1){ //no baddie should EVER have this
-			target.altTexts=['the captain\'s screams are silenced by the void',
-			'the control room is littered with pictures of a life long forgotten',
-			'why the hell is everything pink?'];
+		if(target.ai==aiModes['player']){ //no baddie should EVER have this
 			target.alt=function(){
 				if(this.takeEnergy(6,true)){
 					if(game.time.now>this.altCooldown){
@@ -1716,7 +1669,7 @@ var cmp = [
 							var targetDistance = game.physics.arcade.distanceBetween(this.sprite, ui.enemies[i].sprite);
 
 
-							if(ui.enemies[i].ai!=3 && targetDistance < 500){
+							if(ui.enemies[i].ai!=aiModes['asteroid'] && targetDistance < 500){
 
 								var idx = ui.enemies[i].sprite.name;
 								ui.sound_boop.play();
@@ -1725,7 +1678,6 @@ var cmp = [
 								player.initPlayerShip(enemies[idx].ship);
 								player.sprite.reset(enemies[idx].sprite.x,enemies[idx].sprite.y);
 								player.rotation = enemies[idx].rotation;
-								ui.texts.push(player.altTexts[Math.floor(randomRange(0,player.altTexts.length))]);
 								enemies[idx].damage(9);
 								break;
 							}
@@ -1801,7 +1753,7 @@ var cmp = [
 	'match':'4682',
 	'flavor':'recharge energy by rapidly pressing [Z].',
 	'bonus':function(target){
-		if(target.ai==-1){
+		if(target.ai==aiModes['player']){
 			target.energyRate=60000; //slow enough
 			target.alt=function(){
 				//this guy has his own cooldown timer, so the user
@@ -1916,7 +1868,7 @@ var cmp = [
 		target.fireDamage+=2;
 		target.bulletSprite=6;
 		target.fireSound=ui.sound_bullet;
-		if(target.ai==-1){
+		if(target.ai==aiModes['player']){
 			target.updateBehavior.push(function(targ){
 					if(targ.fireTracking==0){
 					bullets.forEachAlive(function(bullet){
@@ -2330,21 +2282,30 @@ var cmp = [
 {
 	'id':144,
 	'drops':true,
-	'name':'Shiny',
+	'name':'Luxury Quarters',
 	'match':'26',
-	'flavor':'--',
+	'flavor':'mostly useless in combat',
 	'bonus':function(target){
-
+		target.sprite.body.maxVelocity.x-=20;
+		target.sprite.body.maxVelocity.y-=20;
+		target.health+=2;
+		target.acceleration-=1;
+		target.energyMax+=2;
 	}
 },
 {
 	'id':145,
 	'drops':true,
-	'name':'Shiny',
+	'name':'Luxury Quarters',
 	'match':'42',
-	'flavor':'--',
+	'flavor':'mostly useless in combat',
 	'bonus':function(target){
-
+		target.sprite.body.maxVelocity.x-=20;
+		target.sprite.body.maxVelocity.y-=20;
+		target.health+=2;
+		target.acceleration-=1;
+		target.energyMax+=2;
+	
 	}
 },
 {
@@ -2682,21 +2643,31 @@ var cmp = [
 {
 	'id':176,
 	'drops':true,
-	'name':'Shiny',
+	'name':'Luxury Quarters',
 	'match':'86',
-	'flavor':'--',
+	'flavor':'mostly useless in combat',
 	'bonus':function(target){
-
+		target.sprite.body.maxVelocity.x-=20;
+		target.sprite.body.maxVelocity.y-=20;
+		target.health+=2;
+		target.acceleration-=1;
+		target.energyMax+=2;
+	
 	}
 },
 {
 	'id':177,
 	'drops':true,
-	'name':'Shiny',
+	'name':'Luxury Quarters',
 	'match':'84',
-	'flavor':'--',
+	'flavor':'mostly useless in combat',
 	'bonus':function(target){
-
+		target.sprite.body.maxVelocity.x-=20;
+		target.sprite.body.maxVelocity.y-=20;
+		target.health+=2;
+		target.acceleration-=1;
+		target.energyMax+=2;
+	
 	}
 },
 {
