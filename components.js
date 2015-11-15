@@ -1437,16 +1437,17 @@ function(tgt){
 					bullet.loadTexture('explosions',4);
 					bullet.reset(this.sprite.x, this.sprite.y);
 					bullet.rotation=n*2*Math.PI;
-					game.physics.arcade.velocityFromRotation(bullet.rotation, 600, bullet.body.velocity);
-					bullet.alpha=0.8;
+					game.physics.arcade.velocityFromRotation(bullet.rotation, randomRange(25,90), bullet.body.velocity);
+					bullet.alpha=0.4;
 					bullet.damage=this.fireDamage*3;
 					bullet.bulletSprite=4;
 					bullet.scale.setTo(1,1);
-					bullet.lifespan=400;
-					bullet.body.angularVelocity=999;
+					bullet.scaleValue=randomRange(4,18);
+					bullet.lifespan=bullet.scaleValue*100;
+					bullet.body.angularVelocity=randomRange(500,999)*randomSign();
 					bullet.tracking=-999;
-					bullet.blendMode=1;
-					game.add.tween(bullet.scale).to({x:bullet.scale.x*4,y:bullet.scale.y*4},bullet.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
+					bullet.blendMode=0;
+					game.add.tween(bullet.scale).to({x:bullet.scale.x*bullet.scaleValue,y:bullet.scale.y*bullet.scaleValue},bullet.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
 
 					game.add.tween(bullet).to({alpha:0},bullet.lifespan, Phaser.Easing.Exponential.In, true, 0, false);
 				}
