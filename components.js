@@ -2312,7 +2312,7 @@ function(tgt){
 {
 	'id':146,
 	'drops':false,
-	'name':'Component146',
+	'name':'Question Box',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
@@ -2322,7 +2322,7 @@ function(tgt){
 {
 	'id':147,
 	'drops':false,
-	'name':'Component147',
+	'name':'Question Box',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
@@ -2674,7 +2674,7 @@ function(tgt){
 {
 	'id':178,
 	'drops':false,
-	'name':'Component178',
+	'name':'Question Box',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
@@ -2684,7 +2684,7 @@ function(tgt){
 {
 	'id':179,
 	'drops':false,
-	'name':'Component179',
+	'name':'Question Box',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
