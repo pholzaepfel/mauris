@@ -1690,16 +1690,6 @@ playerShip.prototype.update = function(){
 			}
 		}
 		if(this.behavior=='move'){
-			var diffAngle = compareAngles(this.sprite.rotation,this.targetAngle);
-			if(diffAngle*60>this.turnRate && !touchPressed)
-			{
-				this.left(1);
-			}else if(diffAngle*60<-this.turnRate && !touchPressed){
-				this.right(1);
-			}
-			if(game.input.activePointer.isDown && !touchPressed && Math.abs(diffAngle < 0.2)){
-				this.up(1);
-			}
 			if(!this.target.alive){
 				this.target = this.sprite;
 			}
@@ -1718,7 +1708,17 @@ playerShip.prototype.update = function(){
 				}
 			}
 
-
+			var diffAngle = compareAngles(this.sprite.rotation,this.targetAngle);
+			if(diffAngle*60>this.turnRate && !touchPressed)
+			{
+				this.left(1);
+			}else if(diffAngle*60<-this.turnRate && !touchPressed){
+				this.right(1);
+			}
+			if(game.input.activePointer.isDown && !touchPressed && Math.abs(diffAngle < 0.2)){
+				this.up(1);
+			}
+	
 		}
 		if(this.behavior=='target'){
 
@@ -1776,8 +1776,9 @@ playerShip.prototype.update = function(){
 			}
 		}
 		if(this.behavior != 'manual'){
-			if(this.target == this.sprite){
-				this.behavior='move';
+			if(this.target == this.sprite && this.behavior =='target'){
+		this.targetAngle=this.sprite.rotation;		
+		this.behavior='move';
 			}
 		}
 	}
@@ -3459,7 +3460,6 @@ function update () {
 		}
 		if (game.input.activePointer.isDown && game.input.mouse.button != Phaser.Mouse.RIGHT_BUTTON) {
 
-			player.targetAngle=game.physics.arcade.angleToPointer(player.sprite);
 			//handleButtons
 			for(var i=0;i<ui.buttons.length;i++){
 				var btn = ui.buttons[i].button;
@@ -3485,6 +3485,9 @@ function update () {
 			}
 			touchPressed = buttonLeft || buttonRight || buttonUp || buttonDown || buttonFire || buttonAlt || buttonEnter;
 			buttonLeft =0; buttonRight =0; buttonUp =0; buttonDown =0; buttonFire =0; buttonAlt =0; buttonEnter =0;
+			if(!touchPressed){
+			player.targetAngle=game.physics.arcade.angleToPointer(player.sprite);
+}
 			if(attemptTarget && !touchPressed){
 				player.behavior='move';
 				for (var i = 0; i < enemies.length; i++){
