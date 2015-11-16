@@ -2316,6 +2316,32 @@ function(tgt){
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
+		target.sprite.profile=500;
+		target.ai=aiModes['asteroidInit'];
+		target.health-=3;
+		target.oreChance=0;
+		target.nextSparkle=0;
+		target.nextPulse=0;
+		target.sprite.x+=randomRange(2000,8000)*randomSign();
+		target.sprite.y+=randomRange(2000,8000)*randomSign();
+target.sprite.alpha = 1;
+		target.sprite.x+=randomRange(1000,4000)*randomSign();
+target.sprite.alpha = 1;
+target.questionBox = true;
+target.effects=function(){
+
+			if(this.nextSparkle < game.time.now && onscreen(this.sprite.x,this.sprite.y)){
+				epicLootSparkle(this.sprite);
+				this.nextSparkle = game.time.now + 100;
+			}
+			if (this.nextPulse < game.time.now && onscreen(this.sprite.x,this.sprite.y)){
+				
+		this.sprite.alpha=1;		
+				game.add.tween(target.sprite).to({alpha:4},200, Phaser.Easing.Exponential.In, true, 0, false).to({alpha:1},200, Phaser.Easing.Exponential.Out, true, 0, false);
+				
+				this.nextPulse=game.time.now+1000;
+}
+		};
 
 	}
 },
