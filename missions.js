@@ -40,7 +40,14 @@ var missions = [
 			'count':5, 
 			'missionTarget':false
 		}
-		]
+		,
+		{
+			'ships': questionContainers,
+			'respawn':false,
+			'count':3, 
+			'missionTarget':false
+		}
+]
 
 
 
@@ -77,7 +84,13 @@ var missions = [
 		'count':9, 
 		'deaths':['I SMELL DELICIOUS!']
 	},
-	{
+		{
+			'ships': questionContainers,
+			'respawn':false,
+			'count':3, 
+			'missionTarget':false
+		},
+{
 		'ships': asteroids,
 		'respawn':true,
 		'missionTarget':false,
@@ -122,7 +135,13 @@ var missions = [
 		'count':12, 
 		'deaths':['I SMELL DELICIOUS!']
 	},
-	{
+		{
+			'ships': questionContainers,
+			'respawn':false,
+			'count':3, 
+			'missionTarget':false
+		}
+,{
 		'ships': banditBoss1,
 		'respawn':false,
 		'missionTarget':true,
@@ -139,10 +158,17 @@ var missions = [
 		'ships': containers,
 		'respawn':true,
 		'missionTarget':false,
-		'count':2, 
+		'count':4, 
 		'deaths':[]
 	}	
-	]
+			,
+		{
+			'ships': questionContainers,
+			'respawn':false,
+			'count':3, 
+			'missionTarget':false
+		}
+]
 
 
 
@@ -195,10 +221,17 @@ var missions = [
 		'ships': containers,
 		'respawn':true,
 		'missionTarget':false,
-		'count':2, 
+		'count':4, 
 		'deaths':[]
 	}	
-	]
+			,
+		{
+			'ships': questionContainers,
+			'respawn':false,
+			'count':3, 
+			'missionTarget':false
+		}
+]
 
 
 
@@ -289,10 +322,17 @@ var missions = [
 		'ships': containers,
 		'respawn':true,
 		'missionTarget':false,
-		'count':2, 
+		'count':4, 
 		'deaths':[]
 		}
-	]
+			,
+		{
+			'ships': questionContainers,
+			'respawn':false,
+			'count':3, 
+			'missionTarget':false
+		}
+]
 },
 {
 	'id':6,
@@ -340,10 +380,17 @@ var missions = [
 		'ships': containers,
 		'respawn':true,
 		'missionTarget':false,
-		'count':2, 
+		'count':4, 
 		'deaths':[]
 		}
-	]
+			,
+		{
+			'ships': questionContainers,
+			'respawn':false,
+			'count':3, 
+			'missionTarget':false
+		}
+]
 },
 {
 	'id':7,
@@ -387,7 +434,17 @@ var missions = [
 		'respawn':true,
 		'missionTarget':false,
 		'count':3, 
-	},{
+	}
+
+		,
+		{
+			'ships': questionContainers,
+			'respawn':false,
+			'count':3, 
+			'missionTarget':false
+		}
+
+,{
 		'ships': chainsaw,
 		'respawn':true,
 		'missionTarget':false,
@@ -442,9 +499,17 @@ var missions = [
 		'ships': containers,
 		'respawn':true,
 		'missionTarget':false,
-		'count':2, 
+		'count':4, 
 		'deaths':[]
 		}
+		,
+		{
+			'ships': questionContainers,
+			'respawn':false,
+			'count':3, 
+			'missionTarget':false
+		}
+
 	]
 },
 {	'id':9,
@@ -493,6 +558,14 @@ var missions = [
 		'count':3, 
 		'deaths':[]
 	}
+		,
+		{
+			'ships': questionContainers,
+			'respawn':false,
+			'count':3, 
+			'missionTarget':false
+		}
+
 	]
 
 
@@ -581,7 +654,18 @@ var missions = [
 			'respawn':true,
 			'count':6, 
 			'missionTarget':false
-		},
+		}
+
+		,
+		{
+			'ships': questionContainers,
+			'respawn':false,
+			'count':3, 
+			'missionTarget':false
+		}
+
+
+,
 	{
 			'ships': allianceWeak,
 			'respawn':true,

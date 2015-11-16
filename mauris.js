@@ -666,6 +666,7 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 	this.sprite.g=255;
 	this.sprite.b=255;
 	this.organicArmor=0;
+	this.questionBox=0;
 	this.nextOre=0;
 	this.nextOrganicArmorPing=0;
 	this.nextThrust=0;
@@ -838,7 +839,18 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 			}else if(Math.random() < (componentDropRate + player.dropRate) && components[this.parts[j].component].drops){ 
 				spawnComponent(this.parts[j].component, this.sprite.x, this.sprite.y);
 				this.parts[j].sprite.kill();		
-			}else if(this.health == 0 && dmg == 0){
+			}else if(this.questionBox){
+				foo=components[0];	
+			while (!foo.drops){
+					var cmp = parseInt(randomRange(0,components.length));
+					foo=components[cmp];
+				}
+				var drop = spawnComponent(cmp, this.sprite.x,this.sprite.y);
+				drop.body.velocity.x=this.sprite.body.velocity.x;
+				drop.body.velocity.y=this.sprite.body.velocity.y;
+			
+				this.questionBox=false;
+		}else if(this.health == 0 && dmg == 0){
 				this.parts[j].sprite.kill();
 			}else{
 				var tempX = this.parts[j].sprite.body.velocity.x;
@@ -978,13 +990,17 @@ enemyShip.prototype.update = function() {
 
 	//rubberbanding
 	if (this.game.physics.arcade.distanceBetween(this.sprite, player.sprite) > 4000 ||
-			this.game.physics.arcade.distanceBetween(this.sprite, player.sprite) > 2500 && this.ai == aiModes['asteroid']){
+			this.game.physics.arcade.distanceBetween(this.sprite, player.sprite) > 2500 && this.ai == aiModes['asteroid'] && !this.questionBox){
 
 		if(Math.random()>0.5){
 			this.target=player.sprite;
 		}
 		var x = this.target.x + (randomSign() * randomRange(960,1500) + player.sprite.body.velocity.x);
 		var y = this.target.y + (randomSign() * randomRange(540,1500) + player.sprite.body.velocity.y);
+		if(this.questionBox){
+			x+=randomRange(2000,4000)*randomSign();
+			y+=randomRange(2000,4000)*randomSign();
+}
 		this.sprite.reset(x,y);	
 		if(player.target==this.sprite){
 			player.target=player.sprite;
@@ -1155,6 +1171,7 @@ function preload () {
 	game.load.image('haze', 'assets/haze.png');
 	game.load.image('haze2', 'assets/haze2.png');
 	game.load.spritesheet('sparkles', 'assets/sparkles.png',8,8);
+	game.load.spritesheet('sparklescyan', 'assets/sparklescyan.png',8,8);
 	game.load.spritesheet('thrust', 'assets/thrust.png',8,8);
 	game.load.spritesheet('sparks', 'assets/sparks.png',8,8);
 	game.load.spritesheet('explosions', 'assets/explosions.png',16,16);
@@ -2221,7 +2238,7 @@ gameUI.prototype.frobRadarPing = function() {
 			s='';
 		}
 		if(targetDistance>180){targetDistance=180+Math.pow(targetDistance-180,0.6)};
-		if(targetDistance>0.5*resolutionY-50){targetDistance=0.5*resolutionY-50};	
+		if(targetDistance>0.5*Math.min(resolutionX,resolutionY)-50){targetDistance=0.5*Math.min(resolutionX,resolutionY)-50};	
 		this.frobRadar.setText(s);
 		this.frobRadar.x = player.sprite.body.x + Math.cos(targetAngle) * targetDistance - 0.5 * this.frobRadar.width;
 		this.frobRadar.y = player.sprite.body.y + Math.sin(targetAngle) * targetDistance;	
@@ -3102,7 +3119,13 @@ function create () {
 		sparkles.blendMode = 1;
 		sparkles.lifespan=200;
 		otherGraphics = game.add.graphics(0,0);
-	}
+		
+		sparklesCyan = game.add.emitter(0,0,100);
+		sparklesCyan.makeParticles('sparklescyan',[0,1,2,3,4,5,6,7]);
+		sparklesCyan.setAlpha(1,0,2000);
+		sparklesCyan.blendMode = 1;
+		sparklesCyan.lifespan=400;
+		}
 
 	pad1 = game.input.gamepad.pad1;	
 	game.input.gamepad.start();
@@ -3184,6 +3207,21 @@ function lootSparkle(s){
 	sparkles.maxParticleSpeed.setTo(tempC*s.body.velocity.x,tempC*s.body.velocity.y);
 	sparkles.lifespan=(Math.sin(randomRange(0,0.5*Math.PI)))*500;
 	sparkles.emitParticle();
+
+}
+
+function epicLootSparkle(s){
+
+	var halfWidth = s.width * 0.5;
+	sparklesCyan.x=s.x+randomRange(-1 * halfWidth,halfWidth);
+	sparklesCyan.y=s.y+randomRange(-1 * halfWidth,halfWidth);
+	var tempC;
+	tempC = (Math.sin(randomRange(0,-0.5*Math.PI)));
+	tempC*=0.5;
+	sparklesCyan.minParticleSpeed.setTo(tempC*s.body.velocity.x,tempC*s.body.velocity.y);
+	sparklesCyan.maxParticleSpeed.setTo(tempC*s.body.velocity.x,tempC*s.body.velocity.y);
+	sparklesCyan.lifespan=(Math.sin(randomRange(0,0.5*Math.PI)))*500;
+	sparklesCyan.emitParticle();
 
 }
 
@@ -4078,6 +4116,7 @@ function spawnLoots(_count, x, y){
 		loot.lootType='ore';
 		loot.acceleration=0;
 		game.physics.arcade.velocityFromRotation(loot.rotation, randomRange(100,300), loot.body.velocity);
+		return loot;
 	}
 }
 function spawnComponent(component,x,y){
@@ -4101,7 +4140,7 @@ function spawnComponent(component,x,y){
 		loot.component = component;
 		loot.acceleration=0;
 		game.physics.arcade.velocityFromRotation(Math.random()*2*Math.PI, randomRange(50,player.sprite.body.maxVelocity.x*0.75), loot.body.velocity);
-
+		return loot;
 	}
 }
 function playerGotLoot (sprite, loot) {
