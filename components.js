@@ -1446,7 +1446,7 @@ function(tgt){
 					bullet.lifespan=bullet.scaleValue*100;
 					bullet.body.angularVelocity=randomRange(100,200)*randomSign();
 					bullet.tracking=-999;
-					bullet.blendMode=0;
+					bullet.blendMode=1;
 					game.add.tween(bullet.scale).to({x:bullet.scale.x*bullet.scaleValue,y:bullet.scale.y*bullet.scaleValue},bullet.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
 
 					game.add.tween(bullet).to({alpha:0},bullet.lifespan, Phaser.Easing.Exponential.In, true, 0, false);

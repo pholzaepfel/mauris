@@ -1356,14 +1356,7 @@ playerShip.prototype.initPlayerShip = function (ship) {
 
 	applyBonuses(this);
 
-	if(cheatmode || playerStats.health >  this.health - (playerStats.healthMax - playerStats.health)){
-		playerStats.health = this.healthMax;
-	}	else if(playerStats.health == -1){
-		this.health=1; //start off damaged 
-		playerStats.health = this.health;
-	} else {
-		this.health-=playerStats.healthMax-playerStats.health;
-	}
+	playerStats.health = this.healthMax;
 	playerStats.healthMax = this.healthMax;
 }
 playerShip.prototype.damage = function(dmg, aggro) {
@@ -2652,8 +2645,7 @@ gameUI.prototype.partsUI = function (ship) {
 	playerStats.inventory.sort(alphaComponentSort);
 	player.sprite.reset(0,0);
 	player.sprite.rotation=0;
-	// store health to preserve relative damage
-	playerStats.health = player.health;
+	playerStats.health = player.healthMax;
 	playerStats.healthMax = player.healthMax;
 	this.firstPart();
 	game.camera.follow=null;
