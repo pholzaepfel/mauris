@@ -1434,7 +1434,7 @@ function(tgt){
 				ui.sound_missile.play();
 				for(var n=0; n<1;n+=0.075){
 					var bullet=this.spawnBullet(false);
-					bullet.loadTexture('explosions',4);
+					bullet.loadTexture('explosions',7);
 					bullet.reset(this.sprite.x, this.sprite.y);
 					bullet.rotation=n*2*Math.PI;
 					game.physics.arcade.velocityFromRotation(bullet.rotation, randomRange(25,90), bullet.body.velocity);
@@ -1444,7 +1444,7 @@ function(tgt){
 					bullet.scale.setTo(1,1);
 					bullet.scaleValue=randomRange(4,18);
 					bullet.lifespan=bullet.scaleValue*100;
-					bullet.body.angularVelocity=randomRange(500,999)*randomSign();
+					bullet.body.angularVelocity=randomRange(100,200)*randomSign();
 					bullet.tracking=-999;
 					bullet.blendMode=0;
 					game.add.tween(bullet.scale).to({x:bullet.scale.x*bullet.scaleValue,y:bullet.scale.y*bullet.scaleValue},bullet.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
