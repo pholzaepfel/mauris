@@ -1844,7 +1844,7 @@ function(tgt){
 		target.bulletHitBehavior.push(function(sprite,bullet){
 				var tgt = ownerFromName(sprite.name);
 				if(tgt.acceleration>0.5){				
-				tgt.acceleration-=1;
+				tgt.acceleration-=0.3;
 				if(tgt.acceleration>0.5){				
 				tgt.acceleration=0.5;
 				}
@@ -2287,10 +2287,10 @@ function(tgt){
 	'match':'26',
 	'flavor':'mostly useless in combat',
 	'bonus':function(target){
-		target.sprite.body.maxVelocity.x-=20;
-		target.sprite.body.maxVelocity.y-=20;
+		target.sprite.body.maxVelocity.x-=10;
+		target.sprite.body.maxVelocity.y-=10;
 		target.health+=2;
-		target.acceleration-=1;
+		target.acceleration-=0.1;
 		target.energyMax+=2;
 	}
 },
@@ -2301,10 +2301,10 @@ function(tgt){
 	'match':'42',
 	'flavor':'mostly useless in combat',
 	'bonus':function(target){
-		target.sprite.body.maxVelocity.x-=20;
-		target.sprite.body.maxVelocity.y-=20;
+		target.sprite.body.maxVelocity.x-=10;
+		target.sprite.body.maxVelocity.y-=10;
 		target.health+=2;
-		target.acceleration-=1;
+		target.acceleration-=0.1;
 		target.energyMax+=2;
 	
 	}
@@ -2674,10 +2674,10 @@ target.effects=function(){
 	'match':'86',
 	'flavor':'mostly useless in combat',
 	'bonus':function(target){
-		target.sprite.body.maxVelocity.x-=20;
-		target.sprite.body.maxVelocity.y-=20;
+		target.sprite.body.maxVelocity.x-=10;
+		target.sprite.body.maxVelocity.y-=10;
 		target.health+=2;
-		target.acceleration-=1;
+		target.acceleration-=0.1;
 		target.energyMax+=2;
 	
 	}
@@ -2689,10 +2689,10 @@ target.effects=function(){
 	'match':'84',
 	'flavor':'mostly useless in combat',
 	'bonus':function(target){
-		target.sprite.body.maxVelocity.x-=20;
-		target.sprite.body.maxVelocity.y-=20;
+		target.sprite.body.maxVelocity.x-=10;
+		target.sprite.body.maxVelocity.y-=10;
 		target.health+=2;
-		target.acceleration-=1;
+		target.acceleration-=0.1;
 		target.energyMax+=2;
 	
 	}
