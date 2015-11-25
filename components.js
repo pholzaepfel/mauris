@@ -211,7 +211,7 @@ var cmp = [
 	'id':12,
 	'drops':true,
 	'name':'Xenoform Reactor',
-	'match':'26',
+	'match':'6',
 	'flavor':'hums with power. very valuable',
 	'bonus':function(target){
 		target.energyAmount+=2;
@@ -222,7 +222,7 @@ var cmp = [
 	'id':13,
 	'drops':true,
 	'name':'Fusion Bolt Cannon',
-	'match':'842',
+	'match':'4',
 	'flavor':'covered in warnings in multiple languages',
 	'bonus':function(target){
 		target.bulletSprite=5; 
@@ -423,7 +423,7 @@ var cmp = [
 	'id':31,
 	'drops':true,
 	'name':'Reeunk Afterburner',
-	'match':'862',
+	'match':'6',
 	'flavor':'hold [Z] to blaze forward and burn enemies in your wake',
 	'bonus':function(target){
 		target.acceleration+=0.2;
@@ -479,7 +479,7 @@ var cmp = [
 	'id':32,
 	'drops':true,
 	'name':'Radioactive Thruster',
-	'match':'862',
+	'match':'6',
 	'flavor':'mostly safe',
 	'bonus':function(target){
 		target.acceleration+=1;
@@ -699,6 +699,10 @@ var cmp = [
 				bullet.alpha=1.5;
 				bullet.blendMode=1;
 				game.physics.arcade.velocityFromRotation(bullet.rotation, bullet.fireVelocity, bullet.body.velocity);
+
+				var tgt = ownerFromName(bullet.owner.name);
+		bullet.body.velocity.x += 0.5 * tgt.sprite.body.velocity.x;
+		bullet.body.velocity.y += 0.5 * tgt.sprite.body.velocity.y;
 				bullet.scale.setTo(.25,.25);
 				game.add.tween(bullet.scale).to({x:3,y:3},bullet.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
 
@@ -985,7 +989,7 @@ var cmp = [
 	'id':72,
 	'drops':true,
 	'name':'Crew Pod',
-	'match':'4682',
+	'match':'462',
 	'flavor':'improves health and energy recharge',
 	'bonus':function(target){
 		target.health+=6;
@@ -1053,7 +1057,7 @@ function(tgt){
 	'id':76,
 	'drops':true,
 	'name':'AWSM',
-	'match':'4682',
+	'match':'62',
 	'flavor':'press [Z] to self-destruct, destroying nearby ships',
 	'bonus':function(target){
 
@@ -1086,7 +1090,7 @@ function(tgt){
 	'id':77,
 	'drops':true,
 	'name':'skul-gun',
-	'match':'4682',
+	'match':'82',
 	'flavor':'drains targets\' energy',
 	'bonus':function(target){
 		target.sprite.profile+=20;
@@ -1121,7 +1125,7 @@ function(tgt){
 	'id':79,
 	'drops':true,
 	'name':'Xenoid Pulse Laser',
-	'match':'42',
+	'match':'2',
 	'flavor':'cheap, strong shots',
 	'bonus':function(target){
 		target.fireRate*=1.1;
@@ -1163,7 +1167,7 @@ function(tgt){
 	'id':82,
 	'drops':true,
 	'name':'External Power Plant',
-	'match':'26',
+	'match':'6',
 	'flavor':'ore pickups also give energy',
 	'bonus':function(target){
 		target.oreEnergy+=6;
@@ -1173,7 +1177,7 @@ function(tgt){
 	'id':83,
 	'drops':true,
 	'name':'Force Cannon',
-	'match':'24',
+	'match':'4',
 	'flavor':'adds knockback',
 	'bonus':function(target){
 		target.bulletSprite=3;
