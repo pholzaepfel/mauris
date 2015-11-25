@@ -242,6 +242,18 @@ var warButtons = [
 	'rotation':0,
 	'label':'"'}
 	];
+	var allLootableItems = function () {
+	var ret=[];
+			for(var i=0; i<components.length; i++){
+				if(typeof(components[i].name)=='undefined'){
+				}else{
+					if(components[i].drops){
+						ret.push(i);
+					}
+				}
+			}
+	return ret;	
+	}
 	// container for stuff that might persist between games
 	// TODO: persist stuff between games
 	var playerMeta = function () {
@@ -386,6 +398,19 @@ function randomSort(a, b) {
 	} else{
 		return -1;
 	}
+}
+// pull parts with more match points first
+function matchabilityComponentSort(a, b) {
+	if(components[a].match.length<components[b].match.length){
+		return 1;
+	}else if(components[a].match.length>components[b].match.length){
+		return -1;
+	}else if(a>b){
+		return 1;
+	}else if(a<b){
+		return -1;
+	} 
+	return 0;
 }
 function alphaComponentSort(a, b) {
 	if(components[a].name>components[b].name){
@@ -691,6 +716,7 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 	this.bulletHitBehavior=[];
 	this.updateBehavior=[];
 	this.bulletBehavior=[];
+	this.bulletSparkle=function(){};
 	this.ai = aiModes['enemy'];
 	this.alive=true;
 	this.behavior=defaultBehavior;
@@ -939,7 +965,9 @@ enemyShip.prototype.spawnBullet = function (playerFired) {
 		game.physics.arcade.velocityFromRotation(bullet.rotation, bullet.fireVelocity, bullet.body.velocity);
 		bullet.body.velocity.x += 0.5 * this.sprite.body.velocity.x;
 		bullet.body.velocity.y += 0.5 * this.sprite.body.velocity.y;
-		bullet.target=player;
+		bullet.target=this.target;
+		bullet.sparkle=this.bulletSparkle;
+		bullet.nextSparkle=game.time.now;
 		for (var i = 0; i < this.bulletBehavior.length; i++) {
 			this.bulletBehavior[i](bullet, playerFired);
 		}
@@ -1294,6 +1322,7 @@ playerShip.prototype.initPlayerShip = function (ship) {
 	this.bulletBlendMode=1;
 	this.bulletHitBehavior=[];
 	this.bulletBehavior=[];
+	this.bulletSparkle=function(){};
 	this.updateBehavior=[];
 	this.destroyParts();
 	this.parts=[];
@@ -1450,7 +1479,9 @@ playerShip.prototype.spawnBullet = function(playerFired){
 		game.physics.arcade.velocityFromRotation(bullet.rotation, bullet.fireVelocity, bullet.body.velocity);
 		bullet.body.velocity.x += 0.5 * this.sprite.body.velocity.x;
 		bullet.body.velocity.y += 0.5 * this.sprite.body.velocity.y;
-
+		bullet.sparkle=this.bulletSparkle;
+		bullet.nextSparkle=game.time.now;
+	
 		for (var i = 0; i < this.bulletBehavior.length; i++) {
 			this.bulletBehavior[i](bullet, playerFired);
 		}
@@ -1666,6 +1697,132 @@ var laserFiringSolution = function(attacker, target, fireRange, fireVelocity, an
 	}
 	return null;
 
+}
+var variantComponents = function(partId){
+	if(partId==-1 || typeof(components[partId])=="undefined"){
+		return -1;
+		}
+	var myName = components[partId].name;
+	var result = [];
+	for (var i = 0; i < components.length;i++){
+		if(components[i].name == components[partId].name && i != partId){
+			result.push(i);
+		}
+	}
+	return result;
+}
+var randomVariantComponent = function(partId){
+	if (partId == -1){
+		return -1;
+		}
+		var partsList = variantComponents(partId);
+	
+	if(!partsList.length){
+		return partId;
+		}
+	return partsList[parseInt(randomRange(0,partsList.length))];
+}
+var oppositeVariantComponent = function(partId){
+	if (partId == -1){
+		return -1;
+		}
+	var partsList = variantComponents(partId);
+	
+	for(var i=0;i<partsList.length;i++){
+		if(matchOppositeComponents(partId,partsList[i])){
+		return partsList[i];
+		}
+	}
+	return partId;
+}
+var randomPartsList = function(partsList,size){
+	var result = [];
+	for (var i = 0; i < size; i++){
+		var partId = (parseInt(randomRange(0,partsList.length)));
+		if(result.indexOf(partId) > -1){
+			partId = (parseInt(randomRange(0,partsList.length)));
+		}
+		result.push(partsList[partId]);
+		if(variantComponents(partId).length && Math.random()<0.5){
+		partId = randomVariantComponent(parseInt(randomRange(0,partsList.length)));
+		result.push(partsList[partId]);
+		}
+	}
+	result.sort(matchabilityComponentSort);
+	return result;
+}
+var invertPartsOnArrayRow = function(array, row){
+	var arraySlice=Math.sqrt(array.length);
+	var ret = array.slice(0);
+	for(var i=0;i<arraySlice;i++){
+		ret[i+row*arraySlice]=oppositeVariantComponent(ret[i+row*arraySlice]);
+	}
+	return ret;
+}
+
+var setSquareArrayRow = function(array, row, patch){
+	var arraySlice=Math.sqrt(array.length);
+	var ret = array.slice(0);
+	for(var i=0;i<arraySlice;i++){
+		ret[i+row*arraySlice]=patch[i];
+	}
+	return ret;
+}
+var getSquareArrayRow = function(array, row){
+	var arraySlice=Math.sqrt(array.length);
+	var ret = [];
+	for(var	i=0;i<arraySlice;i++){
+		ret.push(array[i+row*arraySlice]);
+	}
+	return ret;
+}
+var symmetrizeShip = function(ship){
+	var arraySlice=Math.sqrt(ship.length);
+	var half = ship.length/2;
+	var halfSlice = arraySlice/2;
+	var ret = ship.slice(0);
+	for(var i = arraySlice; i>halfSlice; i--){
+		var firstRow=getSquareArrayRow(ret,arraySlice-i);
+		var secondRow=getSquareArrayRow(ret,i-1);
+		if(shipWithoutVoid(firstRow).length>shipWithoutVoid(secondRow).length){
+		ret = setSquareArrayRow(ret,i-1,firstRow);
+		ret = invertPartsOnArrayRow(ret,i-1);}else{
+		ret = setSquareArrayRow(ret,arraySlice-i,secondRow);
+		
+		ret = invertPartsOnArrayRow(ret,arraySlice-i);}
+	}
+	return ret;
+}
+var randomShip = function(partsList,size){
+	var squareSize = size * size;
+	var numParts=Math.max(parseInt(randomRange(squareSize/4,squareSize)),2);
+	var myParts=randomPartsList(partsList,numParts);
+	var center=parseInt(squareSize/2);
+	var ship = [];
+	for (var i=0;i<squareSize;i++){
+		ship[i]=-1;
+	}
+	for (var i=0;i<myParts.length;i++) {
+		var newShip = ship.slice(0);
+		var attempts = 0;
+		while (newShip.join() == ship.join() && attempts++ < 40){
+		//pick part
+		if(i==0){
+		newShip[center]=myParts[i];
+		}else{
+
+		newShip = calculatePartPosition3(0,0,myParts[i],ship,40-attempts,(attempts > 10 ? true:false));
+		}
+		}
+		ship=newShip;
+	}
+	//should not be happening
+	for (var i=0;i<ship.length;i++){
+		if(typeof(ship[i])=='undefined'){
+			ship[i]=-1;
+		}
+	}
+	return ship;
 }
 var standardFiringSolution = function(attacker, target, fireRange, fireVelocity, angleModifier, turnRate) {
 
@@ -2069,6 +2226,137 @@ gameUI.prototype.calculatePartPosition = function(x, y) {
 	}
 	return {'x':outx,'y':outy};
 }
+var partAtArray = function (arr,idx){
+	if(typeof(arr[idx])=='undefined'){
+		return false;
+	}
+	if(arr[idx]==-1){
+		return false;
+	}
+	return true;
+}
+var matchLocationArray = function(arrayIndex,partId,partsArray){
+	var matches = 0;
+	
+	if(partsArray[arrayIndex]!=-1){
+		return 0;
+	}
+	var noNeighbor = true;
+	var partsArraySliceLength=Math.sqrt(partsArray.length);
+			var left=arrayIndex-1;
+			var right=arrayIndex+1;
+			var up=arrayIndex-partsArraySliceLength;
+			var down=arrayIndex+partsArraySliceLength;
+	if(arrayIndex % partsArraySliceLength > 0){
+	matches += matchArrayComponents(partId,partsArray[left],'W');
+	if( partAtArray(partsArray,left)){
+		noNeighbor=false;
+	}
+	}
+	if(arrayIndex % partsArraySliceLength < partsArraySliceLength - 1){
+	matches += matchArrayComponents(partId,partsArray[right],'E');
+	if( partAtArray(partsArray,right)){
+		noNeighbor=false;
+	}
+		}
+	if(arrayIndex>=partsArraySliceLength){
+	matches += matchArrayComponents(partId,partsArray[up],'N');
+	if( partAtArray(partsArray,up)){
+		noNeighbor=false;
+	}
+		}
+	if(arrayIndex<partsArray.length-partsArraySliceLength){
+	matches += matchArrayComponents(partId,partsArray[down],'S');
+	if( partAtArray(partsArray,down)){
+		noNeighbor=false;
+	}
+		}
+	
+if (noNeighbor)	{ 
+	 return 0;
+	 }
+	return matches;
+}
+var randomAvailableEW = function(partId){
+	var east = components[partId].match.match('4');
+	var west = components[partId].match.match('6');
+
+	if (!east && west) {
+		return 'w';	
+	}
+	if (east && !west) {
+		return 'e';
+	}
+	
+	if(Math.random<0.5){
+		return 'e';
+		}else{
+		return 'w';
+	}
+
+}
+var randomAvailableNS = function(partId){
+	var north = components[partId].match.match('2');
+	var south = components[partId].match.match('8');
+
+	if (!north && south) {
+		return 's';	
+	}
+	if (north && !south) {
+		return 'n';
+	}
+	
+	if(Math.random<0.5){
+		return 's';
+		}else{
+		return 'n';
+	}
+
+}
+var calculatePartPosition3 = function (x,y,partId,partsArray,matchThreshold,forceGrowArray) {
+	var locations=[];
+	var returnArray = partsArray.slice(0);
+	var partsArraySliceLength=Math.sqrt(partsArray.length);
+	var returnArraySliceLength=partsArraySliceLength;
+	var growArray = true;
+	for(var i=0;growArray && i<partsArray.length;i++){
+		if(partsArray[i]==-1){
+			growArray=false;
+		}
+	}
+	if(forceGrowArray){
+		growArray=true;
+	}
+	if(growArray && false){
+		var modifier = 0;
+
+		if (randomAvailableEW(partId)=='e'){
+			modifier+=1;
+			}
+		if (randomAvailableNS(partId)=='s'){
+			modifier+=partsArraySliceLength;
+			}
+
+
+		for (var i=0;i<Math.pow(partsArraySliceLength+1,2);i++){
+			returnArray[i]=-1;
+		}
+		for (var i=0;i<partsArray.length;i++){
+			returnArray[i+parseInt(i/partsArraySliceLength)+modifier]=partsArray[i];
+		}
+		returnArraySliceLength+=1;
+	}
+	for(var i=0;i<returnArray.length;i++){
+				locations[matchLocationArray(i,partId,returnArray)]=i;
+	}
+	for(var i=locations.length;i>matchThreshold;i--){
+		if(typeof(locations[i])!='undefined'){
+			returnArray[locations[i]]=partId;
+			return returnArray;
+		}
+	}
+	return partsArray;
+}
 gameUI.prototype.calculatePartPosition2 = function (x,y,index) {
 	var locations=[];
 	var outx = x;
@@ -2135,6 +2423,47 @@ gameUI.prototype.partAt = function(x,y){
 //    S
 //    8			
 //    b
+var matchOppositeComponents = function(a,b,direction){
+	var matchA = '';
+	if (a>0) {matchA = components[a].match;}
+	var matchB = '';
+	if (b>0) {matchB = components[b].match;}
+	var result = 0;
+	matchA = matchA.replace('8','N').replace('2','S').replace('4','E').replace('6','W');
+	matchB = matchB.replace('2','N').replace('8','S').replace('4','E').replace('6','W');
+
+	if (!matchA || !matchB) {
+		return false;
+	}
+	if((matchA.match('N') && matchB.match('N')) ||
+	(matchA.match('S') && matchB.match('S'))){
+		matchB=matchB.replace('N','').replace('S','').replace('WE','EW');
+		matchA=matchA.replace('N','').replace('S','').replace('WE','EW');
+		return matchA==matchB;
+	}
+
+	return false;
+};
+var matchArrayComponents = function(a,b,direction){
+	var matchA = '';
+	if (a>0) {matchA = components[a].match;}
+	var matchB = '';
+	if (b>0) {matchB = components[b].match;}
+	var result = 0;
+	matchA = matchA.replace('8','N').replace('2','S').replace('6','E').replace('4','W');
+	matchB = matchB.replace('2','N').replace('8','S').replace('4','E').replace('6','W');
+
+	if (a>0 && b>0 && matchA.match(direction)) { result +=8;}
+	if (b<=0){result+=8;}
+	if (matchA.match(direction) && matchB.match(direction)) { 
+		result += 20;
+		if (components[a].name==components[b].name) {
+			result += 20;
+		}
+	}
+
+	return result;
+};
 gameUI.prototype.matchComponents = function(a,b,direction){
 	var matchA = '';
 	if (a>0) {matchA = components[a].match;}
@@ -3296,7 +3625,12 @@ function epicLootSparkle(s){
 	sparklesCyan.emitParticle();
 
 }
-
+function sparkleBullets(s) {
+	if(game.time.now>s.nextSparkle){
+		s.sparkle(explosions,s.x,s.y);
+		s.nextSparkle=game.time.now+randomRange(100,200);
+	}
+}
 function pullLootToPlayer(s) {
 	if (!player.alive){
 		s.kill();
@@ -3832,7 +4166,9 @@ function update () {
 				for (var i = 0; i < player.parts.length; i++) {
 					game.physics.arcade.overlap(enemyBullets, player.parts[i].sprite, bulletHitPlayer, null, this);
 				}
+				enemyBullets.forEachAlive(sparkleBullets,this);
 			}
+				bullets.forEachAlive(sparkleBullets,this);
 
 			for (var i = 0; i < enemies.length; i++){
 				if (enemies[i].alive){
@@ -4116,6 +4452,33 @@ function fireBoom(explosionsGroup, bulletSprite, x, y, rot){
 		}
 	}
 }
+function gasBoom(explosionsGroup, x, y){
+
+	if(onscreen(x,y)){
+
+		var r = Math.random();
+
+		for(var i=0; i < 4; i ++) { 
+			if(explosionsGroup.countDead()){
+				var explosion = explosionsGroup.getFirstDead();
+				explosion.loadTexture('explosions', Math.random()>0.5?7:9);
+				explosion.reset(x+randomRange(-8,8),y+randomRange(-8,8));
+				explosion.rotation = Math.random()*Math.PI*2;
+				explosion.fireVelocity=randomRange(-10,10);
+				explosion.lifespan=600;
+				r=randomRange(0.4,0.8);
+				explosion.scale.setTo(r,r);
+				explosion.alpha=1;
+				game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
+				explosion.blendMode=0;
+			game.add.tween(explosion.scale).to({x:explosion.scale.x*4,y:explosion.scale.y*4},explosion.lifespan-300, Phaser.Easing.Linear.Out, true, 0, false);
+	game.add.tween(explosion).to({alpha:0},explosion.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
+				explosion.body.angularVelocity=randomRange(200,500)*randomSign();
+			}
+		}
+	}
+}
+
 function boom(explosionsGroup, bulletSprite, x, y){
 
 	if(onscreen(x,y)){

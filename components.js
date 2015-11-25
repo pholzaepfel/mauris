@@ -24,7 +24,7 @@ var cmp = [
 	'id':2,
 	'drops':true,
 	'name':'Ancient Railgun',
-	'match':'482',
+	'match':'46',
 	'flavor':'fires long-ranged slugs, slow rate of fire',
 	'bonus':function(target){
 		target.bulletSprite=3;
@@ -506,7 +506,7 @@ var cmp = [
 	'id':34,
 	'drops':true,
 	'name':'Filthy Cockpit',
-	'match':'482',
+	'match':'4',
 	'flavor':'still reliable and fast!',
 	'bonus':function(target){
 		target.turnRate+=0.2;
@@ -517,7 +517,7 @@ var cmp = [
 	'id':35,
 	'drops':true,
 	'name':'Fusion Thrust',
-	'match':'682',
+	'match':'6',
 	'flavor':'clean energy thruster',
 	'bonus':function(target){
 		target.acceleration+=0.7;
@@ -604,7 +604,8 @@ var cmp = [
 				var tgt = ownerFromName(bullet.owner.name);
 				bullet.rotation+=Math.random()*0.4-0.2;
 				game.physics.arcade.velocityFromRotation(bullet.rotation, getHypo(bullet.body.velocity.x,bullet.body.velocity.y), bullet.body.velocity);	
-				if(tgt.takeEnergy(tgt.fireEnergy/3)){
+				var fireEnergyCost = typeof(tgt.fireEnergy4)=='undefined'?tgt.fireEnergy/3:tgt.fireEnergy;
+				if(tgt.takeEnergy(fireEnergyCost)){
 				var bullet2 = tgt.spawnBullet(false);
 
 				if(typeof(bullet2)!='undefined'){
@@ -1548,7 +1549,7 @@ function(tgt){
 {
 	'id':103,
 	'drops':true,
-	'name':'Tactical Control Module',
+	'name':'Command Deck',
 	'match':'8',
 	'flavor':'improves weapons and other critical systems',
 	'bonus':function(target){
@@ -1843,18 +1844,21 @@ function(tgt){
 	'bonus':function(target){
 		target.bulletHitBehavior.push(function(sprite,bullet){
 				var tgt = ownerFromName(sprite.name);
-				if(tgt.acceleration>0.5){				
-				tgt.acceleration-=0.3;
-				if(tgt.acceleration>0.5){				
-				tgt.acceleration=0.5;
+				if(typeof(tgt.nextRoots)=='undefined'){
+				tgt.nextRoots=0;
+				tgt.acceleration119=tgt.acceleration;
+				};
+				if(game.time.now>tgt.nextRoots){
+				tgt.acceleration*0.4;
+				game.add.tween(tgt).to({acceleration:tgt.acceleration119},400, Phaser.Easing.Linear.Out, true, 0, false);
+				tgt.nextRoots=game.time.now+500;
 				}
+
 				tgt.sprite.body.velocity.x*=0.8;
 				tgt.sprite.body.velocity.y*=0.8;
-				};
-
 				});
-
 	}
+
 },
 {
 	'id':120,
@@ -2516,12 +2520,40 @@ target.effects=function(){
 {
 	'id':163,
 	'drops':false,
-	'name':'Component163',
-	'match':'4682',
-	'flavor':'--',
+	'name':'Refuse Cannon',
+	'match':'482',
+	'flavor':'Spew scattering refuse at targets',
 	'bonus':function(target){
+		target.bulletSprite=8;
+		target.bulletBlendMode=0;
+		target.bulletSparkle=gasBoom;
+				target.bulletBehavior.push(function(bullet){
+				bullet.scale.setTo(bullet.scale.x+1.1,bullet.scale.y+0.7);
+				bullet.body.angularVelocity=333;
+				});
 
-	}
+target.bulletHitBehavior.push(function(sprite,bullet){
+
+				var tgt = ownerFromName(sprite.name);
+				boom(explosions,9,bullet.x,bullet.y);
+				for (var b=0;b<7;b++){
+
+				var newBullet=tgt.spawnBullet(false);
+				newBullet.loadTexture('bullet', bullet.bulletSprite);
+				newBullet.bulletSprite=bullet.bulletSprite;
+				newBullet.damage=bullet.damage;
+				var vel = randomRange(0.9,1.4)*getHypo(bullet.body.velocity.x,bullet.body.velocity.y);
+				newBullet.rotation = randomRange(0,2*Math.PI);
+				game.physics.arcade.velocityFromRotation(newBullet.rotation, vel, newBullet.body.velocity);
+				newBullet.lifespan=200;
+				newBullet.body.angularVelocity=randomRange(200,500)*randomSign();
+				newBullet.scale.setTo(randomRange(0.7,1.2),randomRange(0.7,0.12));
+				newBullet.x=bullet.x;
+				newBullet.y=bullet.y;
+				}
+				});
+
+}
 },
 {
 	'id':164,
