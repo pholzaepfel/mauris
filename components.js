@@ -905,9 +905,8 @@ var cmp = [
 	'match':'4682',
 	'flavor':'heavy armor, increases mass',
 	'bonus':function(target){
-		target.health+=13;
-		target.acceleration-=0.2;
-		target.turnRate-=0.3;
+		target.health+=6;
+		target.turnRate-=0.1;
 		target.sprite.profile+=10;
 	}
 },
@@ -942,9 +941,9 @@ var cmp = [
 	'match':'4682',
 	'flavor':'strong armor, inhibits aim',
 	'bonus':function(target){
-		target.health+=18;
+		target.health+=9;
 		target.acceleration-=0.1;
-		target.turnRate-=0.5;
+		target.turnRate-=0.3;
 		target.sprite.profile+=25;	
 	}
 },
@@ -2365,9 +2364,9 @@ target.effects=function(){
 },
 {
 	'id':148,
-	'drops':false,
-	'name':'Component148',
-	'match':'4682',
+	'drops':true,
+	'name':'Junker',
+	'match':'426',
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -2375,9 +2374,9 @@ target.effects=function(){
 },
 {
 	'id':149,
-	'drops':false,
-	'name':'Component149',
-	'match':'4682',
+	'drops':true,
+	'name':'Junker',
+	'match':'42',
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -2385,9 +2384,9 @@ target.effects=function(){
 },
 {
 	'id':150,
-	'drops':false,
-	'name':'Component150',
-	'match':'4682',
+	'drops':true,
+	'name':'Xenoid',
+	'match':'26',
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -2395,9 +2394,9 @@ target.effects=function(){
 },
 {
 	'id':151,
-	'drops':false,
-	'name':'Component151',
-	'match':'4682',
+	'drops':true,
+	'name':'Xenoid',
+	'match':'42',
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -2405,9 +2404,9 @@ target.effects=function(){
 },
 {
 	'id':152,
-	'drops':false,
-	'name':'Component152',
-	'match':'4682',
+	'drops':true,
+	'name':'Augmented Xenoid',
+	'match':'26',
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -2415,9 +2414,9 @@ target.effects=function(){
 },
 {
 	'id':153,
-	'drops':false,
-	'name':'Component153',
-	'match':'4682',
+	'drops':true,
+	'name':'Augmented Xenoid',
+	'match':'42',
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -2425,42 +2424,52 @@ target.effects=function(){
 },
 {
 	'id':154,
-	'drops':false,
-	'name':'Component154',
-	'match':'4682',
-	'flavor':'--',
+	'drops':true,
+	'name':'Durasteel Plating',
+	'match':'26',
+	'flavor':'strong armor, inhibits aim',
 	'bonus':function(target){
-
+		target.health+=9;
+		target.acceleration-=0.1;
+		target.turnRate-=0.3;
+		target.sprite.profile+=25;	
 	}
 },
 {
 	'id':155,
-	'drops':false,
-	'name':'Component155',
-	'match':'4682',
-	'flavor':'--',
+	'drops':true,
+	'name':'Durasteel Plating',
+	'match':'42',
+	'flavor':'strong armor, inhibits aim',
 	'bonus':function(target){
-
+		target.health+=9;
+		target.acceleration-=0.1;
+		target.turnRate-=0.3;
+		target.sprite.profile+=25;	
 	}
 },
 {
 	'id':156,
 	'drops':false,
-	'name':'Component156',
-	'match':'4682',
-	'flavor':'--',
+	'name':'Worn Armor Plating',
+	'match':'26',
+	'flavor':'heavy armor, increases mass',
 	'bonus':function(target){
-
+		target.health+=6;
+		target.turnRate-=0.1;
+		target.sprite.profile+=10;
 	}
 },
 {
 	'id':157,
 	'drops':false,
-	'name':'Component157',
-	'match':'4682',
-	'flavor':'--',
+	'name':'Worn Armor Plating',
+	'match':'42',
+		'flavor':'heavy armor, increases mass',
 	'bonus':function(target){
-
+		target.health+=6;
+		target.turnRate-=0.1;
+		target.sprite.profile+=10;
 	}
 },
 {
@@ -2755,9 +2764,9 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 },
 {
 	'id':180,
-	'drops':false,
-	'name':'Component180',
-	'match':'4682',
+	'drops':true,
+	'name':'Junker',
+	'match':'86',
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -2765,9 +2774,9 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 },
 {
 	'id':181,
-	'drops':false,
-	'name':'Component181',
-	'match':'4682',
+	'drops':true,
+	'name':'Junker',
+	'match':'84',
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -2775,9 +2784,9 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 },
 {
 	'id':182,
-	'drops':false,
-	'name':'Component182',
-	'match':'4682',
+	'drops':true,
+	'name':'Xenoid',
+	'match':'86',
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -2785,9 +2794,9 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 },
 {
 	'id':183,
-	'drops':false,
-	'name':'Component183',
-	'match':'4682',
+	'drops':true,
+	'name':'Xenoid',
+	'match':'84',
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -2795,9 +2804,9 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 },
 {
 	'id':184,
-	'drops':false,
-	'name':'Component184',
-	'match':'4682',
+	'drops':true,
+	'name':'Augmented Xenoid',
+	'match':'86',
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -2805,9 +2814,9 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 },
 {
 	'id':185,
-	'drops':false,
-	'name':'Component185',
-	'match':'4682',
+	'drops':true,
+	'name':'Augmented Xenoid',
+	'match':'84',
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -2815,42 +2824,52 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 },
 {
 	'id':186,
-	'drops':false,
-	'name':'Component186',
-	'match':'4682',
-	'flavor':'--',
+	'drops':true,
+	'name':'Durasteel Plating',
+	'match':'86',
+	'flavor':'strong armor, inhibits aim',
 	'bonus':function(target){
-
+		target.health+=9;
+		target.acceleration-=0.1;
+		target.turnRate-=0.3;
+		target.sprite.profile+=25;	
 	}
 },
 {
 	'id':187,
-	'drops':false,
-	'name':'Component187',
-	'match':'4682',
-	'flavor':'--',
+	'drops':true,
+	'name':'Durasteel Plating',
+	'match':'84',
+	'flavor':'strong armor, inhibits aim',
 	'bonus':function(target){
-
+		target.health+=9;
+		target.acceleration-=0.1;
+		target.turnRate-=0.3;
+		target.sprite.profile+=25;	
 	}
 },
 {
 	'id':188,
-	'drops':false,
-	'name':'Component188',
-	'match':'4682',
-	'flavor':'--',
+	'drops':true,
+	'name':'Worn Armor Plating',
+	'match':'86',
+		'flavor':'heavy armor, increases mass',
 	'bonus':function(target){
-
+		target.health+=6;
+		target.turnRate-=0.1;
+		target.sprite.profile+=10;
 	}
 },
 {
 	'id':189,
-	'drops':false,
-	'name':'Component189',
-	'match':'4682',
-	'flavor':'--',
+	'drops':true,
+	'name':'Worn Armor Plating',
+	'match':'84',
+	'flavor':'heavy armor, increases mass',
 	'bonus':function(target){
-
+		target.health+=6;
+		target.turnRate-=0.1;
+		target.sprite.profile+=10;
 	}
 },
 {

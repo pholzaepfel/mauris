@@ -1,4 +1,16 @@
-var contextTutorialDeath = 'wake up, captain. we managed to recover you from the wreckage.\nyour ship is a lost cause, but we can recover parts you were carrying.';
+	var allLootableItems = function () {
+	var ret=[];
+			for(var i=0; i<components.length; i++){
+				if(typeof(components[i].name)=='undefined'){
+				}else{
+					if(components[i].drops){
+						ret.push(i);
+					}
+				}
+			}
+	return ret;	
+	}
+	var contextTutorialDeath = 'wake up, captain. we managed to recover you from the wreckage.\nyour ship is a lost cause, but we can recover parts you were carrying.';
 
 var missions = [
 
@@ -79,6 +91,9 @@ var missions = [
 	},
 	'enemies': [{
 		'ships': ships,
+		'parts': allLootableItems(),
+		'sizeMin': 2,
+		'sizeMax': 7,
 		'respawn':true,
 		'missionTarget':false,
 		'count':9, 
@@ -130,7 +145,10 @@ var missions = [
 	},
 	'enemies': [{
 		'ships': bandits,
-		'respawn':true,
+				'parts': banditGear2,
+		'sizeMin': 2,
+		'sizeMax': 5,
+	'respawn':true,
 		'missionTarget':false,
 		'count':12, 
 		'deaths':['I SMELL DELICIOUS!']
@@ -143,7 +161,10 @@ var missions = [
 		}
 ,{
 		'ships': banditBoss1,
-		'respawn':false,
+				'parts': banditGear2,
+		'sizeMin': 7,
+		'sizeMax': 7,
+	'respawn':false,
 		'missionTarget':true,
 		'count':1, 
 		'deaths':[]
@@ -199,14 +220,20 @@ var missions = [
 	},
 	'enemies': [{
 		'ships': bandits,
-		'respawn':true,
+				'parts': banditGear2,
+		'sizeMin': 2,
+		'sizeMax': 5,
+	'respawn':true,
 		'missionTarget':false,
 		'count': 6, 
 		'deaths':['I SMELL DELICIOUS!']
 	},
 	{
 		'ships': drones,
-		'respawn':true,
+				'parts':droneGear,
+		'sizeMin': 2,
+		'sizeMax': 5,
+	'respawn':true,
 		'missionTarget':false,
 		'count':8, 
 		'deaths':[]
@@ -270,7 +297,10 @@ var missions = [
 		},
 	{
 			'ships': cops,
-			'respawn':true,
+					'parts': allianceGear4,
+		'sizeMin': 5,
+		'sizeMax': 7,
+	'respawn':true,
 			'count':13, 
 			'missionTarget':false
 		}]
@@ -315,7 +345,10 @@ var missions = [
 		},
 	{
 			'ships': alliance,
-			'respawn':true,
+					'parts': allianceGear4,
+		'sizeMin': 2,
+		'sizeMax': 6,
+	'respawn':true,
 			'count':14, 
 			'missionTarget':false
 		},{
@@ -368,12 +401,18 @@ var missions = [
 		},
 	{
 			'ships': alliance,
-			'respawn':true,
+					'parts': allianceGear4,
+		'sizeMin': 2,
+		'sizeMax': 5,
+	'respawn':true,
 			'count':13, 
 			'missionTarget':false
 		},{
 			'ships': banditsMedium,
-			'respawn':true,
+					'parts': banditGear2,
+		'sizeMin': 3,
+		'sizeMax': 7,
+	'respawn':true,
 			'count':3, 
 			'missionTarget':false
 		},{
@@ -426,7 +465,10 @@ var missions = [
 		},
 	{
 			'ships': zombies,
-			'respawn':true,
+					'parts': zombieGear,
+		'sizeMin': 3,
+		'sizeMax': 6,
+	'respawn':true,
 			'count':15, 
 			'missionTarget':false
 		},{
@@ -486,13 +528,19 @@ var missions = [
 		},
 	{
 			'ships': droneBoss1,
-			'respawn':false,
+					'parts': droneGear,
+		'sizeMin': 5,
+		'sizeMax': 7,
+	'respawn':false,
 			'count':3, 
 			'missionTarget':false
 		},
 	{
 			'ships': drones2,
-			'respawn':true,
+					'parts': droneGear,
+		'sizeMin': 2,
+		'sizeMax': 4,
+	'respawn':true,
 			'count':13, 
 			'missionTarget':false
 		},{
@@ -539,7 +587,10 @@ var missions = [
 	'enemies': [
 	{
 		'ships': drones,
-		'respawn':true,
+				'parts': failDroneGear,
+		'sizeMin': 2,
+		'sizeMax': 4,
+	'respawn':true,
 		'missionTarget':false,
 		'count':7, 
 		'deaths':[]
@@ -605,13 +656,19 @@ var missions = [
 		},
 	{
 			'ships': mechanoids,
-			'respawn':true,
+					'parts': mechanoidGear,
+		'sizeMin': 2,
+		'sizeMax': 6,
+	'respawn':true,
 			'count':13, 
 			'missionTarget':false
 		},
 	{
 			'ships': mechanoidMiniBoss1,
-			'respawn':true,
+					'parts': mechanoidGear,
+		'sizeMin': 7,
+		'sizeMax': 7,
+	'respawn':true,
 			'count':1, 
 			'missionTarget':false
 		}]
@@ -668,7 +725,10 @@ var missions = [
 ,
 	{
 			'ships': allianceWeak,
-			'respawn':true,
+					'parts': allianceGear4,
+		'sizeMin': 2,
+		'sizeMax': 5,
+	'respawn':true,
 			'count':13, 
 			'missionTarget':false
 		}]
@@ -719,7 +779,10 @@ var missions = [
 		},
 	{
 			'ships': TODO,
-			'respawn':true,
+					'parts': allLootableItems(),
+		'sizeMin': 2,
+		'sizeMax': 9,
+	'respawn':true,
 			'count':13, 
 			'missionTarget':false
 		}]

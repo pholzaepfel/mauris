@@ -242,19 +242,7 @@ var warButtons = [
 	'rotation':0,
 	'label':'"'}
 	];
-	var allLootableItems = function () {
-	var ret=[];
-			for(var i=0; i<components.length; i++){
-				if(typeof(components[i].name)=='undefined'){
-				}else{
-					if(components[i].drops){
-						ret.push(i);
-					}
-				}
-			}
-	return ret;	
-	}
-	// container for stuff that might persist between games
+// container for stuff that might persist between games
 	// TODO: persist stuff between games
 	var playerMeta = function () {
 		this.inventory=[];
@@ -1728,6 +1716,22 @@ var randomVariantComponent = function(partId){
 		}
 	return partsList[parseInt(randomRange(0,partsList.length))];
 }
+var centralVariantComponent = function(partId){
+	if (partId == -1){
+		return -1;
+		}
+	if(components[partId].match.length >= 4){
+	return partId;
+	}
+	var partsList = variantComponents(partId);
+	
+	for(var i=0;i<partsList.length;i++){
+		if(components[partsList[i]].match.length >= 4){
+		return partsList[i];
+		}
+	}
+	return partId;
+}
 var oppositeVariantComponent = function(partId){
 	if (partId == -1){
 		return -1;
@@ -1757,6 +1761,16 @@ var randomPartsList = function(partsList,size){
 	result.sort(matchabilityComponentSort);
 	return result;
 }
+// use a "central" variant that matches on all sides for the center
+var centralPartsOnArrayRow = function(array, row){
+	var arraySlice=Math.sqrt(array.length);
+	var ret = array.slice(0);
+	for(var i=0;i<arraySlice;i++){
+		ret[i+row*arraySlice]=centralVariantComponent(ret[i+row*arraySlice]);
+	}
+	return ret;
+}
+
 var invertPartsOnArrayRow = function(array, row){
 	var arraySlice=Math.sqrt(array.length);
 	var ret = array.slice(0);
@@ -1774,6 +1788,14 @@ var setSquareArrayRow = function(array, row, patch){
 	}
 	return ret;
 }
+var getSquareArrayCol = function(array, col){
+	var arraySlice=Math.sqrt(array.length);
+	var ret = [];
+	for(var	i=0;i<arraySlice;i++){
+		ret.push(array[i*arraySlice+col]);
+	}
+	return ret;
+} 
 var getSquareArrayRow = function(array, row){
 	var arraySlice=Math.sqrt(array.length);
 	var ret = [];
@@ -1805,6 +1827,9 @@ if (!use) {use = Math.random()>0.5 ? 1 : 2}
 		
 		ret = invertPartsOnArrayRow(ret,arraySlice-i);}
 	}
+	if(arraySlice % 2 == 1){
+		ret = centralPartsOnArrayRow(ret,parseInt(halfSlice)); 	
+	}
 	return ret;
 }
 var randomShip = function(partsList,size){
@@ -1813,6 +1838,7 @@ var randomShip = function(partsList,size){
 	var myParts=randomPartsList(partsList,numParts);
 	var center=parseInt(squareSize/2);
 	var ship = [];
+	var success = true;
 	for (var i=0;i<squareSize;i++){
 		ship[i]=-1;
 	}
@@ -1836,7 +1862,19 @@ var randomShip = function(partsList,size){
 			ship[i]=-1;
 		}
 	}
+	if(shipWithoutVoid(ship).length < size + 1) {
+		success = false;
+	}
+	for(var i=0;i<size;i++){
+		if(shipWithoutVoid(getSquareArrayRow(ship,i)).length==0){
+			success=false;
+		}
+	}
+	if(success){
 	return ship;
+	}else{
+	return randomShip(partsList,size);
+	}
 }
 var standardFiringSolution = function(attacker, target, fireRange, fireVelocity, angleModifier, turnRate) {
 
@@ -2467,7 +2505,8 @@ var matchArrayComponents = function(a,b,direction){
 	matchA = matchA.replace('8','N').replace('2','S').replace('6','E').replace('4','W');
 	matchB = matchB.replace('2','N').replace('8','S').replace('4','E').replace('6','W');
 
-	if (a>0 && b<0 && matchA.match(direction)) { result +=4;}
+//	if (a>0 && b<0 && matchA.match(direction)) { result +=4;}
+
 	if (matchA.match(direction) && matchB.match(direction)) { 
 		result += 20;
 		if (components[a].name==components[b].name) {
@@ -3316,11 +3355,16 @@ function initMission (missionId) {
 	var index = 0;
 	for(var n=0;n<playerStats.mission.enemies.length;n++){	
 		for (var i = 0; i < playerStats.mission.enemies[n].count; i++){
-var myShip = randomShip(banditGear2.sort(matchabilityComponentSort), parseInt(randomRange(2,6)));
+			
+var myShip = playerStats.mission.enemies[n].ships.slice(0);
+if(typeof(playerStats.mission.enemies[n].parts)!='undefined'){
+var mySize = parseInt(randomRange(playerStats.mission.enemies[n].sizeMin, playerStats.mission.enemies[n].sizeMax + 1));
+myShip = randomShip(playerStats.mission.enemies[n].parts.sort(matchabilityComponentSort), mySize);
 if(Math.random() > (1 / (Math.sqrt(myShip.length)-1))){
 myShip = symmetrizeShip(myShip);
 }
 myShip=[myShip];
+}
 			if(index<enemies.length){
 				//enemies[index].shipList=playerStats.mission.enemies[n].ships;
 				enemies[index].shipList=myShip;
