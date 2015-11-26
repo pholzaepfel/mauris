@@ -943,6 +943,9 @@ enemyShip.prototype.fire = function () {
 
 }
 enemyShip.prototype.spawnBullet = function (playerFired) {
+	if(!this.bullets.countDead()){
+		this.bullets.getFirstAlive().kill();
+	}
 	if(this.bullets.countDead()){
 		var bullet = this.bullets.getFirstDead();
 		bullet.rotation=this.sprite.rotation;
@@ -1454,7 +1457,10 @@ playerShip.prototype.fire = function(){
 
 };
 playerShip.prototype.spawnBullet = function(playerFired){
-	if(bullets.countDead()){
+	if(!bullets.countDead()){
+		bullets.getFirstAlive().kill();
+	}
+		if(bullets.countDead()){
 
 		var bullet = bullets.getFirstDead();
 		bullet.loadTexture('bullet', this.bulletSprite);
@@ -1784,7 +1790,15 @@ var symmetrizeShip = function(ship){
 	for(var i = arraySlice; i>halfSlice; i--){
 		var firstRow=getSquareArrayRow(ret,arraySlice-i);
 		var secondRow=getSquareArrayRow(ret,i-1);
-		if(shipWithoutVoid(firstRow).length>shipWithoutVoid(secondRow).length){
+		var use=false;
+		if(shipWithoutVoid(firstRow).length == 0){
+			use=2;
+		}
+		if(shipWithoutVoid(secondRow).length == 0){
+			use=1;
+}
+if (!use) {use = Math.random()>0.5 ? 1 : 2}
+		if(use == 1){
 		ret = setSquareArrayRow(ret,i-1,firstRow);
 		ret = invertPartsOnArrayRow(ret,i-1);}else{
 		ret = setSquareArrayRow(ret,arraySlice-i,secondRow);
@@ -2453,8 +2467,7 @@ var matchArrayComponents = function(a,b,direction){
 	matchA = matchA.replace('8','N').replace('2','S').replace('6','E').replace('4','W');
 	matchB = matchB.replace('2','N').replace('8','S').replace('4','E').replace('6','W');
 
-	if (a>0 && b>0 && matchA.match(direction)) { result +=8;}
-	if (b<=0){result+=8;}
+	if (a>0 && b<0 && matchA.match(direction)) { result +=4;}
 	if (matchA.match(direction) && matchB.match(direction)) { 
 		result += 20;
 		if (components[a].name==components[b].name) {
@@ -3303,12 +3316,18 @@ function initMission (missionId) {
 	var index = 0;
 	for(var n=0;n<playerStats.mission.enemies.length;n++){	
 		for (var i = 0; i < playerStats.mission.enemies[n].count; i++){
+var myShip = randomShip(banditGear2.sort(matchabilityComponentSort), parseInt(randomRange(2,6)));
+if(Math.random() > (1 / (Math.sqrt(myShip.length)-1))){
+myShip = symmetrizeShip(myShip);
+}
+myShip=[myShip];
 			if(index<enemies.length){
-				enemies[index].shipList=playerStats.mission.enemies[n].ships;
+				//enemies[index].shipList=playerStats.mission.enemies[n].ships;
+				enemies[index].shipList=myShip;
 				enemies[index].initEnemyShip();
 				enemies[index].target=player.sprite;
 			}else{
-				enemies.push(new enemyShip(index, game, player.sprite, enemyBullets, playerStats.mission.enemies[n].ships, enemyThrust));
+				enemies.push(new enemyShip(index, game, player.sprite, enemyBullets, myShip, enemyThrust));
 			}
 			enemies[index].respawn=playerStats.mission.enemies[n].respawn;
 			enemies[index].missionTarget=playerStats.mission.enemies[n].missionTarget;
