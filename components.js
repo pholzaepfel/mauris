@@ -497,7 +497,7 @@ var cmp = [
 	'flavor':'extra crewhands speed energy regeneration',
 	'bonus':function(target){
 		target.health+=2;
-		target.energyRate+=1;
+		target.energyAmount+=1;
 		target.acceleration+=0.1;
 		target.sprite.profile+=10;
 	}
@@ -1223,6 +1223,7 @@ function(tgt){
 	'match':'26',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO=1;
 
 	}
 },
@@ -1233,6 +1234,7 @@ function(tgt){
 	'match':'42',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO=1;
 
 	}
 },
@@ -2105,8 +2107,8 @@ function(tgt){
 		var fireRateDiff=200/target.fireRate;
 		target.fireRate=200;
 		target.fireSound=ui.sound_bullet;
-		target.fireDamage*=fireRateDiff;
-		target.fireEnergy*=fireRateDiff;
+		target.fireDamage*=fireRateDiff*1.2;
+		target.fireEnergy*=fireRateDiff*1.05;
 		target.sprite.profile+=20;
 	}
 },
@@ -2221,8 +2223,10 @@ function(tgt){
 	'drops':true,
 	'name':'Tank',
 	'match':'26',
-	'flavor':'--',
+	'flavor':'Extra combat energy',
 	'bonus':function(target){
+		target.health+=2;
+		target.energyMax+=4;
 
 	}
 },
@@ -2231,8 +2235,11 @@ function(tgt){
 	'drops':true,
 	'name':'Tank',
 	'match':'42',
-	'flavor':'--',
+	'flavor':'Extra combat energy',
 	'bonus':function(target){
+		target.health+=2;
+		target.energyMax+=4;
+
 
 	}
 },
@@ -2369,6 +2376,7 @@ target.effects=function(){
 	'match':'426',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO=1;
 
 	}
 },
@@ -2379,6 +2387,7 @@ target.effects=function(){
 	'match':'42',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO=1;
 
 	}
 },
@@ -2389,6 +2398,7 @@ target.effects=function(){
 	'match':'26',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO=1;
 
 	}
 },
@@ -2399,6 +2409,7 @@ target.effects=function(){
 	'match':'42',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO=1;
 
 	}
 },
@@ -2409,6 +2420,7 @@ target.effects=function(){
 	'match':'26',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO=1;
 
 	}
 },
@@ -2419,6 +2431,7 @@ target.effects=function(){
 	'match':'42',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO=1;
 
 	}
 },
@@ -2648,8 +2661,10 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Tank',
 	'match':'86',
-	'flavor':'--',
+	'flavor':'Extra combat energy',
 	'bonus':function(target){
+		target.health+=2;
+		target.energyMax+=4;
 
 	}
 },
@@ -2658,8 +2673,10 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Tank',
 	'match':'84',
-	'flavor':'--',
+	'flavor':'Extra combat energy',
 	'bonus':function(target){
+		target.health+=2;
+		target.energyMax+=4;
 
 	}
 },
@@ -2769,6 +2786,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'match':'86',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO=1;
 
 	}
 },
@@ -2779,6 +2797,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'match':'84',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO=1;
 
 	}
 },
@@ -2789,6 +2808,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'match':'86',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO=1;
 
 	}
 },
@@ -2799,6 +2819,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'match':'84',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO=1;
 
 	}
 },
@@ -2809,6 +2830,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'match':'86',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO=1;
 
 	}
 },
@@ -2819,6 +2841,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'match':'84',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO=1;
 
 	}
 },

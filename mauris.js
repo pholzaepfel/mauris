@@ -10,6 +10,13 @@ var aiModes = {
 	'asteroid':3,
 	'accurateEnemy':4
 };
+var forceDead = function(collection){
+	if(!collection.countDead()){
+		collection.sort('lifespan',Phaser.Group.SORT_ASCENDING);
+		collection.getFirstAlive().kill();
+	}
+	return collection.countDead();
+}
 var legacyButtons = [
 {'name':'left',
 	'downCallback':function(){buttonLeft=1;},
@@ -922,7 +929,7 @@ enemyShip.prototype.up = function(a){
 
 };
 enemyShip.prototype.fire = function () {
-	if (this.game.time.now > this.nextFire && this.bullets.countDead() > 0 &&
+	if (this.game.time.now > this.nextFire && forceDead(this.bullets) > 0 &&
 			this.takeEnergy(this.fireEnergy)){
 		this.fireSound.play();
 		this.nextFire = this.game.time.now + this.fireRate;
@@ -931,10 +938,7 @@ enemyShip.prototype.fire = function () {
 
 }
 enemyShip.prototype.spawnBullet = function (playerFired) {
-	if(!this.bullets.countDead()){
-		this.bullets.getFirstAlive().kill();
-	}
-	if(this.bullets.countDead()){
+	if(forceDead(this.bullets)){
 		var bullet = this.bullets.getFirstDead();
 		bullet.rotation=this.sprite.rotation;
 		bullet.damage=this.fireDamage;
@@ -1215,7 +1219,46 @@ function preload () {
 }
 
 
+var blurbStats = function(target){
+	var burstDps = target.fireDamage*(1000/target.fireRate);
+	var sustainedDps = target.fireDamage * (1000/((target.fireEnergy*target.energyRate)/target.energyAmount));
+	var maxBurst = target.fireDamage*(target.energyMax/target.fireEnergy);
+	var fireDamage = target.fireDamage;
+	var shotsPerSecond = 1000/target.fireRate;
+	var fireEnergy = target.fireEnergy;
+	var acceleration = target.acceleration;
+	var maxVelocity = target.sprite.body.maxVelocity.x;
+	var chargeTime = target.energyMax/(target.energyAmount*(1000/target.energyRate));
+	var turnRate = target.turnRate;
+	var health = target.health;
+	var radarTargets = target.radarTargets;
 
+	var ret = '';
+ret += ' burstDps: ' + parseFloat(burstDps).toFixed(2);
+ret += ' sustainedDps: ' + parseFloat(sustainedDps).toFixed(2);
+ret += ' maxBurst: ' + parseFloat(maxBurst).toFixed(2);
+ret += ' chargeTime: ' + parseFloat(chargeTime).toFixed(2) +'s';
+//ret += ' fireDamage: ' + parseFloat(fireDamage).toFixed(2);
+//ret += ' shotsPerSecond: ' + parseFloat(shotsPerSecond).toFixed(2);
+//ret += ' fireEnergy: ' + parseFloat(fireEnergy).toFixed(2);
+ret += '\n';
+ret += ' acceleration: ' + parseFloat(acceleration).toFixed(2);
+ret += ' maxVelocity: ' + parseFloat(maxVelocity).toFixed(2);
+ret += ' turnRate: ' + parseFloat(turnRate).toFixed(2);
+ret += ' health: ' + parseFloat(health).toFixed(2);
+//ret += ' radarTargets: ' + parseFloat(radarTargets).toFixed(2);
+
+return ret;		
+}
+
+
+var mockPlayerShip = function(ship) {
+	this.sprite = game.add.sprite(0, 0, 'parts', 1023);
+	game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
+	this.game = game;
+	this.initPlayerShip(ship);
+	this.thrust = game.add.emitter(0,0,0);
+}
 var playerShip = function(ship) {
 	this.sprite = game.add.sprite(0, 0, 'parts', 1023);
 	game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
@@ -1274,6 +1317,94 @@ playerShip.prototype.takeEnergy = function (amt, forgive){
 	}
 
 	return ret;
+}
+mockPlayerShip.prototype.initPlayerShip = function (ship) {
+
+	this.sprite.r=255;
+	this.sprite.g=255;
+	this.sprite.b=255;
+	this.organicArmor=0;
+	this.nextOre=0;
+	this.nextOrganicArmorPing=0;
+	this.target=this.sprite;
+	this.fireSound=ui.sound_pew3;
+	this.firingSolution=standardFiringSolution;
+	this.ai=aiModes['player']; //natural intelligence
+	this.radarTargets=1;
+	this.dropRate=0;
+	this.effects=function(){};
+	this.radarError=0;
+	this.sawDamage=0;
+	this.radarShowInRange=false;
+	this.radarShowInEnemyRange=false;
+	this.radarOreTargets=4;
+	this.oreEnergy=0;
+	this.oreChance=0.09;
+	this.acceleration=1;
+	this.lootRange=250;
+	this.sprite.reset(0,0);
+	this.sprite.name = 'player';
+	this.sprite.rotation=0;
+	this.lastVelocityX = this.sprite.body.velocity.x;
+	this.lastVelocityY = this.sprite.body.velocity.y;
+	this.turnRate=0.5;
+	this.health=8;
+	this.alive=true;
+	this.sprite.alive=true;
+	this.bulletSprite=0;
+	this.attackAngleThreshold = 0.03;
+	this.bulletBlendMode=1;
+	this.bulletHitBehavior=[];
+	this.bulletBehavior=[];
+	this.bulletSparkle=function(){};
+	this.updateBehavior=[];
+	this.parts=[];
+	this.speed = 0; //current
+	this.fireCounter = 0;
+	this.fireCounterReset = 0;
+	this.fireRate = 300;
+	this.fireVelocity = 400;
+	this.fireDamage = 2;
+	this.fireRange = 1000;
+	this.fireMass = 0.1;
+	this.fireEnergy = 2;
+	this.fireTracking = 0;
+	this.profileDecay = 166;
+	this.profileShow = false;
+	this.energy=0;
+	this.energyMax=12;
+	this.energyRate=1000;
+	this.energyAmount=2;
+	this.nextProfileDecay =0;
+	this.nextEnergy4 = 0;
+	this.nextEnergy = 0;
+	this.nextFire = 0;
+	this.altCooldown=0;
+	this.shieldCooldown=0;
+	this.cooldown114=0;
+	this.sprite.visible=true;
+	this.sprite.anchor.setTo(0.5, 0.5);
+	this.sprite.body.maxVelocity.setTo(500,500);
+	this.sprite.profile=250;	//max range at which opponents will attack. this will change dynamically
+	this.sprite.body.drag.x=0;
+	this.sprite.body.drag.y=0;
+	this.sprite.body.collideWorldBounds = true; 
+	this.altCheck = function(){return false;};
+	this.energyReserve = 0;
+	this.targetAngle=-666;
+	this.behavior="manual";
+	this.alt = function(){
+		if(game.time.now>this.altCooldown){
+			sparks(pew,this.sprite);
+			this.altCooldown=game.time.now+1000;
+		}
+	}
+	if(typeof(ship)=='undefined'){
+		this.ship = ships[Math.floor(randomRange(0,ships.length))];
+	}else{
+		this.ship = ship;
+	}
+	applyBonuses(this);
 }
 playerShip.prototype.initPlayerShip = function (ship) {
 
@@ -1430,7 +1561,7 @@ playerShip.prototype.fire = function(){
 	}
 
 
-	if (game.time.now > this.nextFire && bullets.countDead() > 0 && this.alive && this.takeEnergy(this.fireEnergy)){
+	if (game.time.now > this.nextFire && forceDead(bullets) > 0 && this.alive && this.takeEnergy(this.fireEnergy)){
 
 		this.fireSound.play();
 
@@ -1445,10 +1576,7 @@ playerShip.prototype.fire = function(){
 
 };
 playerShip.prototype.spawnBullet = function(playerFired){
-	if(!bullets.countDead()){
-		bullets.getFirstAlive().kill();
-	}
-		if(bullets.countDead()){
+		if(forceDead(bullets)){
 
 		var bullet = bullets.getFirstDead();
 		bullet.loadTexture('bullet', this.bulletSprite);
@@ -1842,19 +1970,21 @@ var randomShip = function(partsList,size){
 	for (var i=0;i<squareSize;i++){
 		ship[i]=-1;
 	}
+		var attempts = 0;
+		ship[center] = myParts[0];
+		myParts.splice(0,1);
+	while(myParts.length && attempts < 40){
 	for (var i=0;i<myParts.length;i++) {
 		var newShip = ship.slice(0);
-		var attempts = 0;
-		while (newShip.join() == ship.join() && attempts++ < 40){
 		//pick part
-		if(i==0){
-		newShip[center]=myParts[i];
-		}else{
-
 		newShip = calculatePartPosition3(0,0,myParts[i],ship,40-attempts,(attempts > 10 ? true:false));
-		}
+		if(newShip.join() != ship.join()){
+			myParts.splice(i,1);
+			i--;
 		}
 		ship=newShip;
+	}
+		attempts+=1;
 	}
 	//should not be happening
 	for (var i=0;i<ship.length;i++){
@@ -1864,6 +1994,10 @@ var randomShip = function(partsList,size){
 	}
 	if(shipWithoutVoid(ship).length < size + 1) {
 		success = false;
+	}
+	//box ships are ugly
+	if(shipWithoutVoid(ship).length == ship.length && Math.random() > 0.1){
+		success=false;
 	}
 	for(var i=0;i<size;i++){
 		if(shipWithoutVoid(getSquareArrayRow(ship,i)).length==0){
@@ -2073,6 +2207,7 @@ playerShip.prototype.update = function(){
 };
 var touchPressed = 0;
 var player;
+var mockPlayer;
 var attackerTargetSizeThreshold = 0.5;
 var laserRangeModifier=0.2;
 var laserRangeMinimum=150;
@@ -2609,7 +2744,10 @@ gameUI.prototype.initCombatUi = function() {
 	this.comms.anchor.setTo(0.5,0.5);
 	destroyIfExists(this.partText);
 	this.partText = game.add.text(-300,150,'',{font:'42px mozart', fill: 'rgb(255,255,255)', align: 'left'});
-	destroyIfExists(this.partFlavorText);
+	destroyIfExists(this.statsText);
+	this.statsText = game.add.text(0,-200,'',{font:'28px mozart', fill: 'rgb(255,255,255)', align: 'left'});
+	this.statsText.anchor.setTo(0.5,0.5);
+		destroyIfExists(this.partFlavorText);
 	this.partFlavorText = game.add.text(-280,180,'',{font:'28px mozart', fill: 'rgb(255,255,255)', align: 'left'});
 	destroyIfExists(this.explainerText);
 	this.explainerText = game.add.text(-300,210,'',{font:'24px mozart', fill: 'rgb(255,255,220)', align: 'left'});
@@ -2883,7 +3021,13 @@ gameUI.prototype.partPing = function () {
 	this.graphics.drawRect(-400,142, 800, 96);
 	this.toTop(this.partText);
 	this.toTop(this.partFlavorText);
-	this.toTop(this.explainerText);
+	this.toTop(this.statsText);
+	if(this.comms.alpha>0){
+		this.statsText.visible=false;
+	}else{
+		this.statsText.visible=true;
+	}
+		this.toTop(this.explainerText);
 	this.partsSelector.bringToTop();
 
 }
@@ -2911,6 +3055,8 @@ gameUI.prototype.update = function() {
 }
 gameUI.prototype.updatePart = function () {
 	this.partsSelector.visible=true;
+	mockPlayer.initPlayerShip(this.partsArray());
+	this.statsText.setText(blurbStats(mockPlayer));
 	if(ui.buildMode == 'select'){
 		if(playerStats.inventory.length){
 			this.partsSelector.loadTexture('parts',playerStats.inventory[this.currentPart]);
@@ -3213,6 +3359,7 @@ gameUI.prototype.endPartsUI = function () {
 	var ship = this.partsArray();
 	this.destroyParts();
 	this.partText.setText('');
+	this.statsText.setText('');
 	this.partFlavorText.setText('');
 	this.explainerText.setText('');
 	player.initPlayerShip(ship);
@@ -3518,6 +3665,7 @@ function create () {
 		pool = new partsPool();
 		dragPool = new dragPartsPool();
 		player = new playerShip(defaultPlayerShip);
+		mockPlayer = new mockPlayerShip(defaultPlayerShip);
 
 		//  The enemies bullet group
 		enemyBullets = game.add.group();
@@ -4322,7 +4470,7 @@ function hugeBoom(explosionsGroup, x, y){
 		var r = Math.random();
 
 		for(var i=0; i < 10 + (r * 9) ; i ++) { 
-			if(explosions.countDead()){
+			if(forceDead(explosions)){
 				var explosion = explosionsGroup.getFirstDead();
 				explosion.loadTexture('explosions', Math.random()>0.7 ? 1 : 2);
 				explosion.reset(x+randomRange(-80,80),y+randomRange(-80,80));
@@ -4346,7 +4494,7 @@ function bigBoom(explosionsGroup, x, y){
 		var r = Math.random();
 
 		for(var i=0; i < 5 + (r * 6) ; i ++) { 
-			if(explosions.countDead()){
+			if(forceDead(explosions)){
 				var explosion = explosionsGroup.getFirstDead();
 				var rand2 = Math.random()>0.7 ? 1 : 2;
 				explosion.loadTexture('explosions', rand2);
@@ -4383,7 +4531,7 @@ function shieldEffect(explosionsGroup, bulletSprite, x, y, velx, vely,scale)
 	scale=Math.sqrt(scale)*0.5;
 	var r = Math.random();
 
-	if(explosionsGroup.countDead()){
+	if(forceDead(explosionsGroup)){
 		var explosion = explosionsGroup.getFirstDead();
 		explosion.loadTexture('explosions', 0);
 		explosion.reset(x,y);
@@ -4400,7 +4548,7 @@ function shieldEffect(explosionsGroup, bulletSprite, x, y, velx, vely,scale)
 		game.add.tween(explosion.scale).to({x:explosion.scale.x*8,y:explosion.scale.y*8},explosion.lifespan-100, Phaser.Easing.Exponential.Out, true, 0, false);
 		game.add.tween(explosion).to({alpha:0},explosion.lifespan, Phaser.Easing.Linear.InOut, true, 0, false);
 	}
-	if(explosionsGroup.countDead()){
+	if(forceDead(explosionsGroup)){
 		var explosion = explosionsGroup.getFirstDead();
 		explosion.loadTexture('explosions', bulletSprite || 0);
 		explosion.reset(x,y);
@@ -4424,7 +4572,7 @@ function sparkleBoom(explosionsGroup, minSprite, maxSprite, x, y){
 	var r = Math.random();
 
 	for(var i=0; i < 8 + (r * 6) ; i ++) { 
-		if(explosionsGroup.countDead()){
+		if(forceDead(explosionsGroup)){
 			var explosion = explosionsGroup.getFirstDead();
 			explosion.loadTexture('sparkles', Math.floor(randomRange(minSprite,maxSprite)));
 			explosion.reset(x+randomRange(-8,8),y+randomRange(-8,8));
@@ -4454,7 +4602,7 @@ function midBoom(explosionsGroup, bulletSprite, x, y){
 		var r = Math.random();
 
 		for(var i=0; i < 3 + (r * 6) ; i ++) { 
-			if(explosionsGroup.countDead()){
+			if(forceDead(explosionsGroup)){
 				var explosion = explosionsGroup.getFirstDead();
 				explosion.loadTexture('explosions', bulletSprite || 0);
 				explosion.reset(x+randomRange(-8,8),y+randomRange(-8,8));
@@ -4479,7 +4627,7 @@ function fireBoom(explosionsGroup, bulletSprite, x, y, rot){
 		var r = Math.random();
 
 		for(var i=0; i < 3 + (r * 2) ; i ++) { 
-			if(explosionsGroup.countDead()){
+			if(forceDead(explosionsGroup)){
 				var explosion = explosionsGroup.getFirstDead();
 				explosion.loadTexture('explosions', bulletSprite || 0);
 				explosion.reset(x,y);
@@ -4497,7 +4645,7 @@ function fireBoom(explosionsGroup, bulletSprite, x, y, rot){
 		}
 
 		for(var i=0; i < 3; i ++) { 
-			if(explosionsGroup.countDead()){
+			if(forceDead(explosionsGroup)){
 				var explosion = explosionsGroup.getFirstDead();
 				explosion.loadTexture('explosions', bulletSprite || 0);
 				explosion.reset(x,y);
@@ -4522,7 +4670,7 @@ function gasBoom(explosionsGroup, x, y){
 		var r = Math.random();
 
 		for(var i=0; i < 4; i ++) { 
-			if(explosionsGroup.countDead()){
+			if(forceDead(explosionsGroup)){
 				var explosion = explosionsGroup.getFirstDead();
 				explosion.loadTexture('explosions', Math.random()>0.5?7:9);
 				explosion.reset(x+randomRange(-8,8),y+randomRange(-8,8));
@@ -4548,7 +4696,7 @@ function boom(explosionsGroup, bulletSprite, x, y){
 
 		var r = Math.random();
 		for(var i=0; i < 3 + (r * 2) ; i ++) { 
-			if(explosionsGroup.countDead()){
+			if(forceDead(explosionsGroup)){
 				var explosion = explosionsGroup.getFirstDead();
 				explosion.loadTexture('explosions', bulletSprite || 0);
 				explosion.reset(x,y);
@@ -4567,7 +4715,7 @@ function boom(explosionsGroup, bulletSprite, x, y){
 
 
 		for(var i=0; i < 3; i ++) { 
-			if(explosionsGroup.countDead()){
+			if(forceDead(explosionsGroup)){
 				var explosion = explosionsGroup.getFirstDead();
 				explosion.loadTexture('explosions', bulletSprite || 0);
 				explosion.reset(x+randomRange(-8,8),y+randomRange(-8,8));
@@ -4608,12 +4756,10 @@ function sparkExplosion(emitter, sprite){
 }
 function spawnLoots(_count, x, y){
 	var lootCount = _count;
-	if(loots.countDead() < lootCount){
-		lootCount = loots.countDead();
-	}
 
 	for(var i = 0; i < lootCount; i++)
 	{
+		if(forceDead(loots)){
 		var loot = loots.getFirstDead();
 		if(typeof(loot.pulseTween)!='undefined'){
 			loot.pulseTween.stop();
@@ -4635,10 +4781,11 @@ function spawnLoots(_count, x, y){
 		loot.acceleration=0;
 		game.physics.arcade.velocityFromRotation(loot.rotation, randomRange(100,300), loot.body.velocity);
 		return loot;
+		}
 	}
 }
 function spawnComponent(component,x,y){
-	if(loots.countDead()){
+	if(forceDead(loots)){
 		var loot = loots.getFirstDead();
 		if(typeof(loot.pulseTween)!='undefined'){
 			loot.pulseTween.stop();
