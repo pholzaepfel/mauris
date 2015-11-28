@@ -3579,7 +3579,7 @@ function fadeIn () {
 	planet.baseX=randomRange(300,400)*randomSign();
 	planet.baseY=randomRange(300,400)*randomSign();
 	planet.rotation=randomRange(0,2*Math.PI);
-	planet.baseScale=randomRange(4,5);
+	planet.baseScale=randomRange(2,6);
 	planet.anchor.setTo(0.5,0.5);
 	planet.scale.x=planet.baseScale;
 	planet.scale.y=planet.baseScale;
@@ -4471,22 +4471,19 @@ function update () {
 		planetlod.scale.setTo(planet.scale.x,planet.scale.y);
 		planetlod.reset(planet.x,planet.y);
 
-		if(planet.scaleModifier<1){
+		if(planet.scaleModifier<1.5){
 			planet.alpha=1;
 			planet.visible=true;
 			planetlod.visible=false;
-		}else if(planet.scaleModifier>4){
-			planet.visible=true;
-			planet.alpha=1;
-			planetlod.visible=false;
-		}else if(planet.scaleModifier>3){
-			planet.visible=true;
-			planetlod.alpha=4-planet.scaleModifier;
+		}else if(planet.scaleModifier>2.5){
+			planet.visible=false;
+			planetlod.alpha=1;
 			planetlod.visible=true;
 		}else{
 			planet.visible=true;
 			planetlod.visible=true;
-			planetlod.alpha=0.5*(planet.scaleModifier-1);
+			planet.alpha=1-planet.scaleModifier;
+			planetlod.alpha=planet.scaleModifier-1.5;
 		}
 
 		hazeRed.tilePosition.x = hazeRed.offsetx + ( -0.26*game.camera.x / hazeRed.scale.x) + (game.time.now / (hazeRed.speed));
