@@ -249,7 +249,7 @@ var warButtons = [
 	'rotation':0,
 	'label':'"'}
 	];
-// container for stuff that might persist between games
+	// container for stuff that might persist between games
 	// TODO: persist stuff between games
 	var playerMeta = function () {
 		this.inventory=[];
@@ -271,10 +271,10 @@ var warButtons = [
 function queryComponent(id){
 	return components[id].bonus.toString().replace(/target\./g,'').replace(/function.*{/,'').replace(/}/g,'').replace(/bulletBehavior.*/,'CHANGE BULLET BEHAVIOR').replace(/alt=.*/,'ALTERNATE FIRE').replace(/this.*body\./g,'').replace(/this.*sprite\./g,'').replace(/this\./g,'').replace(/[();\[\]{}]/g,'').replace(/\t\t\t.*\n/g,'').replace(/[\t ]*/g,'').replace(/^\n/g,'');
 }
-var scroll = function(modifier, target){
-var ret ={'x':0,y:'0'};
-target.tilePosition.x = target.offsetx + ( modifier*game.camera.x / target.scale.x) + (game.time.now / (target.speed));
-		target.tilePosition.y = target.offsety + ( modifier*game.camera.y / target.scale.y);
+var scroll = function(target,modifier ){
+	var ret ={'x':0,y:'0'};
+	target.tilePosition.x += ( modifier*game.time.physicsElapsed*player.sprite.body.velocity.x / target.scale.x) + (game.time.physicsElapsed * (target.speed));
+	target.tilePosition.y += ( modifier*game.time.physicsElapsed*player.sprite.body.velocity.y / target.scale.y) ;
 }
 var blackOut = function(){
 
@@ -1194,6 +1194,7 @@ function preload () {
 	game.load.spritesheet('bullet', 'assets/bullets.png',16,16);
 	game.load.image('planets', 'assets/planets.png');
 	game.load.image('planetslod', 'assets/planetslod.png');
+	game.load.image('planetfall', 'assets/planetfall.png');
 	game.load.image('starfield2', 'assets/starfield2.png');
 	game.load.image('starfield6', 'assets/starfield6.png');
 	game.load.image('starfield4', 'assets/starfield4.png');
@@ -1240,21 +1241,21 @@ var blurbStats = function(target){
 	var radarTargets = target.radarTargets;
 
 	var ret = '';
-ret += ' burstDps: ' + parseFloat(burstDps).toFixed(2);
-ret += ' sustainedDps: ' + parseFloat(sustainedDps).toFixed(2);
-ret += ' maxBurst: ' + parseFloat(maxBurst).toFixed(2);
-ret += ' chargeTime: ' + parseFloat(chargeTime).toFixed(2) +'s';
-//ret += ' fireDamage: ' + parseFloat(fireDamage).toFixed(2);
-//ret += ' shotsPerSecond: ' + parseFloat(shotsPerSecond).toFixed(2);
-//ret += ' fireEnergy: ' + parseFloat(fireEnergy).toFixed(2);
-ret += '\n';
-ret += ' acceleration: ' + parseFloat(acceleration).toFixed(2);
-ret += ' maxVelocity: ' + parseFloat(maxVelocity).toFixed(2);
-ret += ' turnRate: ' + parseFloat(turnRate).toFixed(2);
-ret += ' health: ' + parseFloat(health).toFixed(2);
-//ret += ' radarTargets: ' + parseFloat(radarTargets).toFixed(2);
+	ret += ' burstDps: ' + parseFloat(burstDps).toFixed(2);
+	ret += ' sustainedDps: ' + parseFloat(sustainedDps).toFixed(2);
+	ret += ' maxBurst: ' + parseFloat(maxBurst).toFixed(2);
+	ret += ' chargeTime: ' + parseFloat(chargeTime).toFixed(2) +'s';
+	//ret += ' fireDamage: ' + parseFloat(fireDamage).toFixed(2);
+	//ret += ' shotsPerSecond: ' + parseFloat(shotsPerSecond).toFixed(2);
+	//ret += ' fireEnergy: ' + parseFloat(fireEnergy).toFixed(2);
+	ret += '\n';
+	ret += ' acceleration: ' + parseFloat(acceleration).toFixed(2);
+	ret += ' maxVelocity: ' + parseFloat(maxVelocity).toFixed(2);
+	ret += ' turnRate: ' + parseFloat(turnRate).toFixed(2);
+	ret += ' health: ' + parseFloat(health).toFixed(2);
+	//ret += ' radarTargets: ' + parseFloat(radarTargets).toFixed(2);
 
-return ret;		
+	return ret;		
 }
 
 
@@ -1582,7 +1583,7 @@ playerShip.prototype.fire = function(){
 
 };
 playerShip.prototype.spawnBullet = function(playerFired){
-		if(forceDead(bullets)){
+	if(forceDead(bullets)){
 
 		var bullet = bullets.getFirstDead();
 		bullet.loadTexture('bullet', this.bulletSprite);
@@ -1609,7 +1610,7 @@ playerShip.prototype.spawnBullet = function(playerFired){
 		bullet.body.velocity.y += 0.5 * this.sprite.body.velocity.y;
 		bullet.sparkle=this.bulletSparkle;
 		bullet.nextSparkle=game.time.now;
-	
+
 		for (var i = 0; i < this.bulletBehavior.length; i++) {
 			this.bulletBehavior[i](bullet, playerFired);
 		}
@@ -1658,15 +1659,15 @@ var laserIntersection = function(laser,edges) {
 var closest = function(reference,point1,point2){
 	if(typeof(point1)=='undefined' && typeof(point2) == 'undefined'){
 		return null;
-}else if(typeof(point1)=='undefined'){
-	return point2;
-}else if(typeof(point2) == 'undefined'){
-	return point1;
-}
-				var dist1 = game.physics.arcade.distanceBetween(reference,point1);
-				var dist2 = game.physics.arcade.distanceBetween(reference,point2);
+	}else if(typeof(point1)=='undefined'){
+		return point2;
+	}else if(typeof(point2) == 'undefined'){
+		return point1;
+	}
+	var dist1 = game.physics.arcade.distanceBetween(reference,point1);
+	var dist2 = game.physics.arcade.distanceBetween(reference,point2);
 	if(dist1>dist2){return point2;}
-else{return point1;}
+	else{return point1;}
 }
 var laserBulletBehavior = function(bullet,thickness,alpha,color1,color2,color3,damageModifier,laserHitBehavior){
 	var tgt = ownerFromName(bullet.owner.name);
@@ -1729,7 +1730,7 @@ var laserBulletBehavior = function(bullet,thickness,alpha,color1,color2,color3,d
 	color1Point = new Phaser.Point(color1X,color1Y);
 	color1Point = closest(bullet, color1Point, closestIntersection);
 	tempLength=randomRange(0.7,0.9);
-  color2X=bullet.x + Math.cos(tgt.sprite.rotation)*adjFireRange*tempLength;
+	color2X=bullet.x + Math.cos(tgt.sprite.rotation)*adjFireRange*tempLength;
 	color2Y=bullet.y + Math.sin(tgt.sprite.rotation)*adjFireRange*tempLength;
 	color2Point = new Phaser.Point(color2X,color2Y);
 	color2Point = closest(bullet, color2Point, closestIntersection);
@@ -1740,7 +1741,7 @@ var laserBulletBehavior = function(bullet,thickness,alpha,color1,color2,color3,d
 	color3Y-=Math.sin(tgt.sprite.rotation)*tempLength;
 	color3Point = new Phaser.Point(color3X,color3Y);
 	color3Point = closest(bullet, color3Point, closestIntersection);
-	
+
 	otherGraphics.lineStyle(1, color1, alpha);
 	otherGraphics.moveTo(bullet.x,bullet.y);
 	otherGraphics.lineTo(color1Point.x,color1Point.y);
@@ -1787,21 +1788,21 @@ var laserBulletBehavior = function(bullet,thickness,alpha,color1,color2,color3,d
 		var rightEdge = new Phaser.Line(body.x+body.height,body.y,body.x+body.height,body.y+body.height);
 		intersection = laserIntersection(laser,[topEdge,bottomEdge,leftEdge,rightEdge]); 
 		if(intersection){
-				if(game.physics.arcade.distanceBetween(laser.start,intersection) < closestIntersectionDistance){
-					closestIntersectionDistance=game.physics.arcade.distanceBetween(laser.start,intersection);
-					closestIntersection=intersection;
-				}
-				player.damage(tgt.fireDamage*damageModifier*0.5*game.time.physicsElapsed);
+			if(game.physics.arcade.distanceBetween(laser.start,intersection) < closestIntersectionDistance){
+				closestIntersectionDistance=game.physics.arcade.distanceBetween(laser.start,intersection);
+				closestIntersection=intersection;
+			}
+			player.damage(tgt.fireDamage*damageModifier*0.5*game.time.physicsElapsed);
 			laserHitBehavior(player);
 			boom(explosions,tgt.bulletSprite,intersection.x,intersection.y);
-				if(typeof(player.nextLaserBoom)=='undefined'){
-					player.nextLaserBoom=0;
-				}
-				if(game.time.now > player.nextLaserBoom){
-					boom(explosions,tgt.bulletSprite,intersection.x,intersection.y);
-					player.nextLaserBoom=game.time.now+50;
-				}
+			if(typeof(player.nextLaserBoom)=='undefined'){
+				player.nextLaserBoom=0;
 			}
+			if(game.time.now > player.nextLaserBoom){
+				boom(explosions,tgt.bulletSprite,intersection.x,intersection.y);
+				player.nextLaserBoom=game.time.now+50;
+			}
+		}
 
 	}
 	bullet.kill();
@@ -1829,7 +1830,7 @@ var laserFiringSolution = function(attacker, target, fireRange, fireVelocity, an
 var variantComponents = function(partId){
 	if(partId==-1 || typeof(components[partId])=="undefined"){
 		return -1;
-		}
+	}
 	var myName = components[partId].name;
 	var result = [];
 	for (var i = 0; i < components.length;i++){
@@ -1842,26 +1843,26 @@ var variantComponents = function(partId){
 var randomVariantComponent = function(partId){
 	if (partId == -1){
 		return -1;
-		}
-		var partsList = variantComponents(partId);
-	
+	}
+	var partsList = variantComponents(partId);
+
 	if(!partsList.length){
 		return partId;
-		}
+	}
 	return partsList[parseInt(randomRange(0,partsList.length))];
 }
 var centralVariantComponent = function(partId){
 	if (partId == -1){
 		return -1;
-		}
+	}
 	if(components[partId].match.length >= 4){
-	return partId;
+		return partId;
 	}
 	var partsList = variantComponents(partId);
-	
+
 	for(var i=0;i<partsList.length;i++){
 		if(components[partsList[i]].match.length >= 4){
-		return partsList[i];
+			return partsList[i];
 		}
 	}
 	return partId;
@@ -1869,12 +1870,12 @@ var centralVariantComponent = function(partId){
 var oppositeVariantComponent = function(partId){
 	if (partId == -1){
 		return -1;
-		}
+	}
 	var partsList = variantComponents(partId);
-	
+
 	for(var i=0;i<partsList.length;i++){
 		if(matchOppositeComponents(partId,partsList[i])){
-		return partsList[i];
+			return partsList[i];
 		}
 	}
 	return partId;
@@ -1888,8 +1889,8 @@ var randomPartsList = function(partsList,size){
 		}
 		result.push(partsList[partId]);
 		if(variantComponents(partId).length && Math.random()<0.5){
-		partId = randomVariantComponent(parseInt(randomRange(0,partsList.length)));
-		result.push(partsList[partId]);
+			partId = randomVariantComponent(parseInt(randomRange(0,partsList.length)));
+			result.push(partsList[partId]);
 		}
 	}
 	result.sort(matchabilityComponentSort);
@@ -1952,14 +1953,14 @@ var symmetrizeShip = function(ship){
 		}
 		if(shipWithoutVoid(secondRow).length == 0){
 			use=1;
-}
-if (!use) {use = Math.random()>0.5 ? 1 : 2}
+		}
+		if (!use) {use = Math.random()>0.5 ? 1 : 2}
 		if(use == 1){
-		ret = setSquareArrayRow(ret,i-1,firstRow);
-		ret = invertPartsOnArrayRow(ret,i-1);}else{
-		ret = setSquareArrayRow(ret,arraySlice-i,secondRow);
-		
-		ret = invertPartsOnArrayRow(ret,arraySlice-i);}
+			ret = setSquareArrayRow(ret,i-1,firstRow);
+			ret = invertPartsOnArrayRow(ret,i-1);}else{
+				ret = setSquareArrayRow(ret,arraySlice-i,secondRow);
+
+				ret = invertPartsOnArrayRow(ret,arraySlice-i);}
 	}
 	if(arraySlice % 2 == 1){
 		ret = centralPartsOnArrayRow(ret,parseInt(halfSlice)); 	
@@ -1976,20 +1977,20 @@ var randomShip = function(partsList,size){
 	for (var i=0;i<squareSize;i++){
 		ship[i]=-1;
 	}
-		var attempts = 0;
-		ship[center] = myParts[0];
-		myParts.splice(0,1);
+	var attempts = 0;
+	ship[center] = myParts[0];
+	myParts.splice(0,1);
 	while(myParts.length && attempts < 40){
-	for (var i=0;i<myParts.length;i++) {
-		var newShip = ship.slice(0);
-		//pick part
-		newShip = calculatePartPosition3(0,0,myParts[i],ship,40-attempts,(attempts > 10 ? true:false));
-		if(newShip.join() != ship.join()){
-			myParts.splice(i,1);
-			i--;
+		for (var i=0;i<myParts.length;i++) {
+			var newShip = ship.slice(0);
+			//pick part
+			newShip = calculatePartPosition3(0,0,myParts[i],ship,40-attempts,(attempts > 10 ? true:false));
+			if(newShip.join() != ship.join()){
+				myParts.splice(i,1);
+				i--;
+			}
+			ship=newShip;
 		}
-		ship=newShip;
-	}
 		attempts+=1;
 	}
 	//should not be happening
@@ -2011,9 +2012,9 @@ var randomShip = function(partsList,size){
 		}
 	}
 	if(success){
-	return ship;
+		return ship;
 	}else{
-	return randomShip(partsList,size);
+		return randomShip(partsList,size);
 	}
 }
 var standardFiringSolution = function(attacker, target, fireRange, fireVelocity, angleModifier, turnRate) {
@@ -2213,6 +2214,7 @@ playerShip.prototype.update = function(){
 };
 var touchPressed = 0;
 var player;
+var detailLod = 240;
 var mockPlayer;
 var attackerTargetSizeThreshold = 0.5;
 var laserRangeModifier=0.2;
@@ -2256,6 +2258,7 @@ var spawnShips=[
 	var hazeWhite,hazeRed,hazePurple;
 	var planet;
 	var planetlod;
+	var planetfall;
 	var foredrop;
 	var numBaddies = 9;
 	var numAsteroids = 19;
@@ -2431,44 +2434,44 @@ var partAtArray = function (arr,idx){
 }
 var matchLocationArray = function(arrayIndex,partId,partsArray){
 	var matches = 0;
-	
+
 	if(partsArray[arrayIndex]!=-1){
 		return 0;
 	}
 	var noNeighbor = true;
 	var partsArraySliceLength=Math.sqrt(partsArray.length);
-			var left=arrayIndex-1;
-			var right=arrayIndex+1;
-			var up=arrayIndex-partsArraySliceLength;
-			var down=arrayIndex+partsArraySliceLength;
+	var left=arrayIndex-1;
+	var right=arrayIndex+1;
+	var up=arrayIndex-partsArraySliceLength;
+	var down=arrayIndex+partsArraySliceLength;
 	if(arrayIndex % partsArraySliceLength > 0){
-	matches += matchArrayComponents(partId,partsArray[left],'W');
-	if( partAtArray(partsArray,left)){
-		noNeighbor=false;
-	}
+		matches += matchArrayComponents(partId,partsArray[left],'W');
+		if( partAtArray(partsArray,left)){
+			noNeighbor=false;
+		}
 	}
 	if(arrayIndex % partsArraySliceLength < partsArraySliceLength - 1){
-	matches += matchArrayComponents(partId,partsArray[right],'E');
-	if( partAtArray(partsArray,right)){
-		noNeighbor=false;
-	}
+		matches += matchArrayComponents(partId,partsArray[right],'E');
+		if( partAtArray(partsArray,right)){
+			noNeighbor=false;
 		}
+	}
 	if(arrayIndex>=partsArraySliceLength){
-	matches += matchArrayComponents(partId,partsArray[up],'N');
-	if( partAtArray(partsArray,up)){
-		noNeighbor=false;
-	}
+		matches += matchArrayComponents(partId,partsArray[up],'N');
+		if( partAtArray(partsArray,up)){
+			noNeighbor=false;
 		}
+	}
 	if(arrayIndex<partsArray.length-partsArraySliceLength){
-	matches += matchArrayComponents(partId,partsArray[down],'S');
-	if( partAtArray(partsArray,down)){
-		noNeighbor=false;
-	}
+		matches += matchArrayComponents(partId,partsArray[down],'S');
+		if( partAtArray(partsArray,down)){
+			noNeighbor=false;
 		}
-	
-if (noNeighbor)	{ 
-	 return 0;
-	 }
+	}
+
+	if (noNeighbor)	{ 
+		return 0;
+	}
 	return matches;
 }
 var randomAvailableEW = function(partId){
@@ -2481,10 +2484,10 @@ var randomAvailableEW = function(partId){
 	if (east && !west) {
 		return 'e';
 	}
-	
+
 	if(Math.random<0.5){
 		return 'e';
-		}else{
+	}else{
 		return 'w';
 	}
 
@@ -2499,10 +2502,10 @@ var randomAvailableNS = function(partId){
 	if (north && !south) {
 		return 'n';
 	}
-	
+
 	if(Math.random<0.5){
 		return 's';
-		}else{
+	}else{
 		return 'n';
 	}
 
@@ -2526,10 +2529,10 @@ var calculatePartPosition3 = function (x,y,partId,partsArray,matchThreshold,forc
 
 		if (randomAvailableEW(partId)=='e'){
 			modifier+=1;
-			}
+		}
 		if (randomAvailableNS(partId)=='s'){
 			modifier+=partsArraySliceLength;
-			}
+		}
 
 
 		for (var i=0;i<Math.pow(partsArraySliceLength+1,2);i++){
@@ -2541,7 +2544,7 @@ var calculatePartPosition3 = function (x,y,partId,partsArray,matchThreshold,forc
 		returnArraySliceLength+=1;
 	}
 	for(var i=0;i<returnArray.length;i++){
-				locations[matchLocationArray(i,partId,returnArray)]=i;
+		locations[matchLocationArray(i,partId,returnArray)]=i;
 	}
 	for(var i=locations.length;i>matchThreshold;i--){
 		if(typeof(locations[i])!='undefined'){
@@ -2630,7 +2633,7 @@ var matchOppositeComponents = function(a,b,direction){
 		return false;
 	}
 	if((matchA.match('N') && matchB.match('N')) ||
-	(matchA.match('S') && matchB.match('S'))){
+			(matchA.match('S') && matchB.match('S'))){
 		matchB=matchB.replace('N','').replace('S','').replace('WE','EW');
 		matchA=matchA.replace('N','').replace('S','').replace('WE','EW');
 		return matchA==matchB;
@@ -2647,7 +2650,7 @@ var matchArrayComponents = function(a,b,direction){
 	matchA = matchA.replace('8','N').replace('2','S').replace('6','E').replace('4','W');
 	matchB = matchB.replace('2','N').replace('8','S').replace('4','E').replace('6','W');
 
-//	if (a>0 && b<0 && matchA.match(direction)) { result +=4;}
+	//	if (a>0 && b<0 && matchA.match(direction)) { result +=4;}
 
 	if (matchA.match(direction) && matchB.match(direction)) { 
 		result += 20;
@@ -2754,7 +2757,7 @@ gameUI.prototype.initCombatUi = function() {
 	destroyIfExists(this.statsText);
 	this.statsText = game.add.text(0,-200,'',{font:'28px mozart', fill: 'rgb(255,255,255)', align: 'left'});
 	this.statsText.anchor.setTo(0.5,0.5);
-		destroyIfExists(this.partFlavorText);
+	destroyIfExists(this.partFlavorText);
 	this.partFlavorText = game.add.text(-280,180,'',{font:'28px mozart', fill: 'rgb(255,255,255)', align: 'left'});
 	destroyIfExists(this.explainerText);
 	this.explainerText = game.add.text(-300,210,'',{font:'24px mozart', fill: 'rgb(255,255,220)', align: 'left'});
@@ -3034,7 +3037,7 @@ gameUI.prototype.partPing = function () {
 	}else{
 		this.statsText.visible=true;
 	}
-		this.toTop(this.explainerText);
+	this.toTop(this.explainerText);
 	this.partsSelector.bringToTop();
 
 }
@@ -3509,16 +3512,16 @@ function initMission (missionId) {
 	var index = 0;
 	for(var n=0;n<playerStats.mission.enemies.length;n++){	
 		for (var i = 0; i < playerStats.mission.enemies[n].count; i++){
-			
-var myShip = playerStats.mission.enemies[n].ships.slice(0);
-if(typeof(playerStats.mission.enemies[n].parts)!='undefined'){
-var mySize = parseInt(randomRange(playerStats.mission.enemies[n].sizeMin, playerStats.mission.enemies[n].sizeMax + 1));
-myShip = randomShip(playerStats.mission.enemies[n].parts.sort(matchabilityComponentSort), mySize);
-if(Math.random() > (1 / (Math.sqrt(myShip.length)-1))){
-myShip = symmetrizeShip(myShip);
-}
-myShip=[myShip];
-}
+
+			var myShip = playerStats.mission.enemies[n].ships.slice(0);
+			if(typeof(playerStats.mission.enemies[n].parts)!='undefined'){
+				var mySize = parseInt(randomRange(playerStats.mission.enemies[n].sizeMin, playerStats.mission.enemies[n].sizeMax + 1));
+				myShip = randomShip(playerStats.mission.enemies[n].parts.sort(matchabilityComponentSort), mySize);
+				if(Math.random() > (1 / (Math.sqrt(myShip.length)-1))){
+					myShip = symmetrizeShip(myShip);
+				}
+				myShip=[myShip];
+			}
 			if(index<enemies.length){
 				//enemies[index].shipList=playerStats.mission.enemies[n].ships;
 				enemies[index].shipList=myShip;
@@ -3588,16 +3591,30 @@ function fadeIn () {
 	planet.anchor.setTo(0.5,0.5);
 	planet.scale.x=planet.baseScale;
 	planet.scale.y=planet.baseScale;
-	planet.tint=(parseInt(randomRange(48,255)) << 16) + (parseInt(randomRange(48,255)) << 8) + parseInt(randomRange(48,255));
+	planet.r=0;
+	planet.g=0;
+	planet.b=0;
+	planet.r=parseInt(randomRange(192,255));
+	planet.g=parseInt(randomRange(192,255));
+	planet.b=parseInt(randomRange(192,255));
+	if(Math.random()<0.1){planet.r-=randomRange(25,70);}
+	if(Math.random()<0.1){planet.g-=randomRange(25,70);}
+	if(Math.random()<0.1){planet.b-=randomRange(25,70);}
+	planet.tint=(planet.r << 16) + (planet.g << 8) + planet.b;
 	planetlod.baseX=planet.baseX;
 	planetlod.baseY=planet.baseY;
+	planet.x = planet.baseX;
+	planet.x = planet.baseX;
+	planet.y = planet.baseY;
+	planet.y = planet.baseY;
 	planetlod.rotation=planet.rotation;
 	planetlod.baseScale=planet.baseScale;
 	planetlod.anchor.setTo(0.5,0.5);
 	planetlod.scale.x=planetlod.baseScale;
 	planetlod.scale.y=planetlod.baseScale;
 	planetlod.tint=planet.tint;
-		hazeRed.alpha=0;
+	planetfall.tint=planet.tint;
+	hazeRed.alpha=0;
 	hazeWhite.alpha=0;
 	hazePurple.alpha=0;
 	game.add.tween(hazeRed).to({alpha:playerStats.mission.hazeRed},1000, Phaser.Easing.Linear.None, true, 0, false);
@@ -3637,18 +3654,24 @@ function create () {
 		hazeWhite.scale.y=2;
 		hazeWhite.alpha=0.6; //random()
 		hazeWhite.blendMode=0;
-		hazeWhite.offsetx = Math.random()*resolutionX;
-		hazeWhite.offsety = Math.random()*resolutionY;
+		hazeWhite.tilePosition.x = Math.random()*resolutionX;
+		hazeWhite.tilePosition.y = Math.random()*resolutionY;
 		hazeWhite.speed = 600;
 		planet = game.add.sprite(resolutionX/1.6, resolutionY/1.6, 'planets');
-		planet.baseX=randomRange(-100,100);
-		planet.baseY=randomRange(-100,100);
+		planet.baseX=randomRange(-300,400) * randomSign();
+		planet.baseY=randomRange(-300,400) * randomSign();
 		planetlod = game.add.sprite(resolutionX/1.6, resolutionY/1.6, 'planetslod');
+		planetfall = game.add.tileSprite(0, 0, resolutionX/2, resolutionY/2, 'planetfall');
 		planetlod.baseX=planet.baseX;
 		planetlod.baseY=planet.baseY;
-			hazeRed = game.add.tileSprite(0, 0, resolutionX/3, resolutionY/3, 'haze');
-		hazeRed.offsetx = Math.random()*resolutionX;
-		hazeRed.offsety = Math.random()*resolutionY;
+		planetfall.fixedToCamera=true; 
+		planetfall.scale.setTo(2,2);
+		planetfall.tilePosition.x=0;
+		planetfall.tilePosition.y=0;
+		hazeRed = game.add.tileSprite(0, 0, resolutionX/3, resolutionY/3, 'haze');
+		planetfall.speed=0;
+		hazeRed.tilePosition.x = Math.random()*resolutionX;
+		hazeRed.tilePosition.y = Math.random()*resolutionY;
 		hazeRed.fixedToCamera = true;
 		hazeRed.baseScale=3;
 		hazeRed.scale.x=hazeRed.baseScale;
@@ -3657,9 +3680,10 @@ function create () {
 		hazeRed.blendMode=1;
 		hazeRed.speed = 160;
 		hazePurple = game.add.tileSprite(0, 0, resolutionX/3, resolutionY/3, 'haze2');
-		hazePurple.offsetx = Math.random()*resolutionX;
-		hazePurple.offsety = Math.random()*resolutionY;
+		hazePurple.tilePosition.x = Math.random()*resolutionX;
+		hazePurple.tilePosition.y = Math.random()*resolutionY;
 		hazePurple.fixedToCamera = true;
+		hazePurple.baseScale=5;
 		hazePurple.scale.x=3;
 		hazePurple.scale.y=3;
 		hazePurple.alpha=1.0; //randomRange(0,0.6)-0.2;
@@ -4401,7 +4425,7 @@ function update () {
 				}
 				enemyBullets.forEachAlive(sparkleBullets,this);
 			}
-				bullets.forEachAlive(sparkleBullets,this);
+			bullets.forEachAlive(sparkleBullets,this);
 
 			for (var i = 0; i < enemies.length; i++){
 				if (enemies[i].alive){
@@ -4454,483 +4478,505 @@ function update () {
 				player.alt();
 			}
 			player.update();
-
-			if(alt==0){
-				player.cooldown114=0;
-			}
-
-
+			if(alt==0){ player.cooldown114=0; } 
 			if (fire){
 				player.fire();
 			}
 
 		}	
 		// scrolling
-		hazeWhite.tilePosition.x = hazeWhite.offsetx + ( -0.03*game.camera.x / hazeWhite.scale.x) + (game.time.now / (hazeWhite.speed));
-		hazeWhite.tilePosition.y = hazeWhite.offsety + ( -0.03*game.camera.y / hazeWhite.scale.y);
+		scroll(hazeWhite,-0.03);
 
 		planet.scaleModifier=(player.sprite.x*planet.baseX*(1/400)+player.sprite.y*planet.baseY*(1/400))/5000;
+		planet.scaleModifier=Math.min(planet.scaleModifier,3);
 		planet.scale.setTo(Math.pow(planet.baseScale,planet.scaleModifier));
-		planet.reset(player.sprite.body.x + planet.baseX + -0.04*game.camera.x,  player.sprite.body.y + planet.baseY + -0.04*game.camera.y);
-	
-		planetlod.scale.setTo(planet.scale.x,planet.scale.y);
-		planetlod.reset(planet.x,planet.y);
+		var planetXdiff = planet.x;
+		var planetYdiff = planet.y;
+		planet.reset(planet.x + player.sprite.body.velocity.x * game.time.physicsElapsed,  planet.y + player.sprite.body.velocity.y * game.time.physicsElapsed);
+		planetXdiff -= planet.x;
+		planetYdiff -= planet.y;
+		planetfall.tilePosition.x-=planetfall.width*0.5;
+		planetfall.tilePosition.y-=planetfall.height*0.5;
+		planetfall.scale.setTo(planet.scale.x/24,planet.scale.y/24);
+		planetfall.x=player.sprite.body.x-resolutionX/2;
+		planetfall.y=player.sprite.body.y-resolutionY/2;
+		planetfall.width=resolutionX/planetfall.scale.x;
+		planetfall.height=resolutionY/planetfall.scale.y;
+		planetfall.tilePosition.x+=planetfall.width*0.5;
+		planetfall.tilePosition.y+=planetfall.height*0.5;
+		var lodConstantX = (planet.scale.x/planetfall.scale.x) * 0.22;
+		var lodConstantY = (planet.scale.y/planetfall.scale.y) * 0.22;
+		planetfall.tilePosition.x+=planetXdiff / lodConstantX;
+		planetfall.tilePosition.y+=planetYdiff / lodConstantY;
+			planetlod.scale.setTo(planet.scale.x,planet.scale.y);
+			planetlod.reset(planet.x,planet.y);
+			planetfall.alpha=Math.min(1,0.75*(planet.scaleModifier-1.65));
 
-		if(planet.scaleModifier<1){
-			planet.alpha=1;
-			planet.visible=true;
-			planetlod.visible=false;
-		}else if(planet.scaleModifier>4){
-			planet.visible=true;
-			planet.alpha=1;
-			planetlod.visible=false;
-		}else if(planet.scaleModifier>3){
-			planet.visible=true;
-			planetlod.alpha=4-planet.scaleModifier;
-			planetlod.visible=true;
-		}else{
-			planet.visible=true;
-			planetlod.visible=true;
-			planetlod.alpha=0.5*(planet.scaleModifier-1);
-		}
+			if(planet.scaleModifier>4){
+				planet.visible=true;
+				planetlod.visible=false;
+				planetfall.visible=true;
+			}else if(planet.scaleModifier>3){
+				planet.visible=true;
+				planetlod.alpha=4-planet.scaleModifier;
+				planetlod.visible=true;
+				planetfall.visible=true;
+			}else if(planet.scaleModifier>2){
+				planetlod.alpha=1;
+				planetlod.visible=true;
+				planetfall.visible=true;
+			}else if(planet.scaleModifier>=1){
+				planetlod.alpha=planet.scaleModifier-1;
 
-		hazeRed.tilePosition.x = hazeRed.offsetx + ( -0.26*game.camera.x / hazeRed.scale.x) + (game.time.now / (hazeRed.speed));
-		hazeRed.tilePosition.y = hazeRed.offsety + ( -0.26*game.camera.y / hazeRed.scale.y);
-		hazePurple.tilePosition.x = hazePurple.offsetx + ( -.9*game.camera.x / hazePurple.scale.x) + (game.time.now / (hazePurple.speed));
-		hazePurple.tilePosition.y = hazePurple.offsety + ( -.9*game.camera.y / hazePurple.scale.y);
-		//hazePurple.bringToTop();
-	planet.hazeModifier=Math.max(0,planet.scaleModifier/2);
-	planet.hazeModifier=Math.min(planet.hazeModifier,2);
-	hazeRed.alpha=playerStats.mission.hazeRed+planet.hazeModifier;
-	hazeWhite.alpha=playerStats.mission.hazeWhite;
-	hazePurple.alpha=playerStats.mission.hazePurple+planet.hazeModifier;
-
-		if(gamemode!='paused'){
-			ui.update();
-
-
-		}
-
-		explosions.parent.bringToTop(explosions);
-
-	}
-}
-
-function hugeBoom(explosionsGroup, x, y){
-
-	if(onscreen(x,y)){
-		var r = Math.random();
-
-		for(var i=0; i < 10 + (r * 9) ; i ++) { 
-			if(forceDead(explosions)){
-				var explosion = explosionsGroup.getFirstDead();
-				explosion.loadTexture('explosions', Math.random()>0.7 ? 1 : 2);
-				explosion.reset(x+randomRange(-80,80),y+randomRange(-80,80));
-				explosion.rotation = Math.random()*Math.PI*2;
-				explosion.angularVelocity=randomRange(-3,3);
-				explosion.fireVelocity=randomRange(600,890);
-				explosion.lifespan=2000;
-				r=randomRange(4,8);
-				explosion.scale.setTo(r,r);
-				explosion.alpha=1;
-				game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
-				explosion.blendMode=1;
-				boomTween(explosion);
+				planetfall.visible=true;
+				planet.visible=true;
+				planetlod.visible=true;
+			}else{
+				planet.visible=true;
+				planetlod.visible=false;
+				planetfall.visible=false;
 			}
+
+			scroll(hazeRed,-0.26);
+			scroll(hazePurple,-0.9);
+			//scroll(planetfall,-0.49*planetfall.scale.x);
+
+			//hazePurple.bringToTop();
+			planet.hazeModifier=Math.max(0,planet.scaleModifier/2);
+			planet.hazeModifier=Math.min(planet.hazeModifier,2);
+			hazeRed.scale.setTo(hazeRed.baseScale+planet.hazeModifier,hazeRed.baseScale+planet.hazeModifier);
+			hazePurple.scale.setTo(hazePurple.baseScale+planet.hazeModifier,hazePurple.baseScale+planet.hazeModifier);
+			hazeRed.alpha=playerStats.mission.hazeRed+planet.hazeModifier;
+			hazeWhite.alpha=playerStats.mission.hazeWhite;
+			hazePurple.alpha=playerStats.mission.hazePurple+planet.hazeModifier;
+
+			if(gamemode!='paused'){
+				ui.update();
+
+
+			}
+
+			explosions.parent.bringToTop(explosions);
+
 		}
 	}
-}
-function bigBoom(explosionsGroup, x, y){
 
-	if(onscreen(x,y)){
-		var r = Math.random();
 
-		for(var i=0; i < 5 + (r * 6) ; i ++) { 
-			if(forceDead(explosions)){
-				var explosion = explosionsGroup.getFirstDead();
-				var rand2 = Math.random()>0.7 ? 1 : 2;
-				explosion.loadTexture('explosions', rand2);
-				explosion.reset(x+randomRange(-20,20),y+randomRange(-20,20));
-				explosion.rotation = Math.random()*Math.PI;
-				explosion.fireVelocity=randomRange(30,80) * (2-rand2);
-				explosion.lifespan=700 * (6 - 2*rand2);
-				r=randomRange(0.5,1.7);
-				explosion.body.angularVelocity=0;
-				explosion.scale.setTo(r,r);
-				explosion.alpha=1.3;
+	function hugeBoom(explosionsGroup, x, y){
 
-				explosion.blendMode=1;
-				if(rand2==1){
-					explosion.blendMode=0;
-					explosion.alpha=0.1;
-					explosion.scale.setTo(explosion.scale.x*2,explosion.scale.y*2);
-				};
-				if(rand2==2){
+		if(onscreen(x,y)){
+			var r = Math.random();
 
-					explosion.body.angularVelocity=randomRange(100,150)*randomSign()*Math.sin(randomRange(0,0.5*Math.PI));
+			for(var i=0; i < 10 + (r * 9) ; i ++) { 
+				if(forceDead(explosions)){
+					var explosion = explosionsGroup.getFirstDead();
+					explosion.loadTexture('explosions', Math.random()>0.7 ? 1 : 2);
+					explosion.reset(x+randomRange(-80,80),y+randomRange(-80,80));
+					explosion.rotation = Math.random()*Math.PI*2;
+					explosion.angularVelocity=randomRange(-3,3);
+					explosion.fireVelocity=randomRange(600,890);
+					explosion.lifespan=2000;
+					r=randomRange(4,8);
+					explosion.scale.setTo(r,r);
+					explosion.alpha=1;
+					game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
+					explosion.blendMode=1;
+					boomTween(explosion);
 				}
-				game.add.tween(explosion.scale).to({x:explosion.scale.x*12,y:explosion.scale.y*12},explosion.lifespan*0.3, Phaser.Easing.Quadratic.Out, true, 0, false);
-				game.add.tween(explosion).to({alpha:0},explosion.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
-
-
-				game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
 			}
 		}
 	}
-}
-function shieldEffect(explosionsGroup, bulletSprite, x, y, velx, vely,scale)
-{
-	scale=Math.sqrt(scale)*0.5;
-	var r = Math.random();
+	function bigBoom(explosionsGroup, x, y){
 
-	if(forceDead(explosionsGroup)){
-		var explosion = explosionsGroup.getFirstDead();
-		explosion.loadTexture('explosions', 0);
-		explosion.reset(x,y);
-		explosion.rotation=Math.random()*Math.PI;
-		explosion.angularVelocity=200;
-		explosion.fireVelocity=randomRange(-10,10);
-		explosion.lifespan=300;
-		explosion.scale.setTo(scale,scale);
-		explosion.alpha=0.8;
-		explosion.body.velocity.x=velx;
-		explosion.body.velocity.y=vely;
-		explosion.blendMode=1;
-		game.add.tween(explosion).to({rotation:explosion.rotation+0.2},explosion.lifespan, Phaser.Easing.Linear.None, true, 0, false);
-		game.add.tween(explosion.scale).to({x:explosion.scale.x*8,y:explosion.scale.y*8},explosion.lifespan-100, Phaser.Easing.Exponential.Out, true, 0, false);
-		game.add.tween(explosion).to({alpha:0},explosion.lifespan, Phaser.Easing.Linear.InOut, true, 0, false);
+		if(onscreen(x,y)){
+			var r = Math.random();
+
+			for(var i=0; i < 5 + (r * 6) ; i ++) { 
+				if(forceDead(explosions)){
+					var explosion = explosionsGroup.getFirstDead();
+					var rand2 = Math.random()>0.7 ? 1 : 2;
+					explosion.loadTexture('explosions', rand2);
+					explosion.reset(x+randomRange(-20,20),y+randomRange(-20,20));
+					explosion.rotation = Math.random()*Math.PI;
+					explosion.fireVelocity=randomRange(30,80) * (2-rand2);
+					explosion.lifespan=700 * (6 - 2*rand2);
+					r=randomRange(0.5,1.7);
+					explosion.body.angularVelocity=0;
+					explosion.scale.setTo(r,r);
+					explosion.alpha=1.3;
+
+					explosion.blendMode=1;
+					if(rand2==1){
+						explosion.blendMode=0;
+						explosion.alpha=0.1;
+						explosion.scale.setTo(explosion.scale.x*2,explosion.scale.y*2);
+					};
+					if(rand2==2){
+
+						explosion.body.angularVelocity=randomRange(100,150)*randomSign()*Math.sin(randomRange(0,0.5*Math.PI));
+					}
+					game.add.tween(explosion.scale).to({x:explosion.scale.x*12,y:explosion.scale.y*12},explosion.lifespan*0.3, Phaser.Easing.Quadratic.Out, true, 0, false);
+					game.add.tween(explosion).to({alpha:0},explosion.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
+
+
+					game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
+				}
+			}
+		}
 	}
-	if(forceDead(explosionsGroup)){
-		var explosion = explosionsGroup.getFirstDead();
-		explosion.loadTexture('explosions', bulletSprite || 0);
-		explosion.reset(x,y);
-		explosion.rotation=Math.random()*Math.PI;
-		explosion.angularVelocity=200;
-		explosion.fireVelocity=randomRange(-10,10);
-		explosion.lifespan=900;
-		r=randomRange(0.5*scale,scale);
-		explosion.scale.setTo(r,r);
-		explosion.alpha=1.7;
-		explosion.body.velocity.x=velx;
-		explosion.body.velocity.y=vely;
-		explosion.blendMode=1;
-		game.add.tween(explosion).to({rotation:explosion.rotation+0.2},explosion.lifespan, Phaser.Easing.Linear.None, true, 0, false);
-		boomTween(explosion);
-	}
-}
-function sparkleBoom(explosionsGroup, minSprite, maxSprite, x, y){
+	function shieldEffect(explosionsGroup, bulletSprite, x, y, velx, vely,scale)
+	{
+		scale=Math.sqrt(scale)*0.5;
+		var r = Math.random();
 
-
-	var r = Math.random();
-
-	for(var i=0; i < 8 + (r * 6) ; i ++) { 
 		if(forceDead(explosionsGroup)){
 			var explosion = explosionsGroup.getFirstDead();
-			explosion.loadTexture('sparkles', Math.floor(randomRange(minSprite,maxSprite)));
-			explosion.reset(x+randomRange(-8,8),y+randomRange(-8,8));
-			explosion.rotation = Math.random()*Math.PI;
-			explosion.angularVelocity=randomRange(500,1000);
-			explosion.fireVelocity=randomRange(-20,20);
-			explosion.lifespan=700;
-			r=randomRange(1.2,1.6);
-			explosion.scale.setTo(r,r);
-			explosion.alpha=1.5;
+			explosion.loadTexture('explosions', 0);
+			explosion.reset(x,y);
+			explosion.rotation=Math.random()*Math.PI;
+			explosion.angularVelocity=200;
+			explosion.fireVelocity=randomRange(-10,10);
+			explosion.lifespan=300;
+			explosion.scale.setTo(scale,scale);
+			explosion.alpha=0.8;
+			explosion.body.velocity.x=velx;
+			explosion.body.velocity.y=vely;
 			explosion.blendMode=1;
+			game.add.tween(explosion).to({rotation:explosion.rotation+0.2},explosion.lifespan, Phaser.Easing.Linear.None, true, 0, false);
+			game.add.tween(explosion.scale).to({x:explosion.scale.x*8,y:explosion.scale.y*8},explosion.lifespan-100, Phaser.Easing.Exponential.Out, true, 0, false);
+			game.add.tween(explosion).to({alpha:0},explosion.lifespan, Phaser.Easing.Linear.InOut, true, 0, false);
+		}
+		if(forceDead(explosionsGroup)){
+			var explosion = explosionsGroup.getFirstDead();
+			explosion.loadTexture('explosions', bulletSprite || 0);
+			explosion.reset(x,y);
+			explosion.rotation=Math.random()*Math.PI;
+			explosion.angularVelocity=200;
+			explosion.fireVelocity=randomRange(-10,10);
+			explosion.lifespan=900;
+			r=randomRange(0.5*scale,scale);
+			explosion.scale.setTo(r,r);
+			explosion.alpha=1.7;
+			explosion.body.velocity.x=velx;
+			explosion.body.velocity.y=vely;
+			explosion.blendMode=1;
+			game.add.tween(explosion).to({rotation:explosion.rotation+0.2},explosion.lifespan, Phaser.Easing.Linear.None, true, 0, false);
 			boomTween(explosion);
-			game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
 		}
 	}
-}
+	function sparkleBoom(explosionsGroup, minSprite, maxSprite, x, y){
 
-
-function boomTween(sprite){
-	game.add.tween(sprite.scale).to({x:sprite.scale.x*8,y:sprite.scale.y*8},sprite.lifespan-100, Phaser.Easing.Exponential.Out, true, 0, false);
-	game.add.tween(sprite).to({alpha:0},sprite.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
-}
-function midBoom(explosionsGroup, bulletSprite, x, y){
-
-	if(onscreen(x,y)){
 
 		var r = Math.random();
 
-		for(var i=0; i < 3 + (r * 6) ; i ++) { 
+		for(var i=0; i < 8 + (r * 6) ; i ++) { 
 			if(forceDead(explosionsGroup)){
 				var explosion = explosionsGroup.getFirstDead();
-				explosion.loadTexture('explosions', bulletSprite || 0);
+				explosion.loadTexture('sparkles', Math.floor(randomRange(minSprite,maxSprite)));
 				explosion.reset(x+randomRange(-8,8),y+randomRange(-8,8));
 				explosion.rotation = Math.random()*Math.PI;
-				explosion.angularVelocity=randomRange(-5,5);
-				explosion.fireVelocity=randomRange(-10,10);
-				explosion.lifespan=800;
-				r=randomRange(1.2,1.7);
+				explosion.angularVelocity=randomRange(500,1000);
+				explosion.fireVelocity=randomRange(-20,20);
+				explosion.lifespan=700;
+				r=randomRange(1.2,1.6);
 				explosion.scale.setTo(r,r);
-				explosion.alpha=.7;
-				game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
-				explosion.blendMode=1;
-				boomTween(explosion);
-			}
-		}
-	}
-}
-function fireBoom(explosionsGroup, bulletSprite, x, y, rot){
-
-	if(onscreen(x,y)){
-
-		var r = Math.random();
-
-		for(var i=0; i < 3 + (r * 2) ; i ++) { 
-			if(forceDead(explosionsGroup)){
-				var explosion = explosionsGroup.getFirstDead();
-				explosion.loadTexture('explosions', bulletSprite || 0);
-				explosion.reset(x,y);
-				explosion.rotation = rot + randomSign() * randomRange(0.3,1);
-				explosion.angularVelocity=randomRange(-5,5);
-				explosion.fireVelocity=randomRange(350,600);
-				explosion.lifespan=randomRange(350,600);
-				explosion.scale.setTo(1.2,1.2);
-				explosion.alpha=2;
-				game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
-				explosion.blendMode=1;
-				game.add.tween(explosion.scale).to({x:0.01,y:0.01},explosion.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
-
-				game.add.tween(explosion).to({alpha:0},explosion.lifespan, Phaser.Easing.Quadratic.Out, true, 0, false);		}
-		}
-
-		for(var i=0; i < 3; i ++) { 
-			if(forceDead(explosionsGroup)){
-				var explosion = explosionsGroup.getFirstDead();
-				explosion.loadTexture('explosions', bulletSprite || 0);
-				explosion.reset(x,y);
-				explosion.rotation = rot ;
-				explosion.angularVelocity=randomRange(-5,5);
-				explosion.fireVelocity=randomRange(200,230);
-				explosion.lifespan=randomRange(500,800);
-				explosion.scale.setTo(1,1);
 				explosion.alpha=1.5;
-				game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
-				explosion.blendMode=1;
-				game.add.tween(explosion.scale).to({x:1,y:1},explosion.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
-
-				game.add.tween(explosion).to({alpha:0},explosion.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);		}
-		}
-	}
-}
-function gasBoom(explosionsGroup, x, y){
-
-	if(onscreen(x,y)){
-
-		var r = Math.random();
-
-		for(var i=0; i < 4; i ++) { 
-			if(forceDead(explosionsGroup)){
-				var explosion = explosionsGroup.getFirstDead();
-				explosion.loadTexture('explosions', Math.random()>0.5?7:9);
-				explosion.reset(x+randomRange(-8,8),y+randomRange(-8,8));
-				explosion.rotation = Math.random()*Math.PI*2;
-				explosion.fireVelocity=randomRange(-10,10);
-				explosion.lifespan=600;
-				r=randomRange(0.4,0.8);
-				explosion.scale.setTo(r,r);
-				explosion.alpha=1;
-				game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
-				explosion.blendMode=0;
-			game.add.tween(explosion.scale).to({x:explosion.scale.x*4,y:explosion.scale.y*4},explosion.lifespan-300, Phaser.Easing.Linear.Out, true, 0, false);
-	game.add.tween(explosion).to({alpha:0},explosion.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
-				explosion.body.angularVelocity=randomRange(200,500)*randomSign();
-			}
-		}
-	}
-}
-
-function boom(explosionsGroup, bulletSprite, x, y){
-
-	if(onscreen(x,y)){
-
-		var r = Math.random();
-		for(var i=0; i < 3 + (r * 2) ; i ++) { 
-			if(forceDead(explosionsGroup)){
-				var explosion = explosionsGroup.getFirstDead();
-				explosion.loadTexture('explosions', bulletSprite || 0);
-				explosion.reset(x,y);
-				explosion.rotation = randomSign() * randomRange(0,Math.PI);
-				explosion.angularVelocity=randomRange(-5,5);
-				explosion.fireVelocity=randomRange(350,600);
-				explosion.lifespan=randomRange(350,600);
-				explosion.scale.setTo(1.2,1.2);
-				explosion.alpha=2;
-				game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
-				explosion.blendMode=1;
-				game.add.tween(explosion.scale).to({x:0.1,y:0.1},explosion.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
-
-				game.add.tween(explosion).to({alpha:0},explosion.lifespan, Phaser.Easing.Quadratic.Out, true, 0, false);		}
-		}
-
-
-		for(var i=0; i < 3; i ++) { 
-			if(forceDead(explosionsGroup)){
-				var explosion = explosionsGroup.getFirstDead();
-				explosion.loadTexture('explosions', bulletSprite || 0);
-				explosion.reset(x+randomRange(-8,8),y+randomRange(-8,8));
-				explosion.rotation = Math.random()*Math.PI;
-				explosion.angularVelocity=randomRange(-5,5);
-				explosion.fireVelocity=randomRange(-10,10);
-				explosion.lifespan=800;
-				r=randomRange(0.6,1);
-				explosion.scale.setTo(r,r);
-				explosion.alpha=1;
-				game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
 				explosion.blendMode=1;
 				boomTween(explosion);
+				game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
 			}
 		}
 	}
-}
 
-function sparks(emitter, sprite){
-	if(onscreen(sprite.x,sprite.y)){
-		emitter.x=sprite.x+randomRange(-.7*sprite.body.width,sprite.body.width);
-		emitter.y=sprite.y+randomRange(-.7*sprite.body.width,sprite.body.width);;
-		emitter.minParticleSpeed.setTo(-200,-200);
-		emitter.maxParticleSpeed.setTo(200,200);
-		emitter.particleFriction = -500;
-		emitter.start(true,200,null, randomRange(1,14));
-	}
-}
-function sparkExplosion(emitter, sprite){
-	if(onscreen(sprite.x,sprite.y)){
-		emitter.x=sprite.x;
-		emitter.y=sprite.y;
-		emitter.minParticleSpeed.setTo(-500,-500);
-		emitter.maxParticleSpeed.setTo(500,500);
-		emitter.particleFriction = -2000;
-		emitter.start(true,300,null, 50);
-	}
-}
-function spawnLoots(_count, x, y){
-	var lootCount = _count;
 
-	for(var i = 0; i < lootCount; i++)
-	{
+	function boomTween(sprite){
+		game.add.tween(sprite.scale).to({x:sprite.scale.x*8,y:sprite.scale.y*8},sprite.lifespan-100, Phaser.Easing.Exponential.Out, true, 0, false);
+		game.add.tween(sprite).to({alpha:0},sprite.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
+	}
+	function midBoom(explosionsGroup, bulletSprite, x, y){
+
+		if(onscreen(x,y)){
+
+			var r = Math.random();
+
+			for(var i=0; i < 3 + (r * 6) ; i ++) { 
+				if(forceDead(explosionsGroup)){
+					var explosion = explosionsGroup.getFirstDead();
+					explosion.loadTexture('explosions', bulletSprite || 0);
+					explosion.reset(x+randomRange(-8,8),y+randomRange(-8,8));
+					explosion.rotation = Math.random()*Math.PI;
+					explosion.angularVelocity=randomRange(-5,5);
+					explosion.fireVelocity=randomRange(-10,10);
+					explosion.lifespan=800;
+					r=randomRange(1.2,1.7);
+					explosion.scale.setTo(r,r);
+					explosion.alpha=.7;
+					game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
+					explosion.blendMode=1;
+					boomTween(explosion);
+				}
+			}
+		}
+	}
+	function fireBoom(explosionsGroup, bulletSprite, x, y, rot){
+
+		if(onscreen(x,y)){
+
+			var r = Math.random();
+
+			for(var i=0; i < 3 + (r * 2) ; i ++) { 
+				if(forceDead(explosionsGroup)){
+					var explosion = explosionsGroup.getFirstDead();
+					explosion.loadTexture('explosions', bulletSprite || 0);
+					explosion.reset(x,y);
+					explosion.rotation = rot + randomSign() * randomRange(0.3,1);
+					explosion.angularVelocity=randomRange(-5,5);
+					explosion.fireVelocity=randomRange(350,600);
+					explosion.lifespan=randomRange(350,600);
+					explosion.scale.setTo(1.2,1.2);
+					explosion.alpha=2;
+					game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
+					explosion.blendMode=1;
+					game.add.tween(explosion.scale).to({x:0.01,y:0.01},explosion.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
+
+					game.add.tween(explosion).to({alpha:0},explosion.lifespan, Phaser.Easing.Quadratic.Out, true, 0, false);		}
+			}
+
+			for(var i=0; i < 3; i ++) { 
+				if(forceDead(explosionsGroup)){
+					var explosion = explosionsGroup.getFirstDead();
+					explosion.loadTexture('explosions', bulletSprite || 0);
+					explosion.reset(x,y);
+					explosion.rotation = rot ;
+					explosion.angularVelocity=randomRange(-5,5);
+					explosion.fireVelocity=randomRange(200,230);
+					explosion.lifespan=randomRange(500,800);
+					explosion.scale.setTo(1,1);
+					explosion.alpha=1.5;
+					game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
+					explosion.blendMode=1;
+					game.add.tween(explosion.scale).to({x:1,y:1},explosion.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
+
+					game.add.tween(explosion).to({alpha:0},explosion.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);		}
+			}
+		}
+	}
+	function gasBoom(explosionsGroup, x, y){
+
+		if(onscreen(x,y)){
+
+			var r = Math.random();
+
+			for(var i=0; i < 4; i ++) { 
+				if(forceDead(explosionsGroup)){
+					var explosion = explosionsGroup.getFirstDead();
+					explosion.loadTexture('explosions', Math.random()>0.5?7:9);
+					explosion.reset(x+randomRange(-8,8),y+randomRange(-8,8));
+					explosion.rotation = Math.random()*Math.PI*2;
+					explosion.fireVelocity=randomRange(-10,10);
+					explosion.lifespan=600;
+					r=randomRange(0.4,0.8);
+					explosion.scale.setTo(r,r);
+					explosion.alpha=1;
+					game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
+					explosion.blendMode=0;
+					game.add.tween(explosion.scale).to({x:explosion.scale.x*4,y:explosion.scale.y*4},explosion.lifespan-300, Phaser.Easing.Linear.Out, true, 0, false);
+					game.add.tween(explosion).to({alpha:0},explosion.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
+					explosion.body.angularVelocity=randomRange(200,500)*randomSign();
+				}
+			}
+		}
+	}
+
+	function boom(explosionsGroup, bulletSprite, x, y){
+
+		if(onscreen(x,y)){
+
+			var r = Math.random();
+			for(var i=0; i < 3 + (r * 2) ; i ++) { 
+				if(forceDead(explosionsGroup)){
+					var explosion = explosionsGroup.getFirstDead();
+					explosion.loadTexture('explosions', bulletSprite || 0);
+					explosion.reset(x,y);
+					explosion.rotation = randomSign() * randomRange(0,Math.PI);
+					explosion.angularVelocity=randomRange(-5,5);
+					explosion.fireVelocity=randomRange(350,600);
+					explosion.lifespan=randomRange(350,600);
+					explosion.scale.setTo(1.2,1.2);
+					explosion.alpha=2;
+					game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
+					explosion.blendMode=1;
+					game.add.tween(explosion.scale).to({x:0.1,y:0.1},explosion.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
+
+					game.add.tween(explosion).to({alpha:0},explosion.lifespan, Phaser.Easing.Quadratic.Out, true, 0, false);		}
+			}
+
+
+			for(var i=0; i < 3; i ++) { 
+				if(forceDead(explosionsGroup)){
+					var explosion = explosionsGroup.getFirstDead();
+					explosion.loadTexture('explosions', bulletSprite || 0);
+					explosion.reset(x+randomRange(-8,8),y+randomRange(-8,8));
+					explosion.rotation = Math.random()*Math.PI;
+					explosion.angularVelocity=randomRange(-5,5);
+					explosion.fireVelocity=randomRange(-10,10);
+					explosion.lifespan=800;
+					r=randomRange(0.6,1);
+					explosion.scale.setTo(r,r);
+					explosion.alpha=1;
+					game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
+					explosion.blendMode=1;
+					boomTween(explosion);
+				}
+			}
+		}
+	}
+
+	function sparks(emitter, sprite){
+		if(onscreen(sprite.x,sprite.y)){
+			emitter.x=sprite.x+randomRange(-.7*sprite.body.width,sprite.body.width);
+			emitter.y=sprite.y+randomRange(-.7*sprite.body.width,sprite.body.width);;
+			emitter.minParticleSpeed.setTo(-200,-200);
+			emitter.maxParticleSpeed.setTo(200,200);
+			emitter.particleFriction = -500;
+			emitter.start(true,200,null, randomRange(1,14));
+		}
+	}
+	function sparkExplosion(emitter, sprite){
+		if(onscreen(sprite.x,sprite.y)){
+			emitter.x=sprite.x;
+			emitter.y=sprite.y;
+			emitter.minParticleSpeed.setTo(-500,-500);
+			emitter.maxParticleSpeed.setTo(500,500);
+			emitter.particleFriction = -2000;
+			emitter.start(true,300,null, 50);
+		}
+	}
+	function spawnLoots(_count, x, y){
+		var lootCount = _count;
+
+		for(var i = 0; i < lootCount; i++)
+		{
+			if(forceDead(loots)){
+				var loot = loots.getFirstDead();
+				if(typeof(loot.pulseTween)!='undefined'){
+					loot.pulseTween.stop();
+				}
+				loot.loadTexture('parts', Math.floor(randomRange(0,4))+26);
+				loot.lifespan = 60000;
+				loot.reset(x + randomRange(-16,16), y+randomRange(-16,16));
+				loot.rotation = Math.random()*2*Math.PI;
+				game.add.tween(loot).to({rotation:Math.PI*30},loot.lifespan,Phaser.Easing.Exponential.Out, true, 0, false);
+				var scale = randomRange(0.8,1.1);
+				loot.scale.setTo(scale,scale);
+				loot.pullTime=0;
+				loot.alpha=2.5;
+
+				loot.pulseTween = game.add.tween(loot).to({alpha:1},randomRange(200,400),Phaser.Easing.Exponential.Out,true,0,Number.MAX_VALUE,true);
+				loot.acceleration=200;
+				loot.blendMode=0;
+				loot.lootType='ore';
+				loot.acceleration=0;
+				game.physics.arcade.velocityFromRotation(loot.rotation, randomRange(100,300), loot.body.velocity);
+				return loot;
+			}
+		}
+	}
+	function spawnComponent(component,x,y){
 		if(forceDead(loots)){
-		var loot = loots.getFirstDead();
-		if(typeof(loot.pulseTween)!='undefined'){
-			loot.pulseTween.stop();
-		}
-		loot.loadTexture('parts', Math.floor(randomRange(0,4))+26);
-		loot.lifespan = 60000;
-		loot.reset(x + randomRange(-16,16), y+randomRange(-16,16));
-		loot.rotation = Math.random()*2*Math.PI;
-		game.add.tween(loot).to({rotation:Math.PI*30},loot.lifespan,Phaser.Easing.Exponential.Out, true, 0, false);
-		var scale = randomRange(0.8,1.1);
-		loot.scale.setTo(scale,scale);
-		loot.pullTime=0;
-		loot.alpha=2.5;
-
-		loot.pulseTween = game.add.tween(loot).to({alpha:1},randomRange(200,400),Phaser.Easing.Exponential.Out,true,0,Number.MAX_VALUE,true);
-		loot.acceleration=200;
-		loot.blendMode=0;
-		loot.lootType='ore';
-		loot.acceleration=0;
-		game.physics.arcade.velocityFromRotation(loot.rotation, randomRange(100,300), loot.body.velocity);
-		return loot;
+			var loot = loots.getFirstDead();
+			if(typeof(loot.pulseTween)!='undefined'){
+				loot.pulseTween.stop();
+			}
+			loot.loadTexture('parts', component);
+			loot.lifespan = 120000;
+			loot.scale.setTo(2,2);
+			loot.reset(x + randomRange(-16,16), y+randomRange(-16,16));
+			loot.rotation=0;
+			game.add.tween(loot).to({rotation:Math.PI*10},loot.lifespan,Phaser.Easing.Exponential.Out, true, 0, false);
+			loot.acceleration=200;
+			loot.blendMode=0;
+			loot.pullTime=0;
+			loot.alpha=2.5;
+			loot.pulseTween = game.add.tween(loot).to({alpha:1},250,Phaser.Easing.Circular.InOut,true,0,Number.MAX_VALUE,true);
+			loot.lootType='component';
+			loot.component = component;
+			loot.acceleration=0;
+			game.physics.arcade.velocityFromRotation(Math.random()*2*Math.PI, randomRange(50,player.sprite.body.maxVelocity.x*0.75), loot.body.velocity);
+			return loot;
 		}
 	}
-}
-function spawnComponent(component,x,y){
-	if(forceDead(loots)){
-		var loot = loots.getFirstDead();
-		if(typeof(loot.pulseTween)!='undefined'){
-			loot.pulseTween.stop();
+	function playerGotLoot (sprite, loot) {
+		if(loot.lootType=='ore'){
+			if(player.health>player.healthMax){
+				player.health=player.healthMax;
+			}
+			player.health+=1;
+			player.energy+=player.oreEnergy;
+		}else if(loot.lootType=='component'){
+			playerStats.inventory.push(loot.component);
+			ui.texts.push('got ' + components[loot.component].name);
 		}
-		loot.loadTexture('parts', component);
-		loot.lifespan = 120000;
-		loot.scale.setTo(2,2);
-		loot.reset(x + randomRange(-16,16), y+randomRange(-16,16));
-		loot.rotation=0;
-		game.add.tween(loot).to({rotation:Math.PI*10},loot.lifespan,Phaser.Easing.Exponential.Out, true, 0, false);
-		loot.acceleration=200;
-		loot.blendMode=0;
-		loot.pullTime=0;
-		loot.alpha=2.5;
-		loot.pulseTween = game.add.tween(loot).to({alpha:1},250,Phaser.Easing.Circular.InOut,true,0,Number.MAX_VALUE,true);
-		loot.lootType='component';
-		loot.component = component;
-		loot.acceleration=0;
-		game.physics.arcade.velocityFromRotation(Math.random()*2*Math.PI, randomRange(50,player.sprite.body.maxVelocity.x*0.75), loot.body.velocity);
-		return loot;
+		ui.sound_beep.play();
+		player.sprite.alpha=6;
+
+		game.add.tween(player.sprite).to({alpha:1},700, Phaser.Easing.Circular.Out, true, 0, false);
+		sparkleBoom(sparkleExplosions,0,8,loot.x,loot.y);	
+		loot.kill();
 	}
-}
-function playerGotLoot (sprite, loot) {
-	if(loot.lootType=='ore'){
-		if(player.health>player.healthMax){
-			player.health=player.healthMax;
-		}
-		player.health+=1;
-		player.energy+=player.oreEnergy;
-	}else if(loot.lootType=='component'){
-		playerStats.inventory.push(loot.component);
-		ui.texts.push('got ' + components[loot.component].name);
-	}
-	ui.sound_beep.play();
-	player.sprite.alpha=6;
+	function bulletHitPlayer (sprite, bullet) {
 
-	game.add.tween(player.sprite).to({alpha:1},700, Phaser.Easing.Circular.Out, true, 0, false);
-	sparkleBoom(sparkleExplosions,0,8,loot.x,loot.y);	
-	loot.kill();
-}
-function bulletHitPlayer (sprite, bullet) {
-
-	boom(explosions, bullet.bulletSprite, bullet.x, bullet.y);
-	ui.sound_hit1.play();
-	for (var i = 0; i < bullet.bulletHitBehavior.length; i++) {
-		bullet.bulletHitBehavior[i](sprite, bullet);
-	}
-
-	var destroyed = player.damage(bullet.damage, bullet.owner);
-
-	if(destroyed){
-		ui.sound_randomBoom();
-	}
-	bullet.kill();
-}
-function enemyTouchPlayer (enemySprite, playerSprite) {
-	if(player.sawDamage && enemies[enemySprite.name].ai==aiModes['asteroid'])
-	{
-
-		ui.sound_hit1.play();
-		var destroyed = enemies[enemySprite.name].damage(player.sawDamage);
-		if(destroyed){
-			ui.sound_randomBoom();
-		}
-		var angle=game.physics.arcade.angleBetween(playerSprite,enemySprite);
-		enemySprite.body.velocity.x+=Math.cos(angle)*200;
-		enemySprite.body.velocity.y+=Math.sin(angle)*200;
-	}	
-}
-
-function bulletHitEnemy (sprite, bullet) {
-
-	if(bullet.owner!=sprite){
-		ui.sound_hit1.play();
 		boom(explosions, bullet.bulletSprite, bullet.x, bullet.y);
-
+		ui.sound_hit1.play();
 		for (var i = 0; i < bullet.bulletHitBehavior.length; i++) {
 			bullet.bulletHitBehavior[i](sprite, bullet);
 		}
-		var destroyed = enemies[sprite.name].damage(bullet.damage, bullet.owner, bullet.body.velocity);
+
+		var destroyed = player.damage(bullet.damage, bullet.owner);
+
 		if(destroyed){
-			if(Math.random()>0.5){
-				ui.sound_boom1.play();
-			}else{
-				ui.sound_boom2.play();
-			}
+			ui.sound_randomBoom();
 		}
 		bullet.kill();
 	}
+	function enemyTouchPlayer (enemySprite, playerSprite) {
+		if(player.sawDamage && enemies[enemySprite.name].ai==aiModes['asteroid'])
+		{
 
-}
+			ui.sound_hit1.play();
+			var destroyed = enemies[enemySprite.name].damage(player.sawDamage);
+			if(destroyed){
+				ui.sound_randomBoom();
+			}
+			var angle=game.physics.arcade.angleBetween(playerSprite,enemySprite);
+			enemySprite.body.velocity.x+=Math.cos(angle)*200;
+			enemySprite.body.velocity.y+=Math.sin(angle)*200;
+		}	
+	}
 
-function render () {
+	function bulletHitEnemy (sprite, bullet) {
 
-}
+		if(bullet.owner!=sprite){
+			ui.sound_hit1.play();
+			boom(explosions, bullet.bulletSprite, bullet.x, bullet.y);
+
+			for (var i = 0; i < bullet.bulletHitBehavior.length; i++) {
+				bullet.bulletHitBehavior[i](sprite, bullet);
+			}
+			var destroyed = enemies[sprite.name].damage(bullet.damage, bullet.owner, bullet.body.velocity);
+			if(destroyed){
+				if(Math.random()>0.5){
+					ui.sound_boom1.play();
+				}else{
+					ui.sound_boom2.play();
+				}
+			}
+			bullet.kill();
+		}
+
+	}
+
+	function render () {
+
+	}
 
