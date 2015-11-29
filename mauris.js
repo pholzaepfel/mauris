@@ -271,6 +271,11 @@ var warButtons = [
 function queryComponent(id){
 	return components[id].bonus.toString().replace(/target\./g,'').replace(/function.*{/,'').replace(/}/g,'').replace(/bulletBehavior.*/,'CHANGE BULLET BEHAVIOR').replace(/alt=.*/,'ALTERNATE FIRE').replace(/this.*body\./g,'').replace(/this.*sprite\./g,'').replace(/this\./g,'').replace(/[();\[\]{}]/g,'').replace(/\t\t\t.*\n/g,'').replace(/[\t ]*/g,'').replace(/^\n/g,'');
 }
+var scroll = function(modifier, target){
+var ret ={'x':0,y:'0'};
+target.tilePosition.x = target.offsetx + ( modifier*game.camera.x / target.scale.x) + (game.time.now / (target.speed));
+		target.tilePosition.y = target.offsety + ( modifier*game.camera.y / target.scale.y);
+}
 var blackOut = function(){
 
 	ui.tempStation.visible=false;
