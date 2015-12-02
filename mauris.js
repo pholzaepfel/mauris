@@ -1195,6 +1195,7 @@ function preload () {
 	game.load.image('planets', 'assets/planets.png');
 	game.load.image('planetslod', 'assets/planetslod.png');
 	game.load.image('planetfall', 'assets/planetfall.png');
+	game.load.image('planetdirt', 'assets/planetdirt.png');
 	game.load.image('starfield2', 'assets/starfield2.png');
 	game.load.image('starfield6', 'assets/starfield6.png');
 	game.load.image('starfield4', 'assets/starfield4.png');
@@ -2214,6 +2215,7 @@ playerShip.prototype.update = function(){
 };
 var touchPressed = 0;
 var player;
+var mysteriousConstant=0.22;
 var detailLod = 240;
 var mockPlayer;
 var attackerTargetSizeThreshold = 0.5;
@@ -2258,6 +2260,7 @@ var spawnShips=[
 	var hazeWhite,hazeRed,hazePurple;
 	var planet;
 	var planetlod;
+	var planetdirt;
 	var planetfall;
 	var foredrop;
 	var numBaddies = 9;
@@ -3587,7 +3590,7 @@ function fadeIn () {
 	planet.baseX=randomRange(300,400)*randomSign();
 	planet.baseY=randomRange(300,400)*randomSign();
 	planet.rotation=randomRange(0,2*Math.PI);
-	planet.baseScale=randomRange(4,5);
+	planet.baseScale=randomRange(5,5);
 	planet.anchor.setTo(0.5,0.5);
 	planet.scale.x=planet.baseScale;
 	planet.scale.y=planet.baseScale;
@@ -3613,6 +3616,7 @@ function fadeIn () {
 	planetlod.scale.x=planetlod.baseScale;
 	planetlod.scale.y=planetlod.baseScale;
 	planetlod.tint=planet.tint;
+	planetdirt.tint=planet.tint;
 	planetfall.tint=planet.tint;
 	hazeRed.alpha=0;
 	hazeWhite.alpha=0;
@@ -3662,13 +3666,19 @@ function create () {
 		planet.baseY=randomRange(-300,400) * randomSign();
 		planetlod = game.add.sprite(resolutionX/1.6, resolutionY/1.6, 'planetslod');
 		planetfall = game.add.tileSprite(0, 0, resolutionX/2, resolutionY/2, 'planetfall');
+		planetdirt = game.add.tileSprite(0, 0, resolutionX/2, resolutionY/2, 'planetdirt');
 		planetlod.baseX=planet.baseX;
 		planetlod.baseY=planet.baseY;
-		planetfall.fixedToCamera=true; 
+		planetdirt.fixedToCamera=true; 
+		planetdirt.scale.setTo(2,2);
+		planetdirt.tilePosition.x=0;
+		planetdirt.tilePosition.y=0;
+			planetfall.fixedToCamera=true; 
 		planetfall.scale.setTo(2,2);
 		planetfall.tilePosition.x=0;
 		planetfall.tilePosition.y=0;
-		hazeRed = game.add.tileSprite(0, 0, resolutionX/3, resolutionY/3, 'haze');
+			hazeRed = game.add.tileSprite(0, 0, resolutionX/3, resolutionY/3, 'haze');
+		planetdirt.speed=0;
 		planetfall.speed=0;
 		hazeRed.tilePosition.x = Math.random()*resolutionX;
 		hazeRed.tilePosition.y = Math.random()*resolutionY;
@@ -4486,69 +4496,85 @@ function update () {
 		}	
 		// scrolling
 		scroll(hazeWhite,-0.03);
-
+		
+		
 		planet.scaleModifier=(player.sprite.x*planet.baseX*(1/400)+player.sprite.y*planet.baseY*(1/400))/5000;
-		planet.scaleModifier=Math.min(planet.scaleModifier,3);
+//		if(planet.scaleModifier>1.2){
+//		planet.scaleModifier = 2.2 - Math.pow(2.2-planet.scaleModifier,2);
+//		}
+		if(planet.scaleModifier>1.8){
+			planet.scaleModifier=1.8 + ((planet.scaleModifier-1.8)/(planet.scaleModifier-.8));
+		}
+		planet.scaleModifier=Math.min(planet.scaleModifier,2.3);
 		planet.scale.setTo(Math.pow(planet.baseScale,planet.scaleModifier));
 		var planetXdiff = planet.x;
 		var planetYdiff = planet.y;
-		planet.reset(planet.x + player.sprite.body.velocity.x * game.time.physicsElapsed,  planet.y + player.sprite.body.velocity.y * game.time.physicsElapsed);
+		planet.speedModifier=0.9;
+		planet.reset(planet.x + planet.speedModifier * player.sprite.body.velocity.x * game.time.physicsElapsed,  planet.y + planet.speedModifier * player.sprite.body.velocity.y * game.time.physicsElapsed);
 		planetXdiff -= planet.x;
 		planetYdiff -= planet.y;
-		planetfall.tilePosition.x-=planetfall.width*0.5;
-		planetfall.tilePosition.y-=planetfall.height*0.5;
-		planetfall.scale.setTo(planet.scale.x/24,planet.scale.y/24);
+
+		planetdirt.blendMode=1;
+		planetdirt.scale.setTo(planet.scale.x/32,planet.scale.y/32);
+		planetdirt.x=player.sprite.body.x-resolutionX/2;
+		planetdirt.y=player.sprite.body.y-resolutionY/2;
+		planetdirt.width=resolutionX/planetdirt.scale.x;
+		planetdirt.height=resolutionY/planetdirt.scale.y;
+		planetdirt.tilePosition.x=(planet.x-planetdirt.x)/planetdirt.scale.x;
+		planetdirt.tilePosition.y=(planet.y-planetdirt.y)/planetdirt.scale.y;
+	
+
+
+		planetfall.blendMode=2;
+		planetfall.scale.setTo(planet.scale.x/8,planet.scale.y/8);
 		planetfall.x=player.sprite.body.x-resolutionX/2;
 		planetfall.y=player.sprite.body.y-resolutionY/2;
 		planetfall.width=resolutionX/planetfall.scale.x;
 		planetfall.height=resolutionY/planetfall.scale.y;
-		planetfall.tilePosition.x+=planetfall.width*0.5;
-		planetfall.tilePosition.y+=planetfall.height*0.5;
-		var lodConstantX = (planet.scale.x/planetfall.scale.x) * 0.22;
-		var lodConstantY = (planet.scale.y/planetfall.scale.y) * 0.22;
-		planetfall.tilePosition.x+=planetXdiff / lodConstantX;
-		planetfall.tilePosition.y+=planetYdiff / lodConstantY;
+		planetfall.tilePosition.x=(planet.x-planetfall.x)/planetfall.scale.x;
+		planetfall.tilePosition.y=(planet.y-planetfall.y)/planetfall.scale.y;
 			planetlod.scale.setTo(planet.scale.x,planet.scale.y);
 			planetlod.reset(planet.x,planet.y);
-			planetfall.alpha=Math.min(1,0.75*(planet.scaleModifier-1.65));
+			planetfall.alpha=Math.min(1,(planet.scaleModifier-1));
+		planetlod.alpha=Math.min(1,planet.scaleModifier);
+			planetdirt.alpha=Math.min(0.8,0.8*(planet.scaleModifier-1.3));
 
-			if(planet.scaleModifier>4){
-				planet.visible=true;
-				planetlod.visible=false;
-				planetfall.visible=true;
-			}else if(planet.scaleModifier>3){
-				planet.visible=true;
-				planetlod.alpha=4-planet.scaleModifier;
+			planetlod.visible=false;
+			if(planetlod.alpha>0){
 				planetlod.visible=true;
-				planetfall.visible=true;
-			}else if(planet.scaleModifier>2){
-				planetlod.alpha=1;
-				planetlod.visible=true;
-				planetfall.visible=true;
-			}else if(planet.scaleModifier>=1){
-				planetlod.alpha=planet.scaleModifier-1;
-
-				planetfall.visible=true;
-				planet.visible=true;
-				planetlod.visible=true;
-			}else{
-				planet.visible=true;
-				planetlod.visible=false;
-				planetfall.visible=false;
 			}
 
+			planet.visible=true;
+			if(planetlod.alpha==1){
+				planet.visible=false;
+			}
+
+			planetfall.visible=false;
+			hazeWhite.visible=true;
+			if(planetfall.alpha>0){
+				planetfall.visible=true;
+			}
+			if(planet.scaleModifier>2){
+				hazeWhite.visible=false;
+			}
 			scroll(hazeRed,-0.26);
 			scroll(hazePurple,-0.9);
-			//scroll(planetfall,-0.49*planetfall.scale.x);
-
+//should be thickest at 1.3
 			//hazePurple.bringToTop();
-			planet.hazeModifier=Math.max(0,planet.scaleModifier/2);
-			planet.hazeModifier=Math.min(planet.hazeModifier,2);
+			planet.hazeModifier=0;
+			planet.hazeModifier=Math.max(0,(planet.scaleModifier-1));
+			if(planet.hazeModifier>1){
+				planet.hazeModifier+=(1-planet.hazeModifier)*5;
+			}
+			planet.hazeModifier=Math.max(0,planet.hazeModifier);
+			planet.hazeModifier=Math.min(planet.hazeModifier,1);
 			hazeRed.scale.setTo(hazeRed.baseScale+planet.hazeModifier,hazeRed.baseScale+planet.hazeModifier);
 			hazePurple.scale.setTo(hazePurple.baseScale+planet.hazeModifier,hazePurple.baseScale+planet.hazeModifier);
+			hazeRed.speed=playerStats.mission.hazeRedSpeed+playerStats.mission.hazeRedSpeed*planet.hazeModifier*2;
 			hazeRed.alpha=playerStats.mission.hazeRed+planet.hazeModifier;
 			hazeWhite.alpha=playerStats.mission.hazeWhite;
 			hazePurple.alpha=playerStats.mission.hazePurple+planet.hazeModifier;
+			hazePurple.speed=playerStats.mission.hazePurple+playerStats.mission.hazePurple*planet.hazeModifier*2;
 
 			if(gamemode!='paused'){
 				ui.update();
