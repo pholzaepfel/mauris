@@ -1064,7 +1064,7 @@ function(tgt){
 			var ret = false;
 			var targetDistance = game.physics.arcade.distanceBetween(this.sprite, this.target);
 
-			if(targetDistance < 250 && Math.random()<0.01+(0.04*((this.healthMax-this.health)/this.healthMax))){
+			if(targetDistance < 250 && this.health < 0.2 * this.healthMax){
 				ret = true;
 			}
 			return ret;
@@ -2106,6 +2106,7 @@ function(tgt){
 				});
 		var fireRateDiff=200/target.fireRate;
 		target.fireRate=200;
+		target.bulletSparkle=function(){};
 		target.fireSound=ui.sound_bullet;
 		target.fireDamage*=fireRateDiff*1.2;
 		target.fireEnergy*=fireRateDiff*1.05;
@@ -2151,6 +2152,7 @@ function(tgt){
 	'flavor':'BRRRRRRAAAAAAPPPPPP',
 	'bonus':function(target){
 		target.bulletSprite=1;
+		target.bulletSparkle=function(){};
 		target.bulletBlendMode=0;
 		target.fireRate*=0.7;
 		target.fireSound=ui.sound_bullet;
