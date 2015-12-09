@@ -4531,7 +4531,7 @@ function update () {
 		planetlod.scale.setTo(planet.scale.x*1.07,planet.scale.y*1.07);
 		planetlod.reset(planet.x,planet.y);
 		planetfall.alpha=Math.min(0.7,(planet.scaleModifier-1));
-		planetlod.alpha=Math.min(1,planet.scaleModifier-0.6);
+		planetlod.alpha=Math.min(1,planet.scaleModifier-0.3);
 		planetdirt.alpha=Math.min(0.6,0.8*(planet.scaleModifier-1.3));
 
 		planetlod.visible=false;
