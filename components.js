@@ -1443,6 +1443,7 @@ function(tgt){
 					bullet.loadTexture('explosions',7);
 					bullet.reset(this.sprite.x, this.sprite.y);
 					bullet.rotation=n*2*Math.PI;
+					bullet.bulletSparkle=function(){};
 					game.physics.arcade.velocityFromRotation(bullet.rotation, randomRange(25,90), bullet.body.velocity);
 					bullet.alpha=0.4;
 					bullet.damage=this.fireDamage*3;
