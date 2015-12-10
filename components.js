@@ -2101,13 +2101,14 @@ function(tgt){
 	'bonus':function(target){
 		target.bulletSprite=1;
 		target.bulletBlendMode=0;
+
+		target.bulletSparkle=function(){};
 		target.bulletBehavior.push(function(bullet){				
 				var tgt = ownerFromName(bullet.owner.name);
 				tgt.nextFire = game.time.now + (randomRange(0.7,1.2) * tgt.fireRate);
 				});
 		var fireRateDiff=200/target.fireRate;
 		target.fireRate=200;
-		target.bulletSparkle=function(){};
 		target.fireSound=ui.sound_bullet;
 		target.fireDamage*=fireRateDiff*1.2;
 		target.fireEnergy*=fireRateDiff*1.05;

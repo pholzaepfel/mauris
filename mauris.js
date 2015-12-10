@@ -2039,15 +2039,15 @@ var standardFiringSolution = function(attacker, target, fireRange, fireVelocity,
 		return null;
 	}
 	var interceptTime = targetDistance/adjVelocity;
-
+	var targetRectangle = new Phaser.Rectangle(target.x, target.y, target.width, target.height);	
+		var bulletWidth = 16;
+		var bulletHeight = 16;
+	
 	for(var j=interceptTime*0.7;j<interceptTime*1.3;j+=0.01){
 
 		var bulletEndX = bulletStartX + (bulletVelX * j);
 		var bulletEndY = bulletStartY + (bulletVelY * j);
-		var bulletWidth = 16;
-		var bulletHeight = 16;
 		var bulletProjection = new Phaser.Rectangle(bulletEndX,bulletEndY,bulletWidth,bulletHeight);
-		var targetRectangle = new Phaser.Rectangle(target.x, target.y, target.width, target.height);	
 		if(targetRectangle.intersects(bulletProjection) ){
 			return 1/targetDistance;
 		}
@@ -3614,8 +3614,8 @@ function fadeIn () {
 	planetlod.scale.x=planetlod.baseScale;
 	planetlod.scale.y=planetlod.baseScale;
 	planetlod.tint=planet.tint;
-	planetdirt.tint=planet.tint;
-	planetfall.tint=planet.tint;
+	planetdirt.tint=(randomRange(40,255) << 16) + (randomRange(40,255) << 8) + randomRange(40,255);
+	planetfall.tint=(randomRange(40,255) << 16) + (randomRange(40,255) << 8) + randomRange(40,255);
 	hazeRed.alpha=0;
 	hazeWhite.alpha=0;
 	hazePurple.alpha=0;
@@ -3893,7 +3893,7 @@ function epicLootSparkle(s){
 function sparkleBullets(s) {
 	if(game.time.now>s.nextSparkle){
 		s.sparkle(explosions,s.x,s.y,s);
-		s.nextSparkle=game.time.now+30;
+		s.nextSparkle=game.time.now+150;
 	}
 }
 function pullLootToPlayer(s) {
@@ -4124,7 +4124,7 @@ function update () {
 		if (cursors.fire.isDown){
 			fire = 1;
 		}
-		if (cursors.alt.isDown || game.input.mouse.button == Phaser.Mouse.RIGHT_BUTTON){
+		if (cursors.alt.isDown){
 			alt = 1;
 		}
 		if (cursors.enter.isDown){
@@ -4132,6 +4132,9 @@ function update () {
 		}
 		if (left || right || up || down || fire || alt || enter) {
 			player.behavior='manual';
+		}
+		if (game.input.mouse.button == Phaser.Mouse.RIGHT_BUTTON){
+			alt = 1; //don't force player back to manual mode
 		}
 		if (!game.input.activePointer.isDown|| game.input.mouse.button == Phaser.Mouse.RIGHT_BUTTON) {
 			attemptTarget=true;
@@ -4530,9 +4533,9 @@ function update () {
 		planetfall.tilePosition.y=(planet.y-planetfall.y)/planetfall.scale.y;
 		planetlod.scale.setTo(planet.scale.x*1.07,planet.scale.y*1.07);
 		planetlod.reset(planet.x,planet.y);
-		planetfall.alpha=Math.min(0.7,(planet.scaleModifier-1));
-		planetlod.alpha=Math.min(1,planet.scaleModifier-0.3);
-		planetdirt.alpha=Math.min(0.6,0.8*(planet.scaleModifier-1.3));
+		planetfall.alpha=Math.min(0.77,(planet.scaleModifier-1));
+		planetlod.alpha=1;//Math.min(1,planet.scaleModifier+0.2);
+		planetdirt.alpha=Math.min(0.65,(planet.scaleModifier-1.3));
 
 		planetlod.visible=false;
 		if(planetlod.alpha>0){
@@ -4562,14 +4565,14 @@ function update () {
 		scroll(hazePurple,-0.9);
 		//hazePurple.bringToTop();
 		planet.hazeModifier=0;
-		planet.hazeModifier=Math.max(0,2*planet.scaleModifier-6);
+		planet.hazeModifier=Math.max(0,(2*planet.scaleModifier)-4);
 		planet.hazeModifier=Math.min(planet.hazeModifier,1);
 		hazeRed.scale.setTo(hazeRed.baseScale+planet.hazeModifier,hazeRed.baseScale+planet.hazeModifier);
 		hazePurple.scale.setTo(hazePurple.baseScale+planet.hazeModifier,hazePurple.baseScale+planet.hazeModifier);
 		hazeRed.speed=playerStats.mission.hazeRedSpeed+playerStats.mission.hazeRedSpeed*planet.hazeModifier*2;
 		hazeRed.alpha=playerStats.mission.hazeRed-planet.hazeModifier;
 		hazeWhite.alpha=playerStats.mission.hazeWhite*(1-planet.hazeModifier);
-		hazePurple.alpha=playerStats.mission.hazePurple*(1-planet.hazeModifier);
+		hazePurple.alpha=playerStats.mission.hazePurple*(1-(planet.hazeModifier*0.3));
 		hazePurple.speed=playerStats.mission.hazePurple+playerStats.mission.hazePurple*planet.hazeModifier*2;
 		hazeWhite.visible=false;
 		if(hazeWhite.alpha>0){
@@ -4806,6 +4809,34 @@ function glow(explosionsGroup, x, y, bullet){
 			if(forceDead(explosionsGroup)){
 				var explosion = explosionsGroup.getFirstDead();
 				explosion.loadTexture('explosions', bullet.bulletSprite);
+				var bulletOffsetX = bullet.body.velocity.x * game.time.physicsElapsed;
+				bulletOffsetX -= bullet.width * 0.40 * Math.cos(bullet.rotation);
+				var bulletOffsetY = bullet.body.velocity.y * game.time.physicsElapsed; 
+				bulletOffsetY -= bullet.width * 0.40 * Math.sin(bullet.rotation);
+				explosion.reset(x + bulletOffsetX,y + bulletOffsetY);
+				explosion.rotation = bullet.rotation + randomRange(-0.5,0.5);//bullet.rotation+Math.PI;
+				if(Math.random()>0.5){explosion.rotation+=Math.PI};
+				explosion.lifespan=Math.min(150,bullet.lifespan);
+				r=randomRange(0.5,0.8);
+				explosion.body.velocity.x=bullet.body.velocity.x;
+				explosion.body.velocity.y=bullet.body.velocity.y;
+				explosion.scale.setTo(r+r*1.2*bullet.scale.y,r*r*1.2*bullet.scale.y);
+				explosion.alpha=bullet.alpha;
+				explosion.blendMode=bullet.blendMode;
+				explosion.body.angularVelocity=randomRange(50,200)*randomSign()/r;
+
+			}
+	}
+}
+function trail(explosionsGroup, x, y, bullet){
+
+	if(onscreen(x,y)){
+
+		var r = Math.random();
+
+			if(forceDead(explosionsGroup)){
+				var explosion = explosionsGroup.getFirstDead();
+				explosion.loadTexture('explosions', bullet.bulletSprite);
 				var bulletOffsetX = bullet.width * 0.1 * Math.cos(bullet.rotation);
 				var bulletOffsetY = bullet.width * 0.1 * Math.sin(bullet.rotation);
 				explosion.reset(x - bulletOffsetX,y - bulletOffsetY);
@@ -4827,14 +4858,6 @@ function glow(explosionsGroup, x, y, bullet){
 
 function gasBoom(explosionsGroup, x, y, bullet){
 	
-	if(typeof(bullet.nextSparkleTrue)=="undefined"){
-		bullet.nextSparkleTrue=0;
-	}
-	if(game.time.now > bullet.nextSparkleTrue){
-		return;
-	}
-	bullet.nextSparkleTrue = game.time.now + randomRange(100,200);
-
 	if(onscreen(x,y)){
 
 		var r = Math.random();
@@ -4860,8 +4883,12 @@ function gasBoom(explosionsGroup, x, y, bullet){
 	}
 }
 
-function boom(explosionsGroup, bulletSprite, x, y){
+function boom(explosionsGroup, bulletSprite, x, y, damage){
 
+	if(typeof(damage)=='undefined'){
+		damage = 1;
+	}
+	var damageScale = Math.sqrt(damage/2);
 	if(onscreen(x,y)){
 
 		var r = Math.random();
@@ -4874,7 +4901,7 @@ function boom(explosionsGroup, bulletSprite, x, y){
 				explosion.angularVelocity=randomRange(-5,5);
 				explosion.fireVelocity=randomRange(350,600);
 				explosion.lifespan=randomRange(350,600);
-				explosion.scale.setTo(1.2,1.2);
+				explosion.scale.setTo(damageScale*1.2,damageScale*1.2);
 				explosion.alpha=2;
 				game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
 				explosion.blendMode=1;
@@ -4892,8 +4919,10 @@ function boom(explosionsGroup, bulletSprite, x, y){
 				explosion.rotation = Math.random()*Math.PI;
 				explosion.angularVelocity=randomRange(-5,5);
 				explosion.fireVelocity=randomRange(-10,10);
-				explosion.lifespan=800;
+				explosion.lifespan=600;
 				r=randomRange(0.6,1);
+				r*=damageScale;
+				explosion.lifespan+=200*damageScale;
 				explosion.scale.setTo(r,r);
 				explosion.alpha=1;
 				game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
@@ -4998,7 +5027,7 @@ function playerGotLoot (sprite, loot) {
 }
 function bulletHitPlayer (sprite, bullet) {
 
-	boom(explosions, bullet.bulletSprite, bullet.x, bullet.y);
+	boom(explosions, bullet.bulletSprite, bullet.x, bullet.y, bullet.damage / damageCoef);
 	ui.sound_hit1.play();
 	for (var i = 0; i < bullet.bulletHitBehavior.length; i++) {
 		bullet.bulletHitBehavior[i](sprite, bullet);
@@ -5030,7 +5059,7 @@ function bulletHitEnemy (sprite, bullet) {
 
 	if(bullet.owner!=sprite){
 		ui.sound_hit1.play();
-		boom(explosions, bullet.bulletSprite, bullet.x, bullet.y);
+		boom(explosions, bullet.bulletSprite, bullet.x, bullet.y, bullet.damage / targetDamageCoef);
 
 		for (var i = 0; i < bullet.bulletHitBehavior.length; i++) {
 			bullet.bulletHitBehavior[i](sprite, bullet);
