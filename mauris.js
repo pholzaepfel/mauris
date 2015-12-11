@@ -2,6 +2,38 @@ var gamemode;
 var defaultBehavior='neutral';
 var cheatmode = 0;
 var touchPressed = 0;
+var bulletTypes = [ 
+{'name':'pulse', 'id':0},
+{'name':'bullets', 'id':1},
+{'name':'missile', 'id':2},
+{'name':'rail', 'id':3},
+{'name':'twinlaser', 'id':4},
+{'name':'fireblast', 'id':5},
+{'name':'tribullet', 'id':6},
+{'name':'gas', 'id':7},
+{'name':'waste', 'id':8},
+{'name':'chem', 'id':9},
+{'name':'gascloud', 'id':14},
+{'name':'fire', 'id':15}
+	
+];
+var bulletTypeName = function(id){
+	for (var i=0;i<bulletTypes.length;i++){
+		if(bulletTypes[i].id==id){
+			return bulletTypes[i].name;
+		}
+	}
+	return '';
+
+}
+var bulletType = function(name){
+	for (var i=0;i<bulletTypes.length;i++){
+		if(bulletTypes[i].name==name){
+			return bulletTypes[i].id;
+		}
+	}
+	return -1;
+}
 var aiModes = {
 	'player':-1,
 	'simple':0,
@@ -10,10 +42,19 @@ var aiModes = {
 	'asteroid':3,
 	'accurateEnemy':4
 };
+var lastFDtick = 0;
+var FDcount = 0;
 var forceDead = function(collection){
+	if(lastFDtick < game.time.now){
+		FDcount=0;
+		lastFDtick=game.time.now;
+	}	
 	if(!collection.countDead()){
+		if(FDcount < 30){ // stop big events from slowing things down
 		collection.sort('lifespan',Phaser.Group.SORT_ASCENDING);
 		collection.getFirstAlive().kill();
+		FDcount++;
+		}
 	}
 	return collection.countDead();
 }
@@ -958,7 +999,7 @@ enemyShip.prototype.spawnBullet = function (playerFired) {
 		bullet.nextTrack = 0;
 		bullet.bulletHitBehavior=this.bulletHitBehavior;
 		bullet.angularVelocity=0;
-		bullet.loadTexture('bullet', this.bulletSprite);
+		bullet.animations.play(bulletTypeName(this.bulletSprite));
 		bullet.bulletSprite=this.bulletSprite;		
 		bullet.fireVelocity=this.fireVelocity;
 		bullet.owner=this.sprite;
@@ -1587,7 +1628,7 @@ playerShip.prototype.spawnBullet = function(playerFired){
 	if(forceDead(bullets)){
 
 		var bullet = bullets.getFirstDead();
-		bullet.loadTexture('bullet', this.bulletSprite);
+		bullet.animations.play(bulletTypeName(this.bulletSprite));
 		bullet.bulletSprite = this.bulletSprite;
 		bullet.damage = this.fireDamage * targetDamageCoef;
 		bullet.lifespan = this.fireRange;
@@ -3730,7 +3771,14 @@ function create () {
 		enemyBullets.setAll('anchor.y', 0.5);
 		enemyBullets.setAll('lifespan',5000)
 			enemyBullets.setAll('outOfBoundsKill', true);
-
+		for (var i=0;i<enemyBullets.length;i++){
+			var bullet = enemyBullets.getAt(i);
+			for (var j=0;j<bulletTypes.length;j++){							
+var bulletType = bulletTypes[j];
+				bullet.animations.add(bulletType.name, [bulletType.id]);
+			}
+		}
+	
 		enemyThrust = game.add.emitter(0,0,100);
 		enemyThrust.makeParticles('thrust',[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]);
 		enemyThrust.setAlpha(1.5,0,1500,Phaser.Easing.Sinusoidal.Out);
@@ -3744,7 +3792,14 @@ function create () {
 		explosions.setAll('anchor.y', 0.5);
 		explosions.setAll('lifespan',5000);
 		explosions.setAll('blendMode',1);
-
+		for (var i=0;i<explosions.length;i++){
+			var explosion = explosions.getAt(i);
+			for (var j=0;j<bulletTypes.length;j++){							
+				var bulletType = bulletTypes[j];
+				explosion.animations.add(bulletType.name, [bulletType.id]);
+			}
+		}
+	
 		sparkleExplosions = game.add.group();
 		sparkleExplosions.createMultiple(50, 'sparkles');
 		game.physics.enable(sparkleExplosions, Phaser.Physics.ARCADE);
@@ -3768,7 +3823,14 @@ function create () {
 		bullets.setAll('anchor.y', 0.5);
 		bullets.setAll('outOfBoundsKill', true);
 		bullets.setAll('lifespan', 1000);
-
+		//define bullet sprites
+		for (var i=0;i<bullets.length;i++){
+			var bullet = bullets.getAt(i);
+			for (var j=0;j<bulletTypes.length;j++){							
+var bulletType = bulletTypes[j];
+				bullet.animations.add(bulletType.name, [bulletType.id]);
+			}
+		}
 		loots = game.add.group();
 		loots.createMultiple(30, 'parts');
 		game.physics.enable(loots, Phaser.Physics.ARCADE);
@@ -4609,7 +4671,7 @@ function hugeBoom(explosionsGroup, x, y){
 		for(var i=0; i < 10 + (r * 9) ; i ++) { 
 			if(forceDead(explosions)){
 				var explosion = explosionsGroup.getFirstDead();
-				explosion.loadTexture('explosions', Math.random()>0.7 ? 1 : 2);
+				explosion.animations.play(bulletTypeName(Math.random()>0.7 ? 1 : 2));
 				explosion.reset(x+randomRange(-80,80),y+randomRange(-80,80));
 				explosion.rotation = Math.random()*Math.PI*2;
 				explosion.angularVelocity=randomRange(-3,3);
@@ -4634,7 +4696,7 @@ function bigBoom(explosionsGroup, x, y){
 			if(forceDead(explosions)){
 				var explosion = explosionsGroup.getFirstDead();
 				var rand2 = Math.random()>0.7 ? 1 : 2;
-				explosion.loadTexture('explosions', rand2);
+				explosion.animations.play(bulletTypeName(rand2));
 				explosion.reset(x+randomRange(-20,20),y+randomRange(-20,20));
 				explosion.rotation = Math.random()*Math.PI;
 				explosion.fireVelocity=randomRange(30,80) * (2-rand2);
@@ -4670,7 +4732,7 @@ function shieldEffect(explosionsGroup, bulletSprite, x, y, velx, vely,scale)
 
 	if(forceDead(explosionsGroup)){
 		var explosion = explosionsGroup.getFirstDead();
-		explosion.loadTexture('explosions', 0);
+		explosion.animations.play(bulletTypeName(0));
 		explosion.reset(x,y);
 		explosion.rotation=Math.random()*Math.PI;
 		explosion.angularVelocity=200;
@@ -4687,7 +4749,7 @@ function shieldEffect(explosionsGroup, bulletSprite, x, y, velx, vely,scale)
 	}
 	if(forceDead(explosionsGroup)){
 		var explosion = explosionsGroup.getFirstDead();
-		explosion.loadTexture('explosions', bulletSprite || 0);
+		explosion.animations.play(bulletTypeName(bulletSprite || 0));
 		explosion.reset(x,y);
 		explosion.rotation=Math.random()*Math.PI;
 		explosion.angularVelocity=200;
@@ -4741,7 +4803,7 @@ function midBoom(explosionsGroup, bulletSprite, x, y){
 		for(var i=0; i < 3 + (r * 6) ; i ++) { 
 			if(forceDead(explosionsGroup)){
 				var explosion = explosionsGroup.getFirstDead();
-				explosion.loadTexture('explosions', bulletSprite || 0);
+				explosion.animations.play(bulletTypeName( bulletSprite || 0));
 				explosion.reset(x+randomRange(-8,8),y+randomRange(-8,8));
 				explosion.rotation = Math.random()*Math.PI;
 				explosion.angularVelocity=randomRange(-5,5);
@@ -4766,7 +4828,7 @@ function fireBoom(explosionsGroup, bulletSprite, x, y, rot){
 		for(var i=0; i < 3 + (r * 2) ; i ++) { 
 			if(forceDead(explosionsGroup)){
 				var explosion = explosionsGroup.getFirstDead();
-				explosion.loadTexture('explosions', bulletSprite || 0);
+				explosion.animations.play(bulletTypeName( bulletSprite || 0));
 				explosion.reset(x,y);
 				explosion.rotation = rot + randomSign() * randomRange(0.3,1);
 				explosion.angularVelocity=randomRange(-5,5);
@@ -4784,7 +4846,7 @@ function fireBoom(explosionsGroup, bulletSprite, x, y, rot){
 		for(var i=0; i < 3; i ++) { 
 			if(forceDead(explosionsGroup)){
 				var explosion = explosionsGroup.getFirstDead();
-				explosion.loadTexture('explosions', bulletSprite || 0);
+				explosion.animations.play(bulletTypeName( bulletSprite || 0));
 				explosion.reset(x,y);
 				explosion.rotation = rot ;
 				explosion.angularVelocity=randomRange(-5,5);
@@ -4808,11 +4870,12 @@ function glow(explosionsGroup, x, y, bullet){
 
 			if(forceDead(explosionsGroup)){
 				var explosion = explosionsGroup.getFirstDead();
-				explosion.loadTexture('explosions', bullet.bulletSprite);
+				explosion.animations.play(bulletTypeName( bullet.bulletSprite));
+				r = randomRange(-0.2,0.2);
 				var bulletOffsetX = bullet.body.velocity.x * game.time.physicsElapsed;
-				bulletOffsetX -= bullet.width * 0.40 * Math.cos(bullet.rotation);
+				bulletOffsetX -= bullet.width * 0.40 * Math.cos(bullet.rotation + r);
 				var bulletOffsetY = bullet.body.velocity.y * game.time.physicsElapsed; 
-				bulletOffsetY -= bullet.width * 0.40 * Math.sin(bullet.rotation);
+				bulletOffsetY -= bullet.width * 0.40 * Math.sin(bullet.rotation + r);
 				explosion.reset(x + bulletOffsetX,y + bulletOffsetY);
 				explosion.rotation = bullet.rotation + randomRange(-0.5,0.5);//bullet.rotation+Math.PI;
 				if(Math.random()>0.5){explosion.rotation+=Math.PI};
@@ -4820,7 +4883,7 @@ function glow(explosionsGroup, x, y, bullet){
 				r=randomRange(0.5,0.8);
 				explosion.body.velocity.x=bullet.body.velocity.x;
 				explosion.body.velocity.y=bullet.body.velocity.y;
-				explosion.scale.setTo(r+r*1.2*bullet.scale.y,r*r*1.2*bullet.scale.y);
+				explosion.scale.setTo(r+r*1.4*bullet.scale.y,r*r*1.2*bullet.scale.y);
 				explosion.alpha=bullet.alpha;
 				explosion.blendMode=bullet.blendMode;
 				explosion.body.angularVelocity=randomRange(50,200)*randomSign()/r;
@@ -4836,23 +4899,22 @@ function trail(explosionsGroup, x, y, bullet){
 
 			if(forceDead(explosionsGroup)){
 				var explosion = explosionsGroup.getFirstDead();
-				explosion.loadTexture('explosions', bullet.bulletSprite);
-				var bulletOffsetX = bullet.width * 0.1 * Math.cos(bullet.rotation);
-				var bulletOffsetY = bullet.width * 0.1 * Math.sin(bullet.rotation);
+				explosion.animations.play(bulletTypeName(bullet.bulletSprite));
+				var adjRotation = bullet.rotation + randomRange(-0.2,0.2);
+				var bulletOffsetX = bullet.width * 0.4 * Math.cos(adjRotation);
+				var bulletOffsetY = bullet.width * 0.4 * Math.sin(adjRotation);
 				explosion.reset(x - bulletOffsetX,y - bulletOffsetY);
-				explosion.rotation = bullet.rotation;
-				explosion.body.velocity.x=bullet.body.velocity.x;
-				explosion.body.velocity.y=bullet.body.velocity.y;
-				explosion.lifespan=Math.min(30*2,bullet.lifespan);
-				r=randomRange(0.25,1.6);
-				r*=Math.sqrt((bullet.scale.x+bullet.scale.y)/2);
-				explosion.scale.setTo(r*r*1.5,r*r*0.5);
-				explosion.anchor.setTo(Math.min(r*0.35,0.8),0.5);
-				explosion.alpha=0.7;
-				game.add.tween(explosion).to({alpha:Math.random()},explosion.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
+				explosion.rotation = Math.random()*Math.PI;
+				explosion.body.velocity.x=bullet.body.velocity.x*Math.random();
+				explosion.body.velocity.y=bullet.body.velocity.y*Math.random();
+				explosion.lifespan=Math.min(250,bullet.lifespan);
+				var r = randomRange(0.5,0.7);
+				r*=(bullet.scale.x+bullet.scale.y)/2;
+				explosion.scale.setTo(r,r);
+				explosion.alpha=randomRange(0.7,0.9);
+				explosion.body.angularVelocity=randomRange(800,1200)*randomSign();
 				explosion.blendMode=1;
-				explosion.body.angularVelocity=randomRange(200,500)*randomSign()/r;
-			}
+				}
 	}
 }
 
@@ -4865,7 +4927,7 @@ function gasBoom(explosionsGroup, x, y, bullet){
 		for(var i=0; i < 4; i ++) { 
 			if(forceDead(explosionsGroup)){
 				var explosion = explosionsGroup.getFirstDead();
-				explosion.loadTexture('explosions', Math.random()>0.5?7:9);
+				explosion.animations.play( Math.random(bulletTypeName()>0.5?7:9));
 				explosion.reset(x+randomRange(-8,8),y+randomRange(-8,8));
 				explosion.rotation = Math.random()*Math.PI*2;
 				explosion.fireVelocity=randomRange(-10,10);
@@ -4895,7 +4957,7 @@ function boom(explosionsGroup, bulletSprite, x, y, damage){
 		for(var i=0; i < 3 + (r * 2) ; i ++) { 
 			if(forceDead(explosionsGroup)){
 				var explosion = explosionsGroup.getFirstDead();
-				explosion.loadTexture('explosions', bulletSprite || 0);
+				explosion.animations.play(bulletTypeName( bulletSprite || 0));
 				explosion.reset(x,y);
 				explosion.rotation = randomSign() * randomRange(0,Math.PI);
 				explosion.angularVelocity=randomRange(-5,5);
@@ -4914,7 +4976,7 @@ function boom(explosionsGroup, bulletSprite, x, y, damage){
 		for(var i=0; i < 3; i ++) { 
 			if(forceDead(explosionsGroup)){
 				var explosion = explosionsGroup.getFirstDead();
-				explosion.loadTexture('explosions', bulletSprite || 0);
+				explosion.animations.play(bulletTypeName( bulletSprite || 0));
 				explosion.reset(x+randomRange(-8,8),y+randomRange(-8,8));
 				explosion.rotation = Math.random()*Math.PI;
 				explosion.angularVelocity=randomRange(-5,5);

@@ -452,8 +452,9 @@ var cmp = [
 				this.sprite.body.velocity.y+=Math.sin(this.sprite.rotation)*150;
 				this.speed=this.acceleration;
 				var bullet=this.spawnBullet(false);
-				bullet.loadTexture('explosions',2);
-				bullet.bulletSprite=2;
+				bullet.animations.play(bulletTypeName(15));
+				bullet.bulletSprite=15;
+				target.bulletSparkle=trail;
 				bullet.reset(this.sprite.x - (Math.cos(this.sprite.rotation)*(this.sprite.body.width)), this.sprite.y - (Math.sin(this.sprite.rotation)*(this.sprite.body.width)));
 				midBoom(explosions,2,bullet.x,bullet.y);
 				bullet.rotation=Math.random()*Math.PI;
@@ -693,7 +694,7 @@ var cmp = [
 	'bonus':function(target){
 		target.bulletBehavior.push(function(bullet,playerFired){
 				bullet.rotation+=randomRange(-.25,.25);
-				bullet.loadTexture('explosions',2);
+				bullet.animations.play(bulletTypeName(15));
 				bullet.body.angularVelocity=randomRange(600,900);
 				bullet.tracking=-999;
 				bullet.alpha=1.5;
@@ -1440,7 +1441,7 @@ function(tgt){
 				ui.sound_missile.play();
 				for(var n=0; n<1;n+=0.075){
 					var bullet=this.spawnBullet(false);
-					bullet.loadTexture('explosions',7);
+					bullet.animations.play(bulletTypeName(14));
 					bullet.reset(this.sprite.x, this.sprite.y);
 					bullet.rotation=n*2*Math.PI;
 					bullet.sparkle=function(){};
@@ -1931,7 +1932,7 @@ function(tgt){
 				var tgt = ownerFromName(sprite.name);
 
 				var newBullet=tgt.spawnBullet(false);
-				newBullet.loadTexture('bullet', bullet.bulletSprite);
+				newBullet.animations.play(bulletTypeName( bullet.bulletSprite));
 				newBullet.bulletSprite=bullet.bulletSprite;
 				newBullet.damage=bullet.damage;
 				newBullet.body.velocity.x=bullet.body.velocity.x;
@@ -2063,7 +2064,7 @@ function(tgt){
 	'flavor':'high damage, unreliable speed',
 	'bonus':function(target){
 		target.bulletSprite=2;
-
+		target.bulletSparkle=trail;
 		target.bulletBlendMode=0;
 		target.fireEnergy+=2;
 		target.fireDamage+=8;
@@ -2123,6 +2124,7 @@ function(tgt){
 	'flavor':'guided, long-range',
 	'bonus':function(target){
 		target.bulletSprite=2;
+		target.bulletSparkle=trail;
 		target.bulletBlendMode=0;
 		target.fireSound=ui.sound_missile;
 		target.fireTracking+=1.5;
@@ -2569,8 +2571,9 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 				for (var b=0;b<7;b++){
 
 				var newBullet=tgt.spawnBullet(false);
-				newBullet.loadTexture('bullet', bullet.bulletSprite);
+				newBullet.animations.play(bulletTypeName( bullet.bulletSprite));
 				newBullet.bulletSprite=bullet.bulletSprite;
+				newBullet.sparkle=function(){};
 				newBullet.damage=bullet.damage;
 				var vel = randomRange(0.9,1.4)*getHypo(bullet.body.velocity.x,bullet.body.velocity.y);
 				newBullet.rotation = randomRange(0,2*Math.PI);
