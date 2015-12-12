@@ -4595,7 +4595,7 @@ function update () {
 		planetfall.tilePosition.y=(planet.y-planetfall.y)/planetfall.scale.y;
 		planetlod.scale.setTo(planet.scale.x*1.07,planet.scale.y*1.07);
 		planetlod.reset(planet.x,planet.y);
-		planetfall.alpha=Math.min(0.77,(planet.scaleModifier-1));
+		planetfall.alpha=Math.min(0.77,(planet.scaleModifier-0.5));
 		planetlod.alpha=1;//Math.min(1,planet.scaleModifier+0.2);
 		planetdirt.alpha=Math.min(0.65,(planet.scaleModifier-1.3));
 
