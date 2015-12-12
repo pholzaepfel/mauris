@@ -1932,6 +1932,7 @@ function(tgt){
 				var tgt = ownerFromName(sprite.name);
 
 				var newBullet=tgt.spawnBullet(false);
+				if(typeof(newBullet)!='undefined'){
 				newBullet.animations.play(bulletTypeName( bullet.bulletSprite));
 				newBullet.bulletSprite=bullet.bulletSprite;
 				newBullet.damage=bullet.damage;
@@ -1942,7 +1943,8 @@ function(tgt){
 				newBullet.y=bullet.y;
 				if(Math.random()>0.5){
 				newBullet.bulletHitBehavior = bullet.bulletHitBehavior;
-				};
+				}
+				}
 				});
 
 	}
@@ -2571,6 +2573,8 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 				for (var b=0;b<7;b++){
 
 				var newBullet=tgt.spawnBullet(false);
+				
+				if(typeof(newBullet)!='undefined'){
 				newBullet.animations.play(bulletTypeName( bullet.bulletSprite));
 				newBullet.bulletSprite=bullet.bulletSprite;
 				newBullet.sparkle=function(){};
@@ -2583,6 +2587,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 				newBullet.scale.setTo(randomRange(0.7,1.2),randomRange(0.7,0.12));
 				newBullet.x=bullet.x;
 				newBullet.y=bullet.y;
+				}
 				}
 				});
 

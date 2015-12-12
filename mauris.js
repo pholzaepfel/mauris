@@ -3704,12 +3704,12 @@ function create () {
 		planet.baseX=randomRange(-300,400) * randomSign();
 		planet.baseY=randomRange(-300,400) * randomSign();
 		planetlod = game.add.sprite(resolutionX/1.6, resolutionY/1.6, 'planetslod');
-		planetfall = game.add.tileSprite(0, 0, resolutionX/2, resolutionY/2, 'planetfall');
+		planetfall = game.add.tileSprite(0, 0, resolutionX/1.5, resolutionY/1.5, 'planetfall');
 		planetdirt = game.add.tileSprite(0, 0, resolutionX/2, resolutionY/2, 'planetdirt');
 		planetlod.baseX=planet.baseX;
 		planetlod.baseY=planet.baseY;
 		planetdirt.fixedToCamera=true; 
-		planetdirt.scale.setTo(2,2);
+		planetdirt.scale.setTo(1.5,1.5);
 		planetdirt.tilePosition.x=0;
 		planetdirt.tilePosition.y=0;
 		planetfall.fixedToCamera=true; 
@@ -3786,7 +3786,7 @@ var bulletType = bulletTypes[j];
 		enemyThrust.gravity=0;
 
 		explosions = game.add.group();
-		explosions.createMultiple(100, 'explosions');
+		explosions.createMultiple(50, 'explosions');
 		game.physics.enable(explosions, Phaser.Physics.ARCADE);
 		explosions.setAll('anchor.x', 0.5);
 		explosions.setAll('anchor.y', 0.5);
