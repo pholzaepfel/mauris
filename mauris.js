@@ -385,6 +385,16 @@ function applyBonuses(target){
 			n++;
 		}
 	}
+	//apply some generic bonuses for NYI items
+	if(target.TODO){
+		target.acceleration+=target.TODO*0.2;
+		target.turnRate+=target.TODO*0.1;
+		target.health+=target.TODO;
+		target.fireEnergy+=target.TODO*0.2;
+		target.fireDamage+=target.TODO*0.25;
+		target.energyMax+=target.TODO;
+		target.energyAmount+=target.TODO*0.2;
+	}
 	target.acceleration =target.acceleration*48/(n+3);
 	target.turnRate*=2.5;
 
@@ -648,6 +658,7 @@ shipPart.prototype.update = function(){
 
 	this.sprite.exists=true;
 	if(this.target.alive){
+		this.sprite.scale.setTo(this.target.scale.x);
 		this.sprite.tint = (this.target.r << 16) + (this.target.g << 8) + this.target.b;
 		this.sprite.alpha=this.target.alpha;
 	}else{
@@ -656,12 +667,13 @@ shipPart.prototype.update = function(){
 	}
 	var ons = onscreen(this.target.x,this.target.y);
 	this.sprite.visible=this.sprite.alive && ons;
+	var scale = this.sprite.scale.x;
 	if (this.target.alive && this.alive && ons) {
 		this.sprite.angle = this.target.angle;
-		this.sprite.x = this.target.x + (this.offsetx * Math.cos(game.math.degToRad(this.target.angle)));
-		this.sprite.y = this.target.y + (this.offsety * Math.cos(game.math.degToRad(this.target.angle)));
-		this.sprite.x -= (this.offsety * Math.sin(game.math.degToRad(this.target.angle)));
-		this.sprite.y += (this.offsetx * Math.sin(game.math.degToRad(this.target.angle)));
+		this.sprite.x = this.target.x + (this.offsetx * scale * Math.cos(game.math.degToRad(this.target.angle)));
+		this.sprite.y = this.target.y + (this.offsety * scale * Math.cos(game.math.degToRad(this.target.angle)));
+		this.sprite.x -= (this.offsety * scale * Math.sin(game.math.degToRad(this.target.angle)));
+		this.sprite.y += (this.offsetx * scale * Math.sin(game.math.degToRad(this.target.angle)));
 		this.sprite.body.velocity = this.target.body.velocity;
 	}else if(!ons){
 		this.sprite.exists=false;
@@ -731,6 +743,7 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 	this.sprite.r=255;
 	this.sprite.g=255;
 	this.sprite.b=255;
+	this.TODO=0;
 	this.organicArmor=0;
 	this.questionBox=0;
 	this.nextOre=0;
@@ -1373,6 +1386,7 @@ mockPlayerShip.prototype.initPlayerShip = function (ship) {
 	this.sprite.g=255;
 	this.sprite.b=255;
 	this.organicArmor=0;
+	this.TODO=0;
 	this.nextOre=0;
 	this.nextOrganicArmorPing=0;
 	this.target=this.sprite;
@@ -1461,6 +1475,7 @@ playerShip.prototype.initPlayerShip = function (ship) {
 	this.sprite.g=255;
 	this.sprite.b=255;
 	this.organicArmor=0;
+	this.TODO=0;
 	this.nextOre=0;
 	this.nextOrganicArmorPing=0;
 	this.target=this.sprite;
@@ -1935,7 +1950,6 @@ var randomPartsList = function(partsList,size){
 			result.push(partsList[partId]);
 		}
 	}
-	result.sort(matchabilityComponentSort);
 	return result;
 }
 // use a "central" variant that matches on all sides for the center
@@ -2046,6 +2060,9 @@ var randomShip = function(partsList,size){
 	}
 	//box ships are ugly
 	if(shipWithoutVoid(ship).length == ship.length && Math.random() > 0.1){
+		success=false;
+	}
+	if(ship.filter(function(v,i) { return i==ship.lastIndexOf(v); }).length<size+1){
 		success=false;
 	}
 	for(var i=0;i<size;i++){
@@ -2695,7 +2712,9 @@ var matchArrayComponents = function(a,b,direction){
 	matchB = matchB.replace('2','N').replace('8','S').replace('4','E').replace('6','W');
 
 	//	if (a>0 && b<0 && matchA.match(direction)) { result +=4;}
-
+	if (matchA.match(direction) && b > 0 && !matchB.match(direction)){
+		result-=10;
+	}
 	if (matchA.match(direction) && matchB.match(direction)) { 
 		result += 20;
 		if (components[a].name==components[b].name) {
@@ -3520,7 +3539,7 @@ function createShip(shipParts, targetActor){
 			//that godawful barf there is a terse calculation for the coordinates of the part
 			//assuming an array of 'parts' (sprite ids) - array should have a length
 			//with an int square root
-			myParts.push(pool.get(((n-1)*-8)+((i%n)*16),((n-1)*-8)+(Math.floor(i/n)*16),shipParts[i],targetActor));
+			myParts.push(pool.get(((n-1)*-(8))+((i%n)*(16)),((n-1)*-(8))+(Math.floor(i/n)*(16)),shipParts[i],targetActor));
 		}
 	}
 	return myParts; 
@@ -3561,7 +3580,7 @@ function initMission (missionId) {
 			var myShip = playerStats.mission.enemies[n].ships.slice(0);
 			if(typeof(playerStats.mission.enemies[n].parts)!='undefined'){
 				var mySize = parseInt(randomRange(playerStats.mission.enemies[n].sizeMin, playerStats.mission.enemies[n].sizeMax + 1));
-				myShip = randomShip(playerStats.mission.enemies[n].parts.sort(matchabilityComponentSort), mySize);
+				myShip = randomShip(playerStats.mission.enemies[n].parts, mySize);
 				if(Math.random() > (1 / (Math.sqrt(myShip.length)-1))){
 					myShip = symmetrizeShip(myShip);
 				}
@@ -4595,7 +4614,7 @@ function update () {
 		planetfall.tilePosition.y=(planet.y-planetfall.y)/planetfall.scale.y;
 		planetlod.scale.setTo(planet.scale.x*1.07,planet.scale.y*1.07);
 		planetlod.reset(planet.x,planet.y);
-		planetfall.alpha=Math.min(0.77,(planet.scaleModifier-0.5));
+		planetfall.alpha=Math.min(0.77,(planet.scaleModifier-0.7));
 		planetlod.alpha=1;//Math.min(1,planet.scaleModifier+0.2);
 		planetdirt.alpha=Math.min(0.65,(planet.scaleModifier-1.3));
 

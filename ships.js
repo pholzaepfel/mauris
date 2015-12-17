@@ -1,4 +1,6 @@
 //prefabricated ships and asteroids to populate the playfield
+var blackParts = [9, 74, 71, 75, 321, 70, 8, 224, 193, 194, 290, 46, 258, 256, 192, 225, 226, 102, 320, 289, 257, 288, 72, 46, 91, 73, 321, 41, 322, 103, 321, 105, 70, 321, 41, 107, 104, 102, 40, 106];
+var dirtyParts = [148, 149, 180, 181, 31, 30, 47, 142, 175, 174, 143];
 var questionContainers=[
 [146, 147, 178, 179]
 ]

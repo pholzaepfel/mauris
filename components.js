@@ -1224,7 +1224,7 @@ function(tgt){
 	'match':'26',
 	'flavor':'--',
 	'bonus':function(target){
-		target.TODO=1;
+		target.TODO+=1;
 
 	}
 },
@@ -1235,7 +1235,7 @@ function(tgt){
 	'match':'42',
 	'flavor':'--',
 	'bonus':function(target){
-		target.TODO=1;
+		target.TODO+=1;
 
 	}
 },
@@ -1286,7 +1286,7 @@ function(tgt){
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
-		target.TODO=1;
+		target.TODO+=1;
 	}
 },
 {
@@ -1296,7 +1296,7 @@ function(tgt){
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
-		target.TODO=1;
+		target.TODO+=1;
 	}
 },
 {
@@ -2384,7 +2384,7 @@ target.effects=function(){
 	'match':'426',
 	'flavor':'--',
 	'bonus':function(target){
-		target.TODO=1;
+		target.TODO+=1;
 
 	}
 },
@@ -2395,7 +2395,7 @@ target.effects=function(){
 	'match':'42',
 	'flavor':'--',
 	'bonus':function(target){
-		target.TODO=1;
+		target.TODO+=1;
 
 	}
 },
@@ -2406,7 +2406,7 @@ target.effects=function(){
 	'match':'26',
 	'flavor':'--',
 	'bonus':function(target){
-		target.TODO=1;
+		target.TODO+=1;
 
 	}
 },
@@ -2417,7 +2417,7 @@ target.effects=function(){
 	'match':'42',
 	'flavor':'--',
 	'bonus':function(target){
-		target.TODO=1;
+		target.TODO+=1;
 
 	}
 },
@@ -2428,7 +2428,7 @@ target.effects=function(){
 	'match':'26',
 	'flavor':'--',
 	'bonus':function(target){
-		target.TODO=1;
+		target.TODO+=1;
 
 	}
 },
@@ -2439,7 +2439,7 @@ target.effects=function(){
 	'match':'42',
 	'flavor':'--',
 	'bonus':function(target){
-		target.TODO=1;
+		target.TODO+=1;
 
 	}
 },
@@ -2798,7 +2798,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'match':'86',
 	'flavor':'--',
 	'bonus':function(target){
-		target.TODO=1;
+		target.TODO+=1;
 
 	}
 },
@@ -2809,7 +2809,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'match':'84',
 	'flavor':'--',
 	'bonus':function(target){
-		target.TODO=1;
+		target.TODO+=1;
 
 	}
 },
@@ -2820,7 +2820,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'match':'86',
 	'flavor':'--',
 	'bonus':function(target){
-		target.TODO=1;
+		target.TODO+=1;
 
 	}
 },
@@ -2831,7 +2831,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'match':'84',
 	'flavor':'--',
 	'bonus':function(target){
-		target.TODO=1;
+		target.TODO+=1;
 
 	}
 },
@@ -2842,7 +2842,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'match':'86',
 	'flavor':'--',
 	'bonus':function(target){
-		target.TODO=1;
+		target.TODO+=1;
 
 	}
 },
@@ -2853,7 +2853,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'match':'84',
 	'flavor':'--',
 	'bonus':function(target){
-		target.TODO=1;
+		target.TODO+=1;
 
 	}
 },
@@ -2929,32 +2929,32 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 },
 {
 	'id':192,
-	'drops':false,
-	'name':'Component192',
+	'drops':true,
+	'name':'Black',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
-
+		target.TODO+=1;
 	}
 },
 {
 	'id':193,
-	'drops':false,
-	'name':'Component193',
+	'drops':true,
+	'name':'Black',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
-
+		target.TODO+=1;
 	}
 },
 {
 	'id':194,
-	'drops':false,
-	'name':'Component194',
-	'match':'4682',
+	'drops':true,
+	'name':'Black',
+	'match':'4',
 	'flavor':'--',
 	'bonus':function(target){
-
+		target.TODO+=1;
 	}
 },
 {
@@ -3249,32 +3249,32 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 },
 {
 	'id':224,
-	'drops':false,
-	'name':'Component224',
-	'match':'4682',
+	'drops':true,
+	'name':'Black',
+	'match':'6',
 	'flavor':'--',
 	'bonus':function(target){
-
+		target.TODO+=1;
 	}
 },
 {
 	'id':225,
-	'drops':false,
-	'name':'Component225',
+	'drops':true,
+	'name':'Black',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
-
+		target.TODO+=1;
 	}
 },
 {
 	'id':226,
-	'drops':false,
-	'name':'Component226',
-	'match':'4682',
+	'drops':true,
+	'name':'Black',
+	'match':'4',
 	'flavor':'--',
 	'bonus':function(target){
-
+		target.TODO+=1;
 	}
 },
 {
@@ -3569,32 +3569,32 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 },
 {
 	'id':256,
-	'drops':false,
-	'name':'Component256',
-	'match':'4682',
+	'drops':true,
+	'name':'Black',
+	'match':'486',
 	'flavor':'--',
 	'bonus':function(target){
-
+		target.TODO+=1;
 	}
 },
 {
 	'id':257,
-	'drops':false,
-	'name':'Component-257',
+	'drops':true,
+	'name':'Black-257',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
-
+		target.TODO+=1;
 	}
 },
 {
 	'id':258,
-	'drops':false,
-	'name':'Component-258',
-	'match':'4682',
+	'drops':true,
+	'name':'Black-258',
+	'match':'6',
 	'flavor':'--',
 	'bonus':function(target){
-
+		target.TODO+=1;
 	}
 },
 {
@@ -3889,32 +3889,32 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 },
 {
 	'id':288,
-	'drops':false,
-	'name':'Component-288',
+	'drops':true,
+	'name':'Black-288',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
-
+		target.TODO+=1;
 	}
 },
 {
 	'id':289,
-	'drops':false,
-	'name':'Component-289',
+	'drops':true,
+	'name':'Black-289',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
-
+		target.TODO+=1;
 	}
 },
 {
 	'id':290,
-	'drops':false,
-	'name':'Component-290',
-	'match':'4682',
+	'drops':true,
+	'name':'Black-290',
+	'match':'42',
 	'flavor':'--',
 	'bonus':function(target){
-
+		target.TODO+=1;
 	}
 },
 {
@@ -4209,32 +4209,32 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 },
 {
 	'id':320,
-	'drops':false,
-	'name':'Component-320',
+	'drops':true,
+	'name':'Black-320',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
-
+		target.TODO+=1;
 	}
 },
 {
 	'id':321,
-	'drops':false,
-	'name':'Component-321',
-	'match':'4682',
+	'drops':true,
+	'name':'Black-321',
+	'match':'82',
 	'flavor':'--',
 	'bonus':function(target){
-
+		target.TODO+=1;
 	}
 },
 {
 	'id':322,
-	'drops':false,
-	'name':'Component-322',
-	'match':'4682',
+	'drops':true,
+	'name':'Black-322',
+	'match':'8',
 	'flavor':'--',
 	'bonus':function(target){
-
+		target.TODO+=1;
 	}
 },
 {
