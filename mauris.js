@@ -734,8 +734,8 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 
 	this.sprite.rotation=Math.random()*2*Math.PI;
 
-	var x = this.target.x + (Math.cos(-1 * this.sprite.rotation) * (randomRange(960,1500) + player.sprite.body.velocity.x));
-	var y = this.target.y + (Math.sin(-1 * this.sprite.rotation) * (randomRange(540,1500) + player.sprite.body.velocity.y));
+	var x = this.target.x + (Math.cos(-1 * this.sprite.rotation) * (randomRange(1100,1500) + player.sprite.body.velocity.x * 1.2));
+	var y = this.target.y + (Math.sin(-1 * this.sprite.rotation) * (randomRange(700,1500) + player.sprite.body.velocity.y * 1.2));
 
 	if(player.target==this.sprite){
 		player.target=player.sprite;
@@ -743,6 +743,7 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 	this.sprite.r=255;
 	this.sprite.g=255;
 	this.sprite.b=255;
+	this.sprite.scale.setTo(1,1);
 	this.TODO=0;
 	this.organicArmor=0;
 	this.questionBox=0;
@@ -1061,6 +1062,12 @@ enemyShip.prototype.update = function() {
 		this.parts=createShip(this.ship,this.sprite);
 		this.built=true;
 	}
+	var scale = ((this.sprite.body.x - player.sprite.body.x)/1000)*-1*(planet.baseX/Math.abs(planet.baseY));
+	scale += ((this.sprite.body.y - player.sprite.body.y)/1000)*-1*(planet.baseY/Math.abs(planet.baseX));
+	scale /= 9 + (planet.scaleModifier/2);
+	scale += 1;
+	scale = Math.pow(scale,2);
+	this.sprite.scale.setTo(scale,scale);
 	//fugly hack to get around mysterious loss of velocity
 	if(this.sprite.body.velocity.x != 0 || this.sprite.body.velocity.y != 0){
 		this.lastVelocityX = this.sprite.body.velocity.x;
@@ -4644,13 +4651,17 @@ function update () {
 		}
 		scroll(hazeRed,-0.26);
 		scroll(hazePurple,-0.9);
-		//hazePurple.bringToTop();
+	        //hazePurple.bringToTop();
 		planet.hazeModifier=0;
 		planet.hazeModifier=Math.max(0,(2*planet.scaleModifier)-4);
 		planet.hazeModifier=Math.min(planet.hazeModifier,1);
 		hazeRed.scale.setTo(hazeRed.baseScale+planet.hazeModifier,hazeRed.baseScale+planet.hazeModifier);
-		hazePurple.scale.setTo(hazePurple.baseScale+planet.hazeModifier,hazePurple.baseScale+planet.hazeModifier);
-		hazeRed.speed=playerStats.mission.hazeRedSpeed+playerStats.mission.hazeRedSpeed*planet.hazeModifier*2;
+		hazeRed.width=resolutionX/hazeRed.scale.x;
+		hazeRed.height=resolutionY/hazeRed.scale.y;
+			hazePurple.scale.setTo(hazePurple.baseScale+planet.hazeModifier,hazePurple.baseScale+planet.hazeModifier);
+		hazePurple.width=resolutionX/hazePurple.scale.x;
+		hazePurple.height=resolutionY/hazePurple.scale.y;
+	hazeRed.speed=playerStats.mission.hazeRedSpeed+playerStats.mission.hazeRedSpeed*planet.hazeModifier*2;
 		hazeRed.alpha=playerStats.mission.hazeRed-planet.hazeModifier;
 		hazeWhite.alpha=playerStats.mission.hazeWhite*(1-planet.hazeModifier);
 		hazePurple.alpha=playerStats.mission.hazePurple*(1-(planet.hazeModifier*0.3));
