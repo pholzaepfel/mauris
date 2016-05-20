@@ -1940,7 +1940,7 @@ var oppositeVariantComponent = function(partId){
 var randomPartsList = function(partsList,size){
 	var result = [];
 	for (var i = 0; i < size; i++){
-		var partId = (parseInt(randomRange(0,partsList.length)));
+		var partId = (parseInt(randomRange(0,partsList.length*Math.random())));
 		if(result.indexOf(partId) > -1){
 			partId = (parseInt(randomRange(0,partsList.length)));
 		}
@@ -2023,10 +2023,19 @@ var symmetrizeShip = function(ship){
 	}
 	return ret;
 }
-var randomShip = function(partsList,size){
+var randomShip = function(partsList,size,exactPartsList){
+	if(typeof(exactPartsList)=='undefined'){
+		exactPartsList=false;
+	}
+
 	var squareSize = size * size;
-	var numParts=Math.max(parseInt(randomRange(squareSize/4,squareSize)),2);
-	var myParts=randomPartsList(partsList,numParts);
+
+	var numParts=Math.max(parseInt(randomRange(squareSize/4,squareSize)),4);
+	var matchedParts=partsList.slice(0).sort(matchabilityComponentSort);
+	var myParts=randomPartsList(matchedParts,numParts);
+	if(exactPartsList){
+		myParts=matchedParts;
+	}
 	var center=parseInt(squareSize/2);
 	var ship = [];
 	var success = true;
@@ -2034,14 +2043,16 @@ var randomShip = function(partsList,size){
 		ship[i]=-1;
 	}
 	var attempts = 0;
+	myParts.sort(matchabilityComponentSort);
 	ship[center] = myParts[0];
 	myParts.splice(0,1);
-	while(myParts.length && attempts < 40){
+	while(myParts.length && attempts < 5){
 		for (var i=0;i<myParts.length;i++) {
 			var newShip = ship.slice(0);
 			//pick part
-			newShip = calculatePartPosition3(0,0,myParts[i],ship,40-attempts,(attempts > 10 ? true:false));
+			newShip = calculatePartPosition3(0,0,myParts[i],ship,8*attempts,(attempts > 2 ? true:false));
 			if(newShip.join() != ship.join()){
+//				console.log('Added ' + myParts[i]);
 				myParts.splice(i,1);
 				i--;
 			}
@@ -2055,25 +2066,40 @@ var randomShip = function(partsList,size){
 			ship[i]=-1;
 		}
 	}
-	if(shipWithoutVoid(ship).length < size + 1) {
+	if(!exactPartsList && shipWithoutVoid(ship).length < size) {
 		success = false;
+		console.log('Too small:' + size);
+			console.log(ship);
 	}
 	//box ships are ugly
-	if(shipWithoutVoid(ship).length == ship.length && Math.random() > 0.1){
+	if(ship.length > 4 && shipWithoutVoid(ship).length == ship.length && Math.random() > 0.1){
 		success=false;
+console.log('Boxy');
+			console.log(ship);
 	}
-	if(ship.filter(function(v,i) { return i==ship.lastIndexOf(v); }).length<size+1){
+	/*if(ship.filter(function(v,i) { return i==ship.lastIndexOf(v); }).length<size+1){
 		success=false;
-	}
+	}*/ // what is this doing?
+	var lastRowWasEmpty=true;
+	var failNextChange=false;
 	for(var i=0;i<size;i++){
 		if(shipWithoutVoid(getSquareArrayRow(ship,i)).length==0){
+			if(!lastRowWasEmpty){
+				lastRowWasEmpty=true;
+				failNextChange=true;
+			}
+		}else if (!lastRowWasEmpty && !failNextChange){
+			lastRowWasEmpty=false;
+		}else if (lastRowWasEmpty && failNextChange){
 			success=false;
+			console.log('Empty row' + (i-1));
+			console.log(ship);
 		}
 	}
 	if(success){
 		return ship;
 	}else{
-		return randomShip(partsList,size);
+		return [76];
 	}
 }
 var standardFiringSolution = function(attacker, target, fireRange, fireVelocity, angleModifier, turnRate) {
