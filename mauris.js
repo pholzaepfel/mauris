@@ -15,7 +15,7 @@ var bulletTypes = [
 {'name':'chem', 'id':9},
 {'name':'gascloud', 'id':14},
 {'name':'fire', 'id':15}
-	
+
 ];
 var bulletTypeName = function(id){
 	for (var i=0;i<bulletTypes.length;i++){
@@ -51,9 +51,9 @@ var forceDead = function(collection){
 	}	
 	if(!collection.countDead()){
 		if(FDcount < 30){ // stop big events from slowing things down
-		collection.sort('lifespan',Phaser.Group.SORT_ASCENDING);
-		collection.getFirstAlive().kill();
-		FDcount++;
+			collection.sort('lifespan',Phaser.Group.SORT_ASCENDING);
+			collection.getFirstAlive().kill();
+			FDcount++;
 		}
 	}
 	return collection.countDead();
@@ -463,6 +463,18 @@ function matchabilityComponentSort(a, b) {
 	} 
 	return 0;
 }
+function reverseMatchabilityComponentSort(a, b) {
+	if(components[a].match.length<components[b].match.length){
+		return -1;
+	}else if(components[a].match.length>components[b].match.length){
+		return 1;
+	}else if(b<a){
+		return -1;
+	}else if(b>a){
+		return 1;
+	} 
+	return 0;
+}
 function alphaComponentSort(a, b) {
 	if(components[a].name>components[b].name){
 		return 1;
@@ -652,12 +664,13 @@ shipPart.prototype.initShipPart = function (x,y,index,targetSprite){
 	this.sprite.visible = true;
 	this.sprite.reset(this.offsetx,this.offsety);
 	this.sprite.anchor.setTo(0.5,0.5);
+	this.attached=true;
 	this.sprite.bringToTop();
 }
 shipPart.prototype.update = function(){
 
 	this.sprite.exists=true;
-	if(this.target.alive){
+	if(this.target.alive && this.attached){
 		this.sprite.scale.setTo(this.target.scale.x);
 		this.sprite.tint = (this.target.r << 16) + (this.target.g << 8) + this.target.b;
 		this.sprite.alpha=this.target.alpha;
@@ -668,7 +681,7 @@ shipPart.prototype.update = function(){
 	var ons = onscreen(this.target.x,this.target.y);
 	this.sprite.visible=this.sprite.alive && ons;
 	var scale = this.sprite.scale.x;
-	if (this.target.alive && this.alive && ons) {
+	if (this.target.alive && this.alive && ons && this.attached) {
 		this.sprite.angle = this.target.angle;
 		this.sprite.x = this.target.x + (this.offsetx * scale * Math.cos(game.math.degToRad(this.target.angle)));
 		this.sprite.y = this.target.y + (this.offsety * scale * Math.cos(game.math.degToRad(this.target.angle)));
@@ -1574,8 +1587,23 @@ playerShip.prototype.initPlayerShip = function (ship) {
 	playerStats.health = this.healthMax;
 	playerStats.healthMax = this.healthMax;
 }
-playerShip.prototype.damage = function(dmg, aggro) {
+playerShip.prototype.damage = function(dmg, aggro, bulletX, bulletY) {
 
+	if(typeof(bulletX)=='undefined'){
+		bulletX = 0;
+	}
+	if(typeof(bulletY)=='undefined'){
+		bulletY = 0;
+	}
+	var bullet = {x:bulletX, y:bulletY};
+
+	for(var i=0;i<this.parts.length;i++){
+		if(this.ship[i]!=-1){
+			if(game.physics.arcade.overlap(this.parts[i].sprite,bullet)){
+				removePlayerPartInFlight(i, dmg);		
+			}
+		}
+	}
 	if(this.shield){
 		midBoom(explosions,4,this.sprite.x,this.sprite.y);
 	}else{
@@ -1849,7 +1877,7 @@ var laserBulletBehavior = function(bullet,thickness,alpha,color1,color2,color3,d
 				closestIntersectionDistance=game.physics.arcade.distanceBetween(laser.start,intersection);
 				closestIntersection=intersection;
 			}
-			player.damage(tgt.fireDamage*damageModifier*0.5*game.time.physicsElapsed);
+			player.damage(tgt.fireDamage*damageModifier*0.5*game.time.physicsElapsed, intersection.x, intersection.y);
 			laserHitBehavior(player);
 			boom(explosions,tgt.bulletSprite,intersection.x,intersection.y);
 			if(typeof(player.nextLaserBoom)=='undefined'){
@@ -2023,9 +2051,13 @@ var symmetrizeShip = function(ship){
 	}
 	return ret;
 }
-var randomShip = function(partsList,size){
+var randomShip = function(partsList,size,extraParts){
+	if(typeof(extraParts)=='undefined'){
+		extraParts=0;
+	}
 	var squareSize = size * size;
-	var numParts=Math.max(parseInt(randomRange(squareSize/4,squareSize)),2);
+	var numParts=Math.max(parseInt(randomRange(squareSize/4,squareSize)),4);
+	numParts+=extraParts;
 	var myParts=randomPartsList(partsList,numParts);
 	var center=parseInt(squareSize/2);
 	var ship = [];
@@ -2034,16 +2066,18 @@ var randomShip = function(partsList,size){
 		ship[i]=-1;
 	}
 	var attempts = 0;
+	var connected = 0;
 	ship[center] = myParts[0];
 	myParts.splice(0,1);
-	while(myParts.length && attempts < 40){
+	while(myParts.length && attempts < 10 && connected < squareSize - 1){
 		for (var i=0;i<myParts.length;i++) {
 			var newShip = ship.slice(0);
 			//pick part
-			newShip = calculatePartPosition3(0,0,myParts[i],ship,40-attempts,(attempts > 10 ? true:false));
+			newShip = calculatePartPosition3(0,0,myParts[i],ship,40-(attempts*4),false);
 			if(newShip.join() != ship.join()){
 				myParts.splice(i,1);
 				i--;
+				connected++;
 			}
 			ship=newShip;
 		}
@@ -2055,25 +2089,37 @@ var randomShip = function(partsList,size){
 			ship[i]=-1;
 		}
 	}
-	if(shipWithoutVoid(ship).length < size + 1) {
+	if(shipWithoutVoid(ship).length < size) {
 		success = false;
 	}
 	//box ships are ugly
 	if(shipWithoutVoid(ship).length == ship.length && Math.random() > 0.1){
 		success=false;
 	}
-	if(ship.filter(function(v,i) { return i==ship.lastIndexOf(v); }).length<size+1){
+	/*	if(ship.filter(function(v,i) { return i==ship.lastIndexOf(v); }).length<size+1){
 		success=false;
-	}
+		}*/
+
+	var lastRowWasEmpty=true;
+	var failNextChange=false;
+
 	for(var i=0;i<size;i++){
 		if(shipWithoutVoid(getSquareArrayRow(ship,i)).length==0){
+			if(!lastRowWasEmpty){
+				lastRowWasEmpty=true;
+				failNextChange=true;
+			}
+		}else if (!lastRowWasEmpty && !failNextChange){
+			lastRowWasEmpty=false;
+		}else if (lastRowWasEmpty && failNextChange){
 			success=false;
 		}
 	}
+
 	if(success){
 		return ship;
 	}else{
-		return randomShip(partsList,size);
+		return randomShip(partsList,size,extraParts+size);
 	}
 }
 var standardFiringSolution = function(attacker, target, fireRange, fireVelocity, angleModifier, turnRate) {
@@ -2098,9 +2144,9 @@ var standardFiringSolution = function(attacker, target, fireRange, fireVelocity,
 	}
 	var interceptTime = targetDistance/adjVelocity;
 	var targetRectangle = new Phaser.Rectangle(target.x, target.y, target.width, target.height);	
-		var bulletWidth = 16;
-		var bulletHeight = 16;
-	
+	var bulletWidth = 16;
+	var bulletHeight = 16;
+
 	for(var j=interceptTime*0.7;j<interceptTime*1.3;j+=0.01){
 
 		var bulletEndX = bulletStartX + (bulletVelX * j);
@@ -3515,8 +3561,43 @@ function selectPart() {
 		}
 	}
 }
+// n = position in array
+function removePlayerPartInFlight(n, dmg) {
+	var oldX = player.sprite.x;
+	var oldY = player.sprite.y;
+	var oldRotation = player.sprite.rotation;
+	var oldVelocityX = player.sprite.body.velocity.x;
+	var oldVelocityY = player.sprite.body.velocity.y;
+	var nAdj = 0;
+	for (var i=0;i<n+nAdj+1;i++){
+		if(player.ship[i]==-1){
+			nAdj++;
+		}
+	}
+	console.log(nAdj);
+	player.ship[n + nAdj]=-1;
+	player.initPlayerShip(player.ship);	
+	player.sprite.reset(oldX,oldY);
+	player.sprite.body.velocity.x=oldVelocityX;	
+	player.sprite.body.velocity.y=oldVelocityY;	
+	player.sprite.rotation=oldRotation;
+}
 
-
+function addPlayerPartInFlight(componentId) {
+	var oldX = player.sprite.x;
+	var oldY = player.sprite.y;
+	var oldRotation = player.sprite.rotation;
+	var oldVelocityX = player.sprite.body.velocity.x;
+	var oldVelocityY = player.sprite.body.velocity.y;
+	ui.parts = createBuildParts(player.ship,0,0);
+	ui.partsArray();
+	createPart(componentId);
+	ui.endPartsUI();
+	player.sprite.reset(oldX,oldY);
+	player.sprite.body.velocity.x=oldVelocityX;	
+	player.sprite.body.velocity.y=oldVelocityY;	
+	player.sprite.rotation=oldRotation;
+}
 
 function createPart(n){
 
@@ -3778,8 +3859,9 @@ function create () {
 
 		pool = new partsPool();
 		dragPool = new dragPartsPool();
-		player = new playerShip(defaultPlayerShip);
-		mockPlayer = new mockPlayerShip(defaultPlayerShip);
+		// end of an era
+		player = new playerShip(symmetrizeShip(randomShip(banditGear,3)));
+		mockPlayer = new mockPlayerShip(player.ship);
 
 		//  The enemies bullet group
 		enemyBullets = game.add.group();
@@ -3793,11 +3875,11 @@ function create () {
 		for (var i=0;i<enemyBullets.length;i++){
 			var bullet = enemyBullets.getAt(i);
 			for (var j=0;j<bulletTypes.length;j++){							
-var bulletType = bulletTypes[j];
+				var bulletType = bulletTypes[j];
 				bullet.animations.add(bulletType.name, [bulletType.id]);
 			}
 		}
-	
+
 		enemyThrust = game.add.emitter(0,0,100);
 		enemyThrust.makeParticles('thrust',[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]);
 		enemyThrust.setAlpha(1.5,0,1500,Phaser.Easing.Sinusoidal.Out);
@@ -3818,7 +3900,7 @@ var bulletType = bulletTypes[j];
 				explosion.animations.add(bulletType.name, [bulletType.id]);
 			}
 		}
-	
+
 		sparkleExplosions = game.add.group();
 		sparkleExplosions.createMultiple(50, 'sparkles');
 		game.physics.enable(sparkleExplosions, Phaser.Physics.ARCADE);
@@ -3846,7 +3928,7 @@ var bulletType = bulletTypes[j];
 		for (var i=0;i<bullets.length;i++){
 			var bullet = bullets.getAt(i);
 			for (var j=0;j<bulletTypes.length;j++){							
-var bulletType = bulletTypes[j];
+				var bulletType = bulletTypes[j];
 				bullet.animations.add(bulletType.name, [bulletType.id]);
 			}
 		}
@@ -4392,6 +4474,7 @@ function update () {
 						ui.parts[ui.currentPlayerPart].sprite.blendMode=0;
 						nextUIDelay = game.time.now+2000;
 						ui.updatePart();
+						ui.endPartsUI();
 						ui.partsArray();
 					}
 					if(fire){
@@ -4887,27 +4970,27 @@ function glow(explosionsGroup, x, y, bullet){
 
 		var r = Math.random();
 
-			if(forceDead(explosionsGroup)){
-				var explosion = explosionsGroup.getFirstDead();
-				explosion.animations.play(bulletTypeName( bullet.bulletSprite));
-				r = randomRange(-0.2,0.2);
-				var bulletOffsetX = bullet.body.velocity.x * game.time.physicsElapsed;
-				bulletOffsetX -= bullet.width * 0.40 * Math.cos(bullet.rotation + r);
-				var bulletOffsetY = bullet.body.velocity.y * game.time.physicsElapsed; 
-				bulletOffsetY -= bullet.width * 0.40 * Math.sin(bullet.rotation + r);
-				explosion.reset(x + bulletOffsetX,y + bulletOffsetY);
-				explosion.rotation = bullet.rotation + randomRange(-0.5,0.5);//bullet.rotation+Math.PI;
-				if(Math.random()>0.5){explosion.rotation+=Math.PI};
-				explosion.lifespan=Math.min(150,bullet.lifespan);
-				r=randomRange(0.5,0.8);
-				explosion.body.velocity.x=bullet.body.velocity.x;
-				explosion.body.velocity.y=bullet.body.velocity.y;
-				explosion.scale.setTo(r+r*1.4*bullet.scale.y,r*r*1.2*bullet.scale.y);
-				explosion.alpha=bullet.alpha;
-				explosion.blendMode=bullet.blendMode;
-				explosion.body.angularVelocity=randomRange(50,200)*randomSign()/r;
+		if(forceDead(explosionsGroup)){
+			var explosion = explosionsGroup.getFirstDead();
+			explosion.animations.play(bulletTypeName( bullet.bulletSprite));
+			r = randomRange(-0.2,0.2);
+			var bulletOffsetX = bullet.body.velocity.x * game.time.physicsElapsed;
+			bulletOffsetX -= bullet.width * 0.40 * Math.cos(bullet.rotation + r);
+			var bulletOffsetY = bullet.body.velocity.y * game.time.physicsElapsed; 
+			bulletOffsetY -= bullet.width * 0.40 * Math.sin(bullet.rotation + r);
+			explosion.reset(x + bulletOffsetX,y + bulletOffsetY);
+			explosion.rotation = bullet.rotation + randomRange(-0.5,0.5);//bullet.rotation+Math.PI;
+			if(Math.random()>0.5){explosion.rotation+=Math.PI};
+			explosion.lifespan=Math.min(150,bullet.lifespan);
+			r=randomRange(0.5,0.8);
+			explosion.body.velocity.x=bullet.body.velocity.x;
+			explosion.body.velocity.y=bullet.body.velocity.y;
+			explosion.scale.setTo(r+r*1.4*bullet.scale.y,r*r*1.2*bullet.scale.y);
+			explosion.alpha=bullet.alpha;
+			explosion.blendMode=bullet.blendMode;
+			explosion.body.angularVelocity=randomRange(50,200)*randomSign()/r;
 
-			}
+		}
 	}
 }
 function trail(explosionsGroup, x, y, bullet){
@@ -4916,29 +4999,29 @@ function trail(explosionsGroup, x, y, bullet){
 
 		var r = Math.random();
 
-			if(forceDead(explosionsGroup)){
-				var explosion = explosionsGroup.getFirstDead();
-				explosion.animations.play(bulletTypeName(bullet.bulletSprite));
-				var adjRotation = bullet.rotation + randomRange(-0.2,0.2);
-				var bulletOffsetX = bullet.width * 0.4 * Math.cos(adjRotation);
-				var bulletOffsetY = bullet.width * 0.4 * Math.sin(adjRotation);
-				explosion.reset(x - bulletOffsetX,y - bulletOffsetY);
-				explosion.rotation = Math.random()*Math.PI;
-				explosion.body.velocity.x=bullet.body.velocity.x*Math.random();
-				explosion.body.velocity.y=bullet.body.velocity.y*Math.random();
-				explosion.lifespan=Math.min(250,bullet.lifespan);
-				var r = randomRange(0.5,0.7);
-				r*=(bullet.scale.x+bullet.scale.y)/2;
-				explosion.scale.setTo(r,r);
-				explosion.alpha=randomRange(0.7,0.9);
-				explosion.body.angularVelocity=randomRange(800,1200)*randomSign();
-				explosion.blendMode=1;
-				}
+		if(forceDead(explosionsGroup)){
+			var explosion = explosionsGroup.getFirstDead();
+			explosion.animations.play(bulletTypeName(bullet.bulletSprite));
+			var adjRotation = bullet.rotation + randomRange(-0.2,0.2);
+			var bulletOffsetX = bullet.width * 0.4 * Math.cos(adjRotation);
+			var bulletOffsetY = bullet.width * 0.4 * Math.sin(adjRotation);
+			explosion.reset(x - bulletOffsetX,y - bulletOffsetY);
+			explosion.rotation = Math.random()*Math.PI;
+			explosion.body.velocity.x=bullet.body.velocity.x*Math.random();
+			explosion.body.velocity.y=bullet.body.velocity.y*Math.random();
+			explosion.lifespan=Math.min(250,bullet.lifespan);
+			var r = randomRange(0.5,0.7);
+			r*=(bullet.scale.x+bullet.scale.y)/2;
+			explosion.scale.setTo(r,r);
+			explosion.alpha=randomRange(0.7,0.9);
+			explosion.body.angularVelocity=randomRange(800,1200)*randomSign();
+			explosion.blendMode=1;
+		}
 	}
 }
 
 function gasBoom(explosionsGroup, x, y, bullet){
-	
+
 	if(onscreen(x,y)){
 
 		var r = Math.random();
@@ -5096,7 +5179,8 @@ function playerGotLoot (sprite, loot) {
 		player.health+=1;
 		player.energy+=player.oreEnergy;
 	}else if(loot.lootType=='component'){
-		playerStats.inventory.push(loot.component);
+		//playerStats.inventory.push(loot.component);
+		addPlayerPartInFlight(loot.component);
 		ui.texts.push('got ' + components[loot.component].name);
 	}
 	ui.sound_beep.play();
@@ -5114,7 +5198,7 @@ function bulletHitPlayer (sprite, bullet) {
 		bullet.bulletHitBehavior[i](sprite, bullet);
 	}
 
-	var destroyed = player.damage(bullet.damage, bullet.owner);
+	var destroyed = player.damage(bullet.damage, bullet.owner, bullet.x, bullet.y);
 
 	if(destroyed){
 		ui.sound_randomBoom();
