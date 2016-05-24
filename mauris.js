@@ -3752,9 +3752,9 @@ function fadeIn () {
 	planet.r=0;
 	planet.g=0;
 	planet.b=0;
-	planet.r=parseInt(randomRange(40,255));
-	planet.g=parseInt(randomRange(40,255));
-	planet.b=parseInt(randomRange(40,255));
+	planet.r=parseInt(randomRange(120,255));
+	planet.g=parseInt(randomRange(120,255));
+	planet.b=parseInt(randomRange(120,255));
 	planet.tint=(planet.r << 16) + (planet.g << 8) + planet.b;
 	planetlod.baseX=planet.baseX;
 	planetlod.baseY=planet.baseY;
@@ -3762,12 +3762,15 @@ function fadeIn () {
 	planet.x = planet.baseX;
 	planet.y = planet.baseY;
 	planet.y = planet.baseY;
-	planetlod.rotation=planet.rotation;
+	planetlod.rotation=randomRange(0,2*Math.PI);
 	planetlod.baseScale=planet.baseScale;
 	planetlod.anchor.setTo(0.5,0.5);
 	planetlod.scale.x=planetlod.baseScale;
 	planetlod.scale.y=planetlod.baseScale;
-	planetlod.tint=planet.tint;
+		planetlod.r=parseInt(randomRange(128,255));
+	planetlod.g=parseInt(randomRange(128,255));
+	planetlod.b=parseInt(randomRange(128,255));
+	planetlod.tint=(planetlod.r << 16) + (planetlod.g << 8) + planetlod.b;
 	planetdirt.tint=(randomRange(40,255) << 16) + (randomRange(40,255) << 8) + randomRange(40,255);
 	planetfall.tint=(randomRange(40,255) << 16) + (randomRange(40,255) << 8) + randomRange(40,255);
 	hazeRed.alpha=0;
@@ -3813,7 +3816,7 @@ function create () {
 		hazeWhite.tilePosition.x = Math.random()*resolutionX;
 		hazeWhite.tilePosition.y = Math.random()*resolutionY;
 		hazeWhite.speed = 600;
-		planet = game.add.sprite(resolutionX/1.6, resolutionY/1.6, 'planets');
+		planet = game.add.sprite(resolutionX/1.6, resolutionY/1.6, 'planetslod');
 		planet.baseX=randomRange(-300,400) * randomSign();
 		planet.baseY=randomRange(-300,400) * randomSign();
 		planetlod = game.add.sprite(resolutionX/1.6, resolutionY/1.6, 'planetslod');
@@ -4712,12 +4715,14 @@ function update () {
 		planetfall.height=resolutionY/planetfall.scale.y;
 		planetfall.tilePosition.x=(planet.x-planetfall.x)/planetfall.scale.x;
 		planetfall.tilePosition.y=(planet.y-planetfall.y)/planetfall.scale.y;
-		planetlod.scale.setTo(planet.scale.x*1.07,planet.scale.y*1.07);
+		planetlod.scale.setTo(planet.scale.x*1,planet.scale.y*1);
 		planetlod.reset(planet.x,planet.y);
-		planetfall.alpha=Math.min(0.77,(planet.scaleModifier-0.7));
-		
-		planetlod.alpha=1;//Math.min(1,planet.scaleModifier+0.2);
-		planetdirt.alpha=Math.min(0.65,(planet.scaleModifier-1.3));
+		planetfall.alpha=Math.min(0.77,(planet.scaleModifier-0.5));
+		planetfall.alpha=Math.max(0.4,planetfall.alpha);
+		planetlod.blendMode=2;
+		planet.alpha=3.0;
+		planetlod.alpha=0.7;//Math.min(1,planet.scaleModifier+0.2);
+		planetdirt.alpha=Math.min(0.77,(planet.scaleModifier*3-5.1));
 
 		planetlod.visible=false;
 		if(planetlod.alpha>0){
