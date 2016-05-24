@@ -1597,13 +1597,23 @@ playerShip.prototype.damage = function(dmg, aggro, bulletX, bulletY) {
 	}
 	var bullet = {x:bulletX, y:bulletY};
 
+	var closestPartOrdinal = -1;
+	var closestPartDistance = 99999;
+
+	//TODO change
+	if(this.ship.length > 1 && dmg > 0.2){
 	for(var i=0;i<this.parts.length;i++){
 		if(this.ship[i]!=-1){
-			if(game.physics.arcade.overlap(this.parts[i].sprite,bullet)){
-				removePlayerPartInFlight(i, dmg);		
-			}
+			var dist = game.physics.arcade.distanceBetween(this.parts[i].sprite,bullet);
+			if(dist < closestPartDistance){
+				closestPartDistance=dist;
+				closestPartOrdinal=i;
+			}			
 		}
 	}
+	removePlayerPartInFlight(closestPartOrdinal, dmg);		
+	}
+
 	if(this.shield){
 		midBoom(explosions,4,this.sprite.x,this.sprite.y);
 	}else{
@@ -2096,9 +2106,10 @@ var randomShip = function(partsList,size,extraParts){
 	if(shipWithoutVoid(ship).length == ship.length && Math.random() > 0.1){
 		success=false;
 	}
-	/*	if(ship.filter(function(v,i) { return i==ship.lastIndexOf(v); }).length<size+1){
+	//so are ships of only one part	
+		if(ship.filter(function(v,i) { return components[i].name==components[ship.lastIndexOf(v)].name; }).length<size){
 		success=false;
-		}*/
+		}
 
 	var lastRowWasEmpty=true;
 	var failNextChange=false;
@@ -3574,9 +3585,11 @@ function removePlayerPartInFlight(n, dmg) {
 			nAdj++;
 		}
 	}
-	console.log(nAdj);
 	player.ship[n + nAdj]=-1;
 	player.initPlayerShip(player.ship);	
+	ui.parts = createBuildParts(player.ship,0,0);
+	ui.partsArray();
+	ui.endPartsUI();
 	player.sprite.reset(oldX,oldY);
 	player.sprite.body.velocity.x=oldVelocityX;	
 	player.sprite.body.velocity.y=oldVelocityY;	
@@ -3860,7 +3873,11 @@ function create () {
 		pool = new partsPool();
 		dragPool = new dragPartsPool();
 		// end of an era
-		player = new playerShip(symmetrizeShip(randomShip(banditGear,3)));
+		var startShip = randomShip(basicGear,3);
+		if(Math.random() > 0.5){
+			startShip=symmetrizeShip(startShip);
+		}
+		player = new playerShip(startShip);
 		mockPlayer = new mockPlayerShip(player.ship);
 
 		//  The enemies bullet group
@@ -4698,6 +4715,7 @@ function update () {
 		planetlod.scale.setTo(planet.scale.x*1.07,planet.scale.y*1.07);
 		planetlod.reset(planet.x,planet.y);
 		planetfall.alpha=Math.min(0.77,(planet.scaleModifier-0.7));
+		
 		planetlod.alpha=1;//Math.min(1,planet.scaleModifier+0.2);
 		planetdirt.alpha=Math.min(0.65,(planet.scaleModifier-1.3));
 
