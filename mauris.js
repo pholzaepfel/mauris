@@ -427,6 +427,43 @@ function clampVelocity (sprite){
 }
 function randomRange (a,b){var c,d; if(a>b){c=a;d=b;}else{d=a;c=b};return (Math.random()*(c-d))+d};
 function randomSign (){return Math.random()>.5?1:-1};
+function joinRegions(regions, a, b) {
+	if (a==b) { return regions; }
+
+	for(var i=0;i<regions.length;i++){
+		if(regions[i] == a){
+			regions[i]=b;
+		}
+	}
+	return regions;
+}
+// return an array of contiguous ship regions
+function contiguous (ship) {
+	var regions = [];
+	var connectingRegions = [];
+	var size = Math.sqrt(ship.length);
+	var currentRegion = 0;
+	for (var i=0;i<ship.length;i++){
+		connectingRegions = [];
+		if(ship[i] != -1){
+			if(i > 0 && ship[i-1] != -1){
+				connectingRegions.push(regions[i-1]);
+			}
+			if(i >= size && ship[i-size] != -1){
+				connectingRegions.push(regions[i-size]);
+			}	
+			for(var j=0;j < connectingRegions.length - 1; j++){
+				regions = joinRegions(regions, connectingRegions[j], connectingRegions[j+1]);
+			}
+			regions[i] = currentRegion++;
+
+			if(connectingRegions.length){
+				regions[i] = connectingRegions[connectingRegions.length-1];
+			}
+		}
+	}
+	return regions;
+}
 function shipWithoutVoid (ship) {
 	var shipOut=[];
 	for (var i=0;i<ship.length;i++){
@@ -1602,16 +1639,20 @@ playerShip.prototype.damage = function(dmg, aggro, bulletX, bulletY) {
 
 	//TODO change
 	if(this.ship.length > 1 && dmg > 0.2){
-	for(var i=0;i<this.parts.length;i++){
-		if(this.ship[i]!=-1){
-			var dist = game.physics.arcade.distanceBetween(this.parts[i].sprite,bullet);
-			if(dist < closestPartDistance){
-				closestPartDistance=dist;
-				closestPartOrdinal=i;
-			}			
+		for(var i=0;i<this.parts.length;i++){
+			if(this.ship[i]!=-1){
+				var dist = game.physics.arcade.distanceBetween(this.parts[i].sprite,bullet);
+				if(dist < closestPartDistance){
+					closestPartDistance=dist;
+					closestPartOrdinal=i;
+				}			
+			}
 		}
-	}
-	removePlayerPartInFlight(closestPartOrdinal, dmg);		
+
+		var part = this.parts[closestPartOrdinal];
+		console.log(part.component);
+		spawnDebris(part.component, part.sprite.x, part.sprite.y); 
+		removePlayerPartInFlight(closestPartOrdinal, dmg);		
 	}
 
 	if(this.shield){
@@ -2107,9 +2148,9 @@ var randomShip = function(partsList,size,extraParts){
 		success=false;
 	}
 	//so are ships of only one part	
-		if(ship.filter(function(v,i) { return components[i].name==components[ship.lastIndexOf(v)].name; }).length<size){
+	if(ship.filter(function(v,i) { return components[i].name==components[ship.lastIndexOf(v)].name; }).length<size){
 		success=false;
-		}
+	}
 
 	var lastRowWasEmpty=true;
 	var failNextChange=false;
@@ -2382,6 +2423,7 @@ var spawnShips=[
 	var numAsteroids = 19;
 	var enemies;
 	var loots;
+	var debris;
 	var sparkles;
 	var enemyBullets;
 	var enemyThrust;
@@ -2397,7 +2439,6 @@ var spawnShips=[
 	var cursors;
 	var pew;
 	var bullets;
-	var loots;
 	var nextFire = 0;
 
 	var partShip;
@@ -3579,6 +3620,10 @@ function removePlayerPartInFlight(n, dmg) {
 	var oldRotation = player.sprite.rotation;
 	var oldVelocityX = player.sprite.body.velocity.x;
 	var oldVelocityY = player.sprite.body.velocity.y;
+	var oldBehavior = player.behavior;
+	var oldTarget = player.target;
+	var oldHealth = player.health;
+	var oldHealthMax = player.healthMax;
 	var nAdj = 0;
 	for (var i=0;i<n+nAdj+1;i++){
 		if(player.ship[i]==-1){
@@ -3594,6 +3639,12 @@ function removePlayerPartInFlight(n, dmg) {
 	player.sprite.body.velocity.x=oldVelocityX;	
 	player.sprite.body.velocity.y=oldVelocityY;	
 	player.sprite.rotation=oldRotation;
+	player.behavior = oldBehavior;
+	player.target = oldTarget;
+	player.health = oldHealth;
+	if(player.healthMax - oldHealthMax > 0){
+		player.health += player.healthMax - oldHealthMax;
+	}
 }
 
 function addPlayerPartInFlight(componentId) {
@@ -3602,6 +3653,10 @@ function addPlayerPartInFlight(componentId) {
 	var oldRotation = player.sprite.rotation;
 	var oldVelocityX = player.sprite.body.velocity.x;
 	var oldVelocityY = player.sprite.body.velocity.y;
+	var oldBehavior = player.behavior;
+	var oldTarget = player.target;
+	var oldHealth = player.health;
+	var oldHealthMax = player.healthMax;
 	ui.parts = createBuildParts(player.ship,0,0);
 	ui.partsArray();
 	createPart(componentId);
@@ -3610,6 +3665,10 @@ function addPlayerPartInFlight(componentId) {
 	player.sprite.body.velocity.x=oldVelocityX;	
 	player.sprite.body.velocity.y=oldVelocityY;	
 	player.sprite.rotation=oldRotation;
+	player.behavior = oldBehavior;
+	player.target = oldTarget;
+	player.health = oldHealth;
+	player.health += player.healthMax - oldHealthMax;
 }
 
 function createPart(n){
@@ -3767,7 +3826,7 @@ function fadeIn () {
 	planetlod.anchor.setTo(0.5,0.5);
 	planetlod.scale.x=planetlod.baseScale;
 	planetlod.scale.y=planetlod.baseScale;
-		planetlod.r=parseInt(randomRange(128,255));
+	planetlod.r=parseInt(randomRange(128,255));
 	planetlod.g=parseInt(randomRange(128,255));
 	planetlod.b=parseInt(randomRange(128,255));
 	planetlod.tint=(planetlod.r << 16) + (planetlod.g << 8) + planetlod.b;
@@ -3816,10 +3875,10 @@ function create () {
 		hazeWhite.tilePosition.x = Math.random()*resolutionX;
 		hazeWhite.tilePosition.y = Math.random()*resolutionY;
 		hazeWhite.speed = 600;
-		planet = game.add.sprite(resolutionX/1.6, resolutionY/1.6, 'planetslod');
+		planet = game.add.sprite(resolutionX/0.8, resolutionY/0.8, 'planetslod');
 		planet.baseX=randomRange(-300,400) * randomSign();
 		planet.baseY=randomRange(-300,400) * randomSign();
-		planetlod = game.add.sprite(resolutionX/1.6, resolutionY/1.6, 'planetslod');
+		planetlod = game.add.sprite(resolutionX/0.8, resolutionY/0.8, 'planetslod');
 		planetfall = game.add.tileSprite(0, 0, resolutionX/1.5, resolutionY/1.5, 'planetfall');
 		planetdirt = game.add.tileSprite(0, 0, resolutionX/2, resolutionY/2, 'planetdirt');
 		planetlod.baseX=planet.baseX;
@@ -3952,6 +4011,14 @@ function create () {
 				bullet.animations.add(bulletType.name, [bulletType.id]);
 			}
 		}
+		debris = game.add.group();
+		debris.createMultiple(30, 'parts');
+		game.physics.enable(debris, Phaser.Physics.ARCADE);
+		debris.setAll('anchor.x',0.5);
+		debris.setAll('anchor.y', 0.5);
+		debris.setAll('outOfBoundsKill', true);
+		debris.setAll('lifespan', 60000);
+
 		loots = game.add.group();
 		loots.createMultiple(30, 'parts');
 		game.physics.enable(loots, Phaser.Physics.ARCADE);
@@ -4555,6 +4622,7 @@ function update () {
 				}
 			}
 			revertGroup(loots);
+			revertGroup(debris);
 			revertGroup(enemyBullets);
 			revertGroup(bullets);
 			revertGroup(explosions);
@@ -4722,7 +4790,7 @@ function update () {
 		planetlod.blendMode=2;
 		planet.alpha=3.0;
 		planetlod.alpha=0.7;//Math.min(1,planet.scaleModifier+0.2);
-		planetdirt.alpha=Math.min(0.77,(planet.scaleModifier*3-5.1));
+		planetdirt.alpha=Math.min(0.65,(planet.scaleModifier*3-4.5));
 
 		planetlod.visible=false;
 		if(planetlod.alpha>0){
@@ -5168,6 +5236,26 @@ function spawnLoots(_count, x, y){
 			game.physics.arcade.velocityFromRotation(loot.rotation, randomRange(100,300), loot.body.velocity);
 			return loot;
 		}
+	}
+}
+//like spawnComponent but it's not loot. this is if we need to throw a part without killing the ship
+function spawnDebris(component,x,y){ 
+	if(forceDead(debris)){
+		var part = debris.getFirstDead();
+		part.loadTexture('parts', component);
+		part.lifespan = 120000;
+		part.scale.setTo(1,1);
+		part.reset(x, y);
+		part.rotation=0;
+		part.body.angularVelocity=200;
+		game.add.tween(component).to({rotation:Math.PI*30},part.lifespan,Phaser.Easing.Exponential.Out, true, 0, false);
+		part.acceleration=200;
+		part.blendMode=0;
+		part.alpha=1;
+		part.component = component;
+		part.acceleration=0;
+		game.physics.arcade.velocityFromRotation(Math.random()*2*Math.PI, randomRange(50,player.sprite.body.maxVelocity.x*0.75), part.body.velocity);
+		return debris;
 	}
 }
 function spawnComponent(component,x,y){
