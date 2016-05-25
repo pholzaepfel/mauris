@@ -1398,7 +1398,7 @@ function(tgt){
 			if(game.time.now>this.altCooldown && this.takeEnergy(6)){
 				ui.sound_blur.play();
 				this.altCooldown=game.time.now+2000;
-				bigBoom(explosions,this.sprite.x,this.sprite.y);
+				warmBoom(explosions,this.sprite.x,this.sprite.y);
 				if(this.ai==aiModes['player']){
 					this.sprite.profile+=this.sprite.profileMax*3;
 					confusionCooldown=game.time.now+8000;	
