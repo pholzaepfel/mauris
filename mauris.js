@@ -5522,7 +5522,7 @@ function bigBoom(explosionsGroup, x, y){
 			enemySprite1.body.velocity.x+=Math.cos(angle)*200;
 			enemySprite1.body.velocity.y+=Math.sin(angle)*200;
 			var e2 = enemies[enemySprite2.name];
-			if(e2.health>1){e2.damage(8*Math.sqrt(enemies[enemySprite1.name].ship.length),
+			if(e2.health>1){e2.damage(15*Math.sqrt(enemies[enemySprite1.name].ship.length),
 							   enemySprite1,
 							   enemySprite1.x, enemySprite1.y
 							   )};
