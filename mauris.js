@@ -13,6 +13,7 @@ var bulletTypes = [
 {'name':'gas', 'id':7},
 {'name':'waste', 'id':8},
 {'name':'chem', 'id':9},
+{'name':'smoke', 'id':10},
 {'name':'gascloud', 'id':14},
 {'name':'fire', 'id':15}
 
@@ -1250,7 +1251,14 @@ enemyShip.prototype.update = function() {
 			}
 
 			var diffAngle = compareAngles(this.sprite.rotation,targetAngle);
+			for(var i=0; i< enemies.length;i++){
 
+				var enDistance = this.game.physics.arcade.distanceBetween(this.sprite, enemies[i].sprite);
+				var enAngle = this.game.physics.arcade.angleBetween(this.sprite, {x:enemies[i].sprite.x + enemies[i].sprite.body.velocity.x, y:enemies[i].sprite.y + enemies[i].sprite.body.velocity.y}); 
+				if(enDistance > 0 && enDistance < 0.2 * getHypo(this.sprite.body.velocity.x,this.sprite.body.velocity.y)){
+				diffAngle = compareAngles(this.sprite.rotation,enAngle)*-5;
+}
+			}
 			if(this.energy<this.energyReserve){
 				diffAngle = compareAngles(this.sprite.rotation+Math.PI,targetAngle);
 			}
@@ -2474,7 +2482,7 @@ playerShip.prototype.damage = function(dmg, aggro, bulletX, bulletY) {
 	var frob1;
 
 	var profileExponent=0.9;
-	var componentDropRate = 0.2;
+	var componentDropRate = 0.12;
 	var hazeWhite,hazeRed,hazePurple;
 	var planet;
 	var planetlod;
@@ -3732,6 +3740,7 @@ playerShip.prototype.damage = function(dmg, aggro, bulletX, bulletY) {
 		var oldTarget = player.target;
 		var oldTargetAngle = player.targetAngle;
 		var oldProfile = player.sprite.profile;
+		var oldEnergy = player.energy;
 		var oldHealth = player.health;
 		var oldHealthMax = player.healthMax;
 		var nAdj = 0;
@@ -3753,6 +3762,7 @@ playerShip.prototype.damage = function(dmg, aggro, bulletX, bulletY) {
 		player.target = oldTarget;
 		player.targetAngle = oldTargetAngle;
 		player.health = oldHealth;
+		player.energy = oldEnergy;
 		if(player.healthMax - oldHealthMax > 0){
 			player.health += player.healthMax - oldHealthMax;
 		}
@@ -3767,6 +3777,7 @@ playerShip.prototype.damage = function(dmg, aggro, bulletX, bulletY) {
 		var oldBehavior = player.behavior;
 		var oldTarget = player.target;
 		var oldTargetAngle = player.targetAngle;
+		var oldEnergy = player.energy;
 		var oldHealth = player.health;
 		var oldHealthMax = player.healthMax;
 		var oldProfile = player.sprite.profile;
@@ -3780,6 +3791,7 @@ playerShip.prototype.damage = function(dmg, aggro, bulletX, bulletY) {
 		player.sprite.rotation=oldRotation;
 		player.behavior = oldBehavior;
 		player.target = oldTarget;
+		player.energy = oldEnergy;
 		player.health = oldHealth;
 		player.sprite.profile=oldProfile;
 		player.health += player.healthMax - oldHealthMax;
@@ -4297,6 +4309,8 @@ up: game.input.keyboard.addKey(Phaser.Keyboard.UP),
 			playerStats.mission.complete=true; //just for frob-only missions
 			winMission(); 
 			ui.partsUI(player.ship);
+			//temporarily disable
+			ui.endPartsUI();
 			nextUIDelay=game.time.now+1000;
 		}
 		if(playerStats.mission.complete && playerStats.mission.outro.length){
@@ -5031,22 +5045,29 @@ up: game.input.keyboard.addKey(Phaser.Keyboard.UP),
 			for(var i=0; i < 5 + (r * 6) ; i ++) { 
 				if(forceDead(explosions)){
 					var explosion = explosionsGroup.getFirstDead();
-					var rand2 = 1;
+					var rand2 = Math.random()>0.5 ? 1 : 10;
 					explosion.animations.play(bulletTypeName(rand2));
 					explosion.reset(x+randomRange(-20,20),y+randomRange(-20,20));
 					explosion.rotation = Math.random()*Math.PI;
-					explosion.fireVelocity=randomRange(30,80) * (2-rand2);
-					explosion.lifespan=500 * (6 - 2*rand2);
+					explosion.fireVelocity=randomRange(30,80);
+					explosion.lifespan=randomRange(1500,2500);
 					r=randomRange(0.5,1.7);
 					explosion.body.angularVelocity=0;
 					explosion.scale.setTo(r,r);
-					explosion.alpha=1.3;
-
 					explosion.blendMode=1;
 						explosion.blendMode=0;
 						explosion.alpha=randomRange(0.1,0.3);
+					if(rand2==10){ explosion.alpha*=2;
+var q = randomRange(1,8);
+explosion.lifespan*=q;
+explosion.fireVelocity/=q;
+explosion.alpha/=q;
+						explosion.body.angularVelocity=randomRange(100,160)*randomSign()*Math.sin(randomRange(0,0.5*Math.PI));
+
+ }else{
 						explosion.scale.setTo(explosion.scale.x*2,explosion.scale.y*2);
 						explosion.body.angularVelocity=randomRange(30,60)*randomSign()*Math.sin(randomRange(0,0.5*Math.PI));
+					}
 					game.add.tween(explosion.scale).to({x:explosion.scale.x*7,y:explosion.scale.y*7},explosion.lifespan*0.3, Phaser.Easing.Quadratic.Out, true, 0, false);
 					game.add.tween(explosion).to({alpha:0},explosion.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
 
@@ -5334,9 +5355,13 @@ function bigBoom(explosionsGroup, x, y){
 					explosion.lifespan=randomRange(350,600);
 					explosion.scale.setTo(damageScale*1.2,damageScale*1.2);
 					explosion.alpha=2;
-					game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
+				game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
 					explosion.blendMode=1;
-					game.add.tween(explosion.scale).to({x:0.1,y:0.1},explosion.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
+					if(bulletSprite==10){
+						explosion.blendMode = Math.random() > 0.7 ? 0 : 2;
+						explosion.alpha=0.2 + explosion.blendMode * 0.5;
+					}
+						game.add.tween(explosion.scale).to({x:0.1,y:0.1},explosion.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
 
 					game.add.tween(explosion).to({alpha:0},explosion.lifespan, Phaser.Easing.Quadratic.Out, true, 0, false);		}
 			}
@@ -5463,6 +5488,7 @@ function bigBoom(explosionsGroup, x, y){
 			if(player.health>player.healthMax){
 				player.health=player.healthMax;
 			}
+			ui.addDamageNumber(sprite.x,sprite.y,-1);
 			player.health+=1;
 			player.energy+=player.oreEnergy;
 		}else if(loot.lootType=='component'){
@@ -5522,7 +5548,7 @@ function bigBoom(explosionsGroup, x, y){
 			enemySprite1.body.velocity.x+=Math.cos(angle)*200;
 			enemySprite1.body.velocity.y+=Math.sin(angle)*200;
 			var e2 = enemies[enemySprite2.name];
-			if(e2.health>1){e2.damage(15*Math.sqrt(enemies[enemySprite1.name].ship.length),
+			if(e2.health>1){e2.damage(8*Math.sqrt(enemies[enemySprite1.name].ship.length),
 							   enemySprite1,
 							   enemySprite1.x, enemySprite1.y
 							   )};

@@ -672,7 +672,7 @@ var missions = [
 	'distanceMax':9000,
 	'hazePurpleBlendMode':2,
 	'hazeRedBlendMode':1,
-	'intro':['take these components and add them to your ship.\ncomponents will upgrade your ship.'],
+	'intro':['components will upgrade your ship.\ntake care, they can be lost in combat'],
 	'outro':['nice job. come on to the next station'],
 	'win':{
 		'condition':'frob'
