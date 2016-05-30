@@ -995,7 +995,7 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 		this.alive = false;
 		this.died=game.time.now+10000;
 
-		if (this.ai==aiModes['asteroid']){
+		if (this.ai==aiModes['asteroid'] && onscreen(this.sprite.x,this.sprite.y){
 			asteroidBoom(explosions,this.sprite.x,this.sprite.y);
 			
 		}else{
