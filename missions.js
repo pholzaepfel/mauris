@@ -20,9 +20,9 @@ var missions = [
 	'complete':false,
 	'componentsReward':banditGear,
 	'componentsCount':1,
-	'hazeRed':0.5,
-	'hazeWhite':1,
-	'hazePurple':0.7,
+	'hazeRed':0.7,
+	'hazeWhite':1.5,
+	'hazePurple':0.8,
 	'hazeRedTint':16777215,
 	'hazeWhiteTint':16777215,
 	'hazePurpleTint':16777215,
@@ -43,10 +43,19 @@ var missions = [
 		[{
 			'ships': asteroids,
 			'respawn':true,
-			'count':25, 
+			'count':10, 
 			'missionTarget':false
 		},
 		{
+			'ships': asteroids,
+			'parts': asteroidParts, 
+			'sizeMin': 2,
+			'sizeMax': 3,
+			'respawn':true,
+			'count':30, 
+			'missionTarget':false
+		},
+{
 			'ships': containers,
 			'respawn':true,
 			'count':5, 
@@ -72,7 +81,7 @@ var missions = [
 	'componentsReward':banditGear,
 	'componentsCount':2,
 	'hazeRed':0.7,
-	'hazeWhite':1,
+	'hazeWhite':1.5,
 	'hazePurple':1.0,
 	'hazeRedTint':16777215,
 	'hazeWhiteTint':16777215,
@@ -105,14 +114,24 @@ var missions = [
 			'count':3, 
 			'missionTarget':false
 		},
-{
-		'ships': asteroids,
-		'respawn':true,
-		'missionTarget':false,
-		'count':20, 
-		'deaths':[]
-	}
-	]
+	{
+			'ships': asteroids,
+			'respawn':true,
+			'count':10, 
+			'missionTarget':false
+		},
+		{
+			'ships': asteroids,
+			'parts': asteroidParts, 
+			'sizeMin': 2,
+			'sizeMax': 3,
+			'respawn':true,
+			'count':30, 
+			'missionTarget':false
+		}
+
+
+]
 
 
 
@@ -124,7 +143,7 @@ var missions = [
 	'componentsReward':banditGear,
 	'componentsCount':4,
 	'hazeRed':0.7,
-	'hazeWhite':1,
+	'hazeWhite':1.2,
 	'hazePurple':0.2,
 	'hazeRedTint':16777215,
 	'hazeWhiteTint':16777215,
@@ -170,12 +189,23 @@ var missions = [
 		'deaths':[]
 	},
 	{
-		'ships': asteroids,
-		'respawn':true,
-		'missionTarget':false,
-		'count':15, 
-		'deaths':[]
-	},{
+			'ships': asteroids,
+			'respawn':true,
+			'count':10, 
+			'missionTarget':false
+		},
+		{
+			'ships': asteroids,
+			'parts': asteroidParts, 
+			'sizeMin': 2,
+			'sizeMax': 3,
+			'respawn':true,
+			'count':30, 
+			'missionTarget':false
+		}
+
+
+,{
 		'ships': containers,
 		'respawn':true,
 		'missionTarget':false,
@@ -201,7 +231,7 @@ var missions = [
 	'componentsReward':[64],
 	'componentsCount':2,
 	'hazeRed':0.2,
-	'hazeWhite':1,
+	'hazeWhite':1.7,
 	'hazePurple':1.0,
 	'hazeRedTint':16777215,
 	'hazeWhiteTint':16777215,
@@ -239,12 +269,23 @@ var missions = [
 		'deaths':[]
 	},
 	{
-		'ships': asteroids,
-		'respawn':true,
-		'missionTarget':false,
-		'count':15, 
-		'deaths':[]
-	},{
+			'ships': asteroids,
+			'respawn':true,
+			'count':10, 
+			'missionTarget':false
+		},
+		{
+			'ships': asteroids,
+			'parts': asteroidParts, 
+			'sizeMin': 2,
+			'sizeMax': 3,
+			'respawn':true,
+			'count':30, 
+			'missionTarget':false
+		}
+
+
+,{
 		'ships': containers,
 		'respawn':true,
 		'missionTarget':false,
@@ -271,7 +312,7 @@ var missions = [
 	'componentsReward':[76],
 	'componentsCount':1,
 	'hazeRed':1,
-	'hazeWhite':1,
+	'hazeWhite':1.4,
 	'hazePurple':1,
 	'hazeRedTint':(255<<16)+(32<<8)+32,
 	'hazeWhiteTint':16777215,
@@ -288,13 +329,24 @@ var missions = [
 	'win':{
 		'condition':'frob',
 	},
-	'enemies':
-		[{
+	'enemies':[
+	{
 			'ships': asteroids,
 			'respawn':true,
-			'count':17, 
+			'count':10, 
 			'missionTarget':false
 		},
+		{
+			'ships': asteroids,
+			'parts': asteroidParts, 
+			'sizeMin': 2,
+			'sizeMax': 3,
+			'respawn':true,
+			'count':30, 
+			'missionTarget':false
+		}
+
+,
 	{
 			'ships': cops,
 					'parts': allianceGear4,
@@ -319,7 +371,7 @@ var missions = [
 	'componentsReward':allianceGear,
 	'componentsCount':2,
 	'hazeRed':1,
-	'hazeWhite':1,
+	'hazeWhite':1.1,
 	'hazePurple':0.3,
 	'hazeRedTint':16777215,
 	'hazeWhiteTint':16777215,
@@ -337,12 +389,23 @@ var missions = [
 		'condition':'frob'
 	},
 	'enemies':
-		[{
+[	{
 			'ships': asteroids,
 			'respawn':true,
-			'count':17, 
+			'count':10, 
 			'missionTarget':false
 		},
+		{
+			'ships': asteroids,
+			'parts': asteroidParts, 
+			'sizeMin': 2,
+			'sizeMax': 3,
+			'respawn':true,
+			'count':30, 
+			'missionTarget':false
+		}
+
+,
 	{
 			'ships': alliance,
 					'parts': allianceGear4,
@@ -375,7 +438,7 @@ var missions = [
 	'componentsReward':allianceGear,
 	'componentsCount':1,
 	'hazeRed':1,
-	'hazeWhite':1,
+	'hazeWhite':1.4,
 	'hazePurple':0.9,
 	'hazeRedTint':16777215,
 	'hazeWhiteTint':16777215,
@@ -396,9 +459,19 @@ var missions = [
 		[{
 			'ships': asteroids,
 			'respawn':true,
-			'count':17, 
+			'count':10, 
 			'missionTarget':false
 		},
+		{
+			'ships': asteroids,
+			'parts': asteroidParts, 
+			'sizeMin': 2,
+			'sizeMax': 3,
+			'respawn':true,
+			'count':30, 
+			'missionTarget':false
+		}
+,
 	{
 			'ships': alliance,
 					'parts': allianceGear4,
@@ -439,7 +512,7 @@ var missions = [
 	'componentsReward':droneGear,
 	'componentsCount':2,
 	'hazeRed':0.8,
-	'hazeWhite':1,
+	'hazeWhite':1.4,
 	'hazePurple':0.7,
 	'hazeRedTint':16777215,
 	'hazeWhiteTint':16777215,
@@ -460,9 +533,19 @@ var missions = [
 		[{
 			'ships': asteroids,
 			'respawn':true,
-			'count':13, 
+			'count':10, 
 			'missionTarget':false
 		},
+		{
+			'ships': asteroids,
+			'parts': asteroidParts, 
+			'sizeMin': 2,
+			'sizeMax': 3,
+			'respawn':true,
+			'count':30, 
+			'missionTarget':false
+		}
+,
 	{
 			'ships': zombies,
 					'parts': zombieGear,
@@ -502,7 +585,7 @@ var missions = [
 	'componentsReward':droneGear,
 	'componentsCount':4,
 	'hazeRed':0.8,
-	'hazeWhite':1,
+	'hazeWhite':1.6,
 	'hazePurple':1.0,
 	'hazeRedTint':16777215,
 	'hazeWhiteTint':16777215,
@@ -523,9 +606,19 @@ var missions = [
 		[{
 			'ships': asteroids,
 			'respawn':true,
-			'count':17, 
+			'count':10, 
 			'missionTarget':false
 		},
+		{
+			'ships': asteroids,
+			'parts': asteroidParts, 
+			'sizeMin': 2,
+			'sizeMax': 3,
+			'respawn':true,
+			'count':30, 
+			'missionTarget':false
+		}
+,
 	{
 			'ships': droneBoss1,
 					'parts': droneGear,
@@ -567,7 +660,7 @@ var missions = [
 	'componentsReward':banditGear,
 	'componentsCount':2,
 	'hazeRed':0.3,
-	'hazeWhite':1,
+	'hazeWhite':1.6,
 	'hazePurple':1.0,
 	'hazeRedTint':16777215,
 	'hazeWhiteTint':16777215,
@@ -596,12 +689,21 @@ var missions = [
 		'deaths':[]
 	},
 	{
-		'ships': asteroids,
-		'respawn':true,
-		'missionTarget':false,
-		'count':18, 
-		'deaths':[]
-	},
+			'ships': asteroids,
+			'respawn':true,
+			'count':10, 
+			'missionTarget':false
+		},
+		{
+			'ships': asteroids,
+			'parts': asteroidParts, 
+			'sizeMin': 2,
+			'sizeMax': 3,
+			'respawn':true,
+			'count':30, 
+			'missionTarget':false
+		}
+,
 	{
 		'ships': containers,
 		'respawn':true,
@@ -630,7 +732,7 @@ var missions = [
 	'componentsReward':mechanoidGear,
 	'componentsCount':2,
 	'hazeRed':0.7,
-	'hazeWhite':1,
+	'hazeWhite':1.7,
 	'hazePurple':0.8,
 	'hazeRedTint':16777215,
 	'hazeWhiteTint':16777215,
@@ -651,9 +753,19 @@ var missions = [
 		[{
 			'ships': asteroids,
 			'respawn':true,
-			'count':17, 
+			'count':10, 
 			'missionTarget':false
 		},
+		{
+			'ships': asteroids,
+			'parts': asteroidParts, 
+			'sizeMin': 2,
+			'sizeMax': 3,
+			'respawn':true,
+			'count':30, 
+			'missionTarget':false
+		}
+,
 	{
 			'ships': mechanoids,
 					'parts': mechanoidGear,
@@ -682,7 +794,7 @@ var missions = [
 	'componentsReward':banditGear,
 	'componentsCount':2,
 	'hazeRed':0.5,
-	'hazeWhite':1,
+	'hazeWhite':1.2,
 	'hazePurple':0.4,
 	'hazeRedTint':16777215,
 	'hazeWhiteTint':16777215,
@@ -703,9 +815,19 @@ var missions = [
 		[{
 			'ships': asteroids,
 			'respawn':true,
-			'count':17, 
+			'count':10, 
 			'missionTarget':false
 		},
+		{
+			'ships': asteroids,
+			'parts': asteroidParts, 
+			'sizeMin': 2,
+			'sizeMax': 3,
+			'respawn':true,
+			'count':30, 
+			'missionTarget':false
+		}
+,
 {
 			'ships': containers,
 			'respawn':true,
@@ -751,7 +873,7 @@ var missions = [
 	'componentsReward':TODO,
 	'componentsCount':1,
 	'hazeRed':0.7,
-	'hazeWhite':1,
+	'hazeWhite':1.4,
 	'hazePurple':0.8,
 	'hazeRedTint':16777215,
 	'hazeWhiteTint':16777215,
