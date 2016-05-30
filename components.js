@@ -1017,7 +1017,7 @@ var cmp = [
 function(tgt){
 				if(tgt.ai == aiModes['asteroid'] && tgt.oreChance < 1 && game.time.now>tgt.nextOre){
 				spawnLoots(1,tgt.sprite.x,tgt.sprite.y)
-				tgt.nextOre=game.time.now+500;
+				tgt.nextOre=game.time.now+100;
 				}
 		
 });

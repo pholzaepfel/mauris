@@ -738,12 +738,14 @@ shipPart.prototype.initShipPart = function (x,y,index,targetSprite){
 shipPart.prototype.update = function(){
 
 	this.sprite.exists=true;
-	if(this.target.alive && this.attached){
+	if(this.target.alive){
 		this.sprite.scale.setTo(this.target.scale.x);
 		this.sprite.tint = (this.target.r << 16) + (this.target.g << 8) + this.target.b;
 		this.sprite.alpha=this.target.alpha;
 	}else{
-		this.sprite.tint = 16777215;
+		game.add.tween(this.sprite.scale).to({x:0,y:0},randomRange(1500,6500), Phaser.Easing.Linear.Out, true, 0, false);
+		var col = 255 - ((game.time.now + 10000 - enemies[this.target.name].died));
+		this.sprite.tint = (col << 16) + (col << 8) + (col);
 		this.sprite.alpha=1;
 	}
 	var ons = onscreen(this.target.x,this.target.y);
@@ -839,7 +841,7 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 	this.destroyParts()
 		this.effects=function(){};
 	this.sprite.profile = 250;
-	this.sawDamage=0;
+	this.sawDamage=9999;
 	this.sprite.profileDecay = 166;
 	this.nextProfileDecay = 0;
 	this.aggroList = [];
@@ -970,8 +972,12 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 	if(this.shield){
 		midBoom(explosions,4,this.sprite.x,this.sprite.y);
 	}else{
+		if(this.ai!=aiModes['asteroid']){
+			var dn = parseInt(this.health)-parseInt(this.health-damageCoef*dmg);
+			ui.addDamageNumber(this.sprite.x,this.sprite.y,dn);
+		}
 		this.health -= damageCoef * dmg;
-		ui.addDamageNumber(this.sprite.x,this.sprite.y,dmg);
+
 		this.sprite.r=255 * (1 - (this.health/this.healthMax));
 		this.sprite.g=255 * (this.health/this.healthMax);
 		this.sprite.b=0;
@@ -988,12 +994,15 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 		this.alive = false;
 		this.died=game.time.now+10000;
 
-		if (this.ai!=aiModes['asteroid']){
+		if (this.ai==aiModes['asteroid']){
+			asteroidBoom(explosions,this.sprite.x,this.sprite.y);
+			
+		}else{
 			sparkExplosion(pew, this.sprite);	
+			bigBoom(explosions,this.sprite.x,this.sprite.y);
 		}
 
 
-		bigBoom(explosions,this.sprite.x,this.sprite.y);
 		for (var j = 0; j < this.parts.length; j++) {
 			if(Math.random() < this.oreChance){
 				spawnLoots(Math.floor(randomRange(0,4)), this.sprite.x, this.sprite.y);
@@ -1480,7 +1489,7 @@ mockPlayerShip.prototype.initPlayerShip = function (ship, x, y) {
 	this.dropRate=0;
 	this.effects=function(){};
 	this.radarError=0;
-	this.sawDamage=0;
+	this.sawDamage=9999;
 	this.radarShowInRange=false;
 	this.radarShowInEnemyRange=false;
 	this.radarOreTargets=4;
@@ -1571,7 +1580,7 @@ playerShip.prototype.initPlayerShip = function (ship,x,y) {
 	this.dropRate=0;
 	this.effects=function(){};
 	this.radarError=0;
-	this.sawDamage=0;
+	this.sawDamage=9999;
 	this.radarShowInRange=false;
 	this.radarShowInEnemyRange=false;
 	this.radarOreTargets=4;
@@ -1675,7 +1684,8 @@ playerShip.prototype.damage = function(dmg, aggro, bulletX, bulletY) {
 	if(this.shield){
 		midBoom(explosions,4,this.sprite.x,this.sprite.y);
 	}else{
-		ui.addDamageNumber(this.sprite.x,this.sprite.y,dmg);
+		var dn = parseInt(this.health)-parseInt(this.health-damageCoef*dmg);
+		ui.addDamageNumber(this.sprite.x,this.sprite.y,dn);
 		this.health -= damageCoef * dmg;
 		this.radarError=Math.max(this.radarError,this.radarTargets+0.5)
 			ui.healthLine.shudder = 5;
@@ -1685,7 +1695,7 @@ playerShip.prototype.damage = function(dmg, aggro, bulletX, bulletY) {
 		this.sprite.alpha=6;
 		game.add.tween(this.sprite).to({r:255,g:255,b:255,alpha:1},400, Phaser.Easing.Exponential.Out, true, 0, false);
 	//handle part loss
-	if(this.ship.length > 1 && Math.random() * (dmg / 10) > player.health / player.healthMax){
+	if(this.ship.length > 1 && Math.random() > Math.sqrt((((player.health * 1.33) / player.healthMax )- (Math.pow(dmg,0.33)/16)))){
 		for(var i=0;i<this.parts.length;i++){
 			var dist = game.physics.arcade.distanceBetween(this.parts[i].sprite,bullet);
 			if(dist < closestPartDistance){
@@ -1696,16 +1706,24 @@ playerShip.prototype.damage = function(dmg, aggro, bulletX, bulletY) {
 		if(typeof(this.parts[closestPartOrdinal]) != 'undefined'){
 
 			var part = this.parts[closestPartOrdinal];
+			//var msg = ui.texts.push('>lost ' + components[loot.component].name + '\n' + components[loot.component].flavor);
+			var msg = '>lost ' + components[part.component].name;
 			spawnDebris(part.component, part.sprite.x, part.sprite.y); 
 			bigBoom(explosions,part.sprite.x,part.sprite.y);
 			ui.sound_boom2.play();
 			removePlayerPartInFlight(closestPartOrdinal, dmg);		
 			var cullList = getCullable(contiguous(this.ship));
+			if(cullList.length){
+				msg='>MAJOR DAMAGE\n';
+				msg+=parseInt((100*(cullList.length+1))/(this.parts.length+1));
+				msg+='% systems disabled';
+			}
 			for(var f=cullList.length-1; f>=0; --f){
 				part = this.parts[cullList[f]];
 				spawnDebris(part.component, part.sprite.x, part.sprite.y); 
 				removePlayerPartInFlight(cullList[f], dmg);		
 			}
+			ui.texts.push(msg);
 
 		}
 	}
@@ -2992,6 +3010,7 @@ playerShip.prototype.damage = function(dmg, aggro, bulletX, bulletY) {
 		} 
 	}
 	gameUI.prototype.addDamageNumber = function(x,y,dmg){
+		if(!dmg){return;}
 		var dmgDisplay = parseInt(Math.ceil(dmg)*-1);
 		var dn;
 		for(var i=0;i<this.damageNumbers.length;i++){
@@ -4748,7 +4767,7 @@ up: game.input.keyboard.addKey(Phaser.Keyboard.UP),
 
 				if(nextSpawn<game.time.now||nextSpawn==0){
 					if(!player.alive){
-						player.initPlayerShip(spawnShips[Math.floor(Math.random()*spawnShips.length)]);
+						player.initPlayerShip(randomShip(basicGear,3));
 						if(contextTutorialDeath){
 							ui.texts.push(contextTutorialDeath);
 							contextTutorialDeath='';
@@ -4795,6 +4814,9 @@ up: game.input.keyboard.addKey(Phaser.Keyboard.UP),
 						for (var j = 0; j < player.parts.length; j++) {
 							game.physics.arcade.overlap(enemies[i].sprite, player.parts[j].sprite, enemyTouchPlayer, null, this);
 						}
+						for (var j = i; j < enemies.length; j++) {
+							game.physics.arcade.overlap(enemies[i].sprite, enemies[j].sprite, enemyTouchEnemy, null, this);
+						}	
 						game.physics.arcade.overlap(bullets, enemies[i].sprite, bulletHitEnemy, null, this);
 						for (var j = 0; j < enemies[i].parts.length; j++) {
 
@@ -4808,9 +4830,11 @@ up: game.input.keyboard.addKey(Phaser.Keyboard.UP),
 				bullets.forEachAlive(playerBulletTracking);
 				enemyBullets.forEachAlive(enemyBulletTracking);
 
-				for (var i = 0; i < player.parts.length; i++){
-					player.parts[i].update();
-				};
+				if(player.alive){
+					for (var i = 0; i < player.parts.length; i++){
+						player.parts[i].update();
+					};
+				}
 				if(enter && game.time.now >= nextUIDelay && player.alive){
 					gamemode='paused';
 					nextUIDelay=game.time.now+2000;
@@ -4885,7 +4909,7 @@ up: game.input.keyboard.addKey(Phaser.Keyboard.UP),
 			planetlod.blendMode=0;
 			planet.alpha=1.0;
 			planetlod.alpha=0.5;//Math.min(1,planet.scaleModifier+0.2);
-			planetdirt.alpha=Math.min(0.65,(planet.scaleModifier-1.3));
+			planetdirt.alpha=Math.min(0.72,((planet.scaleModifier*3)-3.9));
 
 			planetlod.visible=false;
 			if(planetlod.alpha>0){
@@ -4999,7 +5023,40 @@ up: game.input.keyboard.addKey(Phaser.Keyboard.UP),
 			}
 		}
 	}
-	function bigBoom(explosionsGroup, x, y){
+		function asteroidBoom(explosionsGroup, x, y){
+
+		if(onscreen(x,y)){
+			var r = Math.random();
+
+			for(var i=0; i < 5 + (r * 6) ; i ++) { 
+				if(forceDead(explosions)){
+					var explosion = explosionsGroup.getFirstDead();
+					var rand2 = 1;
+					explosion.animations.play(bulletTypeName(rand2));
+					explosion.reset(x+randomRange(-20,20),y+randomRange(-20,20));
+					explosion.rotation = Math.random()*Math.PI;
+					explosion.fireVelocity=randomRange(30,80) * (2-rand2);
+					explosion.lifespan=500 * (6 - 2*rand2);
+					r=randomRange(0.5,1.7);
+					explosion.body.angularVelocity=0;
+					explosion.scale.setTo(r,r);
+					explosion.alpha=1.3;
+
+					explosion.blendMode=1;
+						explosion.blendMode=0;
+						explosion.alpha=randomRange(0.1,0.3);
+						explosion.scale.setTo(explosion.scale.x*2,explosion.scale.y*2);
+						explosion.body.angularVelocity=randomRange(30,60)*randomSign()*Math.sin(randomRange(0,0.5*Math.PI));
+					game.add.tween(explosion.scale).to({x:explosion.scale.x*7,y:explosion.scale.y*7},explosion.lifespan*0.3, Phaser.Easing.Quadratic.Out, true, 0, false);
+					game.add.tween(explosion).to({alpha:0},explosion.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
+
+
+					game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
+				}
+			}
+		}
+	}
+function bigBoom(explosionsGroup, x, y){
 
 		if(onscreen(x,y)){
 			var r = Math.random();
@@ -5436,6 +5493,42 @@ up: game.input.keyboard.addKey(Phaser.Keyboard.UP),
 		}
 		bullet.kill();
 	}
+	function enemyTouchEnemy (a, b) {
+		var aAi = enemies[a.name].ai;
+		var bAi = enemies[b.name].ai;
+		if(aAi == bAi) {return;}
+		if(aAi == aiModes['asteroidInit'] || bAi == aiModes['asteroidInit']){
+			return;
+		}
+		var enemySprite1;
+		var enemySprite2;
+		if(aAi == aiModes['asteroid']){
+			enemySprite1 = a;
+			enemySprite2 = b;
+		}else if(bAi == aiModes['asteroid']){
+			enemySprite1 = b;
+			enemySprite2 = a;
+		}else{return;}
+		if(enemies[enemySprite1.name].ai==aiModes['asteroid'])
+		{
+
+			ui.sound_hit1.play();
+			var destroyed = enemies[enemySprite1.name].damage(9999);
+			if(destroyed){
+				ui.sound_hit1.play();
+				//ui.sound_randomBoom();
+			}
+			var angle=game.physics.arcade.angleBetween(enemySprite2,enemySprite1);
+			enemySprite1.body.velocity.x+=Math.cos(angle)*200;
+			enemySprite1.body.velocity.y+=Math.sin(angle)*200;
+			var e2 = enemies[enemySprite2.name];
+			if(e2.health>1){e2.damage(8*Math.sqrt(enemies[enemySprite1.name].ship.length),
+							   enemySprite1,
+							   enemySprite1.x, enemySprite1.y
+							   )};
+		}	
+	}
+
 	function enemyTouchPlayer (enemySprite, playerSprite) {
 		if(player.sawDamage && enemies[enemySprite.name].ai==aiModes['asteroid'])
 		{
@@ -5443,11 +5536,16 @@ up: game.input.keyboard.addKey(Phaser.Keyboard.UP),
 			ui.sound_hit1.play();
 			var destroyed = enemies[enemySprite.name].damage(player.sawDamage);
 			if(destroyed){
-				ui.sound_randomBoom();
+				ui.sound_hit1.play();
+				//ui.sound_randomBoom();
 			}
 			var angle=game.physics.arcade.angleBetween(playerSprite,enemySprite);
 			enemySprite.body.velocity.x+=Math.cos(angle)*200;
 			enemySprite.body.velocity.y+=Math.sin(angle)*200;
+			if(player.health>1){player.damage(2*Math.sqrt(enemies[enemySprite.name].ship.length),
+							   enemySprite,
+							   enemySprite.x, enemySprite.y
+							   )};
 		}	
 	}
 
