@@ -2474,7 +2474,7 @@ playerShip.prototype.damage = function(dmg, aggro, bulletX, bulletY) {
 	var frob1;
 
 	var profileExponent=0.9;
-	var componentDropRate = 0.1;
+	var componentDropRate = 0.2;
 	var hazeWhite,hazeRed,hazePurple;
 	var planet;
 	var planetlod;
