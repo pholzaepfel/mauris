@@ -4993,19 +4993,21 @@ function warmBoom(explosionsGroup, x, y){
 
 				if(onscreen(x,y)){
 								var r = Math.random();
-
+								for(var i=0; i < 15; i++){
+								smoke(explosionsGroup,x + randomRange(-40,40),y+randomRange(-40,40));
+								}
 								for(var i=0; i < 10 + (r * 9) ; i ++) { 
 												if(forceDead(explosions)){
 																var explosion = explosionsGroup.getFirstDead();
 																explosion.animations.play(bulletTypeName(Math.random()>0.7 ? 1 : 2));
 																explosion.reset(x+randomRange(-80,80),y+randomRange(-80,80));
 																explosion.rotation = Math.random()*Math.PI*2;
-																explosion.angularVelocity=randomRange(40,60)*randomSign();
-																explosion.fireVelocity=randomRange(200,390);
-																explosion.lifespan=5000;
-																r=randomRange(3,8);
+																explosion.body.angularVelocity=randomRange(400,600)*randomSign();
+																explosion.fireVelocity=randomRange(10,390);
+																explosion.lifespan=randomRange(1000,5000);
+																r=randomRange(1,2);
 																explosion.scale.setTo(r,r);
-																explosion.alpha=0.81;
+																explosion.alpha=0.9;
 																game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
 																explosion.blendMode=1;
 																boomTween(explosion);
@@ -5644,7 +5646,7 @@ function playerGotLoot (sprite, loot) {
 								player.energy+=player.oreEnergy;
 				}else if(loot.lootType=='component'){
 								//playerStats.inventory.push(loot.component);
-								shieldEffect(explosions, 4, sprite.x, sprite.y, sprite.body.velocity.x, sprite.body.velocity.y, player.ship.length*4);
+								shieldEffect(explosions, 4, sprite.x, sprite.y, sprite.body.velocity.x, sprite.body.velocity.y, player.ship.length);
 								addPlayerPartInFlight(loot.component);
 								ui.texts.push('got ' + components[loot.component].name + '\n' + components[loot.component].flavor);
 				}
