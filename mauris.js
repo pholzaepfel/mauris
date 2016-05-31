@@ -51,9 +51,10 @@ var forceDead = function(collection){
 								lastFDtick=game.time.now;
 				}	
 				if(!collection.countDead()){
-								if(FDcount < 30){ // stop big events from slowing things down
+								if(FDcount < 100){ // stop big events from slowing things down
 												collection.sort('lifespan',Phaser.Group.SORT_ASCENDING);
 												collection.getFirstAlive().kill();
+												killTweensFromExplosion(collection);
 												FDcount++;
 								}
 				}
@@ -4206,21 +4207,6 @@ up: game.input.keyboard.addKey(Phaser.Keyboard.UP),
 				gamemode='war';
 
 }
-function explosionAnimate(s) {
-				if(s.alive){
-								s.angularVelocity-=game.time.physicsElapsed*s.angularVelocity * 1.5;
-								//	s.alpha+=s.alpha;
-								s.alpha-=game.time.physicsElapsed*(Math.min(Math.pow(s.alpha,1.7),1.5))*15;
-								//	s.alpha=Math.cos((s.alpha-game.time.physicsElapsed)*0.5*Math.PI);
-
-								s.rotation += (s.angularVelocity * game.time.physicsElapsed);
-								s.scale.setTo(s.scale.x+((game.time.physicsElapsed*16)),s.scale.y+((game.time.physicsElapsed*16)));
-								s.scale.setTo(s.scale.x*(1+(game.time.physicsElapsed*2)),s.scale.y*(1+(game.time.physicsElapsed*2)));
-								if(s.alpha<=0.05){s.kill()};
-				};
-}
-
-
 function fadeSpark(s) {
 				s.alpha-=0.01*game.time.physicsElapsed;
 				s.scale.setTo(s.scale.x*1.03,s.scale.y*1.03);
@@ -4386,7 +4372,14 @@ function revertGroup(group){
 }
 
 function update () {
-				if(gamemode!='init'){
+								//suppress odd large explosions bug
+								explosions.forEach(function(e){
+									if(!e.alive || !e.visible || e.scale.x > 14 || e.scale.y > 15){
+										killTweensFromExplosion(e);
+										e.scale.setTo(1,1);
+									}
+								},this);
+					if(gamemode!='init'){
 								//
 								// get controls before any updates
 								//
@@ -4985,9 +4978,14 @@ function update () {
 
 
 								}
-
 								explosions.parent.bringToTop(explosions);
 
+								for(var i=0;i<explosions.length;i++){
+									if(typeof(explosions[i])!='undefined'){
+									if(typeof(explosions[i].scale)!='undefined'){
+								}
+}
+								}
 				}
 }
 
@@ -5077,13 +5075,14 @@ killTweensFromExplosion(explosion);;
 				}
 }
 function killTweensFromExplosion(explosion){
+if(typeof(explosion.scale)!='undefined'){
 if(typeof(explosion.scale.tween)!='undefined'){
 	game.tweens.remove(explosion.scale.tween);
+}
 }
 if(typeof(explosion.tween)!='undefined'){
 	game.tweens.remove(explosion.tween);
 }
-explosion.visible=false;
 }
 function asteroidBoom(explosionsGroup, x, y){
 
@@ -5112,7 +5111,7 @@ killTweensFromExplosion(explosion);
 																				explosion.fireVelocity/=q;
 																				explosion.alpha/=q;
 																				explosion.body.angularVelocity=randomRange(100,160)*randomSign()*Math.sin(randomRange(0,0.5*Math.PI));
-																explosion.scale.tween=game.add.tween(explosion.scale).to({x:explosion.scale.x*7,y:explosion.scale.y*7},explosion.lifespan*0.3, Phaser.Easing.Quadratic.Out, true, 0, false).to({x:explosion.scale.x*50,y:explosion.scale.y*50},explosion.lifespan*0.7, Phaser.Easing.Sinusoidal.In, true,0,false);
+																explosion.scale.tween=game.add.tween(explosion.scale).to({x:explosion.scale.x*14,y:explosion.scale.y*14},explosion.lifespan*1.3, Phaser.Easing.Quadratic.Out, true, 0, false);
 																explosion.tween=game.add.tween(explosion).to({alpha:0},explosion.lifespan*2, Phaser.Easing.Exponential.Out, true, 0, false);
 
 																}else{
@@ -5275,13 +5274,13 @@ function fireBoom(explosionsGroup, bulletSprite, x, y, rot){
 												if(forceDead(explosionsGroup)){
 																var explosion = explosionsGroup.getFirstDead();
 killTweensFromExplosion(explosion);
+																explosion.scale.setTo(1.2,1.2);
 																explosion.animations.play(bulletTypeName( bulletSprite || 0));
 																explosion.reset(x,y);
 																explosion.rotation = rot + randomSign() * randomRange(0.3,1);
 																explosion.angularVelocity=randomRange(-5,5);
 																explosion.fireVelocity=randomRange(350,600);
 																explosion.lifespan=randomRange(350,600);
-																explosion.scale.setTo(1.2,1.2);
 																explosion.alpha=2;
 																game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
 																explosion.blendMode=1;
