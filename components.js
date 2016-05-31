@@ -98,6 +98,7 @@ var cmp = [
 		target.fireEnergy+=2;
 		target.fireDamage+=3;
 		target.fireRate=10;
+		target.profileOnFire=false;
 		target.firingSolution=laserFiringSolution;
 		target.bulletBehavior=[(function(bullet){
 				
@@ -1011,6 +1012,7 @@ var cmp = [
 		target.sprite.profile+=20;	
 		target.bulletSprite=4;
 		target.firingSolution=laserFiringSolution;
+		target.profileOnFire=false;
 		target.bulletBehavior=[(function(bullet){
 					
 	laserBulletBehavior(bullet,parseInt(randomRange(4,7)),randomRange(0.3,1.8),0x20CF10,0xDDFF60,0xFFFFDD,13,
@@ -2066,7 +2068,7 @@ function(tgt){
 	'flavor':'high damage, unreliable speed',
 	'bonus':function(target){
 		target.bulletSprite=2;
-		target.bulletSparkle=trail;
+		target.bulletSparkle=rocketTrail;
 		target.bulletBlendMode=0;
 		target.fireEnergy+=2;
 		target.fireDamage+=8;
@@ -2126,7 +2128,7 @@ function(tgt){
 	'flavor':'guided, long-range',
 	'bonus':function(target){
 		target.bulletSprite=2;
-		target.bulletSparkle=trail;
+		target.bulletSparkle=rocketTrail;
 		target.bulletBlendMode=0;
 		target.fireSound=ui.sound_missile;
 		target.fireTracking+=1.5;
