@@ -753,7 +753,7 @@ shipPart.prototype.update = function(){
 				var ons = onscreen(this.target.x,this.target.y);
 				this.sprite.visible=this.sprite.alive && ons;
 				var scale = this.sprite.scale.x;
-				if (this.target.alive && this.alive && ons && this.attached) {
+				if (this.target.alive && this.alive && this.attached) {
 								this.sprite.angle = this.target.angle;
 								this.sprite.x = this.target.x + (this.offsetx * scale * Math.cos(game.math.degToRad(this.target.angle)));
 								this.sprite.y = this.target.y + (this.offsety * scale * Math.cos(game.math.degToRad(this.target.angle)));
@@ -1131,17 +1131,10 @@ enemyShip.prototype.emitThrust = function() {
 
 				if(typeof(this.parts[0])!='undefined' && this.parts[0].sprite.alpha>0.5){
 
-								this.thrust.x=this.sprite.x-(Math.cos(this.sprite.rotation)*(this.sprite.body.width)*0.5);
-								this.thrust.y=this.sprite.y-(Math.sin(this.sprite.rotation)*(this.sprite.body.width)*0.5);
-								this.thrust.minParticleSpeed.setTo(0,0);
-								this.thrust.maxParticleSpeed.setTo(0,0);
-								this.thrust.lifespan=(1-Math.cos(randomRange(0,0.5*Math.PI)))*500;
-								this.thrust.lifespan+=200;
-								var tempX = randomRange(-18,18);
-								var tempY = randomRange(-18,18);
-								this.thrust.minParticleSpeed.setTo(tempX,tempY);
-								this.thrust.maxParticleSpeed.setTo(tempX,tempY);
-								this.thrust.emitParticle();
+								var x=this.sprite.x-(Math.cos(this.sprite.rotation)*(this.sprite.body.width)*0.5);
+								var y=this.sprite.y-(Math.sin(this.sprite.rotation)*(this.sprite.body.width)*0.5);
+								//this.thrust.emitParticle();
+								tinySmoke(explosions,x,y);
 				}
 }
 
@@ -1426,11 +1419,7 @@ var playerShip = function(ship) {
 				game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
 				this.game = game;
 				this.initPlayerShip(ship);
-				this.thrust = game.add.emitter(0,0,50); //this is the right number for continuous thrust
-				this.thrust.makeParticles('thrust',[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]);
-				this.thrust.setAlpha(1.5,0,1500,Phaser.Easing.Sinusoidal.Out);
-				this.thrust.blendMode = 1;
-				this.thrust.gravity=0;
+				this.thrust = game.add.emitter(0,0,0); //this is the right number for continuous thrust
 }
 //parts, when killed, are 'available' to be used in newly init'd ships
 //this prevents destroyParts() from attempting to cull parts that have
@@ -1833,18 +1822,10 @@ playerShip.prototype.spawnBullet = function(playerFired){
 }
 
 playerShip.prototype.emitThrust = function() {
-				this.thrust.x=this.sprite.x-(Math.cos(this.sprite.rotation)*(this.sprite.body.width)*0.5);
-				this.thrust.y=this.sprite.y-(Math.sin(this.sprite.rotation)*(this.sprite.body.width)*0.5);
-				this.thrust.minParticleSpeed.setTo(0,0);
-				this.thrust.maxParticleSpeed.setTo(0,0);
-				this.thrust.lifespan=(1-Math.cos(randomRange(0,0.5*Math.PI)))*500;
-				this.thrust.lifespan+=200;
-				var tempX = randomRange(-18,18);
-				var tempY = randomRange(-18,18);
-				this.thrust.minParticleSpeed.setTo(tempX,tempY);
-				this.thrust.maxParticleSpeed.setTo(tempX,tempY);
-				this.thrust.emitParticle();
-
+				var x=this.sprite.x-(Math.cos(this.sprite.rotation)*(this.sprite.body.width)*0.5);
+				var y=this.sprite.y-(Math.sin(this.sprite.rotation)*(this.sprite.body.width)*0.5);
+				//this.thrust.emitParticle();
+				tinySmoke(explosions,x,y);
 }
 var drawLine = function(graphics, line) {
 				graphics.moveTo(line.start.x,line.start.y);
@@ -4087,14 +4068,10 @@ function create () {
 												}
 								}
 
-								enemyThrust = game.add.emitter(0,0,100);
-								enemyThrust.makeParticles('thrust',[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]);
-								enemyThrust.setAlpha(1.5,0,1500,Phaser.Easing.Sinusoidal.Out);
-								enemyThrust.blendMode = 1;
-								enemyThrust.gravity=0;
+								enemyThrust = game.add.emitter(0,0,0);
 
 								explosions = game.add.group();
-								explosions.createMultiple(200, 'explosions');
+								explosions.createMultiple(350, 'explosions');
 								game.physics.enable(explosions, Phaser.Physics.ARCADE);
 								explosions.setAll('anchor.x', 0.5);
 								explosions.setAll('anchor.y', 0.5);
@@ -4374,7 +4351,7 @@ function revertGroup(group){
 function update () {
 								//suppress odd large explosions bug
 								explosions.forEach(function(e){
-									if(!e.alive || !e.visible || e.scale.x > 14 || e.scale.y > 15){
+									if(!e.alive || !e.visible || !onscreen(e.x,e.y)){
 										killTweensFromExplosion(e);
 										e.scale.setTo(1,1);
 									}
@@ -5042,6 +5019,48 @@ killTweensFromExplosion(explosion);;
 								}
 				}
 }
+function tinySmoke(explosionsGroup, x, y){
+
+				if(onscreen(x,y)){
+								var r = Math.random();
+
+								for(var i=0; i < 1 + (r * 4) ; i ++) { 
+												if(forceDead(explosions)){
+																var bs = Math.random()>0.5 ? 2 : 10;
+																var explosion = explosionsGroup.getFirstDead();
+
+killTweensFromExplosion(explosion);;
+																explosion.rotation = Math.random()*Math.PI;
+																explosion.fireVelocity=randomRange(30,80);
+																explosion.lifespan=randomRange(100,300);
+																r=randomRange(0.2,0.24);
+																if(bs==10){explosion.lifespan*=randomRange(1.4,2);r*=randomRange(1,2)}
+																explosion.body.angularVelocity=0;
+																explosion.scale.setTo(r,r);
+																explosion.alpha=randomRange(0.5,0.7);
+															 explosion.alpha*=2;
+																	if (bs ==10){
+																explosion.blendMode=Math.random()>0.5?0:2;
+														}else{
+explosion.alpha*=randomRange(3.5,4.5);
+explosion.blendMode=1;
+}
+																			var q = randomRange(1,3);
+																				explosion.lifespan*=q;
+																				explosion.fireVelocity/=q;
+																				explosion.alpha/=q;
+																				explosion.body.angularVelocity=randomRange(40,80)*randomSign()*Math.sin(randomRange(0,0.5*Math.PI));
+																var scaleMod = (bs == 10 ? 11 : 6);
+																explosion.scale.tween=game.add.tween(explosion.scale).to({x:explosion.scale.x*scaleMod,y:explosion.scale.y*scaleMod},explosion.lifespan*1.6, Phaser.Easing.Quadratic.Out, true, 0, false);
+																explosion.tween=game.add.tween(explosion).to({alpha:0},explosion.lifespan*2, Phaser.Easing.Exponential.Out, true, 0, false);
+																explosion.reset(x,y);
+																explosion.animations.play(bulletTypeName(bs));
+
+																game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
+												}
+								}
+				}
+}
 function smoke(explosionsGroup, x, y){
 
 				if(onscreen(x,y)){
@@ -5065,7 +5084,7 @@ killTweensFromExplosion(explosion);;
 																				explosion.lifespan*=q;
 																				explosion.fireVelocity/=q;
 																				explosion.alpha/=q;
-																				explosion.body.angularVelocity=randomRange(100,160)*randomSign()*Math.sin(randomRange(0,0.5*Math.PI));
+																				explosion.body.angularVelocity=randomRange(40,80)*randomSign()*Math.sin(randomRange(0,0.5*Math.PI));
 																explosion.scale.tween=game.add.tween(explosion.scale).to({x:explosion.scale.x*14,y:explosion.scale.y*14},explosion.lifespan*1.6, Phaser.Easing.Quadratic.Out, true, 0, false);
 																explosion.tween=game.add.tween(explosion).to({alpha:0},explosion.lifespan*2, Phaser.Easing.Exponential.Out, true, 0, false);
 																explosion.reset(x+randomRange(-20,20),y+randomRange(-20,20));
@@ -5212,7 +5231,7 @@ killTweensFromExplosion(explosion);
 }
 function sparkleBoom(explosionsGroup, minSprite, maxSprite, x, y){
 
-
+			if(onscreen(x,y)){
 				var r = Math.random();
 
 				for(var i=0; i < 8 + (r * 6) ; i ++) { 
@@ -5233,6 +5252,7 @@ killTweensFromExplosion(explosion);
 												game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
 								}
 				}
+		}
 }
 
 
@@ -5365,7 +5385,9 @@ function rocketTrail(explosionsGroup, x, y, bullet){
 				if(onscreen(x,y)){
 								
 								smoke(explosionsGroup,x,y);
-
+								var vel = randomRange(25,125)/1000;
+								console.log(bullet.body.velocity.x);
+								smoke(explosionsGroup,x-(Math.cos(bullet.rotation)*bullet.body.velocity.x*vel),y-(Math.sin(bullet.rotation)*bullet.body.velocity.y*vel));
 								var r = Math.random();
 
 								if(forceDead(explosionsGroup)){
@@ -5377,8 +5399,8 @@ killTweensFromExplosion(explosion);
 												var bulletOffsetY = bullet.width * 0.4 * Math.sin(adjRotation);
 												explosion.reset(x - bulletOffsetX,y - bulletOffsetY);
 												explosion.rotation = Math.random()*Math.PI;
-												explosion.body.velocity.x=bullet.body.velocity.x*Math.random();
-												explosion.body.velocity.y=bullet.body.velocity.y*Math.random();
+												explosion.body.velocity.x=bullet.body.velocity.x*0.95;
+												explosion.body.velocity.y=bullet.body.velocity.y*0.95;
 												explosion.lifespan=Math.min(250,bullet.lifespan);
 												var r = randomRange(0.5,1.7);
 												r*=(bullet.scale.x+bullet.scale.y)/2;
@@ -5391,17 +5413,17 @@ killTweensFromExplosion(explosion);
 																explosion = explosionsGroup.getFirstDead();
 killTweensFromExplosion(explosion);
 																explosion.animations.play(bulletTypeName( bullet.bulletSprite));
-												bulletOffsetX = bullet.width * (0.80 + i) * Math.cos(bullet.rotation) * Math.pow(randomRange(0.9,1.1),i);
-												bulletOffsetY = bullet.width * (0.80 + i) * Math.sin(bullet.rotation) * Math.pow(randomRange(0.9,1.1),i);
+												bulletOffsetX = bullet.width * (0.30 + i) * Math.cos(bullet.rotation);
+												bulletOffsetY = bullet.width * (0.30 + i) * Math.sin(bullet.rotation);
 												explosion.reset(x-bulletOffsetX,y-bulletOffsetY);
 																explosion.rotation = bullet.rotation + randomRange(-0.5,0.5);//bullet.rotation+Math.PI;
 																if(Math.random()>0.5){explosion.rotation+=Math.PI};
 																explosion.lifespan=Math.min(150,bullet.lifespan);
 																r=randomRange(0.6,0.8);
-																explosion.body.velocity.x=bullet.body.velocity.x*Math.pow(randomRange(0.7,1.3),i);
-																explosion.body.velocity.y=bullet.body.velocity.y*Math.pow(randomRange(0.7,1.3),i);
-																explosion.scale.setTo(r*(4.0-i)*bullet.scale.y,r*r*(4.0-i)*bullet.scale.y);
-																explosion.alpha=bullet.alpha*0.7;
+																explosion.body.velocity.x=bullet.body.velocity.x*Math.pow(randomRange(0.9,1.1),i);
+																explosion.body.velocity.y=bullet.body.velocity.y*Math.pow(randomRange(0.9,1.1),i);
+																explosion.scale.setTo(r*0.5*(4.0-i)*bullet.scale.y,0.5*r*r*(4.0-i)*bullet.scale.y);
+																explosion.alpha=bullet.alpha*Math.pow(0.9,i);
 																explosion.blendMode=1;
 																explosion.body.angularVelocity=randomRange(50,200)*randomSign()/r;
 												}
