@@ -5034,7 +5034,7 @@ killTweensFromExplosion(explosion);;
 																explosion.fireVelocity=randomRange(30,80);
 																explosion.lifespan=randomRange(100,300);
 																r=randomRange(0.2,0.24);
-																if(bs==10){explosion.lifespan*=randomRange(1.4,2);r*=randomRange(1,2)}
+																if(bs==10){explosion.lifespan*=2;r*=1.5}
 																explosion.body.angularVelocity=0;
 																explosion.scale.setTo(r,r);
 																explosion.alpha=randomRange(0.5,0.7);
@@ -5050,7 +5050,7 @@ explosion.blendMode=1;
 																				explosion.fireVelocity/=q;
 																				explosion.alpha/=q;
 																				explosion.body.angularVelocity=randomRange(40,80)*randomSign()*Math.sin(randomRange(0,0.5*Math.PI));
-																var scaleMod = (bs == 10 ? 11 : 6);
+																var scaleMod = (bs == 10 ? 7.4 : 6);
 																explosion.scale.tween=game.add.tween(explosion.scale).to({x:explosion.scale.x*scaleMod,y:explosion.scale.y*scaleMod},explosion.lifespan*1.6, Phaser.Easing.Quadratic.Out, true, 0, false);
 																explosion.tween=game.add.tween(explosion).to({alpha:0},explosion.lifespan*2, Phaser.Easing.Exponential.Out, true, 0, false);
 																explosion.reset(x,y);
