@@ -4045,6 +4045,7 @@ function create () {
 								dragPool = new dragPartsPool();
 								// end of an era
 								var startShip = randomShip(basicGear,3);
+								if(true){startShip = randomShip(allLootableItems(),parseInt(randomRange(3,8)))}
 								if(Math.random() > 0.5){
 												startShip=symmetrizeShip(startShip);
 								}
@@ -4753,6 +4754,7 @@ function update () {
 												if(nextSpawn<game.time.now||nextSpawn==0){
 																if(!player.alive){
 																				player.initPlayerShip(randomShip(basicGear,3));
+								if(cheatmode){player.initPlayerShip(randomShip(allLootableItems(),parseInt(randomRange(3,8))))}
 																				if(contextTutorialDeath){
 																								ui.texts.push(contextTutorialDeath);
 																								contextTutorialDeath='';
@@ -4894,7 +4896,7 @@ function update () {
 								planetfall.alpha=Math.min(0.77,(planet.scaleModifier-0.5));
 								planetfall.alpha=Math.max(0.4,planetfall.alpha);
 								planetlod.blendMode=0;
-								planet.alpha=1.0;
+								planet.alpha=Math.max(Math.min(1.0,(1.6 - planet.scaleModifier)*2.5),0);
 								planetlod.alpha=0.5;//Math.min(1,planet.scaleModifier+0.2);
 								planetdirt.alpha=Math.min(0.72,((planet.scaleModifier*3)-3.9));
 
@@ -4914,7 +4916,7 @@ function update () {
 
 
 								planet.visible=true;
-								if(planetlod.alpha==1){
+								if(planet.alpha<=0){
 												planet.visible=false;
 								}
 
@@ -4929,8 +4931,12 @@ function update () {
 								planet.hazeModifier=Math.max(0,(2*planet.scaleModifier)-4);
 								planet.hazeModifier=Math.min(planet.hazeModifier,1);
 								hazeRed.scale.setTo(hazeRed.baseScale+planet.hazeModifier,hazeRed.baseScale+planet.hazeModifier);
+								hazeRed.width=resolutionX/hazeRed.scale.x;
+								hazeRed.height=resolutionY/hazeRed.scale.y;
 								hazePurple.scale.setTo(hazePurple.baseScale+planet.hazeModifier,hazePurple.baseScale+planet.hazeModifier);
-								hazeRed.speed=playerStats.mission.hazeRedSpeed+playerStats.mission.hazeRedSpeed*planet.hazeModifier*2;
+								hazePurple.width=resolutionX/hazePurple.scale.x;
+								hazePurple.height=resolutionY/hazePurple.scale.y;
+									hazeRed.speed=playerStats.mission.hazeRedSpeed+playerStats.mission.hazeRedSpeed*planet.hazeModifier*2;
 								hazeRed.alpha=playerStats.mission.hazeRed-planet.hazeModifier;
 								hazeWhite.alpha=playerStats.mission.hazeWhite*(1-planet.hazeModifier);
 								hazePurple.alpha=playerStats.mission.hazePurple*(1-(planet.hazeModifier*0.3));
@@ -5061,6 +5067,48 @@ explosion.blendMode=1;
 								}
 				}
 }
+function cleanSmoke(explosionsGroup, x, y){
+
+				if(onscreen(x,y)){
+								var r = Math.random();
+
+								for(var i=0; i < 1 + (r * 4) ; i ++) { 
+												if(forceDead(explosions)){
+																var bs = Math.random()>0.5 ? 0 : 10;
+																var explosion = explosionsGroup.getFirstDead();
+
+killTweensFromExplosion(explosion);
+																explosion.rotation = Math.random()*Math.PI;
+																explosion.fireVelocity=randomRange(30,80);
+																explosion.lifespan=randomRange(200,250);
+																r=randomRange(0.2,0.24);
+																if(bs==10){explosion.lifespan*=1.2;r*=1.2}
+																explosion.body.angularVelocity=0;
+																explosion.scale.setTo(r,r);
+																explosion.alpha=randomRange(0.5,0.7);
+															 explosion.alpha*=2;
+																	if (bs ==10){
+																explosion.blendMode=Math.random()>0.5?0:2;
+														}else{
+explosion.alpha*=randomRange(3.5,4.5);
+explosion.blendMode=1;
+}
+																			var q = randomRange(1,3);
+																				explosion.lifespan*=q;
+																				explosion.fireVelocity/=q;
+																				explosion.alpha/=q;
+																				explosion.body.angularVelocity=randomRange(40,80)*randomSign()*Math.sin(randomRange(0,0.5*Math.PI));
+																var scaleMod = (bs == 10 ? 7.4 : 6);
+																explosion.scale.tween=game.add.tween(explosion.scale).to({x:explosion.scale.x*scaleMod,y:explosion.scale.y*scaleMod},explosion.lifespan*1.6, Phaser.Easing.Quadratic.Out, true, 0, false);
+																explosion.tween=game.add.tween(explosion).to({alpha:0},explosion.lifespan*2, Phaser.Easing.Exponential.Out, true, 0, false);
+																explosion.reset(x,y);
+																explosion.animations.play(bulletTypeName(bs));
+
+																game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
+												}
+								}
+				}
+}
 function smoke(explosionsGroup, x, y){
 
 				if(onscreen(x,y)){
@@ -5079,7 +5127,7 @@ killTweensFromExplosion(explosion);;
 																explosion.scale.setTo(r,r);
 																explosion.blendMode=Math.random()>0.5?0:2;
 																explosion.alpha=randomRange(0.3,0.5);
-															 explosion.alpha*=2;
+															 explosion.alpha*=3;
 																				var q = randomRange(1,4);
 																				explosion.lifespan*=q;
 																				explosion.fireVelocity/=q;
@@ -5099,10 +5147,12 @@ function killTweensFromExplosion(explosion){
 if(typeof(explosion.scale)!='undefined'){
 if(typeof(explosion.scale.tween)!='undefined'){
 	game.tweens.remove(explosion.scale.tween);
+	explosion.scale.tween=undefined;
 }
 }
 if(typeof(explosion.tween)!='undefined'){
 	game.tweens.remove(explosion.tween);
+	explosion.tween=undefined;
 }
 }
 function asteroidBoom(explosionsGroup, x, y){
@@ -5331,6 +5381,34 @@ killTweensFromExplosion(explosion);
 								}
 				}
 }
+function simpleGlow(explosionsGroup, x, y, bullet){
+
+				if(onscreen(x,y)){
+
+								var r = Math.random();
+
+								if(forceDead(explosionsGroup)){
+												var explosion = explosionsGroup.getFirstDead();
+killTweensFromExplosion(explosion);
+									killTweensFromExplosion(explosion);
+																explosion.animations.play(bulletTypeName( bullet.bulletSprite));
+												var bulletOffsetX = bullet.width * 0.50 * Math.cos(bullet.rotation);
+												var bulletOffsetY = bullet.width * 0.50 * Math.sin(bullet.rotation);
+												explosion.reset(x + bulletOffsetX,y + bulletOffsetY);
+																explosion.rotation = bullet.rotation + randomRange(-0.5,0.5);//bullet.rotation+Math.PI;
+																if(Math.random()>0.5){explosion.rotation+=Math.PI};
+																explosion.lifespan=Math.min(150,bullet.lifespan);
+																r=randomRange(0.5,0.8);
+																explosion.body.velocity.x=bullet.body.velocity.x;
+																explosion.body.velocity.y=bullet.body.velocity.y;
+																explosion.scale.setTo(r*r*5.0*bullet.scale.y,r*r*5.0*bullet.scale.y);
+																explosion.alpha=bullet.alpha*0.7;
+																explosion.blendMode=1;
+																explosion.body.angularVelocity=randomRange(450,200)*randomSign()/r;
+												}
+
+								}
+}
 function glow(explosionsGroup, x, y, bullet){
 
 				if(onscreen(x,y)){
@@ -5384,10 +5462,10 @@ function rocketTrail(explosionsGroup, x, y, bullet){
 
 				if(onscreen(x,y)){
 								
-								smoke(explosionsGroup,x,y);
+								tinySmoke(explosionsGroup,x,y);
 								var vel = randomRange(25,125)/1000;
 								console.log(bullet.body.velocity.x);
-								smoke(explosionsGroup,x-(Math.cos(bullet.rotation)*bullet.body.velocity.x*vel),y-(Math.sin(bullet.rotation)*bullet.body.velocity.y*vel));
+								tinySmoke(explosionsGroup,x-(bullet.body.velocity.x*vel),y-(bullet.body.velocity.y*vel));
 								var r = Math.random();
 
 								if(forceDead(explosionsGroup)){
@@ -5569,9 +5647,7 @@ function sparks(emitter, sprite){
 								emitter.maxParticleSpeed.setTo(200,200);
 								emitter.particleFriction = -500;
 								emitter.start(true,200,null, randomRange(1,14));
-				if(Math.random() > 0.3) {
 					smoke(explosions, sprite.x, sprite.y);
-				}
 				}
 }
 function sparkExplosion(emitter, sprite){

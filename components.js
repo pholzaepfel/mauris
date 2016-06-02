@@ -455,7 +455,7 @@ var cmp = [
 				var bullet=this.spawnBullet(false);
 				bullet.animations.play(bulletTypeName(15));
 				bullet.bulletSprite=15;
-				target.bulletSparkle=trail;
+				target.bulletSparkle=simpleGlow;
 				bullet.reset(this.sprite.x - (Math.cos(this.sprite.rotation)*(this.sprite.body.width)), this.sprite.y - (Math.sin(this.sprite.rotation)*(this.sprite.body.width)));
 				midBoom(explosions,2,bullet.x,bullet.y);
 				bullet.rotation=Math.random()*Math.PI;
