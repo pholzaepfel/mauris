@@ -680,12 +680,21 @@ var missions = [
 	'enemies': [
 	{
 		'ships': drones,
+				'parts': blackParts,
+		'sizeMin': 2,
+		'sizeMax': 5,
+	'respawn':true,
+		'missionTarget':false,
+		'count':1, 
+		'deaths':[]
+	},{
+		'ships': drones,
 				'parts': failDroneGear,
 		'sizeMin': 2,
 		'sizeMax': 4,
 	'respawn':true,
 		'missionTarget':false,
-		'count':7, 
+		'count':8, 
 		'deaths':[]
 	},
 	{

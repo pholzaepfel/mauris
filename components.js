@@ -484,6 +484,7 @@ var cmp = [
 	'match':'6',
 	'flavor':'mostly safe',
 	'bonus':function(target){
+		target.thrustBehavior=unstableSmoke;
 		target.acceleration+=1;
 		target.turnRate+=0.2;
 		target.health-=1;
@@ -523,7 +524,7 @@ var cmp = [
 	'flavor':'clean energy thruster',
 	'bonus':function(target){
 		target.acceleration+=0.7;
-
+target.thrustBehavior=cleanSmoke;
 		target.sprite.body.maxVelocity.x+=15;
 		target.sprite.body.maxVelocity.y+=15;
 
@@ -920,6 +921,7 @@ var cmp = [
 	'flavor':'improves turn rate, lowers maximum energy',
 	'bonus':function(target){
 		target.turnRate+=0.6;
+		target.thrustBehavior=greenThrustSmoke;
 		target.acceleration+=0.2;
 		target.sprite.body.maxVelocity.x+=5;
 		target.sprite.body.maxVelocity.y+=5;
@@ -2089,6 +2091,7 @@ function(tgt){
 	'match':'82',
 	'flavor':'light frame fitted with thrusters',
 	'bonus':function(target){
+		target.thrustBehavior=twistSmoke;
 		target.acceleration+=0.7;
 		target.turnRate+=0.1;
 		target.health+=2;
@@ -2285,6 +2288,7 @@ function(tgt){
 	'match':'426',
 	'flavor':'slow, poor control',
 	'bonus':function(target){
+		target.thrustBehavior=foulThrust;
 		target.acceleration+=0.3;
 		target.turnRate-=0.1;
 	}
