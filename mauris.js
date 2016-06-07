@@ -5159,27 +5159,30 @@ function unstableSmoke(explosionsGroup, x, y){
 }
 function twistSmoke(explosionsGroup, x, y){
 
-				if(Math.random()>0.5){
-								x+=Math.cos(game.time.now/100)*16;
-								y+=Math.sin(game.time.now/100)*16;
-				}else{
-								x+=Math.cos((game.time.now/100)+Math.PI)*16;
-								y+=Math.sin((game.time.now/100)+Math.PI)*16;
-				}
+	
+								var leftx=x+Math.cos(game.time.now/100)*16;
+var lefty = y +Math.sin(game.time.now/100)*16;
+							var rightx = x +Math.cos((game.time.now/100)+Math.PI)*16;
+								var righty = y+Math.sin((game.time.now/100)+Math.PI)*16;
+tinySmoke(explosionsGroup, leftx, lefty);
+tinySmoke(explosionsGroup, rightx, righty);
+}
+function tinyPuff(explosionsGroup, x, y){
+
 				if(onscreen(x,y)){
 								var r = Math.random();
 
-								for(var i=0; i < 1 + (r * 4) ; i ++) { 
+								for(var i=0; i < 1 + (r * 2) ; i ++) { 
 												if(forceDead(explosions)){
-																var bs = Math.random()>0.5 ? 2 : 10;
+																var bs = 10;
 																var explosion = explosionsGroup.getFirstDead();
 
 																killTweensFromExplosion(explosion);;
 																explosion.rotation = Math.random()*Math.PI;
 																explosion.fireVelocity=randomRange(30,80);
 																explosion.lifespan=randomRange(70,110);
-																r=randomRange(0.2,0.24);
-																if(bs==10){explosion.lifespan*=1.2;r*=1.5}
+																r=randomRange(0.2,0.28);
+																if(bs==10){explosion.lifespan*=1.8;r*=1.5}
 																explosion.body.angularVelocity=randomRange(-50,50);
 																explosion.scale.setTo(r,r);
 																explosion.alpha=randomRange(0.9,1.7);
@@ -6029,6 +6032,9 @@ function bulletHitPlayer (sprite, bullet) {
 				bullet.kill();
 }
 function enemyTouchEnemy (a, b) {
+				if(!onscreen(a.x,a.y)&&!onscreen(b.x,b.y)){
+return;
+}
 				var aAi = enemies[a.name].ai;
 				var bAi = enemies[b.name].ai;
 				if(aAi == bAi) {return;}
