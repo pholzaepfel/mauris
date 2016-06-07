@@ -767,7 +767,7 @@ lightness2/=partDist;
 								lightness = lightness+1;
 								lightness2 = lightness2+1; //(lightness + lightness2)/-2;
 								lightness2 /= 2;
-								lightness=lightness+(lightness2*0.7)+0.7;
+								lightness=lightness+(lightness2*currentBrightness)+0.7;
 								lightness/=2;
 								lightness=Math.max(lightness,0.3);
 								this.sprite.alpha=this.target.alpha;
@@ -1814,6 +1814,7 @@ playerShip.prototype.fire = function(){
 				if (game.time.now > this.nextFire && forceDead(bullets) > 0 && this.alive && this.takeEnergy(this.fireEnergy)){
 
 								this.fireSound.play();
+								currentBrightness=1; //may be used for a flash again one day
 								if(this.profileOnFire){
 												this.sprite.profile+=Math.floor(this.fireDamage*60);
 								}
@@ -2474,6 +2475,7 @@ playerShip.prototype.update = function(){
 };
 var touchPressed = 0;
 var player;
+var currentBrightness=1.0;
 var mysteriousConstant=0.22;
 var detailLod = 240;
 var mockPlayer;
@@ -4437,6 +4439,7 @@ function revertGroup(group){
 }
 
 function update () {
+				decayCurrentBrightness();
 				//suppress odd large explosions bug
 				/*explosions.forEach(function(e){
 					if(!e.alive || !e.visible || !onscreen(e.x,e.y)){
@@ -5057,7 +5060,14 @@ function update () {
 								}
 				}
 }
-
+function decayCurrentBrightness(){
+	if(currentBrightness>1){
+		currentBrightness/=1.2;
+	}
+	if(currentBrightness<1){
+		currentBrightness=1;
+	}
+}
 function warmBoom(explosionsGroup, x, y){
 
 				if(onscreen(x,y)){
