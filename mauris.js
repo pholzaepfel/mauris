@@ -762,7 +762,7 @@ shipPart.prototype.update = function(){
 								var lightSpot=undefined;
 									lightSpot={x:player.sprite.body.x+(player.sprite.body.width*0.5)+(Math.cos(player.sprite.rotation)*player.sprite.body.width*0.6),y:player.sprite.body.y+(player.sprite.body.width*0.5)+(Math.sin(player.sprite.rotation)*player.sprite.body.width*0.6)};
 								//avoid div by 0
-								var spriteOffset={x:this.sprite.x-1,y:this.sprite.y-1};	
+								var spriteOffset={x:this.sprite.body.x+(this.sprite.body.width*0.5),y:this.sprite.body.y+(this.sprite.body.width*0.5)};	
 								var lightness = game.physics.arcade.distanceBetween(spriteOffset, lightSpot)/Math.sqrt(Math.pow(Math.min(resolutionX,resolutionY),2));
 								lightness = lightness == 0 ? 0 : Math.cos((Math.PI*0.5)+(lightness*Math.PI*0.5));
 								var lightness2 = 0.5;
