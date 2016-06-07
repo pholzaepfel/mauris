@@ -523,7 +523,7 @@ var missions = [
 	'distanceMin':13000,
 	'distanceMax':14000,
 	'hazePurpleBlendMode':1,
-	'hazeRedBlendMode':0,
+	'hazeRedBlendMode':1,
 	'intro':[''],
 	'outro':[''],
 	'win':{

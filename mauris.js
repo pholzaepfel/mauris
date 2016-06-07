@@ -311,6 +311,21 @@ var warButtons = [
 								this.kills=0;
 								this.deaths=0;
 				};
+function headlight(){
+								var lightSpot=undefined;
+									lightSpot={x:player.sprite.body.x+(player.sprite.body.width*0.5)+(Math.cos(player.sprite.rotation)*player.sprite.body.width),y:player.sprite.body.y+(player.sprite.body.width*0.5)+(Math.sin(player.sprite.rotation)*player.sprite.body.width)};
+
+					otherGraphics.lineStyle(3, 0xFFFFFF, 0);
+				for(var i=0.90;i>0.50;i-=0.04){
+				otherGraphics.beginFill(0xFFFFFF,0.025);
+				otherGraphics.moveTo(lightSpot.x,lightSpot.y);
+				otherGraphics.lineTo(lightSpot.x+Math.cos(player.sprite.rotation - i)*2*Math.max(resolutionY,resolutionX),lightSpot.y+Math.sin(player.sprite.rotation - i)*2*Math.max(resolutionY,resolutionX));
+				otherGraphics.lineTo(lightSpot.x+Math.cos(player.sprite.rotation + i)*2*Math.max(resolutionY,resolutionX),lightSpot.y+Math.sin(player.sprite.rotation + i)*2*Math.max(resolutionY,resolutionX));
+				otherGraphics.lineTo(lightSpot.x,lightSpot.y);
+				otherGraphics.endFill();
+				}
+}
+
 function queryComponent(id){
 				return components[id].bonus.toString().replace(/target\./g,'').replace(/function.*{/,'').replace(/}/g,'').replace(/bulletBehavior.*/,'CHANGE BULLET BEHAVIOR').replace(/alt=.*/,'ALTERNATE FIRE').replace(/this.*body\./g,'').replace(/this.*sprite\./g,'').replace(/this\./g,'').replace(/[();\[\]{}]/g,'').replace(/\t\t\t.*\n/g,'').replace(/[\t ]*/g,'').replace(/^\n/g,'');
 }
@@ -745,7 +760,7 @@ shipPart.prototype.update = function(){
 								this.sprite.scale.setTo(this.target.scale.x);
 								if(onscreen(this.sprite.x,this.sprite.y)){
 								var lightSpot=undefined;
-									lightSpot={x:player.sprite.x+(Math.cos(player.sprite.rotation)*player.sprite.body.width*0.5),y:player.sprite.y+(Math.sin(player.sprite.rotation)*player.sprite.body.width*0.5)};
+									lightSpot={x:player.sprite.x+(Math.cos(player.sprite.rotation)*player.sprite.body.width),y:player.sprite.y+(Math.sin(player.sprite.rotation)*player.sprite.body.width)};
 								//avoid div by 0
 								var spriteOffset={x:this.sprite.x-1,y:this.sprite.y-1};	
 								var lightness = game.physics.arcade.distanceBetween(spriteOffset, lightSpot)/Math.sqrt(Math.pow(Math.min(resolutionX,resolutionY),2));
@@ -756,18 +771,19 @@ shipPart.prototype.update = function(){
 								lightness2 = game.physics.arcade.distanceBetween(this.target,lightSpot) - game.physics.arcade.distanceBetween(spriteOffset,lightSpot);
 lightness2/=partDist;
 }
-								var width = 0;
+								var lightnessAngle = game.physics.arcade.angleBetween(lightSpot,spriteOffset);
 								if(this.target.name=='player'){
-									width = Math.sqrt(player.ship.length)*16;
+								lightnessAngle=Math.abs(compareAngles(lightnessAngle,player.sprite.rotation+Math.PI));
+								lightnessAngle=Math.max(0,1-lightnessAngle);
 }else{
-									width = Math.sqrt(enemies[this.target.name].ship.length)*16;
+								lightnessAngle=Math.abs(compareAngles(lightnessAngle,player.sprite.rotation));
+								lightnessAngle=Math.max(0,2-lightnessAngle);
 								}
 								
-								//lightness2 /= getHypo(width/2,width/2)/(width/16);
 								lightness = lightness+1;
 								lightness2 = lightness2+1; //(lightness + lightness2)/-2;
 								lightness2 /= 2;
-								lightness=lightness+(lightness2*currentBrightness)+0.7;
+								lightness=lightness+(lightnessAngle*0.3)+(lightness2*lightnessAngle*1.5)+0.3;
 								lightness/=2;
 								lightness=Math.max(lightness,0.3);
 								this.sprite.alpha=this.target.alpha;
@@ -3394,6 +3410,7 @@ gameUI.prototype.update = function() {
 				this.toTop(this.graphics);
 				this.commsPing();
 				this.toTop(otherGraphics);
+				headlight();
 				if (gamemode == '?build'){
 								this.partPing();
 				}
