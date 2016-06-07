@@ -762,13 +762,14 @@ shipPart.prototype.update = function(){
 								var lightSpot=undefined;
 									lightSpot={x:player.sprite.body.x+(player.sprite.body.width*0.5)+(Math.cos(player.sprite.rotation)*player.sprite.body.width*0.6),y:player.sprite.body.y+(player.sprite.body.width*0.5)+(Math.sin(player.sprite.rotation)*player.sprite.body.width*0.6)};
 								//avoid div by 0
+									var targetOffset={x:this.target.body.x+(this.target.body.width*0.5)+(Math.cos(this.target.rotation)*this.target.body.width*0.05),y:this.target.body.y+(this.target.body.width*0.5)+(Math.sin(this.target.rotation)*this.target.body.width*0.05)};
 								var spriteOffset={x:this.sprite.body.x+(this.sprite.body.width*0.5),y:this.sprite.body.y+(this.sprite.body.width*0.5)};	
 								var lightness = game.physics.arcade.distanceBetween(spriteOffset, lightSpot)/Math.sqrt(Math.pow(Math.min(resolutionX,resolutionY),2));
 								lightness = lightness == 0 ? 0 : Math.cos((Math.PI*0.5)+(lightness*Math.PI*0.5));
 								var lightness2 = 0.5;
-								var partDist = game.physics.arcade.distanceBetween(spriteOffset,this.target);
+								var partDist = game.physics.arcade.distanceBetween(spriteOffset,targetOffset);
 								if(partDist>0){
-								lightness2 = game.physics.arcade.distanceBetween(this.target,lightSpot) - game.physics.arcade.distanceBetween(spriteOffset,lightSpot);
+								lightness2 = game.physics.arcade.distanceBetween(targetOffset,lightSpot) - game.physics.arcade.distanceBetween(spriteOffset,lightSpot);
 lightness2/=partDist;
 }
 								var lightnessAngle = game.physics.arcade.angleBetween(lightSpot,spriteOffset);
