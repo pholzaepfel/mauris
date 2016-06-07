@@ -313,7 +313,7 @@ var warButtons = [
 				};
 function headlight(){
 								var lightSpot=undefined;
-									lightSpot={x:player.sprite.body.x+(player.sprite.body.width*0.5)+(Math.cos(player.sprite.rotation)*player.sprite.body.width),y:player.sprite.body.y+(player.sprite.body.width*0.5)+(Math.sin(player.sprite.rotation)*player.sprite.body.width)};
+									lightSpot={x:player.sprite.body.x+(player.sprite.body.width*0.5)+(Math.cos(player.sprite.rotation)*player.sprite.body.width*0.5),y:player.sprite.body.y+(player.sprite.body.width*0.5)+(Math.sin(player.sprite.rotation)*player.sprite.body.width*0.5)};
 
 					otherGraphics.lineStyle(3, 0xFFFFFF, 0);
 				for(var i=0.90;i>0.50;i-=0.04){
@@ -760,7 +760,7 @@ shipPart.prototype.update = function(){
 								this.sprite.scale.setTo(this.target.scale.x);
 								if(onscreen(this.sprite.x,this.sprite.y)){
 								var lightSpot=undefined;
-									lightSpot={x:player.sprite.x+(Math.cos(player.sprite.rotation)*player.sprite.body.width),y:player.sprite.y+(Math.sin(player.sprite.rotation)*player.sprite.body.width)};
+									lightSpot={x:player.sprite.body.x+(player.sprite.body.width*0.5)+(Math.cos(player.sprite.rotation)*player.sprite.body.width*0.6),y:player.sprite.body.y+(player.sprite.body.width*0.5)+(Math.sin(player.sprite.rotation)*player.sprite.body.width*0.6)};
 								//avoid div by 0
 								var spriteOffset={x:this.sprite.x-1,y:this.sprite.y-1};	
 								var lightness = game.physics.arcade.distanceBetween(spriteOffset, lightSpot)/Math.sqrt(Math.pow(Math.min(resolutionX,resolutionY),2));
