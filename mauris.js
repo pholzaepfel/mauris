@@ -1411,10 +1411,10 @@ function preload () {
 				game.load.audio('powerup','assets/powerup.wav');
 				game.load.audio('missile','assets/missile.wav');
 				game.load.audio('bullet','assets/bullet.wav');
-								game.load.audio('1','assets/1.ogg');
-							game.load.audio('2','assets/2.ogg');
-						game.load.audio('3','assets/3.ogg');
-					game.load.audio('4','assets/4.ogg');
+//								game.load.audio('1','assets/1.ogg');
+//							game.load.audio('2','assets/2.ogg');
+//						game.load.audio('3','assets/3.ogg');
+//					game.load.audio('4','assets/4.ogg');
 }
 
 
@@ -2652,14 +2652,14 @@ gameUI.prototype.initSound = function(){
 				this.sound_bullet = game.add.audio('bullet');
 				this.currentMusic=undefined;
 				this.music=[];
-				for(var i = 1; i <=4; i++){
+		/*		for(var i = 1; i <=4; i++){
 													this.music[i]=game.add.audio(i);
-				}
+				}*/
 }
 function checkForNewMusic(){
-	if(game.time.now>nextMusic){
+/*	if(game.time.now>nextMusic){
 		ui.music_random();
-	}
+	}*/
 }
 gameUI.prototype.music_random = function(){
 				var rnd = parseInt(randomRange(1,this.music.length));
