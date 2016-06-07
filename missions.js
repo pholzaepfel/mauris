@@ -672,7 +672,7 @@ var missions = [
 	'distanceMax':9000,
 	'hazePurpleBlendMode':2,
 	'hazeRedBlendMode':1,
-	'intro':['take these components and add them to your ship.\ncomponents will upgrade your ship.'],
+	'intro':['components will upgrade your ship.\ntake care, they can be lost in combat'],
 	'outro':['nice job. come on to the next station'],
 	'win':{
 		'condition':'frob'
@@ -680,12 +680,21 @@ var missions = [
 	'enemies': [
 	{
 		'ships': drones,
+				'parts': blackParts,
+		'sizeMin': 2,
+		'sizeMax': 5,
+	'respawn':true,
+		'missionTarget':false,
+		'count':1, 
+		'deaths':[]
+	},{
+		'ships': drones,
 				'parts': failDroneGear,
 		'sizeMin': 2,
 		'sizeMax': 4,
 	'respawn':true,
 		'missionTarget':false,
-		'count':7, 
+		'count':8, 
 		'deaths':[]
 	},
 	{
@@ -799,9 +808,9 @@ var missions = [
 	'hazeRedTint':16777215,
 	'hazeWhiteTint':16777215,
 	'hazePurpleTint':16777215,
-	'hazeRedSpeed':320,
-	'hazeWhiteSpeed':1200,
-	'hazePurpleSpeed':160,
+	'hazeRedSpeed':220,
+	'hazeWhiteSpeed':10,
+	'hazePurpleSpeed':90,
 	'distanceMin':12000,
 	'distanceMax':12000,
 	'hazePurpleBlendMode':2,

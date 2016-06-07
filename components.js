@@ -98,6 +98,7 @@ var cmp = [
 		target.fireEnergy+=2;
 		target.fireDamage+=3;
 		target.fireRate=10;
+		target.profileOnFire=false;
 		target.firingSolution=laserFiringSolution;
 		target.bulletBehavior=[(function(bullet){
 				
@@ -454,7 +455,7 @@ var cmp = [
 				var bullet=this.spawnBullet(false);
 				bullet.animations.play(bulletTypeName(15));
 				bullet.bulletSprite=15;
-				target.bulletSparkle=trail;
+				target.bulletSparkle=simpleGlow;
 				bullet.reset(this.sprite.x - (Math.cos(this.sprite.rotation)*(this.sprite.body.width)), this.sprite.y - (Math.sin(this.sprite.rotation)*(this.sprite.body.width)));
 				midBoom(explosions,2,bullet.x,bullet.y);
 				bullet.rotation=Math.random()*Math.PI;
@@ -483,6 +484,7 @@ var cmp = [
 	'match':'6',
 	'flavor':'mostly safe',
 	'bonus':function(target){
+		target.thrustBehavior=unstableSmoke;
 		target.acceleration+=1;
 		target.turnRate+=0.2;
 		target.health-=1;
@@ -522,7 +524,7 @@ var cmp = [
 	'flavor':'clean energy thruster',
 	'bonus':function(target){
 		target.acceleration+=0.7;
-
+target.thrustBehavior=cleanSmoke;
 		target.sprite.body.maxVelocity.x+=15;
 		target.sprite.body.maxVelocity.y+=15;
 
@@ -919,6 +921,7 @@ var cmp = [
 	'flavor':'improves turn rate, lowers maximum energy',
 	'bonus':function(target){
 		target.turnRate+=0.6;
+		target.thrustBehavior=greenThrustSmoke;
 		target.acceleration+=0.2;
 		target.sprite.body.maxVelocity.x+=5;
 		target.sprite.body.maxVelocity.y+=5;
@@ -1011,6 +1014,7 @@ var cmp = [
 		target.sprite.profile+=20;	
 		target.bulletSprite=4;
 		target.firingSolution=laserFiringSolution;
+		target.profileOnFire=false;
 		target.bulletBehavior=[(function(bullet){
 					
 	laserBulletBehavior(bullet,parseInt(randomRange(4,7)),randomRange(0.3,1.8),0x20CF10,0xDDFF60,0xFFFFDD,13,
@@ -2066,7 +2070,7 @@ function(tgt){
 	'flavor':'high damage, unreliable speed',
 	'bonus':function(target){
 		target.bulletSprite=2;
-		target.bulletSparkle=trail;
+		target.bulletSparkle=rocketTrail;
 		target.bulletBlendMode=0;
 		target.fireEnergy+=2;
 		target.fireDamage+=8;
@@ -2087,6 +2091,7 @@ function(tgt){
 	'match':'82',
 	'flavor':'light frame fitted with thrusters',
 	'bonus':function(target){
+		target.thrustBehavior=twistSmoke;
 		target.acceleration+=0.7;
 		target.turnRate+=0.1;
 		target.health+=2;
@@ -2126,7 +2131,7 @@ function(tgt){
 	'flavor':'guided, long-range',
 	'bonus':function(target){
 		target.bulletSprite=2;
-		target.bulletSparkle=trail;
+		target.bulletSparkle=rocketTrail;
 		target.bulletBlendMode=0;
 		target.fireSound=ui.sound_missile;
 		target.fireTracking+=1.5;
@@ -2283,6 +2288,7 @@ function(tgt){
 	'match':'426',
 	'flavor':'slow, poor control',
 	'bonus':function(target){
+		target.thrustBehavior=foulThrust;
 		target.acceleration+=0.3;
 		target.turnRate-=0.1;
 	}
