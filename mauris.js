@@ -743,8 +743,40 @@ shipPart.prototype.update = function(){
 				this.sprite.exists=true;
 				if(this.target.alive){
 								this.sprite.scale.setTo(this.target.scale.x);
-								this.sprite.tint = (this.target.r << 16) + (this.target.g << 8) + this.target.b;
+								if(onscreen(this.sprite.x,this.sprite.y)){
+								var lightSpot=undefined;
+									lightSpot={x:player.sprite.x+(Math.cos(player.sprite.rotation)*player.sprite.body.width*0.5),y:player.sprite.y+(Math.sin(player.sprite.rotation)*player.sprite.body.width*0.5)};
+								//avoid div by 0
+								var spriteOffset={x:this.sprite.x-1,y:this.sprite.y-1};	
+								var lightness = game.physics.arcade.distanceBetween(spriteOffset, lightSpot)/Math.sqrt(Math.pow(Math.min(resolutionX,resolutionY),2));
+								lightness = lightness == 0 ? 0 : Math.cos((Math.PI*0.5)+(lightness*Math.PI*0.5));
+								var lightness2 = 0.5;
+								var partDist = game.physics.arcade.distanceBetween(spriteOffset,this.target);
+								if(partDist>0){
+								lightness2 = game.physics.arcade.distanceBetween(this.target,lightSpot) - game.physics.arcade.distanceBetween(spriteOffset,lightSpot);
+lightness2/=partDist;
+}
+								var width = 0;
+								if(this.target.name=='player'){
+									width = Math.sqrt(player.ship.length)*16;
+}else{
+									width = Math.sqrt(enemies[this.target.name].ship.length)*16;
+								}
+								
+								//lightness2 /= getHypo(width/2,width/2)/(width/16);
+								lightness = lightness+1;
+								lightness2 = lightness2+1; //(lightness + lightness2)/-2;
+								lightness2 /= 2;
+								lightness=lightness+(lightness2*0.7)+0.7;
+								lightness/=2;
+								lightness=Math.max(lightness,0.3);
 								this.sprite.alpha=this.target.alpha;
+								if(this.sprite.alpha==1 && lightness > 1){
+									this.sprite.alpha=lightness;
+								}
+								lightness=Math.min(lightness,1);
+								this.sprite.tint = (parseInt(this.target.r * lightness) << 16) + (parseInt(this.target.g*lightness) << 8) + parseInt(this.target.b * lightness);
+}
 				}else{
 								game.add.tween(this.sprite.scale).to({x:0,y:0},randomRange(1500,6500), Phaser.Easing.Linear.Out, true, 0, false);
 								var col = 255 - ((game.time.now + 10000 - enemies[this.target.name].died));
@@ -2445,6 +2477,7 @@ var player;
 var mysteriousConstant=0.22;
 var detailLod = 240;
 var mockPlayer;
+var nextMusic = 0;
 var attackerTargetSizeThreshold = 0.5;
 var laserRangeModifier=0.2;
 var laserRangeMinimum=150;
@@ -2615,11 +2648,16 @@ gameUI.prototype.initSound = function(){
 				this.sound_complete = game.add.audio('complete');
 				this.sound_comms = game.add.audio('comms');
 				this.sound_bullet = game.add.audio('bullet');
-				this.currentMusic='undefined';
+				this.currentMusic=undefined;
 				this.music=[];
 				for(var i = 1; i <=4; i++){
 													this.music[i]=game.add.audio(i);
 				}
+}
+function checkForNewMusic(){
+	if(game.time.now>nextMusic){
+		ui.music_random();
+	}
 }
 gameUI.prototype.music_random = function(){
 				var rnd = parseInt(randomRange(1,this.music.length));
@@ -2628,6 +2666,7 @@ gameUI.prototype.music_random = function(){
 				}
 				this.currentMusic=this.music[rnd];
 				this.currentMusic.play('',0,1,true);
+				nextMusic = game.time.now + this.currentMusic.totalDuration;
 }
 gameUI.prototype.sound_randomBoom = function(){
 				if(Math.random()>0.5){
@@ -4798,6 +4837,8 @@ function update () {
 								if(gamemode=='war' ){
 
 												handleMission();
+
+												checkForNewMusic();
 
 												if(nextSpawn<game.time.now||nextSpawn==0){
 																if(!player.alive){
