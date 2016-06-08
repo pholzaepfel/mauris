@@ -2128,13 +2128,14 @@ function optimizeComponents(ship){
 				for(var i=0;i<outship.length;i++){
 								if(outship[i]!=-1){
 												var vc = variantComponents(ship[i]);
+												vc.push(ship[i]);
 												if(vc.length){
 																var bestMatch = 0;
 																var bestMatchIndex = 0;
 																var matchString = getBestMatch(outship,i);
 																for (var j=0;j<vc.length;j++){
 																				var matches = matchComponentToString(vc[j],matchString);
-																				if(matches>bestMatch){
+																				if(matches>=bestMatch){
 																								bestMatch = matches;
 																								bestMatchIndex = j;	
 																				}
@@ -3965,7 +3966,7 @@ function matchComponentToString (a,b){
 								}
 								player.ship[n + nAdj]=-1;
 								ui.parts = createBuildParts(player.ship,0,0);
-								player.initPlayerShip(ui.partsArray(),oldX,oldY);
+								player.initPlayerShip(optimizeComponents(ui.partsArray()),oldX,oldY);
 								ui.destroyInventory();
 								ui.destroyParts();
 								player.sprite.body.velocity.x=oldVelocityX;	
@@ -3997,7 +3998,7 @@ function matchComponentToString (a,b){
 								var oldProfile = player.sprite.profile;
 								ui.parts = createBuildParts(player.ship,0,0);
 								createPart(componentId);
-								player.initPlayerShip(ui.partsArray(),oldX,oldY);
+								player.initPlayerShip(optimizeComponents(ui.partsArray()),oldX,oldY);
 								ui.destroyInventory();
 								ui.destroyParts();
 								player.sprite.body.velocity.x=oldVelocityX;	
