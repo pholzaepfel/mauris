@@ -32912,7 +32912,8 @@ Phaser.Device.prototype = {
     _checkAudio: function () {
 
         this.audioData = !!(window['Audio']);
-        this.webAudio = !!(window['webkitAudioContext'] || window['AudioContext']);
+        this.webAudio = !!(window['AudioContext']);
+	//remove annoying msg
         var audioElement = document.createElement('audio');
         var result = false;
 

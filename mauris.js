@@ -312,59 +312,59 @@ var warButtons = [
 								this.deaths=0;
 				};
 function spacesAtStartOfRow(ship,rowNum){
-	var size = Math.sqrt(ship.length);
-	var spaces = 0;
-	for(var i = size*rowNum ;i<(rowNum*size)+size;i++){
-		if(ship[i]==-1){spaces++}
-		else{return spaces;}
-}
+				var size = Math.sqrt(ship.length);
+				var spaces = 0;
+				for(var i = size*rowNum ;i<(rowNum*size)+size;i++){
+								if(ship[i]==-1){spaces++}
+								else{return spaces;}
+				}
 
-		return spaces;
+				return spaces;
 }
 function spacesAtEndOfRow(ship,rowNum){
-	var size = Math.sqrt(ship.length);
-	var spaces = 0;
-	for(var i = size + (rowNum*size) - 1;i>=(rowNum*size);i--){
-		if(ship[i]==-1){spaces++}
-		else{return spaces;}
-}
+				var size = Math.sqrt(ship.length);
+				var spaces = 0;
+				for(var i = size + (rowNum*size) - 1;i>=(rowNum*size);i--){
+								if(ship[i]==-1){spaces++}
+								else{return spaces;}
+				}
 
-		return spaces;
+				return spaces;
 }
 function thrustPosition(ship){
-	var size = Math.sqrt(ship.length);
-	if(size<=2){
-return 0;
-}
-	if (size % 2 == 0){
-		return -1* Math.max(spacesAtStartOfRow(ship,size/2),spacesAtStartOfRow(ship,(size/2)-1))*16;
-}else{
-		return -1*spacesAtStartOfRow(ship,(size-1)/2)*16;
-}
+				var size = Math.sqrt(ship.length);
+				if(size<=2){
+								return 0;
+				}
+				if (size % 2 == 0){
+								return -1* Math.max(spacesAtStartOfRow(ship,size/2),spacesAtStartOfRow(ship,(size/2)-1))*16;
+				}else{
+								return -1*spacesAtStartOfRow(ship,(size-1)/2)*16;
+				}
 }
 function lightPosition(ship){
-	var size = Math.sqrt(ship.length);
-	if(size<=2){
-return 0;
-}
-	if (size % 2 == 0){
-		return Math.max(spacesAtEndOfRow(ship,size/2),spacesAtEndOfRow(ship,(size/2)-1))*16;
-}else{
-		return spacesAtEndOfRow(ship,(size-1)/2)*16;
-}
+				var size = Math.sqrt(ship.length);
+				if(size<=2){
+								return 0;
+				}
+				if (size % 2 == 0){
+								return Math.max(spacesAtEndOfRow(ship,size/2),spacesAtEndOfRow(ship,(size/2)-1))*16;
+				}else{
+								return spacesAtEndOfRow(ship,(size-1)/2)*16;
+				}
 }
 function headlight(){
-								var lightSpot=undefined;
-									lightSpot={x:player.sprite.body.x+(player.sprite.body.width*0.5)+(Math.cos(player.sprite.rotation)*((player.sprite.body.width*0.5)-lightPosition(player.ship))),y:player.sprite.body.y+(player.sprite.body.width*0.5)+(Math.sin(player.sprite.rotation)*((player.sprite.body.width*0.5)-lightPosition(player.ship)))};
+				var lightSpot=undefined;
+				lightSpot={x:player.sprite.body.x+(player.sprite.body.width*0.5)+(Math.cos(player.sprite.rotation)*((player.sprite.body.width*0.5)-lightPosition(player.ship))),y:player.sprite.body.y+(player.sprite.body.width*0.5)+(Math.sin(player.sprite.rotation)*((player.sprite.body.width*0.5)-lightPosition(player.ship)))};
 
-					otherGraphics.lineStyle(3, 0xFFFFFF, 0);
+				otherGraphics.lineStyle(3, 0xFFFFFF, 0);
 				for(var i=0.90;i>0.50;i-=0.04){
-				otherGraphics.beginFill(0xFFFFFF,0.025);
-				otherGraphics.moveTo(lightSpot.x,lightSpot.y);
-				otherGraphics.lineTo(lightSpot.x+Math.cos(player.sprite.rotation - i)*2*Math.max(resolutionY,resolutionX),lightSpot.y+Math.sin(player.sprite.rotation - i)*2*Math.max(resolutionY,resolutionX));
-				otherGraphics.lineTo(lightSpot.x+Math.cos(player.sprite.rotation + i)*2*Math.max(resolutionY,resolutionX),lightSpot.y+Math.sin(player.sprite.rotation + i)*2*Math.max(resolutionY,resolutionX));
-				otherGraphics.lineTo(lightSpot.x,lightSpot.y);
-				otherGraphics.endFill();
+								otherGraphics.beginFill(0xFFFFFF,0.025);
+								otherGraphics.moveTo(lightSpot.x,lightSpot.y);
+								otherGraphics.lineTo(lightSpot.x+Math.cos(player.sprite.rotation - i)*2*Math.max(resolutionY,resolutionX),lightSpot.y+Math.sin(player.sprite.rotation - i)*2*Math.max(resolutionY,resolutionX));
+								otherGraphics.lineTo(lightSpot.x+Math.cos(player.sprite.rotation + i)*2*Math.max(resolutionY,resolutionX),lightSpot.y+Math.sin(player.sprite.rotation + i)*2*Math.max(resolutionY,resolutionX));
+								otherGraphics.lineTo(lightSpot.x,lightSpot.y);
+								otherGraphics.endFill();
 				}
 }
 
@@ -792,7 +792,6 @@ shipPart.prototype.initShipPart = function (x,y,index,targetSprite){
 				this.sprite.visible = true;
 				this.sprite.reset(this.offsetx,this.offsety);
 				this.sprite.anchor.setTo(0.5,0.5);
-				this.attached=true;
 				this.sprite.bringToTop();
 }
 shipPart.prototype.update = function(){
@@ -801,41 +800,41 @@ shipPart.prototype.update = function(){
 				if(this.target.alive){
 								this.sprite.scale.setTo(this.target.scale.x);
 								if(onscreen(this.sprite.x,this.sprite.y)){
-								var lightSpot=undefined;
-									lightSpot={x:player.sprite.body.x+(player.sprite.body.width*0.5)+(Math.cos(player.sprite.rotation)*player.sprite.body.width*0.6),y:player.sprite.body.y+(player.sprite.body.width*0.5)+(Math.sin(player.sprite.rotation)*player.sprite.body.width*0.6)};
-								//avoid div by 0
-									var targetOffset={x:this.target.body.x+(this.target.body.width*0.5)+(Math.cos(this.target.rotation)*this.target.body.width*-0.05),y:this.target.body.y+(this.target.body.width*0.5)+(Math.sin(this.target.rotation)*this.target.body.width*-0.05)};
-								var spriteOffset={x:this.sprite.body.x+(this.sprite.body.width*0.5),y:this.sprite.body.y+(this.sprite.body.width*0.5)};	
-								var lightness = game.physics.arcade.distanceBetween(spriteOffset, lightSpot)/Math.sqrt(Math.pow(Math.min(resolutionX,resolutionY),2));
-								lightness = lightness == 0 ? 0 : Math.cos((Math.PI*0.5)+(lightness*Math.PI*0.5));
-								var lightness2 = 0.5;
-								var partDist = game.physics.arcade.distanceBetween(spriteOffset,targetOffset);
-								if(partDist>0){
-								lightness2 = game.physics.arcade.distanceBetween(targetOffset,lightSpot) - game.physics.arcade.distanceBetween(spriteOffset,lightSpot);
-lightness2/=partDist;
-}
-								var lightnessAngle = game.physics.arcade.angleBetween(lightSpot,spriteOffset);
-								if(this.target.name=='player'){
-								lightnessAngle=Math.abs(compareAngles(lightnessAngle,player.sprite.rotation+Math.PI));
-								lightnessAngle=Math.max(0,1-lightnessAngle);
-}else{
-								lightnessAngle=Math.abs(compareAngles(lightnessAngle,player.sprite.rotation));
-								lightnessAngle=Math.max(0,2-lightnessAngle);
+												var lightSpot=undefined;
+												lightSpot={x:player.sprite.body.x+(player.sprite.body.width*0.5)+(Math.cos(player.sprite.rotation)*player.sprite.body.width*0.6),y:player.sprite.body.y+(player.sprite.body.width*0.5)+(Math.sin(player.sprite.rotation)*player.sprite.body.width*0.6)};
+												//avoid div by 0
+												var targetOffset={x:this.target.body.x+(this.target.body.width*0.5)+(Math.cos(this.target.rotation)*this.target.body.width*-0.05),y:this.target.body.y+(this.target.body.width*0.5)+(Math.sin(this.target.rotation)*this.target.body.width*-0.05)};
+												var spriteOffset={x:this.sprite.body.x+(this.sprite.body.width*0.5),y:this.sprite.body.y+(this.sprite.body.width*0.5)};	
+												var lightness = game.physics.arcade.distanceBetween(spriteOffset, lightSpot)/Math.sqrt(Math.pow(Math.min(resolutionX,resolutionY),2));
+												lightness = lightness == 0 ? 0 : Math.cos((Math.PI*0.5)+(lightness*Math.PI*0.5));
+												var lightness2 = 0.5;
+												var partDist = game.physics.arcade.distanceBetween(spriteOffset,targetOffset);
+												if(partDist>0){
+																lightness2 = game.physics.arcade.distanceBetween(targetOffset,lightSpot) - game.physics.arcade.distanceBetween(spriteOffset,lightSpot);
+																lightness2/=partDist;
+												}
+												var lightnessAngle = game.physics.arcade.angleBetween(lightSpot,spriteOffset);
+												if(this.target.name=='player'){
+																lightnessAngle=Math.abs(compareAngles(lightnessAngle,player.sprite.rotation+Math.PI));
+																lightnessAngle=Math.max(0,1-lightnessAngle);
+												}else{
+																lightnessAngle=Math.abs(compareAngles(lightnessAngle,player.sprite.rotation));
+																lightnessAngle=Math.max(0,2-lightnessAngle);
+												}
+
+												lightness = lightness+1;
+												lightness2 = lightness2+1; //(lightness + lightness2)/-2;
+												lightness2 /= 2;
+												lightness=lightness+(lightness2*lightnessAngle*1.5)+0.3;
+												lightness/=2;
+												lightness=Math.max(lightness,0.3);
+												this.sprite.alpha=this.target.alpha;
+												if(this.sprite.alpha==1 && lightness > 1){
+																this.sprite.alpha=lightness;
+												}
+												lightness=Math.min(lightness,1);
+												this.sprite.tint = (parseInt(this.target.r * lightness) << 16) + (parseInt(this.target.g*lightness) << 8) + parseInt(this.target.b * lightness);
 								}
-								
-								lightness = lightness+1;
-								lightness2 = lightness2+1; //(lightness + lightness2)/-2;
-								lightness2 /= 2;
-								lightness=lightness+(lightness2*lightnessAngle*1.5)+0.3;
-								lightness/=2;
-								lightness=Math.max(lightness,0.3);
-								this.sprite.alpha=this.target.alpha;
-								if(this.sprite.alpha==1 && lightness > 1){
-									this.sprite.alpha=lightness;
-								}
-								lightness=Math.min(lightness,1);
-								this.sprite.tint = (parseInt(this.target.r * lightness) << 16) + (parseInt(this.target.g*lightness) << 8) + parseInt(this.target.b * lightness);
-}
 				}else{
 								game.add.tween(this.sprite.scale).to({x:0,y:0},randomRange(1500,6500), Phaser.Easing.Linear.Out, true, 0, false);
 								var col = 255 - ((game.time.now + 10000 - enemies[this.target.name].died));
@@ -845,7 +844,7 @@ lightness2/=partDist;
 				var ons = onscreen(this.target.x,this.target.y);
 				this.sprite.visible=this.sprite.alive && ons;
 				var scale = this.sprite.scale.x;
-				if (this.target.alive && this.alive && this.attached) {
+				if (this.target.alive && this.alive) {
 								this.sprite.angle = this.target.angle;
 								this.sprite.x = this.target.x + (this.offsetx * scale * Math.cos(game.math.degToRad(this.target.angle)));
 								this.sprite.y = this.target.y + (this.offsety * scale * Math.cos(game.math.degToRad(this.target.angle)));
@@ -1414,12 +1413,12 @@ enemyShip.prototype.update = function() {
 								}
 								if(this.ai != aiModes['asteroid'] && Math.random()>Math.cos((this.health-this.healthMax)/this.healthMax)){
 												if(Math.random()>(this.health/this.healthMax)){
-																																if(Math.random()>(this.health/this.healthMax)+0.7){
+																if(Math.random()>(this.health/this.healthMax)+0.7){
 																				var tmpX=this.sprite.x+randomRange(-.7*this.sprite.body.width,this.sprite.body.width);
 																				var tmpY=this.sprite.y+randomRange(-.7*this.sprite.body.width,this.sprite.body.width);
 																				unstableSmoke(explosions, tmpX,tmpY);
 																}else{
-																sparks(pew,this.sprite);
+																				sparks(pew,this.sprite);
 																}
 												}
 								}
@@ -1470,12 +1469,12 @@ function preload () {
 				game.load.audio('powerup','assets/powerup.wav');
 				game.load.audio('missile','assets/missile.wav');
 				game.load.audio('bullet','assets/bullet.wav');
-if(!isAndroid){
+				if(!isAndroid){
 								game.load.audio('1','assets/1.ogg');
-							game.load.audio('2','assets/2.ogg');
-						game.load.audio('3','assets/3.ogg');
-					game.load.audio('4','assets/4.ogg');
-}
+								game.load.audio('2','assets/2.ogg');
+								game.load.audio('3','assets/3.ogg');
+								game.load.audio('4','assets/4.ogg');
+				}
 }
 
 
@@ -2123,6 +2122,29 @@ var laserFiringSolution = function(attacker, target, fireRange, fireVelocity, an
 				return null;
 
 }
+
+function optimizeComponents(ship){
+				var outship = ship.slice(0);
+				for(var i=0;i<outship.length;i++){
+								if(outship[i]!=-1){
+												var vc = variantComponents(ship[i]);
+												if(vc.length){
+																var bestMatch = 0;
+																var bestMatchIndex = 0;
+																var matchString = getBestMatch(outship,i);
+																for (var j=0;j<vc.length;j++){
+																				var matches = matchComponentToString(vc[j],matchString);
+																				if(matches>bestMatch){
+																								bestMatch = matches;
+																								bestMatchIndex = j;	
+																				}
+																}		
+																outship[i]=vc[bestMatchIndex];
+												}
+								}
+				}
+				return outship;
+}
 var variantComponents = function(partId){
 				if(partId==-1 || typeof(components[partId])=="undefined"){
 								return -1;
@@ -2260,7 +2282,7 @@ var symmetrizeShip = function(ship){
 				if(arraySlice % 2 == 1){
 								ret = centralPartsOnArrayRow(ret,parseInt(halfSlice)); 	
 				}
-				return ret;
+				return optimizeComponents(ret);
 }
 var randomShip = function(partsList,size,extraParts){
 				if(typeof(extraParts)=='undefined'){
@@ -2329,7 +2351,7 @@ var randomShip = function(partsList,size,extraParts){
 				}
 
 				if(success){
-								return ship;
+								return optimizeComponents(ship);
 				}else{
 								return randomShip(partsList,size,extraParts+size);
 				}
@@ -2436,7 +2458,7 @@ playerShip.prototype.update = function(){
 																				var tmpY=this.sprite.y+randomRange(-.7*this.sprite.body.width,this.sprite.body.width);
 																				unstableSmoke(explosions, tmpX,tmpY);
 																}else{
-																sparks(pew,this.sprite);
+																				sparks(pew,this.sprite);
 																}
 												}
 								}
@@ -2715,18 +2737,18 @@ gameUI.prototype.initSound = function(){
 				this.sound_bullet = game.add.audio('bullet');
 				this.currentMusic=undefined;
 				this.music=[];
-if(!isAndroid){
-for(var i = 1; i <=4; i++){
-													this.music[i]=game.add.audio(i);
-}
-}
+				if(!isAndroid){
+								for(var i = 1; i <=4; i++){
+												this.music[i]=game.add.audio(i);
+								}
+				}
 }
 function checkForNewMusic(){
-if(!isAndroid){
-if(game.time.now>nextMusic){
-		ui.music_random();
-}
-}
+				if(!isAndroid){
+								if(game.time.now>nextMusic){
+												ui.music_random();
+								}
+				}
 }
 gameUI.prototype.music_random = function(){
 				var rnd = parseInt(randomRange(1,this.music.length));
@@ -2960,6 +2982,39 @@ gameUI.prototype.partAt = function(x,y){
 				}
 				return 0;
 }
+function getBestMatch(ship,position){
+				var size=Math.sqrt(ship.length);
+				var res='';
+				if(position<ship.length-size){
+								if(ship[position+size] != -1){
+												if(components[ship[position+size]].match.match('8')){
+																res+='2';
+												}
+								}
+				}
+				if(position % size < size - 1){
+								if(ship[position+1] != -1){
+												if(components[ship[position+1]].match.match('4')){
+																res+='6';
+												}
+								}
+				}
+				if(position % size > 0){
+								if(ship[position-1] != -1){
+												if(components[ship[position-1]].match.match('6')){
+																res+='4';
+												}
+								}
+				}
+				if(position>=size){
+								if(ship[position-size] != -1){
+												if(components[ship[position-size]].match.match('2')){
+																res+='8';
+												}
+								}
+				}
+				return res;
+}
 //direction
 //relative from a
 //    b
@@ -3014,1302 +3069,1321 @@ var matchArrayComponents = function(a,b,direction){
 
 				return result;
 };
-gameUI.prototype.matchComponents = function(a,b,direction){
+function matchComponentToString (a,b){
 				var matchA = '';
-				if (a>0) {matchA = components[a].match;}
-				var matchB = '';
-				if (b>0) {matchB = components[b].match;}
+				if (a<=0) {return 0;}
+				matchA = components[a].match;
+				var matchB = b;
 				var result = 0;
-				matchA = matchA.replace('8','N').replace('2','S').replace('6','E').replace('4','W');
-				matchB = matchB.replace('2','N').replace('8','S').replace('4','E').replace('6','W');
+				var directions = [2,4,6,8];
+				for (var i=0;i<directions.length;i++){
+						var direction=directions[i];
+								if(!matchA.match(direction) && !matchB.match(direction)){
+												result+=1;
+								}
+				if(matchA.match(direction) && matchB.match(direction)){
+												result+=1;
+								}
+				}
+				
+								return result;
+}
+				gameUI.prototype.matchComponents = function(a,b,direction){
+								var matchA = '';
+								if (a>0) {matchA = components[a].match;}
+								var matchB = '';
+								if (b>0) {matchB = components[b].match;}
+								var result = 0;
+								matchA = matchA.replace('8','N').replace('2','S').replace('6','E').replace('4','W');
+								matchB = matchB.replace('2','N').replace('8','S').replace('4','E').replace('6','W');
 
-				if (a>0 && b>0 && matchA.match(direction)) { result =1;}
-				if (!matchA.match(direction) && !matchB.match(direction)) { result = 4;}
-				if (matchA.match(direction) && matchB.match(direction)) { 
-								result = 10;
-								if (components[a].name==components[b].name) {
-												result = 13;
+								if (a>0 && b>0 && matchA.match(direction)) { result =1;}
+								if (!matchA.match(direction) && !matchB.match(direction)) { result = 4;}
+								if (matchA.match(direction) && matchB.match(direction)) { 
+												result = 10;
+												if (components[a].name==components[b].name) {
+																result = 13;
+												}
+								}
+
+								return result;
+				};
+				gameUI.prototype.matchLocation = function(x,y,index){
+								var matches = 0;
+
+								matches += this.matchComponents(index,this.partAt(x-16,y),'W');
+								matches += this.matchComponents(index,this.partAt(x+16,y),'E');
+								matches += this.matchComponents(index,this.partAt(x,y-16),'N');
+								matches += this.matchComponents(index,this.partAt(x,y+16),'S');
+
+								return matches;
+				}
+				gameUI.prototype.matchShip = function(part,index,ship){
+								var matches = 0;
+
+								if(index>0){	
+												matches += this.matchComponents(part,ship[index-1],'W');
+								}
+								if(index<ship.length-1){
+												matches += this.matchComponents(part,ship[index+1],'E');
+								}
+								if(index>=Math.sqrt(ship.length)){
+												matches += this.matchComponents(part,ship[index-Math.sqrt(ship.length)],'N');
+								}
+								if(index<ship.length-Math.sqrt(ship.length)){
+												matches += this.matchComponents(part,ship[index+Math.sqrt(ship.length)],'S');
+								}
+								return matches;
+				}
+				gameUI.prototype.clearButtons = function() {
+								for (var i = 0; i < this.buttons.length; i++){
+												this.buttons[i].button.destroy();	
+								}
+								if(this.buttons.length){
+												this.buttons=[];
 								}
 				}
 
-				return result;
-};
-gameUI.prototype.matchLocation = function(x,y,index){
-				var matches = 0;
-
-				matches += this.matchComponents(index,this.partAt(x-16,y),'W');
-				matches += this.matchComponents(index,this.partAt(x+16,y),'E');
-				matches += this.matchComponents(index,this.partAt(x,y-16),'N');
-				matches += this.matchComponents(index,this.partAt(x,y+16),'S');
-
-				return matches;
-}
-gameUI.prototype.matchShip = function(part,index,ship){
-				var matches = 0;
-
-				if(index>0){	
-								matches += this.matchComponents(part,ship[index-1],'W');
-				}
-				if(index<ship.length-1){
-								matches += this.matchComponents(part,ship[index+1],'E');
-				}
-				if(index>=Math.sqrt(ship.length)){
-								matches += this.matchComponents(part,ship[index-Math.sqrt(ship.length)],'N');
-				}
-				if(index<ship.length-Math.sqrt(ship.length)){
-								matches += this.matchComponents(part,ship[index+Math.sqrt(ship.length)],'S');
-				}
-				return matches;
-}
-gameUI.prototype.clearButtons = function() {
-				for (var i = 0; i < this.buttons.length; i++){
-								this.buttons[i].button.destroy();	
-				}
-				if(this.buttons.length){
-								this.buttons=[];
-				}
-}
-
-gameUI.prototype.clearRadar = function() {
-				for (var i = 0; i < this.radar.length; i++){
-								this.radar[i].destroy();	
-				}
-				if(this.radar.length){
-								this.radar=[];
-				}
-}	
-gameUI.prototype.resetRadar = function() {
-				if(this.radar.length!=player.radarTargets){
-								this.clearRadar();
-								for (var i = 0; i < player.radarTargets; i++){
-												if(typeof(enemies[i])!='undefined'){
-																this.radar.push(game.add.text(200,100, '*',{ font:'12px acknowledge', fill: 'rgb(255,130,130)', align: 'center' }));
-																this.radar[i].anchor.setTo(0.5,0.5);
-																this.radar[i].alpha=0.85;
-																this.radar[i].blendMode=1
-												};
+				gameUI.prototype.clearRadar = function() {
+								for (var i = 0; i < this.radar.length; i++){
+												this.radar[i].destroy();	
+								}
+								if(this.radar.length){
+												this.radar=[];
+								}
+				}	
+				gameUI.prototype.resetRadar = function() {
+								if(this.radar.length!=player.radarTargets){
+												this.clearRadar();
+												for (var i = 0; i < player.radarTargets; i++){
+																if(typeof(enemies[i])!='undefined'){
+																				this.radar.push(game.add.text(200,100, '*',{ font:'12px acknowledge', fill: 'rgb(255,130,130)', align: 'center' }));
+																				this.radar[i].anchor.setTo(0.5,0.5);
+																				this.radar[i].alpha=0.85;
+																				this.radar[i].blendMode=1
+																};
+												}
 								}
 				}
-}
-gameUI.prototype.initCombatUi = function() {
+				gameUI.prototype.initCombatUi = function() {
 
-				this.partsSelector = game.add.sprite(-384,158,'parts',0);
-				this.partsSelector.visible = false;
+								this.partsSelector = game.add.sprite(-384,158,'parts',0);
+								this.partsSelector.visible = false;
 
-				this.tempStation = game.add.sprite(0,0,'station');
-				this.tempStation.anchor.setTo(0.5,0.5);
-				this.tempStation.visible = false;
-				this.partswindow = game.add.sprite(-364,-132,'partswindow');
-				this.partswindow.anchor.setTo(0,0);
-				this.partswindow.visible = false;
-				destroyIfExists(this.missionLine);
-				this.missionLine = game.add.text(200,100, '',{ font:'24px acknowledge', fill: 'rgb(255,192,64)', align: 'right' });
-				this.missionLine.alpha = 0.69;
-				destroyIfExists(this.profileLine);
-				this.profileLine = game.add.text(200,100, '',{ font:'24px acknowledge', fill: 'rgb(255,64,16)', align: 'right' });
-				this.profileLine.alpha = 0.75;
-				destroyIfExists(this.healthLine);
-				this.healthLine = game.add.text(200,100, '',{ font:'18px acknowledge', fill: 'rgb(96,96,240)', align: 'left' });
-				this.healthLine.alpha = 0.9;
-				this.healthLine.blendMode = 1;
-				this.healthLine.anchor.setTo(0.5,0.5);
+								this.tempStation = game.add.sprite(0,0,'station');
+								this.tempStation.anchor.setTo(0.5,0.5);
+								this.tempStation.visible = false;
+								this.partswindow = game.add.sprite(-364,-132,'partswindow');
+								this.partswindow.anchor.setTo(0,0);
+								this.partswindow.visible = false;
+								destroyIfExists(this.missionLine);
+								this.missionLine = game.add.text(200,100, '',{ font:'24px acknowledge', fill: 'rgb(255,192,64)', align: 'right' });
+								this.missionLine.alpha = 0.69;
+								destroyIfExists(this.profileLine);
+								this.profileLine = game.add.text(200,100, '',{ font:'24px acknowledge', fill: 'rgb(255,64,16)', align: 'right' });
+								this.profileLine.alpha = 0.75;
+								destroyIfExists(this.healthLine);
+								this.healthLine = game.add.text(200,100, '',{ font:'18px acknowledge', fill: 'rgb(96,96,240)', align: 'left' });
+								this.healthLine.alpha = 0.9;
+								this.healthLine.blendMode = 1;
+								this.healthLine.anchor.setTo(0.5,0.5);
 
-				destroyIfExists(this.energyLine);
-				this.energyLine = game.add.text(200,100, '',{ font:'18px acknowledge', fill: 'rgb(240,64,255)', align: 'left' });
-				this.energyLine.alpha = 0.9;
-				this.energyLine.anchor.setTo(0.5,0.5);
+								destroyIfExists(this.energyLine);
+								this.energyLine = game.add.text(200,100, '',{ font:'18px acknowledge', fill: 'rgb(240,64,255)', align: 'left' });
+								this.energyLine.alpha = 0.9;
+								this.energyLine.anchor.setTo(0.5,0.5);
 
-				this.energyLine.blendMode = 1;
-				destroyIfExists(this.comms);
-				this.comms = game.add.text(0,0,'',{font:'32px mozart', fill: 'rgb(40,190,240)', align: 'left'});
+								this.energyLine.blendMode = 1;
+								destroyIfExists(this.comms);
+								this.comms = game.add.text(0,0,'',{font:'32px mozart', fill: 'rgb(40,190,240)', align: 'left'});
 
-				this.comms.anchor.setTo(0.5,0.5);
-				destroyIfExists(this.partText);
-				this.partText = game.add.text(-300,150,'',{font:'42px mozart', fill: 'rgb(255,255,255)', align: 'left'});
-				destroyIfExists(this.statsText);
-				this.statsText = game.add.text(0,-200,'',{font:'28px mozart', fill: 'rgb(255,255,255)', align: 'left'});
-				this.statsText.anchor.setTo(0.5,0.5);
-				destroyIfExists(this.partFlavorText);
-				this.partFlavorText = game.add.text(-280,180,'',{font:'28px mozart', fill: 'rgb(255,255,255)', align: 'left'});
-				destroyIfExists(this.explainerText);
-				this.explainerText = game.add.text(-300,210,'',{font:'24px mozart', fill: 'rgb(255,255,220)', align: 'left'});
+								this.comms.anchor.setTo(0.5,0.5);
+								destroyIfExists(this.partText);
+								this.partText = game.add.text(-300,150,'',{font:'42px mozart', fill: 'rgb(255,255,255)', align: 'left'});
+								destroyIfExists(this.statsText);
+								this.statsText = game.add.text(0,-200,'',{font:'28px mozart', fill: 'rgb(255,255,255)', align: 'left'});
+								this.statsText.anchor.setTo(0.5,0.5);
+								destroyIfExists(this.partFlavorText);
+								this.partFlavorText = game.add.text(-280,180,'',{font:'28px mozart', fill: 'rgb(255,255,255)', align: 'left'});
+								destroyIfExists(this.explainerText);
+								this.explainerText = game.add.text(-300,210,'',{font:'24px mozart', fill: 'rgb(255,255,220)', align: 'left'});
 
-				this.radar = [];
-				this.resetRadar();
+								this.radar = [];
+								this.resetRadar();
 
-				this.damageNumbers = [];
+								this.damageNumbers = [];
 
-				this.frobRadar = game.add.text(200,100,'*',{font:'28px acknowledge', fill: 'rgb(255,255,130)', align: 'center'});
-				this.frobRadar.anchor.setTo(0.5,0.5);
-				this.frobRadar.blendMode=1;
-				this.frobRadar.alpha=0.92;
-}
-gameUI.prototype.cleanupDamageNumbers = function(){
-				for(var i=0;i<this.damageNumbers.length;i++){
-								if(game.time.now>this.damageNumbers[i].dieTime){
-												this.damageNumbers[i].visible=false;
+								this.frobRadar = game.add.text(200,100,'*',{font:'28px acknowledge', fill: 'rgb(255,255,130)', align: 'center'});
+								this.frobRadar.anchor.setTo(0.5,0.5);
+								this.frobRadar.blendMode=1;
+								this.frobRadar.alpha=0.92;
+				}
+				gameUI.prototype.cleanupDamageNumbers = function(){
+								for(var i=0;i<this.damageNumbers.length;i++){
+												if(game.time.now>this.damageNumbers[i].dieTime){
+																this.damageNumbers[i].visible=false;
+												}else{
+																this.toTop(this.damageNumbers[i]);
+																this.damageNumbers[i].x+=player.sprite.body.velocity.x*game.time.physicsElapsed;
+																this.damageNumbers[i].y+=player.sprite.body.velocity.y*game.time.physicsElapsed;
+																this.damageNumbers[i].y-=120*game.time.physicsElapsed;
+												}
+								} 
+				}
+				gameUI.prototype.addDamageNumber = function(x,y,dmg){
+								if(!dmg){return;}
+								var dmgDisplay = parseInt(Math.ceil(dmg)*-1);
+								var dn;
+								for(var i=0;i<this.damageNumbers.length;i++){
+												if(this.damageNumbers[i].visible==false){
+																dn=this.damageNumbers[i];
+												}
+								}
+								if(typeof(dn)=='undefined'){
+												this.damageNumbers.push(game.add.text(0,0,'',{ font: '24px acknowledge', fill: 'rgb(240,0,0)', alpha: '2'}));
+												dn=this.damageNumbers[this.damageNumbers.length-1];
+								}
+								dn.x=x;
+								dn.y=y;
+								dn.visible=2;
+								dn.setText(dmgDisplay);
+								if(dmgDisplay<=0){
+												dn.fill='rgb(240,30,30)';
 								}else{
-												this.toTop(this.damageNumbers[i]);
-												this.damageNumbers[i].x+=player.sprite.body.velocity.x*game.time.physicsElapsed;
-												this.damageNumbers[i].y+=player.sprite.body.velocity.y*game.time.physicsElapsed;
-												this.damageNumbers[i].y-=120*game.time.physicsElapsed;
+												dn.fill='rgb(30,240,30)';
 								}
-				} 
-}
-gameUI.prototype.addDamageNumber = function(x,y,dmg){
-				if(!dmg){return;}
-				var dmgDisplay = parseInt(Math.ceil(dmg)*-1);
-				var dn;
-				for(var i=0;i<this.damageNumbers.length;i++){
-								if(this.damageNumbers[i].visible==false){
-												dn=this.damageNumbers[i];
+								dn.alpha=2;
+								dn.dieTime=game.time.now+1000;
+								game.add.tween(dn).to({alpha: 0},1000, Phaser.Easing.Sinusoidal.Out, true, 0, false);
+				}
+				gameUI.prototype.bar = function (targetText, offset, numerator, denominator) {
+								if(typeof(targetText.lastValue)=='undefined'){
+												targetText.lastValue=numerator;
 								}
-				}
-				if(typeof(dn)=='undefined'){
-								this.damageNumbers.push(game.add.text(0,0,'',{ font: '24px acknowledge', fill: 'rgb(240,0,0)', alpha: '2'}));
-								dn=this.damageNumbers[this.damageNumbers.length-1];
-				}
-				dn.x=x;
-				dn.y=y;
-				dn.visible=2;
-				dn.setText(dmgDisplay);
-				if(dmgDisplay<=0){
-								dn.fill='rgb(240,30,30)';
-				}else{
-								dn.fill='rgb(30,240,30)';
-				}
-				dn.alpha=2;
-				dn.dieTime=game.time.now+1000;
-				game.add.tween(dn).to({alpha: 0},1000, Phaser.Easing.Sinusoidal.Out, true, 0, false);
-}
-gameUI.prototype.bar = function (targetText, offset, numerator, denominator) {
-				if(typeof(targetText.lastValue)=='undefined'){
+								targetText.x = player.sprite.body.x+(player.sprite.body.width/2);
+								targetText.y = player.sprite.body.y+(player.sprite.body.height/2);//+30+offset;
+								targetText.x -= Math.cos(player.sprite.rotation)*(player.sprite.body.width+offset);
+								targetText.y -= Math.sin(player.sprite.rotation)*(player.sprite.body.width+offset);
+								targetText.rotation = player.sprite.rotation + 0.5 * Math.PI;
+								targetText.tint=16777215;
+								if(targetText.shudder){
+												targetText.x+=((targetText.shudder)*Math.random())*randomSign();
+												targetText.y+=((targetText.shudder)*Math.random())*randomSign();
+												targetText.shudder-=game.time.physicsElapsed*15;
+												if(targetText.shudder<0){
+																targetText.shudder = 0;
+												}
+												targetText.tint*=Math.random();
+								}	
+								this.toTop(targetText);
+								var barFactor = parseInt(denominator/10)+1;
+								var barSize=Math.floor(denominator/barFactor);	
+								var s = '';
+								if (barFactor > 1){
+												s+=barFactor;
+								}
+								var n=Math.floor(numerator/barFactor);
+								if(n<0){n=0;}
+								s+=repeat('\u2026',n);
+								s+=repeat('\u201A',barSize-n);
+								targetText.setText(s);
+								if(numerator>targetText.lastValue){
+												targetText.alpha=2;
+												game.add.tween(targetText).to({alpha: 0.9},500, Phaser.Easing.Exponential.Out, true, 0, false);
+								}else if(numerator<targetText.lastValue){
+												targetText.alpha=0.6;		
+												game.add.tween(targetText).to({alpha: 0.9},500, Phaser.Easing.Exponential.Out, true, 0, false);	
+								}
 								targetText.lastValue=numerator;
 				}
-				targetText.x = player.sprite.body.x+(player.sprite.body.width/2);
-				targetText.y = player.sprite.body.y+(player.sprite.body.height/2);//+30+offset;
-				targetText.x -= Math.cos(player.sprite.rotation)*(player.sprite.body.width+offset);
-				targetText.y -= Math.sin(player.sprite.rotation)*(player.sprite.body.width+offset);
-				targetText.rotation = player.sprite.rotation + 0.5 * Math.PI;
-				targetText.tint=16777215;
-				if(targetText.shudder){
-								targetText.x+=((targetText.shudder)*Math.random())*randomSign();
-								targetText.y+=((targetText.shudder)*Math.random())*randomSign();
-								targetText.shudder-=game.time.physicsElapsed*15;
-								if(targetText.shudder<0){
-												targetText.shudder = 0;
-								}
-								targetText.tint*=Math.random();
-				}	
-				this.toTop(targetText);
-				var barFactor = parseInt(denominator/10)+1;
-				var barSize=Math.floor(denominator/barFactor);	
-				var s = '';
-				if (barFactor > 1){
-								s+=barFactor;
-				}
-				var n=Math.floor(numerator/barFactor);
-				if(n<0){n=0;}
-				s+=repeat('\u2026',n);
-				s+=repeat('\u201A',barSize-n);
-				targetText.setText(s);
-				if(numerator>targetText.lastValue){
-								targetText.alpha=2;
-								game.add.tween(targetText).to({alpha: 0.9},500, Phaser.Easing.Exponential.Out, true, 0, false);
-				}else if(numerator<targetText.lastValue){
-								targetText.alpha=0.6;		
-								game.add.tween(targetText).to({alpha: 0.9},500, Phaser.Easing.Exponential.Out, true, 0, false);	
-				}
-				targetText.lastValue=numerator;
-}
 
-gameUI.prototype.frobRadarPing = function() {
-				if(false && (playerStats.mission.win.condition!='frob' || playerStats.mission.complete)){
-								this.frobRadar.setText('');
-								this.toTop(this.frobRadar);
-				}else{
+				gameUI.prototype.frobRadarPing = function() {
+								if(false && (playerStats.mission.win.condition!='frob' || playerStats.mission.complete)){
+												this.frobRadar.setText('');
+												this.toTop(this.frobRadar);
+								}else{
+												var s='';
+												var targetAngle=game.physics.arcade.angleBetween(player.sprite, frob1);
+												var targetDistance=game.physics.arcade.distanceBetween(player.sprite, frob1);
+												s='<>'; 
+												var n=Math.floor(255-(targetDistance/8-225));
+												if(n<64){n=64;}if(n>255){n=255};
+												this.frobRadar.style.fill="rgb("+(Math.floor(n))+","+n+","+(Math.floor(n/2))+")";
+												if(playerStats.mission.complete || playerStats.mission.win.condition=='frob') {
+																if (game.time.now > this.nextFrobRadarPulse)  {
+																				this.frobRadar.style.fill="rgb("+(n+72)+","+(n+72)+","+(n)+")";
+																				ui.frobRadar.scale.setTo(3,3);
+																				game.add.tween(ui.frobRadar.scale).to({x:1,y:1},500, Phaser.Easing.Quadratic.InOut, true, 0, true, true);
+																				this.nextFrobRadarPulse=game.time.now+1000;
+																}
+												}else{
+																ui.frobRadar.scale.setTo(1,1);
+																if (game.time.now % 1000 < 50)  {
+																				this.frobRadar.style.fill="rgb("+(n+64)+","+(n+64)+","+(n+32)+")";
+
+																}
+
+												}
+
+												if (targetDistance < 300){
+																s='';
+												}
+												if(targetDistance>180){targetDistance=180+Math.pow(targetDistance-180,0.6)};
+												if(targetDistance>0.5*Math.min(resolutionX,resolutionY)-50){targetDistance=0.5*Math.min(resolutionX,resolutionY)-50};	
+												this.frobRadar.setText(s);
+												this.frobRadar.x = player.sprite.body.x + Math.cos(targetAngle) * targetDistance - 0.5 * this.frobRadar.width;
+												this.frobRadar.y = player.sprite.body.y + Math.sin(targetAngle) * targetDistance;	
+								}
+				}
+				gameUI.prototype.radarPing = function() {
 								var s='';
-								var targetAngle=game.physics.arcade.angleBetween(player.sprite, frob1);
-								var targetDistance=game.physics.arcade.distanceBetween(player.sprite, frob1);
-								s='<>'; 
-								var n=Math.floor(255-(targetDistance/8-225));
-								if(n<64){n=64;}if(n>255){n=255};
-								this.frobRadar.style.fill="rgb("+(Math.floor(n))+","+n+","+(Math.floor(n/2))+")";
-								if(playerStats.mission.complete || playerStats.mission.win.condition=='frob') {
-												if (game.time.now > this.nextFrobRadarPulse)  {
-																this.frobRadar.style.fill="rgb("+(n+72)+","+(n+72)+","+(n)+")";
-																ui.frobRadar.scale.setTo(3,3);
-																game.add.tween(ui.frobRadar.scale).to({x:1,y:1},500, Phaser.Easing.Quadratic.InOut, true, 0, true, true);
-																this.nextFrobRadarPulse=game.time.now+1000;
-												}
-								}else{
-												ui.frobRadar.scale.setTo(1,1);
-												if (game.time.now % 1000 < 50)  {
-																this.frobRadar.style.fill="rgb("+(n+64)+","+(n+64)+","+(n+32)+")";
-
-												}
-
+								this.resetRadar();
+								if(player.radarError > 0){
+												player.radarError-=game.time.physicsElapsed*2;
 								}
-
-								if (targetDistance < 300){
-												s='';
+								if(player.radarError < 0){
+												player.radarError=0;
 								}
-								if(targetDistance>180){targetDistance=180+Math.pow(targetDistance-180,0.6)};
-								if(targetDistance>0.5*Math.min(resolutionX,resolutionY)-50){targetDistance=0.5*Math.min(resolutionX,resolutionY)-50};	
-								this.frobRadar.setText(s);
-								this.frobRadar.x = player.sprite.body.x + Math.cos(targetAngle) * targetDistance - 0.5 * this.frobRadar.width;
-								this.frobRadar.y = player.sprite.body.y + Math.sin(targetAngle) * targetDistance;	
-				}
-}
-gameUI.prototype.radarPing = function() {
-				var s='';
-				this.resetRadar();
-				if(player.radarError > 0){
-								player.radarError-=game.time.physicsElapsed*2;
-				}
-				if(player.radarError < 0){
-								player.radarError=0;
-				}
-				for(var i=0;i<this.radar.length;i++){
-								var targetAngle=game.physics.arcade.angleBetween(player.sprite, this.enemies[i].sprite);
-								this.radar[i].alpha=0.85
-												if(player.radarError>player.radarTargets){
-																this.radar[i].alpha*=Math.random()-((player.radarError-player.radarTargets)/20);
-																targetAngle+=Math.random()*((player.radarError-player.radarTargets)/2)*randomSign();
+								for(var i=0;i<this.radar.length;i++){
+												var targetAngle=game.physics.arcade.angleBetween(player.sprite, this.enemies[i].sprite);
+												this.radar[i].alpha=0.85
+																if(player.radarError>player.radarTargets){
+																				this.radar[i].alpha*=Math.random()-((player.radarError-player.radarTargets)/20);
+																				targetAngle+=Math.random()*((player.radarError-player.radarTargets)/2)*randomSign();
+																}
+
+												var targetDistance=game.physics.arcade.distanceBetween(player.sprite, this.enemies[i].sprite);
+												var s='\u2026';
+												var n=Math.floor(255-(targetDistance/2-900));
+												var blinkDistance = 1000;
+												var bracketLeft = '[';
+												var bracketRight = ']';
+
+												var missionTarget = !playerStats.mission.complete && this.enemies[i].missionTarget ? 128 : 0;
+
+												if(player.profileShow){
+																var adjustedProfile = 200 + Math.pow(player.sprite.profile,profileExponent);
+																this.blinkDistance=adjustedProfile*2.1;
+																if(targetDistance<0.5*blinkDistance){
+																				bracketLeft='>';
+																				s='!';
+																				bracketRight='<';
+																}else{
+																				bracketLeft='(';
+																				bracketRight=')';
+																}
 												}
 
-								var targetDistance=game.physics.arcade.distanceBetween(player.sprite, this.enemies[i].sprite);
-								var s='\u2026';
-								var n=Math.floor(255-(targetDistance/2-900));
-								var blinkDistance = 1000;
-								var bracketLeft = '[';
-								var bracketRight = ']';
-
-								var missionTarget = !playerStats.mission.complete && this.enemies[i].missionTarget ? 128 : 0;
-
-								if(player.profileShow){
-												var adjustedProfile = 200 + Math.pow(player.sprite.profile,profileExponent);
-												this.blinkDistance=adjustedProfile*2.1;
-												if(targetDistance<0.5*blinkDistance){
-																bracketLeft='>';
-																s='!';
-																bracketRight='<';
+												if(n<0){n=0;}if(n>255){n=255};
+												this.radar[i].style.fill="rgb("+n+","+(96+missionTarget)+",96)";
+												if(this.enemies[i].sprite.profile>player.sprite.profileMax*2){
+																this.radar[i].style.font='36px acknowledge';
+												}else if(this.enemies[i].sprite.profile>player.sprite.profileMax){
+																this.radar[i].style.font='30px acknowledge';
+												}else if(this.enemies[i].sprite.profile>player.sprite.profileMax*0.5){
+																this.radar[i].style.font='24px acknowledge';
 												}else{
-																bracketLeft='(';
-																bracketRight=')';
+																this.radar[i].style.font='18px acknowledge';
 												}
-								}
 
-								if(n<0){n=0;}if(n>255){n=255};
-								this.radar[i].style.fill="rgb("+n+","+(96+missionTarget)+",96)";
-								if(this.enemies[i].sprite.profile>player.sprite.profileMax*2){
-												this.radar[i].style.font='36px acknowledge';
-								}else if(this.enemies[i].sprite.profile>player.sprite.profileMax){
-												this.radar[i].style.font='30px acknowledge';
-								}else if(this.enemies[i].sprite.profile>player.sprite.profileMax*0.5){
-												this.radar[i].style.font='24px acknowledge';
-								}else{
-												this.radar[i].style.font='18px acknowledge';
-								}
-
-								if(game.time.now>this.nextRadarSound && targetDistance < 0.75 * blinkDistance && this.enemies[i].sprite.profile > 200){
-												this.nextRadarSound=game.time.now+3333;
-								}
-								if (targetDistance < 0.5 * blinkDistance && game.time.now % 250 > 125){
-												s='['+s+']';
-												this.radar[i].style.fill="rgb(255," + missionTarget + ",0)";
-								}
-								else if (targetDistance < blinkDistance && targetDistance >= 0.5 * blinkDistance && game.time.now % 1000 > 500)  {
-												s='['+s+']';
-												this.radar[i].style.fill="rgb(255," + missionTarget + ",0)";
-								} else {
-												s=' '+s+' ';
-								}
-
-								if(i==0 && player.fireTracking > 0 && targetDistance < (player.fireRange * player.fireVelocity) / 1000){
-												s+='\nLOCKED';
-								}
-
-								var range = targetDistance;
-
-								if(this.enemies[i].sprite==player.target){
-												this.radar[i].style.font='64px mozart';
-												this.radar[i].style.fill="rgb(255,96,32)";
-												if(player.behavior!='target'){
-																this.radar[i].style.fill="rgb(192,212,32)";
+												if(game.time.now>this.nextRadarSound && targetDistance < 0.75 * blinkDistance && this.enemies[i].sprite.profile > 200){
+																this.nextRadarSound=game.time.now+3333;
 												}
-												if(Math.random()<0.955 ){
-																s='[  ';
-												}else{
-																s=String.fromCharCode(Math.floor(Math.random()*255))+'  ';
+												if (targetDistance < 0.5 * blinkDistance && game.time.now % 250 > 125){
+																s='['+s+']';
+																this.radar[i].style.fill="rgb(255," + missionTarget + ",0)";
 												}
-												if(Math.random()<0.955 ){
-																s+=']';
-												}else{
-																s+=String.fromCharCode(Math.floor(Math.random()*255));
+												else if (targetDistance < blinkDistance && targetDistance >= 0.5 * blinkDistance && game.time.now % 1000 > 500)  {
+																s='['+s+']';
+																this.radar[i].style.fill="rgb(255," + missionTarget + ",0)";
+												} else {
+																s=' '+s+' ';
 												}
-								} else {
-												if(range>180){range=180+Math.pow(targetDistance-180,0.6)};	
-												if(range>0.5*Math.min(resolutionX,resolutionY)-50){range=0.5*Math.min(resolutionX,resolutionY)-50};	
-								}
-								this.radar[i].setText(s);
-								this.radar[i].x = player.sprite.body.x + (0.5 * player.sprite.body.width) + Math.cos(targetAngle) * range;
-								this.radar[i].y = player.sprite.body.y + (0.5 * player.sprite.body.width) + Math.sin(targetAngle) * range;	
-								this.toTop(this.radar[i]);
-				}
-}
-//follow this with a push!
-gameUI.prototype.skipText = function() {
-				this.textIndex=this.texts.length;
-				this.textLineIndex=0;
-}
-gameUI.prototype.commsPing = function() {
-				this.comms.x = player.sprite.x;
-				this.comms.y = player.sprite.y - 200;
-				if (game.time.now > this.nextComms && this.textIndex < this.texts.length){
-								if(this.textLineIndex==0||this.nextCommsPing){
-												ui.sound_comms.play();
-												this.nextCommsPing=false;
-								}
-								this.comms.alpha=1;
-								this.textLine = this.texts[this.textIndex].substr(0, this.textLineIndex++);
-								var s ='';
-								if(!this.textLine.substr(-1)=='\n'){
-												for(var i=0;i<this.textLine.length;i++){
-																if(this.textLineIndex > this.texts[this.textIndex].length || this.textLine[i]=='\n' || Math.random()<0.995 ){
-																				s+=this.textLine[i];
+
+												if(i==0 && player.fireTracking > 0 && targetDistance < (player.fireRange * player.fireVelocity) / 1000){
+																s+='\nLOCKED';
+												}
+
+												var range = targetDistance;
+
+												if(this.enemies[i].sprite==player.target){
+																this.radar[i].style.font='64px mozart';
+																this.radar[i].style.fill="rgb(255,96,32)";
+																if(player.behavior!='target'){
+																				this.radar[i].style.fill="rgb(192,212,32)";
+																}
+																if(Math.random()<0.955 ){
+																				s='[  ';
+																}else{
+																				s=String.fromCharCode(Math.floor(Math.random()*255))+'  ';
+																}
+																if(Math.random()<0.955 ){
+																				s+=']';
 																}else{
 																				s+=String.fromCharCode(Math.floor(Math.random()*255));
 																}
+												} else {
+																if(range>180){range=180+Math.pow(targetDistance-180,0.6)};	
+																if(range>0.5*Math.min(resolutionX,resolutionY)-50){range=0.5*Math.min(resolutionX,resolutionY)-50};	
+												}
+												this.radar[i].setText(s);
+												this.radar[i].x = player.sprite.body.x + (0.5 * player.sprite.body.width) + Math.cos(targetAngle) * range;
+												this.radar[i].y = player.sprite.body.y + (0.5 * player.sprite.body.width) + Math.sin(targetAngle) * range;	
+												this.toTop(this.radar[i]);
+								}
+				}
+				//follow this with a push!
+				gameUI.prototype.skipText = function() {
+								this.textIndex=this.texts.length;
+								this.textLineIndex=0;
+				}
+				gameUI.prototype.commsPing = function() {
+								this.comms.x = player.sprite.x;
+								this.comms.y = player.sprite.y - 200;
+								if (game.time.now > this.nextComms && this.textIndex < this.texts.length){
+												if(this.textLineIndex==0||this.nextCommsPing){
+																ui.sound_comms.play();
+																this.nextCommsPing=false;
+												}
+												this.comms.alpha=1;
+												this.textLine = this.texts[this.textIndex].substr(0, this.textLineIndex++);
+												var s ='';
+												if(!this.textLine.substr(-1)=='\n'){
+																for(var i=0;i<this.textLine.length;i++){
+																				if(this.textLineIndex > this.texts[this.textIndex].length || this.textLine[i]=='\n' || Math.random()<0.995 ){
+																								s+=this.textLine[i];
+																				}else{
+																								s+=String.fromCharCode(Math.floor(Math.random()*255));
+																				}
+																}
+												}
+												this.textLine=s;
+												this.comms.setText(this.textLine);
+												if(this.textLineIndex>this.texts[this.textIndex].length){
+																this.nextComms=game.time.now+2000+this.textLineIndex*50;
+																this.textIndex+=1;
+																this.textLineIndex=0;
+												}else{
+																this.nextComms=game.time.now+0.1;
+												}
+												if(this.textLine.substr(-1)=='\n'){
+																this.nextComms+=10;
+												}
+								}else if (game.time.now > this.nextComms) {
+												this.comms.alpha-=randomRange(0,0.05);
+								}  
+								if(this.textLine.length>0 && game.time.now % 200 > 100){
+												this.comms.setText(this.textLine + '_ ');
+								}else{
+												this.comms.setText(this.textLine + '  ');
+								}
+								this.graphics.beginFill(0x000000, ui.comms.alpha/3);
+								this.graphics.drawRect(this.comms.x - 15 - (0.5 * this.comms.width), this.comms.y - 6 - (0.5 * this.comms.height), this.comms.width + 30, this.comms.height + 12);
+
+								//color coding!
+								if(this.comms.text.match(/^got/)){
+												this.comms.fill="rgb(255,240,32)"
+								}else if (this.comms.text.match(/^\$/)){
+												this.comms.fill="rgb(200,255,230)"
+								}else if (this.comms.text.match(/^>/)){
+												this.comms.fill="rgb(255,96,64)"	
+								}else{
+												this.comms.fill='rgb(40,190,240)';
+								}	
+								this.toTop(this.comms);
+				}
+				gameUI.prototype.missionLinePing = function() {
+
+								if(playerStats.mission.win.condition=='kill' && playerStats.mission.win.killCount > playerStats.kills){
+												this.missionLine.setText(playerStats.kills + '/' + playerStats.mission.win.killCount);
+												this.missionLine.x = player.sprite.body.x+(player.sprite.body.width/2);
+												this.missionLine.y = player.sprite.body.height+player.sprite.body.y+55;
+												this.toTop(this.missionLine);
+								} else {
+												this.missionLine.setText('');
+								}
+				}
+				gameUI.prototype.profileLinePing = function() {
+
+								if(player.profileShow){
+												this.profileLine.style.fill="rgb(192,"+Math.floor((player.sprite.profile/5/player.sprite.profileMax)*255)+",16)";
+												this.profileLine.setText(player.sprite.profile);
+												this.profileLine.x = player.sprite.body.x-this.profileLine.width;
+												this.profileLine.y = player.sprite.body.height+player.sprite.body.y+55;
+												this.toTop(this.profileLine);
+								}else{
+												this.profileLine.setText('');
+								}
+				}
+				gameUI.prototype.partPing = function () {
+								this.graphics.beginFill(0x000000, 0.5);
+								this.graphics.drawRect(-400,142, 800, 96);
+								this.toTop(this.partText);
+								this.toTop(this.partFlavorText);
+								this.toTop(this.statsText);
+								if(this.comms.alpha>0){
+												this.statsText.visible=false;
+								}else{
+												this.statsText.visible=true;
+								}
+								this.toTop(this.explainerText);
+								this.partsSelector.bringToTop();
+
+				}
+				gameUI.prototype.update = function() {
+								this.graphics.clear();
+								this.toTop(this.graphics);
+								this.commsPing();
+								this.toTop(otherGraphics);
+								headlight();
+								if (gamemode == '?build'){
+												this.partPing();
+								}
+								if (gamemode == 'war'){
+												this.missionLinePing();
+												this.profileLinePing();
+												this.bar(this.healthLine, 0, player.health, player.healthMax);
+												this.bar(this.energyLine, 10, player.energy, player.energyMax);
+												this.enemies=enemies.slice(0);
+												this.enemies.sort(threatSort);
+												this.asteroids=enemies.slice(0);
+												this.asteroids.sort(asteroidSort);
+												this.radarPing();
+												this.frobRadarPing();
+								}
+								this.buttonsPing();
+								this.cleanupDamageNumbers();
+				}
+				gameUI.prototype.updatePart = function () {
+								this.partsSelector.visible=true;
+								mockPlayer.initPlayerShip(this.partsArray());
+								this.statsText.setText(blurbStats(mockPlayer));
+								if(ui.buildMode == 'select'){
+												if(playerStats.inventory.length){
+																this.partsSelector.loadTexture('parts',playerStats.inventory[this.currentPart]);
+																this.partText.setText(components[playerStats.inventory[this.currentPart]].name);
+																this.partFlavorText.setText(components[playerStats.inventory[this.currentPart]].flavor);
+												}else{
+																this.partsSelector.loadTexture('parts',0)
+																				this.partText.setText('Your inventory is empty.')
+																				this.partFlavorText.setText('');
+												}
+								}else{
+												//workaround
+												if(typeof(this.currentPlayerPart) == 'undefined' || this.currentPlayerPart > this.parts.length){
+																console.log(this.currentPlayerPart);
+																this.currentPlayerPart = 0;
+												}
+												this.partsSelector.loadTexture('parts',this.parts[this.currentPlayerPart].index);
+												this.partText.setText(components[this.parts[this.currentPlayerPart].index].name);
+												this.partFlavorText.setText(components[this.parts[this.currentPlayerPart].index].flavor);
+
+								}
+
+								for(var i=0;i<this.parts.length;i++)
+								{
+												if((this.buildMode=='move' || this.buildMode=='delete') && i== ui.currentPlayerPart)
+												{
+																ui.parts[i].sprite.alpha=2;
+																ui.parts[i].sprite.blendMode=1;
+
+												}
+												else
+												{
+																ui.parts[i].sprite.alpha=1;
+																ui.parts[i].sprite.blendMode=0;
+
+												}	
+								}
+
+								var j=ui.currentPart-(ui.currentPart%16);
+								for(var i=0;i<this.inventory.length;i++){
+												if(i+j<playerStats.inventory.length){
+																this.inventory[i].loadTexture('parts',playerStats.inventory[i+j]);
+																this.inventory[i].visible=true;
+																this.inventory[i].bringToTop();
+												}else{
+																this.inventory[i].visible=false;
+												}
+												if(i==ui.currentPart%16 && ui.buildMode == 'select')
+												{
+																this.inventory[i].blendMode=1;
+																this.inventory[i].alpha=3;
+												}
+												else{
+
+																this.inventory[i].blendMode=0;
+																this.inventory[i].alpha=1;
 												}
 								}
-								this.textLine=s;
-								this.comms.setText(this.textLine);
-								if(this.textLineIndex>this.texts[this.textIndex].length){
-												this.nextComms=game.time.now+2000+this.textLineIndex*50;
-												this.textIndex+=1;
-												this.textLineIndex=0;
-								}else{
-												this.nextComms=game.time.now+0.1;
-								}
-								if(this.textLine.substr(-1)=='\n'){
-												this.nextComms+=10;
-								}
-				}else if (game.time.now > this.nextComms) {
-								this.comms.alpha-=randomRange(0,0.05);
-				}  
-				if(this.textLine.length>0 && game.time.now % 200 > 100){
-								this.comms.setText(this.textLine + '_ ');
-				}else{
-								this.comms.setText(this.textLine + '  ');
-				}
-				this.graphics.beginFill(0x000000, ui.comms.alpha/3);
-				this.graphics.drawRect(this.comms.x - 15 - (0.5 * this.comms.width), this.comms.y - 6 - (0.5 * this.comms.height), this.comms.width + 30, this.comms.height + 12);
 
-				//color coding!
-				if(this.comms.text.match(/^got/)){
-								this.comms.fill="rgb(255,240,32)"
-				}else if (this.comms.text.match(/^\$/)){
-								this.comms.fill="rgb(200,255,230)"
-				}else if (this.comms.text.match(/^>/)){
-								this.comms.fill="rgb(255,96,64)"	
-				}else{
-								this.comms.fill='rgb(40,190,240)';
-				}	
-				this.toTop(this.comms);
-}
-gameUI.prototype.missionLinePing = function() {
+				}
 
-				if(playerStats.mission.win.condition=='kill' && playerStats.mission.win.killCount > playerStats.kills){
-								this.missionLine.setText(playerStats.kills + '/' + playerStats.mission.win.killCount);
-								this.missionLine.x = player.sprite.body.x+(player.sprite.body.width/2);
-								this.missionLine.y = player.sprite.body.height+player.sprite.body.y+55;
-								this.toTop(this.missionLine);
-				} else {
-								this.missionLine.setText('');
-				}
-}
-gameUI.prototype.profileLinePing = function() {
-
-				if(player.profileShow){
-								this.profileLine.style.fill="rgb(192,"+Math.floor((player.sprite.profile/5/player.sprite.profileMax)*255)+",16)";
-								this.profileLine.setText(player.sprite.profile);
-								this.profileLine.x = player.sprite.body.x-this.profileLine.width;
-								this.profileLine.y = player.sprite.body.height+player.sprite.body.y+55;
-								this.toTop(this.profileLine);
-				}else{
-								this.profileLine.setText('');
-				}
-}
-gameUI.prototype.partPing = function () {
-				this.graphics.beginFill(0x000000, 0.5);
-				this.graphics.drawRect(-400,142, 800, 96);
-				this.toTop(this.partText);
-				this.toTop(this.partFlavorText);
-				this.toTop(this.statsText);
-				if(this.comms.alpha>0){
-								this.statsText.visible=false;
-				}else{
-								this.statsText.visible=true;
-				}
-				this.toTop(this.explainerText);
-				this.partsSelector.bringToTop();
-
-}
-gameUI.prototype.update = function() {
-				this.graphics.clear();
-				this.toTop(this.graphics);
-				this.commsPing();
-				this.toTop(otherGraphics);
-				headlight();
-				if (gamemode == '?build'){
-								this.partPing();
-				}
-				if (gamemode == 'war'){
-								this.missionLinePing();
-								this.profileLinePing();
-								this.bar(this.healthLine, 0, player.health, player.healthMax);
-								this.bar(this.energyLine, 10, player.energy, player.energyMax);
-								this.enemies=enemies.slice(0);
-								this.enemies.sort(threatSort);
-								this.asteroids=enemies.slice(0);
-								this.asteroids.sort(asteroidSort);
-								this.radarPing();
-								this.frobRadarPing();
-				}
-				this.buttonsPing();
-				this.cleanupDamageNumbers();
-}
-gameUI.prototype.updatePart = function () {
-				this.partsSelector.visible=true;
-				mockPlayer.initPlayerShip(this.partsArray());
-				this.statsText.setText(blurbStats(mockPlayer));
-				if(ui.buildMode == 'select'){
+				gameUI.prototype.previousPart = function () {
 								if(playerStats.inventory.length){
-												this.partsSelector.loadTexture('parts',playerStats.inventory[this.currentPart]);
-												this.partText.setText(components[playerStats.inventory[this.currentPart]].name);
-												this.partFlavorText.setText(components[playerStats.inventory[this.currentPart]].flavor);
+												this.currentPart = (playerStats.inventory.length + this.currentPart - 1) % playerStats.inventory.length;	
 								}else{
-												this.partsSelector.loadTexture('parts',0)
-																this.partText.setText('Your inventory is empty.')
-																this.partFlavorText.setText('');
+												this.currentPart = 0;
 								}
-				}else{
-								//workaround
-								if(typeof(this.currentPlayerPart) == 'undefined' || this.currentPlayerPart > this.parts.length){
-												console.log(this.currentPlayerPart);
-												this.currentPlayerPart = 0;
-								}
-								this.partsSelector.loadTexture('parts',this.parts[this.currentPlayerPart].index);
-								this.partText.setText(components[this.parts[this.currentPlayerPart].index].name);
-								this.partFlavorText.setText(components[this.parts[this.currentPlayerPart].index].flavor);
-
+								this.updatePart();
 				}
 
-				for(var i=0;i<this.parts.length;i++)
-				{
-								if((this.buildMode=='move' || this.buildMode=='delete') && i== ui.currentPlayerPart)
-								{
-												ui.parts[i].sprite.alpha=2;
-												ui.parts[i].sprite.blendMode=1;
-
+				gameUI.prototype.buyPart = function () {
+								var n=0;
+								while(n==0){
+												var q;
+												q = Math.floor(Math.random()*components.length);
+												if(components[q].drops){
+																n=q;
+																playerStats.inventory.push(q);
+												}
 								}
-								else
-								{
-												ui.parts[i].sprite.alpha=1;
-												ui.parts[i].sprite.blendMode=0;
+				}
+				gameUI.prototype.findDeletePartIndex = function () {
+								for (var i=0;i<this.partsIndex.length;i++){
+												if(this.partsIndex[i]==this.currentPlayerPart){
+																return i;
+												}
+								}
 
+				}
+				gameUI.prototype.rowUpDeletePart = function () {
+
+								this.parts[this.currentPlayerPart].sprite.alpha=1;
+								this.parts[this.currentPlayerPart].sprite.blendMode=0;
+
+								var p = this.findDeletePartIndex();
+
+								p-=Math.sqrt(this.partsIndex.length)-1;
+								while(this.partsIndex[(--p + this.partsIndex.length) % this.partsIndex.length] == -1){}
+
+								this.currentPlayerPart=this.partsIndex[p % this.partsIndex.length];
+								this.updatePart();
+
+								this.parts[this.currentPlayerPart].sprite.alpha=2;
+								this.parts[this.currentPlayerPart].sprite.blendMode=1;
+				}
+				gameUI.prototype.rowDownDeletePart = function () {
+
+								this.parts[this.currentPlayerPart].sprite.alpha=1;
+								this.parts[this.currentPlayerPart].sprite.blendMode=0;
+
+								var p = this.findDeletePartIndex();
+
+								p+=Math.sqrt(this.partsIndex.length)-1;
+								while(this.partsIndex[(++p + this.partsIndex.length) % this.partsIndex.length] == -1){}
+
+								this.currentPlayerPart=this.partsIndex[p % this.partsIndex.length];
+								this.updatePart();
+
+								this.parts[this.currentPlayerPart].sprite.alpha=2;
+								this.parts[this.currentPlayerPart].sprite.blendMode=1;
+				}
+				gameUI.prototype.nextDeletePart = function () {
+
+								this.parts[this.currentPlayerPart].sprite.alpha=1;
+								this.parts[this.currentPlayerPart].sprite.blendMode=0;
+
+								var p = this.findDeletePartIndex();
+								while(this.partsIndex[(++p + this.partsIndex.length) % this.partsIndex.length] == -1){}
+
+								this.currentPlayerPart=this.partsIndex[p % this.partsIndex.length];
+								this.updatePart();
+
+								this.parts[this.currentPlayerPart].sprite.alpha=2;
+								this.parts[this.currentPlayerPart].sprite.blendMode=1;
+				}
+				gameUI.prototype.previousDeletePart = function () {
+								this.parts[this.currentPlayerPart].sprite.alpha=1;
+								this.parts[this.currentPlayerPart].sprite.blendMode=0;
+
+								var p = this.findDeletePartIndex();
+								while(this.partsIndex[(--p + this.partsIndex.length) % this.partsIndex.length] == -1){}
+
+								this.currentPlayerPart=this.partsIndex[(p + this.partsIndex.length)% this.partsIndex.length];
+								this.updatePart();
+								this.parts[this.currentPlayerPart].sprite.alpha=2;
+								this.parts[this.currentPlayerPart].sprite.blendMode=1;
+				}
+
+
+				gameUI.prototype.rowUpPart = function (c) {
+								if(typeof(c)=='undefined'){c=4};
+								if(playerStats.inventory.length){
+												var n = this.currentPart;
+												if (n==0){n=1}
+												if (n>c){n=c}
+												this.currentPart = (this.currentPart - n + playerStats.inventory.length) % playerStats.inventory.length;	
+								}else{
+												this.currentPart = 0;
+								}
+								this.updatePart();
+				}
+				gameUI.prototype.rowDownPart = function (c) {
+								if(typeof(c)=='undefined'){c=4};
+								if(playerStats.inventory.length){
+												var n = playerStats.inventory.length - this.currentPart;
+												if (n==0){n=1}
+												if (n>c){n=c}
+												this.currentPart = (this.currentPart + n ) % playerStats.inventory.length;	
+								}else{
+												this.currentPart = 0;
+								}
+								this.updatePart();
+				}
+				gameUI.prototype.nextPart = function () {
+								if(playerStats.inventory.length){
+												this.currentPart = (this.currentPart  + 1 ) % playerStats.inventory.length;	
+								}else{
+												this.currentPart = 0;
+								}
+								this.updatePart();
+				}
+				gameUI.prototype.firstPart = function() {
+								this.currentPart=0;
+								this.updatePart();
+				}
+				gameUI.prototype.newestPart = function() {
+								this.currentPart=playerStats.inventory.length>0?playerStats.inventory.length-1:0;
+								this.updatePart();
+				}
+				gameUI.prototype.partsUI = function (ship) {
+								this.sound_dock.play();
+								this.initInventory();
+								playerStats.inventory.sort(alphaComponentSort);
+								player.sprite.reset(0,0);
+								player.sprite.rotation=0;
+								playerStats.health = player.healthMax;
+								playerStats.healthMax = player.healthMax;
+								this.firstPart();
+								game.camera.follow=null;
+								if(gamemode != '?build'){
+												gamemode = '?build';
+								}
+								if(typeof(player)!='undefined'){
+												player.destroyParts();
+												player.sprite.body.velocity.x=0;
+												player.lastVelocityX=0;
+												player.sprite.body.velocity.y=0;
+												player.lastVelocityY=0;
+								}
+								this.healthLine.setText('');
+								this.energyLine.setText('');
+								this.missionLine.setText('');
+								this.profileLine.setText('');
+								this.clearRadar();
+								this.tempStation.visible=true;
+								this.tempStation.bringToTop();
+								this.partswindow.visible=true;
+								this.partswindow.bringToTop();
+								this.partsSelector.bringToTop();
+								this.partsSelector.scale.setTo(4,4);
+								if(typeof(ship)!='undefined'){
+												this.parts = createBuildParts(ship,player.sprite.x,player.sprite.y);
+								}
+								this.partsArray();
+								this.setMode('select');
+								this.updatePart();
+				}
+				gameUI.prototype.setMode = function(mode){
+								this.buildMode = mode;
+								if(joystickUsed)
+								{
+												if(mode=='select'){
+																this.explainerText.setText('[SELECT] X: select part   B: unequip parts   START: launch');
+												}else if(mode=='move'){
+																this.explainerText.setText('[CONFIG] X: place part    B: cancel         D-PAD: move part');
+
+												}else if(mode=='delete'){
+																this.explainerText.setText('[REMOVE] X: unequip part   B: done');
+
+												}
+
+								}else{
+												if(mode=='select'){
+																this.explainerText.setText('[SELECT] X: select part   Z: unequip parts   ENTER: launch');
+												}else if(mode=='move'){
+																this.explainerText.setText('[CONFIG] X: place part    Z: cancel         ARROWS: move part');
+
+												}else if(mode=='delete'){
+																this.explainerText.setText('[REMOVE] X: unequip part   Z: done');
+												}
+								}
+								if(mode=='select'){
+												this.initButtons(selectButtons);
+								}else if(mode=='move'){
+												this.initButtons(moveButtons);
+								}
+								else if (mode=='delete'){
+												this.initButtons(deleteButtons);
+								}
+				}
+				gameUI.prototype.cullInventory = function() {
+				}
+				gameUI.prototype.destroyInventory = function() {
+								if(typeof(this.inventory)!='undefined'){
+												for(var i=0; i<this.inventory.length;i++)
+												{
+																this.inventory[i].visible=false;
+												}
+												this.inventory=[];
+								}
+				}
+				gameUI.prototype.cullParts = function() {
+								for(var j = 0; j < this.parts.length; j++) {
+												if(!this.parts[j].sprite.alive){
+																if(this.currentPlayerPart>=j){
+																				this.currentPlayerPart-=1;
+																}
+																this.parts.splice(j,1);
+																j-=1;
+
+												}
 								}	
 				}
-
-				var j=ui.currentPart-(ui.currentPart%16);
-				for(var i=0;i<this.inventory.length;i++){
-								if(i+j<playerStats.inventory.length){
-												this.inventory[i].loadTexture('parts',playerStats.inventory[i+j]);
-												this.inventory[i].visible=true;
-												this.inventory[i].bringToTop();
-								}else{
-												this.inventory[i].visible=false;
-								}
-								if(i==ui.currentPart%16 && ui.buildMode == 'select')
-								{
-												this.inventory[i].blendMode=1;
-												this.inventory[i].alpha=3;
-								}
-								else{
-
-												this.inventory[i].blendMode=0;
-												this.inventory[i].alpha=1;
-								}
-				}
-
-}
-
-gameUI.prototype.previousPart = function () {
-				if(playerStats.inventory.length){
-								this.currentPart = (playerStats.inventory.length + this.currentPart - 1) % playerStats.inventory.length;	
-				}else{
-								this.currentPart = 0;
-				}
-				this.updatePart();
-}
-
-gameUI.prototype.buyPart = function () {
-				var n=0;
-				while(n==0){
-								var q;
-								q = Math.floor(Math.random()*components.length);
-								if(components[q].drops){
-												n=q;
-												playerStats.inventory.push(q);
-								}
-				}
-}
-gameUI.prototype.findDeletePartIndex = function () {
-				for (var i=0;i<this.partsIndex.length;i++){
-								if(this.partsIndex[i]==this.currentPlayerPart){
-												return i;
-								}
-				}
-
-}
-gameUI.prototype.rowUpDeletePart = function () {
-
-				this.parts[this.currentPlayerPart].sprite.alpha=1;
-				this.parts[this.currentPlayerPart].sprite.blendMode=0;
-
-				var p = this.findDeletePartIndex();
-
-				p-=Math.sqrt(this.partsIndex.length)-1;
-				while(this.partsIndex[(--p + this.partsIndex.length) % this.partsIndex.length] == -1){}
-
-				this.currentPlayerPart=this.partsIndex[p % this.partsIndex.length];
-				this.updatePart();
-
-				this.parts[this.currentPlayerPart].sprite.alpha=2;
-				this.parts[this.currentPlayerPart].sprite.blendMode=1;
-}
-gameUI.prototype.rowDownDeletePart = function () {
-
-				this.parts[this.currentPlayerPart].sprite.alpha=1;
-				this.parts[this.currentPlayerPart].sprite.blendMode=0;
-
-				var p = this.findDeletePartIndex();
-
-				p+=Math.sqrt(this.partsIndex.length)-1;
-				while(this.partsIndex[(++p + this.partsIndex.length) % this.partsIndex.length] == -1){}
-
-				this.currentPlayerPart=this.partsIndex[p % this.partsIndex.length];
-				this.updatePart();
-
-				this.parts[this.currentPlayerPart].sprite.alpha=2;
-				this.parts[this.currentPlayerPart].sprite.blendMode=1;
-}
-gameUI.prototype.nextDeletePart = function () {
-
-				this.parts[this.currentPlayerPart].sprite.alpha=1;
-				this.parts[this.currentPlayerPart].sprite.blendMode=0;
-
-				var p = this.findDeletePartIndex();
-				while(this.partsIndex[(++p + this.partsIndex.length) % this.partsIndex.length] == -1){}
-
-				this.currentPlayerPart=this.partsIndex[p % this.partsIndex.length];
-				this.updatePart();
-
-				this.parts[this.currentPlayerPart].sprite.alpha=2;
-				this.parts[this.currentPlayerPart].sprite.blendMode=1;
-}
-gameUI.prototype.previousDeletePart = function () {
-				this.parts[this.currentPlayerPart].sprite.alpha=1;
-				this.parts[this.currentPlayerPart].sprite.blendMode=0;
-
-				var p = this.findDeletePartIndex();
-				while(this.partsIndex[(--p + this.partsIndex.length) % this.partsIndex.length] == -1){}
-
-				this.currentPlayerPart=this.partsIndex[(p + this.partsIndex.length)% this.partsIndex.length];
-				this.updatePart();
-				this.parts[this.currentPlayerPart].sprite.alpha=2;
-				this.parts[this.currentPlayerPart].sprite.blendMode=1;
-}
-
-
-gameUI.prototype.rowUpPart = function (c) {
-				if(typeof(c)=='undefined'){c=4};
-				if(playerStats.inventory.length){
-								var n = this.currentPart;
-								if (n==0){n=1}
-								if (n>c){n=c}
-								this.currentPart = (this.currentPart - n + playerStats.inventory.length) % playerStats.inventory.length;	
-				}else{
-								this.currentPart = 0;
-				}
-				this.updatePart();
-}
-gameUI.prototype.rowDownPart = function (c) {
-				if(typeof(c)=='undefined'){c=4};
-				if(playerStats.inventory.length){
-								var n = playerStats.inventory.length - this.currentPart;
-								if (n==0){n=1}
-								if (n>c){n=c}
-								this.currentPart = (this.currentPart + n ) % playerStats.inventory.length;	
-				}else{
-								this.currentPart = 0;
-				}
-				this.updatePart();
-}
-gameUI.prototype.nextPart = function () {
-				if(playerStats.inventory.length){
-								this.currentPart = (this.currentPart  + 1 ) % playerStats.inventory.length;	
-				}else{
-								this.currentPart = 0;
-				}
-				this.updatePart();
-}
-gameUI.prototype.firstPart = function() {
-				this.currentPart=0;
-				this.updatePart();
-}
-gameUI.prototype.newestPart = function() {
-				this.currentPart=playerStats.inventory.length>0?playerStats.inventory.length-1:0;
-				this.updatePart();
-}
-gameUI.prototype.partsUI = function (ship) {
-				this.sound_dock.play();
-				this.initInventory();
-				playerStats.inventory.sort(alphaComponentSort);
-				player.sprite.reset(0,0);
-				player.sprite.rotation=0;
-				playerStats.health = player.healthMax;
-				playerStats.healthMax = player.healthMax;
-				this.firstPart();
-				game.camera.follow=null;
-				if(gamemode != '?build'){
-								gamemode = '?build';
-				}
-				if(typeof(player)!='undefined'){
-								player.destroyParts();
-								player.sprite.body.velocity.x=0;
-								player.lastVelocityX=0;
-								player.sprite.body.velocity.y=0;
-								player.lastVelocityY=0;
-				}
-				this.healthLine.setText('');
-				this.energyLine.setText('');
-				this.missionLine.setText('');
-				this.profileLine.setText('');
-				this.clearRadar();
-				this.tempStation.visible=true;
-				this.tempStation.bringToTop();
-				this.partswindow.visible=true;
-				this.partswindow.bringToTop();
-				this.partsSelector.bringToTop();
-				this.partsSelector.scale.setTo(4,4);
-				if(typeof(ship)!='undefined'){
-								this.parts = createBuildParts(ship,player.sprite.x,player.sprite.y);
-				}
-				this.partsArray();
-				this.setMode('select');
-				this.updatePart();
-}
-gameUI.prototype.setMode = function(mode){
-				this.buildMode = mode;
-				if(joystickUsed)
-				{
-								if(mode=='select'){
-												this.explainerText.setText('[SELECT] X: select part   B: unequip parts   START: launch');
-								}else if(mode=='move'){
-												this.explainerText.setText('[CONFIG] X: place part    B: cancel         D-PAD: move part');
-
-								}else if(mode=='delete'){
-												this.explainerText.setText('[REMOVE] X: unequip part   B: done');
-
-								}
-
-				}else{
-								if(mode=='select'){
-												this.explainerText.setText('[SELECT] X: select part   Z: unequip parts   ENTER: launch');
-								}else if(mode=='move'){
-												this.explainerText.setText('[CONFIG] X: place part    Z: cancel         ARROWS: move part');
-
-								}else if(mode=='delete'){
-												this.explainerText.setText('[REMOVE] X: unequip part   Z: done');
-								}
-				}
-				if(mode=='select'){
-								this.initButtons(selectButtons);
-				}else if(mode=='move'){
-								this.initButtons(moveButtons);
-				}
-				else if (mode=='delete'){
-								this.initButtons(deleteButtons);
-				}
-}
-gameUI.prototype.cullInventory = function() {
-}
-gameUI.prototype.destroyInventory = function() {
-				if(typeof(this.inventory)!='undefined'){
-								for(var i=0; i<this.inventory.length;i++)
-								{
-												this.inventory[i].visible=false;
-								}
-								this.inventory=[];
-				}
-}
-gameUI.prototype.cullParts = function() {
-				for(var j = 0; j < this.parts.length; j++) {
-								if(!this.parts[j].sprite.alive){
-												if(this.currentPlayerPart>=j){
-																this.currentPlayerPart-=1;
+				gameUI.prototype.destroyParts = function() {
+								if(typeof(this.parts)!='undefined'){
+												for(var i=0; i<this.parts.length;i++)
+												{
+																this.parts[i].sprite.blendMode=0;
+																this.parts[i].sprite.alpha=1;
+																this.parts[i].sprite.kill();
 												}
-												this.parts.splice(j,1);
-												j-=1;
-
+												this.parts=[];
 								}
-				}	
-}
-gameUI.prototype.destroyParts = function() {
-				if(typeof(this.parts)!='undefined'){
-								for(var i=0; i<this.parts.length;i++)
-								{
-												this.parts[i].sprite.blendMode=0;
-												this.parts[i].sprite.alpha=1;
-												this.parts[i].sprite.kill();
-								}
-								this.parts=[];
 				}
-}
-gameUI.prototype.endPartsUI = function () {
-				this.partswindow.visible = false;
-				this.tempStation.visible = false;
-				this.partsSelector.visible=false;
-				this.destroyInventory();
-				var ship = this.partsArray();
-				this.destroyParts();
-				this.partText.setText('');
-				this.statsText.setText('');
-				this.partFlavorText.setText('');
-				this.explainerText.setText('');
-				player.initPlayerShip(ship);
-				this.initButtons(warButtons);
-				gamemode = 'war';
-}
+				gameUI.prototype.endPartsUI = function () {
+								this.partswindow.visible = false;
+								this.tempStation.visible = false;
+								this.partsSelector.visible=false;
+								this.destroyInventory();
+								var ship = this.partsArray();
+								this.destroyParts();
+								this.partText.setText('');
+								this.statsText.setText('');
+								this.partFlavorText.setText('');
+								this.explainerText.setText('');
+								player.initPlayerShip(ship);
+								this.initButtons(warButtons);
+								gamemode = 'war';
+				}
 
-gameUI.prototype.partsArray = function () {
-				var outArray = [];
-
+				gameUI.prototype.partsArray = function () {
+								var outArray = [];
 
 
-				if(this.parts.length && typeof(this.parts[0])!='undefined'){
-								var minx = 999999999;
-								var miny = 999999999;
-								var maxx = -999999999;
-								var maxy = -999999999;
-								var shipSize = 0;
-								for(var i=0;i<this.parts.length;i++){
-												if(this.parts[i].sprite.alive){
 
-																//prevent overlapping parts	
-																if(ui.partCountAt(this.parts[i].sprite.x,this.parts[i].sprite.y)>1){
-																				var newPosition = this.calculatePartPosition(this.parts[i].sprite.x,this.parts[i].sprite.y,this.parts[i].index);
-																				this.parts[i].sprite.reset(newPosition.x,newPosition.y);
-																}	       
+								if(this.parts.length && typeof(this.parts[0])!='undefined'){
+												var minx = 999999999;
+												var miny = 999999999;
+												var maxx = -999999999;
+												var maxy = -999999999;
+												var shipSize = 0;
+												for(var i=0;i<this.parts.length;i++){
+																if(this.parts[i].sprite.alive){
 
-																if(this.parts[i].sprite.x < minx){
-																				minx = this.parts[i].sprite.x;
+																				//prevent overlapping parts	
+																				if(ui.partCountAt(this.parts[i].sprite.x,this.parts[i].sprite.y)>1){
+																								var newPosition = this.calculatePartPosition(this.parts[i].sprite.x,this.parts[i].sprite.y,this.parts[i].index);
+																								this.parts[i].sprite.reset(newPosition.x,newPosition.y);
+																				}	       
+
+																				if(this.parts[i].sprite.x < minx){
+																								minx = this.parts[i].sprite.x;
+																				}
+																				if(this.parts[i].sprite.y < miny){
+																								miny = this.parts[i].sprite.y;
+																				}
+																				if(this.parts[i].sprite.x > maxx){
+																								maxx = this.parts[i].sprite.x;
+																				}
+																				if(this.parts[i].sprite.y > maxy){
+																								maxy = this.parts[i].sprite.y;
+																				}
 																}
-																if(this.parts[i].sprite.y < miny){
-																				miny = this.parts[i].sprite.y;
-																}
-																if(this.parts[i].sprite.x > maxx){
-																				maxx = this.parts[i].sprite.x;
-																}
-																if(this.parts[i].sprite.y > maxy){
-																				maxy = this.parts[i].sprite.y;
+												}
+
+												var shipWidth =(16+maxx-minx)/16; 
+												var shipHeight =(16+maxy-miny)/16; 
+
+												shipSize = shipHeight > shipWidth ? shipHeight : shipWidth;
+												var offset = 0;
+												if(shipWidth - shipHeight > 1){
+																offset = Math.floor((shipWidth-shipHeight)/2)*shipWidth;
+												}
+												if(shipHeight - shipWidth > 1){
+																offset = Math.floor((shipHeight-shipWidth)/2);
+												}
+
+												this.partsIndex = [];
+												for (var i=0;i<shipSize*shipSize;i++){
+																outArray.push(-1);
+																this.partsIndex.push(-1);
+												}
+
+												for (var i=0;i<this.parts.length;i++){
+																if(this.parts[i].sprite.alive){
+																				var n=0;
+																				n = (this.parts[i].sprite.x - minx)/16;
+																				n+= ((this.parts[i].sprite.y - miny)/16)*shipSize;
+																				n+=offset;
+																				outArray[n] = this.parts[i].index;
+																				this.partsIndex[n] = i;
 																}
 												}
 								}
-
-								var shipWidth =(16+maxx-minx)/16; 
-								var shipHeight =(16+maxy-miny)/16; 
-
-								shipSize = shipHeight > shipWidth ? shipHeight : shipWidth;
-								var offset = 0;
-								if(shipWidth - shipHeight > 1){
-												offset = Math.floor((shipWidth-shipHeight)/2)*shipWidth;
-								}
-								if(shipHeight - shipWidth > 1){
-												offset = Math.floor((shipHeight-shipWidth)/2);
-								}
-
-								this.partsIndex = [];
-								for (var i=0;i<shipSize*shipSize;i++){
-												outArray.push(-1);
-												this.partsIndex.push(-1);
-								}
-
-								for (var i=0;i<this.parts.length;i++){
-												if(this.parts[i].sprite.alive){
-																var n=0;
-																n = (this.parts[i].sprite.x - minx)/16;
-																n+= ((this.parts[i].sprite.y - miny)/16)*shipSize;
-																n+=offset;
-																outArray[n] = this.parts[i].index;
-																this.partsIndex[n] = i;
+								return outArray;
+				}
+				function selectPart() {
+								if(playerStats.inventory.length){
+												createPart(playerStats.inventory[ui.currentPart]);	
+												if(!cheatmode){
+																playerStats.inventory.splice(ui.currentPart,1);
+																ui.previousPart();
 												}
 								}
 				}
-				return outArray;
-}
-function selectPart() {
-				if(playerStats.inventory.length){
-								createPart(playerStats.inventory[ui.currentPart]);	
-								if(!cheatmode){
-												playerStats.inventory.splice(ui.currentPart,1);
-												ui.previousPart();
+				// n = position in array
+				function removePlayerPartInFlight(n, dmg) {
+								var oldX = player.sprite.x;
+								var oldY = player.sprite.y;
+								var oldRotation = player.sprite.rotation;
+								var oldVelocityX = player.sprite.body.velocity.x;
+								var oldVelocityY = player.sprite.body.velocity.y;
+								var oldBehavior = player.behavior;
+								var oldTarget = player.target;
+								var oldTargetAngle = player.targetAngle;
+								var oldProfile = player.sprite.profile;
+								var oldEnergy = player.energy;
+								var oldHealth = player.health;
+								var oldHealthMax = player.healthMax;
+								var nAdj = 0;
+								for (var i=0;i<n+nAdj+1;i++){
+												if(player.ship[i]==-1){
+																nAdj++;
+												}
+								}
+								player.ship[n + nAdj]=-1;
+								ui.parts = createBuildParts(player.ship,0,0);
+								player.initPlayerShip(ui.partsArray(),oldX,oldY);
+								ui.destroyInventory();
+								ui.destroyParts();
+								player.sprite.body.velocity.x=oldVelocityX;	
+								player.sprite.body.velocity.y=oldVelocityY;	
+								player.sprite.rotation=oldRotation;
+								player.behavior = oldBehavior;
+								player.sprite.profile=oldProfile;
+								player.target = oldTarget;
+								player.targetAngle = oldTargetAngle;
+								player.health = oldHealth;
+								player.energy = oldEnergy;
+								if(player.healthMax - oldHealthMax > 0){
+												player.health += player.healthMax - oldHealthMax;
 								}
 				}
-}
-// n = position in array
-function removePlayerPartInFlight(n, dmg) {
-				var oldX = player.sprite.x;
-				var oldY = player.sprite.y;
-				var oldRotation = player.sprite.rotation;
-				var oldVelocityX = player.sprite.body.velocity.x;
-				var oldVelocityY = player.sprite.body.velocity.y;
-				var oldBehavior = player.behavior;
-				var oldTarget = player.target;
-				var oldTargetAngle = player.targetAngle;
-				var oldProfile = player.sprite.profile;
-				var oldEnergy = player.energy;
-				var oldHealth = player.health;
-				var oldHealthMax = player.healthMax;
-				var nAdj = 0;
-				for (var i=0;i<n+nAdj+1;i++){
-								if(player.ship[i]==-1){
-												nAdj++;
-								}
-				}
-				player.ship[n + nAdj]=-1;
-				ui.parts = createBuildParts(player.ship,0,0);
-				player.initPlayerShip(ui.partsArray(),oldX,oldY);
-				ui.destroyInventory();
-				ui.destroyParts();
-				player.sprite.body.velocity.x=oldVelocityX;	
-				player.sprite.body.velocity.y=oldVelocityY;	
-				player.sprite.rotation=oldRotation;
-				player.behavior = oldBehavior;
-				player.sprite.profile=oldProfile;
-				player.target = oldTarget;
-				player.targetAngle = oldTargetAngle;
-				player.health = oldHealth;
-				player.energy = oldEnergy;
-				if(player.healthMax - oldHealthMax > 0){
+
+				function addPlayerPartInFlight(componentId) {
+								var oldX = player.sprite.x;
+								var oldY = player.sprite.y;
+								var oldRotation = player.sprite.rotation;
+								var oldVelocityX = player.sprite.body.velocity.x;
+								var oldVelocityY = player.sprite.body.velocity.y;
+								var oldBehavior = player.behavior;
+								var oldTarget = player.target;
+								var oldTargetAngle = player.targetAngle;
+								var oldEnergy = player.energy;
+								var oldHealth = player.health;
+								var oldHealthMax = player.healthMax;
+								var oldProfile = player.sprite.profile;
+								ui.parts = createBuildParts(player.ship,0,0);
+								createPart(componentId);
+								player.initPlayerShip(ui.partsArray(),oldX,oldY);
+								ui.destroyInventory();
+								ui.destroyParts();
+								player.sprite.body.velocity.x=oldVelocityX;	
+								player.sprite.body.velocity.y=oldVelocityY;	
+								player.sprite.rotation=oldRotation;
+								player.behavior = oldBehavior;
+								player.target = oldTarget;
+								player.energy = oldEnergy;
+								player.health = oldHealth;
+								player.sprite.profile=oldProfile;
 								player.health += player.healthMax - oldHealthMax;
 				}
-}
 
-function addPlayerPartInFlight(componentId) {
-				var oldX = player.sprite.x;
-				var oldY = player.sprite.y;
-				var oldRotation = player.sprite.rotation;
-				var oldVelocityX = player.sprite.body.velocity.x;
-				var oldVelocityY = player.sprite.body.velocity.y;
-				var oldBehavior = player.behavior;
-				var oldTarget = player.target;
-				var oldTargetAngle = player.targetAngle;
-				var oldEnergy = player.energy;
-				var oldHealth = player.health;
-				var oldHealthMax = player.healthMax;
-				var oldProfile = player.sprite.profile;
-				ui.parts = createBuildParts(player.ship,0,0);
-				createPart(componentId);
-				player.initPlayerShip(ui.partsArray(),oldX,oldY);
-				ui.destroyInventory();
-				ui.destroyParts();
-				player.sprite.body.velocity.x=oldVelocityX;	
-				player.sprite.body.velocity.y=oldVelocityY;	
-				player.sprite.rotation=oldRotation;
-				player.behavior = oldBehavior;
-				player.target = oldTarget;
-				player.energy = oldEnergy;
-				player.health = oldHealth;
-				player.sprite.profile=oldProfile;
-				player.health += player.healthMax - oldHealthMax;
-}
+				function createPart(n){
 
-function createPart(n){
+								var partPosition = ui.calculatePartPosition2(0, 0, n); 
+								ui.parts.push(dragPool.get(partPosition.x,partPosition.y,'parts',n));	
 
-				var partPosition = ui.calculatePartPosition2(0, 0, n); 
-				ui.parts.push(dragPool.get(partPosition.x,partPosition.y,'parts',n));	
+				}
+				// assumes that the incoming parts list is a square
+				// if not there will be anarchy
+				function createShip(shipParts, targetActor){
+								var myParts = [];
 
-}
-// assumes that the incoming parts list is a square
-// if not there will be anarchy
-function createShip(shipParts, targetActor){
-				var myParts = [];
+								var n=Math.sqrt(shipParts.length);
 
-				var n=Math.sqrt(shipParts.length);
-
-				if (n!=Math.floor(n)){
-								return [];
-				};
-				for (var i=0; i<shipParts.length;i++){
-								if(shipParts[i]>-1){
-												//that godawful barf there is a terse calculation for the coordinates of the part
-												//assuming an array of 'parts' (sprite ids) - array should have a length
-												//with an int square root
-												myParts.push(pool.get(((n-1)*-(8))+((i%n)*(16)),((n-1)*-(8))+(Math.floor(i/n)*(16)),shipParts[i],targetActor));
+								if (n!=Math.floor(n)){
+												return [];
+								};
+								for (var i=0; i<shipParts.length;i++){
+												if(shipParts[i]>-1){
+																//that godawful barf there is a terse calculation for the coordinates of the part
+																//assuming an array of 'parts' (sprite ids) - array should have a length
+																//with an int square root
+																myParts.push(pool.get(((n-1)*-(8))+((i%n)*(16)),((n-1)*-(8))+(Math.floor(i/n)*(16)),shipParts[i],targetActor));
+												}
 								}
+								return myParts; 
 				}
-				return myParts; 
-}
-function createBuildParts(ship,x,y){
-				var myParts = [];
-				var n=Math.sqrt(ship.length);
-				y-=n*8;
-				x-=n*8;
-				y-=y%16;
-				x-=x%16;
-				if (n!=Math.floor(n)){
-								return [];
-				};
-				for (var i=0; i<ship.length;i++){
-								if(ship[i]>-1){
-												//that godawful barf there is a terse calculation for the coordinates of the part
-												//assuming an array of 'parts' (sprite ids) - array should have a length
-												//with an int square root
-												myParts.push(dragPool.get(x+(16*(i%n)),y+(16*Math.floor(i/n)),'parts',ship[i]));
+				function createBuildParts(ship,x,y){
+								var myParts = [];
+								var n=Math.sqrt(ship.length);
+								y-=n*8;
+								x-=n*8;
+								y-=y%16;
+								x-=x%16;
+								if (n!=Math.floor(n)){
+												return [];
+								};
+								for (var i=0; i<ship.length;i++){
+												if(ship[i]>-1){
+																//that godawful barf there is a terse calculation for the coordinates of the part
+																//assuming an array of 'parts' (sprite ids) - array should have a length
+																//with an int square root
+																myParts.push(dragPool.get(x+(16*(i%n)),y+(16*Math.floor(i/n)),'parts',ship[i]));
+												}
 								}
+								return myParts; 
 				}
-				return myParts; 
-}
 
 
-function initMission (missionId) {
-				playerStats.mission = missions[missionId];
-				planet.scaleMission=randomRange(20,100);
-				ui.skipText();
-				for(var i=0;i<playerStats.mission.intro.length;i++){
-								ui.texts.push(playerStats.mission.intro[i]);
-				}
-				var index = 0;
-				for(var n=0;n<playerStats.mission.enemies.length;n++){	
-								for (var i = 0; i < playerStats.mission.enemies[n].count; i++){
+				function initMission (missionId) {
+								playerStats.mission = missions[missionId];
+								planet.scaleMission=randomRange(20,100);
+								ui.skipText();
+								for(var i=0;i<playerStats.mission.intro.length;i++){
+												ui.texts.push(playerStats.mission.intro[i]);
+								}
+								var index = 0;
+								for(var n=0;n<playerStats.mission.enemies.length;n++){	
+												for (var i = 0; i < playerStats.mission.enemies[n].count; i++){
 
-												var myShip = playerStats.mission.enemies[n].ships.slice(0);
-												if(typeof(playerStats.mission.enemies[n].parts)!='undefined'){
-																var mySize = parseInt(randomRange(playerStats.mission.enemies[n].sizeMin, playerStats.mission.enemies[n].sizeMax + 1));
-																myShip = randomShip(playerStats.mission.enemies[n].parts, mySize);
-																if(Math.random() > (1 / (Math.sqrt(myShip.length)-1))){
-																				myShip = symmetrizeShip(myShip);
+																var myShip = playerStats.mission.enemies[n].ships.slice(0);
+																if(typeof(playerStats.mission.enemies[n].parts)!='undefined'){
+																				var mySize = parseInt(randomRange(playerStats.mission.enemies[n].sizeMin, playerStats.mission.enemies[n].sizeMax + 1));
+																				myShip = randomShip(playerStats.mission.enemies[n].parts, mySize);
+																				if(Math.random() > (1 / (Math.sqrt(myShip.length)-1))){
+																								myShip = symmetrizeShip(myShip);
+																				}
+																				myShip=[myShip];
 																}
-																myShip=[myShip];
+																if(index<enemies.length){
+																				//enemies[index].shipList=playerStats.mission.enemies[n].ships;
+																				enemies[index].shipList=myShip;
+																				enemies[index].initEnemyShip();
+																				enemies[index].target=player.sprite;
+																}else{
+																				enemies.push(new enemyShip(index, game, player.sprite, enemyBullets, myShip, enemyThrust));
+																}
+																enemies[index].respawn=playerStats.mission.enemies[n].respawn;
+																enemies[index].missionTarget=playerStats.mission.enemies[n].missionTarget;
+																enemies[index].taunts=playerStats.mission.enemies[n].taunts;
+																enemies[index].deaths=playerStats.mission.enemies[n].deaths;
+																index++;
 												}
-												if(index<enemies.length){
-																//enemies[index].shipList=playerStats.mission.enemies[n].ships;
-																enemies[index].shipList=myShip;
-																enemies[index].initEnemyShip();
-																enemies[index].target=player.sprite;
-												}else{
-																enemies.push(new enemyShip(index, game, player.sprite, enemyBullets, myShip, enemyThrust));
-												}
-												enemies[index].respawn=playerStats.mission.enemies[n].respawn;
-												enemies[index].missionTarget=playerStats.mission.enemies[n].missionTarget;
-												enemies[index].taunts=playerStats.mission.enemies[n].taunts;
-												enemies[index].deaths=playerStats.mission.enemies[n].deaths;
+								}
+								while(index<enemies.length){	//cleanup if we haven't use the entired pool
+												enemies[index].respawn=false;
+												enemies[index].health=0;
+												enemies[index].damage(9999);
 												index++;
 								}
-				}
-				while(index<enemies.length){	//cleanup if we haven't use the entired pool
-								enemies[index].respawn=false;
-								enemies[index].health=0;
-								enemies[index].damage(9999);
-								index++;
-				}
-				if(true || playerStats.mission.win.condition=='frob'){
-								frob1.visible=true;
-								frob1.reset(randomSign()*randomRange(playerStats.mission.distanceMin,playerStats.mission.distanceMax),randomSign()*randomRange(playerStats.mission.distanceMin,playerStats.mission.distanceMax));
-								frob1.body.velocity.x=randomRange(-20,20);
-								frob1.body.velocity.y=randomRange(-20,20);
+								if(true || playerStats.mission.win.condition=='frob'){
+												frob1.visible=true;
+												frob1.reset(randomSign()*randomRange(playerStats.mission.distanceMin,playerStats.mission.distanceMax),randomSign()*randomRange(playerStats.mission.distanceMin,playerStats.mission.distanceMax));
+												frob1.body.velocity.x=randomRange(-20,20);
+												frob1.body.velocity.y=randomRange(-20,20);
+								}
+
+								fadeIn();
 				}
 
-				fadeIn();
-}
-
-function fadeOut () {
-				station.alpha=1;
-				ui.tempStation.alpha=1;
-				game.add.tween(station).to({alpha:1},5000, Phaser.Easing.Exponential.Out, true, 0, false);
-				game.add.tween(ui.tempStation).to({alpha:1},5000, Phaser.Easing.Exponential.Out, true, 0, false);
+				function fadeOut () {
+								station.alpha=1;
+								ui.tempStation.alpha=1;
+								game.add.tween(station).to({alpha:1},5000, Phaser.Easing.Exponential.Out, true, 0, false);
+								game.add.tween(ui.tempStation).to({alpha:1},5000, Phaser.Easing.Exponential.Out, true, 0, false);
 
 
-				hazeRed.alpha=playerStats.mission.hazeRed;
-				hazeWhite.alpha=playerStats.mission.hazeWhite;
-				hazePurple.alpha=playerStats.mission.hazePurple;
-				game.add.tween(hazeRed).to({alpha:0},5000, Phaser.Easing.Linear.Out, true, 0, false);
-				game.add.tween(hazeWhite).to({alpha:0},5000, Phaser.Easing.Exponential.Out, true, 0, false);
-				game.add.tween(hazePurple).to({alpha:0},5000, Phaser.Easing.Exponential.Out, true, 0, false);
+								hazeRed.alpha=playerStats.mission.hazeRed;
+								hazeWhite.alpha=playerStats.mission.hazeWhite;
+								hazePurple.alpha=playerStats.mission.hazePurple;
+								game.add.tween(hazeRed).to({alpha:0},5000, Phaser.Easing.Linear.Out, true, 0, false);
+								game.add.tween(hazeWhite).to({alpha:0},5000, Phaser.Easing.Exponential.Out, true, 0, false);
+								game.add.tween(hazePurple).to({alpha:0},5000, Phaser.Easing.Exponential.Out, true, 0, false);
 
-				hazeRed.tint=playerStats.mission.hazeRedTint;
-				hazeWhite.tint=playerStats.mission.hazeWhiteTint;
-				hazePurple.tint=playerStats.mission.hazePurpleTint;
+								hazeRed.tint=playerStats.mission.hazeRedTint;
+								hazeWhite.tint=playerStats.mission.hazeWhiteTint;
+								hazePurple.tint=playerStats.mission.hazePurpleTint;
 
-				hazeRed.speed=playerStats.mission.hazeRedSpeed;
-				hazeWhite.speed=playerStats.mission.hazeWhiteSpeed;
-				hazePurple.speed=playerStats.mission.hazePurpleSpeed;
-				hazeRed.blendMode=playerStats.mission.hazeRedBlendMode;
-				hazePurple.blendMode=playerStats.mission.hazePurpleBlendMode;
+								hazeRed.speed=playerStats.mission.hazeRedSpeed;
+								hazeWhite.speed=playerStats.mission.hazeWhiteSpeed;
+								hazePurple.speed=playerStats.mission.hazePurpleSpeed;
+								hazeRed.blendMode=playerStats.mission.hazeRedBlendMode;
+								hazePurple.blendMode=playerStats.mission.hazePurpleBlendMode;
 
-}
-function fadeIn () {
-				station.alpha=0;
-				ui.tempStation.alpha=0;
-				game.add.tween(station).to({alpha:1},100, Phaser.Easing.Linear.None, true, 0, false);
-				game.add.tween(ui.tempStation).to({alpha:1},100, Phaser.Easing.Linear.None, true, 0, false);
-
-				planet.baseX=randomRange(300,400)*randomSign();
-				planet.baseY=randomRange(300,400)*randomSign();
-				planet.rotation=randomRange(0,2*Math.PI);
-				planet.baseScale=randomRange(5,5);
-				planet.anchor.setTo(0.5,0.5);
-				planet.scale.x=planet.baseScale;
-				planet.scale.y=planet.baseScale;
-				planet.r=0;
-				planet.g=0;
-				planet.b=0;
-				planet.r=parseInt(randomRange(120,255));
-				planet.g=parseInt(randomRange(120,255));
-				planet.b=parseInt(randomRange(120,255));
-				planet.tint=(planet.r << 16) + (planet.g << 8) + planet.b;
-				planetlod.baseX=planet.baseX;
-				planetlod.baseY=planet.baseY;
-				planet.x = planet.baseX;
-				planet.x = planet.baseX;
-				planet.y = planet.baseY;
-				planet.y = planet.baseY;
-				planetlod.rotation=randomRange(0,2*Math.PI);
-				planetlod.baseScale=planet.baseScale;
-				planetlod.anchor.setTo(0.5,0.5);
-				planetlod.scale.x=planetlod.baseScale;
-				planetlod.scale.y=planetlod.baseScale;
-				planetlod.r=parseInt(randomRange(128,255));
-				planetlod.g=parseInt(randomRange(128,255));
-				planetlod.b=parseInt(randomRange(128,255));
-				planetlod.tint=(planetlod.r << 16) + (planetlod.g << 8) + planetlod.b;
-				planetdirt.tint=(randomRange(40,255) << 16) + (randomRange(40,255) << 8) + randomRange(40,255);
-				planetfall.tint=(randomRange(40,255) << 16) + (randomRange(40,255) << 8) + randomRange(40,255);
-				hazeRed.alpha=0;
-				hazeWhite.alpha=0;
-				hazePurple.alpha=0;
-				game.add.tween(hazeRed).to({alpha:playerStats.mission.hazeRed},100, Phaser.Easing.Linear.None, true, 0, false);
-				game.add.tween(hazeWhite).to({alpha:playerStats.mission.hazeWhite},100, Phaser.Easing.Linear.None, true, 0, false);
-				game.add.tween(hazePurple).to({alpha:playerStats.mission.hazePurple},100, Phaser.Easing.Linear.None, true, 0, false);
-
-				hazeRed.tint=playerStats.mission.hazeRedTint;
-				hazeWhite.tint=playerStats.mission.hazeWhiteTint;
-				hazePurple.tint=playerStats.mission.hazePurpleTint;
-
-				hazeRed.speed=playerStats.mission.hazeRedSpeed;
-				hazeWhite.speed=playerStats.mission.hazeWhiteSpeed;
-				hazePurple.speed=playerStats.mission.hazePurpleSpeed;
-				hazeRed.blendMode=playerStats.mission.hazeRedBlendMode;
-				hazePurple.blendMode=playerStats.mission.hazePurpleBlendMode;
-
-}
-
-function create () {
-
-
-				ui = new gameUI();
-				ui.initSound();
-				ui.initButtons(warButtons);
-				gamemode = location.search||'init';
-				if (gamemode == '?cheat'){
-								gamemode = 'init';
-								cheatmode = 1;
 				}
-				if (gamemode == 'init'){
-								game.world.setBounds(-300000, -300000, 600000, 600000);
+				function fadeIn () {
+								station.alpha=0;
+								ui.tempStation.alpha=0;
+								game.add.tween(station).to({alpha:1},100, Phaser.Easing.Linear.None, true, 0, false);
+								game.add.tween(ui.tempStation).to({alpha:1},100, Phaser.Easing.Linear.None, true, 0, false);
 
-
-								hazeWhite = game.add.tileSprite(0, 0, resolutionX, resolutionY, 'starfield6');
-								hazeWhite.fixedToCamera = true;
-								hazeWhite.scale.x=1;
-								hazeWhite.scale.y=1;
-								hazeWhite.alpha=0.6; //random()
-								hazeWhite.blendMode=0;
-								hazeWhite.tilePosition.x = Math.random()*resolutionX;
-								hazeWhite.tilePosition.y = Math.random()*resolutionY;
-								hazeWhite.speed = 600;
-								planet = game.add.sprite(resolutionX/0.8, resolutionY/0.8, 'planetslod');
-								planet.baseX=randomRange(-300,400) * randomSign();
-								planet.baseY=randomRange(-300,400) * randomSign();
-								planetlod = game.add.sprite(resolutionX/0.8, resolutionY/0.8, 'planetslod');
-								planetfall = game.add.tileSprite(0, 0, resolutionX/1.5, resolutionY/1.5, 'planetfall');
-								planetdirt = game.add.tileSprite(0, 0, resolutionX/2, resolutionY/2, 'planetdirt');
+								planet.baseX=randomRange(300,400)*randomSign();
+								planet.baseY=randomRange(300,400)*randomSign();
+								planet.rotation=randomRange(0,2*Math.PI);
+								planet.baseScale=randomRange(5,5);
+								planet.anchor.setTo(0.5,0.5);
+								planet.scale.x=planet.baseScale;
+								planet.scale.y=planet.baseScale;
+								planet.r=0;
+								planet.g=0;
+								planet.b=0;
+								planet.r=parseInt(randomRange(120,255));
+								planet.g=parseInt(randomRange(120,255));
+								planet.b=parseInt(randomRange(120,255));
+								planet.tint=(planet.r << 16) + (planet.g << 8) + planet.b;
 								planetlod.baseX=planet.baseX;
 								planetlod.baseY=planet.baseY;
-								planetdirt.fixedToCamera=true; 
-								planetdirt.scale.setTo(1.5,1.5);
-								planetdirt.tilePosition.x=0;
-								planetdirt.tilePosition.y=0;
-								planetfall.fixedToCamera=true; 
-								planetfall.scale.setTo(2,2);
-								planetfall.tilePosition.x=0;
-								planetfall.tilePosition.y=0;
-								hazeRed = game.add.tileSprite(0, 0, resolutionX/3, resolutionY/3, 'haze');
-								planetdirt.speed=0;
-								planetfall.speed=0;
-								hazeRed.tilePosition.x = Math.random()*resolutionX;
-								hazeRed.tilePosition.y = Math.random()*resolutionY;
-								hazeRed.fixedToCamera = true;
-								hazeRed.baseScale=3;
-								hazeRed.scale.x=hazeRed.baseScale;
-								hazeRed.scale.y=hazeRed.baseScale;
-								hazeRed.alpha=1; //randomRange(0,0.8)-0.2;
-								hazeRed.blendMode=1;
-								hazeRed.speed = 160;
-								hazePurple = game.add.tileSprite(0, 0, resolutionX/3, resolutionY/3, 'haze2');
-								hazePurple.tilePosition.x = Math.random()*resolutionX;
-								hazePurple.tilePosition.y = Math.random()*resolutionY;
-								hazePurple.fixedToCamera = true;
-								hazePurple.baseScale=5;
-								hazePurple.scale.x=3;
-								hazePurple.scale.y=3;
-								hazePurple.alpha=1.0; //randomRange(0,0.6)-0.2;
-								hazePurple.blendMode=2;
-								hazePurple.speed=17;
-								station = game.add.sprite(0,0,'station');
-								station.anchor.setTo(0.5,0.5)
-												asteroids.sort(lengthSort);
+								planet.x = planet.baseX;
+								planet.x = planet.baseX;
+								planet.y = planet.baseY;
+								planet.y = planet.baseY;
+								planetlod.rotation=randomRange(0,2*Math.PI);
+								planetlod.baseScale=planet.baseScale;
+								planetlod.anchor.setTo(0.5,0.5);
+								planetlod.scale.x=planetlod.baseScale;
+								planetlod.scale.y=planetlod.baseScale;
+								planetlod.r=parseInt(randomRange(128,255));
+								planetlod.g=parseInt(randomRange(128,255));
+								planetlod.b=parseInt(randomRange(128,255));
+								planetlod.tint=(planetlod.r << 16) + (planetlod.g << 8) + planetlod.b;
+								planetdirt.tint=(randomRange(40,255) << 16) + (randomRange(40,255) << 8) + randomRange(40,255);
+								planetfall.tint=(randomRange(40,255) << 16) + (randomRange(40,255) << 8) + randomRange(40,255);
+								hazeRed.alpha=0;
+								hazeWhite.alpha=0;
+								hazePurple.alpha=0;
+								game.add.tween(hazeRed).to({alpha:playerStats.mission.hazeRed},100, Phaser.Easing.Linear.None, true, 0, false);
+								game.add.tween(hazeWhite).to({alpha:playerStats.mission.hazeWhite},100, Phaser.Easing.Linear.None, true, 0, false);
+								game.add.tween(hazePurple).to({alpha:playerStats.mission.hazePurple},100, Phaser.Easing.Linear.None, true, 0, false);
 
-								frob1 = game.add.sprite(-200,-200,'station');
-								game.physics.enable(frob1, Phaser.Physics.ARCADE);
-								frob1.anchor.setTo(0.5,0.5);
-								frob1.visible=false;
-								ships.sort(lengthSort);
+								hazeRed.tint=playerStats.mission.hazeRedTint;
+								hazeWhite.tint=playerStats.mission.hazeWhiteTint;
+								hazePurple.tint=playerStats.mission.hazePurpleTint;
 
-								var temp = game.add.sprite(0,0,'parts');
-								temp.visible = false;
+								hazeRed.speed=playerStats.mission.hazeRedSpeed;
+								hazeWhite.speed=playerStats.mission.hazeWhiteSpeed;
+								hazePurple.speed=playerStats.mission.hazePurpleSpeed;
+								hazeRed.blendMode=playerStats.mission.hazeRedBlendMode;
+								hazePurple.blendMode=playerStats.mission.hazePurpleBlendMode;
 
-
-								playerStats = new playerMeta ();
-
-								dummy=game.add.sprite(0,0,'parts',0);
-								dummy.kill();
-
-								pool = new partsPool();
-								dragPool = new dragPartsPool();
-								// end of an era
-								var startShip = randomShip(basicGear,3);
-								if(cheatmode){startShip = randomShip(allLootableItems(),parseInt(randomRange(3,8)))}
-								if(Math.random() > 0.5){
-												startShip=symmetrizeShip(startShip);
-								}
-								player = new playerShip(startShip);
-								mockPlayer = new mockPlayerShip(player.ship);
-
-								//  The enemies bullet group
-								enemyBullets = game.add.group();
-								enemyBullets.createMultiple(200, 'bullet');
-								game.physics.enable(enemyBullets, Phaser.Physics.ARCADE);
-								enemyBullets.setAll('body.immovable', true);
-								enemyBullets.setAll('anchor.x', 0.5);
-								enemyBullets.setAll('anchor.y', 0.5);
-								enemyBullets.setAll('lifespan',5000)
-												enemyBullets.setAll('outOfBoundsKill', true);
-								for (var i=0;i<enemyBullets.length;i++){
-												var bullet = enemyBullets.getAt(i);
-												for (var j=0;j<bulletTypes.length;j++){							
-																var bulletType = bulletTypes[j];
-																bullet.animations.add(bulletType.name, [bulletType.id]);
-												}
-								}
-
-								enemyThrust = game.add.emitter(0,0,0);
-
-								explosions = game.add.group();
-								explosions.createMultiple(350, 'explosions');
-								game.physics.enable(explosions, Phaser.Physics.ARCADE);
-								explosions.setAll('anchor.x', 0.5);
-								explosions.setAll('anchor.y', 0.5);
-								explosions.setAll('lifespan',5000);
-								explosions.setAll('blendMode',1);
-								for (var i=0;i<explosions.length;i++){
-												var explosion = explosions.getAt(i);
-												for (var j=0;j<bulletTypes.length;j++){							
-																var bulletType = bulletTypes[j];
-																explosion.animations.add(bulletType.name, [bulletType.id]);
-												}
-								}
-
-								sparkleExplosions = game.add.group();
-								sparkleExplosions.createMultiple(50, 'sparkles');
-								game.physics.enable(sparkleExplosions, Phaser.Physics.ARCADE);
-								sparkleExplosions.setAll('anchor.x', 0.5);
-								sparkleExplosions.setAll('anchor.y', 0.5);
-								sparkleExplosions.setAll('lifespan',5000);
-								sparkleExplosions.setAll('blendMode',1);
-
-								enemies = [];
-
-								pew = game.add.emitter(0,0,200);
-								pew.makeParticles('sparks');
-								pew.blendMode=1;
-								pew.setAlpha(2,0,900,Phaser.Easing.Sinusoidal.Out);
-								pew.gravity=0;
-
-								bullets = game.add.group();
-								bullets.createMultiple(30, 'bullet');
-								game.physics.enable(bullets, Phaser.Physics.ARCADE);
-								bullets.setAll('anchor.x', 0.5);
-								bullets.setAll('anchor.y', 0.5);
-								bullets.setAll('outOfBoundsKill', true);
-								bullets.setAll('lifespan', 1000);
-								//define bullet sprites
-								for (var i=0;i<bullets.length;i++){
-												var bullet = bullets.getAt(i);
-												for (var j=0;j<bulletTypes.length;j++){							
-																var bulletType = bulletTypes[j];
-																bullet.animations.add(bulletType.name, [bulletType.id]);
-												}
-								}
-								debris = game.add.group();
-								debris.createMultiple(30, 'parts');
-								game.physics.enable(debris, Phaser.Physics.ARCADE);
-								debris.setAll('anchor.x',0.5);
-								debris.setAll('anchor.y', 0.5);
-								debris.setAll('outOfBoundsKill', true);
-								debris.setAll('lifespan', 60000);
-
-								loots = game.add.group();
-								loots.createMultiple(30, 'parts');
-								game.physics.enable(loots, Phaser.Physics.ARCADE);
-								loots.setAll('anchor.x',0.5);
-								loots.setAll('anchor.y', 0.5);
-								loots.setAll('outOfBoundsKill', true);
-								loots.setAll('lifespan', 60000);
-								game.camera.follow(player.sprite);
-								game.camera.focusOnXY(0, 0);
-
-								sparkles = game.add.emitter(0,0,100);
-								sparkles.makeParticles('sparkles',[0,1,2,3,4,5,6,7]);
-								sparkles.setAlpha(1,0,2000);
-								sparkles.blendMode = 1;
-								sparkles.lifespan=200;
-								otherGraphics = game.add.graphics(0,0);
-
-								sparklesCyan = game.add.emitter(0,0,100);
-								sparklesCyan.makeParticles('sparklescyan',[0,1,2,3,4,5,6,7]);
-								sparklesCyan.setAlpha(1,0,2000);
-								sparklesCyan.blendMode = 1;
-								sparklesCyan.lifespan=400;
 				}
 
-				pad1 = game.input.gamepad.pad1;	
-				game.input.gamepad.start();
-				game.input.gamepad.setDeadZones(0.25);
-				cursors =	{
+				function create () {
+
+
+								ui = new gameUI();
+								ui.initSound();
+								ui.initButtons(warButtons);
+								gamemode = location.search||'init';
+								if (gamemode == '?cheat'){
+												gamemode = 'init';
+												cheatmode = 1;
+								}
+								if (gamemode == 'init'){
+												game.world.setBounds(-300000, -300000, 600000, 600000);
+
+
+												hazeWhite = game.add.tileSprite(0, 0, resolutionX, resolutionY, 'starfield6');
+												hazeWhite.fixedToCamera = true;
+												hazeWhite.scale.x=1;
+												hazeWhite.scale.y=1;
+												hazeWhite.alpha=0.6; //random()
+												hazeWhite.blendMode=0;
+												hazeWhite.tilePosition.x = Math.random()*resolutionX;
+												hazeWhite.tilePosition.y = Math.random()*resolutionY;
+												hazeWhite.speed = 600;
+												planet = game.add.sprite(resolutionX/0.8, resolutionY/0.8, 'planetslod');
+												planet.baseX=randomRange(-300,400) * randomSign();
+												planet.baseY=randomRange(-300,400) * randomSign();
+												planetlod = game.add.sprite(resolutionX/0.8, resolutionY/0.8, 'planetslod');
+												planetfall = game.add.tileSprite(0, 0, resolutionX/1.5, resolutionY/1.5, 'planetfall');
+												planetdirt = game.add.tileSprite(0, 0, resolutionX/2, resolutionY/2, 'planetdirt');
+												planetlod.baseX=planet.baseX;
+												planetlod.baseY=planet.baseY;
+												planetdirt.fixedToCamera=true; 
+												planetdirt.scale.setTo(1.5,1.5);
+												planetdirt.tilePosition.x=0;
+												planetdirt.tilePosition.y=0;
+												planetfall.fixedToCamera=true; 
+												planetfall.scale.setTo(2,2);
+												planetfall.tilePosition.x=0;
+												planetfall.tilePosition.y=0;
+												hazeRed = game.add.tileSprite(0, 0, resolutionX/3, resolutionY/3, 'haze');
+												planetdirt.speed=0;
+												planetfall.speed=0;
+												hazeRed.tilePosition.x = Math.random()*resolutionX;
+												hazeRed.tilePosition.y = Math.random()*resolutionY;
+												hazeRed.fixedToCamera = true;
+												hazeRed.baseScale=3;
+												hazeRed.scale.x=hazeRed.baseScale;
+												hazeRed.scale.y=hazeRed.baseScale;
+												hazeRed.alpha=1; //randomRange(0,0.8)-0.2;
+												hazeRed.blendMode=1;
+												hazeRed.speed = 160;
+												hazePurple = game.add.tileSprite(0, 0, resolutionX/3, resolutionY/3, 'haze2');
+												hazePurple.tilePosition.x = Math.random()*resolutionX;
+												hazePurple.tilePosition.y = Math.random()*resolutionY;
+												hazePurple.fixedToCamera = true;
+												hazePurple.baseScale=5;
+												hazePurple.scale.x=3;
+												hazePurple.scale.y=3;
+												hazePurple.alpha=1.0; //randomRange(0,0.6)-0.2;
+												hazePurple.blendMode=2;
+												hazePurple.speed=17;
+												station = game.add.sprite(0,0,'station');
+												station.anchor.setTo(0.5,0.5)
+																asteroids.sort(lengthSort);
+
+												frob1 = game.add.sprite(-200,-200,'station');
+												game.physics.enable(frob1, Phaser.Physics.ARCADE);
+												frob1.anchor.setTo(0.5,0.5);
+												frob1.visible=false;
+												ships.sort(lengthSort);
+
+												var temp = game.add.sprite(0,0,'parts');
+												temp.visible = false;
+
+
+												playerStats = new playerMeta ();
+
+												dummy=game.add.sprite(0,0,'parts',0);
+												dummy.kill();
+
+												pool = new partsPool();
+												dragPool = new dragPartsPool();
+												// end of an era
+												var startShip = randomShip(basicGear,3);
+												if(cheatmode){startShip = randomShip(allLootableItems(),parseInt(randomRange(3,8)))}
+												if(Math.random() > 0.5){
+																startShip=symmetrizeShip(startShip);
+												}
+												player = new playerShip(startShip);
+												mockPlayer = new mockPlayerShip(player.ship);
+
+												//  The enemies bullet group
+												enemyBullets = game.add.group();
+												enemyBullets.createMultiple(200, 'bullet');
+												game.physics.enable(enemyBullets, Phaser.Physics.ARCADE);
+												enemyBullets.setAll('body.immovable', true);
+												enemyBullets.setAll('anchor.x', 0.5);
+												enemyBullets.setAll('anchor.y', 0.5);
+												enemyBullets.setAll('lifespan',5000)
+																enemyBullets.setAll('outOfBoundsKill', true);
+												for (var i=0;i<enemyBullets.length;i++){
+																var bullet = enemyBullets.getAt(i);
+																for (var j=0;j<bulletTypes.length;j++){							
+																				var bulletType = bulletTypes[j];
+																				bullet.animations.add(bulletType.name, [bulletType.id]);
+																}
+												}
+
+												enemyThrust = game.add.emitter(0,0,0);
+
+												explosions = game.add.group();
+												explosions.createMultiple(350, 'explosions');
+												game.physics.enable(explosions, Phaser.Physics.ARCADE);
+												explosions.setAll('anchor.x', 0.5);
+												explosions.setAll('anchor.y', 0.5);
+												explosions.setAll('lifespan',5000);
+												explosions.setAll('blendMode',1);
+												for (var i=0;i<explosions.length;i++){
+																var explosion = explosions.getAt(i);
+																for (var j=0;j<bulletTypes.length;j++){							
+																				var bulletType = bulletTypes[j];
+																				explosion.animations.add(bulletType.name, [bulletType.id]);
+																}
+												}
+
+												sparkleExplosions = game.add.group();
+												sparkleExplosions.createMultiple(50, 'sparkles');
+												game.physics.enable(sparkleExplosions, Phaser.Physics.ARCADE);
+												sparkleExplosions.setAll('anchor.x', 0.5);
+												sparkleExplosions.setAll('anchor.y', 0.5);
+												sparkleExplosions.setAll('lifespan',5000);
+												sparkleExplosions.setAll('blendMode',1);
+
+												enemies = [];
+
+												pew = game.add.emitter(0,0,200);
+												pew.makeParticles('sparks');
+												pew.blendMode=1;
+												pew.setAlpha(2,0,900,Phaser.Easing.Sinusoidal.Out);
+												pew.gravity=0;
+
+												bullets = game.add.group();
+												bullets.createMultiple(30, 'bullet');
+												game.physics.enable(bullets, Phaser.Physics.ARCADE);
+												bullets.setAll('anchor.x', 0.5);
+												bullets.setAll('anchor.y', 0.5);
+												bullets.setAll('outOfBoundsKill', true);
+												bullets.setAll('lifespan', 1000);
+												//define bullet sprites
+												for (var i=0;i<bullets.length;i++){
+																var bullet = bullets.getAt(i);
+																for (var j=0;j<bulletTypes.length;j++){							
+																				var bulletType = bulletTypes[j];
+																				bullet.animations.add(bulletType.name, [bulletType.id]);
+																}
+												}
+												debris = game.add.group();
+												debris.createMultiple(30, 'parts');
+												game.physics.enable(debris, Phaser.Physics.ARCADE);
+												debris.setAll('anchor.x',0.5);
+												debris.setAll('anchor.y', 0.5);
+												debris.setAll('outOfBoundsKill', true);
+												debris.setAll('lifespan', 60000);
+
+												loots = game.add.group();
+												loots.createMultiple(30, 'parts');
+												game.physics.enable(loots, Phaser.Physics.ARCADE);
+												loots.setAll('anchor.x',0.5);
+												loots.setAll('anchor.y', 0.5);
+												loots.setAll('outOfBoundsKill', true);
+												loots.setAll('lifespan', 60000);
+												game.camera.follow(player.sprite);
+												game.camera.focusOnXY(0, 0);
+
+												sparkles = game.add.emitter(0,0,100);
+												sparkles.makeParticles('sparkles',[0,1,2,3,4,5,6,7]);
+												sparkles.setAlpha(1,0,2000);
+												sparkles.blendMode = 1;
+												sparkles.lifespan=200;
+												otherGraphics = game.add.graphics(0,0);
+
+												sparklesCyan = game.add.emitter(0,0,100);
+												sparklesCyan.makeParticles('sparklescyan',[0,1,2,3,4,5,6,7]);
+												sparklesCyan.setAlpha(1,0,2000);
+												sparklesCyan.blendMode = 1;
+												sparklesCyan.lifespan=400;
+								}
+
+								pad1 = game.input.gamepad.pad1;	
+								game.input.gamepad.start();
+								game.input.gamepad.setDeadZones(0.25);
+								cursors =	{
 up: game.input.keyboard.addKey(Phaser.Keyboard.UP),
 		down: game.input.keyboard.addKey(Phaser.Keyboard.DOWN),
 		left: game.input.keyboard.addKey(Phaser.Keyboard.LEFT),
@@ -4323,515 +4397,453 @@ up: game.input.keyboard.addKey(Phaser.Keyboard.UP),
 		pgup: game.input.keyboard.addKey(Phaser.Keyboard.PAGE_UP),
 		pgdn: game.input.keyboard.addKey(Phaser.Keyboard.PAGE_DOWN),
 		enter: game.input.keyboard.addKey(Phaser.Keyboard.ENTER)
-				}
-
-
-
-				ui.initCombatUi();
-				if(cheatmode){
-								initMission(1);
-				}else{
-								initMission(0);
-				}
-				for(var i=0;i<startParts;i++)
-				{
-								ui.buyPart();
-				}
-
-				hello.visible=false;
-				gamemode='war';
-
-}
-function fadeSpark(s) {
-				s.alpha-=0.01*game.time.physicsElapsed;
-				s.scale.setTo(s.scale.x*1.03,s.scale.y*1.03);
-				if(s.lifespan>175 && s.lifespan < 201){
-								s.scale.setTo(1,1);
-								s.alpha=0.8;
-				}
-}
-function fade(s) {
-				s.alpha-=0.01*game.time.physicsElapsed;
-				s.scale.setTo(s.scale.x*1.03,s.scale.y*1.03);
-				if(s.lifespan>750){
-								s.scale.setTo(1,1);
-								s.alpha=0.8;
-				}
-}
-
-function lootSparkle(s){
-
-				var halfWidth = s.width * 0.5;
-				sparkles.x=s.x+randomRange(-1 * halfWidth,halfWidth);
-				sparkles.y=s.y+randomRange(-1 * halfWidth,halfWidth);
-				var tempC;
-				tempC = (Math.sin(randomRange(0,-0.5*Math.PI)));
-				tempC*=0.5;
-				sparkles.minParticleSpeed.setTo(tempC*s.body.velocity.x,tempC*s.body.velocity.y);
-				sparkles.maxParticleSpeed.setTo(tempC*s.body.velocity.x,tempC*s.body.velocity.y);
-				sparkles.lifespan=(Math.sin(randomRange(0,0.5*Math.PI)))*500;
-				sparkles.emitParticle();
-
-}
-
-function epicLootSparkle(s){
-
-				var halfWidth = s.width * 0.5;
-				sparklesCyan.x=s.x+randomRange(-1 * halfWidth,halfWidth);
-				sparklesCyan.y=s.y+randomRange(-1 * halfWidth,halfWidth);
-				var tempC;
-				tempC = (Math.sin(randomRange(0,-0.5*Math.PI)));
-				tempC*=0.5;
-				sparklesCyan.minParticleSpeed.setTo(tempC*s.body.velocity.x,tempC*s.body.velocity.y);
-				sparklesCyan.maxParticleSpeed.setTo(tempC*s.body.velocity.x,tempC*s.body.velocity.y);
-				sparklesCyan.lifespan=(Math.sin(randomRange(0,0.5*Math.PI)))*500;
-				sparklesCyan.emitParticle();
-
-}
-function sparkleBullets(s) {
-				if(game.time.now>s.nextSparkle){
-								s.sparkle(explosions,s.x,s.y,s);
-								s.nextSparkle=game.time.now+150;
-				}
-}
-function pullLootToPlayer(s) {
-				if (!player.alive){
-								s.kill();
-				}
-				if(s.alive){
-								if(Math.random() < 0.3 && onscreen(s.x,s.y)){
-												lootSparkle(s);
 								}
-								var targetDistance = game.physics.arcade.distanceBetween(s, player.sprite.body); 
 
-								if(targetDistance < player.lootRange){
-												var targetVelocity = (player.lootRange*2)-targetDistance;// * (Math.floor(5000,game.time.now-s.pullTime)/5000);
-												var targetAngle = game.physics.arcade.angleBetween(s, player.sprite); 
-												game.physics.arcade.velocityFromRotation(targetAngle, targetVelocity, s.body.velocity);
-												s.body.velocity.x+=player.sprite.body.velocity.x;
-												s.body.velocity.y+=player.sprite.body.velocity.y;
-												otherGraphics.lineStyle(parseInt(randomRange(1,3)), 0x00CcFF, randomRange(0.3,0.8));
-												otherGraphics.moveTo(s.x, s.y);
-												otherGraphics.lineTo(player.sprite.x,player.sprite.y);
 
+
+								ui.initCombatUi();
+								if(cheatmode){
+												initMission(1);
+								}else{
+												initMission(0);
+								}
+								for(var i=0;i<startParts;i++)
+								{
+												ui.buyPart();
+								}
+
+								hello.visible=false;
+								gamemode='war';
+
+				}
+				function fadeSpark(s) {
+								s.alpha-=0.01*game.time.physicsElapsed;
+								s.scale.setTo(s.scale.x*1.03,s.scale.y*1.03);
+								if(s.lifespan>175 && s.lifespan < 201){
+												s.scale.setTo(1,1);
+												s.alpha=0.8;
 								}
 				}
-}
-function handleMission() {
-
-				if(playerStats.mission.win.condition=='kill'){
-								if(playerStats.mission.win.killCount<=playerStats.kills){
-												playerStats.mission.complete=true;
+				function fade(s) {
+								s.alpha-=0.01*game.time.physicsElapsed;
+								s.scale.setTo(s.scale.x*1.03,s.scale.y*1.03);
+								if(s.lifespan>750){
+												s.scale.setTo(1,1);
+												s.alpha=0.8;
 								}
 				}
 
-				if((playerStats.mission.complete || playerStats.mission.win.condition=='frob') &&
-												game.physics.arcade.overlap(player.sprite,frob1))
-				{
-								playerStats.mission.complete=true; //just for frob-only missions
-								winMission(); 
-								ui.partsUI(player.ship);
-								//temporarily disable
-								ui.endPartsUI();
-								nextUIDelay=game.time.now+1000;
+				function lootSparkle(s){
+
+								var halfWidth = s.width * 0.5;
+								sparkles.x=s.x+randomRange(-1 * halfWidth,halfWidth);
+								sparkles.y=s.y+randomRange(-1 * halfWidth,halfWidth);
+								var tempC;
+								tempC = (Math.sin(randomRange(0,-0.5*Math.PI)));
+								tempC*=0.5;
+								sparkles.minParticleSpeed.setTo(tempC*s.body.velocity.x,tempC*s.body.velocity.y);
+								sparkles.maxParticleSpeed.setTo(tempC*s.body.velocity.x,tempC*s.body.velocity.y);
+								sparkles.lifespan=(Math.sin(randomRange(0,0.5*Math.PI)))*500;
+								sparkles.emitParticle();
+
 				}
-				if(playerStats.mission.complete && playerStats.mission.outro.length){
-								ui.sound_complete.play();
-								ui.skipText();
-								for(var i=0;i<playerStats.mission.outro.length;i++){
-												ui.texts.push(playerStats.mission.outro[i]);
+
+				function epicLootSparkle(s){
+
+								var halfWidth = s.width * 0.5;
+								sparklesCyan.x=s.x+randomRange(-1 * halfWidth,halfWidth);
+								sparklesCyan.y=s.y+randomRange(-1 * halfWidth,halfWidth);
+								var tempC;
+								tempC = (Math.sin(randomRange(0,-0.5*Math.PI)));
+								tempC*=0.5;
+								sparklesCyan.minParticleSpeed.setTo(tempC*s.body.velocity.x,tempC*s.body.velocity.y);
+								sparklesCyan.maxParticleSpeed.setTo(tempC*s.body.velocity.x,tempC*s.body.velocity.y);
+								sparklesCyan.lifespan=(Math.sin(randomRange(0,0.5*Math.PI)))*500;
+								sparklesCyan.emitParticle();
+
+				}
+				function sparkleBullets(s) {
+								if(game.time.now>s.nextSparkle){
+												s.sparkle(explosions,s.x,s.y,s);
+												s.nextSparkle=game.time.now+150;
+								}
+				}
+				function pullLootToPlayer(s) {
+								if (!player.alive){
+												s.kill();
+								}
+								if(s.alive){
+												if(Math.random() < 0.3 && onscreen(s.x,s.y)){
+																lootSparkle(s);
+												}
+												var targetDistance = game.physics.arcade.distanceBetween(s, player.sprite.body); 
+
+												if(targetDistance < player.lootRange){
+																var targetVelocity = (player.lootRange*2)-targetDistance;// * (Math.floor(5000,game.time.now-s.pullTime)/5000);
+																var targetAngle = game.physics.arcade.angleBetween(s, player.sprite); 
+																game.physics.arcade.velocityFromRotation(targetAngle, targetVelocity, s.body.velocity);
+																s.body.velocity.x+=player.sprite.body.velocity.x;
+																s.body.velocity.y+=player.sprite.body.velocity.y;
+																otherGraphics.lineStyle(parseInt(randomRange(1,3)), 0x00CcFF, randomRange(0.3,0.8));
+																otherGraphics.moveTo(s.x, s.y);
+																otherGraphics.lineTo(player.sprite.x,player.sprite.y);
+
+												}
+								}
+				}
+				function handleMission() {
+
+								if(playerStats.mission.win.condition=='kill'){
+												if(playerStats.mission.win.killCount<=playerStats.kills){
+																playerStats.mission.complete=true;
+												}
 								}
 
-								playerStats.mission.outro=[];
+								if((playerStats.mission.complete || playerStats.mission.win.condition=='frob') &&
+																game.physics.arcade.overlap(player.sprite,frob1))
+								{
+												playerStats.mission.complete=true; //just for frob-only missions
+												winMission(); 
+												ui.partsUI(player.ship);
+												//temporarily disable
+												ui.endPartsUI();
+												nextUIDelay=game.time.now+1000;
+								}
+								if(playerStats.mission.complete && playerStats.mission.outro.length){
+												ui.sound_complete.play();
+												ui.skipText();
+												for(var i=0;i<playerStats.mission.outro.length;i++){
+																ui.texts.push(playerStats.mission.outro[i]);
+												}
+
+												playerStats.mission.outro=[];
+								}
+
 				}
 
-}
+				function winMission(){
 
-function winMission(){
+								if(playerStats.mission.complete){
+												ui.sound_ominous.play();
+												var s = 'completed ' + playerStats.mission.name + '. ';
+												if(playerStats.mission.componentsReward.length){
+																for(var i =0;i<playerStats.mission.componentsCount;i++)
+																{
+																				playerStats.inventory.push(playerStats.mission.componentsReward[Math.floor(randomRange(0,playerStats.mission.componentsReward.length))]);
+																				if(i%2==1){
+																								s+='\n';
+																				}
+																}
+												}
+												ui.skipText();
+												ui.texts.push(s);
+												var n = Math.floor(randomRange(0,playerStats.mission.next.length));
+												initMission(playerStats.mission.next[n]);
+												playerStats.mission.complete=false;
+												playerStats.kills=0;
+								}
+				}
 
-				if(playerStats.mission.complete){
-								ui.sound_ominous.play();
-								var s = 'completed ' + playerStats.mission.name + '. ';
-								if(playerStats.mission.componentsReward.length){
-												for(var i =0;i<playerStats.mission.componentsCount;i++)
+				function enemyBulletTracking(bullet){
+								if(bullet.tracking > 0 && game.time.now > bullet.nextTrack){
+												var angle = compareAngles(bullet.rotation, game.physics.arcade.angleBetween(bullet, ownerFromName(bullet.owner.name).target));
+												if(Math.abs(angle)>bullet.tracking * 0.04){
+																bullet.rotation -= angle * bullet.tracking * 0.02 / Math.abs(angle);
+												}
+												game.physics.arcade.velocityFromRotation(bullet.rotation, getHypo(bullet.body.velocity.x,bullet.body.velocity.y), bullet.body.velocity);
+
+												bullet.nextTrack = game.time.now+20;
+								}
+				}
+				function playerBulletTracking(bullet){
+								if(bullet.tracking > 0 && game.time.now > bullet.nextTrack){
+												var angle = compareAngles(bullet.rotation, game.physics.arcade.angleBetween(bullet, ui.enemies[0].sprite));
+												if(Math.abs(angle)>bullet.tracking * 0.04){
+																bullet.rotation -= angle * bullet.tracking * 0.02 / Math.abs(angle);
+												}
+												game.physics.arcade.velocityFromRotation(bullet.rotation, getHypo(bullet.body.velocity.x,bullet.body.velocity.y), bullet.body.velocity);
+
+												bullet.nextTrack = game.time.now+20;
+								}
+				}
+
+				function revertGroup(group){
+
+								for(var i=0;i<group.length;i++){
+												var sprite=group.getAt(i);
+												sprite.x-=sprite.body.velocity.x*game.time.physicsElapsed;
+												sprite.y-=sprite.body.velocity.y*game.time.physicsElapsed;
+												sprite.lifespan+=game.time.physicsElapsed*1000;	
+												sprite.angle-=sprite.body.angularVelocity*game.time.physicsElapsed;
+
+
+								}
+				}
+
+				function update () {
+								decayCurrentBrightness();
+								//suppress odd large explosions bug
+								/*explosions.forEach(function(e){
+									if(!e.alive || !e.visible || !onscreen(e.x,e.y)){
+									killTweensFromExplosion(e);
+									e.scale.setTo(1,1);
+									}
+									},this);*/
+								if(gamemode!='init'){
+												//
+												// get controls before any updates
+												//
+
+												otherGraphics.clear();
+
+												var left = 0;
+												var right = 0;
+												var up = 0;
+												var down = 0;
+												var fire = 0;
+												var alt = 0;
+												var enter = 0;
+
+												//
+												if(pad1.buttonValue(Phaser.Gamepad.XBOX360_DPAD_UP)){
+																joystickUsed=true;
+																up=1;
+												}
+												if(pad1.buttonValue(Phaser.Gamepad.XBOX360_DPAD_DOWN)){
+																joystickUsed=true;
+																down=1;
+												}
+												if(pad1.buttonValue(Phaser.Gamepad.XBOX360_DPAD_LEFT)){
+																joystickUsed=true;
+																left=1;
+												}
+												if(pad1.buttonValue(Phaser.Gamepad.XBOX360_DPAD_RIGHT)){
+																joystickUsed=true;
+																right=1;
+												}
+												if(pad1.buttonValue(Phaser.Gamepad.XBOX360_LEFT_TRIGGER)){
+																joystickUsed=true;
+																alt=1;
+												}
+												if (pad1.axis(2) > 0.3) //left trigger
 												{
-																playerStats.inventory.push(playerStats.mission.componentsReward[Math.floor(randomRange(0,playerStats.mission.componentsReward.length))]);
-																if(i%2==1){
-																				s+='\n';
-																}
+																joystickUsed=true;
+																alt = 1;
 												}
-								}
-								ui.skipText();
-								ui.texts.push(s);
-								var n = Math.floor(randomRange(0,playerStats.mission.next.length));
-								initMission(playerStats.mission.next[n]);
-								playerStats.mission.complete=false;
-								playerStats.kills=0;
-				}
-}
-
-function enemyBulletTracking(bullet){
-				if(bullet.tracking > 0 && game.time.now > bullet.nextTrack){
-								var angle = compareAngles(bullet.rotation, game.physics.arcade.angleBetween(bullet, ownerFromName(bullet.owner.name).target));
-								if(Math.abs(angle)>bullet.tracking * 0.04){
-												bullet.rotation -= angle * bullet.tracking * 0.02 / Math.abs(angle);
-								}
-								game.physics.arcade.velocityFromRotation(bullet.rotation, getHypo(bullet.body.velocity.x,bullet.body.velocity.y), bullet.body.velocity);
-
-								bullet.nextTrack = game.time.now+20;
-				}
-}
-function playerBulletTracking(bullet){
-				if(bullet.tracking > 0 && game.time.now > bullet.nextTrack){
-								var angle = compareAngles(bullet.rotation, game.physics.arcade.angleBetween(bullet, ui.enemies[0].sprite));
-								if(Math.abs(angle)>bullet.tracking * 0.04){
-												bullet.rotation -= angle * bullet.tracking * 0.02 / Math.abs(angle);
-								}
-								game.physics.arcade.velocityFromRotation(bullet.rotation, getHypo(bullet.body.velocity.x,bullet.body.velocity.y), bullet.body.velocity);
-
-								bullet.nextTrack = game.time.now+20;
-				}
-}
-
-function revertGroup(group){
-
-				for(var i=0;i<group.length;i++){
-								var sprite=group.getAt(i);
-								sprite.x-=sprite.body.velocity.x*game.time.physicsElapsed;
-								sprite.y-=sprite.body.velocity.y*game.time.physicsElapsed;
-								sprite.lifespan+=game.time.physicsElapsed*1000;	
-								sprite.angle-=sprite.body.angularVelocity*game.time.physicsElapsed;
-
-
-				}
-}
-
-function update () {
-				decayCurrentBrightness();
-				//suppress odd large explosions bug
-				/*explosions.forEach(function(e){
-					if(!e.alive || !e.visible || !onscreen(e.x,e.y)){
-					killTweensFromExplosion(e);
-					e.scale.setTo(1,1);
-					}
-					},this);*/
-				if(gamemode!='init'){
-								//
-								// get controls before any updates
-								//
-
-								otherGraphics.clear();
-
-								var left = 0;
-								var right = 0;
-								var up = 0;
-								var down = 0;
-								var fire = 0;
-								var alt = 0;
-								var enter = 0;
-
-								//
-								if(pad1.buttonValue(Phaser.Gamepad.XBOX360_DPAD_UP)){
-												joystickUsed=true;
-												up=1;
-								}
-								if(pad1.buttonValue(Phaser.Gamepad.XBOX360_DPAD_DOWN)){
-												joystickUsed=true;
-												down=1;
-								}
-								if(pad1.buttonValue(Phaser.Gamepad.XBOX360_DPAD_LEFT)){
-												joystickUsed=true;
-												left=1;
-								}
-								if(pad1.buttonValue(Phaser.Gamepad.XBOX360_DPAD_RIGHT)){
-												joystickUsed=true;
-												right=1;
-								}
-								if(pad1.buttonValue(Phaser.Gamepad.XBOX360_LEFT_TRIGGER)){
-												joystickUsed=true;
-												alt=1;
-								}
-								if (pad1.axis(2) > 0.3) //left trigger
-								{
-												joystickUsed=true;
-												alt = 1;
-								}
-								if (pad1.axis(6) < -0.3) //dpad x
-								{
-												joystickUsed=true;
-												left = 1;
-								}
-								if (pad1.axis(6) > 0.3)
-								{
-												joystickUsed=true;
-												right = 1;
-								}
-								if (pad1.axis(7) < -0.3) //dpad y
-								{
-												joystickUsed=true;
-												up = 1;
-								}
-								if (pad1.axis(7) > 0.3)
-								{
-												joystickUsed=true;
-												down = 1;
-								}
-								if (pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) < -0.3)
-								{
-												joystickUsed=true;
-												left = pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X);
-								}
-								if (pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) > 0.3)
-								{
-												joystickUsed=true;
-												right = pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X);
-								}
-								if (pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y) < -0.3)
-								{
-												joystickUsed=true;
-												up = pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y);
-								}
-								if (pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y) > 0.3)
-								{
-												joystickUsed=true;
-												down = pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y);
-								}
-								if (pad1.buttonValue(Phaser.Gamepad.XBOX360_X))
-								{
-												joystickUsed=true;
-												fire = 1;
-								}
-								if (pad1.buttonValue(Phaser.Gamepad.XBOX360_A))
-								{
-												joystickUsed=true;
-												up = 1;
-								}
-
-								if (pad1.buttonValue(Phaser.Gamepad.XBOX360_B))
-								{
-												joystickUsed=true;
-												alt = 1;
-								}
-								if (pad1.buttonValue(7) || pad1.buttonValue(Phaser.Gamepad.XBOX360_START)) //start
-								{
-												joystickUsed=true;
-												enter = 1;
-								}	
-								if (cursors.left.isDown || cursors.left2.isDown){
-												left = 1;
-								}
-								if (cursors.right.isDown || cursors.right2.isDown){
-												right = 1;
-								}
-								if (cursors.up.isDown || cursors.up2.isDown){
-												up = 1;
-								}
-								if (cursors.down.isDown || cursors.down2.isDown){
-												down = 1;
-								}
-								if (cursors.fire.isDown){
-												fire = 1;
-								}
-								if (cursors.alt.isDown){
-												alt = 1;
-								}
-								if (cursors.enter.isDown){
-												enter = 1;
-								}
-								if (left || right || up || down || fire || alt || enter) {
-												player.behavior='manual';
-								}
-								if (game.input.mouse.button == Phaser.Mouse.RIGHT_BUTTON){
-												alt = 1; //don't force player back to manual mode
-								}
-								if (!game.input.activePointer.isDown|| game.input.mouse.button == Phaser.Mouse.RIGHT_BUTTON) {
-												attemptTarget=true;
-								}
-								if (game.input.activePointer.isDown && game.input.mouse.button != Phaser.Mouse.RIGHT_BUTTON) {
-
-												//handleButtons
-												for(var i=0;i<ui.buttons.length;i++){
-																var btn = ui.buttons[i].button;
-																var ptr = game.input.activePointer;
-																if(ptr.worldX > btn.x - (0.5 * ui.chunkX) && ptr.worldX < btn.x + ui.chunkX - (0.5 * ui.chunkX) &&
-																								ptr.worldY > btn.y - (0.5 * ui.chunkY) && ptr.worldY < btn.y + ui.chunkY - (0.5 * ui.chunkY)){
-																				ui.buttons[i].downCallback();
-																				ui.buttons[i].flash=true;
-
-
-																}
+												if (pad1.axis(6) < -0.3) //dpad x
+												{
+																joystickUsed=true;
+																left = 1;
 												}
-												if (buttonLeft) {left=1};
-												if (buttonRight) {right=1};
-												if (buttonUp) {up=1};
-												if (buttonDown) {down=1};
-												if (buttonFire) {fire=1};
-												if (buttonAlt) {alt=1};
-												if (buttonEnter) {enter=1};
-												var manualPressed = buttonLeft || buttonRight || buttonUp || buttonDown;
-												if (manualPressed) {
+												if (pad1.axis(6) > 0.3)
+												{
+																joystickUsed=true;
+																right = 1;
+												}
+												if (pad1.axis(7) < -0.3) //dpad y
+												{
+																joystickUsed=true;
+																up = 1;
+												}
+												if (pad1.axis(7) > 0.3)
+												{
+																joystickUsed=true;
+																down = 1;
+												}
+												if (pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) < -0.3)
+												{
+																joystickUsed=true;
+																left = pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X);
+												}
+												if (pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) > 0.3)
+												{
+																joystickUsed=true;
+																right = pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X);
+												}
+												if (pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y) < -0.3)
+												{
+																joystickUsed=true;
+																up = pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y);
+												}
+												if (pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y) > 0.3)
+												{
+																joystickUsed=true;
+																down = pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y);
+												}
+												if (pad1.buttonValue(Phaser.Gamepad.XBOX360_X))
+												{
+																joystickUsed=true;
+																fire = 1;
+												}
+												if (pad1.buttonValue(Phaser.Gamepad.XBOX360_A))
+												{
+																joystickUsed=true;
+																up = 1;
+												}
+
+												if (pad1.buttonValue(Phaser.Gamepad.XBOX360_B))
+												{
+																joystickUsed=true;
+																alt = 1;
+												}
+												if (pad1.buttonValue(7) || pad1.buttonValue(Phaser.Gamepad.XBOX360_START)) //start
+												{
+																joystickUsed=true;
+																enter = 1;
+												}	
+												if (cursors.left.isDown || cursors.left2.isDown){
+																left = 1;
+												}
+												if (cursors.right.isDown || cursors.right2.isDown){
+																right = 1;
+												}
+												if (cursors.up.isDown || cursors.up2.isDown){
+																up = 1;
+												}
+												if (cursors.down.isDown || cursors.down2.isDown){
+																down = 1;
+												}
+												if (cursors.fire.isDown){
+																fire = 1;
+												}
+												if (cursors.alt.isDown){
+																alt = 1;
+												}
+												if (cursors.enter.isDown){
+																enter = 1;
+												}
+												if (left || right || up || down || fire || alt || enter) {
 																player.behavior='manual';
 												}
-												touchPressed = buttonLeft || buttonRight || buttonUp || buttonDown || buttonFire || buttonAlt || buttonEnter;
-												buttonLeft =0; buttonRight =0; buttonUp =0; buttonDown =0; buttonFire =0; buttonAlt =0; buttonEnter =0;
-												if(!touchPressed){
-																player.targetAngle=game.physics.arcade.angleToPointer(player.sprite);
+												if (game.input.mouse.button == Phaser.Mouse.RIGHT_BUTTON){
+																alt = 1; //don't force player back to manual mode
 												}
-												if(attemptTarget && !touchPressed){
-																player.behavior='move';
-																for (var i = 0; i < enemies.length; i++){
-																				if (enemies[i].alive && gamemode=='war'){
-																								if(Math.abs(game.input.activePointer.worldX - enemies[i].sprite.x) < 80 &&
-																																Math.abs(game.input.activePointer.worldY - enemies[i].sprite.y) < 80) {
-																												ui.sound_redalert.play()
-																																player.behavior='target';
-																												player.target=enemies[i].sprite;
-																												ui.radar[0].scale.setTo(3,3);
-																												game.add.tween(ui.radar[0].scale).to({x:1,y:1},250, Phaser.Easing.Quadratic.Out, true, 0, false);
+												if (!game.input.activePointer.isDown|| game.input.mouse.button == Phaser.Mouse.RIGHT_BUTTON) {
+																attemptTarget=true;
+												}
+												if (game.input.activePointer.isDown && game.input.mouse.button != Phaser.Mouse.RIGHT_BUTTON) {
+
+																//handleButtons
+																for(var i=0;i<ui.buttons.length;i++){
+																				var btn = ui.buttons[i].button;
+																				var ptr = game.input.activePointer;
+																				if(ptr.worldX > btn.x - (0.5 * ui.chunkX) && ptr.worldX < btn.x + ui.chunkX - (0.5 * ui.chunkX) &&
+																												ptr.worldY > btn.y - (0.5 * ui.chunkY) && ptr.worldY < btn.y + ui.chunkY - (0.5 * ui.chunkY)){
+																								ui.buttons[i].downCallback();
+																								ui.buttons[i].flash=true;
+
+
+																				}
+																}
+																if (buttonLeft) {left=1};
+																if (buttonRight) {right=1};
+																if (buttonUp) {up=1};
+																if (buttonDown) {down=1};
+																if (buttonFire) {fire=1};
+																if (buttonAlt) {alt=1};
+																if (buttonEnter) {enter=1};
+																var manualPressed = buttonLeft || buttonRight || buttonUp || buttonDown;
+																if (manualPressed) {
+																				player.behavior='manual';
+																}
+																touchPressed = buttonLeft || buttonRight || buttonUp || buttonDown || buttonFire || buttonAlt || buttonEnter;
+																buttonLeft =0; buttonRight =0; buttonUp =0; buttonDown =0; buttonFire =0; buttonAlt =0; buttonEnter =0;
+																if(!touchPressed){
+																				player.targetAngle=game.physics.arcade.angleToPointer(player.sprite);
+																}
+																if(attemptTarget && !touchPressed){
+																				player.behavior='move';
+																				for (var i = 0; i < enemies.length; i++){
+																								if (enemies[i].alive && gamemode=='war'){
+																												if(Math.abs(game.input.activePointer.worldX - enemies[i].sprite.x) < 80 &&
+																																				Math.abs(game.input.activePointer.worldY - enemies[i].sprite.y) < 80) {
+																																ui.sound_redalert.play()
+																																				player.behavior='target';
+																																player.target=enemies[i].sprite;
+																																ui.radar[0].scale.setTo(3,3);
+																																game.add.tween(ui.radar[0].scale).to({x:1,y:1},250, Phaser.Easing.Quadratic.Out, true, 0, false);
+																												}
 																								}
-																				}
 
-																}	
-																attemptTarget=false;
+																				}	
+																				attemptTarget=false;
+																}
+												}else{
+																touchPressed=0;
 												}
-								}else{
-												touchPressed=0;
-								}
-								////
-								if(gamemode=='?build'){
+												////
+												if(gamemode=='?build'){
 
-												for (var i = 0; i < ui.parts.length; i++){
-																ui.parts[i].update();
-												}
+																for (var i = 0; i < ui.parts.length; i++){
+																				ui.parts[i].update();
+																}
 
-												player.sprite.body.velocity.x=0;
-												player.lastVelocityX=0;
-												player.sprite.body.velocity.y=0;
-												player.lastVelocityY=0;
+																player.sprite.body.velocity.x=0;
+																player.lastVelocityX=0;
+																player.sprite.body.velocity.y=0;
+																player.lastVelocityY=0;
 
-												if(game.time.now > nextUIDelay){ 
+																if(game.time.now > nextUIDelay){ 
 
-																if(ui.buildMode=='select')
-																{
-																				if (left){
-																								ui.previousPart();
-																								nextUIDelay = game.time.now+1000;
-																				}
-																				if (right){
-																								ui.nextPart();	
-																								nextUIDelay = game.time.now+1000;
-																				}
-																				if ((cursors.pgdn.isDown)){
-																								ui.rowDownPart(16);	
-																								nextUIDelay = game.time.now+1000;
-																				}
-																				if ((cursors.pgup.isDown)){
-																								ui.rowUpPart(16);	
-																								nextUIDelay = game.time.now+1000;
-																				}
-																				if (down){
-																								ui.rowDownPart();	
-																								nextUIDelay = game.time.now+1000;
-																				}
-																				if (up){
-																								ui.rowUpPart();	
-																								nextUIDelay = game.time.now+1000;
-																				}
-																				if(fire && playerStats.inventory.length){
-																								selectPart();
-																								nextUIDelay = game.time.now+2000;
-																								ui.currentPlayerPart = ui.parts.length-1;
-																								ui.setMode('move');
-																								ui.updatePart();
-																				}
-																				if(alt && ui.parts.length > 2){
-																								ui.currentPlayerPart = 0;
-																								ui.nextDeletePart();
-																								nextUIDelay = game.time.now+2000;
-																								ui.setMode('delete');
-																								ui.updatePart();
-																				}
-																				if (enter && game.time.now > nextUIDelay + 2000){
-																								ui.endPartsUI();
-																								nextUIDelay=game.time.now+1000;
-																				}
-																}else if(ui.buildMode=='move'){
+																				if(ui.buildMode=='select')
+																				{
+																								if (left){
+																												ui.previousPart();
+																												nextUIDelay = game.time.now+1000;
+																								}
+																								if (right){
+																												ui.nextPart();	
+																												nextUIDelay = game.time.now+1000;
+																								}
+																								if ((cursors.pgdn.isDown)){
+																												ui.rowDownPart(16);	
+																												nextUIDelay = game.time.now+1000;
+																								}
+																								if ((cursors.pgup.isDown)){
+																												ui.rowUpPart(16);	
+																												nextUIDelay = game.time.now+1000;
+																								}
+																								if (down){
+																												ui.rowDownPart();	
+																												nextUIDelay = game.time.now+1000;
+																								}
+																								if (up){
+																												ui.rowUpPart();	
+																												nextUIDelay = game.time.now+1000;
+																								}
+																								if(fire && playerStats.inventory.length){
+																												selectPart();
+																												nextUIDelay = game.time.now+2000;
+																												ui.currentPlayerPart = ui.parts.length-1;
+																												ui.setMode('move');
+																												ui.updatePart();
+																								}
+																								if(alt && ui.parts.length > 2){
+																												ui.currentPlayerPart = 0;
+																												ui.nextDeletePart();
+																												nextUIDelay = game.time.now+2000;
+																												ui.setMode('delete');
+																												ui.updatePart();
+																								}
+																								if (enter && game.time.now > nextUIDelay + 2000){
+																												ui.endPartsUI();
+																												nextUIDelay=game.time.now+1000;
+																								}
+																				}else if(ui.buildMode=='move'){
 
-																				if (left){
-																								ui.parts[ui.currentPlayerPart].sprite.reset(ui.parts[ui.currentPlayerPart].sprite.x-16,ui.parts[ui.currentPlayerPart].sprite.y)	
-																												nextUIDelay = game.time.now+500;
-																				}
-																				if (right){
-																								ui.parts[ui.currentPlayerPart].sprite.reset(ui.parts[ui.currentPlayerPart].sprite.x+16,ui.parts[ui.currentPlayerPart].sprite.y)	
-																												nextUIDelay = game.time.now+500;
-																				}
-																				if (up){
-																								ui.parts[ui.currentPlayerPart].sprite.reset(ui.parts[ui.currentPlayerPart].sprite.x,ui.parts[ui.currentPlayerPart].sprite.y-16)	
-																												nextUIDelay = game.time.now+500;
-																				}
-																				if(fire){
-																								ui.setMode('select');
-																								ui.parts[ui.currentPlayerPart].sprite.alpha=1;
-																								ui.parts[ui.currentPlayerPart].sprite.blendMode=0;
-																								nextUIDelay = game.time.now+2000;
-																								ui.updatePart();
-																								ui.partsArray();
-																				}
-																				if(alt && ui.currentPlayerPart > 0){
-																								ui.setMode('select');
-																								nextUIDelay = game.time.now+2000;
-																								playerStats.inventory.push(ui.parts[ui.currentPlayerPart].index);
-																								ui.parts[ui.currentPlayerPart].sprite.kill();				
-																								ui.cullParts();
-																								ui.currentPlayerPart = ui.parts.length-1;
-
-																								ui.updatePart();
-																								ui.partsArray(); //recalc rectangle
-																				}
-																				if (down){
-																								ui.parts[ui.currentPlayerPart].sprite.reset(ui.parts[ui.currentPlayerPart].sprite.x,ui.parts[ui.currentPlayerPart].sprite.y+16)	
-																												nextUIDelay=game.time.now+500;
-																				}
-
-																}else if(ui.buildMode=='delete'){
-
-																				if (left){
-
-																								ui.previousDeletePart();	
-																								nextUIDelay = game.time.now+500;
-
-																				}
-																				if (right){
-																								ui.nextDeletePart();	
-																								nextUIDelay = game.time.now+500;
-																				}
-																				if (up){
-																								ui.rowUpDeletePart();	
-																								nextUIDelay = game.time.now+500;
-																				}
-																				if (down){
-																								ui.rowDownDeletePart();	
-																								nextUIDelay=game.time.now+500;
-																				}
-																				if(alt){
-																								ui.setMode('select');
-																								ui.parts[ui.currentPlayerPart].sprite.alpha=1;
-																								ui.parts[ui.currentPlayerPart].sprite.blendMode=0;
-																								nextUIDelay = game.time.now+2000;
-																								ui.updatePart();
-																								ui.endPartsUI();
-																								ui.partsArray();
-																				}
-																				if(fire){
-																								nextUIDelay = game.time.now+2000;
-																								var t = ui.currentPlayerPart;
-																								ui.previousDeletePart();
-																								playerStats.inventory.push(ui.parts[t].index);
-																								ui.parts[t].sprite.kill();				
-																								ui.cullParts();
-																								ui.updatePart();
-																								ui.partsArray(); //recalc rectangle
-																								if(ui.parts.length==2){
+																								if (left){
+																												ui.parts[ui.currentPlayerPart].sprite.reset(ui.parts[ui.currentPlayerPart].sprite.x-16,ui.parts[ui.currentPlayerPart].sprite.y)	
+																																nextUIDelay = game.time.now+500;
+																								}
+																								if (right){
+																												ui.parts[ui.currentPlayerPart].sprite.reset(ui.parts[ui.currentPlayerPart].sprite.x+16,ui.parts[ui.currentPlayerPart].sprite.y)	
+																																nextUIDelay = game.time.now+500;
+																								}
+																								if (up){
+																												ui.parts[ui.currentPlayerPart].sprite.reset(ui.parts[ui.currentPlayerPart].sprite.x,ui.parts[ui.currentPlayerPart].sprite.y-16)	
+																																nextUIDelay = game.time.now+500;
+																								}
+																								if(fire){
 																												ui.setMode('select');
 																												ui.parts[ui.currentPlayerPart].sprite.alpha=1;
 																												ui.parts[ui.currentPlayerPart].sprite.blendMode=0;
@@ -4839,988 +4851,1002 @@ function update () {
 																												ui.updatePart();
 																												ui.partsArray();
 																								}
+																								if(alt && ui.currentPlayerPart > 0){
+																												ui.setMode('select');
+																												nextUIDelay = game.time.now+2000;
+																												playerStats.inventory.push(ui.parts[ui.currentPlayerPart].index);
+																												ui.parts[ui.currentPlayerPart].sprite.kill();				
+																												ui.cullParts();
+																												ui.currentPlayerPart = ui.parts.length-1;
+
+																												ui.updatePart();
+																												ui.partsArray(); //recalc rectangle
+																								}
+																								if (down){
+																												ui.parts[ui.currentPlayerPart].sprite.reset(ui.parts[ui.currentPlayerPart].sprite.x,ui.parts[ui.currentPlayerPart].sprite.y+16)	
+																																nextUIDelay=game.time.now+500;
+																								}
+
+																				}else if(ui.buildMode=='delete'){
+
+																								if (left){
+
+																												ui.previousDeletePart();	
+																												nextUIDelay = game.time.now+500;
+
+																								}
+																								if (right){
+																												ui.nextDeletePart();	
+																												nextUIDelay = game.time.now+500;
+																								}
+																								if (up){
+																												ui.rowUpDeletePart();	
+																												nextUIDelay = game.time.now+500;
+																								}
+																								if (down){
+																												ui.rowDownDeletePart();	
+																												nextUIDelay=game.time.now+500;
+																								}
+																								if(alt){
+																												ui.setMode('select');
+																												ui.parts[ui.currentPlayerPart].sprite.alpha=1;
+																												ui.parts[ui.currentPlayerPart].sprite.blendMode=0;
+																												nextUIDelay = game.time.now+2000;
+																												ui.updatePart();
+																												ui.endPartsUI();
+																												ui.partsArray();
+																								}
+																								if(fire){
+																												nextUIDelay = game.time.now+2000;
+																												var t = ui.currentPlayerPart;
+																												ui.previousDeletePart();
+																												playerStats.inventory.push(ui.parts[t].index);
+																												ui.parts[t].sprite.kill();				
+																												ui.cullParts();
+																												ui.updatePart();
+																												ui.partsArray(); //recalc rectangle
+																												if(ui.parts.length==2){
+																																ui.setMode('select');
+																																ui.parts[ui.currentPlayerPart].sprite.alpha=1;
+																																ui.parts[ui.currentPlayerPart].sprite.blendMode=0;
+																																nextUIDelay = game.time.now+2000;
+																																ui.updatePart();
+																																ui.partsArray();
+																												}
+
+																								}
 
 																				}
-
+																}
+																if(left==0 && right==0 && up == 0 && down ==0 &&
+																								fire == 0 && alt == 0 &&
+																								!cursors.pgup.isDown && !cursors.pgdn.isDown && enter == 0
+																	){
+																				nextUIDelay = 0;
 																}
 												}
-												if(left==0 && right==0 && up == 0 && down ==0 &&
-																				fire == 0 && alt == 0 &&
-																				!cursors.pgup.isDown && !cursors.pgdn.isDown && enter == 0
-													){
-																nextUIDelay = 0;
-												}
-								}
-								if(gamemode=='paused'){
-												ui.graphics.clear();
-												ui.comms.fill="rgb(21," + Math.floor((1+Math.sin(game.time.now/1000))*100) + ",142)";
+												if(gamemode=='paused'){
+																ui.graphics.clear();
+																ui.comms.fill="rgb(21," + Math.floor((1+Math.sin(game.time.now/1000))*100) + ",142)";
 
-												ui.comms.setText('paused');
-												ui.comms.alpha=1;
-												ui.graphics.beginFill(0x000000, ui.comms.alpha/3);
-												ui.graphics.drawRect(ui.comms.x - 15, ui.comms.y - 6, ui.comms.width + 30, ui.comms.height + 12);
+																ui.comms.setText('paused');
+																ui.comms.alpha=1;
+																ui.graphics.beginFill(0x000000, ui.comms.alpha/3);
+																ui.graphics.drawRect(ui.comms.x - 15, ui.comms.y - 6, ui.comms.width + 30, ui.comms.height + 12);
 
-												frob1.x-=frob1.body.velocity.x*game.time.physicsElapsed;
-												frob1.y-=frob1.body.velocity.y*game.time.physicsElapsed;
-												frob1.angle-=frob1.body.angularVelocity*game.time.physicsElapsed;
+																frob1.x-=frob1.body.velocity.x*game.time.physicsElapsed;
+																frob1.y-=frob1.body.velocity.y*game.time.physicsElapsed;
+																frob1.angle-=frob1.body.angularVelocity*game.time.physicsElapsed;
 
-												player.sprite.x-=player.sprite.body.velocity.x*game.time.physicsElapsed;
-												player.sprite.y-=player.sprite.body.velocity.y*game.time.physicsElapsed;
-												for(var i=0;i<player.parts.length;i++){
-																player.parts[i].update();
-												}	
-												for(var i=0;i<enemies.length;i++){
-																enemies[i].sprite.body.x-=enemies[i].sprite.body.velocity.x*game.time.physicsElapsed;	
-																enemies[i].sprite.body.y-=enemies[i].sprite.body.velocity.y*game.time.physicsElapsed;	
-																enemies[i].sprite.angle-=enemies[i].sprite.body.angularVelocity*game.time.physicsElapsed;
-																if(enemies[i].alive && enemies[i].parts.length){
-																				for(var j=0;j<enemies[i].parts.length;j++){
-																								enemies[i].parts[j].update();
+																player.sprite.x-=player.sprite.body.velocity.x*game.time.physicsElapsed;
+																player.sprite.y-=player.sprite.body.velocity.y*game.time.physicsElapsed;
+																for(var i=0;i<player.parts.length;i++){
+																				player.parts[i].update();
+																}	
+																for(var i=0;i<enemies.length;i++){
+																				enemies[i].sprite.body.x-=enemies[i].sprite.body.velocity.x*game.time.physicsElapsed;	
+																				enemies[i].sprite.body.y-=enemies[i].sprite.body.velocity.y*game.time.physicsElapsed;	
+																				enemies[i].sprite.angle-=enemies[i].sprite.body.angularVelocity*game.time.physicsElapsed;
+																				if(enemies[i].alive && enemies[i].parts.length){
+																								for(var j=0;j<enemies[i].parts.length;j++){
+																												enemies[i].parts[j].update();
+																								}
 																				}
 																}
-												}
-												revertGroup(loots);
-												revertGroup(debris);
-												revertGroup(enemyBullets);
-												revertGroup(bullets);
-												revertGroup(explosions);
-												if(enter && game.time.now >= nextUIDelay){
+																revertGroup(loots);
+																revertGroup(debris);
+																revertGroup(enemyBullets);
+																revertGroup(bullets);
+																revertGroup(explosions);
+																if(enter && game.time.now >= nextUIDelay){
 
-																gamemode='war';
-																nextUIDelay=game.time.now+2000;
-																ui.comms.setText('');
-																ui.comms.alpha=0;
+																				gamemode='war';
+																				nextUIDelay=game.time.now+2000;
+																				ui.comms.setText('');
+																				ui.comms.alpha=0;
 
-																var tweens = game.tweens.getAll()	
-																				for(var i=0;i<tweens.length;i++){
-																								tweens[i].resume();
-																				}
-												}
-
-												if(left==0 && right==0 && up == 0 && down ==0 &&
-																				fire == 0 && alt == 0 &&
-																				!cursors.pgup.isDown && !cursors.pgdn.isDown && enter == 0
-													){
-																nextUIDelay = 0;
-												}
-								}
-
-								if(gamemode=='war' ){
-
-												handleMission();
-
-												checkForNewMusic();
-
-												if(nextSpawn<game.time.now||nextSpawn==0){
-																if(!player.alive){
-																				player.initPlayerShip(randomShip(basicGear,3));
-																				if(cheatmode){player.initPlayerShip(randomShip(allLootableItems(),parseInt(randomRange(3,8))))}
-																				if(contextTutorialDeath){
-																								ui.texts.push(contextTutorialDeath);
-																								contextTutorialDeath='';
-																				}
-																				winMission(); 
-																				fadeIn();
-																				ui.partsUI(player.ship);
-																				//temporarily disable
-																				ui.endPartsUI();
-																				nextUIDelay=game.time.now+1000;
+																				var tweens = game.tweens.getAll()	
+																								for(var i=0;i<tweens.length;i++){
+																												tweens[i].resume();
+																								}
 																}
-																for(var c = 0; c < enemies.length ; c++) {
-																				if (enemies[c].alive==false && enemies[c].respawn && game.time.now > enemies[c].died){
-																								enemies[c].initEnemyShip();
-																								break;
+
+																if(left==0 && right==0 && up == 0 && down ==0 &&
+																								fire == 0 && alt == 0 &&
+																								!cursors.pgup.isDown && !cursors.pgdn.isDown && enter == 0
+																	){
+																				nextUIDelay = 0;
+																}
+												}
+
+												if(gamemode=='war' ){
+
+																handleMission();
+
+																checkForNewMusic();
+
+																if(nextSpawn<game.time.now||nextSpawn==0){
+																				if(!player.alive){
+																								player.initPlayerShip(randomShip(basicGear,3));
+																								if(cheatmode){player.initPlayerShip(randomShip(allLootableItems(),parseInt(randomRange(3,8))))}
+																								if(contextTutorialDeath){
+																												ui.texts.push(contextTutorialDeath);
+																												contextTutorialDeath='';
+																								}
+																								winMission(); 
+																								fadeIn();
+																								ui.partsUI(player.ship);
+																								//temporarily disable
+																								ui.endPartsUI();
+																								nextUIDelay=game.time.now+1000;
+																				}
+																				for(var c = 0; c < enemies.length ; c++) {
+																								if (enemies[c].alive==false && enemies[c].respawn && game.time.now > enemies[c].died){
+																												enemies[c].initEnemyShip();
+																												break;
+																								};
+																				}
+																				nextSpawn=game.time.now+randomRange(100,200);
+																}	
+
+
+																if(loots.getFirstAlive() != null) {
+
+																				for (var i = 0; i < player.parts.length; i++) {
+																								game.physics.arcade.overlap(loots, player.parts[i].sprite, playerGotLoot, null, this);
+																				}
+																				loots.forEachAlive(pullLootToPlayer, this);
+																}
+
+																if(enemyBullets.getFirstAlive() != null) {
+
+																				for (var i = 0; i < player.parts.length; i++) {
+																								game.physics.arcade.overlap(enemyBullets, player.parts[i].sprite, bulletHitPlayer, null, this);
+																				}
+																				enemyBullets.forEachAlive(sparkleBullets,this);
+																}
+																bullets.forEachAlive(sparkleBullets,this);
+
+																for (var i = 0; i < enemies.length; i++){
+																				if (enemies[i].alive){
+																								enemies[i].update();
+																								if(enemyBullets.getFirstAlive() != null) {
+
+																												game.physics.arcade.overlap(enemyBullets, enemies[i].sprite, bulletHitEnemy, null, this);
+																								}
+																								for (var j = 0; j < player.parts.length; j++) {
+																												game.physics.arcade.overlap(enemies[i].sprite, player.parts[j].sprite, enemyTouchPlayer, null, this);
+																								}
+																								for (var j = i; j < enemies.length; j++) {
+																												game.physics.arcade.overlap(enemies[i].sprite, enemies[j].sprite, enemyTouchEnemy, null, this);
+																								}	
+																								game.physics.arcade.overlap(bullets, enemies[i].sprite, bulletHitEnemy, null, this);
+																								for (var j = 0; j < enemies[i].parts.length; j++) {
+
+																												enemies[i].parts[j].update();
+
+																								}	
+
+																				}
+																}
+
+																bullets.forEachAlive(playerBulletTracking);
+																enemyBullets.forEachAlive(enemyBulletTracking);
+
+																if(player.alive){
+																				for (var i = 0; i < player.parts.length; i++){
+																								player.parts[i].update();
 																				};
 																}
-																nextSpawn=game.time.now+randomRange(100,200);
+																if(enter && game.time.now >= nextUIDelay && player.alive){
+																				gamemode='paused';
+																				nextUIDelay=game.time.now+2000;
+
+																				var tweens = game.tweens.getAll()	
+																								for(var i=0;i<tweens.length;i++){
+																												tweens[i].pause();
+																								}
+
+																}
+
+
+																if (left){
+																				player.left(left);
+																}
+																if (right){
+																				player.right(right)
+																}
+																if (up){
+																				player.up(up);
+																}
+																if(player.alive && alt){
+																				player.alt();
+																}
+																player.update();
+																if(alt==0){ player.cooldown114=0; } 
+																if (fire){
+																				player.fire();
+																}
+
 												}	
+												// scrolling
+												scroll(hazeWhite,-0.0015);
 
 
-												if(loots.getFirstAlive() != null) {
+												planet.scaleModifier=(player.sprite.x/planet.baseX)+(player.sprite.y/planet.baseY)+planet.scaleMission;
+												planet.scaleModifier/=100;
+												planet.scaleModifier+=0.6;
+												planet.scaleModifier=Math.pow(planet.scaleModifier,2);
+												planet.scaleModifier=Math.min(planet.scaleModifier,2.5);
+												planet.scale.setTo(planet.baseScale*planet.scaleModifier);
+												planet.speedModifier=.995-(Math.sqrt(Math.pow(10,planet.scaleModifier)*0.00006));
 
-																for (var i = 0; i < player.parts.length; i++) {
-																				game.physics.arcade.overlap(loots, player.parts[i].sprite, playerGotLoot, null, this);
-																}
-																loots.forEachAlive(pullLootToPlayer, this);
+												planet.reset(player.sprite.body.x * planet.speedModifier + planet.baseX, player.sprite.body.y * planet.speedModifier+planet.baseY);
+
+												planetdirt.blendMode=1;
+												planetdirt.scale.setTo(planet.scale.x/10,planet.scale.y/10);
+												planetdirt.x=player.sprite.body.x-resolutionX/2;
+												planetdirt.y=player.sprite.body.y-resolutionY/2;
+												planetdirt.width=resolutionX/planetdirt.scale.x;
+												planetdirt.height=resolutionY/planetdirt.scale.y;
+												planetdirt.tilePosition.x=(planet.x-planetdirt.x)/planetdirt.scale.x;
+												planetdirt.tilePosition.y=(planet.y-planetdirt.y)/planetdirt.scale.y;
+
+
+
+												planetfall.blendMode=2;
+												planetfall.scale.setTo(planet.scale.x/8,planet.scale.y/8);
+												planetfall.x=player.sprite.body.x-resolutionX/2;
+												planetfall.y=player.sprite.body.y-resolutionY/2;
+												planetfall.width=resolutionX/planetfall.scale.x;
+												planetfall.height=resolutionY/planetfall.scale.y;
+												planetfall.tilePosition.x=(planet.x-planetfall.x)/planetfall.scale.x;
+												planetfall.tilePosition.y=(planet.y-planetfall.y)/planetfall.scale.y;
+												planetlod.scale.setTo(planet.scale.x*-1,planet.scale.y*-1);
+												planetlod.reset(planet.x,planet.y);
+												planetfall.alpha=Math.min(0.77,(planet.scaleModifier-0.5));
+												planetfall.alpha=Math.max(0.4,planetfall.alpha);
+												planetlod.blendMode=0;
+												planet.alpha=Math.max(Math.min(1.0,(1.6 - planet.scaleModifier)*2.5),0);
+												planetlod.alpha=0.5;//Math.min(1,planet.scaleModifier+0.2);
+												planetdirt.alpha=Math.min(0.72,((planet.scaleModifier*3)-3.9));
+
+												planetlod.visible=false;
+												if(planetlod.alpha>0){
+																planetlod.visible=true;
+												}
+												planetfall.visible=false;
+												if(planetfall.alpha>0){
+																planetfall.visible=true;
 												}
 
-												if(enemyBullets.getFirstAlive() != null) {
-
-																for (var i = 0; i < player.parts.length; i++) {
-																				game.physics.arcade.overlap(enemyBullets, player.parts[i].sprite, bulletHitPlayer, null, this);
-																}
-																enemyBullets.forEachAlive(sparkleBullets,this);
+												planetdirt.visible=false;
+												if(planetdirt.alpha>0){
+																planetdirt.visible=true;
 												}
-												bullets.forEachAlive(sparkleBullets,this);
 
-												for (var i = 0; i < enemies.length; i++){
-																if (enemies[i].alive){
-																				enemies[i].update();
-																				if(enemyBullets.getFirstAlive() != null) {
 
-																								game.physics.arcade.overlap(enemyBullets, enemies[i].sprite, bulletHitEnemy, null, this);
+												planet.visible=true;
+												if(planet.alpha<=0){
+																planet.visible=false;
+												}
+
+												planetfall.visible=false;
+												if(planetfall.alpha>0){
+																planetfall.visible=true;
+												}
+												scroll(hazeRed,-0.26);
+												scroll(hazePurple,-0.9);
+												//hazePurple.bringToTop();
+												planet.hazeModifier=0;
+												planet.hazeModifier=Math.max(0,(2*planet.scaleModifier)-4);
+												planet.hazeModifier=Math.min(planet.hazeModifier,1);
+												hazeRed.scale.setTo(hazeRed.baseScale+planet.hazeModifier,hazeRed.baseScale+planet.hazeModifier);
+												hazeRed.width=resolutionX/hazeRed.scale.x;
+												hazeRed.height=resolutionY/hazeRed.scale.y;
+												hazePurple.scale.setTo(hazePurple.baseScale+planet.hazeModifier,hazePurple.baseScale+planet.hazeModifier);
+												hazePurple.width=resolutionX/hazePurple.scale.x;
+												hazePurple.height=resolutionY/hazePurple.scale.y;
+												hazeRed.speed=playerStats.mission.hazeRedSpeed+playerStats.mission.hazeRedSpeed*planet.hazeModifier*2;
+												hazeRed.alpha=playerStats.mission.hazeRed-planet.hazeModifier;
+												hazeWhite.alpha=playerStats.mission.hazeWhite*(1-planet.hazeModifier);
+												hazePurple.alpha=playerStats.mission.hazePurple*(1-(planet.hazeModifier*0.3));
+												hazePurple.speed=playerStats.mission.hazePurple+playerStats.mission.hazePurple*planet.hazeModifier*2;
+												hazeWhite.visible=false;
+												if(hazeWhite.alpha>0){
+																hazeWhite.visible=true;
+												}
+												hazePurple.visible=false;
+												if(hazePurple.alpha>0){
+																hazePurple.visible=true;
+												}
+												hazeRed.visible=false;
+												if(hazeRed.alpha>0){
+																hazeRed.visible=true;
+												}
+
+
+
+												if(gamemode!='paused'){
+																ui.update();
+
+
+												}
+												explosions.parent.bringToTop(explosions);
+
+												for(var i=0;i<explosions.length;i++){
+																if(typeof(explosions[i])!='undefined'){
+																				if(typeof(explosions[i].scale)!='undefined'){
 																				}
-																				for (var j = 0; j < player.parts.length; j++) {
-																								game.physics.arcade.overlap(enemies[i].sprite, player.parts[j].sprite, enemyTouchPlayer, null, this);
+																}
+												}
+								}
+				}
+				function decayCurrentBrightness(){
+								if(currentBrightness>1){
+												currentBrightness/=1.2;
+								}
+								if(currentBrightness<1){
+												currentBrightness=1;
+								}
+				}
+				function warmBoom(explosionsGroup, x, y){
+
+								if(onscreen(x,y)){
+												var r = Math.random();
+												for(var i=0; i < 15; i++){
+																smoke(explosionsGroup,x + randomRange(-40,40),y+randomRange(-40,40));
+												}
+												for(var i=0; i < 10 + (r * 9) ; i ++) { 
+																if(forceDead(explosions)){
+																				var explosion = explosionsGroup.getFirstDead();
+																				explosion.animations.play(bulletTypeName(Math.random()>0.7 ? 1 : 2));
+																				explosion.reset(x+randomRange(-80,80),y+randomRange(-80,80));
+																				explosion.rotation = Math.random()*Math.PI*2;
+																				explosion.body.angularVelocity=randomRange(400,600)*randomSign();
+																				explosion.fireVelocity=randomRange(10,390);
+																				explosion.lifespan=randomRange(1000,5000);
+																				r=randomRange(1,2);
+																				explosion.scale.setTo(r,r);
+																				explosion.alpha=0.9;
+																				game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
+																				explosion.blendMode=1;
+																				boomTween(explosion);
+																}
+												}
+								}
+				}
+
+				function hugeBoom(explosionsGroup, x, y){
+
+								if(onscreen(x,y)){
+												var r = Math.random();
+
+												for(var i=0; i < 10 + (r * 9) ; i ++) { 
+																if(forceDead(explosions)){
+																				var explosion = explosionsGroup.getFirstDead();
+
+																				killTweensFromExplosion(explosion);;
+																				explosion.animations.play(bulletTypeName(Math.random()>0.7 ? 1 : 2));
+																				explosion.reset(x+randomRange(-80,80),y+randomRange(-80,80));
+																				explosion.rotation = Math.random()*Math.PI*2;
+																				explosion.angularVelocity=randomRange(-3,3);
+																				explosion.fireVelocity=randomRange(600,890);
+																				explosion.lifespan=2000;
+																				r=randomRange(4,8);
+																				explosion.scale.setTo(r,r);
+																				explosion.alpha=1;
+																				game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
+																				explosion.blendMode=1;
+																				boomTween(explosion);
+																}
+												}
+								}
+				}
+				function unstableWarpSmoke(explosionsGroup, x, y){
+
+								if(onscreen(x,y)){
+												var r = Math.random();
+												var rCoef = 1;
+												if(Math.random()<0.1){rCoef*=randomRange(0.1,5)};
+												for(var i=0; i < 1 + (r * 4) ; i ++) { 
+																if(forceDead(explosions)){
+																				var bs = Math.random()>0.5 ? 2 : 10;
+																				var explosion = explosionsGroup.getFirstDead();
+
+																				killTweensFromExplosion(explosion);;
+																				explosion.rotation = Math.random()*Math.PI;
+																				explosion.fireVelocity=randomRange(30,80);
+																				explosion.lifespan=randomRange(70,110);
+																				r=randomRange(0.2,0.24);
+																				r*=rCoef;
+																				if(bs==10){explosion.lifespan*=1.2;r*=1.5}
+																				explosion.body.angularVelocity=randomRange(-50,50);
+																				explosion.scale.setTo(r,r);
+																				explosion.alpha=randomRange(0.9,1.7);
+																				if (bs ==10){
+																								explosion.blendMode=Math.random()>0.5?0:2;
+																				}else{
+																								explosion.alpha*=randomRange(2,3);
+																								explosion.blendMode=1;
 																				}
-																				for (var j = i; j < enemies.length; j++) {
-																								game.physics.arcade.overlap(enemies[i].sprite, enemies[j].sprite, enemyTouchEnemy, null, this);
-																				}	
-																				game.physics.arcade.overlap(bullets, enemies[i].sprite, bulletHitEnemy, null, this);
-																				for (var j = 0; j < enemies[i].parts.length; j++) {
-
-																								enemies[i].parts[j].update();
-
-																				}	
-
-																}
-												}
-
-												bullets.forEachAlive(playerBulletTracking);
-												enemyBullets.forEachAlive(enemyBulletTracking);
-
-												if(player.alive){
-																for (var i = 0; i < player.parts.length; i++){
-																				player.parts[i].update();
-																};
-												}
-												if(enter && game.time.now >= nextUIDelay && player.alive){
-																gamemode='paused';
-																nextUIDelay=game.time.now+2000;
-
-																var tweens = game.tweens.getAll()	
-																				for(var i=0;i<tweens.length;i++){
-																								tweens[i].pause();
-																				}
-
-												}
-
-
-												if (left){
-																player.left(left);
-												}
-												if (right){
-																player.right(right)
-												}
-												if (up){
-																player.up(up);
-												}
-												if(player.alive && alt){
-																player.alt();
-												}
-												player.update();
-												if(alt==0){ player.cooldown114=0; } 
-												if (fire){
-																player.fire();
-												}
-
-								}	
-								// scrolling
-								scroll(hazeWhite,-0.0015);
-
-
-								planet.scaleModifier=(player.sprite.x/planet.baseX)+(player.sprite.y/planet.baseY)+planet.scaleMission;
-								planet.scaleModifier/=100;
-								planet.scaleModifier+=0.6;
-								planet.scaleModifier=Math.pow(planet.scaleModifier,2);
-								planet.scaleModifier=Math.min(planet.scaleModifier,2.5);
-								planet.scale.setTo(planet.baseScale*planet.scaleModifier);
-								planet.speedModifier=.995-(Math.sqrt(Math.pow(10,planet.scaleModifier)*0.00006));
-
-								planet.reset(player.sprite.body.x * planet.speedModifier + planet.baseX, player.sprite.body.y * planet.speedModifier+planet.baseY);
-
-								planetdirt.blendMode=1;
-								planetdirt.scale.setTo(planet.scale.x/10,planet.scale.y/10);
-								planetdirt.x=player.sprite.body.x-resolutionX/2;
-								planetdirt.y=player.sprite.body.y-resolutionY/2;
-								planetdirt.width=resolutionX/planetdirt.scale.x;
-								planetdirt.height=resolutionY/planetdirt.scale.y;
-								planetdirt.tilePosition.x=(planet.x-planetdirt.x)/planetdirt.scale.x;
-								planetdirt.tilePosition.y=(planet.y-planetdirt.y)/planetdirt.scale.y;
-
-
-
-								planetfall.blendMode=2;
-								planetfall.scale.setTo(planet.scale.x/8,planet.scale.y/8);
-								planetfall.x=player.sprite.body.x-resolutionX/2;
-								planetfall.y=player.sprite.body.y-resolutionY/2;
-								planetfall.width=resolutionX/planetfall.scale.x;
-								planetfall.height=resolutionY/planetfall.scale.y;
-								planetfall.tilePosition.x=(planet.x-planetfall.x)/planetfall.scale.x;
-								planetfall.tilePosition.y=(planet.y-planetfall.y)/planetfall.scale.y;
-								planetlod.scale.setTo(planet.scale.x*-1,planet.scale.y*-1);
-								planetlod.reset(planet.x,planet.y);
-								planetfall.alpha=Math.min(0.77,(planet.scaleModifier-0.5));
-								planetfall.alpha=Math.max(0.4,planetfall.alpha);
-								planetlod.blendMode=0;
-								planet.alpha=Math.max(Math.min(1.0,(1.6 - planet.scaleModifier)*2.5),0);
-								planetlod.alpha=0.5;//Math.min(1,planet.scaleModifier+0.2);
-								planetdirt.alpha=Math.min(0.72,((planet.scaleModifier*3)-3.9));
-
-								planetlod.visible=false;
-								if(planetlod.alpha>0){
-												planetlod.visible=true;
-								}
-								planetfall.visible=false;
-								if(planetfall.alpha>0){
-												planetfall.visible=true;
-								}
-
-								planetdirt.visible=false;
-								if(planetdirt.alpha>0){
-												planetdirt.visible=true;
-								}
-
-
-								planet.visible=true;
-								if(planet.alpha<=0){
-												planet.visible=false;
-								}
-
-								planetfall.visible=false;
-								if(planetfall.alpha>0){
-												planetfall.visible=true;
-								}
-								scroll(hazeRed,-0.26);
-								scroll(hazePurple,-0.9);
-								//hazePurple.bringToTop();
-								planet.hazeModifier=0;
-								planet.hazeModifier=Math.max(0,(2*planet.scaleModifier)-4);
-								planet.hazeModifier=Math.min(planet.hazeModifier,1);
-								hazeRed.scale.setTo(hazeRed.baseScale+planet.hazeModifier,hazeRed.baseScale+planet.hazeModifier);
-								hazeRed.width=resolutionX/hazeRed.scale.x;
-								hazeRed.height=resolutionY/hazeRed.scale.y;
-								hazePurple.scale.setTo(hazePurple.baseScale+planet.hazeModifier,hazePurple.baseScale+planet.hazeModifier);
-								hazePurple.width=resolutionX/hazePurple.scale.x;
-								hazePurple.height=resolutionY/hazePurple.scale.y;
-								hazeRed.speed=playerStats.mission.hazeRedSpeed+playerStats.mission.hazeRedSpeed*planet.hazeModifier*2;
-								hazeRed.alpha=playerStats.mission.hazeRed-planet.hazeModifier;
-								hazeWhite.alpha=playerStats.mission.hazeWhite*(1-planet.hazeModifier);
-								hazePurple.alpha=playerStats.mission.hazePurple*(1-(planet.hazeModifier*0.3));
-								hazePurple.speed=playerStats.mission.hazePurple+playerStats.mission.hazePurple*planet.hazeModifier*2;
-								hazeWhite.visible=false;
-								if(hazeWhite.alpha>0){
-												hazeWhite.visible=true;
-								}
-								hazePurple.visible=false;
-								if(hazePurple.alpha>0){
-												hazePurple.visible=true;
-								}
-								hazeRed.visible=false;
-								if(hazeRed.alpha>0){
-												hazeRed.visible=true;
-								}
-
-
-
-								if(gamemode!='paused'){
-												ui.update();
-
-
-								}
-								explosions.parent.bringToTop(explosions);
-
-								for(var i=0;i<explosions.length;i++){
-												if(typeof(explosions[i])!='undefined'){
-																if(typeof(explosions[i].scale)!='undefined'){
-																}
-												}
-								}
-				}
-}
-function decayCurrentBrightness(){
-	if(currentBrightness>1){
-		currentBrightness/=1.2;
-	}
-	if(currentBrightness<1){
-		currentBrightness=1;
-	}
-}
-function warmBoom(explosionsGroup, x, y){
-
-				if(onscreen(x,y)){
-								var r = Math.random();
-								for(var i=0; i < 15; i++){
-												smoke(explosionsGroup,x + randomRange(-40,40),y+randomRange(-40,40));
-								}
-								for(var i=0; i < 10 + (r * 9) ; i ++) { 
-												if(forceDead(explosions)){
-																var explosion = explosionsGroup.getFirstDead();
-																explosion.animations.play(bulletTypeName(Math.random()>0.7 ? 1 : 2));
-																explosion.reset(x+randomRange(-80,80),y+randomRange(-80,80));
-																explosion.rotation = Math.random()*Math.PI*2;
-																explosion.body.angularVelocity=randomRange(400,600)*randomSign();
-																explosion.fireVelocity=randomRange(10,390);
-																explosion.lifespan=randomRange(1000,5000);
-																r=randomRange(1,2);
-																explosion.scale.setTo(r,r);
-																explosion.alpha=0.9;
-																game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
-																explosion.blendMode=1;
-																boomTween(explosion);
-												}
-								}
-				}
-}
-
-function hugeBoom(explosionsGroup, x, y){
-
-				if(onscreen(x,y)){
-								var r = Math.random();
-
-								for(var i=0; i < 10 + (r * 9) ; i ++) { 
-												if(forceDead(explosions)){
-																var explosion = explosionsGroup.getFirstDead();
-
-																killTweensFromExplosion(explosion);;
-																explosion.animations.play(bulletTypeName(Math.random()>0.7 ? 1 : 2));
-																explosion.reset(x+randomRange(-80,80),y+randomRange(-80,80));
-																explosion.rotation = Math.random()*Math.PI*2;
-																explosion.angularVelocity=randomRange(-3,3);
-																explosion.fireVelocity=randomRange(600,890);
-																explosion.lifespan=2000;
-																r=randomRange(4,8);
-																explosion.scale.setTo(r,r);
-																explosion.alpha=1;
-																game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
-																explosion.blendMode=1;
-																boomTween(explosion);
-												}
-								}
-				}
-}
-function unstableWarpSmoke(explosionsGroup, x, y){
-
-				if(onscreen(x,y)){
-								var r = Math.random();
-								var rCoef = 1;
-								if(Math.random()<0.1){rCoef*=randomRange(0.1,5)};
-								for(var i=0; i < 1 + (r * 4) ; i ++) { 
-												if(forceDead(explosions)){
-																var bs = Math.random()>0.5 ? 2 : 10;
-																var explosion = explosionsGroup.getFirstDead();
-
-																killTweensFromExplosion(explosion);;
-																explosion.rotation = Math.random()*Math.PI;
-																explosion.fireVelocity=randomRange(30,80);
-																explosion.lifespan=randomRange(70,110);
-																r=randomRange(0.2,0.24);
-																r*=rCoef;
-																if(bs==10){explosion.lifespan*=1.2;r*=1.5}
-																explosion.body.angularVelocity=randomRange(-50,50);
-																explosion.scale.setTo(r,r);
-																explosion.alpha=randomRange(0.9,1.7);
-																if (bs ==10){
-																				explosion.blendMode=Math.random()>0.5?0:2;
-																}else{
-																				explosion.alpha*=randomRange(2,3);
-																				explosion.blendMode=1;
-																}
-																var q = randomRange(1,3);
-																explosion.lifespan*=3*q;
-																explosion.fireVelocity/=q;
-																explosion.alpha/=q;
-																explosion.body.angularVelocity=randomRange(40,80)*randomSign()*Math.sin(randomRange(0,0.5*Math.PI));
-																var scaleMod = (bs == 10 ? 7.4 : 6);
-																explosion.scale.tween=game.add.tween(explosion.scale).to({x:explosion.scale.x*scaleMod,y:explosion.scale.y*scaleMod},explosion.lifespan, Phaser.Easing.Sinusoidal.Out, true, 0, false);
-																explosion.tween=game.add.tween(explosion).to({alpha:0},explosion.lifespan, Phaser.Easing.Sinusoidal.Out, true, 0, false);
-																explosion.reset(x,y);
-																explosion.animations.play(bulletTypeName(bs));
-
-																game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
-												}
-								}
-				}
-}
-function unstableSmoke(explosionsGroup, x, y){
-
-				if(onscreen(x,y)){
-								var r = Math.random();
-								var rCoef = 1;
-								if(Math.random()<0.1){rCoef*=randomRange(0.1,5)};
-								for(var i=0; i < 1 + (r * 4) ; i ++) { 
-												if(forceDead(explosions)){
-																var bs = Math.random()>0.5 ? 2 : 10;
-																var explosion = explosionsGroup.getFirstDead();
-
-																killTweensFromExplosion(explosion);;
-																explosion.rotation = Math.random()*Math.PI;
-																explosion.fireVelocity=randomRange(30,80);
-																explosion.lifespan=randomRange(70,110);
-																r=randomRange(0.2,0.24);
-																r*=rCoef;
-																if(bs==10){explosion.lifespan*=1.2;r*=1.5}
-																explosion.body.angularVelocity=randomRange(-50,50);
-																explosion.scale.setTo(r,r);
-																explosion.alpha=randomRange(0.9,1.7);
-																if (bs ==10){
-																				explosion.blendMode=Math.random()>0.5?0:2;
-																}else{
-																				explosion.alpha*=randomRange(2,3);
-																				explosion.blendMode=1;
-																}
-																var q = randomRange(1,3);
-																explosion.lifespan*=3*q;
-																explosion.fireVelocity/=q;
-																explosion.alpha/=q;
-																explosion.body.angularVelocity=randomRange(40,80)*randomSign()*Math.sin(randomRange(0,0.5*Math.PI));
-																var scaleMod = (bs == 10 ? 7.4 : 6);
-																explosion.scale.tween=game.add.tween(explosion.scale).to({x:explosion.scale.x*scaleMod,y:explosion.scale.y*scaleMod},explosion.lifespan, Phaser.Easing.Sinusoidal.Out, true, 0, false);
-																explosion.tween=game.add.tween(explosion).to({alpha:0},explosion.lifespan, Phaser.Easing.Sinusoidal.Out, true, 0, false);
-																explosion.reset(x,y);
-																explosion.animations.play(bulletTypeName(bs));
-
-																game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
-												}
-								}
-				}
-}
-function twistSmoke(explosionsGroup, x, y){
-
-	
-								var leftx=x+Math.cos(game.time.now/100)*16;
-var lefty = y +Math.sin(game.time.now/100)*16;
-							var rightx = x +Math.cos((game.time.now/100)+Math.PI)*16;
-								var righty = y+Math.sin((game.time.now/100)+Math.PI)*16;
-tinySmoke(explosionsGroup, leftx, lefty);
-tinySmoke(explosionsGroup, rightx, righty);
-}
-function tinyPuff(explosionsGroup, x, y){
-
-				if(onscreen(x,y)){
-								var r = Math.random();
-
-								for(var i=0; i < 1 + (r * 2) ; i ++) { 
-												if(forceDead(explosions)){
-																var bs = 10;
-																var explosion = explosionsGroup.getFirstDead();
-
-																killTweensFromExplosion(explosion);;
-																explosion.rotation = Math.random()*Math.PI;
-																explosion.fireVelocity=randomRange(30,80);
-																explosion.lifespan=randomRange(70,110);
-																r=randomRange(0.2,0.28);
-																if(bs==10){explosion.lifespan*=1.8;r*=1.5}
-																explosion.body.angularVelocity=randomRange(-50,50);
-																explosion.scale.setTo(r,r);
-																explosion.alpha=randomRange(0.9,1.7);
-																if (bs ==10){
-																				explosion.blendMode=Math.random()>0.5?0:2;
-																}else{
-																				explosion.alpha*=randomRange(2,3);
-																				explosion.blendMode=1;
-																}
-																var q = randomRange(1,3);
-																explosion.lifespan*=3*q;
-																explosion.fireVelocity/=q;
-																explosion.alpha/=q;
-																explosion.body.angularVelocity=randomRange(40,80)*randomSign()*Math.sin(randomRange(0,0.5*Math.PI));
-																var scaleMod = (bs == 10 ? 7.4 : 6);
-																explosion.scale.tween=game.add.tween(explosion.scale).to({x:explosion.scale.x*scaleMod,y:explosion.scale.y*scaleMod},explosion.lifespan, Phaser.Easing.Sinusoidal.Out, true, 0, false);
-																explosion.tween=game.add.tween(explosion).to({alpha:0},explosion.lifespan, Phaser.Easing.Sinusoidal.Out, true, 0, false);
-																explosion.reset(x,y);
-																explosion.animations.play(bulletTypeName(bs));
-
-																game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
-												}
-								}
-				}
-}
-function tinySmoke(explosionsGroup, x, y){
-
-				if(onscreen(x,y)){
-								var r = Math.random();
-
-								for(var i=0; i < 1 + (r * 4) ; i ++) { 
-												if(forceDead(explosions)){
-																var bs = Math.random()>0.5 ? 2 : 10;
-																var explosion = explosionsGroup.getFirstDead();
-
-																killTweensFromExplosion(explosion);;
-																explosion.rotation = Math.random()*Math.PI;
-																explosion.fireVelocity=randomRange(30,80);
-																explosion.lifespan=randomRange(70,110);
-																r=randomRange(0.2,0.24);
-																if(bs==10){explosion.lifespan*=1.2;r*=1.5}
-																explosion.body.angularVelocity=randomRange(-50,50);
-																explosion.scale.setTo(r,r);
-																explosion.alpha=randomRange(0.9,1.7);
-																if (bs ==10){
-																				explosion.blendMode=Math.random()>0.5?0:2;
-																}else{
-																				explosion.alpha*=randomRange(2,3);
-																				explosion.blendMode=1;
-																}
-																var q = randomRange(1,3);
-																explosion.lifespan*=3*q;
-																explosion.fireVelocity/=q;
-																explosion.alpha/=q;
-																explosion.body.angularVelocity=randomRange(40,80)*randomSign()*Math.sin(randomRange(0,0.5*Math.PI));
-																var scaleMod = (bs == 10 ? 7.4 : 6);
-																explosion.scale.tween=game.add.tween(explosion.scale).to({x:explosion.scale.x*scaleMod,y:explosion.scale.y*scaleMod},explosion.lifespan, Phaser.Easing.Sinusoidal.Out, true, 0, false);
-																explosion.tween=game.add.tween(explosion).to({alpha:0},explosion.lifespan, Phaser.Easing.Sinusoidal.Out, true, 0, false);
-																explosion.reset(x,y);
-																explosion.animations.play(bulletTypeName(bs));
-
-																game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
-												}
-								}
-				}
-}
-function greenThrustSmoke(explosionsGroup, x, y){
-
-				if(onscreen(x,y)){
-								var r = Math.random();
-
-								for(var i=0; i < 1 + (r * 4) ; i ++) { 
-												if(forceDead(explosions)){
-																var bs = Math.random()>0.5 ? 9 : 10;
-																var explosion = explosionsGroup.getFirstDead();
-
-																killTweensFromExplosion(explosion);
-																explosion.rotation = Math.random()*Math.PI;
-																explosion.fireVelocity=randomRange(30,80);
-																explosion.lifespan=randomRange(200,250);
-																r=randomRange(0.2,0.24);
-																if(bs==10){explosion.lifespan*=1.2;r*=1.2}
-																explosion.body.angularVelocity=0;
-																explosion.scale.setTo(r,r);
-																explosion.alpha=randomRange(0.5,0.7);
-																explosion.alpha*=2;
-																if (bs ==10){
-																				explosion.blendMode=Math.random()>0.5?0:2;
-																}else{
-																				explosion.alpha*=randomRange(3.5,4.5);
-																				explosion.blendMode=1;
-																}
-																var q = randomRange(1,3);
-																explosion.lifespan*=q;
-																explosion.fireVelocity/=q;
-																explosion.alpha/=q;
-																explosion.body.angularVelocity=randomRange(40,80)*randomSign()*Math.sin(randomRange(0,0.5*Math.PI));
-																var scaleMod = (bs == 10 ? 7.4 : 6);
-																explosion.scale.tween=game.add.tween(explosion.scale).to({x:explosion.scale.x*scaleMod,y:explosion.scale.y*scaleMod},explosion.lifespan*1.6, Phaser.Easing.Quadratic.Out, true, 0, false);
-																explosion.tween=game.add.tween(explosion).to({alpha:0},explosion.lifespan*2, Phaser.Easing.Exponential.Out, true, 0, false);
-																explosion.reset(x,y);
-																explosion.animations.play(bulletTypeName(bs));
-
-																game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
-												}
-								}
-				}
-}
-function foulThrust(explosionsGroup, x, y){
-
-				if(onscreen(x,y)){
-								var r = Math.random();
-
-								for(var i=0; i < 1 + (r * 4) ; i ++) { 
-												if(forceDead(explosions)){
-																var bs = Math.random()>0.5 ? 7 : 9;
-																var explosion = explosionsGroup.getFirstDead();
-
-																killTweensFromExplosion(explosion);
-																explosion.rotation = Math.random()*Math.PI;
-																explosion.fireVelocity=randomRange(30,80);
-																explosion.lifespan=randomRange(200,250);
-																r=randomRange(0.2,0.24);
-																if(bs==bs){explosion.lifespan*=1.2;r*=1.2}
-																explosion.body.angularVelocity=0;
-																explosion.scale.setTo(r,r);
-																explosion.alpha=randomRange(0.5,0.7);
-																explosion.alpha*=4;
-																explosion.blendMode=Math.random()>0.5?0:1;
-																var q = randomRange(1,3);
-																explosion.lifespan*=q;
-																explosion.fireVelocity/=q;
-																explosion.alpha/=q;
-																explosion.body.angularVelocity=randomRange(40,80)*randomSign()*Math.sin(randomRange(0,0.5*Math.PI));
-																var scaleMod = (bs == 10 ? 7.4 : 6);
-																explosion.scale.tween=game.add.tween(explosion.scale).to({x:explosion.scale.x*scaleMod,y:explosion.scale.y*scaleMod},explosion.lifespan*1.6, Phaser.Easing.Quadratic.Out, true, 0, false);
-																explosion.tween=game.add.tween(explosion).to({alpha:0},explosion.lifespan*2, Phaser.Easing.Exponential.Out, true, 0, false);
-																explosion.reset(x,y);
-																explosion.animations.play(bulletTypeName(bs));
-
-																game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
-												}
-								}
-				}
-}
-function cleanSmoke(explosionsGroup, x, y){
-
-				if(onscreen(x,y)){
-								var r = Math.random();
-
-								for(var i=0; i < 1 + (r * 4) ; i ++) { 
-												if(forceDead(explosions)){
-																var bs = Math.random()>0.5 ? 0 : 10;
-																var explosion = explosionsGroup.getFirstDead();
-
-																killTweensFromExplosion(explosion);
-																explosion.rotation = Math.random()*Math.PI;
-																explosion.fireVelocity=randomRange(30,80);
-																explosion.lifespan=randomRange(200,250);
-																r=randomRange(0.2,0.24);
-																if(bs==10){explosion.lifespan*=1.2;r*=1.2}
-																explosion.body.angularVelocity=0;
-																explosion.scale.setTo(r,r);
-																explosion.alpha=randomRange(0.5,0.7);
-																explosion.alpha*=2;
-																if (bs ==10){
-																				explosion.blendMode=Math.random()>0.5?0:2;
-																}else{
-																				explosion.alpha*=randomRange(3.5,4.5);
-																				explosion.blendMode=1;
-																}
-																var q = randomRange(1,3);
-																explosion.lifespan*=q;
-																explosion.fireVelocity/=q;
-																explosion.alpha/=q;
-																explosion.body.angularVelocity=randomRange(40,80)*randomSign()*Math.sin(randomRange(0,0.5*Math.PI));
-																var scaleMod = (bs == 10 ? 7.4 : 6);
-																explosion.scale.tween=game.add.tween(explosion.scale).to({x:explosion.scale.x*scaleMod,y:explosion.scale.y*scaleMod},explosion.lifespan*1.6, Phaser.Easing.Quadratic.Out, true, 0, false);
-																explosion.tween=game.add.tween(explosion).to({alpha:0},explosion.lifespan*2, Phaser.Easing.Exponential.Out, true, 0, false);
-																explosion.reset(x,y);
-																explosion.animations.play(bulletTypeName(bs));
-
-																game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
-												}
-								}
-				}
-}
-function smoke(explosionsGroup, x, y){
-
-				if(onscreen(x,y)){
-								var r = Math.random();
-
-								for(var i=0; i < 1 + (r * 4) ; i ++) { 
-												if(forceDead(explosions)){
-																var explosion = explosionsGroup.getFirstDead();
-
-																killTweensFromExplosion(explosion);;
-																explosion.rotation = Math.random()*Math.PI;
-																explosion.fireVelocity=randomRange(30,80);
-																explosion.lifespan=randomRange(150,300);
-																r=randomRange(0.5,1.0);
-																explosion.body.angularVelocity=0;
-																explosion.scale.setTo(r,r);
-																explosion.blendMode=Math.random()>0.5?0:2;
-																explosion.alpha=randomRange(0.3,0.5);
-																explosion.alpha*=3;
-																var q = randomRange(1,4);
-																explosion.lifespan*=q;
-																explosion.fireVelocity/=q;
-																explosion.alpha/=q;
-																explosion.body.angularVelocity=randomRange(40,80)*randomSign()*Math.sin(randomRange(0,0.5*Math.PI));
-																explosion.scale.tween=game.add.tween(explosion.scale).to({x:explosion.scale.x*14,y:explosion.scale.y*14},explosion.lifespan*1.6, Phaser.Easing.Quadratic.Out, true, 0, false);
-																explosion.tween=game.add.tween(explosion).to({alpha:0},explosion.lifespan*2, Phaser.Easing.Exponential.Out, true, 0, false);
-																explosion.reset(x+randomRange(-20,20),y+randomRange(-20,20));
-																explosion.animations.play(bulletTypeName(10));
-
-																game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
-												}
-								}
-				}
-}
-function killTweensFromExplosion(explosion){
-				if(typeof(explosion.scale)!='undefined'){
-								if(typeof(explosion.scale.tween)!='undefined'){
-												game.tweens.remove(explosion.scale.tween);
-												explosion.scale.tween=undefined;
-								}
-				}
-				if(typeof(explosion.tween)!='undefined'){
-								game.tweens.remove(explosion.tween);
-								explosion.tween=undefined;
-				}
-}
-function asteroidBoom(explosionsGroup, x, y){
-
-				if(onscreen(x,y)){
-								var r = Math.random();
-
-								for(var i=0; i < 5 + (r * 6) ; i ++) { 
-												if(forceDead(explosions)){
-																var explosion = explosionsGroup.getFirstDead();
-																killTweensFromExplosion(explosion);
-																var rand2 = Math.random()>0.5 ? 1 : 10;
-																explosion.animations.play(bulletTypeName(rand2));
-																explosion.reset(x+randomRange(-20,20),y+randomRange(-20,20));
-																explosion.rotation = Math.random()*Math.PI;
-																explosion.fireVelocity=randomRange(30,80);
-																explosion.lifespan=randomRange(250,500);
-																r=randomRange(0.5,1.7);
-																explosion.body.angularVelocity=0;
-																explosion.scale.setTo(r,r);
-																explosion.blendMode=1;
-																explosion.blendMode=0;
-																explosion.alpha=randomRange(0.1,0.3);
-																if(rand2==10){ explosion.alpha*=2;
-																				var q = randomRange(1,8);
-																				explosion.lifespan*=Math.sqrt(rand2)*q/2;
+																				var q = randomRange(1,3);
+																				explosion.lifespan*=3*q;
 																				explosion.fireVelocity/=q;
 																				explosion.alpha/=q;
-																				explosion.body.angularVelocity=randomRange(100,160)*randomSign()*Math.sin(randomRange(0,0.5*Math.PI));
-																				explosion.scale.tween=game.add.tween(explosion.scale).to({x:explosion.scale.x*14,y:explosion.scale.y*14},explosion.lifespan*1, Phaser.Easing.Linear.Out, true, 0, false);
-																				explosion.tween=game.add.tween(explosion).to({alpha:0},explosion.lifespan*2, Phaser.Easing.Exponential.Out, true, 0, false);
+																				explosion.body.angularVelocity=randomRange(40,80)*randomSign()*Math.sin(randomRange(0,0.5*Math.PI));
+																				var scaleMod = (bs == 10 ? 7.4 : 6);
+																				explosion.scale.tween=game.add.tween(explosion.scale).to({x:explosion.scale.x*scaleMod,y:explosion.scale.y*scaleMod},explosion.lifespan, Phaser.Easing.Sinusoidal.Out, true, 0, false);
+																				explosion.tween=game.add.tween(explosion).to({alpha:0},explosion.lifespan, Phaser.Easing.Sinusoidal.Out, true, 0, false);
+																				explosion.reset(x,y);
+																				explosion.animations.play(bulletTypeName(bs));
 
-																}else{
-																				explosion.scale.setTo(explosion.scale.x*2,explosion.scale.y*2);
-																				explosion.body.angularVelocity=randomRange(30,60)*randomSign()*Math.sin(randomRange(0,0.5*Math.PI));
-																				explosion.scale.tween=game.add.tween(explosion.scale).to({x:explosion.scale.x*7,y:explosion.scale.y*7},explosion.lifespan, Phaser.Easing.Quadratic.Out, true, 0, false);
-																				explosion.tween=game.add.tween(explosion).to({alpha:0},explosion.lifespan*2, Phaser.Easing.Exponential.Out, true, 0, false);
+																				game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
 																}
-
-
-																game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
 												}
 								}
 				}
-}
-function bigBoom(explosionsGroup, x, y){
+				function unstableSmoke(explosionsGroup, x, y){
 
-				if(onscreen(x,y)){
-								var r = Math.random();
+								if(onscreen(x,y)){
+												var r = Math.random();
+												var rCoef = 1;
+												if(Math.random()<0.1){rCoef*=randomRange(0.1,5)};
+												for(var i=0; i < 1 + (r * 4) ; i ++) { 
+																if(forceDead(explosions)){
+																				var bs = Math.random()>0.5 ? 2 : 10;
+																				var explosion = explosionsGroup.getFirstDead();
 
-								for(var i=0; i < 5 + (r * 6) ; i ++) { 
-												if(forceDead(explosions)){
-																var explosion = explosionsGroup.getFirstDead();
-																killTweensFromExplosion(explosion);
-																var rand2 = Math.random()>0.7 ? 1 : 2;
-																explosion.animations.play(bulletTypeName(rand2));
-																explosion.rotation = Math.random()*Math.PI;
-																explosion.fireVelocity=randomRange(30,80) * (2-rand2);
-																explosion.lifespan=700 * (6 - 2*rand2);
-																r=randomRange(0.5,1.7);
-																explosion.body.angularVelocity=0;
-																explosion.scale.setTo(r,r);
-																explosion.alpha=1.3;
+																				killTweensFromExplosion(explosion);;
+																				explosion.rotation = Math.random()*Math.PI;
+																				explosion.fireVelocity=randomRange(30,80);
+																				explosion.lifespan=randomRange(70,110);
+																				r=randomRange(0.2,0.24);
+																				r*=rCoef;
+																				if(bs==10){explosion.lifespan*=1.2;r*=1.5}
+																				explosion.body.angularVelocity=randomRange(-50,50);
+																				explosion.scale.setTo(r,r);
+																				explosion.alpha=randomRange(0.9,1.7);
+																				if (bs ==10){
+																								explosion.blendMode=Math.random()>0.5?0:2;
+																				}else{
+																								explosion.alpha*=randomRange(2,3);
+																								explosion.blendMode=1;
+																				}
+																				var q = randomRange(1,3);
+																				explosion.lifespan*=3*q;
+																				explosion.fireVelocity/=q;
+																				explosion.alpha/=q;
+																				explosion.body.angularVelocity=randomRange(40,80)*randomSign()*Math.sin(randomRange(0,0.5*Math.PI));
+																				var scaleMod = (bs == 10 ? 7.4 : 6);
+																				explosion.scale.tween=game.add.tween(explosion.scale).to({x:explosion.scale.x*scaleMod,y:explosion.scale.y*scaleMod},explosion.lifespan, Phaser.Easing.Sinusoidal.Out, true, 0, false);
+																				explosion.tween=game.add.tween(explosion).to({alpha:0},explosion.lifespan, Phaser.Easing.Sinusoidal.Out, true, 0, false);
+																				explosion.reset(x,y);
+																				explosion.animations.play(bulletTypeName(bs));
 
-																explosion.blendMode=1;
-																if(rand2==1){
+																				game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
+																}
+												}
+								}
+				}
+				function twistSmoke(explosionsGroup, x, y){
+
+
+								var leftx=x+Math.cos(game.time.now/100)*16;
+								var lefty = y +Math.sin(game.time.now/100)*16;
+								var rightx = x +Math.cos((game.time.now/100)+Math.PI)*16;
+								var righty = y+Math.sin((game.time.now/100)+Math.PI)*16;
+								tinySmoke(explosionsGroup, leftx, lefty);
+								tinySmoke(explosionsGroup, rightx, righty);
+				}
+				function tinyPuff(explosionsGroup, x, y){
+
+								if(onscreen(x,y)){
+												var r = Math.random();
+
+												for(var i=0; i < 1 + (r * 2) ; i ++) { 
+																if(forceDead(explosions)){
+																				var bs = 10;
+																				var explosion = explosionsGroup.getFirstDead();
+
+																				killTweensFromExplosion(explosion);;
+																				explosion.rotation = Math.random()*Math.PI;
+																				explosion.fireVelocity=randomRange(30,80);
+																				explosion.lifespan=randomRange(70,110);
+																				r=randomRange(0.2,0.28);
+																				if(bs==10){explosion.lifespan*=1.8;r*=1.5}
+																				explosion.body.angularVelocity=randomRange(-50,50);
+																				explosion.scale.setTo(r,r);
+																				explosion.alpha=randomRange(0.9,1.7);
+																				if (bs ==10){
+																								explosion.blendMode=Math.random()>0.5?0:2;
+																				}else{
+																								explosion.alpha*=randomRange(2,3);
+																								explosion.blendMode=1;
+																				}
+																				var q = randomRange(1,3);
+																				explosion.lifespan*=3*q;
+																				explosion.fireVelocity/=q;
+																				explosion.alpha/=q;
+																				explosion.body.angularVelocity=randomRange(40,80)*randomSign()*Math.sin(randomRange(0,0.5*Math.PI));
+																				var scaleMod = (bs == 10 ? 7.4 : 6);
+																				explosion.scale.tween=game.add.tween(explosion.scale).to({x:explosion.scale.x*scaleMod,y:explosion.scale.y*scaleMod},explosion.lifespan, Phaser.Easing.Sinusoidal.Out, true, 0, false);
+																				explosion.tween=game.add.tween(explosion).to({alpha:0},explosion.lifespan, Phaser.Easing.Sinusoidal.Out, true, 0, false);
+																				explosion.reset(x,y);
+																				explosion.animations.play(bulletTypeName(bs));
+
+																				game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
+																}
+												}
+								}
+				}
+				function tinySmoke(explosionsGroup, x, y){
+
+								if(onscreen(x,y)){
+												var r = Math.random();
+
+												for(var i=0; i < 1 + (r * 4) ; i ++) { 
+																if(forceDead(explosions)){
+																				var bs = Math.random()>0.5 ? 2 : 10;
+																				var explosion = explosionsGroup.getFirstDead();
+
+																				killTweensFromExplosion(explosion);;
+																				explosion.rotation = Math.random()*Math.PI;
+																				explosion.fireVelocity=randomRange(30,80);
+																				explosion.lifespan=randomRange(70,110);
+																				r=randomRange(0.2,0.24);
+																				if(bs==10){explosion.lifespan*=1.2;r*=1.5}
+																				explosion.body.angularVelocity=randomRange(-50,50);
+																				explosion.scale.setTo(r,r);
+																				explosion.alpha=randomRange(0.9,1.7);
+																				if (bs ==10){
+																								explosion.blendMode=Math.random()>0.5?0:2;
+																				}else{
+																								explosion.alpha*=randomRange(2,3);
+																								explosion.blendMode=1;
+																				}
+																				var q = randomRange(1,3);
+																				explosion.lifespan*=3*q;
+																				explosion.fireVelocity/=q;
+																				explosion.alpha/=q;
+																				explosion.body.angularVelocity=randomRange(40,80)*randomSign()*Math.sin(randomRange(0,0.5*Math.PI));
+																				var scaleMod = (bs == 10 ? 7.4 : 6);
+																				explosion.scale.tween=game.add.tween(explosion.scale).to({x:explosion.scale.x*scaleMod,y:explosion.scale.y*scaleMod},explosion.lifespan, Phaser.Easing.Sinusoidal.Out, true, 0, false);
+																				explosion.tween=game.add.tween(explosion).to({alpha:0},explosion.lifespan, Phaser.Easing.Sinusoidal.Out, true, 0, false);
+																				explosion.reset(x,y);
+																				explosion.animations.play(bulletTypeName(bs));
+
+																				game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
+																}
+												}
+								}
+				}
+				function greenThrustSmoke(explosionsGroup, x, y){
+
+								if(onscreen(x,y)){
+												var r = Math.random();
+
+												for(var i=0; i < 1 + (r * 4) ; i ++) { 
+																if(forceDead(explosions)){
+																				var bs = Math.random()>0.5 ? 9 : 10;
+																				var explosion = explosionsGroup.getFirstDead();
+
+																				killTweensFromExplosion(explosion);
+																				explosion.rotation = Math.random()*Math.PI;
+																				explosion.fireVelocity=randomRange(30,80);
+																				explosion.lifespan=randomRange(200,250);
+																				r=randomRange(0.2,0.24);
+																				if(bs==10){explosion.lifespan*=1.2;r*=1.2}
+																				explosion.body.angularVelocity=0;
+																				explosion.scale.setTo(r,r);
+																				explosion.alpha=randomRange(0.5,0.7);
+																				explosion.alpha*=2;
+																				if (bs ==10){
+																								explosion.blendMode=Math.random()>0.5?0:2;
+																				}else{
+																								explosion.alpha*=randomRange(3.5,4.5);
+																								explosion.blendMode=1;
+																				}
+																				var q = randomRange(1,3);
+																				explosion.lifespan*=q;
+																				explosion.fireVelocity/=q;
+																				explosion.alpha/=q;
+																				explosion.body.angularVelocity=randomRange(40,80)*randomSign()*Math.sin(randomRange(0,0.5*Math.PI));
+																				var scaleMod = (bs == 10 ? 7.4 : 6);
+																				explosion.scale.tween=game.add.tween(explosion.scale).to({x:explosion.scale.x*scaleMod,y:explosion.scale.y*scaleMod},explosion.lifespan*1.6, Phaser.Easing.Quadratic.Out, true, 0, false);
+																				explosion.tween=game.add.tween(explosion).to({alpha:0},explosion.lifespan*2, Phaser.Easing.Exponential.Out, true, 0, false);
+																				explosion.reset(x,y);
+																				explosion.animations.play(bulletTypeName(bs));
+
+																				game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
+																}
+												}
+								}
+				}
+				function foulThrust(explosionsGroup, x, y){
+
+								if(onscreen(x,y)){
+												var r = Math.random();
+
+												for(var i=0; i < 1 + (r * 4) ; i ++) { 
+																if(forceDead(explosions)){
+																				var bs = Math.random()>0.5 ? 7 : 9;
+																				var explosion = explosionsGroup.getFirstDead();
+
+																				killTweensFromExplosion(explosion);
+																				explosion.rotation = Math.random()*Math.PI;
+																				explosion.fireVelocity=randomRange(30,80);
+																				explosion.lifespan=randomRange(200,250);
+																				r=randomRange(0.2,0.24);
+																				if(bs==bs){explosion.lifespan*=1.2;r*=1.2}
+																				explosion.body.angularVelocity=0;
+																				explosion.scale.setTo(r,r);
+																				explosion.alpha=randomRange(0.5,0.7);
+																				explosion.alpha*=4;
+																				explosion.blendMode=Math.random()>0.5?0:1;
+																				var q = randomRange(1,3);
+																				explosion.lifespan*=q;
+																				explosion.fireVelocity/=q;
+																				explosion.alpha/=q;
+																				explosion.body.angularVelocity=randomRange(40,80)*randomSign()*Math.sin(randomRange(0,0.5*Math.PI));
+																				var scaleMod = (bs == 10 ? 7.4 : 6);
+																				explosion.scale.tween=game.add.tween(explosion.scale).to({x:explosion.scale.x*scaleMod,y:explosion.scale.y*scaleMod},explosion.lifespan*1.6, Phaser.Easing.Quadratic.Out, true, 0, false);
+																				explosion.tween=game.add.tween(explosion).to({alpha:0},explosion.lifespan*2, Phaser.Easing.Exponential.Out, true, 0, false);
+																				explosion.reset(x,y);
+																				explosion.animations.play(bulletTypeName(bs));
+
+																				game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
+																}
+												}
+								}
+				}
+				function cleanSmoke(explosionsGroup, x, y){
+
+								if(onscreen(x,y)){
+												var r = Math.random();
+
+												for(var i=0; i < 1 + (r * 4) ; i ++) { 
+																if(forceDead(explosions)){
+																				var bs = Math.random()>0.5 ? 0 : 10;
+																				var explosion = explosionsGroup.getFirstDead();
+
+																				killTweensFromExplosion(explosion);
+																				explosion.rotation = Math.random()*Math.PI;
+																				explosion.fireVelocity=randomRange(30,80);
+																				explosion.lifespan=randomRange(200,250);
+																				r=randomRange(0.2,0.24);
+																				if(bs==10){explosion.lifespan*=1.2;r*=1.2}
+																				explosion.body.angularVelocity=0;
+																				explosion.scale.setTo(r,r);
+																				explosion.alpha=randomRange(0.5,0.7);
+																				explosion.alpha*=2;
+																				if (bs ==10){
+																								explosion.blendMode=Math.random()>0.5?0:2;
+																				}else{
+																								explosion.alpha*=randomRange(3.5,4.5);
+																								explosion.blendMode=1;
+																				}
+																				var q = randomRange(1,3);
+																				explosion.lifespan*=q;
+																				explosion.fireVelocity/=q;
+																				explosion.alpha/=q;
+																				explosion.body.angularVelocity=randomRange(40,80)*randomSign()*Math.sin(randomRange(0,0.5*Math.PI));
+																				var scaleMod = (bs == 10 ? 7.4 : 6);
+																				explosion.scale.tween=game.add.tween(explosion.scale).to({x:explosion.scale.x*scaleMod,y:explosion.scale.y*scaleMod},explosion.lifespan*1.6, Phaser.Easing.Quadratic.Out, true, 0, false);
+																				explosion.tween=game.add.tween(explosion).to({alpha:0},explosion.lifespan*2, Phaser.Easing.Exponential.Out, true, 0, false);
+																				explosion.reset(x,y);
+																				explosion.animations.play(bulletTypeName(bs));
+
+																				game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
+																}
+												}
+								}
+				}
+				function smoke(explosionsGroup, x, y){
+
+								if(onscreen(x,y)){
+												var r = Math.random();
+
+												for(var i=0; i < 1 + (r * 4) ; i ++) { 
+																if(forceDead(explosions)){
+																				var explosion = explosionsGroup.getFirstDead();
+
+																				killTweensFromExplosion(explosion);;
+																				explosion.rotation = Math.random()*Math.PI;
+																				explosion.fireVelocity=randomRange(30,80);
+																				explosion.lifespan=randomRange(150,300);
+																				r=randomRange(0.5,1.0);
+																				explosion.body.angularVelocity=0;
+																				explosion.scale.setTo(r,r);
+																				explosion.blendMode=Math.random()>0.5?0:2;
+																				explosion.alpha=randomRange(0.3,0.5);
+																				explosion.alpha*=3;
+																				var q = randomRange(1,4);
+																				explosion.lifespan*=q;
+																				explosion.fireVelocity/=q;
+																				explosion.alpha/=q;
+																				explosion.body.angularVelocity=randomRange(40,80)*randomSign()*Math.sin(randomRange(0,0.5*Math.PI));
+																				explosion.scale.tween=game.add.tween(explosion.scale).to({x:explosion.scale.x*14,y:explosion.scale.y*14},explosion.lifespan*1.6, Phaser.Easing.Quadratic.Out, true, 0, false);
+																				explosion.tween=game.add.tween(explosion).to({alpha:0},explosion.lifespan*2, Phaser.Easing.Exponential.Out, true, 0, false);
+																				explosion.reset(x+randomRange(-20,20),y+randomRange(-20,20));
+																				explosion.animations.play(bulletTypeName(10));
+
+																				game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
+																}
+												}
+								}
+				}
+				function killTweensFromExplosion(explosion){
+								if(typeof(explosion.scale)!='undefined'){
+												if(typeof(explosion.scale.tween)!='undefined'){
+																game.tweens.remove(explosion.scale.tween);
+																explosion.scale.tween=undefined;
+												}
+								}
+								if(typeof(explosion.tween)!='undefined'){
+												game.tweens.remove(explosion.tween);
+												explosion.tween=undefined;
+								}
+				}
+				function asteroidBoom(explosionsGroup, x, y){
+
+								if(onscreen(x,y)){
+												var r = Math.random();
+
+												for(var i=0; i < 5 + (r * 6) ; i ++) { 
+																if(forceDead(explosions)){
+																				var explosion = explosionsGroup.getFirstDead();
+																				killTweensFromExplosion(explosion);
+																				var rand2 = Math.random()>0.5 ? 1 : 10;
+																				explosion.animations.play(bulletTypeName(rand2));
+																				explosion.reset(x+randomRange(-20,20),y+randomRange(-20,20));
+																				explosion.rotation = Math.random()*Math.PI;
+																				explosion.fireVelocity=randomRange(30,80);
+																				explosion.lifespan=randomRange(250,500);
+																				r=randomRange(0.5,1.7);
+																				explosion.body.angularVelocity=0;
+																				explosion.scale.setTo(r,r);
+																				explosion.blendMode=1;
 																				explosion.blendMode=0;
-																				explosion.alpha=0.1;
-																				explosion.scale.setTo(explosion.scale.x*2,explosion.scale.y*2);
-																};
-																if(rand2==2){
+																				explosion.alpha=randomRange(0.1,0.3);
+																				if(rand2==10){ explosion.alpha*=2;
+																								var q = randomRange(1,8);
+																								explosion.lifespan*=Math.sqrt(rand2)*q/2;
+																								explosion.fireVelocity/=q;
+																								explosion.alpha/=q;
+																								explosion.body.angularVelocity=randomRange(100,160)*randomSign()*Math.sin(randomRange(0,0.5*Math.PI));
+																								explosion.scale.tween=game.add.tween(explosion.scale).to({x:explosion.scale.x*14,y:explosion.scale.y*14},explosion.lifespan*1, Phaser.Easing.Linear.Out, true, 0, false);
+																								explosion.tween=game.add.tween(explosion).to({alpha:0},explosion.lifespan*2, Phaser.Easing.Exponential.Out, true, 0, false);
 
-																				explosion.body.angularVelocity=randomRange(100,150)*randomSign()*Math.sin(randomRange(0,0.5*Math.PI));
+																				}else{
+																								explosion.scale.setTo(explosion.scale.x*2,explosion.scale.y*2);
+																								explosion.body.angularVelocity=randomRange(30,60)*randomSign()*Math.sin(randomRange(0,0.5*Math.PI));
+																								explosion.scale.tween=game.add.tween(explosion.scale).to({x:explosion.scale.x*7,y:explosion.scale.y*7},explosion.lifespan, Phaser.Easing.Quadratic.Out, true, 0, false);
+																								explosion.tween=game.add.tween(explosion).to({alpha:0},explosion.lifespan*2, Phaser.Easing.Exponential.Out, true, 0, false);
+																				}
+
+
+																				game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
 																}
-																explosion.scale.tween=game.add.tween(explosion.scale).to({x:explosion.scale.x*12,y:explosion.scale.y*12},explosion.lifespan*0.3, Phaser.Easing.Quadratic.Out, true, 0, false);
-																explosion.tween=game.add.tween(explosion).to({alpha:0},explosion.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
-
-																explosion.reset(x+randomRange(-20,20),y+randomRange(-20,20));
-
-																game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
 												}
 								}
 				}
-}
-function shieldEffect(explosionsGroup, bulletSprite, x, y, velx, vely,scale)
-{
-				scale=Math.sqrt(scale)*0.5;
-				var r = Math.random();
+				function bigBoom(explosionsGroup, x, y){
 
-				if(forceDead(explosionsGroup)){
-								var explosion = explosionsGroup.getFirstDead();
-								killTweensFromExplosion(explosion);
-								explosion.animations.play(bulletTypeName(0));
-								explosion.reset(x,y);
-								explosion.rotation=Math.random()*Math.PI;
-								explosion.angularVelocity=200;
-								explosion.fireVelocity=randomRange(-10,10);
-								explosion.lifespan=300;
-								explosion.scale.setTo(scale,scale);
-								explosion.alpha=0.8;
-								explosion.body.velocity.x=velx;
-								explosion.body.velocity.y=vely;
-								explosion.blendMode=1;
-								explosion.tween=game.add.tween(explosion).to({rotation:explosion.rotation+0.2},explosion.lifespan, Phaser.Easing.Linear.None, true, 0, false);
-								explosion.scale.tween=game.add.tween(explosion.scale).to({x:explosion.scale.x*8,y:explosion.scale.y*8},explosion.lifespan-100, Phaser.Easing.Exponential.Out, true, 0, false);
-								explosion.tween=game.add.tween(explosion).to({alpha:0},explosion.lifespan, Phaser.Easing.Linear.InOut, true, 0, false);
-				}
-				if(forceDead(explosionsGroup)){
-								var explosion = explosionsGroup.getFirstDead();
-								killTweensFromExplosion(explosion);
-								explosion.animations.play(bulletTypeName(bulletSprite || 0));
-								explosion.reset(x,y);
-								explosion.rotation=Math.random()*Math.PI;
-								explosion.angularVelocity=200;
-								explosion.fireVelocity=randomRange(-10,10);
-								explosion.lifespan=900;
-								r=randomRange(0.5*scale,scale);
-								explosion.scale.setTo(r,r);
-								explosion.alpha=1.7;
-								explosion.body.velocity.x=velx;
-								explosion.body.velocity.y=vely;
-								explosion.blendMode=1;
-								explosion.tween=game.add.tween(explosion).to({rotation:explosion.rotation+0.2},explosion.lifespan, Phaser.Easing.Linear.None, true, 0, false);
-								boomTween(explosion);
-				}
-}
-function sparkleBoom(explosionsGroup, minSprite, maxSprite, x, y){
+								if(onscreen(x,y)){
+												var r = Math.random();
 
-				if(onscreen(x,y)){
-								var r = Math.random();
+												for(var i=0; i < 5 + (r * 6) ; i ++) { 
+																if(forceDead(explosions)){
+																				var explosion = explosionsGroup.getFirstDead();
+																				killTweensFromExplosion(explosion);
+																				var rand2 = Math.random()>0.7 ? 1 : 2;
+																				explosion.animations.play(bulletTypeName(rand2));
+																				explosion.rotation = Math.random()*Math.PI;
+																				explosion.fireVelocity=randomRange(30,80) * (2-rand2);
+																				explosion.lifespan=700 * (6 - 2*rand2);
+																				r=randomRange(0.5,1.7);
+																				explosion.body.angularVelocity=0;
+																				explosion.scale.setTo(r,r);
+																				explosion.alpha=1.3;
 
-								for(var i=0; i < 8 + (r * 6) ; i ++) { 
-												if(forceDead(explosionsGroup)){
-																var explosion = explosionsGroup.getFirstDead();
-																killTweensFromExplosion(explosion);
-																explosion.loadTexture('sparkles', Math.floor(randomRange(minSprite,maxSprite)));
-																explosion.reset(x+randomRange(-8,8),y+randomRange(-8,8));
-																explosion.rotation = Math.random()*Math.PI;
-																explosion.angularVelocity=randomRange(500,1000);
-																explosion.fireVelocity=randomRange(-20,20);
-																explosion.lifespan=700;
-																r=randomRange(1.2,1.6);
-																explosion.scale.setTo(r,r);
-																explosion.alpha=1.5;
-																explosion.blendMode=1;
-																boomTween(explosion);
-																game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
+																				explosion.blendMode=1;
+																				if(rand2==1){
+																								explosion.blendMode=0;
+																								explosion.alpha=0.1;
+																								explosion.scale.setTo(explosion.scale.x*2,explosion.scale.y*2);
+																				};
+																				if(rand2==2){
+
+																								explosion.body.angularVelocity=randomRange(100,150)*randomSign()*Math.sin(randomRange(0,0.5*Math.PI));
+																				}
+																				explosion.scale.tween=game.add.tween(explosion.scale).to({x:explosion.scale.x*12,y:explosion.scale.y*12},explosion.lifespan*0.3, Phaser.Easing.Quadratic.Out, true, 0, false);
+																				explosion.tween=game.add.tween(explosion).to({alpha:0},explosion.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
+
+																				explosion.reset(x+randomRange(-20,20),y+randomRange(-20,20));
+
+																				game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
+																}
 												}
 								}
 				}
-}
-
-
-function boomTween(sprite){
-				sprite.scale.tween=game.add.tween(sprite.scale).to({x:sprite.scale.x*8,y:sprite.scale.y*8},sprite.lifespan-100, Phaser.Easing.Exponential.Out, true, 0, false);
-				sprite.tween=game.add.tween(sprite).to({alpha:0},sprite.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
-}
-function midBoom(explosionsGroup, bulletSprite, x, y){
-
-				if(onscreen(x,y)){
-
-								var r = Math.random();
-
-								for(var i=0; i < 3 + (r * 6) ; i ++) { 
-												if(forceDead(explosionsGroup)){
-																var explosion = explosionsGroup.getFirstDead();
-																killTweensFromExplosion(explosion);
-																explosion.animations.play(bulletTypeName( bulletSprite || 0));
-																explosion.reset(x+randomRange(-8,8),y+randomRange(-8,8));
-																explosion.rotation = Math.random()*Math.PI;
-																explosion.angularVelocity=randomRange(-5,5);
-																explosion.fireVelocity=randomRange(-10,10);
-																explosion.lifespan=800;
-																r=randomRange(1.2,1.7);
-																explosion.scale.setTo(r,r);
-																explosion.alpha=.7;
-																game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
-																explosion.blendMode=1;
-																boomTween(explosion);
-												}
-								}
-				}
-}
-function fireBoom(explosionsGroup, bulletSprite, x, y, rot){
-
-				if(onscreen(x,y)){
-
-								var r = Math.random();
-
-								for(var i=0; i < 3 + (r * 2) ; i ++) { 
-												if(forceDead(explosionsGroup)){
-																var explosion = explosionsGroup.getFirstDead();
-																killTweensFromExplosion(explosion);
-																explosion.scale.setTo(1.2,1.2);
-																explosion.animations.play(bulletTypeName( bulletSprite || 0));
-																explosion.reset(x,y);
-																explosion.rotation = rot + randomSign() * randomRange(0.3,1);
-																explosion.angularVelocity=randomRange(-5,5);
-																explosion.fireVelocity=randomRange(350,600);
-																explosion.lifespan=randomRange(350,600);
-																explosion.alpha=2;
-																game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
-																explosion.blendMode=1;
-																explosion.scale.tween=game.add.tween(explosion.scale).to({x:0.01,y:0.01},explosion.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
-
-																explosion.tween=game.add.tween(explosion).to({alpha:0},explosion.lifespan, Phaser.Easing.Quadratic.Out, true, 0, false);		}
-								}
-
-								for(var i=0; i < 3; i ++) { 
-												if(forceDead(explosionsGroup)){
-																var explosion = explosionsGroup.getFirstDead();
-																killTweensFromExplosion(explosion);
-																explosion.animations.play(bulletTypeName( bulletSprite || 0));
-																explosion.reset(x,y);
-																explosion.rotation = rot ;
-																explosion.angularVelocity=randomRange(-5,5);
-																explosion.fireVelocity=randomRange(200,230);
-																explosion.lifespan=randomRange(500,800);
-																explosion.scale.setTo(1,1);
-																explosion.alpha=1.5;
-																game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
-																explosion.blendMode=1;
-																explosion.scale.tween=game.add.tween(explosion.scale).to({x:1,y:1},explosion.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
-
-																explosion.tween=game.add.tween(explosion).to({alpha:0},explosion.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);		}
-								}
-				}
-}
-function simpleGlow(explosionsGroup, x, y, bullet){
-
-				if(onscreen(x,y)){
-
+				function shieldEffect(explosionsGroup, bulletSprite, x, y, velx, vely,scale)
+				{
+								scale=Math.sqrt(scale)*0.5;
 								var r = Math.random();
 
 								if(forceDead(explosionsGroup)){
 												var explosion = explosionsGroup.getFirstDead();
 												killTweensFromExplosion(explosion);
-												killTweensFromExplosion(explosion);
-												explosion.animations.play(bulletTypeName( bullet.bulletSprite));
-												var bulletOffsetX = bullet.width * 0.50 * Math.cos(bullet.rotation);
-												var bulletOffsetY = bullet.width * 0.50 * Math.sin(bullet.rotation);
-												explosion.reset(x + bulletOffsetX,y + bulletOffsetY);
-												explosion.rotation = bullet.rotation + randomRange(-0.5,0.5);//bullet.rotation+Math.PI;
-												if(Math.random()>0.5){explosion.rotation+=Math.PI};
-												explosion.lifespan=Math.min(150,bullet.lifespan);
-												r=randomRange(0.5,0.8);
-												explosion.body.velocity.x=bullet.body.velocity.x;
-												explosion.body.velocity.y=bullet.body.velocity.y;
-												explosion.scale.setTo(r*r*5.0*bullet.scale.y,r*r*5.0*bullet.scale.y);
-												explosion.alpha=bullet.alpha*0.7;
+												explosion.animations.play(bulletTypeName(0));
+												explosion.reset(x,y);
+												explosion.rotation=Math.random()*Math.PI;
+												explosion.angularVelocity=200;
+												explosion.fireVelocity=randomRange(-10,10);
+												explosion.lifespan=300;
+												explosion.scale.setTo(scale,scale);
+												explosion.alpha=0.8;
+												explosion.body.velocity.x=velx;
+												explosion.body.velocity.y=vely;
 												explosion.blendMode=1;
-												explosion.body.angularVelocity=randomRange(450,200)*randomSign()/r;
+												explosion.tween=game.add.tween(explosion).to({rotation:explosion.rotation+0.2},explosion.lifespan, Phaser.Easing.Linear.None, true, 0, false);
+												explosion.scale.tween=game.add.tween(explosion.scale).to({x:explosion.scale.x*8,y:explosion.scale.y*8},explosion.lifespan-100, Phaser.Easing.Exponential.Out, true, 0, false);
+												explosion.tween=game.add.tween(explosion).to({alpha:0},explosion.lifespan, Phaser.Easing.Linear.InOut, true, 0, false);
 								}
-
-				}
-}
-function glow(explosionsGroup, x, y, bullet){
-
-				if(onscreen(x,y)){
-
-								var r = Math.random();
-
 								if(forceDead(explosionsGroup)){
 												var explosion = explosionsGroup.getFirstDead();
 												killTweensFromExplosion(explosion);
-												explosion.animations.play(bulletTypeName( bullet.bulletSprite));
-												r = randomRange(-0.2,0.2);
-												var bulletOffsetX = bullet.body.velocity.x * game.time.physicsElapsed;
-												bulletOffsetX -= bullet.width * 0.40 * Math.cos(bullet.rotation + r);
-												var bulletOffsetY = bullet.body.velocity.y * game.time.physicsElapsed; 
-												bulletOffsetY -= bullet.width * 0.40 * Math.sin(bullet.rotation + r);
-												explosion.reset(x + bulletOffsetX,y + bulletOffsetY);
-												explosion.rotation = bullet.rotation + randomRange(-0.5,0.5);//bullet.rotation+Math.PI;
-												if(Math.random()>0.5){explosion.rotation+=Math.PI};
-												explosion.lifespan=Math.min(150,bullet.lifespan);
-												r=randomRange(0.5,0.8);
-												explosion.body.velocity.x=bullet.body.velocity.x;
-												explosion.body.velocity.y=bullet.body.velocity.y;
-												explosion.scale.setTo(r+r*1.4*bullet.scale.y,r*r*1.2*bullet.scale.y);
-												explosion.alpha=bullet.alpha;
-												explosion.blendMode=bullet.blendMode;
-												explosion.body.angularVelocity=randomRange(50,200)*randomSign()/r;
+												explosion.animations.play(bulletTypeName(bulletSprite || 0));
+												explosion.reset(x,y);
+												explosion.rotation=Math.random()*Math.PI;
+												explosion.angularVelocity=200;
+												explosion.fireVelocity=randomRange(-10,10);
+												explosion.lifespan=900;
+												r=randomRange(0.5*scale,scale);
+												explosion.scale.setTo(r,r);
+												explosion.alpha=1.7;
+												explosion.body.velocity.x=velx;
+												explosion.body.velocity.y=vely;
+												explosion.blendMode=1;
+												explosion.tween=game.add.tween(explosion).to({rotation:explosion.rotation+0.2},explosion.lifespan, Phaser.Easing.Linear.None, true, 0, false);
+												boomTween(explosion);
+								}
+				}
+				function sparkleBoom(explosionsGroup, minSprite, maxSprite, x, y){
+
+								if(onscreen(x,y)){
+												var r = Math.random();
+
+												for(var i=0; i < 8 + (r * 6) ; i ++) { 
+																if(forceDead(explosionsGroup)){
+																				var explosion = explosionsGroup.getFirstDead();
+																				killTweensFromExplosion(explosion);
+																				explosion.loadTexture('sparkles', Math.floor(randomRange(minSprite,maxSprite)));
+																				explosion.reset(x+randomRange(-8,8),y+randomRange(-8,8));
+																				explosion.rotation = Math.random()*Math.PI;
+																				explosion.angularVelocity=randomRange(500,1000);
+																				explosion.fireVelocity=randomRange(-20,20);
+																				explosion.lifespan=700;
+																				r=randomRange(1.2,1.6);
+																				explosion.scale.setTo(r,r);
+																				explosion.alpha=1.5;
+																				explosion.blendMode=1;
+																				boomTween(explosion);
+																				game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
+																}
+												}
+								}
+				}
+
+
+				function boomTween(sprite){
+								sprite.scale.tween=game.add.tween(sprite.scale).to({x:sprite.scale.x*8,y:sprite.scale.y*8},sprite.lifespan-100, Phaser.Easing.Exponential.Out, true, 0, false);
+								sprite.tween=game.add.tween(sprite).to({alpha:0},sprite.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
+				}
+				function midBoom(explosionsGroup, bulletSprite, x, y){
+
+								if(onscreen(x,y)){
+
+												var r = Math.random();
+
+												for(var i=0; i < 3 + (r * 6) ; i ++) { 
+																if(forceDead(explosionsGroup)){
+																				var explosion = explosionsGroup.getFirstDead();
+																				killTweensFromExplosion(explosion);
+																				explosion.animations.play(bulletTypeName( bulletSprite || 0));
+																				explosion.reset(x+randomRange(-8,8),y+randomRange(-8,8));
+																				explosion.rotation = Math.random()*Math.PI;
+																				explosion.angularVelocity=randomRange(-5,5);
+																				explosion.fireVelocity=randomRange(-10,10);
+																				explosion.lifespan=800;
+																				r=randomRange(1.2,1.7);
+																				explosion.scale.setTo(r,r);
+																				explosion.alpha=.7;
+																				game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
+																				explosion.blendMode=1;
+																				boomTween(explosion);
+																}
+												}
+								}
+				}
+				function fireBoom(explosionsGroup, bulletSprite, x, y, rot){
+
+								if(onscreen(x,y)){
+
+												var r = Math.random();
+
+												for(var i=0; i < 3 + (r * 2) ; i ++) { 
+																if(forceDead(explosionsGroup)){
+																				var explosion = explosionsGroup.getFirstDead();
+																				killTweensFromExplosion(explosion);
+																				explosion.scale.setTo(1.2,1.2);
+																				explosion.animations.play(bulletTypeName( bulletSprite || 0));
+																				explosion.reset(x,y);
+																				explosion.rotation = rot + randomSign() * randomRange(0.3,1);
+																				explosion.angularVelocity=randomRange(-5,5);
+																				explosion.fireVelocity=randomRange(350,600);
+																				explosion.lifespan=randomRange(350,600);
+																				explosion.alpha=2;
+																				game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
+																				explosion.blendMode=1;
+																				explosion.scale.tween=game.add.tween(explosion.scale).to({x:0.01,y:0.01},explosion.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
+
+																				explosion.tween=game.add.tween(explosion).to({alpha:0},explosion.lifespan, Phaser.Easing.Quadratic.Out, true, 0, false);		}
+												}
+
+												for(var i=0; i < 3; i ++) { 
+																if(forceDead(explosionsGroup)){
+																				var explosion = explosionsGroup.getFirstDead();
+																				killTweensFromExplosion(explosion);
+																				explosion.animations.play(bulletTypeName( bulletSprite || 0));
+																				explosion.reset(x,y);
+																				explosion.rotation = rot ;
+																				explosion.angularVelocity=randomRange(-5,5);
+																				explosion.fireVelocity=randomRange(200,230);
+																				explosion.lifespan=randomRange(500,800);
+																				explosion.scale.setTo(1,1);
+																				explosion.alpha=1.5;
+																				game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
+																				explosion.blendMode=1;
+																				explosion.scale.tween=game.add.tween(explosion.scale).to({x:1,y:1},explosion.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
+
+																				explosion.tween=game.add.tween(explosion).to({alpha:0},explosion.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);		}
+												}
+								}
+				}
+				function simpleGlow(explosionsGroup, x, y, bullet){
+
+								if(onscreen(x,y)){
+
+												var r = Math.random();
 
 												if(forceDead(explosionsGroup)){
-																explosion = explosionsGroup.getFirstDead();
+																var explosion = explosionsGroup.getFirstDead();
+																killTweensFromExplosion(explosion);
 																killTweensFromExplosion(explosion);
 																explosion.animations.play(bulletTypeName( bullet.bulletSprite));
-																bulletOffsetX += bullet.width * 0.50 * Math.cos(bullet.rotation);
-																bulletOffsetY += bullet.width * 0.50 * Math.sin(bullet.rotation);
+																var bulletOffsetX = bullet.width * 0.50 * Math.cos(bullet.rotation);
+																var bulletOffsetY = bullet.width * 0.50 * Math.sin(bullet.rotation);
 																explosion.reset(x + bulletOffsetX,y + bulletOffsetY);
 																explosion.rotation = bullet.rotation + randomRange(-0.5,0.5);//bullet.rotation+Math.PI;
 																if(Math.random()>0.5){explosion.rotation+=Math.PI};
@@ -5831,406 +5857,453 @@ function glow(explosionsGroup, x, y, bullet){
 																explosion.scale.setTo(r*r*5.0*bullet.scale.y,r*r*5.0*bullet.scale.y);
 																explosion.alpha=bullet.alpha*0.7;
 																explosion.blendMode=1;
-																explosion.body.angularVelocity=randomRange(50,200)*randomSign()/r;
+																explosion.body.angularVelocity=randomRange(450,200)*randomSign()/r;
 												}
 
 								}
 				}
-}
-function rocketTrail(explosionsGroup, x, y, bullet){
+				function glow(explosionsGroup, x, y, bullet){
 
-				if(onscreen(x,y)){
+								if(onscreen(x,y)){
 
-								tinySmoke(explosionsGroup,x,y);
-								var vel = randomRange(25,125)/1000;
-								console.log(bullet.body.velocity.x);
-								tinySmoke(explosionsGroup,x-(bullet.body.velocity.x*vel),y-(bullet.body.velocity.y*vel));
-								var r = Math.random();
+												var r = Math.random();
 
-								if(forceDead(explosionsGroup)){
-												var explosion = explosionsGroup.getFirstDead();
-												killTweensFromExplosion(explosion);
-												explosion.animations.play(bulletTypeName(bullet.bulletSprite));
-												var adjRotation = bullet.rotation + randomRange(-0.2,0.2);
-												var bulletOffsetX = bullet.width * 0.4 * Math.cos(adjRotation);
-												var bulletOffsetY = bullet.width * 0.4 * Math.sin(adjRotation);
-												explosion.reset(x - bulletOffsetX,y - bulletOffsetY);
-												explosion.rotation = Math.random()*Math.PI;
-												explosion.body.velocity.x=bullet.body.velocity.x*0.95;
-												explosion.body.velocity.y=bullet.body.velocity.y*0.95;
-												explosion.lifespan=Math.min(250,bullet.lifespan);
-												var r = randomRange(0.5,1.7);
-												r*=(bullet.scale.x+bullet.scale.y)/2;
-												explosion.scale.setTo(r,r);
-												explosion.alpha=randomRange(0.7,0.9);
-												explosion.body.angularVelocity=randomRange(800,1200)*randomSign();
-												explosion.blendMode=1;
-												for(var i=0;i<4;i++){
+												if(forceDead(explosionsGroup)){
+																var explosion = explosionsGroup.getFirstDead();
+																killTweensFromExplosion(explosion);
+																explosion.animations.play(bulletTypeName( bullet.bulletSprite));
+																r = randomRange(-0.2,0.2);
+																var bulletOffsetX = bullet.body.velocity.x * game.time.physicsElapsed;
+																bulletOffsetX -= bullet.width * 0.40 * Math.cos(bullet.rotation + r);
+																var bulletOffsetY = bullet.body.velocity.y * game.time.physicsElapsed; 
+																bulletOffsetY -= bullet.width * 0.40 * Math.sin(bullet.rotation + r);
+																explosion.reset(x + bulletOffsetX,y + bulletOffsetY);
+																explosion.rotation = bullet.rotation + randomRange(-0.5,0.5);//bullet.rotation+Math.PI;
+																if(Math.random()>0.5){explosion.rotation+=Math.PI};
+																explosion.lifespan=Math.min(150,bullet.lifespan);
+																r=randomRange(0.5,0.8);
+																explosion.body.velocity.x=bullet.body.velocity.x;
+																explosion.body.velocity.y=bullet.body.velocity.y;
+																explosion.scale.setTo(r+r*1.4*bullet.scale.y,r*r*1.2*bullet.scale.y);
+																explosion.alpha=bullet.alpha;
+																explosion.blendMode=bullet.blendMode;
+																explosion.body.angularVelocity=randomRange(50,200)*randomSign()/r;
+
 																if(forceDead(explosionsGroup)){
 																				explosion = explosionsGroup.getFirstDead();
 																				killTweensFromExplosion(explosion);
 																				explosion.animations.play(bulletTypeName( bullet.bulletSprite));
-																				bulletOffsetX = bullet.width * (0.30 + i) * Math.cos(bullet.rotation);
-																				bulletOffsetY = bullet.width * (0.30 + i) * Math.sin(bullet.rotation);
-																				explosion.reset(x-bulletOffsetX,y-bulletOffsetY);
+																				bulletOffsetX += bullet.width * 0.50 * Math.cos(bullet.rotation);
+																				bulletOffsetY += bullet.width * 0.50 * Math.sin(bullet.rotation);
+																				explosion.reset(x + bulletOffsetX,y + bulletOffsetY);
 																				explosion.rotation = bullet.rotation + randomRange(-0.5,0.5);//bullet.rotation+Math.PI;
 																				if(Math.random()>0.5){explosion.rotation+=Math.PI};
 																				explosion.lifespan=Math.min(150,bullet.lifespan);
-																				r=randomRange(0.6,0.8);
-																				explosion.body.velocity.x=bullet.body.velocity.x*Math.pow(randomRange(0.9,1.1),i);
-																				explosion.body.velocity.y=bullet.body.velocity.y*Math.pow(randomRange(0.9,1.1),i);
-																				explosion.scale.setTo(r*0.5*(4.0-i)*bullet.scale.y,0.5*r*r*(4.0-i)*bullet.scale.y);
-																				explosion.alpha=bullet.alpha*Math.pow(0.9,i);
+																				r=randomRange(0.5,0.8);
+																				explosion.body.velocity.x=bullet.body.velocity.x;
+																				explosion.body.velocity.y=bullet.body.velocity.y;
+																				explosion.scale.setTo(r*r*5.0*bullet.scale.y,r*r*5.0*bullet.scale.y);
+																				explosion.alpha=bullet.alpha*0.7;
+																				explosion.blendMode=1;
+																				explosion.body.angularVelocity=randomRange(50,200)*randomSign()/r;
+																}
+
+												}
+								}
+				}
+				function rocketTrail(explosionsGroup, x, y, bullet){
+
+								if(onscreen(x,y)){
+
+												tinySmoke(explosionsGroup,x,y);
+												var vel = randomRange(25,125)/1000;
+												tinySmoke(explosionsGroup,x-(bullet.body.velocity.x*vel),y-(bullet.body.velocity.y*vel));
+												var r = Math.random();
+
+												if(forceDead(explosionsGroup)){
+																var explosion = explosionsGroup.getFirstDead();
+																killTweensFromExplosion(explosion);
+																explosion.animations.play(bulletTypeName(bullet.bulletSprite));
+																var adjRotation = bullet.rotation + randomRange(-0.2,0.2);
+																var bulletOffsetX = bullet.width * 0.4 * Math.cos(adjRotation);
+																var bulletOffsetY = bullet.width * 0.4 * Math.sin(adjRotation);
+																explosion.reset(x - bulletOffsetX,y - bulletOffsetY);
+																explosion.rotation = Math.random()*Math.PI;
+																explosion.body.velocity.x=bullet.body.velocity.x*0.95;
+																explosion.body.velocity.y=bullet.body.velocity.y*0.95;
+																explosion.lifespan=Math.min(250,bullet.lifespan);
+																var r = randomRange(0.5,1.7);
+																r*=(bullet.scale.x+bullet.scale.y)/2;
+																explosion.scale.setTo(r,r);
+																explosion.alpha=randomRange(0.7,0.9);
+																explosion.body.angularVelocity=randomRange(800,1200)*randomSign();
+																explosion.blendMode=1;
+																for(var i=0;i<4;i++){
+																				if(forceDead(explosionsGroup)){
+																								explosion = explosionsGroup.getFirstDead();
+																								killTweensFromExplosion(explosion);
+																								explosion.animations.play(bulletTypeName( bullet.bulletSprite));
+																								bulletOffsetX = bullet.width * (0.30 + i) * Math.cos(bullet.rotation);
+																								bulletOffsetY = bullet.width * (0.30 + i) * Math.sin(bullet.rotation);
+																								explosion.reset(x-bulletOffsetX,y-bulletOffsetY);
+																								explosion.rotation = bullet.rotation + randomRange(-0.5,0.5);//bullet.rotation+Math.PI;
+																								if(Math.random()>0.5){explosion.rotation+=Math.PI};
+																								explosion.lifespan=Math.min(150,bullet.lifespan);
+																								r=randomRange(0.6,0.8);
+																								explosion.body.velocity.x=bullet.body.velocity.x*Math.pow(randomRange(0.9,1.1),i);
+																								explosion.body.velocity.y=bullet.body.velocity.y*Math.pow(randomRange(0.9,1.1),i);
+																								explosion.scale.setTo(r*0.5*(4.0-i)*bullet.scale.y,0.5*r*r*(4.0-i)*bullet.scale.y);
+																								explosion.alpha=bullet.alpha*Math.pow(0.9,i);
+																								explosion.blendMode=1;
+																								explosion.body.angularVelocity=randomRange(50,200)*randomSign()/r;
+																				}
+																}
+												}
+								}
+				}
+
+				function trail(explosionsGroup, x, y, bullet){
+
+								if(onscreen(x,y)){
+												var r = Math.random();
+
+												if(forceDead(explosionsGroup)){
+																var explosion = explosionsGroup.getFirstDead();
+																killTweensFromExplosion(explosion);
+																explosion.animations.play(bulletTypeName(bullet.bulletSprite));
+																var adjRotation = bullet.rotation + randomRange(-0.2,0.2);
+																var bulletOffsetX = bullet.width * 0.4 * Math.cos(adjRotation);
+																var bulletOffsetY = bullet.width * 0.4 * Math.sin(adjRotation);
+																explosion.reset(x - bulletOffsetX,y - bulletOffsetY);
+																explosion.rotation = Math.random()*Math.PI;
+																explosion.body.velocity.x=bullet.body.velocity.x*Math.random();
+																explosion.body.velocity.y=bullet.body.velocity.y*Math.random();
+																explosion.lifespan=Math.min(250,bullet.lifespan);
+																var r = randomRange(0.5,0.7);
+																r*=(bullet.scale.x+bullet.scale.y)/2;
+																explosion.scale.setTo(r,r);
+																explosion.alpha=randomRange(0.7,0.9);
+																explosion.body.angularVelocity=randomRange(800,1200)*randomSign();
+																explosion.blendMode=1;
+																if(forceDead(explosionsGroup)){
+																				explosion = explosionsGroup.getFirstDead();
+																				killTweensFromExplosion(explosion);
+																				explosion.animations.play(bulletTypeName( bullet.bulletSprite));
+																				bulletOffsetX += bullet.width * 0.50 * Math.cos(bullet.rotation);
+																				bulletOffsetY += bullet.width * 0.50 * Math.sin(bullet.rotation);
+																				explosion.reset(x + bulletOffsetX,y + bulletOffsetY);
+																				explosion.rotation = bullet.rotation + randomRange(-0.5,0.5);//bullet.rotation+Math.PI;
+																				if(Math.random()>0.5){explosion.rotation+=Math.PI};
+																				explosion.lifespan=Math.min(150,bullet.lifespan);
+																				r=randomRange(0.5,0.8);
+																				explosion.body.velocity.x=bullet.body.velocity.x;
+																				explosion.body.velocity.y=bullet.body.velocity.y;
+																				explosion.scale.setTo(r*r*5.0*bullet.scale.y,r*r*5.0*bullet.scale.y);
+																				explosion.alpha=bullet.alpha*0.7;
 																				explosion.blendMode=1;
 																				explosion.body.angularVelocity=randomRange(50,200)*randomSign()/r;
 																}
 												}
 								}
 				}
-}
 
-function trail(explosionsGroup, x, y, bullet){
+				function gasBoom(explosionsGroup, x, y, bullet){
 
-				if(onscreen(x,y)){
-								var r = Math.random();
+								if(onscreen(x,y)){
 
-								if(forceDead(explosionsGroup)){
-												var explosion = explosionsGroup.getFirstDead();
-												killTweensFromExplosion(explosion);
-												explosion.animations.play(bulletTypeName(bullet.bulletSprite));
-												var adjRotation = bullet.rotation + randomRange(-0.2,0.2);
-												var bulletOffsetX = bullet.width * 0.4 * Math.cos(adjRotation);
-												var bulletOffsetY = bullet.width * 0.4 * Math.sin(adjRotation);
-												explosion.reset(x - bulletOffsetX,y - bulletOffsetY);
-												explosion.rotation = Math.random()*Math.PI;
-												explosion.body.velocity.x=bullet.body.velocity.x*Math.random();
-												explosion.body.velocity.y=bullet.body.velocity.y*Math.random();
-												explosion.lifespan=Math.min(250,bullet.lifespan);
-												var r = randomRange(0.5,0.7);
-												r*=(bullet.scale.x+bullet.scale.y)/2;
-												explosion.scale.setTo(r,r);
-												explosion.alpha=randomRange(0.7,0.9);
-												explosion.body.angularVelocity=randomRange(800,1200)*randomSign();
-												explosion.blendMode=1;
-												if(forceDead(explosionsGroup)){
-																explosion = explosionsGroup.getFirstDead();
-																killTweensFromExplosion(explosion);
-																explosion.animations.play(bulletTypeName( bullet.bulletSprite));
-																bulletOffsetX += bullet.width * 0.50 * Math.cos(bullet.rotation);
-																bulletOffsetY += bullet.width * 0.50 * Math.sin(bullet.rotation);
-																explosion.reset(x + bulletOffsetX,y + bulletOffsetY);
-																explosion.rotation = bullet.rotation + randomRange(-0.5,0.5);//bullet.rotation+Math.PI;
-																if(Math.random()>0.5){explosion.rotation+=Math.PI};
-																explosion.lifespan=Math.min(150,bullet.lifespan);
-																r=randomRange(0.5,0.8);
-																explosion.body.velocity.x=bullet.body.velocity.x;
-																explosion.body.velocity.y=bullet.body.velocity.y;
-																explosion.scale.setTo(r*r*5.0*bullet.scale.y,r*r*5.0*bullet.scale.y);
-																explosion.alpha=bullet.alpha*0.7;
-																explosion.blendMode=1;
-																explosion.body.angularVelocity=randomRange(50,200)*randomSign()/r;
-												}
-								}
-				}
-}
+												var r = Math.random();
 
-function gasBoom(explosionsGroup, x, y, bullet){
-
-				if(onscreen(x,y)){
-
-								var r = Math.random();
-
-								for(var i=0; i < 4; i ++) { 
-												if(forceDead(explosionsGroup)){
-																var explosion = explosionsGroup.getFirstDead();
-																killTweensFromExplosion(explosion);
-																explosion.animations.play( Math.random(bulletTypeName()>0.5?7:9));
-																explosion.reset(x+randomRange(-8,8),y+randomRange(-8,8));
-																explosion.rotation = Math.random()*Math.PI*2;
-																explosion.fireVelocity=randomRange(-10,10);
-																explosion.lifespan=600;
-																r=randomRange(0.4,0.8);
-																explosion.scale.setTo(r,r);
-																explosion.alpha=1;
-																game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
-																explosion.blendMode=0;
-																explosion.scale.tween=game.add.tween(explosion.scale).to({x:explosion.scale.x*4,y:explosion.scale.y*4},explosion.lifespan-300, Phaser.Easing.Linear.Out, true, 0, false);
-																explosion.tween=game.add.tween(explosion).to({alpha:0},explosion.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
-																explosion.body.angularVelocity=randomRange(200,500)*randomSign();
-												}
-								}
-				}
-}
-
-function boom(explosionsGroup, bulletSprite, x, y, damage){
-
-				if(typeof(damage)=='undefined'){
-								damage = 1;
-				}
-				var damageScale = Math.sqrt(damage/2);
-				if(onscreen(x,y)){
-
-								var r = Math.random();
-								for(var i=0; i < 3 + (r * 2) ; i ++) { 
-												if(forceDead(explosionsGroup)){
-																var explosion = explosionsGroup.getFirstDead();
-																killTweensFromExplosion(explosion);
-																explosion.animations.play(bulletTypeName( bulletSprite || 0));
-																explosion.reset(x,y);
-																explosion.rotation = randomSign() * randomRange(0,Math.PI);
-																explosion.angularVelocity=randomRange(-5,5);
-																explosion.fireVelocity=randomRange(350,600);
-																explosion.lifespan=randomRange(350,600);
-																explosion.scale.setTo(damageScale*1.2,damageScale*1.2);
-																explosion.alpha=2;
-																game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
-																explosion.blendMode=1;
-																if(bulletSprite==10){
-																				explosion.blendMode = Math.random() > 0.7 ? 0 : 2;
-																				explosion.alpha=0.2 + explosion.blendMode * 0.5;
+												for(var i=0; i < 4; i ++) { 
+																if(forceDead(explosionsGroup)){
+																				var explosion = explosionsGroup.getFirstDead();
+																				killTweensFromExplosion(explosion);
+																				explosion.animations.play( Math.random(bulletTypeName()>0.5?7:9));
+																				explosion.reset(x+randomRange(-8,8),y+randomRange(-8,8));
+																				explosion.rotation = Math.random()*Math.PI*2;
+																				explosion.fireVelocity=randomRange(-10,10);
+																				explosion.lifespan=600;
+																				r=randomRange(0.4,0.8);
+																				explosion.scale.setTo(r,r);
+																				explosion.alpha=1;
+																				game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
+																				explosion.blendMode=0;
+																				explosion.scale.tween=game.add.tween(explosion.scale).to({x:explosion.scale.x*4,y:explosion.scale.y*4},explosion.lifespan-300, Phaser.Easing.Linear.Out, true, 0, false);
+																				explosion.tween=game.add.tween(explosion).to({alpha:0},explosion.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
+																				explosion.body.angularVelocity=randomRange(200,500)*randomSign();
 																}
-																explosion.scale.tween=game.add.tween(explosion.scale).to({x:0.1,y:0.1},explosion.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
-
-																explosion.tween=game.add.tween(explosion).to({alpha:0},explosion.lifespan, Phaser.Easing.Quadratic.Out, true, 0, false);		}
-								}
-
-
-								for(var i=0; i < 3; i ++) { 
-												if(forceDead(explosionsGroup)){
-																var explosion = explosionsGroup.getFirstDead();
-																killTweensFromExplosion(explosion);
-																explosion.animations.play(bulletTypeName( bulletSprite || 0));
-																explosion.reset(x+randomRange(-8,8),y+randomRange(-8,8));
-																explosion.rotation = Math.random()*Math.PI;
-																explosion.angularVelocity=randomRange(-5,5);
-																explosion.fireVelocity=randomRange(-10,10);
-																explosion.lifespan=600;
-																r=randomRange(0.6,1);
-																r*=damageScale;
-																explosion.lifespan+=200*damageScale;
-																explosion.scale.setTo(r,r);
-																explosion.alpha=1;
-																game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
-																explosion.blendMode=1;
-																boomTween(explosion);
 												}
 								}
 				}
-}
 
-function sparks(emitter, sprite){
-				if(onscreen(sprite.x,sprite.y)){
-								emitter.x=sprite.x+randomRange(-.7*sprite.body.width,sprite.body.width);
-								emitter.y=sprite.y+randomRange(-.7*sprite.body.width,sprite.body.width);;
-								emitter.minParticleSpeed.setTo(-200,-200);
-								emitter.maxParticleSpeed.setTo(200,200);
-								emitter.particleFriction = -500;
-								emitter.start(true,200,null, randomRange(1,14));
-								smoke(explosions, sprite.x, sprite.y);
-				}
-}
-function sparkExplosion(emitter, sprite){
-				if(onscreen(sprite.x,sprite.y)){
-								emitter.x=sprite.x;
-								emitter.y=sprite.y;
-								emitter.minParticleSpeed.setTo(-500,-500);
-								emitter.maxParticleSpeed.setTo(500,500);
-								emitter.particleFriction = -2000;
-								emitter.start(true,300,null, 50);
-				}
-}
-function spawnLoots(_count, x, y){
-				var lootCount = _count;
+				function boom(explosionsGroup, bulletSprite, x, y, damage){
 
-				for(var i = 0; i < lootCount; i++)
-				{
+								if(typeof(damage)=='undefined'){
+												damage = 1;
+								}
+								var damageScale = Math.sqrt(damage/2);
+								if(onscreen(x,y)){
+
+												var r = Math.random();
+												for(var i=0; i < 3 + (r * 2) ; i ++) { 
+																if(forceDead(explosionsGroup)){
+																				var explosion = explosionsGroup.getFirstDead();
+																				killTweensFromExplosion(explosion);
+																				explosion.animations.play(bulletTypeName( bulletSprite || 0));
+																				explosion.reset(x,y);
+																				explosion.rotation = randomSign() * randomRange(0,Math.PI);
+																				explosion.angularVelocity=randomRange(-5,5);
+																				explosion.fireVelocity=randomRange(350,600);
+																				explosion.lifespan=randomRange(350,600);
+																				explosion.scale.setTo(damageScale*1.2,damageScale*1.2);
+																				explosion.alpha=2;
+																				game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
+																				explosion.blendMode=1;
+																				if(bulletSprite==10){
+																								explosion.blendMode = Math.random() > 0.7 ? 0 : 2;
+																								explosion.alpha=0.2 + explosion.blendMode * 0.5;
+																				}
+																				explosion.scale.tween=game.add.tween(explosion.scale).to({x:0.1,y:0.1},explosion.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
+
+																				explosion.tween=game.add.tween(explosion).to({alpha:0},explosion.lifespan, Phaser.Easing.Quadratic.Out, true, 0, false);		}
+												}
+
+
+												for(var i=0; i < 3; i ++) { 
+																if(forceDead(explosionsGroup)){
+																				var explosion = explosionsGroup.getFirstDead();
+																				killTweensFromExplosion(explosion);
+																				explosion.animations.play(bulletTypeName( bulletSprite || 0));
+																				explosion.reset(x+randomRange(-8,8),y+randomRange(-8,8));
+																				explosion.rotation = Math.random()*Math.PI;
+																				explosion.angularVelocity=randomRange(-5,5);
+																				explosion.fireVelocity=randomRange(-10,10);
+																				explosion.lifespan=600;
+																				r=randomRange(0.6,1);
+																				r*=damageScale;
+																				explosion.lifespan+=200*damageScale;
+																				explosion.scale.setTo(r,r);
+																				explosion.alpha=1;
+																				game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
+																				explosion.blendMode=1;
+																				boomTween(explosion);
+																}
+												}
+								}
+				}
+
+				function sparks(emitter, sprite){
+								if(onscreen(sprite.x,sprite.y)){
+												emitter.x=sprite.x+randomRange(-.7*sprite.body.width,sprite.body.width);
+												emitter.y=sprite.y+randomRange(-.7*sprite.body.width,sprite.body.width);;
+												emitter.minParticleSpeed.setTo(-200,-200);
+												emitter.maxParticleSpeed.setTo(200,200);
+												emitter.particleFriction = -500;
+												emitter.start(true,200,null, randomRange(1,14));
+												smoke(explosions, sprite.x, sprite.y);
+								}
+				}
+				function sparkExplosion(emitter, sprite){
+								if(onscreen(sprite.x,sprite.y)){
+												emitter.x=sprite.x;
+												emitter.y=sprite.y;
+												emitter.minParticleSpeed.setTo(-500,-500);
+												emitter.maxParticleSpeed.setTo(500,500);
+												emitter.particleFriction = -2000;
+												emitter.start(true,300,null, 50);
+								}
+				}
+				function spawnLoots(_count, x, y){
+								var lootCount = _count;
+
+								for(var i = 0; i < lootCount; i++)
+								{
+												if(forceDead(loots)){
+																var loot = loots.getFirstDead();
+																if(typeof(loot.pulseTween)!='undefined'){
+																				loot.pulseTween.stop();
+																}
+																loot.loadTexture('parts', Math.floor(randomRange(0,4))+26);
+																loot.lifespan = 60000;
+																loot.reset(x + randomRange(-16,16), y+randomRange(-16,16));
+																loot.rotation = Math.random()*2*Math.PI;
+																game.add.tween(loot).to({rotation:Math.PI*30},loot.lifespan,Phaser.Easing.Exponential.Out, true, 0, false);
+																var scale = randomRange(0.8,1.1);
+																loot.scale.setTo(scale,scale);
+																loot.pullTime=0;
+																loot.alpha=2.5;
+
+																loot.pulseTween = game.add.tween(loot).to({alpha:1},randomRange(200,400),Phaser.Easing.Exponential.Out,true,0,Number.MAX_VALUE,true);
+																loot.acceleration=200;
+																loot.blendMode=0;
+																loot.lootType='ore';
+																loot.acceleration=0;
+																game.physics.arcade.velocityFromRotation(loot.rotation, randomRange(100,300), loot.body.velocity);
+																return loot;
+												}
+								}
+				}
+				//like spawnComponent but it's not loot. this is if we need to throw a part without killing the ship
+				function spawnDebris(component,x,y){ 
+								if(forceDead(debris)){
+												var part = debris.getFirstDead();
+												part.loadTexture('parts', component);
+												part.lifespan = 120000;
+												part.scale.setTo(1,1);
+												part.reset(x, y);
+												part.rotation=0;
+												part.body.angularVelocity=200;
+												game.add.tween(component).to({rotation:Math.PI*30},part.lifespan,Phaser.Easing.Exponential.Out, true, 0, false);
+												part.acceleration=200;
+												part.blendMode=0;
+												part.alpha=1;
+												part.component = component;
+												part.acceleration=0;
+												game.physics.arcade.velocityFromRotation(Math.random()*2*Math.PI, randomRange(50,player.sprite.body.maxVelocity.x*0.75), part.body.velocity);
+												return debris;
+								}
+				}
+				function spawnComponent(component,x,y){
 								if(forceDead(loots)){
 												var loot = loots.getFirstDead();
 												if(typeof(loot.pulseTween)!='undefined'){
 																loot.pulseTween.stop();
 												}
-												loot.loadTexture('parts', Math.floor(randomRange(0,4))+26);
-												loot.lifespan = 60000;
+												loot.loadTexture('parts', component);
+												loot.lifespan = 120000;
+												loot.scale.setTo(2,2);
 												loot.reset(x + randomRange(-16,16), y+randomRange(-16,16));
-												loot.rotation = Math.random()*2*Math.PI;
-												game.add.tween(loot).to({rotation:Math.PI*30},loot.lifespan,Phaser.Easing.Exponential.Out, true, 0, false);
-												var scale = randomRange(0.8,1.1);
-												loot.scale.setTo(scale,scale);
-												loot.pullTime=0;
-												loot.alpha=2.5;
-
-												loot.pulseTween = game.add.tween(loot).to({alpha:1},randomRange(200,400),Phaser.Easing.Exponential.Out,true,0,Number.MAX_VALUE,true);
+												loot.rotation=0;
+												game.add.tween(loot).to({rotation:Math.PI*10},loot.lifespan,Phaser.Easing.Exponential.Out, true, 0, false);
 												loot.acceleration=200;
 												loot.blendMode=0;
-												loot.lootType='ore';
+												loot.pullTime=0;
+												loot.alpha=2.5;
+												loot.pulseTween = game.add.tween(loot).to({alpha:1},250,Phaser.Easing.Circular.InOut,true,0,Number.MAX_VALUE,true);
+												loot.lootType='component';
+												loot.component = component;
 												loot.acceleration=0;
-												game.physics.arcade.velocityFromRotation(loot.rotation, randomRange(100,300), loot.body.velocity);
+												game.physics.arcade.velocityFromRotation(Math.random()*2*Math.PI, randomRange(50,player.sprite.body.maxVelocity.x*0.75), loot.body.velocity);
 												return loot;
 								}
 				}
-}
-//like spawnComponent but it's not loot. this is if we need to throw a part without killing the ship
-function spawnDebris(component,x,y){ 
-				if(forceDead(debris)){
-								var part = debris.getFirstDead();
-								part.loadTexture('parts', component);
-								part.lifespan = 120000;
-								part.scale.setTo(1,1);
-								part.reset(x, y);
-								part.rotation=0;
-								part.body.angularVelocity=200;
-								game.add.tween(component).to({rotation:Math.PI*30},part.lifespan,Phaser.Easing.Exponential.Out, true, 0, false);
-								part.acceleration=200;
-								part.blendMode=0;
-								part.alpha=1;
-								part.component = component;
-								part.acceleration=0;
-								game.physics.arcade.velocityFromRotation(Math.random()*2*Math.PI, randomRange(50,player.sprite.body.maxVelocity.x*0.75), part.body.velocity);
-								return debris;
-				}
-}
-function spawnComponent(component,x,y){
-				if(forceDead(loots)){
-								var loot = loots.getFirstDead();
-								if(typeof(loot.pulseTween)!='undefined'){
-												loot.pulseTween.stop();
+				function playerGotLoot (sprite, loot) {
+								if(loot.lootType=='ore'){
+												if(player.health>player.healthMax){
+																player.health=player.healthMax;
+												}
+												ui.addDamageNumber(sprite.x,sprite.y,-1);
+												player.health+=1;
+												player.energy+=player.oreEnergy;
+								}else if(loot.lootType=='component'){
+												//playerStats.inventory.push(loot.component);
+												shieldEffect(explosions, 4, sprite.x, sprite.y, sprite.body.velocity.x, sprite.body.velocity.y, player.ship.length);
+												addPlayerPartInFlight(loot.component);
+												ui.texts.push('got ' + components[loot.component].name + '\n' + components[loot.component].flavor);
 								}
-								loot.loadTexture('parts', component);
-								loot.lifespan = 120000;
-								loot.scale.setTo(2,2);
-								loot.reset(x + randomRange(-16,16), y+randomRange(-16,16));
-								loot.rotation=0;
-								game.add.tween(loot).to({rotation:Math.PI*10},loot.lifespan,Phaser.Easing.Exponential.Out, true, 0, false);
-								loot.acceleration=200;
-								loot.blendMode=0;
-								loot.pullTime=0;
-								loot.alpha=2.5;
-								loot.pulseTween = game.add.tween(loot).to({alpha:1},250,Phaser.Easing.Circular.InOut,true,0,Number.MAX_VALUE,true);
-								loot.lootType='component';
-								loot.component = component;
-								loot.acceleration=0;
-								game.physics.arcade.velocityFromRotation(Math.random()*2*Math.PI, randomRange(50,player.sprite.body.maxVelocity.x*0.75), loot.body.velocity);
-								return loot;
-				}
-}
-function playerGotLoot (sprite, loot) {
-				if(loot.lootType=='ore'){
-								if(player.health>player.healthMax){
-												player.health=player.healthMax;
-								}
-								ui.addDamageNumber(sprite.x,sprite.y,-1);
-								player.health+=1;
-								player.energy+=player.oreEnergy;
-				}else if(loot.lootType=='component'){
-								//playerStats.inventory.push(loot.component);
-								shieldEffect(explosions, 4, sprite.x, sprite.y, sprite.body.velocity.x, sprite.body.velocity.y, player.ship.length);
-								addPlayerPartInFlight(loot.component);
-								ui.texts.push('got ' + components[loot.component].name + '\n' + components[loot.component].flavor);
-				}
-				ui.sound_beep.play();
-				player.sprite.alpha=6;
+								ui.sound_beep.play();
+								player.sprite.alpha=6;
 
-				game.add.tween(player.sprite).to({alpha:1},700, Phaser.Easing.Circular.Out, true, 0, false);
-				sparkleBoom(sparkleExplosions,0,8,loot.x,loot.y);	
-				loot.kill();
-}
-function bulletHitPlayer (sprite, bullet) {
-
-				boom(explosions, bullet.bulletSprite, bullet.x, bullet.y, bullet.damage / damageCoef);
-				ui.sound_hit1.play();
-				for (var i = 0; i < bullet.bulletHitBehavior.length; i++) {
-								bullet.bulletHitBehavior[i](sprite, bullet);
+								game.add.tween(player.sprite).to({alpha:1},700, Phaser.Easing.Circular.Out, true, 0, false);
+								sparkleBoom(sparkleExplosions,0,8,loot.x,loot.y);	
+								loot.kill();
 				}
+				function bulletHitPlayer (sprite, bullet) {
 
-				var destroyed = player.damage(bullet.damage, bullet.owner, bullet.x, bullet.y);
-
-				if(destroyed){
-								ui.sound_randomBoom();
-				}
-				bullet.kill();
-}
-function enemyTouchEnemy (a, b) {
-				if(!onscreen(a.x,a.y)&&!onscreen(b.x,b.y)){
-return;
-}
-				var aAi = enemies[a.name].ai;
-				var bAi = enemies[b.name].ai;
-				if(aAi == bAi) {return;}
-				if(aAi == aiModes['asteroidInit'] || bAi == aiModes['asteroidInit']){
-								return;
-				}
-				var enemySprite1;
-				var enemySprite2;
-				if(aAi == aiModes['asteroid']){
-								enemySprite1 = a;
-								enemySprite2 = b;
-				}else if(bAi == aiModes['asteroid']){
-								enemySprite1 = b;
-								enemySprite2 = a;
-				}else{return;}
-				if(enemies[enemySprite1.name].ai==aiModes['asteroid'])
-				{
-
+								boom(explosions, bullet.bulletSprite, bullet.x, bullet.y, bullet.damage / damageCoef);
 								ui.sound_hit1.play();
-								var destroyed = enemies[enemySprite1.name].damage(9999);
-								if(destroyed){
-												ui.sound_hit1.play();
-												//ui.sound_randomBoom();
-								}
-								var angle=game.physics.arcade.angleBetween(enemySprite2,enemySprite1);
-								enemySprite1.body.velocity.x+=Math.cos(angle)*200;
-								enemySprite1.body.velocity.y+=Math.sin(angle)*200;
-								var e2 = enemies[enemySprite2.name];
-								if(e2.health>1){e2.damage(8*Math.sqrt(enemies[enemySprite1.name].ship.length),
-																enemySprite1,
-																enemySprite1.x, enemySprite1.y
-																) ? ui.sound_randomBoom():0};
-				}	
-}
-
-function enemyTouchPlayer (enemySprite, playerSprite) {
-				if(player.sawDamage && enemies[enemySprite.name].ai==aiModes['asteroid'])
-				{
-
-								ui.sound_hit1.play();
-								var destroyed = enemies[enemySprite.name].damage(player.sawDamage);
-								if(destroyed){
-												ui.sound_hit1.play();
-												//ui.sound_randomBoom();
-								}
-								var angle=game.physics.arcade.angleBetween(playerSprite,enemySprite);
-								enemySprite.body.velocity.x+=Math.cos(angle)*200;
-								enemySprite.body.velocity.y+=Math.sin(angle)*200;
-								if(player.health>1){player.damage(2*Math.sqrt(enemies[enemySprite.name].ship.length),
-																enemySprite,
-																enemySprite.x, enemySprite.y
-																) ? ui.sound_randomBoom():0};
-				}	
-}
-
-function bulletHitEnemy (sprite, bullet) {
-
-				if(bullet.owner!=sprite){
-								ui.sound_hit1.play();
-								boom(explosions, bullet.bulletSprite, bullet.x, bullet.y, bullet.damage / targetDamageCoef);
-
 								for (var i = 0; i < bullet.bulletHitBehavior.length; i++) {
 												bullet.bulletHitBehavior[i](sprite, bullet);
 								}
-								var destroyed = enemies[sprite.name].damage(bullet.damage, bullet.owner, bullet.body.velocity);
+
+								var destroyed = player.damage(bullet.damage, bullet.owner, bullet.x, bullet.y);
+
 								if(destroyed){
-												if(Math.random()>0.5){
-																ui.sound_boom1.play();
-												}else{
-																ui.sound_boom2.play();
-												}
+												ui.sound_randomBoom();
 								}
 								bullet.kill();
 				}
+				function enemyTouchEnemy (a, b) {
+								if(!onscreen(a.x,a.y)&&!onscreen(b.x,b.y)){
+												return;
+								}
+								var aAi = enemies[a.name].ai;
+								var bAi = enemies[b.name].ai;
+								if(aAi == bAi) {return;}
+								if(aAi == aiModes['asteroidInit'] || bAi == aiModes['asteroidInit']){
+												return;
+								}
+								var enemySprite1;
+								var enemySprite2;
+								if(aAi == aiModes['asteroid']){
+												enemySprite1 = a;
+												enemySprite2 = b;
+								}else if(bAi == aiModes['asteroid']){
+												enemySprite1 = b;
+												enemySprite2 = a;
+								}else{return;}
+								if(enemies[enemySprite1.name].ai==aiModes['asteroid'])
+								{
 
-}
+												ui.sound_hit1.play();
+												var destroyed = enemies[enemySprite1.name].damage(9999);
+												if(destroyed){
+																ui.sound_hit1.play();
+																//ui.sound_randomBoom();
+												}
+												var angle=game.physics.arcade.angleBetween(enemySprite2,enemySprite1);
+												enemySprite1.body.velocity.x+=Math.cos(angle)*200;
+												enemySprite1.body.velocity.y+=Math.sin(angle)*200;
+												var e2 = enemies[enemySprite2.name];
+												if(e2.health>1){e2.damage(8*Math.sqrt(enemies[enemySprite1.name].ship.length),
+																				enemySprite1,
+																				enemySprite1.x, enemySprite1.y
+																				) ? ui.sound_randomBoom():0};
+								}	
+				}
 
-function render () {
+				function enemyTouchPlayer (enemySprite, playerSprite) {
+								if(player.sawDamage && enemies[enemySprite.name].ai==aiModes['asteroid'])
+								{
 
-}
+												ui.sound_hit1.play();
+												var destroyed = enemies[enemySprite.name].damage(player.sawDamage);
+												if(destroyed){
+																ui.sound_hit1.play();
+																//ui.sound_randomBoom();
+												}
+												var angle=game.physics.arcade.angleBetween(playerSprite,enemySprite);
+												enemySprite.body.velocity.x+=Math.cos(angle)*200;
+												enemySprite.body.velocity.y+=Math.sin(angle)*200;
+												if(player.health>1){player.damage(2*Math.sqrt(enemies[enemySprite.name].ship.length),
+																				enemySprite,
+																				enemySprite.x, enemySprite.y
+																				) ? ui.sound_randomBoom():0};
+								}	
+				}
+
+				function bulletHitEnemy (sprite, bullet) {
+
+								if(bullet.owner!=sprite){
+												ui.sound_hit1.play();
+												boom(explosions, bullet.bulletSprite, bullet.x, bullet.y, bullet.damage / targetDamageCoef);
+
+												for (var i = 0; i < bullet.bulletHitBehavior.length; i++) {
+																bullet.bulletHitBehavior[i](sprite, bullet);
+												}
+												var destroyed = enemies[sprite.name].damage(bullet.damage, bullet.owner, bullet.body.velocity);
+												if(destroyed){
+																if(Math.random()>0.5){
+																				ui.sound_boom1.play();
+																}else{
+																				ui.sound_boom2.play();
+																}
+												}
+												bullet.kill();
+								}
+
+				}
+
+				function render () {
+
+				}
 
