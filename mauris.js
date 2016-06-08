@@ -358,8 +358,8 @@ function headlight(){
 				lightSpot={x:player.sprite.body.x+(player.sprite.body.width*0.5)+(Math.cos(player.sprite.rotation)*((player.sprite.body.width*0.5)-lightPosition(player.ship))),y:player.sprite.body.y+(player.sprite.body.width*0.5)+(Math.sin(player.sprite.rotation)*((player.sprite.body.width*0.5)-lightPosition(player.ship)))};
 
 				otherGraphics.lineStyle(3, 0xFFFFFF, 0);
-				for(var i=0.90;i>0.50;i-=0.04){
-								otherGraphics.beginFill(0xFFFFFF,0.025);
+				for(var i=0.90;i>0.50;i-=0.02){
+								otherGraphics.beginFill(0xFFFFFF,0.0125);
 								otherGraphics.moveTo(lightSpot.x,lightSpot.y);
 								otherGraphics.lineTo(lightSpot.x+Math.cos(player.sprite.rotation - i)*2*Math.max(resolutionY,resolutionX),lightSpot.y+Math.sin(player.sprite.rotation - i)*2*Math.max(resolutionY,resolutionX));
 								otherGraphics.lineTo(lightSpot.x+Math.cos(player.sprite.rotation + i)*2*Math.max(resolutionY,resolutionX),lightSpot.y+Math.sin(player.sprite.rotation + i)*2*Math.max(resolutionY,resolutionX));
