@@ -333,7 +333,7 @@ function spacesAtEndOfRow(ship,rowNum){
 }
 function thrustPosition(ship){
 	var size = Math.sqrt(ship.length);
-	if(size==0){
+	if(size<=2){
 return 0;
 }
 	if (size % 2 == 0){
@@ -344,7 +344,7 @@ return 0;
 }
 function lightPosition(ship){
 	var size = Math.sqrt(ship.length);
-	if(size==0){
+	if(size<=2){
 return 0;
 }
 	if (size % 2 == 0){
