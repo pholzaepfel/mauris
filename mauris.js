@@ -819,7 +819,7 @@ shipPart.prototype.update = function(){
 																lightnessAngle=Math.max(0,1-lightnessAngle);
 												}else{
 																lightnessAngle=Math.abs(compareAngles(lightnessAngle,player.sprite.rotation));
-																lightnessAngle=Math.max(0,2-lightnessAngle);
+																lightnessAngle=Math.max(0,1.5-lightnessAngle);
 												}
 
 												lightness = lightness+1;
