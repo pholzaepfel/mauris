@@ -311,9 +311,51 @@ var warButtons = [
 								this.kills=0;
 								this.deaths=0;
 				};
+function spacesAtStartOfRow(ship,rowNum){
+	var size = Math.sqrt(ship.length);
+	var spaces = 0;
+	for(var i = size*rowNum ;i<(rowNum*size)+size;i++){
+		if(ship[i]==-1){spaces++}
+		else{return spaces;}
+}
+
+		return spaces;
+}
+function spacesAtEndOfRow(ship,rowNum){
+	var size = Math.sqrt(ship.length);
+	var spaces = 0;
+	for(var i = size + (rowNum*size) - 1;i>=(rowNum*size);i--){
+		if(ship[i]==-1){spaces++}
+		else{return spaces;}
+}
+
+		return spaces;
+}
+function thrustPosition(ship){
+	var size = Math.sqrt(ship.length);
+	if(size==0){
+return 0;
+}
+	if (size % 2 == 0){
+		return -1* Math.max(spacesAtStartOfRow(ship,size/2),spacesAtStartOfRow(ship,(size/2)-1))*16;
+}else{
+		return -1*spacesAtStartOfRow(ship,(size-1)/2)*16;
+}
+}
+function lightPosition(ship){
+	var size = Math.sqrt(ship.length);
+	if(size==0){
+return 0;
+}
+	if (size % 2 == 0){
+		return Math.max(spacesAtEndOfRow(ship,size/2),spacesAtEndOfRow(ship,(size/2)-1))*16;
+}else{
+		return spacesAtEndOfRow(ship,(size-1)/2)*16;
+}
+}
 function headlight(){
 								var lightSpot=undefined;
-									lightSpot={x:player.sprite.body.x+(player.sprite.body.width*0.5)+(Math.cos(player.sprite.rotation)*player.sprite.body.width*0.5),y:player.sprite.body.y+(player.sprite.body.width*0.5)+(Math.sin(player.sprite.rotation)*player.sprite.body.width*0.5)};
+									lightSpot={x:player.sprite.body.x+(player.sprite.body.width*0.5)+(Math.cos(player.sprite.rotation)*((player.sprite.body.width*0.5)-lightPosition(player.ship))),y:player.sprite.body.y+(player.sprite.body.width*0.5)+(Math.sin(player.sprite.rotation)*((player.sprite.body.width*0.5)-lightPosition(player.ship)))};
 
 					otherGraphics.lineStyle(3, 0xFFFFFF, 0);
 				for(var i=0.90;i>0.50;i-=0.04){
@@ -1887,8 +1929,8 @@ playerShip.prototype.spawnBullet = function(playerFired){
 }
 
 playerShip.prototype.emitThrust = function() {
-				var x=this.sprite.x-(Math.cos(this.sprite.rotation)*(this.sprite.body.width)*0.5);
-				var y=this.sprite.y-(Math.sin(this.sprite.rotation)*(this.sprite.body.width)*0.5);
+				var x=this.sprite.x-(Math.cos(this.sprite.rotation)*(thrustPosition(this.ship)+((this.sprite.body.width)*0.5)));
+				var y=this.sprite.y-(Math.sin(this.sprite.rotation)*(thrustPosition(this.ship)+((this.sprite.body.width)*0.5)));
 				//this.thrust.emitParticle();
 				this.thrustBehavior(explosions,x,y);
 }
