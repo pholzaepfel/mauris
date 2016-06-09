@@ -4872,7 +4872,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'id':384,
 	'drops':true,
 	'name':'Radioactive Thruster',
-	'match':'426',
+	'match':'26',
 	'flavor':'mostly safe',
 	'bonus':function(target){
 		target.thrustBehavior=unstableSmoke;
@@ -5212,7 +5212,7 @@ target.thrustBehavior=cleanSmoke;
 	'id':416,
 	'drops':true,
 	'name':'Radioactive Thruster',
-	'match':'486',
+	'match':'86',
 	'flavor':'mostly safe',
 	'bonus':function(target){
 		target.thrustBehavior=unstableSmoke;
