@@ -815,8 +815,7 @@ shipPart.prototype.update = function(){
 												}
 												var lightnessAngle = game.physics.arcade.angleBetween(lightSpot,spriteOffset);
 												if(this.target.name=='player'){
-																lightnessAngle=Math.abs(compareAngles(lightnessAngle,player.sprite.rotation+Math.PI));
-																lightnessAngle=Math.max(0,1-lightnessAngle);
+																lightnessAngle=1;
 												}else{
 																lightnessAngle=Math.abs(compareAngles(lightnessAngle,player.sprite.rotation));
 																lightnessAngle=Math.max(0,1.5-lightnessAngle);

@@ -4545,32 +4545,37 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 },
 {
 	'id':353,
-	'drops':false,
-	'name':'Component-353',
-	'match':'4682',
-	'flavor':'--',
+	'drops':true,
+	'name':'Rusted Wing',
+	'match':'84',
+	'flavor':'improves maneuverability',
 	'bonus':function(target){
-
+		target.turnRate+=0.3;
+		target.acceleration+=0.3;
+		target.sprite.body.maxVelocity.x+=15;
+		target.sprite.body.maxVelocity.y+=15;
 	}
+
 },
 {
 	'id':354,
-	'drops':false,
-	'name':'Component-354',
-	'match':'4682',
-	'flavor':'--',
+	'drops':true,
+	'name':'Capacitor Unit',
+	'match':'682',
+	'flavor':'basic energy storage',
 	'bonus':function(target){
-
+		target.energyMax+=6;
 	}
+
 },
 {
 	'id':355,
-	'drops':false,
-	'name':'Component-355',
-	'match':'4682',
-	'flavor':'--',
+	'drops':true,
+	'name':'Capacitor Unit',
+	'match':'482',
+	'flavor':'basic energy storage',
 	'bonus':function(target){
-
+		target.energyMax+=6;
 	}
 },
 {
@@ -4855,22 +4860,32 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 },
 {
 	'id':384,
-	'drops':false,
-	'name':'Component-384',
-	'match':'4682',
-	'flavor':'--',
+	'drops':true,
+	'name':'Radioactive Thruster',
+	'match':'26',
+	'flavor':'mostly safe',
 	'bonus':function(target){
-
+		target.thrustBehavior=unstableSmoke;
+		target.acceleration+=1;
+		target.turnRate+=0.2;
+		target.health-=1;
+		target.sprite.body.maxVelocity.x+=15;
+		target.sprite.body.maxVelocity.y+=15;
 	}
+
+
 },
 {
 	'id':385,
-	'drops':false,
-	'name':'Component-385',
-	'match':'4682',
-	'flavor':'--',
+	'drops':true,
+	'name':'Derelict Crewpod',
+	'match':'86',
+	'flavor':'extra crewhands speed energy regeneration',
 	'bonus':function(target){
-
+		target.health+=2;
+		target.energyAmount+=1;
+		target.acceleration+=0.1;
+		target.sprite.profile+=10;
 	}
 },
 {
@@ -5175,21 +5190,32 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 },
 {
 	'id':416,
-	'drops':false,
-	'name':'Component-416',
-	'match':'4682',
-	'flavor':'--',
+	'drops':true,
+	'name':'Radioactive Thruster',
+	'match':'86',
+	'flavor':'mostly safe',
 	'bonus':function(target){
-
+		target.thrustBehavior=unstableSmoke;
+		target.acceleration+=1;
+		target.turnRate+=0.2;
+		target.health-=1;
+		target.sprite.body.maxVelocity.x+=15;
+		target.sprite.body.maxVelocity.y+=15;
 	}
 },
 {
 	'id':417,
-	'drops':false,
-	'name':'Component-417',
+	'drops':true,
+	'name':'Scavenged Exoskeleton',
 	'match':'4682',
-	'flavor':'--',
+	'flavor':'light frame fitted with thrusters',
 	'bonus':function(target){
+		target.thrustBehavior=twistSmoke;
+		target.acceleration+=0.7;
+		target.turnRate+=0.1;
+		target.health+=2;
+		target.sprite.body.maxVelocity.x+=12;
+		target.sprite.body.maxVelocity.y+=12;
 
 	}
 },
@@ -5505,11 +5531,17 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 },
 {
 	'id':449,
-	'drops':false,
-	'name':'Component-449',
-	'match':'4682',
-	'flavor':'--',
+	'drops':true,
+	'name':'Scavenged Exoskeleton',
+	'match':'8',
+	'flavor':'light frame fitted with thrusters',
 	'bonus':function(target){
+		target.thrustBehavior=twistSmoke;
+		target.acceleration+=0.7;
+		target.turnRate+=0.1;
+		target.health+=2;
+		target.sprite.body.maxVelocity.x+=12;
+		target.sprite.body.maxVelocity.y+=12;
 
 	}
 },
@@ -5825,22 +5857,42 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 },
 {
 	'id':481,
-	'drops':false,
-	'name':'Component-481',
-	'match':'4682',
-	'flavor':'--',
+	'drops':true,
+	'name':'Scavenged Exoskeleton',
+	'match':'2',
+	'flavor':'light frame fitted with thrusters',
 	'bonus':function(target){
+		target.thrustBehavior=twistSmoke;
+		target.acceleration+=0.7;
+		target.turnRate+=0.1;
+		target.health+=2;
+		target.sprite.body.maxVelocity.x+=12;
+		target.sprite.body.maxVelocity.y+=12;
 
 	}
-},
+}
+,
 {
 	'id':482,
-	'drops':false,
-	'name':'Component-482',
-	'match':'4682',
-	'flavor':'--',
+	'drops':true,
+	'name':'Aftermarket Gatling',
+	'match':'2',
+	'flavor':'erratic fire rate',
 	'bonus':function(target){
+		target.bulletSprite=1;
+		target.bulletBlendMode=0;
 
+		target.bulletSparkle=function(){};
+		target.bulletBehavior.push(function(bullet){				
+				var tgt = ownerFromName(bullet.owner.name);
+				tgt.nextFire = game.time.now + (randomRange(0.7,1.2) * tgt.fireRate);
+				});
+		var fireRateDiff=200/target.fireRate;
+		target.fireRate=200;
+		target.fireSound=ui.sound_bullet;
+		target.fireDamage*=fireRateDiff*1.2;
+		target.fireEnergy*=fireRateDiff*1.05;
+		target.sprite.profile+=20;
 	}
 },
 {
