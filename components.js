@@ -481,7 +481,7 @@ var cmp = [
 	'id':32,
 	'drops':true,
 	'name':'Radioactive Thruster',
-	'match':'6',
+	'match':'8',
 	'flavor':'mostly safe',
 	'bonus':function(target){
 		target.thrustBehavior=unstableSmoke;
@@ -4535,13 +4535,19 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 },
 {
 	'id':352,
-	'drops':false,
-	'name':'Component-352',
-	'match':'4682',
-	'flavor':'--',
+	'drops':true,
+	'name':'Radioactive Thruster',
+	'match':'4628',
+	'flavor':'mostly safe',
 	'bonus':function(target){
-
+		target.thrustBehavior=unstableSmoke;
+		target.acceleration+=1;
+		target.turnRate+=0.2;
+		target.health-=1;
+		target.sprite.body.maxVelocity.x+=15;
+		target.sprite.body.maxVelocity.y+=15;
 	}
+
 },
 {
 	'id':353,
@@ -4681,61 +4687,65 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 {
 	'id':366,
 	'drops':false,
-	'name':'Component-366',
-	'match':'4682',
-	'flavor':'--',
+	'name':'Asteroid',
+	'match':'2',
+	'flavor':'-',
 	'bonus':function(target){
-
+		target.ai=aiModes['asteroidInit'];
 	}
 },
 {
 	'id':367,
 	'drops':false,
-	'name':'Component-367',
-	'match':'4682',
-	'flavor':'--',
+	'name':'Asteroid',
+	'match':'4',
+	'flavor':'-',
 	'bonus':function(target){
-
+		target.ai=aiModes['asteroidInit'];
 	}
 },
 {
 	'id':368,
 	'drops':false,
-	'name':'Component-368',
-	'match':'4682',
-	'flavor':'--',
+	'name':'Asteroid',
+	'match':'6',
+	'flavor':'-',
 	'bonus':function(target){
-
+		target.ai=aiModes['asteroidInit'];
 	}
 },
 {
 	'id':369,
 	'drops':false,
-	'name':'Component-369',
-	'match':'4682',
-	'flavor':'--',
+	'name':'Asteroid',
+	'match':'8',
+	'flavor':'-',
 	'bonus':function(target){
-
+		target.ai=aiModes['asteroidInit'];
 	}
 },
 {
 	'id':370,
-	'drops':false,
-	'name':'Component-370',
-	'match':'4682',
-	'flavor':'--',
+	'drops':true,
+	'name':'Worn Armor Plating',
+	'match':'46',
+	'flavor':'heavy armor, increases mass',
 	'bonus':function(target){
-
+		target.health+=6;
+		target.turnRate-=0.1;
+		target.sprite.profile+=10;
 	}
 },
 {
 	'id':371,
-	'drops':false,
-	'name':'Component-371',
-	'match':'4682',
-	'flavor':'--',
+	'drops':true,
+	'name':'Worn Armor Plating',
+	'match':'82',
+	'flavor':'heavy armor, increases mass',
 	'bonus':function(target){
-
+		target.health+=6;
+		target.turnRate-=0.1;
+		target.sprite.profile+=10;
 	}
 },
 {
@@ -4862,7 +4872,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'id':384,
 	'drops':true,
 	'name':'Radioactive Thruster',
-	'match':'26',
+	'match':'426',
 	'flavor':'mostly safe',
 	'bonus':function(target){
 		target.thrustBehavior=unstableSmoke;
@@ -4900,23 +4910,33 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 },
 {
 	'id':387,
-	'drops':false,
-	'name':'Component-387',
-	'match':'4682',
-	'flavor':'--',
+	'drops':true,
+	'name':'Fusion Thrust',
+	'match':'2468',
+	'flavor':'clean energy thruster',
 	'bonus':function(target){
+		target.acceleration+=0.7;
+target.thrustBehavior=cleanSmoke;
+		target.sprite.body.maxVelocity.x+=15;
+		target.sprite.body.maxVelocity.y+=15;
 
+		target.health+=1;
 	}
+
 },
 {
 	'id':388,
-	'drops':false,
-	'name':'Component-388',
-	'match':'4682',
-	'flavor':'--',
+	'drops':true,
+	'name':'Standard Quarters',
+	'match':'4',
+	'flavor':'more energy and health',
 	'bonus':function(target){
-
+		target.health+=3;
+		target.energyAmount*=1.2;
+		target.energyMax+=3;
+		target.sprite.profile+=20;
 	}
+
 },
 {
 	'id':389,
@@ -5192,7 +5212,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'id':416,
 	'drops':true,
 	'name':'Radioactive Thruster',
-	'match':'86',
+	'match':'486',
 	'flavor':'mostly safe',
 	'bonus':function(target){
 		target.thrustBehavior=unstableSmoke;

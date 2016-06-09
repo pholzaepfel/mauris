@@ -2162,7 +2162,7 @@ var randomVariantComponent = function(partId){
 				if (partId == -1){
 								return -1;
 				}
-				var partsList = variantComponents(partId);
+				var partsList = variantComponents(partId).push(partId);
 
 				if(!partsList.length){
 								return partId;
@@ -2304,6 +2304,7 @@ var randomShip = function(partsList,size,extraParts){
 				myParts.splice(0,1);
 				while(myParts.length && attempts < 10 && connected < squareSize - 1){
 								for (var i=0;i<myParts.length;i++) {
+												myParts[i]=randomVariantComponent(myParts[i]);
 												var newShip = ship.slice(0);
 												//pick part
 												newShip = calculatePartPosition3(0,0,myParts[i],ship,40-(attempts*4),false);
