@@ -359,7 +359,7 @@ function headlight(){
 
 				otherGraphics.lineStyle(3, 0xFFFFFF, 0);
 				for(var i=0.90;i>0.50;i-=0.02){
-								otherGraphics.beginFill(0xFFFFFF,0.0125);
+								otherGraphics.beginFill(0xFFFFFF,0.0125*headlightIntensity);
 								otherGraphics.moveTo(lightSpot.x,lightSpot.y);
 								otherGraphics.lineTo(lightSpot.x+Math.cos(player.sprite.rotation - i)*2*Math.max(resolutionY,resolutionX),lightSpot.y+Math.sin(player.sprite.rotation - i)*2*Math.max(resolutionY,resolutionX));
 								otherGraphics.lineTo(lightSpot.x+Math.cos(player.sprite.rotation + i)*2*Math.max(resolutionY,resolutionX),lightSpot.y+Math.sin(player.sprite.rotation + i)*2*Math.max(resolutionY,resolutionX));
@@ -797,8 +797,6 @@ shipPart.prototype.initShipPart = function (x,y,index,targetSprite){
 shipPart.prototype.update = function(){
 
 				this.sprite.exists=true;
-				if(this.target.alive){
-								this.sprite.scale.setTo(this.target.scale.x);
 								if(onscreen(this.sprite.x,this.sprite.y)){
 												var lightSpot=undefined;
 												lightSpot={x:player.sprite.body.x+(player.sprite.body.width*0.5)+(Math.cos(player.sprite.rotation)*player.sprite.body.width*0.6),y:player.sprite.body.y+(player.sprite.body.width*0.5)+(Math.sin(player.sprite.rotation)*player.sprite.body.width*0.6)};
@@ -824,7 +822,7 @@ shipPart.prototype.update = function(){
 												lightness = lightness+1;
 												lightness2 = lightness2+1; //(lightness + lightness2)/-2;
 												lightness2 /= 2;
-												lightness=lightness+(lightness2*lightnessAngle*1.5)+0.3;
+												lightness=lightness+(lightness2*lightnessAngle*headlightIntensity*1.5)+0.3;
 												lightness/=2;
 												lightness=Math.max(lightness,0.3);
 												this.sprite.alpha=this.target.alpha;
@@ -834,10 +832,10 @@ shipPart.prototype.update = function(){
 												lightness=Math.min(lightness,1);
 												this.sprite.tint = (parseInt(this.target.r * lightness) << 16) + (parseInt(this.target.g*lightness) << 8) + parseInt(this.target.b * lightness);
 								}
+				if(this.target.alive){
+								this.sprite.scale.setTo(this.target.scale.x);
 				}else{
-								game.add.tween(this.sprite.scale).to({x:0,y:0},randomRange(1500,6500), Phaser.Easing.Linear.Out, true, 0, false);
-								var col = 255 - ((game.time.now + 10000 - enemies[this.target.name].died));
-								this.sprite.tint = (col << 16) + (col << 8) + (col);
+								game.add.tween(this.sprite.scale).to({x:0,y:0},randomRange(1500,15000), Phaser.Easing.Linear.Out, true, 0, false);
 								this.sprite.alpha=1;
 				}
 				var ons = onscreen(this.target.x,this.target.y);
@@ -1341,11 +1339,13 @@ enemyShip.prototype.update = function() {
 												for(var i=0; i< enemies.length;i++){
 
 																var enDistance = this.game.physics.arcade.distanceBetween(this.sprite, enemies[i].sprite);
+																if(enDistance < Math.abs(this.sprite.body.velocity.x) + Math.abs(this.sprite.body.velocity.y)){
 																var enAngle = this.game.physics.arcade.angleBetween(this.sprite, {x:enemies[i].sprite.x + enemies[i].sprite.body.velocity.x, y:enemies[i].sprite.y + enemies[i].sprite.body.velocity.y}); 
 																if(enDistance > 0 && enDistance < 0.2 * getHypo(this.sprite.body.velocity.x,this.sprite.body.velocity.y)){
 																				diffAngle = compareAngles(this.sprite.rotation,enAngle)*-5;
 																}
 												}
+}
 												if(this.energy<this.energyReserve){
 																diffAngle = compareAngles(this.sprite.rotation+Math.PI,targetAngle);
 												}
@@ -1468,7 +1468,7 @@ function preload () {
 				game.load.audio('powerup','assets/powerup.wav');
 				game.load.audio('missile','assets/missile.wav');
 				game.load.audio('bullet','assets/bullet.wav');
-				if(!isAndroid){
+				if(!noMusic){
 								game.load.audio('1','assets/1.ogg');
 								game.load.audio('2','assets/2.ogg');
 								game.load.audio('3','assets/3.ogg');
@@ -2512,7 +2512,7 @@ playerShip.prototype.update = function(){
 												}else if(diffAngle*60<-this.turnRate && !touchPressed){
 																this.right(1);
 												}
-												if(game.input.activePointer.isDown && !touchPressed && Math.abs(diffAngle < 0.2)){
+												if(game.input.activePointer.isDown && !touchPressed && Math.abs(diffAngle) < 0.2){
 																this.up(1);
 												}
 
@@ -2569,6 +2569,12 @@ playerShip.prototype.update = function(){
 																if(!closestFSMatch && Math.abs(diffAngle)<0.5){
 																				this.up(1-Math.abs(diffAngle));
 																}
+else if(this.nextFire < game.time.now - 3000 && targetDistance < this.fireRange * (this.fireVelocity/1500) || Math.abs(diffAngle)<1.0 && Math.abs(diffAngle)>0.3){
+
+//																				this.up(1);
+
+
+																}
 
 												}
 								}
@@ -2581,9 +2587,13 @@ playerShip.prototype.update = function(){
 				}
 };
 var touchPressed = 0;
-var isAndroid = /(android)/i.test(navigator.userAgent);
-
+var noMusic = /(android)/i.test(navigator.userAgent);
+if (!window.location.href.match('voxxse')){
+	noMusic = true;
+}
+var headlightIntensity=1;
 var player;
+								var light = 0; 
 var currentBrightness=1.0;
 var mysteriousConstant=0.22;
 var detailLod = 240;
@@ -2761,14 +2771,14 @@ gameUI.prototype.initSound = function(){
 				this.sound_bullet = game.add.audio('bullet');
 				this.currentMusic=undefined;
 				this.music=[];
-				if(!isAndroid){
+				if(!noMusic){
 								for(var i = 1; i <=4; i++){
 												this.music[i]=game.add.audio(i);
 								}
 				}
 }
 function checkForNewMusic(){
-				if(!isAndroid){
+				if(!noMusic){
 								if(game.time.now>nextMusic){
 												ui.music_random();
 								}
@@ -4423,7 +4433,8 @@ up: game.input.keyboard.addKey(Phaser.Keyboard.UP),
 		alt: game.input.keyboard.addKey(Phaser.Keyboard.Z),
 		pgup: game.input.keyboard.addKey(Phaser.Keyboard.PAGE_UP),
 		pgdn: game.input.keyboard.addKey(Phaser.Keyboard.PAGE_DOWN),
-		enter: game.input.keyboard.addKey(Phaser.Keyboard.ENTER)
+		enter: game.input.keyboard.addKey(Phaser.Keyboard.ENTER),
+		lights: game.input.keyboard.addKey(Phaser.Keyboard.F),
 				}
 
 
@@ -4733,6 +4744,18 @@ function update () {
 								if (cursors.fire.isDown){
 												fire = 1;
 								}
+								if (cursors.lights.isDown){
+									if(!light){
+										light = 1;
+										if(headlightIntensity > 0){
+											headlightIntensity = 0;
+}else{
+headlightIntensity = 1;
+}
+									}
+								}else{
+									light = 0;
+								}
 								if (cursors.alt.isDown){
 												alt = 1;
 								}
@@ -4960,7 +4983,7 @@ function update () {
 												ui.comms.alpha=1;
 												ui.graphics.beginFill(0x000000, ui.comms.alpha/3);
 												ui.graphics.drawRect(ui.comms.x - 15, ui.comms.y - 6, ui.comms.width + 30, ui.comms.height + 12);
-
+												headlight();
 												frob1.x-=frob1.body.velocity.x*game.time.physicsElapsed;
 												frob1.y-=frob1.body.velocity.y*game.time.physicsElapsed;
 												frob1.angle-=frob1.body.angularVelocity*game.time.physicsElapsed;
@@ -6283,7 +6306,7 @@ function enemyTouchEnemy (a, b) {
 								var e2 = enemies[enemySprite2.name];
 								if(e2.health>1){e2.damage(8*Math.sqrt(enemies[enemySprite1.name].ship.length),
 																enemySprite1,
-																enemySprite1.x, enemySprite1.y
+																150	
 																) ? ui.sound_randomBoom():0};
 				}	
 }

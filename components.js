@@ -917,7 +917,7 @@ target.thrustBehavior=cleanSmoke;
 	'id':66,
 	'drops':true,
 	'name':'Discount Attitude Jet',
-	'match':'862',
+	'match':'6',
 	'flavor':'improves turn rate, lowers maximum energy',
 	'bonus':function(target){
 		target.turnRate+=0.6;
@@ -4606,22 +4606,26 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 },
 {
 	'id':358,
-	'drops':false,
-	'name':'Component-358',
-	'match':'4682',
-	'flavor':'--',
+	'drops':true,
+	'name':'Worn Armor Plating',
+	'match':'2',
+	'flavor':'heavy armor, increases mass',
 	'bonus':function(target){
-
+		target.health+=6;
+		target.turnRate-=0.1;
+		target.sprite.profile+=10;
 	}
 },
 {
 	'id':359,
-	'drops':false,
-	'name':'Component-359',
-	'match':'4682',
-	'flavor':'--',
+	'drops':true,
+	'name':'Worn Armor Plating',
+	'match':'6',
+	'flavor':'heavy armor, increases mass',
 	'bonus':function(target){
-
+		target.health+=6;
+		target.turnRate-=0.1;
+		target.sprite.profile+=10;
 	}
 },
 {
@@ -4950,22 +4954,26 @@ target.thrustBehavior=cleanSmoke;
 },
 {
 	'id':390,
-	'drops':false,
-	'name':'Component-390',
-	'match':'4682',
-	'flavor':'--',
+	'drops':true,
+	'name':'Worn Armor Plating',
+	'match':'4',
+	'flavor':'heavy armor, increases mass',
 	'bonus':function(target){
-
+		target.health+=6;
+		target.turnRate-=0.1;
+		target.sprite.profile+=10;
 	}
 },
 {
 	'id':391,
-	'drops':false,
-	'name':'Component-391',
-	'match':'4682',
-	'flavor':'--',
+	'drops':true,
+	'name':'Worn Armor Plating',
+	'match':'8',
+	'flavor':'heavy armor, increases mass',
 	'bonus':function(target){
-
+		target.health+=6;
+		target.turnRate-=0.1;
+		target.sprite.profile+=10;
 	}
 },
 {
@@ -5241,12 +5249,17 @@ target.thrustBehavior=cleanSmoke;
 },
 {
 	'id':418,
-	'drops':false,
-	'name':'Component-418',
-	'match':'4682',
-	'flavor':'--',
+	'drops':true,
+	'name':'Discount Attitude Jet',
+	'match':'4862',
+	'flavor':'improves turn rate, lowers maximum energy',
 	'bonus':function(target){
-
+		target.turnRate+=0.6;
+		target.thrustBehavior=greenThrustSmoke;
+		target.acceleration+=0.2;
+		target.sprite.body.maxVelocity.x+=5;
+		target.sprite.body.maxVelocity.y+=5;
+		target.energyMax-=2;
 	}
 },
 {
@@ -5541,12 +5554,14 @@ target.thrustBehavior=cleanSmoke;
 },
 {
 	'id':448,
-	'drops':false,
-	'name':'Component-448',
-	'match':'4682',
-	'flavor':'--',
+	'drops':true,
+	'name':'Pirate CPU',
+	'match':'4',
+	'flavor':'track an extra target, improves firerate',
 	'bonus':function(target){
-
+		target.fireRate*=0.8;
+		target.radarTargets+=1;
+		target.sprite.profile+=20;	
 	}
 },
 {
@@ -5567,12 +5582,57 @@ target.thrustBehavior=cleanSmoke;
 },
 {
 	'id':450,
-	'drops':false,
-	'name':'Component-450',
-	'match':'4682',
-	'flavor':'--',
+	'drops':true,
+	'name':'Destroyed Airlock',
+	'match':'4',
+	'flavor':'press [Z] to unleash a damaging halo of contagion',
 	'bonus':function(target){
 
+		target.altCheck=function(){
+			var ret = false;
+			this.energyReserve=0;
+			var targetDistance = game.physics.arcade.distanceBetween(this.sprite, this.target);
+
+			if(targetDistance < 600 && this.altCooldown < game.time.now + 5000){
+				this.energyReserve=this.fireEnergy*4;
+			}
+			if(targetDistance < 250)
+			{
+				ret = true;
+			}
+			return ret;
+		}
+
+
+
+		target.alt=function(){
+			if(game.time.now>this.altCooldown && this.takeEnergy(this.fireEnergy*4,true)){
+				this.profile+=200; //cheap!
+				ui.sound_missile.play();
+				for(var n=0; n<1;n+=0.075){
+					var bullet=this.spawnBullet(false);
+					bullet.animations.play(bulletTypeName(14));
+					bullet.reset(this.sprite.x, this.sprite.y);
+					bullet.rotation=n*2*Math.PI;
+					bullet.sparkle=function(){};
+					game.physics.arcade.velocityFromRotation(bullet.rotation, randomRange(25,90), bullet.body.velocity);
+					bullet.alpha=0.4;
+					bullet.damage=this.fireDamage*3;
+					bullet.bulletSprite=4;
+					bullet.scale.setTo(1,1);
+					bullet.scaleValue=randomRange(4,18);
+					bullet.lifespan=bullet.scaleValue*100;
+					bullet.body.angularVelocity=randomRange(100,200)*randomSign();
+					bullet.tracking=-999;
+					bullet.blendMode=1;
+					game.add.tween(bullet.scale).to({x:bullet.scale.x*bullet.scaleValue,y:bullet.scale.y*bullet.scaleValue},bullet.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
+
+					game.add.tween(bullet).to({alpha:0},bullet.lifespan, Phaser.Easing.Exponential.In, true, 0, false);
+				}
+				this.altCooldown=game.time.now+2000;
+
+			}
+		}
 	}
 },
 {
@@ -5867,12 +5927,24 @@ target.thrustBehavior=cleanSmoke;
 },
 {
 	'id':480,
-	'drops':false,
-	'name':'Component-480',
-	'match':'4682',
-	'flavor':'--',
+	'drops':true,
+	'name':'Contraband Missiles',
+	'match':'86',
+	'flavor':'high damage, unreliable speed',
 	'bonus':function(target){
+		target.bulletSprite=2;
+		target.bulletSparkle=rocketTrail;
+		target.bulletBlendMode=0;
+		target.fireEnergy+=2;
+		target.fireDamage+=8;
+		target.fireSound=ui.sound_missile;
+		target.attackAngleThreshold+=0.15;
+		target.bulletBehavior.push(function(bullet){bullet.body.velocity.x*=.75+Math.random()*.5;
+				bullet.body.velocity.y*=.75+Math.random()*.5});
 
+		target.fireVelocity+=100;
+		target.fireEnergy+=1;
+		target.sprite.profile+=25;
 	}
 },
 {
@@ -6217,22 +6289,32 @@ target.thrustBehavior=cleanSmoke;
 },
 {
 	'id':513,
-	'drops':false,
-	'name':'Component-513',
-	'match':'4682',
-	'flavor':'--',
+	'drops':true,
+	'name':'Discount Attitude Jet',
+	'match':'246',
+	'flavor':'improves turn rate, lowers maximum energy',
 	'bonus':function(target){
-
+		target.turnRate+=0.6;
+		target.thrustBehavior=greenThrustSmoke;
+		target.acceleration+=0.2;
+		target.sprite.body.maxVelocity.x+=5;
+		target.sprite.body.maxVelocity.y+=5;
+		target.energyMax-=2;
 	}
 },
 {
 	'id':514,
-	'drops':false,
-	'name':'Component-514',
-	'match':'4682',
-	'flavor':'--',
+	'drops':true,
+	'name':'Discount Attitude Jet',
+	'match':'486',
+	'flavor':'improves turn rate, lowers maximum energy',
 	'bonus':function(target){
-
+		target.turnRate+=0.6;
+		target.thrustBehavior=greenThrustSmoke;
+		target.acceleration+=0.2;
+		target.sprite.body.maxVelocity.x+=5;
+		target.sprite.body.maxVelocity.y+=5;
+		target.energyMax-=2;
 	}
 },
 {
