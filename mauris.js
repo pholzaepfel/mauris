@@ -2641,12 +2641,11 @@ var spawnShips=[
 				var profileExponent=0.9;
 				var componentDropRate = 0.12;
 				var hazeWhite,hazeRed,hazePurple;
+				var nebula2;
 				var nebula;
 				var planet;
 				var planetlod;
 				var planetdirt;
-				var planetfall;
-				var foredrop;
 				var numBaddies = 9;
 				var numAsteroids = 19;
 				var enemies;
@@ -4194,9 +4193,13 @@ function fadeIn () {
 				game.add.tween(ui.tempStation).to({alpha:1},100, Phaser.Easing.Linear.None, true, 0, false);
 				var r = randomRange(3,4);
 				nebula.scale.setTo(r,r);
-				nebula.rotation=randomRange(-0.35,0.35);
+				nebula2.scale.setTo(r,r);
+				nebula.rotation=randomRange(-0.55,0.55);
+				nebula2.rotation=randomRange(-0.55,0.55)+Math.PI;
+				if(resolutionY>resolutionX){nebula2.rotation+=randomSign()*Math.PI/2};
 				if(resolutionY>resolutionX){nebula.rotation+=randomSign()*Math.PI/2};
 				nebula.tint=randomColor(128,255,128,255,128,255);
+				nebula2.tint=randomColor(128,255,128,255,128,255);
 				planet.baseX=randomRange(300,400)*randomSign();
 				planet.baseY=randomRange(300,400)*randomSign();
 				planet.rotation=randomRange(0,2*Math.PI);
@@ -4271,13 +4274,20 @@ function create () {
 								hazeWhite.tilePosition.x = Math.random()*resolutionX;
 								hazeWhite.tilePosition.y = Math.random()*resolutionY;
 								hazeWhite.speed = 600;
+								nebula2 = game.add.sprite(512,512, 'nebula');
 								nebula = game.add.sprite(512,512, 'nebula');
 								nebula.anchor.setTo(0.5,0.5);
+								nebula2.anchor.setTo(0.5,0.5);
 								var r = randomRange(3,4);
 												nebula.scale.setTo(r,r);
-				nebula.rotation=randomRange(-0.35,0.35);
+								r = randomRange(3,4);
+												nebula2.scale.setTo(r,r);
+				nebula.rotation=randomRange(-0.55,0.55);
+				nebula2.rotation=randomRange(-0.55,0.55)+Math.PI;
+				if(resolutionY>resolutionX){nebula2.rotation+=randomSign()*Math.PI/2};
 				if(resolutionY>resolutionX){nebula.rotation+=randomSign()*Math.PI/2};
 				nebula.tint=randomColor(128,255,128,255,128,255);
+				nebula2.tint=randomColor(128,255,128,255,128,255);
 								planet = game.add.sprite(resolutionX/0.8, resolutionY/0.8, 'planetslod');
 								planet.baseX=randomRange(-300,400) * randomSign();
 								planet.baseY=randomRange(-300,400) * randomSign();
@@ -5165,7 +5175,8 @@ headlightIntensity = 1;
 												}
 
 								}
-								nebula.reset(player.sprite.body.x*0.9985,nebula.y=player.sprite.body.y*0.9985);
+								nebula2.reset(player.sprite.body.x*0.9985,player.sprite.body.y*0.9985);
+								nebula.reset(player.sprite.body.x*0.9985,player.sprite.body.y*0.9985);
 								// scrolling
 								scroll(hazeWhite,-0.0015);
 
@@ -5221,9 +5232,11 @@ headlightIntensity = 1;
 
 								planetdirt.visible=false;
 								nebula.visible=true;
+								nebula2.visible=true;
 								if(planetdirt.alpha>0){
 												planetdirt.visible=true;
 												nebula.visible=false
+												nebula2.visible=false
 								}
 
 
