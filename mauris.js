@@ -2787,7 +2787,7 @@ function checkForNewMusic(){
 				}
 }
 gameUI.prototype.music_random = function(){
-				var rnd = parseInt(randomRange(1,this.music.length));
+				var rnd = parseInt(randomRange(2,this.music.length));
 				if(typeof(this.music[rnd])!='undefined' && typeof(this.currentMusic)!='undefined'){
 								this.currentMusic.stop();
 				}
