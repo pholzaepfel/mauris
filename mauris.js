@@ -1437,6 +1437,7 @@ function preload () {
 				game.load.image('partswindow', 'assets/partswindow.png');
 				game.load.spritesheet('bullet', 'assets/bullets.png',16,16);
 				game.load.image('planets', 'assets/planets.png');
+				game.load.image('nebula', 'assets/nebula.png');
 				game.load.image('planetslod', 'assets/planetslod.png');
 				game.load.image('planetfall', 'assets/planetfall.png');
 				game.load.image('planetdirt', 'assets/planetdirt.png');
@@ -2639,6 +2640,7 @@ var spawnShips=[
 				var profileExponent=0.9;
 				var componentDropRate = 0.12;
 				var hazeWhite,hazeRed,hazePurple;
+				var nebula;
 				var planet;
 				var planetlod;
 				var planetdirt;
@@ -4172,12 +4174,28 @@ function fadeOut () {
 				hazePurple.blendMode=playerStats.mission.hazePurpleBlendMode;
 
 }
+function randomColor(minr,maxr,ming,maxg,minb,maxb) {
+if(typeof(minr)=='undefined'){minr=0};
+if(typeof(ming)=='undefined'){ming=0};
+if(typeof(minb)=='undefined'){minb=0};
+if(typeof(maxr)=='undefined'){maxr=255};
+if(typeof(maxg)=='undefined'){maxg=255};
+if(typeof(maxb)=='undefined'){maxb=255};
+var re=parseInt(randomRange(minr,maxr));
+var gr=parseInt(randomRange(ming,maxg));
+var br=parseInt(randomRange(minb,maxb));
+return (re<<16) + (gr<<8) + (br);
+}
 function fadeIn () {
 				station.alpha=0;
 				ui.tempStation.alpha=0;
 				game.add.tween(station).to({alpha:1},100, Phaser.Easing.Linear.None, true, 0, false);
 				game.add.tween(ui.tempStation).to({alpha:1},100, Phaser.Easing.Linear.None, true, 0, false);
-
+				var r = randomRange(3,4);
+				nebula.scale.setTo(r,r);
+				nebula.rotation=randomRange(-0.35,0.35);
+				if(resolutionY>resolutionX){nebula.rotation+=randomSign()*Math.PI/2};
+				nebula.tint=randomColor(128,255,128,255,128,255);
 				planet.baseX=randomRange(300,400)*randomSign();
 				planet.baseY=randomRange(300,400)*randomSign();
 				planet.rotation=randomRange(0,2*Math.PI);
@@ -4252,6 +4270,13 @@ function create () {
 								hazeWhite.tilePosition.x = Math.random()*resolutionX;
 								hazeWhite.tilePosition.y = Math.random()*resolutionY;
 								hazeWhite.speed = 600;
+								nebula = game.add.sprite(512,512, 'nebula');
+								nebula.anchor.setTo(0.5,0.5);
+								var r = randomRange(3,4);
+												nebula.scale.setTo(r,r);
+				nebula.rotation=randomRange(-0.35,0.35);
+				if(resolutionY>resolutionX){nebula.rotation+=randomSign()*Math.PI/2};
+				nebula.tint=randomColor(128,255,128,255,128,255);
 								planet = game.add.sprite(resolutionX/0.8, resolutionY/0.8, 'planetslod');
 								planet.baseX=randomRange(-300,400) * randomSign();
 								planet.baseY=randomRange(-300,400) * randomSign();
@@ -5138,7 +5163,8 @@ headlightIntensity = 1;
 																player.fire();
 												}
 
-								}	
+								}
+								nebula.reset(player.sprite.body.x*0.9985,nebula.y=player.sprite.body.y*0.9985);
 								// scrolling
 								scroll(hazeWhite,-0.0015);
 
@@ -5148,6 +5174,8 @@ headlightIntensity = 1;
 								planet.scaleModifier+=0.6;
 								planet.scaleModifier=Math.pow(planet.scaleModifier,2);
 								planet.scaleModifier=Math.min(planet.scaleModifier,2.5);
+								planet.scaleModifier=Math.max(planet.scaleModifier,0.4);
+								if(planet.scaleModifier<1){planet.scaleModifier=Math.pow(planet.scaleModifier,planet.scaleModifier)};
 								planet.scale.setTo(planet.baseScale*planet.scaleModifier);
 								planet.speedModifier=.995-(Math.sqrt(Math.pow(10,planet.scaleModifier)*0.00006));
 
@@ -5191,8 +5219,10 @@ headlightIntensity = 1;
 								}
 
 								planetdirt.visible=false;
+								nebula.visible=true;
 								if(planetdirt.alpha>0){
 												planetdirt.visible=true;
+												nebula.visible=false
 								}
 
 
