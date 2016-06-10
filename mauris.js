@@ -2592,6 +2592,7 @@ var noMusic = /(android)/i.test(navigator.userAgent);
 if (!window.location.href.match('voxxse')){
 	noMusic = true;
 }
+	noMusic = true;
 var headlightIntensity=1;
 var player;
 								var light = 0; 
