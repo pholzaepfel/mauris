@@ -6462,7 +6462,9 @@ function enemyTouchEnemy (a, b) {
 								enemySprite1.body.velocity.x+=Math.cos(angle)*200;
 								enemySprite1.body.velocity.y+=Math.sin(angle)*200;
 								var e2 = enemies[enemySprite2.name];
-								if(e2.health>1){e2.damage(8*Math.sqrt(enemies[enemySprite1.name].ship.length),
+								addVelocity(game.physics.arcade.angleBetween(enemySprite1,enemySprite2),getHypo(enemySprite2.body.velocity.x,enemySprite2.body.velocity.y)*0.5*(Math.sqrt(enemies[enemySprite1.name].ship.length)/Math.sqrt(e2.ship.length)), enemySprite2.body.velocity);
+																clampVelocity(enemySprite2);
+				if(e2.health>1){e2.damage(8*Math.sqrt(enemies[enemySprite1.name].ship.length),
 																enemySprite1,
 																150	
 																) ? ui.sound_randomBoom():0};
@@ -6482,7 +6484,9 @@ function enemyTouchPlayer (enemySprite, playerSprite) {
 								var angle=game.physics.arcade.angleBetween(playerSprite,enemySprite);
 								enemySprite.body.velocity.x+=Math.cos(angle)*200;
 								enemySprite.body.velocity.y+=Math.sin(angle)*200;
-								if(player.health>1){player.damage(2*Math.sqrt(enemies[enemySprite.name].ship.length),
+				addVelocity(game.physics.arcade.angleBetween(enemySprite,playerSprite),getHypo(playerSprite.body.velocity.x,playerSprite.body.velocity.y)*0.5*(Math.sqrt(enemies[enemySprite.name].ship.length)/Math.sqrt(player.ship.length)), playerSprite.body.velocity);
+																clampVelocity(playerSprite);
+				if(player.health>1){player.damage(2*Math.sqrt(enemies[enemySprite.name].ship.length),
 																enemySprite,
 																enemySprite.x, enemySprite.y
 																) ? ui.sound_randomBoom():0};
