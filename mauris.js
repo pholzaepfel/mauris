@@ -1138,9 +1138,10 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 																				foo=components[cmp];
 																}
 																var drop = spawnComponent(cmp, this.sprite.x,this.sprite.y);
+if(typeof(this.sprite)!='undefined'){
 																drop.body.velocity.x=this.sprite.body.velocity.x;
 																drop.body.velocity.y=this.sprite.body.velocity.y;
-
+}
 																this.questionBox=false;
 												}else if(this.health == 0 && dmg == 0){
 																this.parts[j].sprite.kill();
@@ -2617,7 +2618,6 @@ else if(this.nextFire < game.time.now - 3000 && targetDistance < this.fireRange 
 				}
 };
 var touchPressed = 0;
-
 var noMusic = /(android)/i.test(navigator.userAgent);
 if (!window.location.href.match('voxxse')){
 	noMusic = true;
