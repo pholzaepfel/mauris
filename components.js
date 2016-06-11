@@ -4537,7 +4537,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'id':352,
 	'drops':true,
 	'name':'Radioactive Thruster',
-	'match':'4628',
+	'match':'628',
 	'flavor':'mostly safe',
 	'bonus':function(target){
 		target.thrustBehavior=unstableSmoke;
@@ -6291,7 +6291,7 @@ target.thrustBehavior=cleanSmoke;
 	'id':513,
 	'drops':true,
 	'name':'Discount Attitude Jet',
-	'match':'246',
+	'match':'26',
 	'flavor':'improves turn rate, lowers maximum energy',
 	'bonus':function(target){
 		target.turnRate+=0.6;
@@ -6306,7 +6306,7 @@ target.thrustBehavior=cleanSmoke;
 	'id':514,
 	'drops':true,
 	'name':'Discount Attitude Jet',
-	'match':'486',
+	'match':'86',
 	'flavor':'improves turn rate, lowers maximum energy',
 	'bonus':function(target){
 		target.turnRate+=0.6;

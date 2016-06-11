@@ -14,6 +14,7 @@ var bulletTypes = [
 {'name':'waste', 'id':8},
 {'name':'chem', 'id':9},
 {'name':'smoke', 'id':10},
+{'name':'corpse', 'id':13},
 {'name':'gascloud', 'id':14},
 {'name':'fire', 'id':15}
 
@@ -485,6 +486,12 @@ function clampVelocity (sprite){
 				}
 
 }
+function randomScaleRange (a,b){var c,d; if(a>b){c=a;d=b;}else{d=a;c=b};
+var e = randomRange(a,b);
+e = Math.pow(e,e/(c*0.5));
+e = Math.min(Math.max(e,d),c);
+return e;
+};
 function randomRange (a,b){var c,d; if(a>b){c=a;d=b;}else{d=a;c=b};return (Math.random()*(c-d))+d};
 function randomSign (){return Math.random()>.5?1:-1};
 function joinRegions(regions, a, b) {
@@ -797,7 +804,8 @@ shipPart.prototype.initShipPart = function (x,y,index,targetSprite){
 shipPart.prototype.update = function(){
 
 				this.sprite.exists=true;
-								if(onscreen(this.sprite.x,this.sprite.y)){
+				var ons = onscreen(this.target.x,this.target.y);
+								if(ons){
 												var lightSpot=undefined;
 												lightSpot={x:player.sprite.body.x+(player.sprite.body.width*0.5)+(Math.cos(player.sprite.rotation)*player.sprite.body.width*0.6),y:player.sprite.body.y+(player.sprite.body.width*0.5)+(Math.sin(player.sprite.rotation)*player.sprite.body.width*0.6)};
 												//avoid div by 0
@@ -838,8 +846,7 @@ shipPart.prototype.update = function(){
 								game.add.tween(this.sprite.scale).to({x:0,y:0},randomRange(1500,15000), Phaser.Easing.Linear.Out, true, 0, false);
 								this.sprite.alpha=1;
 				}
-				var ons = onscreen(this.target.x,this.target.y);
-				this.sprite.visible=this.sprite.alive && ons;
+				this.sprite.visible=ons;
 				var scale = this.sprite.scale.x;
 				if (this.target.alive && this.alive) {
 								this.sprite.angle = this.target.angle;
@@ -1024,7 +1031,28 @@ enemyShip.prototype.destroyParts = function() {
 				}
 				this.parts=[];
 }
-
+enemyShip.prototype.spawnCorpses = function(numCorpses) {
+								var bullet;
+								for (var i = 0; i < numCorpses; i++){
+								bullet = this.spawnBullet(false);
+								bullet.blendMode=0;
+								bullet.scale.setTo(randomRange(0.5,1),randomRange(0.5,1));
+								bullet.tracking = 0;
+								bullet.bulletSprite=13;
+								bullet.lifespan=60000;
+								bullet.animations.play(bulletTypeName(bullet.bulletSprite));
+								bullet.sparkle=airPuffs;
+								bullet.nextSparkle=game.time.now;
+								bullet.damage=0;
+								bullet.tint=randomVividColor(64,255,64,255,64,255);
+								bullet.reset(this.sprite.body.x+randomRange(0,this.sprite.body.width),this.sprite.body.y+randomRange(0,this.sprite.body.width));
+								bullet.body.velocity.setTo(randomRange(-100,100)+this.sprite.body.velocity.x,randomRange(-100,100)+this.sprite.body.velocity.y);
+								bullet.body.angularVelocity=randomRange(75,130)*randomSign();
+								bullet.bulletHitBehavior=[function(sprite,bullet){
+												goreBoom(explosions,sprite.x,sprite.y);
+								}];
+		}
+}
 enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 
 				if(this.health==0){
@@ -1064,19 +1092,20 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 
 				if(this.shield){
 								midBoom(explosions,4,this.sprite.x,this.sprite.y);
-				}else{
+				}else if(dmg > 0){
 								if(this.ai!=aiModes['asteroid']){
 												var dn = parseInt(this.health)-parseInt(this.health-damageCoef*dmg);
 												ui.addDamageNumber(this.sprite.x,this.sprite.y,dn);
 								}
 								this.health -= damageCoef * dmg;
-
+								if(this.health>0){
 								this.sprite.r=255 * (1 - (this.health/this.healthMax));
 								this.sprite.g=255 * (this.health/this.healthMax);
 								this.sprite.b=0;
 								this.sprite.alpha=6;
 								game.add.tween(this.sprite).to({r:255,g:255,b:255,alpha:1},400, Phaser.Easing.Exponential.Out, true, 0, false);
 
+								}
 				}
 
 				if(this.behavior=='neutral'){
@@ -1086,15 +1115,14 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 				if (this.health <= 0 && this.health + (damageCoef*dmg) >= 0){
 								this.alive = false;
 								this.died=game.time.now+10000;
-
 								if (this.ai==aiModes['asteroid'] && onscreen(this.sprite.x,this.sprite.y)){
 												asteroidBoom(explosions,this.sprite.x,this.sprite.y);
 
 								}else{
 												sparkExplosion(pew, this.sprite);	
 												bigBoom(explosions,this.sprite.x,this.sprite.y);
+												this.spawnCorpses(randomInt(0,Math.sqrt(this.ship.length)));
 								}
-
 
 								for (var j = 0; j < this.parts.length; j++) {
 												if(Math.random() < this.oreChance){
@@ -1177,7 +1205,7 @@ enemyShip.prototype.fire = function () {
 								this.fireSound.play();
 								this.nextFire = this.game.time.now + this.fireRate;
 								this.spawnBullet(true);
-				}
+	}
 
 }
 enemyShip.prototype.spawnBullet = function (playerFired) {
@@ -1188,6 +1216,7 @@ enemyShip.prototype.spawnBullet = function (playerFired) {
 								bullet.reset(this.sprite.x + (Math.cos(this.sprite.rotation)*(this.sprite.body.width)), this.sprite.y + (Math.sin(this.sprite.rotation)*(this.sprite.body.width)));
 								bullet.lifespan = this.fireRange; 
 								bullet.alpha=1;
+								bullet.tint=16777215;
 								bullet.blendMode=this.bulletBlendMode;
 								bullet.scale.setTo(1,1);
 								bullet.tracking = this.fireTracking;
@@ -1788,16 +1817,18 @@ playerShip.prototype.damage = function(dmg, aggro, bulletX, bulletY) {
 
 				if(this.shield){
 								midBoom(explosions,4,this.sprite.x,this.sprite.y);
-				}else{
+				}else if(dmg>0){
 								var dn = parseInt(this.health)-parseInt(this.health-damageCoef*dmg);
 								ui.addDamageNumber(this.sprite.x,this.sprite.y,dn);
 								this.health -= damageCoef * dmg;
 								this.radarError=Math.max(this.radarError,this.radarTargets+0.5)
 												ui.healthLine.shudder = 5;
+								if(this.health > 0){
 								this.sprite.r=255 * (1 - (this.health/this.healthMax));
 								this.sprite.g=255 * (this.health/this.healthMax);
 								this.sprite.b=0;
 								this.sprite.alpha=6;
+					
 								game.add.tween(this.sprite).to({r:255,g:255,b:255,alpha:1},400, Phaser.Easing.Exponential.Out, true, 0, false);
 								//handle part loss
 								if(this.ship.length > 1 && Math.random() > Math.sqrt((((player.health * 1.33) / player.healthMax )- (Math.pow(dmg,0.33)/16)))){
@@ -1832,12 +1863,15 @@ playerShip.prototype.damage = function(dmg, aggro, bulletX, bulletY) {
 
 												}
 								}
+								}
 
 				}
 
 				if (this.health <= 0 && this.health + (damageCoef * dmg) >= 0){
 								sparkExplosion(pew, this.sprite);	
 								bigBoom(explosions,this.sprite.x,this.sprite.y);
+								this.r=255;this.g=255;this.b=255;
+								this.sprite.alpha=1;
 								this.died=game.time.now+10000;
 								this.alive = false;
 								for (var j = 0; j < this.parts.length; j++) {
@@ -1897,6 +1931,7 @@ playerShip.prototype.spawnBullet = function(playerFired){
 								bullet.body.mass = this.fireMass;
 								bullet.angularVelocity=0;
 								bullet.tracking = this.fireTracking;
+								bullet.tint=16777215;
 								bullet.nextTrack = 0;
 								bullet.bulletHitBehavior=[];
 								bullet.bulletHitBehavior=this.bulletHitBehavior;
@@ -2498,7 +2533,7 @@ playerShip.prototype.update = function(){
 
 																var diffAngle = compareAngles(this.sprite.rotation,targetAngle);
 
-																if (this.energy - this.fireEnergy > this.energyReserve && this.firingSolution(this.sprite, this.target, this.fireRange, this.fireVelocity,i, this.turnRate)){
+																if ((this.energy - this.fireEnergy > this.energyReserve || this.energy == this.energyMax) && this.firingSolution(this.sprite, this.target, this.fireRange, this.fireVelocity,i, this.turnRate)){
 																				if(Math.abs(diffAngle) < 0.5){
 																								this.fire(); 
 																				}
@@ -2541,7 +2576,7 @@ playerShip.prototype.update = function(){
 																								adjTargetAngle=(this.sprite.rotation + i);
 																				}
 																				if(fs && Math.abs(i)<this.attackAngleThreshold){
-																								if (this.energy - this.fireEnergy > this.energyReserve ){		
+																								if (this.energy - this.fireEnergy > this.energyReserve || this.energy >= this.energyMax){		
 																												this.fire(); 
 																								}
 
@@ -4100,7 +4135,7 @@ function createBuildParts(ship,x,y){
 
 function initMission (missionId) {
 				playerStats.mission = missions[missionId];
-				planet.scaleMission=randomRange(20,100);
+				planet.scaleMission=randomRange(20,60);
 				ui.skipText();
 				for(var i=0;i<playerStats.mission.intro.length;i++){
 								ui.texts.push(playerStats.mission.intro[i]);
@@ -4174,6 +4209,19 @@ function fadeOut () {
 				hazePurple.blendMode=playerStats.mission.hazePurpleBlendMode;
 
 }
+
+function randomVividColor(minr,maxr,ming,maxg,minb,maxb) {
+if(typeof(minr)=='undefined'){minr=0};
+if(typeof(ming)=='undefined'){ming=0};
+if(typeof(minb)=='undefined'){minb=0};
+if(typeof(maxr)=='undefined'){maxr=255};
+if(typeof(maxg)=='undefined'){maxg=255};
+if(typeof(maxb)=='undefined'){maxb=255};
+var re=parseInt(randomScaleRange(minr,maxr));
+var gr=parseInt(randomScaleRange(ming,maxg));
+var br=parseInt(randomScaleRange(minb,maxb));
+return (re<<16) + (gr<<8) + (br);
+}
 function randomColor(minr,maxr,ming,maxg,minb,maxb) {
 if(typeof(minr)=='undefined'){minr=0};
 if(typeof(ming)=='undefined'){ming=0};
@@ -4186,6 +4234,9 @@ var gr=parseInt(randomRange(ming,maxg));
 var br=parseInt(randomRange(minb,maxb));
 return (re<<16) + (gr<<8) + (br);
 }
+function randomInt (a,b){
+	return parseInt(randomRange(a,b+1));
+}
 function fadeIn () {
 				station.alpha=0;
 				ui.tempStation.alpha=0;
@@ -4193,6 +4244,7 @@ function fadeIn () {
 				game.add.tween(ui.tempStation).to({alpha:1},100, Phaser.Easing.Linear.None, true, 0, false);
 				var r = randomRange(3,4);
 				nebula.scale.setTo(r,r);
+				r = randomRange(3,6);
 				nebula2.scale.setTo(r,r);
 				nebula.rotation=randomRange(-0.55,0.55);
 				nebula2.rotation=randomRange(-0.55,0.55)+Math.PI;
@@ -4280,7 +4332,7 @@ function create () {
 								nebula2.anchor.setTo(0.5,0.5);
 								var r = randomRange(3,4);
 												nebula.scale.setTo(r,r);
-								r = randomRange(3,4);
+								r = randomRange(3,6);
 												nebula2.scale.setTo(r,r);
 				nebula.rotation=randomRange(-0.55,0.55);
 				nebula2.rotation=randomRange(-0.55,0.55)+Math.PI;
@@ -5702,6 +5754,48 @@ function killTweensFromExplosion(explosion){
 								explosion.tween=undefined;
 				}
 }
+function goreBoom(explosionsGroup, x, y){
+
+				if(onscreen(x,y)){
+								var r = Math.random();
+
+								for(var i=0; i < 5 + (r * 3) ; i ++) { 
+												if(forceDead(explosions)){
+																var explosion = explosionsGroup.getFirstDead();
+																killTweensFromExplosion(explosion);
+																var rand2 = Math.random()>1.0 ? 13 : 13;
+																explosion.animations.play(bulletTypeName(rand2));
+																explosion.reset(x+randomRange(-20,20),y+randomRange(-20,20));
+																explosion.rotation = Math.random()*Math.PI;
+																explosion.fireVelocity=randomRange(30,80);
+																explosion.lifespan=randomRange(250,500);
+																r=randomRange(0.3,1.2);
+																explosion.body.angularVelocity=0;
+																explosion.scale.setTo(r,r);
+																explosion.blendMode=1;
+																explosion.blendMode=0;
+																explosion.alpha=randomRange(0.3,0.4);
+																if(Math.random()>0.5){ 
+																				var q = randomRange(1,8);
+																				explosion.lifespan*=Math.sqrt(rand2)*q/2;
+																				explosion.fireVelocity/=q;
+																				explosion.body.angularVelocity=randomRange(40,80)*randomSign()*Math.sin(randomRange(0,0.5*Math.PI));
+																				explosion.scale.tween=game.add.tween(explosion.scale).to({x:explosion.scale.x*14,y:explosion.scale.y*14},explosion.lifespan*1, Phaser.Easing.Sinusoidal.Out, true, 0, false);
+																				explosion.tween=game.add.tween(explosion).to({alpha:0},explosion.lifespan*2, Phaser.Easing.Exponential.Out, true, 0, false);
+
+																}else{
+																				explosion.scale.setTo(explosion.scale.x*2,explosion.scale.y*2);
+																				explosion.body.angularVelocity=randomRange(30,60)*randomSign()*Math.sin(randomRange(0,0.5*Math.PI));
+																				explosion.scale.tween=game.add.tween(explosion.scale).to({x:explosion.scale.x*7,y:explosion.scale.y*7},explosion.lifespan, Phaser.Easing.Quadratic.Out, true, 0, false);
+																				explosion.tween=game.add.tween(explosion).to({alpha:0},explosion.lifespan*2, Phaser.Easing.Exponential.Out, true, 0, false);
+																}
+
+
+																game.physics.arcade.velocityFromRotation(explosion.rotation, explosion.fireVelocity, explosion.body.velocity);
+												}
+								}
+				}
+}
 function asteroidBoom(explosionsGroup, x, y){
 
 				if(onscreen(x,y)){
@@ -5937,7 +6031,6 @@ function simpleGlow(explosionsGroup, x, y, bullet){
 								if(forceDead(explosionsGroup)){
 												var explosion = explosionsGroup.getFirstDead();
 												killTweensFromExplosion(explosion);
-												killTweensFromExplosion(explosion);
 												explosion.animations.play(bulletTypeName( bullet.bulletSprite));
 												var bulletOffsetX = bullet.width * 0.50 * Math.cos(bullet.rotation);
 												var bulletOffsetY = bullet.width * 0.50 * Math.sin(bullet.rotation);
@@ -5955,6 +6048,36 @@ function simpleGlow(explosionsGroup, x, y, bullet){
 								}
 
 				}
+}
+function airPuffs(explosionsGroup, x, y, bullet){
+				if(onscreen(x,y) && Math.random()<0.4){
+
+								var r = Math.random();
+
+								if(forceDead(explosionsGroup)){
+												var explosion = explosionsGroup.getFirstDead();
+												killTweensFromExplosion(explosion);
+												explosion.animations.play(bulletTypeName(10));
+												var bulletOffsetX = bullet.width * 0.50 * Math.cos(bullet.rotation);
+												var bulletOffsetY = bullet.width * 0.50 * Math.sin(bullet.rotation);
+												explosion.reset(x + bulletOffsetX,y + bulletOffsetY);
+												explosion.rotation = bullet.rotation + randomRange(-0.5,0.5);//bullet.rotation+Math.PI;
+												if(Math.random()>0.5){explosion.rotation+=Math.PI};
+												explosion.lifespan=1000;
+												r=randomRange(0.6,1.2);
+												explosion.body.velocity.x=bullet.body.velocity.x;
+												explosion.body.velocity.y=bullet.body.velocity.y;
+												explosion.scale.setTo(r,r);
+												explosion.alpha=randomRange(0.1,0.3);
+												explosion.blendMode=0;
+												explosion.body.angularVelocity=randomRange(39,50)*randomSign()/r;
+											  explosion.scale.tween=game.add.tween(explosion).to({alpha:0},explosion.lifespan, Phaser.Easing.Sinusoidal.Out, true, 0, false);
+											  explosion.scale.tween=game.add.tween(explosion.scale).to({x:explosion.scale.x*randomRange(1.5,2),y:explosion.scale.y*randomRange(1.5,2)},explosion.lifespan, Phaser.Easing.Sinusoidal.Out, true, 0, false);
+								}
+
+				}
+
+
 }
 function glow(explosionsGroup, x, y, bullet){
 
