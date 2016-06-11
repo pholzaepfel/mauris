@@ -1036,7 +1036,7 @@ enemyShip.prototype.spawnCorpses = function(numCorpses) {
 								for (var i = 0; i < numCorpses; i++){
 								bullet = this.spawnBullet(false);
 								bullet.blendMode=0;
-								bullet.scale.setTo(randomRange(0.5,1),randomRange(0.5,1));
+								bullet.scale.setTo(randomSign()*randomRange(1.0,1.5),randomSign()*randomRange(1.0,1.5));
 								bullet.tracking = 0;
 								bullet.bulletSprite=13;
 								bullet.lifespan=60000;
