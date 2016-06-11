@@ -1,6 +1,7 @@
 var gamemode;
 var defaultBehavior='neutral';
 var cheatmode = 0;
+var noblood = 0;
 var touchPressed = 0;
 var bulletTypes = [ 
 {'name':'pulse', 'id':0},
@@ -353,6 +354,12 @@ function lightPosition(ship){
 				}else{
 								return spacesAtEndOfRow(ship,(size-1)/2)*16;
 				}
+}
+function headlightFlicker(){
+		headlightIntensity=1;
+		if(Math.random()>player.health/player.healthMax){
+headlightIntensity=Math.sin(game.time.now/333);
+}
 }
 function headlight(){
 				var lightSpot=undefined;
@@ -2555,7 +2562,35 @@ playerShip.prototype.update = function(){
 												}
 
 												var fs = false;
+ if(typeof(this.target.owner)!='undefined'){
+
+
+												if(!this.target.alive){
+																this.target = this.sprite;
+												}
 												if(this.target != this.sprite){
+																var targetDistance = this.game.physics.arcade.distanceBetween(this.sprite, this.target);
+																var targetAngle = this.game.physics.arcade.angleBetween(this.sprite, this.target); 
+
+
+																var diffAngle = compareAngles(this.sprite.rotation,targetAngle);
+
+												}
+
+												var diffAngle = compareAngles(this.sprite.rotation,targetAngle);
+												if(diffAngle*60>this.turnRate)
+												{
+																this.left(1);
+												}else if(diffAngle*60<-this.turnRate){
+																this.right(1);
+												}
+												if(Math.abs(diffAngle) < 0.2){
+																this.up(1);
+												}
+
+								
+
+}else if(this.target != this.sprite){
 																var targetDistance = this.game.physics.arcade.distanceBetween(this.sprite, this.target);
 																var adjTarget = new Phaser.Point(this.target.x+this.target.body.velocity.x*(targetDistance/this.fireVelocity),this.target.y+this.target.body.velocity.y*(targetDistance/this.fireVelocity));
 																var targetAngle = this.game.physics.arcade.angleBetween(this.sprite, this.target); 
@@ -4304,6 +4339,9 @@ function create () {
 								gamemode = 'init';
 								cheatmode = 1;
 				}
+				if (gamemode == '?noblood'){
+								noblood=1;
+				}
 				if (gamemode == 'init'){
 								game.world.setBounds(-300000, -300000, 600000, 600000);
 
@@ -4583,6 +4621,13 @@ function sparkleBullets(s) {
 				if(game.time.now>s.nextSparkle){
 								s.sparkle(explosions,s.x,s.y,s);
 								s.nextSparkle=game.time.now+150;
+				}
+}
+function targetBulletIfCorpse (s){
+				if(s.bulletSprite == 13 &&Math.abs(game.input.activePointer.worldX - s.x) < 80 &&
+												Math.abs(game.input.activePointer.worldY - s.y) < 80) {
+								player.behavior='target';
+								player.target=s;
 				}
 }
 function pullLootToPlayer(s) {
@@ -4880,10 +4925,10 @@ headlightIntensity = 1;
 												if(!touchPressed){
 																player.targetAngle=game.physics.arcade.angleToPointer(player.sprite);
 												}
-												if(attemptTarget && !touchPressed){
+												if(attemptTarget && !touchPressed && gamemode=='war'){
 																player.behavior='move';
 																for (var i = 0; i < enemies.length; i++){
-																				if (enemies[i].alive && gamemode=='war'){
+																				if (enemies[i].alive){
 																								if(Math.abs(game.input.activePointer.worldX - enemies[i].sprite.x) < 80 &&
 																																Math.abs(game.input.activePointer.worldY - enemies[i].sprite.y) < 80) {
 																												ui.sound_redalert.play()
@@ -4895,6 +4940,7 @@ headlightIntensity = 1;
 																				}
 
 																}	
+																enemyBullets.forEachAlive(targetBulletIfCorpse,this);
 																attemptTarget=false;
 												}
 								}else{
@@ -5754,7 +5800,7 @@ function goreBoom(explosionsGroup, x, y){
 												if(forceDead(explosions)){
 																var explosion = explosionsGroup.getFirstDead();
 																killTweensFromExplosion(explosion);
-																var rand2 = Math.random()>1.0 ? 13 : 13;
+																var rand2 = noblood ? 10 : 13;
 																explosion.animations.play(bulletTypeName(rand2));
 																explosion.reset(x+randomRange(-20,20),y+randomRange(-20,20));
 																explosion.rotation = Math.random()*Math.PI;
