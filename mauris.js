@@ -2617,6 +2617,7 @@ else if(this.nextFire < game.time.now - 3000 && targetDistance < this.fireRange 
 				}
 };
 var touchPressed = 0;
+
 var noMusic = /(android)/i.test(navigator.userAgent);
 if (!window.location.href.match('voxxse')){
 	noMusic = true;
