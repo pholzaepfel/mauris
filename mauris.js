@@ -1498,12 +1498,6 @@ function preload () {
 				game.load.audio('powerup','assets/powerup.wav');
 				game.load.audio('missile','assets/missile.wav');
 				game.load.audio('bullet','assets/bullet.wav');
-				if(!noMusic){
-								game.load.audio('1','assets/1.ogg');
-								game.load.audio('2','assets/2.ogg');
-								game.load.audio('3','assets/3.ogg');
-								game.load.audio('4','assets/4.ogg');
-				}
 }
 
 
@@ -2627,7 +2621,7 @@ var noMusic = /(android)/i.test(navigator.userAgent);
 if (!window.location.href.match('voxxse')){
 	noMusic = true;
 }
-	noMusic = true;
+	noMusic = false;
 var headlightIntensity=1;
 var player;
 								var light = 0; 
@@ -2808,27 +2802,23 @@ gameUI.prototype.initSound = function(){
 				this.sound_bullet = game.add.audio('bullet');
 				this.currentMusic=undefined;
 				this.music=[];
-				if(!noMusic){
-								for(var i = 1; i <=4; i++){
-												this.music[i]=game.add.audio(i);
-								}
-				}
 }
 function checkForNewMusic(){
 				if(!noMusic){
-								if(game.time.now>nextMusic){
+								if(typeof(this.currentMusic=='undefined')){
+												ui.music_random()
+								}else if(this.currentMusic.ended){
 												ui.music_random();
 								}
 				}
 }
 gameUI.prototype.music_random = function(){
-				var rnd = parseInt(randomRange(2,this.music.length));
-				if(typeof(this.music[rnd])!='undefined' && typeof(this.currentMusic)!='undefined'){
-								this.currentMusic.stop();
+				var rnd = randomInt(1,4);
+				if(typeof(this.music[rnd])=='undefined'){
+					this.music[rnd]=new Audio('assets/' + rnd + '.ogg');
 				}
 				this.currentMusic=this.music[rnd];
-				this.currentMusic.play('',0,1,true);
-				nextMusic = game.time.now + this.currentMusic.totalDuration;
+				this.currentMusic.play();
 }
 gameUI.prototype.sound_randomBoom = function(){
 				if(Math.random()>0.5){

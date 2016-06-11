@@ -2501,22 +2501,28 @@ target.effects=function(){
 },
 {
 	'id':158,
-	'drops':false,
-	'name':'Component158',
-	'match':'4682',
-	'flavor':'--',
+	'drops':true,
+	'name':'Battle-worn Panel',
+	'match':'62',
+	'flavor':'medium armor, bonus damage',
 	'bonus':function(target){
-
+		target.health+=6;
+		target.fireDamage+=1;
+		target.fireEnergy+=0.5;
+		target.acceleration*=0.7;
 	}
 },
 {
 	'id':159,
-	'drops':false,
-	'name':'Component159',
-	'match':'4682',
-	'flavor':'--',
+	'drops':true,
+	'name':'Battle-worn Panel',
+	'match':'42',
+	'flavor':'medium armor, bonus damage',
 	'bonus':function(target){
-
+		target.health+=6;
+		target.fireDamage+=1;
+		target.fireEnergy+=0.5;
+		target.acceleration*=0.7;
 	}
 },
 {
@@ -2915,22 +2921,28 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 },
 {
 	'id':190,
-	'drops':false,
-	'name':'Component190',
-	'match':'4682',
-	'flavor':'--',
+	'drops':true,
+	'name':'Battle-worn Panel',
+	'match':'68',
+	'flavor':'medium armor, bonus damage',
 	'bonus':function(target){
-
+		target.health+=6;
+		target.fireDamage+=1;
+		target.fireEnergy+=0.5;
+		target.acceleration*=0.7;
 	}
 },
 {
 	'id':191,
-	'drops':false,
-	'name':'Component191',
-	'match':'4682',
-	'flavor':'--',
+	'drops':true,
+	'name':'Battle-worn Panel',
+	'match':'48',
+	'flavor':'medium armor, bonus damage',
 	'bonus':function(target){
-
+		target.health+=6;
+		target.fireDamage+=1;
+		target.fireEnergy+=0.5;
+		target.acceleration*=0.7;
 	}
 },
 {
@@ -4630,42 +4642,71 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 },
 {
 	'id':360,
-	'drops':false,
-	'name':'Component-360',
-	'match':'4682',
-	'flavor':'--',
+	'drops':true,
+	'name':'Shield Generator',
+	'match':'842',
+	'flavor':'press [Z] for invincibility',
 	'bonus':function(target){
+		target.altCheck=function(){
+			var ret = false;
+			this.energyReserve=0;
+			var targetDistance = game.physics.arcade.distanceBetween(this.sprite, this.target);
+			var targetAngle = game.physics.arcade.angleBetween(this.target, this.sprite);
 
+			if(targetDistance < 1600 && this.altCooldown < game.time.now + 5000){
+				this.energyReserve=this.energyMax*0.3;
+			}
+			if(targetDistance < (target.fireRange * 0.001 * target.fireVelocity) && Math.abs(compareAngles(this.target.rotation, targetAngle))<0.6)
+			{
+				ret = true;
+			}
+			return ret;
+		}
+		target.alt=function(){
+			if(game.time.now > this.altCooldown && this.takeEnergy(0.8)){				
+				ui.sound_boop.play();
+				this.shieldCooldown=game.time.now+100;
+				this.altCooldown=game.time.now+100;
+				this.shield=true;
+				shieldEffect(explosions, 4, this.sprite.x, this.sprite.y, this.sprite.body.velocity.x, this.sprite.body.velocity.y, this.ship.length);
+			}
+		}
 	}
 },
 {
 	'id':361,
-	'drops':false,
-	'name':'Component-361',
-	'match':'4682',
-	'flavor':'--',
+	'drops':true,
+	'name':'Mineral Scanner',
+	'match':'6',
+	'flavor':'track more enemies and find more loot',
 	'bonus':function(target){
-
+		target.radarTargets+=2;
+		target.dropRate+=0.008;
 	}
 },
 {
 	'id':362,
-	'drops':false,
-	'name':'Component-362',
-	'match':'4682',
-	'flavor':'--',
+	'drops':true,
+	'name':'Fusion Core',
+	'match':'4826',
+	'flavor':'improves recharge speed and maneuverability',
 	'bonus':function(target){
-
+		target.energyMax+=2;
+		target.energyAmount+=1;
+		target.acceleration+=0.2;
+		target.turnRate+=0.1;
 	}
 },
 {
 	'id':363,
-	'drops':false,
-	'name':'Component-363',
-	'match':'4682',
-	'flavor':'--',
+	'drops':true,
+	'name':'Habitat Module',
+	'match':'26',
+	'flavor':'light and tough',
 	'bonus':function(target){
-
+		target.health+=4;
+		target.acceleration-=0.1;
+		target.energyMax+=4;
 	}
 },
 {
@@ -4754,63 +4795,88 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 },
 {
 	'id':372,
-	'drops':false,
-	'name':'Component-372',
-	'match':'4682',
-	'flavor':'--',
+	'drops':true,
+	'name':'Durasteel Plating',
+	'match':'46',
+	'flavor':'strong armor, inhibits aim',
 	'bonus':function(target){
-
+		target.health+=9;
+		target.acceleration-=0.1;
+		target.turnRate-=0.3;
+		target.sprite.profile+=25;	
 	}
+
+
 },
 {
 	'id':373,
-	'drops':false,
-	'name':'Component-373',
-	'match':'4682',
-	'flavor':'--',
+	'drops':true,
+	'name':'Durasteel Plating',
+	'match':'82',
+	'flavor':'strong armor, inhibits aim',
 	'bonus':function(target){
-
+		target.health+=9;
+		target.acceleration-=0.1;
+		target.turnRate-=0.3;
+		target.sprite.profile+=25;	
 	}
+
 },
 {
 	'id':374,
-	'drops':false,
-	'name':'Component-374',
-	'match':'4682',
-	'flavor':'--',
+	'drops':true,
+	'name':'Durasteel Plating',
+	'match':'2',
+	'flavor':'strong armor, inhibits aim',
 	'bonus':function(target){
-
+		target.health+=9;
+		target.acceleration-=0.1;
+		target.turnRate-=0.3;
+		target.sprite.profile+=25;	
 	}
+
 },
 {
 	'id':375,
-	'drops':false,
-	'name':'Component-375',
-	'match':'4682',
-	'flavor':'--',
+	'drops':true,
+	'name':'Durasteel Plating',
+	'match':'6',
+	'flavor':'strong armor, inhibits aim',
 	'bonus':function(target){
-
+		target.health+=9;
+		target.acceleration-=0.1;
+		target.turnRate-=0.3;
+		target.sprite.profile+=25;	
 	}
+
 },
 {
 	'id':376,
-	'drops':false,
-	'name':'Component-376',
-	'match':'4682',
-	'flavor':'--',
+	'drops':true,
+	'name':'Durasteel Plating',
+	'match':'4',
+	'flavor':'strong armor, inhibits aim',
 	'bonus':function(target){
-
+		target.health+=9;
+		target.acceleration-=0.1;
+		target.turnRate-=0.3;
+		target.sprite.profile+=25;	
 	}
+
 },
 {
 	'id':377,
-	'drops':false,
-	'name':'Component-377',
-	'match':'4682',
-	'flavor':'--',
+	'drops':true,
+	'name':'Durasteel Plating',
+	'match':'8',
+	'flavor':'strong armor, inhibits aim',
 	'bonus':function(target){
-
+		target.health+=9;
+		target.acceleration-=0.1;
+		target.turnRate-=0.3;
+		target.sprite.profile+=25;	
 	}
+
 },
 {
 	'id':378,
