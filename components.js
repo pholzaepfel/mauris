@@ -500,6 +500,7 @@ var cmp = [
 	'flavor':'extra crewhands speed energy regeneration',
 	'bonus':function(target){
 		target.health+=2;
+		target.crewMax+=1;
 		target.energyAmount+=1;
 		target.acceleration+=0.1;
 		target.sprite.profile+=10;
@@ -512,6 +513,7 @@ var cmp = [
 	'match':'4',
 	'flavor':'still reliable and fast!',
 	'bonus':function(target){
+		target.crewMax+=1;
 		target.turnRate+=0.2;
 		target.health+=4;
 	}
@@ -538,7 +540,9 @@ target.thrustBehavior=cleanSmoke;
 	'match':'4682',
 	'flavor':'more energy and health',
 	'bonus':function(target){
+		target.crewMax+=1;
 		target.health+=3;
+		target.crewMax+=1;
 		target.energyAmount*=1.2;
 		target.energyMax+=3;
 		target.sprite.profile+=20;
@@ -551,6 +555,7 @@ target.thrustBehavior=cleanSmoke;
 	'match':'4',
 	'flavor':'superior damage control',
 	'bonus':function(target){
+		target.crewMax+=1;
 		target.health+=6;
 		target.turnRate+=0.2;
 	}
@@ -591,7 +596,7 @@ target.thrustBehavior=cleanSmoke;
 	'match':'8',
 	'flavor':'pull in loots from farther away',
 	'bonus':function(target){
-		target.lootRange+=300;
+		target.lootRange+=150;
 	}
 },
 {
@@ -660,7 +665,7 @@ target.thrustBehavior=cleanSmoke;
 		target.acceleration+=0.6;
 		target.sprite.body.maxVelocity.x+=15;
 		target.sprite.body.maxVelocity.y+=15;
-		target.sprite.profile+=50;
+		target.sprite.profile+=20;
 	}
 },
 {
@@ -668,10 +673,9 @@ target.thrustBehavior=cleanSmoke;
 	'drops':true,
 	'name':'Advanced Damage Control',
 	'match':'84',
-	'flavor':'improves health, but leeches energy',
+	'flavor':'improves health',
 	'bonus':function(target){
 		target.health+=12;
-		target.energyMax-=4;
 		target.fireEnergy+=0.5;
 		target.fireDamage+=1;
 	}
@@ -996,6 +1000,7 @@ target.thrustBehavior=cleanSmoke;
 	'flavor':'improves health and energy recharge',
 	'bonus':function(target){
 		target.health+=6;
+		target.crewMax+=2;
 		target.energyRate*=0.95;
 		target.sprite.profile+=10;	
 	}
@@ -1039,6 +1044,7 @@ function(tgt){
 	'match':'26',
 	'flavor':'light and tough',
 	'bonus':function(target){
+		target.crewMax+=1;
 		target.health+=4;
 		target.acceleration-=0.1;
 		target.energyMax+=4;
@@ -1051,6 +1057,7 @@ function(tgt){
 	'flavor':'light and tough',
 	'drops':true,
 	'bonus':function(target){
+		target.crewMax+=1;
 
 		target.health+=4;
 		target.acceleration-=0.1;
@@ -1605,6 +1612,7 @@ function(tgt){
 	'match':'86',
 	'flavor':'light and tough',
 	'bonus':function(target){
+		target.crewMax+=1;
 
 		target.health+=4;
 		target.acceleration-=0.1;
@@ -1618,6 +1626,7 @@ function(tgt){
 	'match':'84',
 	'flavor':'light and tough',
 	'bonus':function(target){
+		target.crewMax+=1;
 
 		target.health+=4;
 		target.acceleration-=0.1;
@@ -2315,6 +2324,7 @@ function(tgt){
 	'match':'26',
 	'flavor':'mostly useless in combat',
 	'bonus':function(target){
+		target.crewMax+=1;
 		target.sprite.body.maxVelocity.x-=10;
 		target.sprite.body.maxVelocity.y-=10;
 		target.health+=2;
@@ -2329,6 +2339,7 @@ function(tgt){
 	'match':'42',
 	'flavor':'mostly useless in combat',
 	'bonus':function(target){
+		target.crewMax+=1;
 		target.sprite.body.maxVelocity.x-=10;
 		target.sprite.body.maxVelocity.y-=10;
 		target.health+=2;
@@ -2737,6 +2748,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'match':'86',
 	'flavor':'unsanitary',
 	'bonus':function(target){
+		target.crewMax+=1;
 		target.energyAmount+=1;
 		target.health-=2;		
 	}
@@ -2760,6 +2772,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'match':'86',
 	'flavor':'mostly useless in combat',
 	'bonus':function(target){
+		target.crewMax+=1;
 		target.sprite.body.maxVelocity.x-=10;
 		target.sprite.body.maxVelocity.y-=10;
 		target.health+=2;
@@ -2775,6 +2788,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'match':'84',
 	'flavor':'mostly useless in combat',
 	'bonus':function(target){
+		target.crewMax+=1;
 		target.sprite.body.maxVelocity.x-=10;
 		target.sprite.body.maxVelocity.y-=10;
 		target.health+=2;
@@ -4704,6 +4718,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'match':'26',
 	'flavor':'light and tough',
 	'bonus':function(target){
+		target.crewMax+=1;
 		target.health+=4;
 		target.acceleration-=0.1;
 		target.energyMax+=4;
@@ -4963,6 +4978,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'flavor':'extra crewhands speed energy regeneration',
 	'bonus':function(target){
 		target.health+=2;
+		target.crewMax+=1;
 		target.energyAmount+=1;
 		target.acceleration+=0.1;
 		target.sprite.profile+=10;
@@ -5001,6 +5017,7 @@ target.thrustBehavior=cleanSmoke;
 	'match':'4',
 	'flavor':'more energy and health',
 	'bonus':function(target){
+		target.crewMax+=1;
 		target.health+=3;
 		target.energyAmount*=1.2;
 		target.energyMax+=3;
