@@ -365,7 +365,7 @@ function headlightFlicker(){
 function headlight(){
 				var lightSpot=undefined;
 				lightSpot={x:player.sprite.body.x+(player.sprite.body.width*0.5)+(Math.cos(player.sprite.rotation)*((player.sprite.body.width*0.5)-lightPosition(player.ship))),y:player.sprite.body.y+(player.sprite.body.width*0.5)+(Math.sin(player.sprite.rotation)*((player.sprite.body.width*0.5)-lightPosition(player.ship)))};
-
+				headlightGlow(explosions,lightSpot.x,lightSpot.y);
 				otherGraphics.lineStyle(3, 0xFFFFFF, 0);
 				for(var i=0.90;i>0.50;i-=0.02){
 								otherGraphics.beginFill(0xFFFFFF,0.0125*headlightIntensity);
@@ -1133,6 +1133,10 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 												this.sprite.alpha=6;
 												game.add.tween(this.sprite).to({r:255,g:255,b:255,alpha:1},400, Phaser.Easing.Exponential.Out, true, 0, false);
 
+								}else{
+									this.sprite.r=255;
+									this.sprite.g=255;
+									this.sprite.b=255;
 								}
 				}
 
@@ -1505,7 +1509,7 @@ function preload () {
 				game.load.image('starfield4', 'assets/starfield4.png');
 				game.load.image('haze', 'assets/haze.png');
 				game.load.image('haze2', 'assets/haze2.png');
-				game.load.spritesheet('sparkles', 'assets/sparkles.png',8,8);
+				game.load.spritesheet('sparkles', 'assets/sparklescyan.png',8,8);
 				game.load.spritesheet('sparklescyan', 'assets/sparklescyan.png',8,8);
 				game.load.spritesheet('thrust', 'assets/thrust.png',8,8);
 				game.load.spritesheet('sparks', 'assets/sparks.png',8,8);
@@ -2699,6 +2703,7 @@ if (!window.location.href.match('voxxse')){
 }
 noMusic = false;
 var headlightIntensity=1;
+var headlightGlowSprite;
 var player;
 var light = 0; 
 var currentBrightness=1.0;
@@ -3596,18 +3601,11 @@ gameUI.prototype.commsPing = function() {
 												this.nextCommsPing=false;
 								}
 								this.comms.alpha=1;
-								this.textLine = this.texts[this.textIndex].substr(0, this.textLineIndex++);
-								var s ='';
-								if(!this.textLine.substr(-1)=='\n'){
-												for(var i=0;i<this.textLine.length;i++){
-																if(this.textLineIndex > this.texts[this.textIndex].length || this.textLine[i]=='\n' || Math.random()<0.995 ){
-																				s+=this.textLine[i];
-																}else{
-																				s+=String.fromCharCode(Math.floor(Math.random()*255));
-																}
-												}
-								}
-								this.textLine=s;
+								this.textLine = this.texts[this.textIndex];
+								
+								if(!this.textLineIndex){
+this.textLineIndex=this.textLine.length+1;
+}
 								this.comms.setText(this.textLine);
 								if(this.textLineIndex>this.texts[this.textIndex].length){
 												this.nextComms=game.time.now+2000+this.textLineIndex*50;
@@ -6120,6 +6118,35 @@ function fireBoom(explosionsGroup, bulletSprite, x, y, rot){
 								}
 				}
 }
+function headlightGlow(explosionsGroup, x, y){
+
+				if(onscreen(x,y)){
+
+								var r = Math.random();
+								if(typeof(headlightGlowSprite)=='undefined'){
+								if(forceDead(explosionsGroup)){
+												var explosion = explosionsGroup.getFirstDead();
+												killTweensFromExplosion(explosion);
+												explosion.animations.play(bulletTypeName(0));
+												explosion.reset(x,y);
+												explosion.rotation = randomRange(-0.5,0.5);//bullet.rotation+Math.PI;
+												if(Math.random()>0.5){explosion.rotation+=Math.PI};
+												explosion.lifespan=-1;
+												headlightGlowSprite=explosion;
+								}
+}
+
+												headlightGlowSprite.animations.play(bulletTypeName(0));
+												headlightGlowSprite.reset(x,y);
+											headlightGlowSprite.lifespan=-1;
+												headlightGlowSprite.body.velocity.x=player.sprite.body.velocity.x;
+												headlightGlowSprite.body.velocity.y=player.sprite.body.velocity.y;
+												headlightGlowSprite.rotation=game.time.now/5000;
+												headlightGlowSprite.scale.setTo(headlightIntensity,headlightIntensity);
+												headlightGlowSprite.alpha=headlightIntensity*0.8;
+												headlightGlowSprite.blendMode=1;
+						}
+}
 function simpleGlow(explosionsGroup, x, y, bullet){
 
 				if(onscreen(x,y)){
@@ -6437,7 +6464,7 @@ function spawnLoots(_count, x, y){
 												if(typeof(loot.pulseTween)!='undefined'){
 																loot.pulseTween.stop();
 												}
-												loot.loadTexture('parts', Math.floor(randomRange(0,4))+26);
+												loot.loadTexture('parts', Math.floor(randomRange(0,4))+378); // magic number part id
 												loot.lifespan = 60000;
 												loot.reset(x + randomRange(-16,16), y+randomRange(-16,16));
 												loot.rotation = Math.random()*2*Math.PI;

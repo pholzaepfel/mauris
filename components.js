@@ -4563,7 +4563,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'id':352,
 	'drops':true,
 	'name':'Radioactive Thruster',
-	'match':'628',
+	'match':'4628',
 	'flavor':'mostly safe',
 	'bonus':function(target){
 		target.thrustBehavior=unstableSmoke;
@@ -5142,11 +5142,27 @@ target.thrustBehavior=cleanSmoke;
 {
 	'id':400,
 	'drops':false,
-	'name':'Component-400',
+	'name':'Container',
 	'match':'4682',
-	'flavor':'--',
+	'flavor':'Containers show on radar, and also give buckets of ore.',
 	'bonus':function(target){
+		target.sprite.profile=500;
+		target.ai=aiModes['asteroidInit'];
+		target.health-=3;
+		target.nextPulse=game.time.now;
+		target.oreChance=1;
+		target.effects=function(){
 
+			if(Math.random() < 0.2 && onscreen(this.sprite.x,this.sprite.y)){
+				lootSparkle(this.sprite);
+			}
+					if (this.nextPulse < game.time.now && onscreen(this.sprite.x,this.sprite.y)){
+				
+		this.sprite.alpha=1;		
+				game.add.tween(target.sprite).to({alpha:4},200, Phaser.Easing.Exponential.In, true, 0, false).to({alpha:1},200, Phaser.Easing.Exponential.Out, true, 0, false);
+				
+				this.nextPulse=game.time.now+1000;
+}};
 	}
 },
 {
