@@ -1153,7 +1153,7 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 								}else{
 												sparkExplosion(pew, this.sprite);	
 												bigBoom(explosions,this.sprite.x,this.sprite.y);
-												if(Math.random()<0.08+(0.01*Math.sqrt(this.ship.length))){
+												if(Math.random()<0.08+(0.02*Math.sqrt(this.ship.length))){
 												this.spawnCorpses(randomInt(1,Math.pow(this.ship.length,1/2.5)));
 									}
 								}

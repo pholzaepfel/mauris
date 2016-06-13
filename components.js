@@ -2082,14 +2082,9 @@ function(tgt){
 		target.bulletSparkle=rocketTrail;
 		target.bulletBlendMode=0;
 		target.fireEnergy+=2;
-		target.fireDamage+=8;
+		target.fireDamage+=4;
 		target.fireSound=ui.sound_missile;
-		target.attackAngleThreshold+=0.15;
-		target.bulletBehavior.push(function(bullet){bullet.body.velocity.x*=.75+Math.random()*.5;
-				bullet.body.velocity.y*=.75+Math.random()*.5});
-
-		target.fireVelocity+=100;
-		target.fireEnergy+=1;
+		target.fireVelocity-=50;
 		target.sprite.profile+=25;
 	}
 },
@@ -6035,17 +6030,14 @@ target.thrustBehavior=cleanSmoke;
 		target.bulletSparkle=rocketTrail;
 		target.bulletBlendMode=0;
 		target.fireEnergy+=2;
-		target.fireDamage+=8;
+		target.fireDamage+=4;
 		target.fireSound=ui.sound_missile;
-		target.attackAngleThreshold+=0.15;
-		target.bulletBehavior.push(function(bullet){bullet.body.velocity.x*=.75+Math.random()*.5;
-				bullet.body.velocity.y*=.75+Math.random()*.5});
-
-		target.fireVelocity+=100;
-		target.fireEnergy+=1;
+		target.fireVelocity-=50;
 		target.sprite.profile+=25;
+
 	}
-},
+}
+,
 {
 	'id':481,
 	'drops':true,
