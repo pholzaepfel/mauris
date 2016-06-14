@@ -3515,9 +3515,9 @@ gameUI.prototype.radarPing = function() {
 								var bracketLeft = '[';
 								var bracketRight = ']';
 
-								var missionTarget = !playerStats.mission.complete && this.enemies[i].missionTarget ? 128 : 0;
+								var missionTarget = this.enemies[i].ai == aiModes['asteroid'] ? 128 : 0;
 
-								if(player.profileShow){
+								if(player.profileShow && !missionTarget){
 												var adjustedProfile = 200 + Math.pow(player.sprite.profile,profileExponent);
 												this.blinkDistance=adjustedProfile*2.1;
 												if(targetDistance<0.5*blinkDistance){
@@ -3545,11 +3545,11 @@ gameUI.prototype.radarPing = function() {
 								if(game.time.now>this.nextRadarSound && targetDistance < 0.75 * blinkDistance && this.enemies[i].sprite.profile > 200){
 												this.nextRadarSound=game.time.now+3333;
 								}
-								if (targetDistance < 0.5 * blinkDistance && game.time.now % 250 > 125){
+								if (!missionTarget && targetDistance < 0.5 * blinkDistance && game.time.now % 250 > 125){
 												s='['+s+']';
 												this.radar[i].style.fill="rgb(255," + missionTarget + ",0)";
 								}
-								else if (targetDistance < blinkDistance && targetDistance >= 0.5 * blinkDistance && game.time.now % 1000 > 500)  {
+								else if (!missionTarget && targetDistance < blinkDistance && targetDistance >= 0.5 * blinkDistance && game.time.now % 1000 > 500)  {
 												s='['+s+']';
 												this.radar[i].style.fill="rgb(255," + missionTarget + ",0)";
 								} else {
