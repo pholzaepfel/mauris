@@ -2753,6 +2753,7 @@ var spawnShips=[
 				var hazeWhite,hazeRed,hazePurple;
 				var nebula2;
 				var nebula;
+				var planets = [];
 				var planet;
 				var planetlod;
 				var planetdirt;
@@ -2894,7 +2895,7 @@ function checkForNewMusic(){
 				}
 }
 gameUI.prototype.music_random = function(){
-				var rnd = randomInt(1,4);
+				var rnd = randomInt(1,5);
 				if(typeof(this.music[rnd])=='undefined'){
 								this.music[rnd]=new Audio('assets/' + rnd + '.ogg');
 				}
@@ -4419,6 +4420,7 @@ function create () {
 								if(resolutionY>resolutionX){nebula.rotation+=randomSign()*Math.PI/2};
 								nebula.tint=randomColor(128,255,128,255,128,255);
 								nebula2.tint=randomColor(128,255,128,255,128,255);
+
 								planet = game.add.sprite(resolutionX/0.8, resolutionY/0.8, 'planetslod');
 								planet.baseX=randomRange(-300,400) * randomSign();
 								planet.baseY=randomRange(-300,400) * randomSign();
@@ -5323,7 +5325,7 @@ function update () {
 												}
 
 								}
-								nebula2.reset(player.sprite.body.x*0.9985,player.sprite.body.y*0.9985);
+							nebula2.reset(player.sprite.body.x*0.9980,player.sprite.body.y*0.9980);
 								nebula.reset(player.sprite.body.x*0.9985,player.sprite.body.y*0.9985);
 								// scrolling
 								scroll(hazeWhite,-0.0015);
