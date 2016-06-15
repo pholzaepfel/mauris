@@ -5487,10 +5487,10 @@ function update () {
 								planet.hazeModifier=0;
 								planet.hazeModifier=Math.max(0,(2*planet.scaleModifier)-4);
 								planet.hazeModifier=Math.min(planet.hazeModifier,0.4);
-								hazeRed.scale.setTo(2*(Math.cos(game.time.now/13000)+hazeRed.baseScale+(planet.hazeModifier*2)),(1.75*hazeRed.baseScale+(planet.hazeModifier*2)));
+								hazeRed.scale.setTo(2*(Math.cos(game.time.now/13000)+hazeRed.baseScale+(planet.hazeModifier*2)),(1.4*hazeRed.baseScale+1+Math.cos(game.time.now/9000)+(planet.hazeModifier*2)));
 								hazeRed.width=resolutionX/hazeRed.scale.x;
 								hazeRed.height=resolutionY/hazeRed.scale.y;
-								hazePurple.scale.setTo(Math.sin(game.time.now/10000)+hazePurple.baseScale+planet.hazeModifier,0.4*(hazePurple.baseScale+planet.hazeModifier));
+								hazePurple.scale.setTo(Math.sin(game.time.now/10000)+hazePurple.baseScale+planet.hazeModifier,0.3*(hazePurple.baseScale+Math.cos(game.time.now/7000)+1+planet.hazeModifier));
 								hazePurple.width=resolutionX/hazePurple.scale.x;
 								hazePurple.height=resolutionY/hazePurple.scale.y;
 								hazeRed.speed=playerStats.mission.hazeRedSpeed+playerStats.mission.hazeRedSpeed*planet.hazeModifier*2;
