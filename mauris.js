@@ -20,6 +20,68 @@ var bulletTypes = [
 {'name':'fire', 'id':15}
 
 ];
+var growShipSE = function(ship){
+	var size = Math.sqrt(ship.length);
+	var outShip = [];
+	var j=0;
+	for(var i=0;i<ship.length;i++){
+	outShip[j++]=ship[i];
+		if(i % size == size-1){
+			outShip[j++]=-1;
+		}
+		}
+	for(var i=(size+1)*(size);i<Math.pow(size+1,2);i++){
+		outShip[i]=-1;
+	}
+	  return outShip;
+}
+var growShipNW = function(ship){
+	var size = Math.sqrt(ship.length);
+	var outShip = [];
+	var j=0;
+	for(var i=0;i<size+1;i++){
+		outShip[i]=-1;
+		j++;
+	}
+		for(var i=0;i<ship.length;i++){
+		if(i % size == 0){
+			outShip[j++]=-1;
+		}
+		outShip[j++]=ship[i];
+	}
+return outShip;
+}
+var growShipNE = function(ship){
+	var size = Math.sqrt(ship.length);
+	var outShip = [];
+	var j=0;
+	for(var i=0;i<size+1;i++){
+		outShip[i]=-1;
+		j++;
+	}
+		for(var i=0;i<ship.length;i++){
+	outShip[j++]=ship[i];
+		if(i % size == size-1){
+			outShip[j++]=-1;
+		}
+		}
+  return outShip;
+}
+var growShipSW = function(ship){
+	var size = Math.sqrt(ship.length);
+	var outShip = [];
+	var j=0;
+	for(var i=0;i<ship.length;i++){
+		if(i % size == 0){
+			outShip[j++]=-1;
+		}
+		outShip[j++]=ship[i];
+	}
+	for(var i=(size+1)*(size);i<Math.pow(size+1,2);i++){
+		outShip[i]=-1;
+	}
+	return outShip;
+}
 var bulletTypeName = function(id){
 				for (var i=0;i<bulletTypes.length;i++){
 								if(bulletTypes[i].id==id){
