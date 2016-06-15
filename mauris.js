@@ -445,7 +445,8 @@ function queryComponent(id){
 var scroll = function(target,modifier ){
 				var ret ={'x':0,y:'0'};
 				target.tilePosition.x += ( modifier*game.time.physicsElapsed*player.sprite.body.velocity.x / target.scale.x) + (game.time.physicsElapsed * (target.speed));
-				target.tilePosition.y += ( modifier*game.time.physicsElapsed*player.sprite.body.velocity.y / target.scale.y) ;
+				var ymodifier = target.scale.y / target.scale.x;
+				target.tilePosition.y += ( ymodifier * modifier*game.time.physicsElapsed*player.sprite.body.velocity.y / target.scale.y) ;
 }
 var blackOut = function(){
 
@@ -2271,6 +2272,9 @@ function optimizeComponentsOptimistic(ship){
 								}
 				}
 				return outship;
+}
+function addComponent(component,ship){
+
 }
 function optimizeComponents(ship){
 				var outship = ship.slice(0);
@@ -4339,7 +4343,7 @@ function fadeOut () {
 
 				hazeRed.tint=playerStats.mission.hazeRedTint;
 				hazeWhite.tint=playerStats.mission.hazeWhiteTint;
-				hazePurple.tint=playerStats.mission.hazePurpleTint;
+				hazePurple.tint=randomMutedColor(140,255,140,255,140,255);
 
 				hazeRed.speed=playerStats.mission.hazeRedSpeed;
 				hazeWhite.speed=playerStats.mission.hazeWhiteSpeed;
@@ -4360,6 +4364,22 @@ function randomVividColor(minr,maxr,ming,maxg,minb,maxb) {
 				var gr=parseInt(randomScaleRange(ming,maxg));
 				var br=parseInt(randomScaleRange(minb,maxb));
 				return (re<<16) + (gr<<8) + (br);
+}
+function randomMutedColor(minr,maxr,ming,maxg,minb,maxb) {
+				if(typeof(minr)=='undefined'){minr=0};
+				if(typeof(ming)=='undefined'){ming=0};
+				if(typeof(minb)=='undefined'){minb=0};
+				if(typeof(maxr)=='undefined'){maxr=255};
+				if(typeof(maxg)=='undefined'){maxg=255};
+				if(typeof(maxb)=='undefined'){maxb=255};
+				var re=parseInt(randomRange(minr,maxr));
+				var gr=parseInt(randomRange(ming,maxg));
+				var br=parseInt(randomRange(minb,maxb));
+re = (re+re+gr+br)/4;
+
+gr = (gr+re+gr+br)/4;
+br = (br+re+gr+br)/4;
+				return (parseInt(re<<16) + parseInt(gr<<8) + parseInt(br));
 }
 function randomColor(minr,maxr,ming,maxg,minb,maxb) {
 				if(typeof(minr)=='undefined'){minr=0};
@@ -4431,7 +4451,7 @@ function fadeIn () {
 
 				hazeRed.tint=playerStats.mission.hazeRedTint;
 				hazeWhite.tint=playerStats.mission.hazeWhiteTint;
-				hazePurple.tint=playerStats.mission.hazePurpleTint;
+				hazePurple.tint=randomMutedColor(140,255,140,255,140,255);
 
 				hazeRed.speed=playerStats.mission.hazeRedSpeed;
 				hazeWhite.speed=playerStats.mission.hazeWhiteSpeed;
@@ -4511,13 +4531,13 @@ function create () {
 								hazeRed.alpha=1; //randomRange(0,0.8)-0.2;
 								hazeRed.blendMode=1;
 								hazeRed.speed = 160;
-								hazePurple = game.add.tileSprite(0, 0, resolutionX/3, resolutionY/3, 'haze2');
+								hazePurple = game.add.tileSprite(0, 0, resolutionX/2, resolutionY/2, 'haze');
 								hazePurple.tilePosition.x = Math.random()*resolutionX;
 								hazePurple.tilePosition.y = Math.random()*resolutionY;
 								hazePurple.fixedToCamera = true;
-								hazePurple.baseScale=5;
-								hazePurple.scale.x=3;
-								hazePurple.scale.y=3;
+								hazePurple.baseScale=2;
+								hazePurple.scale.x=2;
+								hazePurple.scale.y=2;
 								hazePurple.alpha=1.0; //randomRange(0,0.6)-0.2;
 								hazePurple.blendMode=2;
 								hazePurple.speed=17;
@@ -5461,25 +5481,26 @@ function update () {
 								if(planetfall.alpha>0){
 												planetfall.visible=true;
 								}
-								scroll(hazeRed,-0.26);
-								scroll(hazePurple,-0.9);
+								scroll(hazeRed,-0.66);
+								scroll(hazePurple,-0.666);
 								//hazePurple.bringToTop();
 								planet.hazeModifier=0;
 								planet.hazeModifier=Math.max(0,(2*planet.scaleModifier)-4);
-								planet.hazeModifier=Math.min(planet.hazeModifier,1);
-								hazeRed.scale.setTo(hazeRed.baseScale+planet.hazeModifier,hazeRed.baseScale+planet.hazeModifier);
+								planet.hazeModifier=Math.min(planet.hazeModifier,0.4);
+								hazeRed.scale.setTo(2*(Math.cos(game.time.now/13000)+hazeRed.baseScale+(planet.hazeModifier*2)),(1.75*hazeRed.baseScale+(planet.hazeModifier*2)));
 								hazeRed.width=resolutionX/hazeRed.scale.x;
 								hazeRed.height=resolutionY/hazeRed.scale.y;
-								hazePurple.scale.setTo(hazePurple.baseScale+planet.hazeModifier,hazePurple.baseScale+planet.hazeModifier);
+								hazePurple.scale.setTo(Math.sin(game.time.now/10000)+hazePurple.baseScale+planet.hazeModifier,0.4*(hazePurple.baseScale+planet.hazeModifier));
 								hazePurple.width=resolutionX/hazePurple.scale.x;
 								hazePurple.height=resolutionY/hazePurple.scale.y;
 								hazeRed.speed=playerStats.mission.hazeRedSpeed+playerStats.mission.hazeRedSpeed*planet.hazeModifier*2;
 								hazeRed.alpha=playerStats.mission.hazeRed-planet.hazeModifier;
+								hazeRed.alpha*=0.75;
 								hazeWhite.alpha=playerStats.mission.hazeWhite*(1-planet.hazeModifier);
-								hazePurple.alpha=playerStats.mission.hazePurple*(1-(planet.hazeModifier*0.3));
+								hazePurple.alpha=playerStats.mission.hazePurple*(1.3-planet.hazeModifier);
 								hazePurple.speed=playerStats.mission.hazePurple+playerStats.mission.hazePurple*planet.hazeModifier*2;
 								hazeWhite.visible=false;
-								if(hazeWhite.alpha>0){
+								if(hazeWhite.alpha>0 && planetdirt.alpha < 0.1){
 												hazeWhite.visible=true;
 								}
 								hazePurple.visible=false;
