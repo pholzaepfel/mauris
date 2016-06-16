@@ -92,7 +92,7 @@ var missions = [
 	'distanceMin':12000,
 	'distanceMax':12000,
 	'hazePurpleBlendMode':2,
-	'hazeRedBlendMode':1,
+	'hazeRedBlendMode':0,
 	'intro':[''],
 	'outro':['congrats'],
 	'win':{
@@ -154,7 +154,7 @@ var missions = [
 	'distanceMin':10000,
 	'distanceMax':12000,
 	'hazePurpleBlendMode':2,
-	'hazeRedBlendMode':1,
+	'hazeRedBlendMode':0,
 	'intro':['!! BOSSFIGHT !!'],
 	'outro':['BOOoooom!'],
 	'win':{
@@ -242,7 +242,7 @@ var missions = [
 	'distanceMin':12000,
 	'distanceMax':12000,
 	'hazePurpleBlendMode':2,
-	'hazeRedBlendMode':1,
+	'hazeRedBlendMode':0,
 	'intro':['good job. keep making things explode.'],
 	'outro':[''],
 	'win':{
@@ -323,7 +323,7 @@ var missions = [
 	'distanceMin':6000,
 	'distanceMax':9000,
 	'hazePurpleBlendMode':2,
-	'hazeRedBlendMode':1,
+	'hazeRedBlendMode':0,
 	'intro':['!! DO NOT ENGAGE !!'],
 	'outro':[''],
 	'win':{
@@ -382,7 +382,7 @@ var missions = [
 	'distanceMin':12000,
 	'distanceMax':12000,
 	'hazePurpleBlendMode':2,
-	'hazeRedBlendMode':1,
+	'hazeRedBlendMode':0,
 	'intro':[''],
 	'outro':[''],
 	'win':{
@@ -449,7 +449,7 @@ var missions = [
 	'distanceMin':12000,
 	'distanceMax':12000,
 	'hazePurpleBlendMode':2,
-	'hazeRedBlendMode':1,
+	'hazeRedBlendMode':0,
 	'intro':[''],
 	'outro':[''],
 	'win':{
@@ -523,7 +523,7 @@ var missions = [
 	'distanceMin':13000,
 	'distanceMax':14000,
 	'hazePurpleBlendMode':2,
-	'hazeRedBlendMode':1,
+	'hazeRedBlendMode':0,
 	'intro':[''],
 	'outro':[''],
 	'win':{
@@ -596,7 +596,7 @@ var missions = [
 	'distanceMin':12000,
 	'distanceMax':13000,
 	'hazePurpleBlendMode':2,
-	'hazeRedBlendMode':1,
+	'hazeRedBlendMode':0,
 	'intro':[''],
 	'outro':[''],
 	'win':{
@@ -671,7 +671,7 @@ var missions = [
 	'distanceMin':6000,
 	'distanceMax':9000,
 	'hazePurpleBlendMode':2,
-	'hazeRedBlendMode':1,
+	'hazeRedBlendMode':0,
 	'intro':['components will upgrade your ship.\ntake care, they can be lost in combat'],
 	'outro':['nice job. come on to the next station'],
 	'win':{
@@ -752,7 +752,7 @@ var missions = [
 	'distanceMin':12000,
 	'distanceMax':12000,
 	'hazePurpleBlendMode':2,
-	'hazeRedBlendMode':1,
+	'hazeRedBlendMode':0,
 	'intro':[''],
 	'outro':[''],
 	'win':{
@@ -814,7 +814,7 @@ var missions = [
 	'distanceMin':12000,
 	'distanceMax':12000,
 	'hazePurpleBlendMode':2,
-	'hazeRedBlendMode':1,
+	'hazeRedBlendMode':0,
 	'intro':[''],
 	'outro':[''],
 	'win':{
@@ -884,7 +884,7 @@ var missions = [
 	'distanceMin':5000,
 	'distanceMax':8000,
 	'hazePurpleBlendMode':2,
-	'hazeRedBlendMode':1,
+	'hazeRedBlendMode':0,
 	'intro':[''],
 	'outro':[''],
 	'win':{
@@ -931,7 +931,7 @@ var missions = [
 	'distanceMin':12000,
 	'distanceMax':12000,
 	'hazePurpleBlendMode':2,
-	'hazeRedBlendMode':1,
+	'hazeRedBlendMode':0,
 	'intro':[''],
 	'outro':[''],
 	'win':{
