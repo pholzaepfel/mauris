@@ -4343,7 +4343,7 @@ function fadeOut () {
 				game.add.tween(hazeWhite).to({alpha:0},5000, Phaser.Easing.Exponential.Out, true, 0, false);
 				game.add.tween(hazePurple).to({alpha:0},5000, Phaser.Easing.Exponential.Out, true, 0, false);
 
-				hazeRed.tint=randomMutedColor(140,255,140,255,140,255);
+				hazeRed.tint=randomMutedColor(40,200,40,200,40,200);
 				hazeWhite.tint=randomMutedColor(140,255,140,255,140,255);
 				hazePurple.tint=randomMutedColor(140,255,140,255,140,255);
 
@@ -4449,7 +4449,7 @@ function fadeIn () {
 				game.add.tween(hazeWhite).to({alpha:playerStats.mission.hazeWhite},100, Phaser.Easing.Linear.None, true, 0, false);
 				game.add.tween(hazePurple).to({alpha:playerStats.mission.hazePurple},100, Phaser.Easing.Linear.None, true, 0, false);
 
-				hazeRed.tint=randomMutedColor(140,255,140,255,140,255);
+				hazeRed.tint=randomMutedColor(40,200,40,200,40,200);
 				hazeWhite.tint=randomMutedColor(140,255,140,255,140,255);
 				hazePurple.tint=randomMutedColor(140,255,140,255,140,255);
 
@@ -5491,7 +5491,7 @@ function update () {
 								planet.hazeModifier=0;
 								planet.hazeModifier=Math.max(0,(2*planet.scaleModifier)-4);
 								planet.hazeModifier=Math.min(planet.hazeModifier,0.4);
-								hazeRed.scale.setTo(1+(Math.cos(game.time.now/7000)+hazeRed.baseScale+(planet.hazeModifier)),(0.8*hazeRed.baseScale+1+Math.cos(game.time.now/4000)+(planet.hazeModifier)));
+								hazeRed.scale.setTo(2+(Math.cos(game.time.now/7000)+hazeRed.baseScale+(planet.hazeModifier)),(0.8*hazeRed.baseScale+1+Math.cos(game.time.now/4000)+(planet.hazeModifier)));
 								hazeRed.width=1.5*resolutionX/hazeRed.scale.x;
 								hazeRed.height=1.5*resolutionY/hazeRed.scale.y;
 								hazePurple.scale.setTo(1+Math.sin(game.time.now/5000)+hazePurple.baseScale+planet.hazeModifier,0.7575*(hazePurple.baseScale+Math.cos(game.time.now/6000)+1+(0.4*planet.hazeModifier)));

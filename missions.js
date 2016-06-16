@@ -661,7 +661,7 @@ var missions = [
 	'componentsCount':2,
 	'hazeRed':0.3,
 	'hazeWhite':1.6,
-	'hazePurple':0.5,
+	'hazePurple':0.7,
 	'hazeRedTint':16777215,
 	'hazeWhiteTint':16777215,
 	'hazePurpleTint':16777215,
