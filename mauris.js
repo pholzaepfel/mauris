@@ -428,6 +428,7 @@ function headlight(){
 				var lightSpot=undefined;
 				lightSpot={x:player.sprite.body.x+(player.sprite.body.width*0.5)+(Math.cos(player.sprite.rotation)*((player.sprite.body.width*0.5)-lightPosition(player.ship))),y:player.sprite.body.y+(player.sprite.body.width*0.5)+(Math.sin(player.sprite.rotation)*((player.sprite.body.width*0.5)-lightPosition(player.ship)))};
 				headlightGlow(explosions,lightSpot.x,lightSpot.y);
+				otherGraphics.blendMode=1;
 				otherGraphics.lineStyle(3, 0xFFFFFF, 0);
 				for(var i=0.90;i>0.50;i-=0.01){
 								otherGraphics.beginFill(0xFFFFFF,0.00625*headlightIntensity);
@@ -437,6 +438,7 @@ function headlight(){
 								otherGraphics.lineTo(lightSpot.x,lightSpot.y);
 								otherGraphics.endFill();
 				}
+				otherGraphics.blendMode=0;
 }
 
 function queryComponent(id){
@@ -909,7 +911,7 @@ shipPart.prototype.update = function(){
 								if(this.sprite.alpha==1 && lightness > 1){
 												this.sprite.alpha=lightness;
 								}
-								lightness=Math.min(lightness,1);
+									lightness=Math.min(lightness,1);
 								this.sprite.tint = (parseInt(this.target.r * lightness) << 16) + (parseInt(this.target.g*lightness) << 8) + parseInt(this.target.b * lightness);
 				}
 				if(this.target.alive){
@@ -4341,8 +4343,8 @@ function fadeOut () {
 				game.add.tween(hazeWhite).to({alpha:0},5000, Phaser.Easing.Exponential.Out, true, 0, false);
 				game.add.tween(hazePurple).to({alpha:0},5000, Phaser.Easing.Exponential.Out, true, 0, false);
 
-				hazeRed.tint=playerStats.mission.hazeRedTint;
-				hazeWhite.tint=playerStats.mission.hazeWhiteTint;
+				hazeRed.tint=randomMutedColor(140,255,140,255,140,255);
+				hazeWhite.tint=randomMutedColor(140,255,140,255,140,255);
 				hazePurple.tint=randomMutedColor(140,255,140,255,140,255);
 
 				hazeRed.speed=playerStats.mission.hazeRedSpeed;
@@ -4428,8 +4430,6 @@ function fadeIn () {
 				planetlod.baseX=planet.baseX;
 				planetlod.baseY=planet.baseY;
 				planet.x = planet.baseX;
-				planet.x = planet.baseX;
-				planet.y = planet.baseY;
 				planet.y = planet.baseY;
 				planetlod.rotation=randomRange(0,2*Math.PI);
 				planetlod.baseScale=planet.baseScale;
@@ -4449,8 +4449,8 @@ function fadeIn () {
 				game.add.tween(hazeWhite).to({alpha:playerStats.mission.hazeWhite},100, Phaser.Easing.Linear.None, true, 0, false);
 				game.add.tween(hazePurple).to({alpha:playerStats.mission.hazePurple},100, Phaser.Easing.Linear.None, true, 0, false);
 
-				hazeRed.tint=playerStats.mission.hazeRedTint;
-				hazeWhite.tint=playerStats.mission.hazeWhiteTint;
+				hazeRed.tint=randomMutedColor(140,255,140,255,140,255);
+				hazeWhite.tint=randomMutedColor(140,255,140,255,140,255);
 				hazePurple.tint=randomMutedColor(140,255,140,255,140,255);
 
 				hazeRed.speed=playerStats.mission.hazeRedSpeed;
@@ -4519,23 +4519,25 @@ function create () {
 								planetfall.scale.setTo(2,2);
 								planetfall.tilePosition.x=0;
 								planetfall.tilePosition.y=0;
-								hazeRed = game.add.tileSprite(0, 0, resolutionX/3, resolutionY/3, 'haze');
 								planetdirt.speed=0;
 								planetfall.speed=0;
+								hazeRed = game.add.tileSprite(resolutionX/2, resolutionY/2, resolutionX/3, resolutionY/3, 'haze');
+hazeRed.anchor.setTo(0.5,0.5);
 								hazeRed.tilePosition.x = Math.random()*resolutionX;
 								hazeRed.tilePosition.y = Math.random()*resolutionY;
 								hazeRed.fixedToCamera = true;
-								hazeRed.baseScale=3;
+								hazeRed.baseScale=2.1;
 								hazeRed.scale.x=hazeRed.baseScale;
 								hazeRed.scale.y=hazeRed.baseScale;
 								hazeRed.alpha=1; //randomRange(0,0.8)-0.2;
 								hazeRed.blendMode=1;
 								hazeRed.speed = 160;
-								hazePurple = game.add.tileSprite(0, 0, resolutionX/2, resolutionY/2, 'haze');
+								hazePurple = game.add.tileSprite(resolutionX/2, resolutionY/2, resolutionX/2, resolutionY/2, 'haze');
+hazePurple.anchor.setTo(0.5,0.5);
 								hazePurple.tilePosition.x = Math.random()*resolutionX;
 								hazePurple.tilePosition.y = Math.random()*resolutionY;
 								hazePurple.fixedToCamera = true;
-								hazePurple.baseScale=2;
+								hazePurple.baseScale=1.2;
 								hazePurple.scale.x=2;
 								hazePurple.scale.y=2;
 								hazePurple.alpha=1.0; //randomRange(0,0.6)-0.2;
@@ -5426,7 +5428,7 @@ function update () {
 								planet.reset(player.sprite.body.x * planet.speedModifier + planet.baseX, player.sprite.body.y * planet.speedModifier+planet.baseY);
 
 								planetdirt.blendMode=1;
-								planetdirt.scale.setTo(planet.scale.x/10,planet.scale.y/10);
+								planetdirt.scale.setTo(planet.scale.x/8,planet.scale.y/8);
 								planetdirt.x=player.sprite.body.x-resolutionX/2;
 								planetdirt.y=player.sprite.body.y-resolutionY/2;
 								planetdirt.width=resolutionX/planetdirt.scale.x;
@@ -5444,14 +5446,14 @@ function update () {
 								planetfall.height=resolutionY/planetfall.scale.y;
 								planetfall.tilePosition.x=(planet.x-planetfall.x)/planetfall.scale.x;
 								planetfall.tilePosition.y=(planet.y-planetfall.y)/planetfall.scale.y;
-								planetlod.scale.setTo(planet.scale.x*-1,planet.scale.y*-1);
+								planetlod.scale.setTo(-1*planet.scale.x,planet.scale.y);
 								planetlod.reset(planet.x,planet.y);
-								planetfall.alpha=Math.min(0.77,(planet.scaleModifier-0.7));
-								planetfall.alpha=Math.max(0.3,planetfall.alpha);
+								planetfall.alpha=Math.min(0.77,(planet.scale.x-6.3));
+								planetfall.alpha=Math.max(0,planetfall.alpha);
 								planetlod.blendMode=0;
-								planet.alpha=Math.max(Math.min(1.0,(1.6 - planet.scaleModifier)*2.5),0);
+								planet.alpha=1;
 								planetlod.alpha=0.5;//Math.min(1,planet.scaleModifier+0.2);
-								planetdirt.alpha=Math.min(0.72,((planet.scaleModifier*3)-3.9));
+								planetdirt.alpha=planetfall.alpha;
 
 								planetlod.visible=false;
 								if(planetlod.alpha>0){
@@ -5482,22 +5484,23 @@ function update () {
 												planetfall.visible=true;
 								}
 								scroll(hazeRed,-0.66);
-								scroll(hazePurple,-0.666);
+								scroll(hazePurple,-0.466);
+								hazeRed.rotation=0.2*Math.cos(game.time.now/5750);
+								hazePurple.rotation=0.2*Math.sin(game.time.now/4240);
 								//hazePurple.bringToTop();
 								planet.hazeModifier=0;
 								planet.hazeModifier=Math.max(0,(2*planet.scaleModifier)-4);
 								planet.hazeModifier=Math.min(planet.hazeModifier,0.4);
-								hazeRed.scale.setTo(2*(Math.cos(game.time.now/13000)+hazeRed.baseScale+(planet.hazeModifier*2)),(1.4*hazeRed.baseScale+1+Math.cos(game.time.now/9000)+(planet.hazeModifier*2)));
-								hazeRed.width=resolutionX/hazeRed.scale.x;
-								hazeRed.height=resolutionY/hazeRed.scale.y;
-								hazePurple.scale.setTo(Math.sin(game.time.now/10000)+hazePurple.baseScale+planet.hazeModifier,0.3*(hazePurple.baseScale+Math.cos(game.time.now/7000)+1+planet.hazeModifier));
-								hazePurple.width=resolutionX/hazePurple.scale.x;
-								hazePurple.height=resolutionY/hazePurple.scale.y;
+								hazeRed.scale.setTo(1+(Math.cos(game.time.now/7000)+hazeRed.baseScale+(planet.hazeModifier)),(0.8*hazeRed.baseScale+1+Math.cos(game.time.now/4000)+(planet.hazeModifier)));
+								hazeRed.width=1.5*resolutionX/hazeRed.scale.x;
+								hazeRed.height=1.5*resolutionY/hazeRed.scale.y;
+								hazePurple.scale.setTo(1+Math.sin(game.time.now/5000)+hazePurple.baseScale+planet.hazeModifier,0.7575*(hazePurple.baseScale+Math.cos(game.time.now/6000)+1+(0.4*planet.hazeModifier)));
+								hazePurple.width=1.5*resolutionX/hazePurple.scale.x;
+								hazePurple.height=1.5*resolutionY/hazePurple.scale.y;
 								hazeRed.speed=playerStats.mission.hazeRedSpeed+playerStats.mission.hazeRedSpeed*planet.hazeModifier*2;
-								hazeRed.alpha=playerStats.mission.hazeRed-planet.hazeModifier;
-								hazeRed.alpha*=0.75;
+								hazeRed.alpha=playerStats.mission.hazeRed-(0.4*planetfall.alpha);
 								hazeWhite.alpha=playerStats.mission.hazeWhite*(1-planet.hazeModifier);
-								hazePurple.alpha=playerStats.mission.hazePurple*(1.3-planet.hazeModifier);
+								hazePurple.alpha=playerStats.mission.hazePurple-(0.3*planetfall.alpha);
 								hazePurple.speed=playerStats.mission.hazePurple+playerStats.mission.hazePurple*planet.hazeModifier*2;
 								hazeWhite.visible=false;
 								if(hazeWhite.alpha>0 && planetdirt.alpha < 0.1){

@@ -20,9 +20,9 @@ var missions = [
 	'complete':false,
 	'componentsReward':banditGear,
 	'componentsCount':1,
-	'hazeRed':0.7,
+	'hazeRed':0.6,
 	'hazeWhite':1.5,
-	'hazePurple':0.5,
+	'hazePurple':0.7,
 	'hazeRedTint':16777215,
 	'hazeWhiteTint':16777215,
 	'hazePurpleTint':0x333333,
@@ -32,7 +32,7 @@ var missions = [
 	'distanceMin':2000,
 	'distanceMax':3000,
 	'hazePurpleBlendMode':2,
-	'hazeRedBlendMode':1,
+	'hazeRedBlendMode':0,
 	'intro':['click to target. hold to move. try destroying some asteroids and cargo containers.',
 	'when you get the hang of it,\nfollow the GOLD <> indicator to the next station.'],
 	'outro':[''],
@@ -511,7 +511,7 @@ var missions = [
 	'complete':false,
 	'componentsReward':droneGear,
 	'componentsCount':2,
-	'hazeRed':0.8,
+	'hazeRed':0.6,
 	'hazeWhite':1.4,
 	'hazePurple':0.7,
 	'hazeRedTint':16777215,
@@ -584,7 +584,7 @@ var missions = [
 	'complete':false,
 	'componentsReward':droneGear,
 	'componentsCount':4,
-	'hazeRed':0.8,
+	'hazeRed':0.6,
 	'hazeWhite':1.6,
 	'hazePurple':0.5,
 	'hazeRedTint':16777215,
@@ -863,6 +863,44 @@ var missions = [
 			'count':13, 
 			'missionTarget':false
 		}]
+}
+,
+{
+	'id':12,
+	'next':[5,6,7,8],
+	'name':'asteroids',
+	'complete':false,
+	'componentsReward':banditGear,
+	'componentsCount':1,
+	'hazeRed':0.7,
+	'hazeWhite':1.4,
+	'hazePurple':0.8,
+	'hazeRedTint':16777215,
+	'hazeWhiteTint':16777215,
+	'hazePurpleTint':16777215,
+		'hazeRedSpeed':30,
+	'hazeWhiteSpeed':10,
+	'hazePurpleSpeed':85,
+	'distanceMin':5000,
+	'distanceMax':8000,
+	'hazePurpleBlendMode':2,
+	'hazeRedBlendMode':1,
+	'intro':[''],
+	'outro':[''],
+	'win':{
+		'condition':'frob'
+	},
+	'enemies':
+		[{
+			'ships': asteroids,
+			'parts': asteroidParts, 
+			'sizeMin': 2,
+			'sizeMax': 5,
+			'respawn':true,
+			'count':70, 
+			'missionTarget':false
+		}
+	]
 }
 
 
