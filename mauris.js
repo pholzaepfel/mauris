@@ -5485,16 +5485,16 @@ function update () {
 								}
 								scroll(hazeRed,-0.66);
 								scroll(hazePurple,-0.466);
-								hazeRed.rotation=0.2*Math.cos(game.time.now/5750);
-								hazePurple.rotation=0.2*Math.sin(game.time.now/4240);
+								hazeRed.rotation=0.2*Math.cos(game.time.now/7750);
+								hazePurple.rotation=0.2*Math.sin(game.time.now/5240);
 								//hazePurple.bringToTop();
 								planet.hazeModifier=0;
 								planet.hazeModifier=Math.max(0,(2*planet.scaleModifier)-4);
 								planet.hazeModifier=Math.min(planet.hazeModifier,0.4);
-								hazeRed.scale.setTo(2+(Math.cos(game.time.now/7000)+hazeRed.baseScale+(planet.hazeModifier)),(0.8*hazeRed.baseScale+1+Math.cos(game.time.now/4000)+(planet.hazeModifier)));
+								hazeRed.scale.setTo(2+(Math.cos(game.time.now/11000)+hazeRed.baseScale+(planet.hazeModifier)),(0.8*hazeRed.baseScale+1+Math.cos(game.time.now/9000)+(planet.hazeModifier)));
 								hazeRed.width=1.5*resolutionX/hazeRed.scale.x;
 								hazeRed.height=1.5*resolutionY/hazeRed.scale.y;
-								hazePurple.scale.setTo(1+Math.sin(game.time.now/5000)+hazePurple.baseScale+planet.hazeModifier,0.7575*(hazePurple.baseScale+Math.cos(game.time.now/6000)+1+(0.4*planet.hazeModifier)));
+								hazePurple.scale.setTo(1+Math.sin(game.time.now/10000)+hazePurple.baseScale+planet.hazeModifier,0.7575*(hazePurple.baseScale+Math.cos(game.time.now/8000)+1+(0.4*planet.hazeModifier)));
 								hazePurple.width=1.5*resolutionX/hazePurple.scale.x;
 								hazePurple.height=1.5*resolutionY/hazePurple.scale.y;
 								hazeRed.speed=playerStats.mission.hazeRedSpeed+playerStats.mission.hazeRedSpeed*planet.hazeModifier*2;
