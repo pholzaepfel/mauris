@@ -5989,7 +5989,7 @@ function asteroidBoom(explosionsGroup, x, y){
 																r=randomRange(0.5,1.7);
 																explosion.body.angularVelocity=0;
 																explosion.scale.setTo(r,r);
-																explosion.blendMode=1;
+																explosion.blendMode=0;
 																explosion.blendMode=0;
 																explosion.alpha=randomRange(0.1,0.3);
 																if(rand2==10){ explosion.alpha*=2;
