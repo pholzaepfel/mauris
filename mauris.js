@@ -4226,6 +4226,7 @@ function addPlayerPartInFlight(componentId) {
 				player.target = oldTarget;
 				player.energy = oldEnergy;
 				player.health = oldHealth;
+player.targetAngle=	oldTargetAngle;
 				player.sprite.profile=oldProfile;
 				player.health += player.healthMax - oldHealthMax;
 }
