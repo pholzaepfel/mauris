@@ -20,6 +20,10 @@ var bulletTypes = [
 {'name':'fire', 'id':15}
 
 ];
+
+
+
+
 function signedSqrt(x){
 	if(x==0){return 0;}
 	var sign = x / Math.abs(x);
@@ -66,10 +70,20 @@ return;
 								for(var i=0;i<tweens.length;i++){
 												tweens[i].pause();
 								}
+		blurX.blur=0;
+blurY.blur=0;
 
 				if(typeof(resumeDelay)!='undefined'){
 								pauseResumeTime = game.time.now + resumeDelay;
-				}
+game.add.tween(blurX).to({blur:30},resumeDelay,Phaser.Easing.Exponential.Out,true,0,false).to({blur:0},200,Phaser.Easing.Sinusoidal.Out,true,0,false);
+game.add.tween(blurY).to({blur:30},resumeDelay,Phaser.Easing.Exponential.Out,true,0,false).to({blur:0},200,Phaser.Easing.Sinusoidal.Out,true,0,false);
+					}else{
+game.add.tween(blurX).to({blur:30},1000,Phaser.Easing.Exponential.Out,true,0,false);
+game.add.tween(blurY).to({blur:30},1000,Phaser.Easing.Exponential.Out,true,0,false);
+	
+
+
+}
 				if(typeof(x)!='undefined'&&typeof(y)!='undefined'){
 								if(onscreenStrict(x,y)){
 								game.add.tween(cameraTarget).to({x:x,y:y},resumeDelay * 0.65, Phaser.Easing.Sinusoidal.In, true, 0, false);
@@ -85,6 +99,20 @@ function unpause () {
 								for(var i=0;i<tweens.length;i++){
 												tweens[i].resume();
 								}
+blurX.blur=0;
+
+blurY.blur=0;
+//				hazeRed.filters=undefined;
+//				hazeWhite.filters=[];
+//				hazePurple.filters=[];
+	//			planet.filters=undefined;
+//				planetlod.filters=[];
+//				planetfall.filters=[];
+//				planetdirt.filters=[];
+
+//				nebula.filters=[];
+//				nebula2.filters=[];
+
 
 }
 var growShipSE = function(ship){
@@ -1681,6 +1709,9 @@ var game = new Phaser.Game(resolutionX, resolutionY, Phaser.WEBGL, 'phaser-examp
 function preload () {
 				hello =	game.add.text(resolutionX*0.5,resolutionY*0.4, 'LOADING',{ font:'12px acknowledge', fill: 'rgb(196,150,255)', align: 'center' })
 								game.load.spritesheet('parts', 'assets/parts.png', 16, 16);
+
+    game.load.script('blurX', 'BlurX.js');
+    game.load.script('blurY', 'BlurY.js');
 				game.load.image('station', 'assets/station.png');
 				game.load.image('frob1', 'assets/frob1.png');
 				game.load.image('partswindow', 'assets/partswindow.png');
@@ -2897,6 +2928,9 @@ var headlightGlowSprite;
 var pauseResumeTime = 0;
 var cameraTarget;
 var player;
+var blurX;
+	var blurY;
+
 var nextLight = 0; 
 var currentBrightness=1.0;
 var mysteriousConstant=0.22;
@@ -4637,7 +4671,11 @@ function create () {
 								nebula.tint=randomMutedColor(128,255,128,255,128,255);
 								nebula2.tint=randomMutedColor(128,255,128,255,128,255);
 
-								planet = game.add.sprite(resolutionX/0.8, resolutionY/0.8, 'planetslod');
+								
+
+blurX = game.add.filter('BlurX');
+	blurY = game.add.filter('BlurY');
+planet = game.add.sprite(resolutionX/0.8, resolutionY/0.8, 'planetslod');
 								planet.baseX=randomRange(-300,400) * randomSign();
 								planet.baseY=randomRange(-300,400) * randomSign();
 								planetlod = game.add.sprite(resolutionX/0.8, resolutionY/0.8, 'planetslod');
@@ -4680,8 +4718,7 @@ function create () {
 								station = game.add.sprite(0,0,'station');
 								station.anchor.setTo(0.5,0.5)
 												asteroids.sort(lengthSort);
-
-								frob1 = game.add.sprite(-200,-200,'station');
+							frob1 = game.add.sprite(-200,-200,'station');
 								game.physics.enable(frob1, Phaser.Physics.ARCADE);
 								frob1.anchor.setTo(0.5,0.5);
 								frob1.visible=false;
@@ -4841,6 +4878,27 @@ up: game.input.keyboard.addKey(Phaser.Keyboard.UP),
 
 				hello.visible=false;
 				gamemode='war';
+
+filterIfVisible(hazeRed);
+filterIfVisible(hazeWhite);
+filterIfVisible(hazePurple);
+filterIfVisible(planet);
+filterIfVisible(planetlod);
+filterIfVisible(planetfall);
+filterIfVisible(planetdirt);
+filterIfVisible(nebula);
+filterIfVisible(nebula2);
+blurX.blur=0;
+blurY.blur=0;
+
+}
+function filterIfVisible(s){
+if(!(s.visible && s.alpha > 0.3) && typeof(s.filters)!='undefined'){
+s.filters=undefined;
+}
+if(s.visible && s.alpha > 0.3 && typeof(s.filters)=='undefined'){
+s.filters=[blurX,blurY];
+}
 
 }
 function fadeSpark(s) {
@@ -5644,6 +5702,15 @@ function update () {
 												}
 								}
 				}
+filterIfVisible(hazeRed);
+filterIfVisible(hazeWhite);
+filterIfVisible(hazePurple);
+filterIfVisible(planet);
+filterIfVisible(planetlod);
+filterIfVisible(planetfall);
+filterIfVisible(planetdirt);
+filterIfVisible(nebula);
+filterIfVisible(nebula2);
 }
 function decayCurrentBrightness(){
 				if(currentBrightness>1){
