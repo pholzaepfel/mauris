@@ -3571,8 +3571,10 @@ gameUI.prototype.cleanupDamageNumbers = function(){
 												this.damageNumbers[i].visible=false;
 								}else{
 												this.toTop(this.damageNumbers[i]);
+if(gamemode != 'paused'){
 												this.damageNumbers[i].x+=player.sprite.body.velocity.x*game.time.physicsElapsed;
 												this.damageNumbers[i].y+=player.sprite.body.velocity.y*game.time.physicsElapsed;
+}
 												this.damageNumbers[i].y-=120*game.time.physicsElapsed;
 								}
 				} 
