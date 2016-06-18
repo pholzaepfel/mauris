@@ -20,67 +20,134 @@ var bulletTypes = [
 {'name':'fire', 'id':15}
 
 ];
-var growShipSE = function(ship){
-	var size = Math.sqrt(ship.length);
-	var outShip = [];
-	var j=0;
-	for(var i=0;i<ship.length;i++){
-	outShip[j++]=ship[i];
-		if(i % size == size-1){
-			outShip[j++]=-1;
-		}
-		}
-	for(var i=(size+1)*(size);i<Math.pow(size+1,2);i++){
-		outShip[i]=-1;
+function signedSqrt(x){
+	if(x==0){return 0;}
+	var sign = x / Math.abs(x);
+	return sign * Math.sqrt(Math.abs(x));
+	
+}
+function pausedRevertSprites(){
+												frob1.x-=frob1.body.velocity.x*game.time.physicsElapsed;
+												frob1.y-=frob1.body.velocity.y*game.time.physicsElapsed;
+												frob1.angle-=frob1.body.angularVelocity*game.time.physicsElapsed;
+
+												for(var i=0;i<player.parts.length;i++){
+																player.parts[i].update();
+												}	
+													player.sprite.body.x-=player.sprite.body.velocity.x*game.time.physicsElapsed;
+												player.sprite.body.y-=player.sprite.body.velocity.y*game.time.physicsElapsed;
+													for(var i=0;i<enemies.length;i++){
+																enemies[i].sprite.body.x-=enemies[i].sprite.body.velocity.x*game.time.physicsElapsed;	
+																enemies[i].sprite.body.y-=enemies[i].sprite.body.velocity.y*game.time.physicsElapsed;	
+																enemies[i].sprite.angle-=enemies[i].sprite.body.angularVelocity*game.time.physicsElapsed;
+																if(enemies[i].alive && enemies[i].parts.length){
+																				for(var j=0;j<enemies[i].parts.length;j++){
+																								enemies[i].parts[j].update();
+																				}
+																}
+												}
+												revertGroup(loots);
+												revertGroup(debris);
+												revertGroup(enemyBullets);
+												revertGroup(bullets);
+												revertGroup(explosions);
+
+
+}
+function pause(resumeDelay,x,y) {
+				if(typeof(x)!='undefined'&&typeof(y)!='undefined'){
+								if(!onscreenStrict(x,y)){
+return;
+}}
+				gamemode='paused';
+				nextUIDelay=game.time.now+2000;
+
+				var tweens = game.tweens.getAll()	
+								for(var i=0;i<tweens.length;i++){
+												tweens[i].pause();
+								}
+
+				if(typeof(resumeDelay)!='undefined'){
+								pauseResumeTime = game.time.now + resumeDelay;
+				}
+				if(typeof(x)!='undefined'&&typeof(y)!='undefined'){
+								if(onscreenStrict(x,y)){
+								game.add.tween(cameraTarget).to({x:x,y:y},resumeDelay * 0.65, Phaser.Easing.Sinusoidal.In, true, 0, false);
 	}
-	  return outShip;
+								
+				}
+}
+function unpause () {
+				gamemode='war';
+				nextUIDelay=game.time.now+2000;
+				pauseResumeTime = 0;
+				var tweens = game.tweens.getAll()	
+								for(var i=0;i<tweens.length;i++){
+												tweens[i].resume();
+								}
+
+}
+var growShipSE = function(ship){
+				var size = Math.sqrt(ship.length);
+				var outShip = [];
+				var j=0;
+				for(var i=0;i<ship.length;i++){
+								outShip[j++]=ship[i];
+								if(i % size == size-1){
+												outShip[j++]=-1;
+								}
+				}
+				for(var i=(size+1)*(size);i<Math.pow(size+1,2);i++){
+								outShip[i]=-1;
+				}
+				return outShip;
 }
 var growShipNW = function(ship){
-	var size = Math.sqrt(ship.length);
-	var outShip = [];
-	var j=0;
-	for(var i=0;i<size+1;i++){
-		outShip[i]=-1;
-		j++;
-	}
-		for(var i=0;i<ship.length;i++){
-		if(i % size == 0){
-			outShip[j++]=-1;
-		}
-		outShip[j++]=ship[i];
-	}
-return outShip;
+				var size = Math.sqrt(ship.length);
+				var outShip = [];
+				var j=0;
+				for(var i=0;i<size+1;i++){
+								outShip[i]=-1;
+								j++;
+				}
+				for(var i=0;i<ship.length;i++){
+								if(i % size == 0){
+												outShip[j++]=-1;
+								}
+								outShip[j++]=ship[i];
+				}
+				return outShip;
 }
 var growShipNE = function(ship){
-	var size = Math.sqrt(ship.length);
-	var outShip = [];
-	var j=0;
-	for(var i=0;i<size+1;i++){
-		outShip[i]=-1;
-		j++;
-	}
-		for(var i=0;i<ship.length;i++){
-	outShip[j++]=ship[i];
-		if(i % size == size-1){
-			outShip[j++]=-1;
-		}
-		}
-  return outShip;
+				var size = Math.sqrt(ship.length);
+				var outShip = [];
+				var j=0;
+				for(var i=0;i<size+1;i++){
+								outShip[i]=-1;
+								j++;
+				}
+				for(var i=0;i<ship.length;i++){
+								outShip[j++]=ship[i];
+								if(i % size == size-1){
+												outShip[j++]=-1;
+								}
+				}
+				return outShip;
 }
 var growShipSW = function(ship){
-	var size = Math.sqrt(ship.length);
-	var outShip = [];
-	var j=0;
-	for(var i=0;i<ship.length;i++){
-		if(i % size == 0){
-			outShip[j++]=-1;
-		}
-		outShip[j++]=ship[i];
-	}
-	for(var i=(size+1)*(size);i<Math.pow(size+1,2);i++){
-		outShip[i]=-1;
-	}
-	return outShip;
+				var size = Math.sqrt(ship.length);
+				var outShip = [];
+				var j=0;
+				for(var i=0;i<ship.length;i++){
+								if(i % size == 0){
+												outShip[j++]=-1;
+								}
+								outShip[j++]=ship[i];
+				}
+				for(var i=(size+1)*(size);i<Math.pow(size+1,2);i++){
+								outShip[i]=-1;
+				}
+				return outShip;
 }
 var bulletTypeName = function(id){
 				for (var i=0;i<bulletTypes.length;i++){
@@ -325,40 +392,40 @@ var hiddenButtons = [
 
 {'name':'hideButtons',
 				'downCallback':function(){buttonOther=1;
-if(game.time.now > nextUIDelay){
-nextUIDelay = game.time.now + 300;
-ui.initButtons(warButtons);
-}
-},
+								if(game.time.now > nextUIDelay){
+												nextUIDelay = game.time.now + 300;
+												ui.initButtons(warButtons);
+								}
+				},
 				'upCallback':function(){buttonOther=0;},
 				'x':0,
 				'y':7,
 				'rotation':0,
 				'label':'+'}
-]
+				]
 
-var warButtons = [
-/*{'name':'lofi',
-	'downCallback':function(){
-	hazeWhite.blendMode = 1;
+				var warButtons = [
+				/*{'name':'lofi',
+					'downCallback':function(){
+					hazeWhite.blendMode = 1;
 
-	hazeRed.visible=false;
-	hazePurple.visible=false;
-	},
-	'upCallback':function(){},
-	'x':0,
-	'y':0,
-	'rotation':0,
-	'label':':p'},*/
-// ui.initButtons(warButtons);
+					hazeRed.visible=false;
+					hazePurple.visible=false;
+					},
+					'upCallback':function(){},
+					'x':0,
+					'y':0,
+					'rotation':0,
+					'label':':p'},*/
+				// ui.initButtons(warButtons);
 
 {'name':'hideButtons',
 				'downCallback':function(){buttonOther=1;
-if(game.time.now > nextUIDelay){
-nextUIDelay = game.time.now + 300;
-ui.initButtons(hiddenButtons);
-}
-},
+								if(game.time.now > nextUIDelay){
+												nextUIDelay = game.time.now + 300;
+												ui.initButtons(hiddenButtons);
+								}
+				},
 				'upCallback':function(){buttonOther=0;},
 				'x':0,
 				'y':7,
@@ -468,6 +535,10 @@ function headlight(){
 				headlightGlow(explosions,lightSpot.x,lightSpot.y);
 				otherGraphics.blendMode=1;
 				otherGraphics.lineStyle(3, 0xFFFFFF, 0);
+				if(gamemode=='paused'){
+								lightSpot.x-=player.sprite.body.velocity.x * game.time.physicsElapsed;
+								lightSpot.y-=player.sprite.body.velocity.y * game.time.physicsElapsed;
+				}
 				for(var i=0.90;i>0.50;i-=0.01){
 								otherGraphics.beginFill(0xFFFFFF,0.00625*headlightIntensity);
 								otherGraphics.moveTo(lightSpot.x,lightSpot.y);
@@ -483,10 +554,11 @@ function queryComponent(id){
 				return components[id].bonus.toString().replace(/target\./g,'').replace(/function.*{/,'').replace(/}/g,'').replace(/bulletBehavior.*/,'CHANGE BULLET BEHAVIOR').replace(/alt=.*/,'ALTERNATE FIRE').replace(/this.*body\./g,'').replace(/this.*sprite\./g,'').replace(/this\./g,'').replace(/[();\[\]{}]/g,'').replace(/\t\t\t.*\n/g,'').replace(/[\t ]*/g,'').replace(/^\n/g,'');
 }
 var scroll = function(target,modifier ){
-				var ret ={'x':0,y:'0'};
-				target.tilePosition.x += ( modifier*game.time.physicsElapsed*player.sprite.body.velocity.x / target.scale.x) + (game.time.physicsElapsed * (target.speed));
+			if(gamemode!='paused'){	
+			target.tilePosition.x += ( modifier*game.time.physicsElapsed*player.sprite.body.velocity.x / target.scale.x) + (game.time.physicsElapsed * (target.speed));
 				var ymodifier = target.scale.y / target.scale.x;
 				target.tilePosition.y += ( ymodifier * modifier*game.time.physicsElapsed*player.sprite.body.velocity.y / target.scale.y) ;
+}
 }
 var blackOut = function(){
 
@@ -504,6 +576,11 @@ function compareAngles(x,y){
 
 				return Math.atan2(Math.sin(x-y),Math.cos(x-y));
 }
+function onscreenStrict(x,y) {
+				return	(player.sprite.x - (0.5*resolutionX) < x && x < player.sprite.x + (0.5*resolutionX) &&
+												player.sprite.y - (0.5*resolutionY) < y && y < player.sprite.y + (0.5*resolutionY))
+}
+
 function onscreen(x,y) {
 				return	(player.sprite.x - resolutionX < x && x < player.sprite.x + resolutionX &&
 												player.sprite.y - resolutionY < y && y < player.sprite.y + resolutionY)
@@ -949,7 +1026,7 @@ shipPart.prototype.update = function(){
 								if(this.sprite.alpha==1 && lightness > 1){
 												this.sprite.alpha=lightness;
 								}
-									lightness=Math.min(lightness,1);
+								lightness=Math.min(lightness,1);
 								this.sprite.tint = (parseInt(this.target.r * lightness) << 16) + (parseInt(this.target.g*lightness) << 8) + parseInt(this.target.b * lightness);
 				}
 				if(this.target.alive){
@@ -1172,12 +1249,13 @@ enemyShip.prototype.spawnCorpses = function(numCorpses) {
 																				shieldEffect(explosions, 4, player.sprite.x, player.sprite.y, player.sprite.body.velocity.x, player.sprite.body.velocity.y, player.ship.length);
 																				ui.sound_beep.play();
 																				player.sprite.alpha=6;
-
+																				pause(500,sprite.x,sprite.y);
 																				game.add.tween(player.sprite).to({alpha:1},700, Phaser.Easing.Circular.Out, true, 0, false);
 																				sparkleBoom(sparkleExplosions,0,8,bullet.x,bullet.y);	
 																}
 																else
 																{
+																				pause(2000,sprite.x,sprite.y);
 																				goreBoom(explosions,sprite.x,sprite.y);
 																}
 												}];
@@ -1237,9 +1315,9 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 												game.add.tween(this.sprite).to({r:255,g:255,b:255,alpha:1},400, Phaser.Easing.Exponential.Out, true, 0, false);
 
 								}else{
-									this.sprite.r=255;
-									this.sprite.g=255;
-									this.sprite.b=255;
+												this.sprite.r=255;
+												this.sprite.g=255;
+												this.sprite.b=255;
 								}
 				}
 
@@ -1249,16 +1327,17 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 
 				if (this.health <= 0 && this.health + (damageCoef*dmg) >= 0){
 								this.alive = false;
+								var pan = false;
 								this.died=game.time.now+10000;
 								if (this.ai==aiModes['asteroid'] && onscreen(this.sprite.x,this.sprite.y)){
 												asteroidBoom(explosions,this.sprite.x,this.sprite.y);
-
 								}else{
 												sparkExplosion(pew, this.sprite);	
 												bigBoom(explosions,this.sprite.x,this.sprite.y);
-												if(Math.random()<0.08+(0.02*Math.sqrt(this.ship.length))){
-												this.spawnCorpses(randomInt(1,Math.pow(this.ship.length,1/2.5)));
-									}
+												if(Math.random()<baseCorpseRate+(0.02*Math.sqrt(this.ship.length))){
+																this.spawnCorpses(randomInt(1,Math.pow(this.ship.length,1/2.5)));
+pan=true;
+												}
 								}
 								for (var j = 0; j < this.parts.length; j++) {
 												if(Math.random() < this.oreChance){
@@ -1266,6 +1345,7 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 																this.parts[j].sprite.kill();
 												}else if(Math.random() < (componentDropRate + player.dropRate) && components[this.parts[j].component].drops){ 
 																spawnComponent(this.parts[j].component, this.sprite.x, this.sprite.y);
+pan=true;
 																this.parts[j].sprite.kill();		
 												}else if(this.questionBox){
 																foo=components[0];	
@@ -1304,6 +1384,9 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 																playerStats.kills+=1;
 												}
 								}
+							if(pan){	
+																pause(2000, this.sprite.x, this.sprite.y);
+}
 								return true;
 				}
 
@@ -1992,8 +2075,9 @@ playerShip.prototype.damage = function(dmg, aggro, bulletX, bulletY) {
 																								spawnDebris(part.component, part.sprite.x, part.sprite.y); 
 																								removePlayerPartInFlight(cullList[f], dmg);		
 																				}
+				ui.skipText();
 																				ui.texts.push(msg);
-
+																				pause(500);
 																}
 												}
 								}
@@ -2810,6 +2894,8 @@ if (!window.location.href.match('voxxse')){
 noMusic = false;
 var headlightIntensity=1;
 var headlightGlowSprite;
+var pauseResumeTime = 0;
+var cameraTarget;
 var player;
 var nextLight = 0; 
 var currentBrightness=1.0;
@@ -2880,6 +2966,7 @@ var spawnShips=[
 				var nextSpawn=0;
 				var nextCamera=0; //attract
 				var damageCoef=0.3; //global damage tuner
+				var baseCorpseRate = 0.08; 
 				var targetDamageCoef=5; //not so global damage tuner
 				var enemyHealthCoef=1; 
 				var cursors;
@@ -2949,8 +3036,8 @@ gameUI.prototype.initButtons = function(selectedButtons) {
 
 gameUI.prototype.buttonsPing = function(){
 
-				var upperLeftCornerX = player.sprite.body.x - (resolutionX / 2);
-				var upperLeftCornerY = player.sprite.body.y - (resolutionY / 2);
+				var upperLeftCornerX = cameraTarget.x - (resolutionX / 2);
+				var upperLeftCornerY = cameraTarget.y - (resolutionY / 2);
 				for(var i=0;i<this.buttons.length;i++){
 
 								//place button rectangle for hit indicators
@@ -3711,10 +3798,10 @@ gameUI.prototype.commsPing = function() {
 								}
 								this.comms.alpha=1;
 								this.textLine = this.texts[this.textIndex];
-								
+
 								if(!this.textLineIndex){
-this.textLineIndex=this.textLine.length+1;
-}
+												this.textLineIndex=this.textLine.length+1;
+								}
 								this.comms.setText(this.textLine);
 								if(this.textLineIndex>this.texts[this.textIndex].length){
 												this.nextComms=game.time.now+2000+this.textLineIndex*50;
@@ -3792,7 +3879,6 @@ gameUI.prototype.update = function() {
 				this.toTop(this.graphics);
 				this.commsPing();
 				this.toTop(otherGraphics);
-				headlight();
 				if (gamemode == '?build'){
 								this.partPing();
 				}
@@ -3808,6 +3894,20 @@ gameUI.prototype.update = function() {
 								this.asteroids.sort(asteroidSort);
 								this.radarPing();
 								this.frobRadarPing();
+				}
+				if (gamemode == 'paused'){
+								this.missionLinePing();
+								this.profileLinePing();
+								this.bar(this.healthLine, 0, player.health, player.healthMax);
+								this.bar(this.crewLine, 20, playerStats.crew, player.crewMax);
+								this.bar(this.energyLine, 10, player.energy, player.energyMax);
+								this.enemies=enemies.slice(0);
+								this.enemies.sort(threatSort);
+								this.asteroids=enemies.slice(0);
+								this.asteroids.sort(asteroidSort);
+								this.radarPing();
+								this.frobRadarPing();
+	
 				}
 				this.buttonsPing();
 				this.cleanupDamageNumbers();
@@ -4266,7 +4366,7 @@ function addPlayerPartInFlight(componentId) {
 				player.target = oldTarget;
 				player.energy = oldEnergy;
 				player.health = oldHealth;
-player.targetAngle=	oldTargetAngle;
+				player.targetAngle=	oldTargetAngle;
 				player.sprite.profile=oldProfile;
 				player.health += player.healthMax - oldHealthMax;
 }
@@ -4418,10 +4518,10 @@ function randomMutedColor(minr,maxr,ming,maxg,minb,maxb) {
 				var re=parseInt(randomRange(minr,maxr));
 				var gr=parseInt(randomRange(ming,maxg));
 				var br=parseInt(randomRange(minb,maxb));
-re = (re+re+gr+br)/4;
+				re = (re+re+gr+br)/4;
 
-gr = (gr+re+gr+br)/4;
-br = (br+re+gr+br)/4;
+				gr = (gr+re+gr+br)/4;
+				br = (br+re+gr+br)/4;
 				return (parseInt(re<<16) + parseInt(gr<<8) + parseInt(br));
 }
 function randomColor(minr,maxr,ming,maxg,minb,maxb) {
@@ -4554,7 +4654,7 @@ function create () {
 								planetdirt.speed=0;
 								planetfall.speed=0;
 								hazeRed = game.add.tileSprite(resolutionX/2, resolutionY/2, resolutionX/3, resolutionY/3, 'haze');
-hazeRed.anchor.setTo(0.5,0.5);
+								hazeRed.anchor.setTo(0.5,0.5);
 								hazeRed.tilePosition.x = Math.random()*resolutionX;
 								hazeRed.tilePosition.y = Math.random()*resolutionY;
 								hazeRed.fixedToCamera = true;
@@ -4565,7 +4665,7 @@ hazeRed.anchor.setTo(0.5,0.5);
 								hazeRed.blendMode=1;
 								hazeRed.speed = 160;
 								hazePurple = game.add.tileSprite(resolutionX/2, resolutionY/2, resolutionX/2, resolutionY/2, 'haze');
-hazePurple.anchor.setTo(0.5,0.5);
+								hazePurple.anchor.setTo(0.5,0.5);
 								hazePurple.tilePosition.x = Math.random()*resolutionX;
 								hazePurple.tilePosition.y = Math.random()*resolutionY;
 								hazePurple.fixedToCamera = true;
@@ -4602,6 +4702,8 @@ hazePurple.anchor.setTo(0.5,0.5);
 								if(Math.random() > 0.5){
 												startShip=symmetrizeShip(startShip);
 								}
+								cameraTarget = game.add.sprite(0,0);
+								cameraTarget.visible=false;
 								player = new playerShip(startShip);
 								mockPlayer = new mockPlayerShip(player.ship);
 
@@ -4685,7 +4787,7 @@ hazePurple.anchor.setTo(0.5,0.5);
 								loots.setAll('anchor.y', 0.5);
 								loots.setAll('outOfBoundsKill', true);
 								loots.setAll('lifespan', 60000);
-								game.camera.follow(player.sprite);
+								game.camera.follow(cameraTarget);
 								game.camera.focusOnXY(0, 0);
 
 								sparkles = game.add.emitter(0,0,100);
@@ -4837,7 +4939,7 @@ function handleMission() {
 								}
 				}
 				if(playerStats.crew > 1){
-												playerStats.mission.complete=true;
+								playerStats.mission.complete=true;
 				}
 
 				if((playerStats.mission.complete || playerStats.mission.win.condition=='frob') &&
@@ -4850,16 +4952,16 @@ function handleMission() {
 								ui.endPartsUI();
 								nextUIDelay=game.time.now+1000;
 				}
-/*				if(playerStats.mission.complete && playerStats.mission.outro.length){
-								ui.sound_complete.play();
-								ui.skipText();
-								for(var i=0;i<playerStats.mission.outro.length;i++){
-												ui.texts.push(playerStats.mission.outro[i]);
-								}
+				/*				if(playerStats.mission.complete && playerStats.mission.outro.length){
+									ui.sound_complete.play();
+									ui.skipText();
+									for(var i=0;i<playerStats.mission.outro.length;i++){
+									ui.texts.push(playerStats.mission.outro[i]);
+									}
 
-								playerStats.mission.outro=[];
-				}
-*/
+									playerStats.mission.outro=[];
+									}
+				 */
 
 }
 
@@ -4881,9 +4983,9 @@ function winMission(){
 								ui.texts.push(s);
 								var n = Math.floor(randomRange(0,playerStats.mission.next.length));
 								initMission(playerStats.mission.next[n]);
-							
+
 								if(playerStats.crew>0){
-									playerStats.crew-=1;
+												playerStats.crew-=1;
 								}
 
 								playerStats.mission.complete=false;
@@ -4929,6 +5031,9 @@ function revertGroup(group){
 
 function update () {
 				decayCurrentBrightness();
+				if(gamemode!='paused'){
+					cameraTarget.reset(player.sprite.body.x+(0.5*player.sprite.body.width),player.sprite.body.y+(0.5*player.sprite.body.width));
+				}
 				//suppress odd large explosions bug
 				/*explosions.forEach(function(e){
 					if(!e.alive || !e.visible || !onscreen(e.x,e.y)){
@@ -4942,6 +5047,7 @@ function update () {
 								//
 
 								otherGraphics.clear();
+								headlight();
 
 								var left = 0;
 								var right = 0;
@@ -5055,7 +5161,7 @@ function update () {
 												fire = 1;
 								}
 								if (cursors.lights.isDown){
-																light = 1;
+												light = 1;
 								}
 								if (cursors.alt.isDown){
 												alt = 1;
@@ -5280,57 +5386,31 @@ function update () {
 												}
 								}
 								if(gamemode=='paused'){
-												ui.graphics.clear();
-												ui.comms.fill="rgb(21," + Math.floor((1+Math.sin(game.time.now/1000))*100) + ",142)";
+												//anything that relates to player locn goes here
 
-												ui.comms.setText('paused');
-												ui.comms.alpha=1;
-												ui.graphics.beginFill(0x000000, ui.comms.alpha/3);
-												ui.graphics.drawRect(ui.comms.x - 15, ui.comms.y - 6, ui.comms.width + 30, ui.comms.height + 12);
-												headlight();
-												frob1.x-=frob1.body.velocity.x*game.time.physicsElapsed;
-												frob1.y-=frob1.body.velocity.y*game.time.physicsElapsed;
-												frob1.angle-=frob1.body.angularVelocity*game.time.physicsElapsed;
 
-												player.sprite.x-=player.sprite.body.velocity.x*game.time.physicsElapsed;
-												player.sprite.y-=player.sprite.body.velocity.y*game.time.physicsElapsed;
-												for(var i=0;i<player.parts.length;i++){
-																player.parts[i].update();
-												}	
-												for(var i=0;i<enemies.length;i++){
-																enemies[i].sprite.body.x-=enemies[i].sprite.body.velocity.x*game.time.physicsElapsed;	
-																enemies[i].sprite.body.y-=enemies[i].sprite.body.velocity.y*game.time.physicsElapsed;	
-																enemies[i].sprite.angle-=enemies[i].sprite.body.angularVelocity*game.time.physicsElapsed;
-																if(enemies[i].alive && enemies[i].parts.length){
-																				for(var j=0;j<enemies[i].parts.length;j++){
-																								enemies[i].parts[j].update();
-																				}
-																}
+												if((enter && game.time.now >= nextUIDelay) ||
+																				(pauseResumeTime > 0 && game.time.now > pauseResumeTime)){
+
+																unpause();
+												}else{
+												pausedRevertSprites();
+
+												if(pauseResumeTime ==0){
+																ui.comms.fill="rgb(21," + Math.floor((1+Math.sin(game.time.now/1000))*100) + ",142)";
+
+																ui.comms.setText('paused');
+																ui.comms.alpha=1;
+																ui.graphics.beginFill(0x000000, ui.comms.alpha/3);
+																ui.graphics.drawRect(ui.comms.x - 15, ui.comms.y - 6, ui.comms.width + 30, ui.comms.height + 12);
 												}
-												revertGroup(loots);
-												revertGroup(debris);
-												revertGroup(enemyBullets);
-												revertGroup(bullets);
-												revertGroup(explosions);
-												if(enter && game.time.now >= nextUIDelay){
-
-																gamemode='war';
-																nextUIDelay=game.time.now+2000;
-																ui.comms.setText('');
-																ui.comms.alpha=0;
-
-																var tweens = game.tweens.getAll()	
-																				for(var i=0;i<tweens.length;i++){
-																								tweens[i].resume();
-																				}
-												}
-
 												if(left==0 && right==0 && up == 0 && down ==0 &&
 																				fire == 0 && alt == 0 &&
 																				!cursors.pgup.isDown && !cursors.pgdn.isDown && enter == 0
 													){
 																nextUIDelay = 0;
 												}
+}
 								}
 
 								if(gamemode=='war' ){
@@ -5344,6 +5424,7 @@ function update () {
 																				player.initPlayerShip(randomShip(basicGear,3));
 																				if(cheatmode){player.initPlayerShip(randomShip(allLootableItems(),parseInt(randomRange(3,8))))}
 																				if(contextTutorialDeath){
+				ui.skipText();
 																								ui.texts.push(contextTutorialDeath);
 																								contextTutorialDeath='';
 																				}
@@ -5413,14 +5494,7 @@ function update () {
 																};
 												}
 												if(enter && game.time.now >= nextUIDelay && player.alive){
-																gamemode='paused';
-																nextUIDelay=game.time.now+2000;
-
-																var tweens = game.tweens.getAll()	
-																				for(var i=0;i<tweens.length;i++){
-																								tweens[i].pause();
-																				}
-
+																pause();
 												}
 
 
@@ -5441,15 +5515,15 @@ function update () {
 												if (fire){
 																player.fire();
 												}
-																				if (light) {
-if(game.time.now>nextLight){
-headlightIntensity = 1 - headlightIntensity;
-nextLight=game.time.now+300;
-}
-}
+												if (light) {
+																if(game.time.now>nextLight){
+																				headlightIntensity = 1 - headlightIntensity;
+																				nextLight=game.time.now+300;
+																}
+												}
 								}
-							nebula2.reset(player.sprite.body.x*0.9980,player.sprite.body.y*0.9980);
-								nebula.reset(player.sprite.body.x*0.9985,player.sprite.body.y*0.9985);
+								nebula2.reset(cameraTarget.x*0.9980,cameraTarget.y*0.9980);
+								nebula.reset(cameraTarget.x*0.9985,cameraTarget.y*0.9985);
 								// scrolling
 								scroll(hazeWhite,-0.0015);
 
@@ -5464,12 +5538,12 @@ nextLight=game.time.now+300;
 								planet.scale.setTo(planet.baseScale*planet.scaleModifier);
 								planet.speedModifier=.995-(Math.sqrt(Math.pow(10,planet.scaleModifier)*0.00006));
 
-								planet.reset(player.sprite.body.x * planet.speedModifier + planet.baseX, player.sprite.body.y * planet.speedModifier+planet.baseY);
+								planet.reset(cameraTarget.x * planet.speedModifier + planet.baseX, cameraTarget.y * planet.speedModifier+planet.baseY);
 
 								planetdirt.blendMode=1;
 								planetdirt.scale.setTo(planet.scale.x/8,planet.scale.y/8);
-								planetdirt.x=player.sprite.body.x-resolutionX/2;
-								planetdirt.y=player.sprite.body.y-resolutionY/2;
+								planetdirt.x=cameraTarget.x-resolutionX/2;
+								planetdirt.y=cameraTarget.y-resolutionY/2;
 								planetdirt.width=resolutionX/planetdirt.scale.x;
 								planetdirt.height=resolutionY/planetdirt.scale.y;
 								planetdirt.tilePosition.x=(planet.x-planetdirt.x)/planetdirt.scale.x;
@@ -5479,8 +5553,8 @@ nextLight=game.time.now+300;
 
 								planetfall.blendMode=2;
 								planetfall.scale.setTo(planet.scale.x/8,planet.scale.y/8);
-								planetfall.x=player.sprite.body.x-resolutionX/2;
-								planetfall.y=player.sprite.body.y-resolutionY/2;
+								planetfall.x=cameraTarget.x-resolutionX/2;
+								planetfall.y=cameraTarget.y-resolutionY/2;
 								planetfall.width=resolutionX/planetfall.scale.x;
 								planetfall.height=resolutionY/planetfall.scale.y;
 								planetfall.tilePosition.x=(planet.x-planetfall.x)/planetfall.scale.x;
@@ -5556,11 +5630,9 @@ nextLight=game.time.now+300;
 
 
 
-								if(gamemode!='paused'){
-												ui.update();
+								ui.update();
 
 
-								}
 								explosions.parent.bringToTop(explosions);
 
 								for(var i=0;i<explosions.length;i++){
@@ -6251,28 +6323,28 @@ function headlightGlow(explosionsGroup, x, y){
 
 								var r = Math.random();
 								if(typeof(headlightGlowSprite)=='undefined'){
-								if(forceDead(explosionsGroup)){
-												var explosion = explosionsGroup.getFirstDead();
-												killTweensFromExplosion(explosion);
-												explosion.animations.play(bulletTypeName(0));
-												explosion.reset(x,y);
-												explosion.rotation = randomRange(-0.5,0.5);//bullet.rotation+Math.PI;
-												if(Math.random()>0.5){explosion.rotation+=Math.PI};
-												explosion.lifespan=-1;
-												headlightGlowSprite=explosion;
+												if(forceDead(explosionsGroup)){
+																var explosion = explosionsGroup.getFirstDead();
+																killTweensFromExplosion(explosion);
+																explosion.animations.play(bulletTypeName(0));
+																explosion.reset(x,y);
+																explosion.rotation = randomRange(-0.5,0.5);//bullet.rotation+Math.PI;
+																if(Math.random()>0.5){explosion.rotation+=Math.PI};
+																explosion.lifespan=-1;
+																headlightGlowSprite=explosion;
+												}
 								}
-}
 
-												headlightGlowSprite.animations.play(bulletTypeName(0));
-												headlightGlowSprite.reset(x,y);
-											headlightGlowSprite.lifespan=-1;
-												headlightGlowSprite.body.velocity.x=player.sprite.body.velocity.x;
-												headlightGlowSprite.body.velocity.y=player.sprite.body.velocity.y;
-												headlightGlowSprite.rotation=game.time.now/5000;
-												headlightGlowSprite.scale.setTo(headlightIntensity,headlightIntensity);
-												headlightGlowSprite.alpha=headlightIntensity*0.8;
-												headlightGlowSprite.blendMode=1;
-						}
+								headlightGlowSprite.animations.play(bulletTypeName(0));
+								headlightGlowSprite.reset(x,y);
+								headlightGlowSprite.lifespan=-1;
+								headlightGlowSprite.body.velocity.x=player.sprite.body.velocity.x;
+								headlightGlowSprite.body.velocity.y=player.sprite.body.velocity.y;
+								headlightGlowSprite.rotation=game.time.now/5000;
+								headlightGlowSprite.scale.setTo(headlightIntensity,headlightIntensity);
+								headlightGlowSprite.alpha=headlightIntensity*0.8;
+								headlightGlowSprite.blendMode=1;
+				}
 }
 function simpleGlow(explosionsGroup, x, y, bullet){
 
@@ -6606,7 +6678,7 @@ function spawnLoots(_count, x, y){
 												loot.blendMode=0;
 												loot.lootType='ore';
 												loot.acceleration=0;
-loot.owner='player';
+												loot.owner='player';
 												game.physics.arcade.velocityFromRotation(loot.rotation, randomRange(100,300), loot.body.velocity);
 												return loot;
 								}
@@ -6650,6 +6722,7 @@ function spawnComponent(component,x,y){
 								loot.alpha=2.5;
 								loot.pulseTween = game.add.tween(loot).to({alpha:1},250,Phaser.Easing.Circular.InOut,true,0,Number.MAX_VALUE,true);
 								loot.lootType='component';
+												loot.owner='player';
 								loot.component = component;
 								loot.acceleration=0;
 								game.physics.arcade.velocityFromRotation(Math.random()*2*Math.PI, randomRange(50,player.sprite.body.maxVelocity.x*0.75), loot.body.velocity);
@@ -6668,7 +6741,9 @@ function playerGotLoot (sprite, loot) {
 								//playerStats.inventory.push(loot.component);
 								shieldEffect(explosions, 4, sprite.x, sprite.y, sprite.body.velocity.x, sprite.body.velocity.y, player.ship.length);
 								addPlayerPartInFlight(loot.component);
+				ui.skipText();
 								ui.texts.push('got ' + components[loot.component].name + '\n' + components[loot.component].flavor);
+								pause(500);
 				}
 				ui.sound_beep.play();
 				player.sprite.alpha=6;
