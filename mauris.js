@@ -321,6 +321,22 @@ var legacyButtons = [
 				'rotation':0,
 				'label':'cancel'},
 				];
+var hiddenButtons = [
+
+{'name':'hideButtons',
+				'downCallback':function(){buttonOther=1;
+if(game.time.now > nextUIDelay){
+nextUIDelay = game.time.now + 300;
+ui.initButtons(warButtons);
+}
+},
+				'upCallback':function(){buttonOther=0;},
+				'x':0,
+				'y':7,
+				'rotation':0,
+				'label':'+'}
+]
+
 var warButtons = [
 /*{'name':'lofi',
 	'downCallback':function(){
@@ -334,6 +350,28 @@ var warButtons = [
 	'y':0,
 	'rotation':0,
 	'label':':p'},*/
+// ui.initButtons(warButtons);
+
+{'name':'hideButtons',
+				'downCallback':function(){buttonOther=1;
+if(game.time.now > nextUIDelay){
+nextUIDelay = game.time.now + 300;
+ui.initButtons(hiddenButtons);
+}
+},
+				'upCallback':function(){buttonOther=0;},
+				'x':0,
+				'y':7,
+				'rotation':0,
+				'label':'-'},
+
+{'name':'lights',
+				'downCallback':function(){buttonLight=1;},
+				'upCallback':function(){buttonLight=0;},
+				'x':7,
+				'y':5,
+				'rotation':0,
+				'label':'?'},
 {'name':'fire',
 				'downCallback':function(){buttonFire=1;},
 				'upCallback':function(){buttonFire=0;},
@@ -2773,7 +2811,7 @@ noMusic = false;
 var headlightIntensity=1;
 var headlightGlowSprite;
 var player;
-var light = 0; 
+var nextLight = 0; 
 var currentBrightness=1.0;
 var mysteriousConstant=0.22;
 var detailLod = 240;
@@ -2787,6 +2825,8 @@ var buttonRight=0;
 var buttonUp=0;
 var buttonDown=0;
 var buttonFire=0;
+var buttonOther=0;
+var buttonLight=0;
 var buttonAlt=0;
 var buttonEnter=0;
 var shipSpeed = 1/0.015;
@@ -4908,6 +4948,7 @@ function update () {
 								var up = 0;
 								var down = 0;
 								var fire = 0;
+								var light = 0;
 								var alt = 0;
 								var enter = 0;
 
@@ -5014,16 +5055,7 @@ function update () {
 												fire = 1;
 								}
 								if (cursors.lights.isDown){
-												if(!light){
 																light = 1;
-																if(headlightIntensity > 0){
-																				headlightIntensity = 0;
-																}else{
-																				headlightIntensity = 1;
-																}
-												}
-								}else{
-												light = 0;
 								}
 								if (cursors.alt.isDown){
 												alt = 1;
@@ -5061,12 +5093,13 @@ function update () {
 												if (buttonFire) {fire=1};
 												if (buttonAlt) {alt=1};
 												if (buttonEnter) {enter=1};
+												if (buttonLight) {light=1};
 												var manualPressed = buttonLeft || buttonRight || buttonUp || buttonDown;
 												if (manualPressed) {
 																player.behavior='manual';
 												}
-												touchPressed = buttonLeft || buttonRight || buttonUp || buttonDown || buttonFire || buttonAlt || buttonEnter;
-												buttonLeft =0; buttonRight =0; buttonUp =0; buttonDown =0; buttonFire =0; buttonAlt =0; buttonEnter =0;
+												touchPressed = buttonLeft || buttonRight || buttonUp || buttonDown || buttonFire || buttonAlt || buttonEnter || buttonOther ||buttonLight;
+												buttonLeft =0; buttonRight =0; buttonUp =0; buttonDown =0; buttonFire =0; buttonAlt =0; buttonEnter =0; buttonLight=0; buttonOther = 0;
 												if(!touchPressed){
 																player.targetAngle=game.physics.arcade.angleToPointer(player.sprite);
 												}
@@ -5131,6 +5164,7 @@ function update () {
 																								ui.rowUpPart();	
 																								nextUIDelay = game.time.now+1000;
 																				}
+
 																				if(fire && playerStats.inventory.length){
 																								selectPart();
 																								nextUIDelay = game.time.now+2000;
@@ -5407,7 +5441,12 @@ function update () {
 												if (fire){
 																player.fire();
 												}
-
+																				if (light) {
+if(game.time.now>nextLight){
+headlightIntensity = 1 - headlightIntensity;
+nextLight=game.time.now+300;
+}
+}
 								}
 							nebula2.reset(player.sprite.body.x*0.9980,player.sprite.body.y*0.9980);
 								nebula.reset(player.sprite.body.x*0.9985,player.sprite.body.y*0.9985);
