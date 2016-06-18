@@ -2927,6 +2927,7 @@ var headlightIntensity=1;
 var headlightGlowSprite;
 var pauseResumeTime = 0;
 var cameraTarget;
+var isAndroid = navigator.userAgent.match(/android/i) ? true : false;
 var player;
 var blurX;
 	var blurY;
@@ -4893,13 +4894,14 @@ blurY.blur=0;
 
 }
 function filterIfVisible(s){
+if(!isAndroid){
 if(!(s.visible && s.alpha > 0.3) && typeof(s.filters)!='undefined'){
 s.filters=undefined;
 }
 if(s.visible && s.alpha > 0.3 && typeof(s.filters)=='undefined'){
 s.filters=[blurX,blurY];
 }
-
+}
 }
 function fadeSpark(s) {
 				s.alpha-=0.01*game.time.physicsElapsed;
