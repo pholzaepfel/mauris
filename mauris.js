@@ -4751,6 +4751,13 @@ function sparkleBullets(s) {
 								s.nextSparkle=game.time.now+150;
 				}
 }
+function targetLoot (s){
+				if(Math.abs(game.input.activePointer.worldX - s.x) < 80 &&
+												Math.abs(game.input.activePointer.worldY - s.y) < 80) {
+								player.behavior='target';
+								player.target=s;
+				}
+}
 function targetBulletIfCorpse (s){
 				if(s.bulletSprite == 13 &&Math.abs(game.input.activePointer.worldX - s.x) < 80 &&
 												Math.abs(game.input.activePointer.worldY - s.y) < 80) {
@@ -4763,6 +4770,7 @@ function pullLootToPlayer(s) {
 								s.kill();
 				}
 				if(s.alive){
+								targetLoot(s);
 								if(Math.random() < 0.3 && onscreen(s.x,s.y)){
 												lootSparkle(s);
 								}
@@ -6559,6 +6567,7 @@ function spawnLoots(_count, x, y){
 												loot.blendMode=0;
 												loot.lootType='ore';
 												loot.acceleration=0;
+loot.owner='player';
 												game.physics.arcade.velocityFromRotation(loot.rotation, randomRange(100,300), loot.body.velocity);
 												return loot;
 								}
