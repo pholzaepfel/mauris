@@ -4470,7 +4470,7 @@ function createBuildParts(ship,x,y){
 
 function initMission (missionId) {
 				playerStats.mission = missions[missionId];
-				planet.scaleMission=randomRange(20,60);
+				planet.scaleMission=randomRange(50,60);
 				ui.skipText();
 				for(var i=0;i<playerStats.mission.intro.length;i++){
 								ui.texts.push(playerStats.mission.intro[i]);
@@ -4622,7 +4622,7 @@ function fadeIn () {
 				planetlod.scale.y=planetlod.baseScale;
 				planetlod.tint=randomMutedColor(120,255,120,255,120,255);
 				planetdirt.tint=(randomRange(40,255) << 16) + (randomRange(40,255) << 8) + randomRange(40,255);
-				planetfall.tint=(randomRange(40,255) << 16) + (randomRange(40,255) << 8) + randomRange(40,255);
+				planetfall.tint=planetlod.tint;//(randomRange(40,255) << 16) + (randomRange(40,255) << 8) + randomRange(40,255);
 				hazeRed.alpha=0;
 				hazeWhite.alpha=0;
 				hazePurple.alpha=0;
@@ -5618,7 +5618,7 @@ function update () {
 								planet.reset(cameraTarget.x * planet.speedModifier + planet.baseX, cameraTarget.y * planet.speedModifier+planet.baseY);
 
 								planetdirt.blendMode=1;
-								planetdirt.scale.setTo(planet.scale.x/8,planet.scale.y/8);
+								planetdirt.scale.setTo(planet.scale.x/4,planet.scale.y/4);
 								planetdirt.x=cameraTarget.x-resolutionX/2;
 								planetdirt.y=cameraTarget.y-resolutionY/2;
 								planetdirt.width=resolutionX/planetdirt.scale.x;
@@ -5628,8 +5628,8 @@ function update () {
 
 
 
-								planetfall.blendMode=2;
-								planetfall.scale.setTo(planet.scale.x/8,planet.scale.y/8);
+								planetfall.blendMode=0;
+								planetfall.scale.setTo(planet.scale.x/4,planet.scale.y/4);
 								planetfall.x=cameraTarget.x-resolutionX/2;
 								planetfall.y=cameraTarget.y-resolutionY/2;
 								planetfall.width=resolutionX/planetfall.scale.x;
@@ -5638,12 +5638,13 @@ function update () {
 								planetfall.tilePosition.y=(planet.y-planetfall.y)/planetfall.scale.y;
 								planetlod.scale.setTo(-1*planet.scale.x,planet.scale.y);
 								planetlod.reset(planet.x,planet.y);
-								planetfall.alpha=Math.min(0.77,(planet.scale.x-6.3));
+								planetdirt.alpha=Math.min(0.77,2.5*(planet.scale.x-3.15));
+								planetdirt.alpha=Math.max(0,planetdirt.alpha);
+								planetfall.alpha=Math.min(0.5,0.75*(planet.scale.x-3.15));
 								planetfall.alpha=Math.max(0,planetfall.alpha);
 								planetlod.blendMode=0;
 								planet.alpha=1;
 								planetlod.alpha=0.5;//Math.min(1,planet.scaleModifier+0.2);
-								planetdirt.alpha=planetfall.alpha;
 
 								planetlod.visible=false;
 								if(planetlod.alpha>0){
@@ -5700,9 +5701,9 @@ function update () {
 								hazePurple.width=1.5*resolutionX/hazePurple.scale.x;
 								hazePurple.height=1.5*resolutionY/hazePurple.scale.y;
 								hazeRed.speed=playerStats.mission.hazeRedSpeed+playerStats.mission.hazeRedSpeed*planet.hazeModifier*2;
-								hazeRed.alpha=playerStats.mission.hazeRed-(0.1*planetfall.alpha);
+								hazeRed.alpha=playerStats.mission.hazeRed-(0.1*planetdirt.alpha);
 								hazeWhite.alpha=playerStats.mission.hazeWhite*(1-planet.hazeModifier);
-								hazePurple.alpha=playerStats.mission.hazePurple-(0.1*planetfall.alpha);
+								hazePurple.alpha=playerStats.mission.hazePurple-(0.1*planetdirt.alpha);
 								hazePurple.speed=playerStats.mission.hazePurple+playerStats.mission.hazePurple*planet.hazeModifier*2;
 								hazeWhite.visible=false;
 								if(hazeWhite.alpha>0 && planetdirt.alpha < 0.1){
