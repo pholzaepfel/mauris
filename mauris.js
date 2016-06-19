@@ -34,12 +34,9 @@ function pausedRevertSprites(){
 				frob1.x-=frob1.body.velocity.x*game.time.physicsElapsed;
 				frob1.y-=frob1.body.velocity.y*game.time.physicsElapsed;
 				frob1.angle-=frob1.body.angularVelocity*game.time.physicsElapsed;
-
-				for(var i=0;i<player.parts.length;i++){
+					for(var i=0;i<player.parts.length;i++){
 								player.parts[i].update();
 				}	
-				player.sprite.body.x-=player.sprite.body.velocity.x*game.time.physicsElapsed;
-				player.sprite.body.y-=player.sprite.body.velocity.y*game.time.physicsElapsed;
 				for(var i=0;i<enemies.length;i++){
 								enemies[i].sprite.body.x-=enemies[i].sprite.body.velocity.x*game.time.physicsElapsed;	
 								enemies[i].sprite.body.y-=enemies[i].sprite.body.velocity.y*game.time.physicsElapsed;	
@@ -68,7 +65,12 @@ function pause(resumeDelay,x,y) {
 								}}
 				gamemode='paused';
 				nextUIDelay=game.time.now+2000;
-
+				pausedLastPlayerVelX=player.sprite.body.velocity.x;
+				pausedLastPlayerVelY=player.sprite.body.velocity.y;
+	player.lastVelocityX=0;
+	player.lastVelocityY=0;
+	player.sprite.body.velocity.x =0;
+	player.sprite.body.velocity.y =0;
 				var tweens = game.tweens.getAll()	
 								for(var i=0;i<tweens.length;i++){
 												tweens[i].pause();
@@ -114,6 +116,10 @@ function unpause () {
 				blurX.blur=0;
 
 				blurY.blur=0;
+	player.lastVelocityX=pausedLastPlayerVelX;
+	player.lastVelocityY=pausedLastPlayerVelY;
+	player.sprite.body.velocity.x =			pausedLastPlayerVelX;
+	player.sprite.body.velocity.y =			pausedLastPlayerVelY;
 				//				hazeRed.filters=undefined;
 				//				hazeWhite.filters=[];
 				//				hazePurple.filters=[];
@@ -2941,6 +2947,12 @@ var pauseResumeTime = 0;
 var cameraTarget;
 var isAndroid = navigator.userAgent.match(/android/i) ? true : false;
 var player;
+var pausedLastPlayerVelX;
+var pausedLastPlayerVelY;
+var pausedLastPlayerBodyX;
+var pausedLastPlayerBodyY;
+var pausedLastPlayerX;
+var pausedLastPlayerY;
 var blurX;
 var blurY;
 
