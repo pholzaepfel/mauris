@@ -25,44 +25,47 @@ var bulletTypes = [
 
 
 function signedSqrt(x){
-	if(x==0){return 0;}
-	var sign = x / Math.abs(x);
-	return sign * Math.sqrt(Math.abs(x));
-	
+				if(x==0){return 0;}
+				var sign = x / Math.abs(x);
+				return sign * Math.sqrt(Math.abs(x));
+
 }
 function pausedRevertSprites(){
-												frob1.x-=frob1.body.velocity.x*game.time.physicsElapsed;
-												frob1.y-=frob1.body.velocity.y*game.time.physicsElapsed;
-												frob1.angle-=frob1.body.angularVelocity*game.time.physicsElapsed;
+				frob1.x-=frob1.body.velocity.x*game.time.physicsElapsed;
+				frob1.y-=frob1.body.velocity.y*game.time.physicsElapsed;
+				frob1.angle-=frob1.body.angularVelocity*game.time.physicsElapsed;
 
-												for(var i=0;i<player.parts.length;i++){
-																player.parts[i].update();
-												}	
-													player.sprite.body.x-=player.sprite.body.velocity.x*game.time.physicsElapsed;
-												player.sprite.body.y-=player.sprite.body.velocity.y*game.time.physicsElapsed;
-													for(var i=0;i<enemies.length;i++){
-																enemies[i].sprite.body.x-=enemies[i].sprite.body.velocity.x*game.time.physicsElapsed;	
-																enemies[i].sprite.body.y-=enemies[i].sprite.body.velocity.y*game.time.physicsElapsed;	
-																enemies[i].sprite.angle-=enemies[i].sprite.body.angularVelocity*game.time.physicsElapsed;
-																if(enemies[i].alive && enemies[i].parts.length){
-																				for(var j=0;j<enemies[i].parts.length;j++){
-																								enemies[i].parts[j].update();
-																				}
-																}
+				for(var i=0;i<player.parts.length;i++){
+								player.parts[i].update();
+				}	
+				player.sprite.body.x-=player.sprite.body.velocity.x*game.time.physicsElapsed;
+				player.sprite.body.y-=player.sprite.body.velocity.y*game.time.physicsElapsed;
+				for(var i=0;i<enemies.length;i++){
+								enemies[i].sprite.body.x-=enemies[i].sprite.body.velocity.x*game.time.physicsElapsed;	
+								enemies[i].sprite.body.y-=enemies[i].sprite.body.velocity.y*game.time.physicsElapsed;	
+								enemies[i].sprite.angle-=enemies[i].sprite.body.angularVelocity*game.time.physicsElapsed;
+								if(enemies[i].alive && enemies[i].parts.length){
+												for(var j=0;j<enemies[i].parts.length;j++){
+																enemies[i].parts[j].update();
 												}
-												revertGroup(loots);
-												revertGroup(debris);
-												revertGroup(enemyBullets);
-												revertGroup(bullets);
-												revertGroup(explosions);
+								}
+				}
+				revertGroup(loots);
+				revertGroup(debris);
+				revertGroup(enemyBullets);
+				revertGroup(bullets);
+				revertGroup(explosions);
 
 
 }
 function pause(resumeDelay,x,y) {
+				if(game.time.now<nextUIDelay){
+					return;
+				}
 				if(typeof(x)!='undefined'&&typeof(y)!='undefined'){
 								if(!onscreenStrict(x,y)){
-return;
-}}
+												return;
+								}}
 				gamemode='paused';
 				nextUIDelay=game.time.now+2000;
 
@@ -70,25 +73,34 @@ return;
 								for(var i=0;i<tweens.length;i++){
 												tweens[i].pause();
 								}
-		blurX.blur=0;
-blurY.blur=0;
+				blurX.blur=0;
+				blurY.blur=0;
+				var blurAmount = isAndroid ? 30 : 30;
 
 				if(typeof(resumeDelay)!='undefined'){
+					nextUIDelay=game.time.now+5000;
 								pauseResumeTime = game.time.now + resumeDelay;
-game.add.tween(blurX).to({blur:30},resumeDelay,Phaser.Easing.Exponential.Out,true,0,false).to({blur:0},200,Phaser.Easing.Sinusoidal.Out,true,0,false);
-game.add.tween(blurY).to({blur:30},resumeDelay,Phaser.Easing.Exponential.Out,true,0,false).to({blur:0},200,Phaser.Easing.Sinusoidal.Out,true,0,false);
-					}else{
-game.add.tween(blurX).to({blur:30},1000,Phaser.Easing.Exponential.Out,true,0,false);
-game.add.tween(blurY).to({blur:30},1000,Phaser.Easing.Exponential.Out,true,0,false);
-	
+								if(isAndroid){
+												blurX.blur = blurAmount;
+												blurY.blur = blurAmount;
+												game.add.tween(blurX).to({blur:0},resumeDelay,Phaser.Easing.Sinusoidal.Out,true,0,false);
+												game.add.tween(blurY).to({blur:0},resumeDelay,Phaser.Easing.Sinusoidal.Out,true,0,false);
+								}else{
+												game.add.tween(blurX).to({blur:blurAmount},resumeDelay,Phaser.Easing.Exponential.Out,true,0,false).to({blur:0},200,Phaser.Easing.Sinusoidal.Out,true,0,false);
+												game.add.tween(blurY).to({blur:blurAmount},resumeDelay,Phaser.Easing.Exponential.Out,true,0,false).to({blur:0},200,Phaser.Easing.Sinusoidal.Out,true,0,false);
+								}
+				}else{
+								game.add.tween(blurX).to({blur:blurAmount},1000,Phaser.Easing.Exponential.Out,true,0,false);
+								game.add.tween(blurY).to({blur:blurAmount},1000,Phaser.Easing.Exponential.Out,true,0,false);
 
 
-}
+
+				}
 				if(typeof(x)!='undefined'&&typeof(y)!='undefined'){
 								if(onscreenStrict(x,y)){
-								game.add.tween(cameraTarget).to({x:x,y:y},resumeDelay * 0.65, Phaser.Easing.Sinusoidal.In, true, 0, false);
-	}
-								
+												game.add.tween(cameraTarget).to({x:x,y:y},resumeDelay * 0.65, Phaser.Easing.Sinusoidal.In, true, 0, false);
+								}
+
 				}
 }
 function unpause () {
@@ -99,19 +111,19 @@ function unpause () {
 								for(var i=0;i<tweens.length;i++){
 												tweens[i].resume();
 								}
-blurX.blur=0;
+				blurX.blur=0;
 
-blurY.blur=0;
-//				hazeRed.filters=undefined;
-//				hazeWhite.filters=[];
-//				hazePurple.filters=[];
-	//			planet.filters=undefined;
-//				planetlod.filters=[];
-//				planetfall.filters=[];
-//				planetdirt.filters=[];
+				blurY.blur=0;
+				//				hazeRed.filters=undefined;
+				//				hazeWhite.filters=[];
+				//				hazePurple.filters=[];
+				//			planet.filters=undefined;
+				//				planetlod.filters=[];
+				//				planetfall.filters=[];
+				//				planetdirt.filters=[];
 
-//				nebula.filters=[];
-//				nebula2.filters=[];
+				//				nebula.filters=[];
+				//				nebula2.filters=[];
 
 
 }
@@ -582,11 +594,11 @@ function queryComponent(id){
 				return components[id].bonus.toString().replace(/target\./g,'').replace(/function.*{/,'').replace(/}/g,'').replace(/bulletBehavior.*/,'CHANGE BULLET BEHAVIOR').replace(/alt=.*/,'ALTERNATE FIRE').replace(/this.*body\./g,'').replace(/this.*sprite\./g,'').replace(/this\./g,'').replace(/[();\[\]{}]/g,'').replace(/\t\t\t.*\n/g,'').replace(/[\t ]*/g,'').replace(/^\n/g,'');
 }
 var scroll = function(target,modifier ){
-			if(gamemode!='paused'){	
-			target.tilePosition.x += ( modifier*game.time.physicsElapsed*player.sprite.body.velocity.x / target.scale.x) + (game.time.physicsElapsed * (target.speed));
-				var ymodifier = target.scale.y / target.scale.x;
-				target.tilePosition.y += ( ymodifier * modifier*game.time.physicsElapsed*player.sprite.body.velocity.y / target.scale.y) ;
-}
+				if(gamemode!='paused'){	
+								target.tilePosition.x += ( modifier*game.time.physicsElapsed*player.sprite.body.velocity.x / target.scale.x) + (game.time.physicsElapsed * (target.speed));
+								var ymodifier = target.scale.y / target.scale.x;
+								target.tilePosition.y += ( ymodifier * modifier*game.time.physicsElapsed*player.sprite.body.velocity.y / target.scale.y) ;
+				}
 }
 var blackOut = function(){
 
@@ -1364,7 +1376,7 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 												bigBoom(explosions,this.sprite.x,this.sprite.y);
 												if(Math.random()<baseCorpseRate+(0.02*Math.sqrt(this.ship.length))){
 																this.spawnCorpses(randomInt(1,Math.pow(this.ship.length,1/2.5)));
-pan=true;
+																pan=true;
 												}
 								}
 								for (var j = 0; j < this.parts.length; j++) {
@@ -1373,7 +1385,7 @@ pan=true;
 																this.parts[j].sprite.kill();
 												}else if(Math.random() < (componentDropRate + player.dropRate) && components[this.parts[j].component].drops){ 
 																spawnComponent(this.parts[j].component, this.sprite.x, this.sprite.y);
-pan=true;
+																pan=true;
 																this.parts[j].sprite.kill();		
 												}else if(this.questionBox){
 																foo=components[0];	
@@ -1412,9 +1424,9 @@ pan=true;
 																playerStats.kills+=1;
 												}
 								}
-							if(pan){	
-																pause(2000, this.sprite.x, this.sprite.y);
-}
+								if(pan){	
+												pause(2000, this.sprite.x, this.sprite.y);
+								}
 								return true;
 				}
 
@@ -1710,8 +1722,8 @@ function preload () {
 				hello =	game.add.text(resolutionX*0.5,resolutionY*0.4, 'LOADING',{ font:'12px acknowledge', fill: 'rgb(196,150,255)', align: 'center' })
 								game.load.spritesheet('parts', 'assets/parts.png', 16, 16);
 
-    game.load.script('blurX', 'BlurX.js');
-    game.load.script('blurY', 'BlurY.js');
+				game.load.script('blurX', 'BlurX.js');
+				game.load.script('blurY', 'BlurY.js');
 				game.load.image('station', 'assets/station.png');
 				game.load.image('frob1', 'assets/frob1.png');
 				game.load.image('partswindow', 'assets/partswindow.png');
@@ -2106,7 +2118,7 @@ playerShip.prototype.damage = function(dmg, aggro, bulletX, bulletY) {
 																								spawnDebris(part.component, part.sprite.x, part.sprite.y); 
 																								removePlayerPartInFlight(cullList[f], dmg);		
 																				}
-				ui.skipText();
+																				ui.skipText();
 																				ui.texts.push(msg);
 																				pause(500);
 																}
@@ -2930,7 +2942,7 @@ var cameraTarget;
 var isAndroid = navigator.userAgent.match(/android/i) ? true : false;
 var player;
 var blurX;
-	var blurY;
+var blurY;
 
 var nextLight = 0; 
 var currentBrightness=1.0;
@@ -3606,10 +3618,10 @@ gameUI.prototype.cleanupDamageNumbers = function(){
 												this.damageNumbers[i].visible=false;
 								}else{
 												this.toTop(this.damageNumbers[i]);
-if(gamemode != 'paused'){
-												this.damageNumbers[i].x+=player.sprite.body.velocity.x*game.time.physicsElapsed;
-												this.damageNumbers[i].y+=player.sprite.body.velocity.y*game.time.physicsElapsed;
-}
+												if(gamemode != 'paused'){
+																this.damageNumbers[i].x+=player.sprite.body.velocity.x*game.time.physicsElapsed;
+																this.damageNumbers[i].y+=player.sprite.body.velocity.y*game.time.physicsElapsed;
+												}
 												this.damageNumbers[i].y-=120*game.time.physicsElapsed;
 								}
 				} 
@@ -3944,7 +3956,7 @@ gameUI.prototype.update = function() {
 								this.asteroids.sort(asteroidSort);
 								this.radarPing();
 								this.frobRadarPing();
-	
+
 				}
 				this.buttonsPing();
 				this.cleanupDamageNumbers();
@@ -4672,11 +4684,11 @@ function create () {
 								nebula.tint=randomMutedColor(128,255,128,255,128,255);
 								nebula2.tint=randomMutedColor(128,255,128,255,128,255);
 
-								
 
-blurX = game.add.filter('BlurX');
-	blurY = game.add.filter('BlurY');
-planet = game.add.sprite(resolutionX/0.8, resolutionY/0.8, 'planetslod');
+
+								blurX = game.add.filter('BlurX');
+								blurY = game.add.filter('BlurY');
+								planet = game.add.sprite(resolutionX/0.8, resolutionY/0.8, 'planetslod');
 								planet.baseX=randomRange(-300,400) * randomSign();
 								planet.baseY=randomRange(-300,400) * randomSign();
 								planetlod = game.add.sprite(resolutionX/0.8, resolutionY/0.8, 'planetslod');
@@ -4719,7 +4731,7 @@ planet = game.add.sprite(resolutionX/0.8, resolutionY/0.8, 'planetslod');
 								station = game.add.sprite(0,0,'station');
 								station.anchor.setTo(0.5,0.5)
 												asteroids.sort(lengthSort);
-							frob1 = game.add.sprite(-200,-200,'station');
+								frob1 = game.add.sprite(-200,-200,'station');
 								game.physics.enable(frob1, Phaser.Physics.ARCADE);
 								frob1.anchor.setTo(0.5,0.5);
 								frob1.visible=false;
@@ -4880,28 +4892,31 @@ up: game.input.keyboard.addKey(Phaser.Keyboard.UP),
 				hello.visible=false;
 				gamemode='war';
 
-filterIfVisible(hazeRed);
-filterIfVisible(hazeWhite);
-filterIfVisible(hazePurple);
-filterIfVisible(planet);
-filterIfVisible(planetlod);
-filterIfVisible(planetfall);
-filterIfVisible(planetdirt);
-filterIfVisible(nebula);
-filterIfVisible(nebula2);
-blurX.blur=0;
-blurY.blur=0;
+				filterIfVisible(hazeRed);
+				filterIfVisible(hazeWhite);
+				filterIfVisible(hazePurple);
+				filterIfVisible(planet);
+				filterIfVisible(planetlod);
+				filterIfVisible(planetfall);
+				filterIfVisible(planetdirt);
+				filterIfVisible(nebula);
+				filterIfVisible(nebula2);
+				blurX.blur=0;
+				blurY.blur=0;
 
 }
-function filterIfVisible(s){
-if(!isAndroid){
-if(!(s.visible && s.alpha > 0.3) && typeof(s.filters)!='undefined'){
-s.filters=undefined;
-}
-if(s.visible && s.alpha > 0.3 && typeof(s.filters)=='undefined'){
-s.filters=[blurX,blurY];
-}
-}
+function filterIfVisible(s, override){
+				if(typeof(override)=='undefined'){
+								override=false;
+				}
+				if(!isAndroid || override){
+								if(!(s.visible && s.alpha > 0.3) && typeof(s.filters)!='undefined'){
+												s.filters=undefined;
+								}
+								if(s.visible && s.alpha > 0.3 && typeof(s.filters)=='undefined'){
+												s.filters=[blurX,blurY];
+								}
+				}
 }
 function fadeSpark(s) {
 				s.alpha-=0.01*game.time.physicsElapsed;
@@ -5094,7 +5109,7 @@ function revertGroup(group){
 function update () {
 				decayCurrentBrightness();
 				if(gamemode!='paused'){
-					cameraTarget.reset(player.sprite.body.x+(0.5*player.sprite.body.width),player.sprite.body.y+(0.5*player.sprite.body.width));
+								cameraTarget.reset(player.sprite.body.x+(0.5*player.sprite.body.width),player.sprite.body.y+(0.5*player.sprite.body.width));
 				}
 				//suppress odd large explosions bug
 				/*explosions.forEach(function(e){
@@ -5456,23 +5471,23 @@ function update () {
 
 																unpause();
 												}else{
-												pausedRevertSprites();
+																pausedRevertSprites();
 
-												if(pauseResumeTime ==0){
-																ui.comms.fill="rgb(21," + Math.floor((1+Math.sin(game.time.now/1000))*100) + ",142)";
+																if(pauseResumeTime ==0){
+																				ui.comms.fill="rgb(21," + Math.floor((1+Math.sin(game.time.now/1000))*100) + ",142)";
 
-																ui.comms.setText('paused');
-																ui.comms.alpha=1;
-																ui.graphics.beginFill(0x000000, ui.comms.alpha/3);
-																ui.graphics.drawRect(ui.comms.x - 15, ui.comms.y - 6, ui.comms.width + 30, ui.comms.height + 12);
+																				ui.comms.setText('paused');
+																				ui.comms.alpha=1;
+																				ui.graphics.beginFill(0x000000, ui.comms.alpha/3);
+																				ui.graphics.drawRect(ui.comms.x - 15, ui.comms.y - 6, ui.comms.width + 30, ui.comms.height + 12);
+																}
+																if(left==0 && right==0 && up == 0 && down ==0 &&
+																								fire == 0 && alt == 0 &&
+																								!cursors.pgup.isDown && !cursors.pgdn.isDown && enter == 0
+																	){
+																				nextUIDelay = 0;
+																}
 												}
-												if(left==0 && right==0 && up == 0 && down ==0 &&
-																				fire == 0 && alt == 0 &&
-																				!cursors.pgup.isDown && !cursors.pgdn.isDown && enter == 0
-													){
-																nextUIDelay = 0;
-												}
-}
 								}
 
 								if(gamemode=='war' ){
@@ -5486,7 +5501,7 @@ function update () {
 																				player.initPlayerShip(randomShip(basicGear,3));
 																				if(cheatmode){player.initPlayerShip(randomShip(allLootableItems(),parseInt(randomRange(3,8))))}
 																				if(contextTutorialDeath){
-				ui.skipText();
+																								ui.skipText();
 																								ui.texts.push(contextTutorialDeath);
 																								contextTutorialDeath='';
 																				}
@@ -5648,6 +5663,18 @@ function update () {
 																nebula2.visible=false
 								}
 
+								if(blurX.blur>0 && isAndroid){
+												planetlod.alpha=Math.max(0,1-(blurX.blur/30));
+												planetdirt.alpha-=Math.min(planetdirt.alpha,1-(blurX.blur/50));
+												hazePurple.alpha-=Math.min(hazeRed.alpha,1-(blurX.blur/50));
+												hazeRed.alpha-=Math.min(hazeRed.alpha,1-(blurX.blur/50));
+												nebula.alpha=Math.min(nebula.alpha,1-(blurX.blur/50));
+												nebula2.alpha=Math.min(nebula2.alpha,1-(blurX.blur/50));
+								}else{
+												nebula.alpha=1;
+												nebula2.alpha=1;
+
+								}
 
 								planet.visible=true;
 								if(planet.alpha<=0){
@@ -5704,15 +5731,15 @@ function update () {
 												}
 								}
 				}
-filterIfVisible(hazeRed);
-filterIfVisible(hazeWhite);
-filterIfVisible(hazePurple);
-filterIfVisible(planet);
-filterIfVisible(planetlod);
-filterIfVisible(planetfall);
-filterIfVisible(planetdirt);
-filterIfVisible(nebula);
-filterIfVisible(nebula2);
+				filterIfVisible(hazeRed);
+				filterIfVisible(hazeWhite,true);
+				filterIfVisible(hazePurple);
+				filterIfVisible(planet,true);
+				filterIfVisible(planetlod);
+				filterIfVisible(planetfall,true);
+				filterIfVisible(planetdirt);
+				filterIfVisible(nebula);
+				filterIfVisible(nebula2);
 }
 function decayCurrentBrightness(){
 				if(currentBrightness>1){
@@ -6793,7 +6820,7 @@ function spawnComponent(component,x,y){
 								loot.alpha=2.5;
 								loot.pulseTween = game.add.tween(loot).to({alpha:1},250,Phaser.Easing.Circular.InOut,true,0,Number.MAX_VALUE,true);
 								loot.lootType='component';
-												loot.owner='player';
+								loot.owner='player';
 								loot.component = component;
 								loot.acceleration=0;
 								game.physics.arcade.velocityFromRotation(Math.random()*2*Math.PI, randomRange(50,player.sprite.body.maxVelocity.x*0.75), loot.body.velocity);
@@ -6812,7 +6839,7 @@ function playerGotLoot (sprite, loot) {
 								//playerStats.inventory.push(loot.component);
 								shieldEffect(explosions, 4, sprite.x, sprite.y, sprite.body.velocity.x, sprite.body.velocity.y, player.ship.length);
 								addPlayerPartInFlight(loot.component);
-				ui.skipText();
+								ui.skipText();
 								ui.texts.push('got ' + components[loot.component].name + '\n' + components[loot.component].flavor);
 								pause(500);
 				}
