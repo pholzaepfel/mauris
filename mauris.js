@@ -83,10 +83,8 @@ function pause(resumeDelay,x,y) {
 					nextUIDelay=game.time.now+5000;
 								pauseResumeTime = game.time.now + resumeDelay;
 								if(isAndroid){
-												blurX.blur = blurAmount;
-												blurY.blur = blurAmount;
-												game.add.tween(blurX).to({blur:0},resumeDelay,Phaser.Easing.Sinusoidal.Out,true,0,false);
-												game.add.tween(blurY).to({blur:0},resumeDelay,Phaser.Easing.Sinusoidal.Out,true,0,false);
+												game.add.tween(blurX).to({blur:blurAmount},resumeDelay,Phaser.Easing.Sinusoidal.InOut,true,0,true,true);
+												game.add.tween(blurY).to({blur:blurAmount},resumeDelay,Phaser.Easing.Sinusoidal.InOut,true,0,true,true);
 								}else{
 												game.add.tween(blurX).to({blur:blurAmount},resumeDelay,Phaser.Easing.Exponential.Out,true,0,false).to({blur:0},200,Phaser.Easing.Sinusoidal.Out,true,0,false);
 												game.add.tween(blurY).to({blur:blurAmount},resumeDelay,Phaser.Easing.Exponential.Out,true,0,false).to({blur:0},200,Phaser.Easing.Sinusoidal.Out,true,0,false);
