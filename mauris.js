@@ -4606,7 +4606,7 @@ function fadeIn () {
 				planet.baseX=randomRange(300,400)*randomSign();
 				planet.baseY=randomRange(300,400)*randomSign();
 				planet.rotation=randomRange(0,2*Math.PI);
-				planet.baseScale=randomRange(5,5);
+				planet.baseScale=randomRange(2.5,2.5);
 				planet.anchor.setTo(0.5,0.5);
 				planet.scale.x=planet.baseScale;
 				planet.scale.y=planet.baseScale;
