@@ -1024,10 +1024,8 @@ shipPart.prototype.initShipPart = function (x,y,index,targetSprite){
 				if(typeof(targetSprite)!='undefined'){
 								this.target = targetSprite;
 				}
-//TODO change this is really expensive
 																this.sprite.animations.add('a',[this.component]);
 this.sprite.animations.play('a');
-//				this.sprite.loadTexture('parts', this.component);
 				this.alive = true;
 				killTweensFromSprite(this.sprite);
 				this.sprite.alive=true;
