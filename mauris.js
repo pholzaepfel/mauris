@@ -1006,7 +1006,7 @@ partsPool.prototype.get = function (x,y,index,targetSprite){
 }
 shipPart = function(x,y,sheet,index,targetSprite){
 				this.game = game;
-				this.sprite = game.add.sprite(x,y,sheet,index);
+				this.sprite = game.add.sprite(x,y,'parts',index);
 				game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
 				this.initShipPart(x,y,index,targetSprite);
 };
@@ -1025,7 +1025,9 @@ shipPart.prototype.initShipPart = function (x,y,index,targetSprite){
 								this.target = targetSprite;
 				}
 //TODO change this is really expensive
-				this.sprite.loadTexture('parts', this.component);
+																this.sprite.animations.add('a',[this.component]);
+this.sprite.animations.play('a');
+//				this.sprite.loadTexture('parts', this.component);
 				this.alive = true;
 				killTweensFromSprite(this.sprite);
 				this.sprite.alive=true;
