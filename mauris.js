@@ -1024,8 +1024,10 @@ shipPart.prototype.initShipPart = function (x,y,index,targetSprite){
 				if(typeof(targetSprite)!='undefined'){
 								this.target = targetSprite;
 				}
+//TODO change this is really expensive
 				this.sprite.loadTexture('parts', this.component);
 				this.alive = true;
+				killTweensFromSprite(this.sprite);
 				this.sprite.alive=true;
 				this.sprite.exists=true;
 				this.sprite.alpha=1;
@@ -1077,7 +1079,7 @@ shipPart.prototype.update = function(){
 				if(this.target.alive){
 								this.sprite.scale.setTo(this.target.scale.x);
 				}else{
-								game.add.tween(this.sprite.scale).to({x:0,y:0},randomRange(1500,15000), Phaser.Easing.Linear.Out, true, 0, false);
+								this.sprite.tween=game.add.tween(this.sprite.scale).to({x:0,y:0},randomRange(1500,15000), Phaser.Easing.Linear.Out, true, 0, false);
 								this.sprite.alpha=1;
 				}
 				this.sprite.visible=ons;
@@ -6147,7 +6149,12 @@ function smoke(explosionsGroup, x, y){
 								}
 				}
 }
-function killTweensFromExplosion(explosion){
+function killTweensFromSprite(sprite){
+ 			if(typeof(sprite.tween)!='undefined'){
+								game.tweens.remove(sprite.tween);
+								sprite.tween=undefined;
+				}
+}function killTweensFromExplosion(explosion){
 				if(typeof(explosion.scale)!='undefined'){
 								if(typeof(explosion.scale.tween)!='undefined'){
 												game.tweens.remove(explosion.scale.tween);
