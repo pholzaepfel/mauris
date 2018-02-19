@@ -3605,6 +3605,11 @@ gameUI.prototype.initCombatUi = function() {
         this.comms = game.add.text(0,0,'',{font:'32px mozart', fill: 'rgb(40,190,240)', align: 'left'});
 
         this.comms.anchor.setTo(0.5,0.5);
+
+	destroyIfExists(this.playerStatusText);
+	this.playerStatusText = game.add.text(-300,-200,'',{font:'18 px acknowledge', fill: 'rgb(96, 96, 240)', align: 'left' });
+	this.playerStatusText.anchor.setTo(0.5,0.5);
+
         destroyIfExists(this.partText);
         this.partText = game.add.text(-300,150,'',{font:'42px mozart', fill: 'rgb(255,255,255)', align: 'left'});
         destroyIfExists(this.statsText);
@@ -3851,6 +3856,15 @@ gameUI.prototype.skipText = function() {
         this.textLineIndex=0;
 }
 gameUI.prototype.commsPing = function() {
+        var upperLeftCornerX = cameraTarget.x - (resolutionX / 2);
+        var upperLeftCornerY = cameraTarget.y - (resolutionY / 2);
+	
+	this.playerStatusText.x = upperLeftCornerX + 30;
+	this.playerStatusText.y = upperLeftCornerY + 30;
+	this.playerStatusText.setText('hi');
+        this.toTop(this.playerStatusText);
+
+
         this.comms.x = player.sprite.x;
         this.comms.y = player.sprite.y - 200;
         if (game.time.now > this.nextComms && this.textIndex < this.texts.length){
