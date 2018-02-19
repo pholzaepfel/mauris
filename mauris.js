@@ -2464,9 +2464,9 @@ function optimizeComponentsOptimistic(ship){
 												var vc = variantComponents(ship[i]);
 												vc.push(ship[i]);
 												if(vc.length){
-																var bestMatch = 0;
-																var bestMatchIndex = 0;
 																var matchString = getOptimisticMatch(outship,i);
+																var bestMatch = matchComponentToString(vc[vc.length-1],matchString) + 1;
+																var bestMatchIndex = vc.length-1;
 																for (var j=0;j<vc.length;j++){
 																				var matches = matchComponentToString(vc[j],matchString);
 																				if(matches>=bestMatch){
