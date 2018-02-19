@@ -4744,7 +4744,14 @@ function fadeIn () {
 				hazePurple.blendMode=playerStats.mission.hazePurpleBlendMode;
 
 }
-
+function newStartShip(){
+a=randomPartsList(basicGear,6);
+a.sort(matchabilityComponentSort);
+player.initPlayerShip(a[0]);
+for(i=1;i<6;i++){
+addPlayerPartInFlight(a[i]);
+}
+}
 function create () {
 
 
@@ -4854,15 +4861,10 @@ function create () {
 								// end of an era
 								var startShip = randomShip(basicGear,5,0,true);
 								if(cheatmode){startShip = randomShip(allLootableItems(),parseInt(randomRange(3,8)))}
-								if(Math.random() > 0.5){
-												startShip=symmetrizeShip(startShip);
-								}
 								cameraTarget = game.add.sprite(0,0);
 								cameraTarget.visible=false;
 								player = new playerShip(startShip);
-								while(shipWithoutVoid(player.ship).length > playerSizeMax() - 1){
-												removePlayerPartInFlight(0,1);
-								}
+								newStartShip();
 								player.health = player.healthMax;
 								mockPlayer = new mockPlayerShip(player.ship);
 
