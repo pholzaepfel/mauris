@@ -4835,6 +4835,9 @@ function create () {
 								cameraTarget = game.add.sprite(0,0);
 								cameraTarget.visible=false;
 								player = new playerShip(startShip);
+								while(shipWithoutVoid(player.ship).length > playerSizeMax() - 1){
+									removePlayerPartInFlight(0,1);
+								}
 								mockPlayer = new mockPlayerShip(player.ship);
 
 								//  The enemies bullet group
