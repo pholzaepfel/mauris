@@ -3624,7 +3624,7 @@ gameUI.prototype.initCombatUi = function() {
 
 	destroyIfExists(this.playerStatusText);
 	this.playerStatusText = game.add.text(-300,-200,'',{font:'32px acknowledge', fill: 'rgb(96, 96, 240)', align: 'left' });
-	this.playerStatusText.anchor.setTo(0.0,0.5);
+	this.playerStatusText.anchor.setTo(0.0,0.0);
 
         destroyIfExists(this.partText);
         this.partText = game.add.text(-300,150,'',{font:'42px mozart', fill: 'rgb(255,255,255)', align: 'left'});
@@ -3876,8 +3876,8 @@ gameUI.prototype.commsPing = function() {
         var upperLeftCornerY = cameraTarget.y - (resolutionY / 2);
 	
 	this.playerStatusText.x = upperLeftCornerX + 30;
-	this.playerStatusText.y = upperLeftCornerY + 30;
-	this.playerStatusText.setText('L' + playerStats.level + ' | XP ' + playerStats.xp);
+	this.playerStatusText.y = upperLeftCornerY + 50;
+	this.playerStatusText.setText('LEV ' + playerStats.level + '\nXP ' + playerStats.xp + '/' + playerStats.nextXp + '\nHP ' + playerStats.health + '/' + playerStats.healthMax);
         this.toTop(this.playerStatusText);
 
 
