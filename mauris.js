@@ -4508,7 +4508,7 @@ function addPlayerPartInFlight(componentId) {
 				var oldProfile = player.sprite.profile;
 				ui.parts = createBuildParts(player.ship,0,0);
 				createPart(componentId);
-				player.initPlayerShip(optimizeComponentsOptimistic(ui.partsArray()),oldX,oldY);
+				player.initPlayerShip(optimizeComponents(ui.partsArray()),oldX,oldY);
 				ui.destroyInventory();
 				ui.destroyParts();
 				player.sprite.body.velocity.x=oldVelocityX;  
