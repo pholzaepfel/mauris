@@ -3901,7 +3901,7 @@ gameUI.prototype.playerStatusTextPing = function() {
 				statusText += 'XP ' + playerStats.xp + '/' + playerStats.nextXp + '\n'
 								statusText += 'HP ' + parseInt(player.health) + '/' + parseInt(player.healthMax) + '\n'
 								statusText += 'SI ' + shipWithoutVoid(player.ship).length + '/' + playerSizeMax() + '\n';
-				if(gamemode == 'paused' && pauseResumeTime > 0){
+				if(gamemode == 'paused' && pauseResumeTime == 0){
 								statusText += '\ncomponents:\n';
 								for(i=0;i<player.ship.length;i++){
 												if(player.ship[i] != -1){
