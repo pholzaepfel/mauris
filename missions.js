@@ -1,4 +1,12 @@
-	var allLootableItems = function () {
+var messages =
+['as you level, your ship can grow larger.',
+'different parts have wildly different effects.',
+'yellow items usually increase damage.',
+'pink items usually improve energy recharge.',
+'blue items usually increase hp.'
+];
+
+var allLootableItems = function () {
 	var ret=[];
 			for(var i=0; i<components.length; i++){
 				if(typeof(components[i].name)=='undefined'){
@@ -10,7 +18,7 @@
 			}
 	return ret;	
 	}
-	var contextTutorialDeath = 'wake up, captain. we managed to recover you from the wreckage.\nyour ship is a lost cause, but we can recover parts you were carrying.';
+	var contextTutorialDeath = 'lose your ship, lose xp.';
 
 var missions = [
 

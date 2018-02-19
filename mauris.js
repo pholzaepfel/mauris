@@ -3901,6 +3901,12 @@ gameUI.prototype.playerStatusTextPing = function() {
 				statusText += 'XP ' + playerStats.xp + '/' + playerStats.nextXp + '\n'
 				statusText += 'HP ' + parseInt(player.health) + '/' + parseInt(player.healthMax) + '\n'
 				statusText += 'SI ' + shipWithoutVoid(player.ship).length + '/' + playerSizeMax();
+				if(gamemode == 'paused'){
+					for(i=0;i++;i<player.ship.length){
+						if(player.ship[i] != -1){
+							statusText += components[player.ship[i]].name + '\n'; 
+					}
+				}
 				this.playerStatusText.setText(statusText);
 				
 				
@@ -4034,6 +4040,7 @@ gameUI.prototype.update = function() {
 								this.asteroids.sort(asteroidSort);
 								this.radarPing();
 								this.frobRadarPing();
+								this.playerStatusTextPing();
 
 				}
 				this.buttonsPing();
