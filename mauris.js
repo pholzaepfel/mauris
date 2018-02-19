@@ -1454,8 +1454,8 @@ function addXp(xp) {
 				var addedLevel=false;
 				//if subtracting xp on death, recalculate the player level
 				if(xp<0){
-					playerStats.nextXp=100;
-					playerStats.level=1;
+								playerStats.nextXp=100;
+								playerStats.level=1;
 				}
 				while(playerStats.xp >= playerStats.nextXp){
 								playerStats.nextXp *= 2;
@@ -1463,7 +1463,7 @@ function addXp(xp) {
 								addedLevel=true;
 				}
 				if(xp<0){
-					addedLevel=false;
+								addedLevel=false;
 				}
 				if(addedLevel){
 								ui.sound_ominous.play();
@@ -2653,7 +2653,7 @@ var randomShip = function(partsList,size,extraParts,forceExact){
 				if(typeof(forceExact)=='undefined'){
 								forceExact=false;
 				}
-					var squareSize = size * size;
+				var squareSize = size * size;
 				var numParts=Math.max(parseInt(randomRange(squareSize/4,squareSize)),4);
 				numParts+=extraParts;
 				var myParts=randomPartsList(partsList,numParts);
@@ -3892,37 +3892,38 @@ gameUI.prototype.skipText = function() {
 				this.textLineIndex=0;
 }
 var playerSizeMax = function(){
-	return (playerStats.level) + 5;
+				return (playerStats.level) + 5;
 }
 gameUI.prototype.playerStatusTextPing = function() {
-				
+
 				var statusText = '';
 				statusText +='LEV ' + playerStats.level + '\n';
 				statusText += 'XP ' + playerStats.xp + '/' + playerStats.nextXp + '\n'
-				statusText += 'HP ' + parseInt(player.health) + '/' + parseInt(player.healthMax) + '\n'
-				statusText += 'SI ' + shipWithoutVoid(player.ship).length + '/' + playerSizeMax() + '\n';
+								statusText += 'HP ' + parseInt(player.health) + '/' + parseInt(player.healthMax) + '\n'
+								statusText += 'SI ' + shipWithoutVoid(player.ship).length + '/' + playerSizeMax() + '\n';
 				if(gamemode == 'paused' && pauseResumeTime > 0){
-				statusText += '\ncomponents:\n';
-					for(i=0;i<player.ship.length;i++){
-						if(player.ship[i] != -1){
-							var count=0;
-							for(j=0;j<player.ship.length;j++){
-								if(player.ship[j]==player.ship[i] && j < i){
-									j=player.ship.length;
-								}else if(player.ship[j]==player.ship[i]){
-									count+=1;
+								statusText += '\ncomponents:\n';
+								for(i=0;i<player.ship.length;i++){
+												if(player.ship[i] != -1){
+																var count=0;
+																for(j=0;j<player.ship.length;j++){
+																				if(player.ship[j]==player.ship[i] && j < i){
+																								j=player.ship.length;
+																				}else if(player.ship[j]==player.ship[i]){
+																								count+=1;
+																				}
+																}
+																statusText += components[player.ship[i]].name;
+																if(count > 1){
+																				statusText += ' x ' + count;
+																				statusText += '\n'; 
+																}
+												}
 								}
-							}
-							statusText += components[player.ship[i]].name;
-							if(count > 1){
-							statusText += ' x ' + count;
-							statusText += '\n'; 
-					}
-				}
 				}
 				this.playerStatusText.setText(statusText);
-				
-				
+
+
 				var upperLeftCornerX = cameraTarget.x - (resolutionX / 2);
 				var upperLeftCornerY = cameraTarget.y - (resolutionY / 2);
 
@@ -4856,7 +4857,7 @@ function create () {
 								cameraTarget.visible=false;
 								player = new playerShip(startShip);
 								while(shipWithoutVoid(player.ship).length > playerSizeMax() - 1){
-									removePlayerPartInFlight(0,1);
+												removePlayerPartInFlight(0,1);
 								}
 								player.health = player.healthMax;
 								mockPlayer = new mockPlayerShip(player.ship);
@@ -6946,16 +6947,16 @@ function playerGotLoot (sprite, loot) {
 								//playerStats.inventory.push(loot.component);
 								shieldEffect(explosions, 4, sprite.x, sprite.y, sprite.body.velocity.x, sprite.body.velocity.y, player.ship.length);
 								if(shipWithoutVoid(player.ship).length < playerSizeMax()){
-								addPlayerPartInFlight(loot.component);
-								addXp(30);
-								ui.skipText();
-								ui.texts.push('got ' + components[loot.component].name + '\n' + components[loot.component].flavor);
-								pause(500);
+												addPlayerPartInFlight(loot.component);
+												addXp(30);
+												ui.skipText();
+												ui.texts.push('got ' + components[loot.component].name + '\n' + components[loot.component].flavor);
+												pause(500);
 								}else{
-								  var bonusXp = 50 * playerStats.level;
-									addXp(bonusXp);
-									ui.texts.push('maxed size for level.');
-									ui.addDamageNumber(player.sprite.body.x,player.sprite.body.y,1,'+' + bonusXp + ' xp',true);
+												var bonusXp = 50 * playerStats.level;
+												addXp(bonusXp);
+												ui.texts.push('maxed size for level.');
+												ui.addDamageNumber(player.sprite.body.x,player.sprite.body.y,1,'+' + bonusXp + ' xp',true);
 								}
 				}
 				ui.sound_beep.play();
