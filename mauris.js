@@ -3907,6 +3907,7 @@ gameUI.prototype.playerStatusTextPing = function() {
 							statusText += components[player.ship[i]].name + '\n'; 
 					}
 				}
+				}
 				this.playerStatusText.setText(statusText);
 				
 				
