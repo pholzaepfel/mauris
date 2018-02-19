@@ -2688,7 +2688,7 @@ var randomShip = function(partsList,size,extraParts,forceExact){
 												ship[i]=-1;
 								}
 				}
-				if(forceExact && shipWithoutVoid(ship).length != size){
+				if(forceExact && shipWithoutVoid(ship).length != 5){ //initplayeronly, change later TODO
 					success = false;
 				}
 				if(shipWithoutVoid(ship).length < size) {
