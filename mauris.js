@@ -2681,15 +2681,15 @@ var randomShip = function(partsList,size,extraParts,forceExact){
 												ship=newShip;
 								}
 								attempts+=1;
+								if(forceExact && shipWithoutVoid(ship).length == size){
+									attempts=10;
+								}
 				}
 				//should not be happening
 				for (var i=0;i<ship.length;i++){
 								if(typeof(ship[i])=='undefined'){
 												ship[i]=-1;
 								}
-				}
-				if(forceExact && shipWithoutVoid(ship).length != 5){ //initplayeronly, change later TODO
-					success = false;
 				}
 				if(shipWithoutVoid(ship).length < size) {
 								success = false;
