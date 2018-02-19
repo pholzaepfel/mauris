@@ -3900,11 +3900,23 @@ gameUI.prototype.playerStatusTextPing = function() {
 				statusText +='LEV ' + playerStats.level + '\n';
 				statusText += 'XP ' + playerStats.xp + '/' + playerStats.nextXp + '\n'
 				statusText += 'HP ' + parseInt(player.health) + '/' + parseInt(player.healthMax) + '\n'
-				statusText += 'SI ' + shipWithoutVoid(player.ship).length + '/' + playerSizeMax();
-				if(gamemode == 'paused'){
+				statusText += 'SI ' + shipWithoutVoid(player.ship).length + '/' + playerSizeMax() + '\n';
+				if(gamemode == 'paused' && pauseResumeTime > 0){
+				statusText += '\ncomponents:\n';
 					for(i=0;i<player.ship.length;i++){
 						if(player.ship[i] != -1){
-							statusText += components[player.ship[i]].name + '\n'; 
+							var count=0;
+							for(j=0;j<player.ship.length;j++){
+								if(player.ship[j]==player.ship[i] && j < i){
+									j=player.ship.length;
+								}else if(player.ship[j]==player.ship[i]){
+									count+=1;
+								}
+							}
+							statusText += components[player.ship[i]].name;
+							if(count > 1){
+							statusText += ' x ' + count;
+							statusText += '\n'; 
 					}
 				}
 				}
