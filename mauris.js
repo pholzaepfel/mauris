@@ -3,6 +3,7 @@ var defaultBehavior='neutral';
 var cheatmode = 0;
 var noblood = 0;
 var touchPressed = 0;
+var initialXp = 200; //xp required for first level
 var bulletTypes = [ 
 {'name':'pulse', 'id':0},
 {'name':'bullets', 'id':1},
@@ -526,7 +527,7 @@ var warButtons = [
 								this.kills=0;
 								this.level=1;
 								this.xp=0;
-								this.nextXp=100;
+								this.nextXp=initialXp;
 								this.deaths=0;
 				};
 function spacesAtStartOfRow(ship,rowNum){
@@ -1297,6 +1298,7 @@ enemyShip.prototype.spawnCorpses = function(numCorpses) {
 																				playerStats.xp+=1000;
 																				ui.addDamageNumber(player.sprite.body.x,player.sprite.body.y,1,'+1000 xp',true);
 
+
 																				shieldEffect(explosions, 4, player.sprite.x, player.sprite.y, player.sprite.body.velocity.x, player.sprite.body.velocity.y, player.ship.length);
 																				ui.sound_beep.play();
 																				player.sprite.alpha=6;
@@ -1450,10 +1452,18 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 function addXp(xp) {
 				playerStats.xp+=xp;
 				var addedLevel=false;
+				//if subtracting xp on death, recalculate the player level
+				if(xp<0){
+					playerStats.nextXp=100;
+					playerStats.level=1;
+				}
 				while(playerStats.xp >= playerStats.nextXp){
 								playerStats.nextXp *= 2;
 								playerStats.level += 1;
 								addedLevel=true;
+				}
+				if(xp<0){
+					addedLevel=false;
 				}
 				if(addedLevel){
 								ui.sound_ominous.play();
@@ -2173,6 +2183,7 @@ playerShip.prototype.damage = function(dmg, aggro, bulletX, bulletY) {
 								this.cullParts();  //defensive programming, in case I ever decide to do something that will kill a player sprite early :P
 								nextSpawn = game.time.now+5000;
 								playerStats.deaths+=1; //hahahahahhahahahahahahahhahahahahahaha
+								addXp(parseInt(playerStats.xp/-2));
 								playerStats.health=99999; //reset health for next ship
 								fadeOut();
 								return true;
@@ -3877,13 +3888,16 @@ gameUI.prototype.skipText = function() {
 				this.textIndex=this.texts.length;
 				this.textLineIndex=0;
 }
+var playerSizeMax = function(){
+	return (playerStats.level * 2) + 4;
+}
 gameUI.prototype.playerStatusTextPing = function() {
 				
 				var statusText = '';
 				statusText +='LEV ' + playerStats.level + '\n';
 				statusText += 'XP ' + playerStats.xp + '/' + playerStats.nextXp + '\n'
-				statusText += 'HP ' + player.health + '/' + player.healthMax + '\n'
-				statusText += 'SI ' + shipWithoutVoid(player.ship).length + '/' + ((playerStats.level * 2) + 4);
+				statusText += 'HP ' + parseInt(player.health) + '/' + parseInt(player.healthMax) + '\n'
+				statusText += 'SI ' + shipWithoutVoid(player.ship).length + '/' + playerSizeMax();
 				this.playerStatusText.setText(statusText);
 				
 				
@@ -6904,10 +6918,18 @@ function playerGotLoot (sprite, loot) {
 				}else if(loot.lootType=='component'){
 								//playerStats.inventory.push(loot.component);
 								shieldEffect(explosions, 4, sprite.x, sprite.y, sprite.body.velocity.x, sprite.body.velocity.y, player.ship.length);
+								if(shipWithoutVoid(player.ship).length < playerSizeMax()){
 								addPlayerPartInFlight(loot.component);
+								addXp(30);
 								ui.skipText();
 								ui.texts.push('got ' + components[loot.component].name + '\n' + components[loot.component].flavor);
 								pause(500);
+								}else{
+								  var bonusXp = 50 * playerStats.level;
+									addXp(bonusXp);
+									ui.texts.push('maxed size for level.');
+									ui.addDamageNumber(player.sprite.body.x,player.sprite.body.y,1,'+' + bonusXp + ' xp',true);
+								}
 				}
 				ui.sound_beep.play();
 				player.sprite.alpha=6;
