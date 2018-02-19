@@ -1448,11 +1448,16 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 }
 function addXp(xp) {
 			playerStats.xp+=xp;
+			var addedLevel=false;
 			while(playerStats.xp > playerStats.nextXp){
 				playerStats.nextXp *= 2;
 				playerStats.level += 1;
+				addedLevel=true;
 			}
+			if(addedLevel){
+                ui.sound_ominous.play();
 		ui.texts.push('You are now level ' + playerStats.level);
+		}
 
 
 }
