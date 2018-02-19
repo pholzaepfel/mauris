@@ -526,6 +526,7 @@ var hiddenButtons = [
                 this.kills=0;
 		this.level=1;
 		this.xp=0;
+		this.nextXp=100;
                 this.deaths=0;
         };
 function spacesAtStartOfRow(ship,rowNum){
@@ -1426,7 +1427,9 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
                                 game.add.tween(this.parts[j].sprite.body).to({angularVelocity:randomRange(75,400)},700,Phaser.Easing.Exponential.Out, true, 0, false);
                         }
                 }  
-		playerStats.xp+=this.parts.length*10;
+                if(this.ai!=aiModes['asteroid']){
+			addXp(this.parts.length*10);
+		}
                 this.cullParts();
                 this.sprite.kill();
                 if(typeof(playerStats.mission.win.killType)!='undefined'){
@@ -1441,6 +1444,16 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
         }
 
         return false;
+
+}
+function addXp(xp) {
+			playerStats.xp+=xp;
+			while(playerStats.xp > playerStats.nextXp){
+				playerStats.nextXp *= 2;
+				playerStats.level += 1;
+			}
+		ui.texts.push('You are now level ' + playerStats.level);
+
 
 }
 //parts, when killed, are 'available' to be used in newly init'd ships
@@ -3611,7 +3624,7 @@ gameUI.prototype.initCombatUi = function() {
 
 	destroyIfExists(this.playerStatusText);
 	this.playerStatusText = game.add.text(-300,-200,'',{font:'32px acknowledge', fill: 'rgb(96, 96, 240)', align: 'left' });
-	this.playerStatusText.anchor.setTo(0.5,0.5);
+	this.playerStatusText.anchor.setTo(0.0,0.5);
 
         destroyIfExists(this.partText);
         this.partText = game.add.text(-300,150,'',{font:'42px mozart', fill: 'rgb(255,255,255)', align: 'left'});
