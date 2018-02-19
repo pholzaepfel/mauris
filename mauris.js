@@ -2681,9 +2681,6 @@ var randomShip = function(partsList,size,extraParts,forceExact){
 												ship=newShip;
 								}
 								attempts+=1;
-								if(forceExact && shipWithoutVoid(ship).length == size){
-									attempts=10;
-								}
 				}
 				//should not be happening
 				for (var i=0;i<ship.length;i++){
