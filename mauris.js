@@ -5113,7 +5113,7 @@ function winMission(){
                         playerStats.crew-=1;
                 }
 
-                playerStats.mission.complete=false;
+                playerStats.mission.complete=true; //maybe one day we'll implement missions again
                 playerStats.kills=0;
         }
 }
