@@ -3907,9 +3907,9 @@ gameUI.prototype.playerStatusTextPing = function() {
 												if(player.ship[i] != -1){
 																var count=0;
 																for(j=0;j<player.ship.length;j++){
-																				if(player.ship[j]==player.ship[i] && j < i){
+																				if(components[player.ship[j]].name==components[player.ship[i]].name && j < i){
 																								j=player.ship.length;
-																				}else if(player.ship[j]==player.ship[i]){
+																				}else if(components[player.ship[j]].name==components[player.ship[i]].name){
 																								count+=1;
 																				}
 																}
