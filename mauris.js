@@ -3915,11 +3915,13 @@ gameUI.prototype.playerStatusTextPing = function() {
 																				}
 																}
 																}
+																if(count > 0){
 																statusText += components[player.ship[i]].name;
 																if(count > 1){
 																				statusText += ' x ' + count;
 																}
 																				statusText += '\n'; 
+												}
 												}
 								}
 				}
