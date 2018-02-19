@@ -225,7 +225,7 @@ var missions = [
 
 },
 {	'id':3,
-	'next':[4],
+	'next':[11],
 	'name':'shots in the dark',
 	'complete':false,
 	'componentsReward':[64],
