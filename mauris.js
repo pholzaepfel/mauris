@@ -2689,7 +2689,7 @@ var randomShip = function(partsList,size,extraParts,forceExact){
 								}
 				}
 				if(forceExact && shipWithoutVoid(ship).length != size){
-				success = false;
+					success = false;
 				}
 				if(shipWithoutVoid(ship).length < size) {
 								success = false;
@@ -3895,7 +3895,7 @@ gameUI.prototype.skipText = function() {
 				this.textLineIndex=0;
 }
 var playerSizeMax = function(){
-	return (playerStats.level) + 55555;
+	return (playerStats.level) + 5;
 }
 gameUI.prototype.playerStatusTextPing = function() {
 				
