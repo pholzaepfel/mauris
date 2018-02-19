@@ -3902,7 +3902,7 @@ gameUI.prototype.playerStatusTextPing = function() {
 				statusText += 'HP ' + parseInt(player.health) + '/' + parseInt(player.healthMax) + '\n'
 				statusText += 'SI ' + shipWithoutVoid(player.ship).length + '/' + playerSizeMax();
 				if(gamemode == 'paused'){
-					for(i=0;i++;i<player.ship.length){
+					for(i=0;i<player.ship.length;i++){
 						if(player.ship[i] != -1){
 							statusText += components[player.ship[i]].name + '\n'; 
 					}
