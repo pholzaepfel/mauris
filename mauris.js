@@ -524,6 +524,8 @@ var hiddenButtons = [
                         }
                 }
                 this.kills=0;
+		this.level=1;
+		this.xp=0;
                 this.deaths=0;
         };
 function spacesAtStartOfRow(ship,rowNum){
@@ -1424,6 +1426,7 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
                                 game.add.tween(this.parts[j].sprite.body).to({angularVelocity:randomRange(75,400)},700,Phaser.Easing.Exponential.Out, true, 0, false);
                         }
                 }  
+		playerStats.xp+=this.parts.length*10;
                 this.cullParts();
                 this.sprite.kill();
                 if(typeof(playerStats.mission.win.killType)!='undefined'){
@@ -3607,7 +3610,7 @@ gameUI.prototype.initCombatUi = function() {
         this.comms.anchor.setTo(0.5,0.5);
 
 	destroyIfExists(this.playerStatusText);
-	this.playerStatusText = game.add.text(-300,-200,'',{font:'18 px acknowledge', fill: 'rgb(96, 96, 240)', align: 'left' });
+	this.playerStatusText = game.add.text(-300,-200,'',{font:'32px acknowledge', fill: 'rgb(96, 96, 240)', align: 'left' });
 	this.playerStatusText.anchor.setTo(0.5,0.5);
 
         destroyIfExists(this.partText);
@@ -3861,7 +3864,7 @@ gameUI.prototype.commsPing = function() {
 	
 	this.playerStatusText.x = upperLeftCornerX + 30;
 	this.playerStatusText.y = upperLeftCornerY + 30;
-	this.playerStatusText.setText('hi');
+	this.playerStatusText.setText('L' + playerStats.level + ' | XP ' + playerStats.xp);
         this.toTop(this.playerStatusText);
 
 
