@@ -2646,11 +2646,14 @@ var symmetrizeShip = function(ship){
 				}
 				return optimizeComponents(ret);
 }
-var randomShip = function(partsList,size,extraParts){
+var randomShip = function(partsList,size,extraParts,forceExact){
 				if(typeof(extraParts)=='undefined'){
 								extraParts=0;
 				}
-				var squareSize = size * size;
+				if(typeof(forceExact)=='undefined'){
+								forceExact=false;
+				}
+					var squareSize = size * size;
 				var numParts=Math.max(parseInt(randomRange(squareSize/4,squareSize)),4);
 				numParts+=extraParts;
 				var myParts=randomPartsList(partsList,numParts);
@@ -2684,6 +2687,9 @@ var randomShip = function(partsList,size,extraParts){
 								if(typeof(ship[i])=='undefined'){
 												ship[i]=-1;
 								}
+				}
+				if(forceExact && shipWithoutVoid(ship).length != size){
+				success = false;
 				}
 				if(shipWithoutVoid(ship).length < size) {
 								success = false;
@@ -3889,7 +3895,7 @@ gameUI.prototype.skipText = function() {
 				this.textLineIndex=0;
 }
 var playerSizeMax = function(){
-	return (playerStats.level * 2) + 4;
+	return (playerStats.level) + 55555;
 }
 gameUI.prototype.playerStatusTextPing = function() {
 				
@@ -4824,7 +4830,7 @@ function create () {
 								pool = new partsPool();
 								dragPool = new dragPartsPool();
 								// end of an era
-								var startShip = randomShip(basicGear,3);
+								var startShip = randomShip(basicGear,5,0,true);
 								if(cheatmode){startShip = randomShip(allLootableItems(),parseInt(randomRange(3,8)))}
 								if(Math.random() > 0.5){
 												startShip=symmetrizeShip(startShip);
