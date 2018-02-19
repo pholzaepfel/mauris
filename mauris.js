@@ -4838,6 +4838,7 @@ function create () {
 								while(shipWithoutVoid(player.ship).length > playerSizeMax() - 1){
 									removePlayerPartInFlight(0,1);
 								}
+								player.health = player.healthMax;
 								mockPlayer = new mockPlayerShip(player.ship);
 
 								//  The enemies bullet group
