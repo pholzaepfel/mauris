@@ -95,7 +95,7 @@ var randomMission = function(){
 																																								var s=  myfactions[0][0] + ' in area: ';
 																																				if(enemyDensity>140){
 																																								s+='extreme threat.';
-																																				}else if(enemyDensity>60){
+																																				}else if(enemyDensity>80){
 																																								s+='high threat.';
 																																				}else if(enemyDensity>40){
 																																								s+='moderate threat.';
@@ -106,6 +106,7 @@ var randomMission = function(){
 																																				}
 																																				rm.intro.push(s);
 																																				}
+																																				var totalEnemyCount = 0;
 																																				while(enemyDensity > 0){
 																																								var faction = randomFromArray(myfactions);
 																																								var minSize = parseInt(randomRange(2,8));
@@ -114,9 +115,13 @@ var randomMission = function(){
 																																								}
 																																								var maxSize = parseInt(randomRange(0,1));
 																																								var count = parseInt(randomRange(0,20/minSize));
+																																								
+																																								if(count + totalEnemyCount > 30 && minSize < 7){
+																																										minSize+=2;
+																																								}
+																																								var strength = 0;
 																																								var maxCount = Math.pow((minSize+maxSize)/2,2);
 																																								maxCount = parseInt(enemyDensity/maxCount);
-																																								var strength = 0;
 																																								if(maxCount < 1){ 
 																																												count = 0;
 																																												enemyDensity = 0;
@@ -137,6 +142,7 @@ var randomMission = function(){
 																																																				'missionTarget':false
 
 																																																				}
+																																												totalEnemyCount+=count;
 																																																			 )
 																																								}
 
