@@ -1,4 +1,4 @@
-aar gamemode;
+var gamemode;
 var defaultBehavior='neutral';
 var cheatmode = 0;
 var noblood = 0;
