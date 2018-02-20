@@ -76,7 +76,7 @@ var randomMission = function(){
 																																				var asteroidDensity = parseInt(randomRange(10,50));
 																																				if(randomRange(0,1)<asteroidPanicChance){
 																																								rm.asteroidPanic=true;
-																																								asteroidDensity+=parseInt(randomRange(30,50));
+																																								asteroidDensity=parseInt(randomRange(70,120));
 																																				}
 																																				if(asteroidDensity < 20){
 																																								rm.intro.push('asteroid density: light');
@@ -1754,14 +1754,17 @@ enemyShip.prototype.update = function() {
 								//init asteroid stuff
 								this.sprite.body.velocity = game.physics.arcade.velocityFromRotation(game.physics.arcade.angleBetween(this.sprite, player.sprite), randomRange(30,130));  
 								if(playerStats.mission.asteroidPanic){
-								this.sprite.body.velocity.x*=randomRange(0.6,2.4);
-								this.sprite.body.velocity.y*=Math.random(0.6,2.4);
+								this.sprite.body.velocity.x*=randomRange(0.6,4.4);
+								this.sprite.body.velocity.y*=randomRange(0.6,4.4);
 	
 								}else{
 								this.sprite.body.velocity.x*=Math.random();
 								this.sprite.body.velocity.y*=Math.random();
 								}
 								this.sprite.body.angularVelocity=randomRange(25,100)*randomSign();
+								if(playerStats.mission.asteroidPanic){
+								this.sprite.body.angularVelocity*=randomRange(1,3);
+								}
 								if(this.oreChance<1){
 												this.sprite.profile=0;
 												this.sprite.profileMax=0;
