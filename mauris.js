@@ -1,4 +1,4 @@
-var gamemode;
+aar gamemode;
 var defaultBehavior='neutral';
 var cheatmode = 0;
 var noblood = 0;
@@ -23,134 +23,150 @@ var bulletTypes = [
 ];
 
 var randomName = function(){
-var adjectives = ['Dusty','Barren','Lonely','Wasted','Cold','Bleak','Dangerous',
-                  'Solemn','Treacherous','Screaming','Yawning'];
-var nouns = ['Void','Collapse','Spiral','Gap','Graveyard','Scrapyard','Expanse',
-             'Warzone','Trade Zone','Column','Abyss'];
-return randomFromArray(adjectives) + ' ' + randomFromArray(nouns);
+				var adjectives = ['Dusty','Barren','Lonely','Wasted','Cold','Bleak','Dangerous',
+						'Solemn','Treacherous','Screaming','Yawning'];
+				var nouns = ['Void','Collapse','Spiral','Gap','Graveyard','Scrapyard','Expanse',
+						'Warzone','Trade Zone','Column','Abyss'];
+				return randomFromArray(adjectives) + ' ' + randomFromArray(nouns);
 }
 var randomMission = function(){
-	var myfactions=[
-		['alliance military',allianceGear4],
-		['mechanoid',mechanoidGear],
-			['smuggler',banditGear],
-				['infected',zombieGear],
-					['damaged mining drone',failDroneGear],
-						['mining drone',droneGear],
-							['trashhauler',dirtyParts],
-								['mercenary',blackParts],
-									['pirate',banditGear2]
-	];
-									var rm = {};
-									rm.id = 666;
-									rm.next = [666];
-									rm.name = randomName();
-									rm.complete = false;
-									rm.hazeRed = randomRange(0.2,1.2);
-									rm.hazeWhite = randomRange(1.0,1.8);
-									rm.hazePurple = randomRange(0.2,1.2);
-									rm.hazeRedSpeed = randomRange(20,40);
-									rm.hazeWhiteSpeed = 10;
-									rm.hazePurpleSpeed = randomRange(60,100);
-									rm.distanceMin = randomRange(9000,12000);
-									rm.distanceMax = randomRange(10000,15000);
-									rm.hazePurpleBlendMode = 2;
-									rm.hazeRedBlendMode = 0;
-									rm.intro = [rm.name];
-									rm.outro = [];
-									rm.win = {
-										'condition':'frob'
-									};
-									rm.enemies = [];
+				var allfactions=[
+								['alliance military',allianceGear4],
+								['mechanoid',mechanoidGear],
+												['smuggler',banditGear],
+																['infected',zombieGear],
+																				['damaged mining drone',failDroneGear],
+																								['mining drone',droneGear],
+																												['trashhauler',dirtyParts],
+																																['mercenary',blackParts],
+																																				['pirate',banditGear2]
+				];
+																																				var myfactions=[];
+																																				myfactions.push(randomFromArray(allfactions));
+																																				myfactions.push(randomFromArray(allfactions));
+																																				if(randomRange(0,1)>0.5){
+																																								myfactions.push(randomFromArray(allfactions));
 
-									var asteroidDensity = parseInt(randomRange(10,50));
-									if(randomRange(0,100)<2){
-										asteroidDensity+=parseInt(randomRange(30,50));
-									}
-									if(asteroidDensity < 20){
-										rm.intro.push('asteroid density: light');
-									}else if(asteroidDensity < 35){
-										rm.intro.push('asteroid density: moderate');
-									}else if(asteroidDensity < 65){
-										rm.intro.push('asteroid density: high');
-									}else{
-										rm.intro.push('asteroid density: extreme');
-									}
-									var enemyDensity=parseInt(randomRange(20,60));
-									if(asteroidDensity>50){enemyDensity=0};
-									while(enemyDensity > 0){
-										var faction = randomFromArray(myfactions);
-										var minSize = parseInt(randomRange(2,6));
-										var maxSize = parseInt(randomRange(0,3));
-										var count = parseInt(randomRange(0,20/minSize));
-										console.log('minSize - ' + minSize + 'count - ' + count);
-										var maxCount = (minSize+maxSize)/2;
-										maxCount = parseInt(enemyDensity/maxCount);
-										var strength = 0;
-										if(maxCount < 1){ 
-											count = 0;
-											enemyDensity = 0;
-										}else if(maxCount < count){
-											count=maxCount;
-										}
-										if(count > 0){
-										strength=((minSize+maxSize)/2)*count;	
-											enemyDensity-=strength;
-											rm.enemies.push(
-													{
-													'ships': drones,
-													'parts': faction[1], 
-													'sizeMin': minSize,
-													'sizeMax': maxSize+minSize,
-													'respawn':true,
-													'count':count,
-													'missionTarget':false
+																																				}
 
-													}
-												       )
-										if(strength<15){
-											rm.intro.push(faction[0] + ' activity: minimal');
-										}else if(strength<30){
-											rm.intro.push(faction[0] + ' activity: moderate');
-										}else {
-											rm.intro.push(faction[0] + ' activity: dangerous');
-										}
-										}
+																																				var rm = {};
+																																				rm.id = 666;
+																																				rm.next = [666];
+																																				rm.name = randomName();
+																																				rm.complete = false;
+																																				rm.hazeRed = randomRange(0.2,1.2);
+																																				rm.hazeWhite = randomRange(1.0,1.8);
+																																				rm.hazePurple = randomRange(0.2,1.2);
+																																				rm.hazeRedSpeed = randomRange(20,40);
+																																				rm.hazeWhiteSpeed = 10;
+																																				rm.hazePurpleSpeed = randomRange(60,100);
+																																				rm.distanceMin = randomRange(9000,12000);
+																																				rm.distanceMax = randomRange(10000,15000);
+																																				rm.hazePurpleBlendMode = 2;
+																																				rm.hazeRedBlendMode = 0;
+																																				rm.intro = [rm.name];
+																																				rm.outro = [];
+																																				rm.win = {
+																																								'condition':'frob'
+																																				};
+																																				rm.enemies = [];
 
-									}
-									rm.enemies.push(
-											{
-											'ships': asteroids,
-											'parts': asteroidParts, 
-											'sizeMin': 2,
-											'sizeMax': 3,
-											'respawn':true,
-											'count':asteroidDensity,
-											'missionTarget':false
-											}
-										       );
-									rm.enemies.push(
-											{
-											'ships': containers,
-											'respawn':true,
-											'count':parseInt(randomRange(3,8)), 
-											'missionTarget':false
-											}
-										       );
-									rm.enemies.push(
-											{
-											'ships': questionContainers,
-											'respawn':false,
-											'count':parseInt(randomRange(1,5)), 
-											'missionTarget':true
-											}
+																																				var asteroidDensity = parseInt(randomRange(10,50));
+																																				if(randomRange(0,100)<2){
+																																								asteroidDensity+=parseInt(randomRange(30,50));
+																																				}
+																																				if(asteroidDensity < 20){
+																																								rm.intro.push('asteroid density: light');
+																																				}else if(asteroidDensity < 35){
+																																								rm.intro.push('asteroid density: moderate');
+																																				}else if(asteroidDensity < 65){
+																																								rm.intro.push('asteroid density: high');
+																																				}else{
+																																								rm.intro.push('asteroid density: extreme');
+																																				}
+																																				var enemyDensity=parseInt(randomRange(20,40+(5*playerStats.level)));
+																																				if(asteroidDensity>50){enemyDensity=0};
+																																				if(enemyDensity>0){
+																																				var s=  myfactions[0][0] + ' in area: ';
+																																				}
+																																				if(enemyDensity>100){
+																																					s+='extreme threat.';
+																																					}else if(enemyDensity>80){
+																																					s+='high threat.';
+																																					}else if(enemyDensity>60){
+																																					s+='moderate threat.'):
+																																					}else if(enemyDensity>40){
+																																					s+='low threat.');
+																																					}else if(enemyDensity>20){
+																																					s+='minimal threat.');
+																																					}
+																																					rm.intro.push(s);
+																																				while(enemyDensity > 0){
+																																								var faction = randomFromArray(myfactions);
+																																								var minSize = parseInt(randomRange(2,6));
+																																								var maxSize = parseInt(randomRange(0,3));
+																																								var count = parseInt(randomRange(0,20/minSize));
+																																								console.log('minSize - ' + minSize + 'count - ' + count);
+																																								var maxCount = (minSize+maxSize)/2;
+																																								maxCount = parseInt(enemyDensity/maxCount);
+																																								var strength = 0;
+																																								if(maxCount < 1){ 
+																																												count = 0;
+																																												enemyDensity = 0;
+																																								}else if(maxCount < count){
+																																												count=maxCount;
+																																								}
+																																								if(count > 0){
+																																												strength=((minSize+maxSize)/2)*count;	
+																																												enemyDensity-=strength;
+																																												rm.enemies.push(
+																																																				{
+																																																				'ships': drones,
+																																																				'parts': faction[1], 
+																																																				'sizeMin': minSize,
+																																																				'sizeMax': maxSize+minSize,
+																																																				'respawn':true,
+																																																				'count':count,
+																																																				'missionTarget':false
 
-										       );
-	return rm;
+																																																				}
+																																																			 )
+																																								}
+
+																																				}
+																																				rm.enemies.push(
+																																												{
+																																												'ships': asteroids,
+																																												'parts': asteroidParts, 
+																																												'sizeMin': 2,
+																																												'sizeMax': 3,
+																																												'respawn':true,
+																																												'count':asteroidDensity,
+																																												'missionTarget':false
+																																												}
+																																											 );
+																																				rm.enemies.push(
+																																												{
+																																												'ships': containers,
+																																												'respawn':true,
+																																												'count':parseInt(randomRange(3,8)), 
+																																												'missionTarget':false
+																																												}
+																																											 );
+																																				rm.enemies.push(
+																																												{
+																																												'ships': questionContainers,
+																																												'respawn':false,
+																																												'count':parseInt(randomRange(1,5)), 
+																																												'missionTarget':true
+																																												}
+
+																																											 );
+																																				return rm;
 }
 function randomFromArray(arr){
-	var idx = parseInt(randomRange(0, arr.length));
-	return arr[idx];
+				var idx = parseInt(randomRange(0, arr.length));
+				return arr[idx];
 }
 function signedSqrt(x){
 				if(x==0){return 0;}
@@ -4034,21 +4050,21 @@ gameUI.prototype.playerStatusTextPing = function() {
 												if(player.ship[i] != -1){
 																var count=0;
 																for(j=0;j<player.ship.length;j++){
-																	if(player.ship[j] != -1){
-																				if(components[player.ship[j]].name==components[player.ship[i]].name && j < i){
-																								j=player.ship.length;
-																				}else if(components[player.ship[j]].name==components[player.ship[i]].name){
-																								count+=1;
+																				if(player.ship[j] != -1){
+																								if(components[player.ship[j]].name==components[player.ship[i]].name && j < i){
+																												j=player.ship.length;
+																								}else if(components[player.ship[j]].name==components[player.ship[i]].name){
+																												count+=1;
+																								}
 																				}
 																}
-																}
 																if(count > 0){
-																statusText += components[player.ship[i]].name;
-																if(count > 1){
-																				statusText += ' x ' + count;
-																}
+																				statusText += components[player.ship[i]].name;
+																				if(count > 1){
+																								statusText += ' x ' + count;
+																				}
 																				statusText += '\n'; 
-												}
+																}
 												}
 								}
 				}
@@ -4700,9 +4716,9 @@ function createBuildParts(ship,x,y){
 
 function initMission (missionId) {
 				if(missionId==666){
-				playerStats.mission = randomMission();
+								playerStats.mission = randomMission();
 				}else{
-				playerStats.mission = missions[missionId];
+								playerStats.mission = missions[missionId];
 				}
 				planet.scaleMission=randomRange(50,60);
 				ui.skipText();
@@ -4876,12 +4892,12 @@ function fadeIn () {
 
 }
 function newStartShip(){
-a=randomPartsList(basicGear,6);
-a.sort(matchabilityComponentSort);
-player.initPlayerShip(a[0]);
-for(i=1;i<6;i++){
-addPlayerPartInFlight(a[i]);
-}
+				a=randomPartsList(basicGear,6);
+				a.sort(matchabilityComponentSort);
+				player.initPlayerShip(a[0]);
+				for(i=1;i<6;i++){
+								addPlayerPartInFlight(a[i]);
+				}
 }
 function create () {
 
