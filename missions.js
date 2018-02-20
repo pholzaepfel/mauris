@@ -77,7 +77,7 @@ var missions = [
 			'ships': questionContainers,
 			'respawn':false,
 			'count':3, 
-			'missionTarget':false
+			'missionTarget':true
 		}
 	]
 
@@ -226,7 +226,7 @@ var missions = [
 
 },
 {	'id':3,
-	'next':[11],
+	'next':[666],
 	'name':'shots in the dark',
 	'complete':false,
 	'hazeRed':0.2,
@@ -293,7 +293,7 @@ var missions = [
 			'ships': questionContainers,
 			'respawn':false,
 			'count':3, 
-			'missionTarget':false
+			'missionTarget':true
 		}
 	]
 
@@ -691,7 +691,7 @@ var missions = [
 				'ships': questionContainers,
 				'respawn':false,
 				'count':3, 
-				'missionTarget':false
+				'missionTarget':true
 			}
 
 		]

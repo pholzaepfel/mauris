@@ -23,7 +23,114 @@ var bulletTypes = [
 ];
 
 
+var randomMission = function(){
+	var myfactions=[
+		['alliance military',allianceGear4],
+		['mechanoid',mechanoidGear],
+			['smuggler',banditGear],
+				['infected',zombieGear],
+					['damaged mining drone',failDroneGear],
+						['mining drone',droneGear],
+							['trashhauler',dirtyParts],
+								['mercenary',blackParts],
+									['pirate',banditGear2]
+	];
+									var rm = {};
+									rm.id = 666;
+									rm.next = [666];
+									rm.name = 'questname';
+									rm.complete = false;
+									rm.hazeRed = randomRange(0.2,1.2);
+									rm.hazeWhite = randomRange(1.0,1.8);
+									rm.hazePurple = randomRange(0.2,1.2);
+									rm.hazeRedSpeed = randomRange(20,40);
+									rm.hazeWhiteSpeed = 10;
+									rm.hazePurpleSpeed = randomRange(60,100);
+									rm.distanceMin = randomRange(9000,12000);
+									rm.distanceMax = randomRange(10000,15000);
+									rm.hazePurpleBlendMode = 2;
+									rm.hazeRedBlendMode = 0;
+									rm.intro = [];
+									rm.outro = [];
+									rm.win = {
+										'condition':'frob'
+									};
+									rm.enemies = [];
 
+									var asteroidDensity = parseInt(randomRange(10,50));
+									if(randomRange(0,100)<2){
+										asteroidDensity+=parseInt(randomRange(30,50));
+									}
+									if(asteroidDensity < 20){
+										rm.intro.push('asteroid density: light');
+									}else if(asteroidDensity < 35){
+										rm.intro.push('asteroid density: moderate');
+									}else if(asteroidDensity < 65){
+										rm.intro.push('asteroid density: high');
+									}else{
+										rm.intro.push('asteroid density: extreme');
+									}
+									var enemyDensity=parseInt(randomRange(20,60));
+									if(asteroidDensity>50){enemyDensity=0};
+									while(enemyDensity > 0){
+										var faction = randomFromArray(myfactions);
+										var minSize = parseInt(randomRange(2,6));
+										var maxSize = parseInt(randomRange(0,3));
+										var count = parseInt(randomRange(0,20/minSize));
+										console.log('minSize - ' + minSize + 'count - ' + count);
+										var maxCount = (minSize+maxSize)/2;
+										maxCount = parseInt(enemyDensity/maxCount);
+										if(maxCount < 1){ 
+											count = 0;
+											enemyDensity = 0;
+										}else if(maxCount < count){
+											count=maxCount;
+										}
+										if(count > 0){
+											enemyDensity-=((minSize+maxSize)/2)*count;
+											rm.enemies.push(
+													{
+													'ships': drones,
+													'parts': faction[1], 
+													'sizeMin': minSize,
+													'sizeMax': maxSize+minSize,
+													'respawn':true,
+													'count':count,
+													'missionTarget':false
+
+													}
+												       )
+										}
+									}
+									rm.enemies.push(
+											{
+											'ships': asteroids,
+											'parts': asteroidParts, 
+											'sizeMin': 2,
+											'sizeMax': 3,
+											'respawn':true,
+											'count':asteroidDensity,
+											'missionTarget':false
+											}
+										       );
+									rm.enemies.push(
+											{
+											'ships': containers,
+											'respawn':true,
+											'count':parseInt(randomRange(3,8)), 
+											'missionTarget':false
+											}
+										       );
+									rm.enemies.push(
+											{
+											'ships': questionContainers,
+											'respawn':false,
+											'count':parseInt(randomRange(1,5)), 
+											'missionTarget':true
+											}
+
+										       );
+}
 function randomFromArray(arr){
 	var idx = parseInt(randomRange(0, arr.length));
 	return arr[idx];
@@ -5161,7 +5268,11 @@ function winMission(){
 								ui.skipText();
 								ui.texts.push(s);
 								var n = Math.floor(randomRange(0,playerStats.mission.next.length));
-								initMission(playerStats.mission.next[n]);
+								var nextMission = playerStats.mission.next[n];
+								if(nextMission==666){
+									nextMission = randomMission();
+								}
+								initMission(nextMission);
 
 								if(playerStats.crew>0){
 												playerStats.crew-=1;
