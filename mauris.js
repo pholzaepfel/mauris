@@ -74,7 +74,7 @@ var randomMission = function(){
 																																				rm.enemies = [];
 																																				rm.asteroidPanic=false;
 
-																																				var asteroidDensity = parseInt(randomRange(10,50));
+																																				var asteroidDensity = parseInt(randomRange(20,45));
 																																				if(randomRange(0,1)<asteroidPanicChance){
 																																								rm.asteroidPanic=true;
 																																								rm.hazeRedSpeed*=2;
@@ -89,7 +89,7 @@ var randomMission = function(){
 																																				}else{
 																																								rm.intro.push('asteroid density: extreme');
 																																				}
-																																				var enemyDensity=parseInt(randomRange(0,60+(9*playerStats.level)));
+																																				var enemyDensity=parseInt(randomRange(10*player.level,(30*playerStats.level)));
 																																				if(asteroidDensity>50){enemyDensity=0};
 																																				if(enemyDensity>0){
 																																								var s=  myfactions[0][0] + ' in area: ';
@@ -109,6 +109,9 @@ var randomMission = function(){
 																																				while(enemyDensity > 0){
 																																								var faction = randomFromArray(myfactions);
 																																								var minSize = parseInt(randomRange(2,8));
+																																								if(enemyDensity>100){
+																																								var minSize = parseInt(randomRange(5,8));
+																																								}
 																																								var maxSize = parseInt(randomRange(0,1));
 																																								var count = parseInt(randomRange(0,20/minSize));
 																																								var maxCount = Math.pow((minSize+maxSize)/2,2);
