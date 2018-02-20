@@ -93,7 +93,7 @@ var randomMission = function(){
 																																				}else if(enemyDensity>60){
 																																								s+='high threat.';
 																																				}else if(enemyDensity>40){
-																																								s+='moderate threat.':
+																																								s+='moderate threat.';
 																																				}else if(enemyDensity>20){
 																																								s+='low threat.';
 																																				}else if(enemyDensity>0){
