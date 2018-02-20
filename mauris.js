@@ -142,8 +142,8 @@ var randomMission = function(){
 																																																				'missionTarget':false
 
 																																																				}
-																																												totalEnemyCount+=count;
 																																																			 )
+																																												totalEnemyCount+=count;
 																																								}
 
 																																				}
