@@ -6,7 +6,7 @@ var messages =
 	'blue items usually increase hp.',
 	'firing weapons increases your heat signature\nand will make other vessels aggressive',
 	'between repairs, your heat signature will slowly increase\nthis will attract enemy vessels from farther away',
-	'green items improve maneuverability.',
+	'green items usually improve maneuverability.',
 	'laser weapons have a short reach but can hit multiple\nfoes. enemy lasers are more likely to cause\ncomponent removal.',
 	'some parts give a special ability, accessed by\npressing Z or clicking/touching the special attack icon.',
 	'bugs are likely and common',

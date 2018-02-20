@@ -1,4 +1,5 @@
 var gamemode;
+var pauseMessage='';
 var defaultBehavior='neutral';
 var asteroidPanicChance=0.02;
 var cheatmode = 0;
@@ -210,6 +211,7 @@ function pause(resumeDelay,x,y) {
 												return;
 								}}
 				gamemode='paused';
+				pauseMessage=randomFromArray(messages);
 				nextUIDelay=game.time.now+2000;
 				pausedLastPlayerVelX=player.sprite.body.velocity.x;
 				pausedLastPlayerVelY=player.sprite.body.velocity.y;
@@ -4128,7 +4130,7 @@ gameUI.prototype.commsPing = function() {
 				}  
 				if(gamemode=='paused'){
 								this.comms.alpha=1;
-								this.textLine=messages[0];
+								this.textLine=pauseMessage;
 				}
 				if(this.textLine.length>0 && game.time.now % 200 > 100){
 								this.comms.setText(this.textLine + '_ ');
