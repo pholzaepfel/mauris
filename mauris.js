@@ -88,11 +88,11 @@ var randomMission = function(){
 																																				}else{
 																																								rm.intro.push('asteroid density: extreme');
 																																				}
-																																				var enemyDensity=parseInt(randomRange(20,40+(5*playerStats.level)));
+																																				var enemyDensity=parseInt(randomRange(50,60+(9*playerStats.level)));
 																																				if(asteroidDensity>50){enemyDensity=0};
 																																				if(enemyDensity>0){
 																																								var s=  myfactions[0][0] + ' in area: ';
-																																				if(enemyDensity>80){
+																																				if(enemyDensity>140){
 																																								s+='extreme threat.';
 																																				}else if(enemyDensity>60){
 																																								s+='high threat.';
@@ -105,12 +105,13 @@ var randomMission = function(){
 																																				}
 																																				rm.intro.push(s);
 																																				}
+																																				enemyDensity=(enemyDensity/100)*
 																																				while(enemyDensity > 0){
 																																								var faction = randomFromArray(myfactions);
-																																								var minSize = parseInt(randomRange(2,6));
-																																								var maxSize = parseInt(randomRange(0,3));
+																																								var minSize = parseInt(randomRange(2,8));
+																																								var maxSize = parseInt(randomRange(0,1));
 																																								var count = parseInt(randomRange(0,20/minSize));
-																																								var maxCount = (minSize+maxSize)/2;
+																																								var maxCount = Math.pow((minSize+maxSize)/2,2);
 																																								maxCount = parseInt(enemyDensity/maxCount);
 																																								var strength = 0;
 																																								if(maxCount < 1){ 
@@ -120,7 +121,7 @@ var randomMission = function(){
 																																												count=maxCount;
 																																								}
 																																								if(count > 0){
-																																												strength=((minSize+maxSize)/2)*count;	
+																																												strength=Math.pow(((minSize+maxSize)/2),2)*count;	
 																																												enemyDensity-=strength;
 																																												rm.enemies.push(
 																																																				{
