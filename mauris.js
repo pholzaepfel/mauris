@@ -4086,8 +4086,8 @@ gameUI.prototype.playerStatusTextPing = function() {
 																}
 												}
 								}
-				}
 				statusText+='\n' + pauseMessage + '\n';
+				}
 				this.playerStatusText.setText(statusText);
 
 
