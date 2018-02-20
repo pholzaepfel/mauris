@@ -32,6 +32,7 @@ var missions = [
 
 {	'id':0,
 	'next':[9],
+	'asteroidPanic':false,
 	'name':'tutorial',
 	'complete':false,
 	'hazeRed':0.6,
@@ -229,6 +230,7 @@ var missions = [
 	'next':[666],
 	'name':'shots in the dark',
 	'complete':false,
+	'asteroidPanic':false,
 	'hazeRed':0.2,
 	'hazeWhite':1.7,
 	'hazePurple':0.5,
@@ -626,6 +628,7 @@ var missions = [
 },
 {	'id':9,
 	'next':[3],
+	'asteroidPanic':false,
 	'name':'more tutorial',
 	'complete':false,
 	'hazeRed':0.3,

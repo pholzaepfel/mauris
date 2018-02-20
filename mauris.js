@@ -1,5 +1,6 @@
 var gamemode;
 var defaultBehavior='neutral';
+var asteroidPanicChance=0.02;
 var cheatmode = 0;
 var noblood = 0;
 var touchPressed = 0;
@@ -70,9 +71,11 @@ var randomMission = function(){
 																																								'condition':'frob'
 																																				};
 																																				rm.enemies = [];
+																																				rm.asteroidPanic=false;
 
 																																				var asteroidDensity = parseInt(randomRange(10,50));
-																																				if(randomRange(0,100)<2){
+																																				if(randomRange(0,1)<asteroidPanicChance){
+																																								rm.asteroidPanic=true;
 																																								asteroidDensity+=parseInt(randomRange(30,50));
 																																				}
 																																				if(asteroidDensity < 20){
@@ -139,7 +142,7 @@ var randomMission = function(){
 																																												'ships': asteroids,
 																																												'parts': asteroidParts, 
 																																												'sizeMin': 2,
-																																												'sizeMax': 3,
+																																												'sizeMax': 4,
 																																												'respawn':true,
 																																												'count':asteroidDensity,
 																																												'missionTarget':false
@@ -1751,8 +1754,14 @@ enemyShip.prototype.update = function() {
 				if(this.ai==aiModes['asteroidInit']){
 								//init asteroid stuff
 								this.sprite.body.velocity = game.physics.arcade.velocityFromRotation(game.physics.arcade.angleBetween(this.sprite, player.sprite), randomRange(30,130));  
+								if(player.stats.mission.asteroidPanic){
+								this.sprite.body.velocity.x*=randomRange(0.6,2.4);
+								this.sprite.body.velocity.y*=Math.random(0.6,2.4);
+	
+								}else{
 								this.sprite.body.velocity.x*=Math.random();
 								this.sprite.body.velocity.y*=Math.random();
+								}
 								this.sprite.body.angularVelocity=randomRange(25,100)*randomSign();
 								if(this.oreChance<1){
 												this.sprite.profile=0;
