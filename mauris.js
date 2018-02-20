@@ -24,7 +24,10 @@ var bulletTypes = [
 
 
 
-
+function randomFromArray(arr){
+	var idx = parseInt(randomRange(0, arr.length));
+	return arr[idx];
+}
 function signedSqrt(x){
 				if(x==0){return 0;}
 				var sign = x / Math.abs(x);
@@ -1295,7 +1298,7 @@ enemyShip.prototype.spawnCorpses = function(numCorpses) {
 												bullet.bulletHitBehavior=[function(sprite,bullet){
 																if(sprite.name=='player'&&playerStats.crew<player.crewMax){
 																				playerStats.crew+=1;
-																				playerStats.xp+=1000;
+																				addXp(1000);
 																				ui.addDamageNumber(player.sprite.body.x,player.sprite.body.y,1,'+1000 xp',true);
 
 
@@ -5155,15 +5158,6 @@ function winMission(){
 
 				if(playerStats.mission.complete){
 								var s = 'completed ' + playerStats.mission.name + '. ';
-								if(playerStats.mission.componentsReward.length){
-												for(var i =0;i<playerStats.mission.componentsCount;i++)
-												{
-																playerStats.inventory.push(playerStats.mission.componentsReward[Math.floor(randomRange(0,playerStats.mission.componentsReward.length))]);
-																if(i%2==1){
-																				s+='\n';
-																}
-												}
-								}
 								ui.skipText();
 								ui.texts.push(s);
 								var n = Math.floor(randomRange(0,playerStats.mission.next.length));
