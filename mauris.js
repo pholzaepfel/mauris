@@ -4682,7 +4682,11 @@ function createBuildParts(ship,x,y){
 
 
 function initMission (missionId) {
+				if(missionId==666){
+				playerStats.mission = randomMission();
+				}else{
 				playerStats.mission = missions[missionId];
+				}
 				planet.scaleMission=randomRange(50,60);
 				ui.skipText();
 				for(var i=0;i<playerStats.mission.intro.length;i++){
@@ -5269,9 +5273,6 @@ function winMission(){
 								ui.texts.push(s);
 								var n = Math.floor(randomRange(0,playerStats.mission.next.length));
 								var nextMission = playerStats.mission.next[n];
-								if(nextMission==666){
-									nextMission = randomMission();
-								}
 								initMission(nextMission);
 
 								if(playerStats.crew>0){
