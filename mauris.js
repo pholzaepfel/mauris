@@ -1742,7 +1742,12 @@ enemyShip.prototype.update = function() {
 
 												this.sprite.body.velocity = game.physics.arcade.velocityFromRotation(game.physics.arcade.angleBetween(this.sprite, player.sprite), randomRange(25,100));  
 												this.sprite.body.angularVelocity=randomRange(25,100)*randomSign();
-								}
+								if(playerStats.mission.asteroidPanic){
+								this.sprite.body.velocity.x*=randomRange(0.6,4.4);
+								this.sprite.body.velocity.y*=randomRange(0.6,4.4);
+								this.sprite.body.angularVelocity*=randomRange(1,3);
+	
+								}}
 				}
 				this.sprite.profile = this.sprite.profileMax; //tracking this in detail is hard and unnecessary
 
@@ -1756,6 +1761,7 @@ enemyShip.prototype.update = function() {
 								if(playerStats.mission.asteroidPanic){
 								this.sprite.body.velocity.x*=randomRange(0.6,4.4);
 								this.sprite.body.velocity.y*=randomRange(0.6,4.4);
+								this.sprite.body.angularVelocity*=randomRange(1,3);
 	
 								}else{
 								this.sprite.body.velocity.x*=Math.random();
