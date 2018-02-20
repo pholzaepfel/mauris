@@ -130,7 +130,7 @@ var randomMission = function(){
 											}
 
 										       );
-	return rc;
+	return rm;
 }
 function randomFromArray(arr){
 	var idx = parseInt(randomRange(0, arr.length));
