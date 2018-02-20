@@ -1753,7 +1753,7 @@ enemyShip.prototype.update = function() {
 				if(this.ai==aiModes['asteroidInit']){
 								//init asteroid stuff
 								this.sprite.body.velocity = game.physics.arcade.velocityFromRotation(game.physics.arcade.angleBetween(this.sprite, player.sprite), randomRange(30,130));  
-								if(player.stats.mission.asteroidPanic){
+								if(playerStats.mission.asteroidPanic){
 								this.sprite.body.velocity.x*=randomRange(0.6,2.4);
 								this.sprite.body.velocity.y*=Math.random(0.6,2.4);
 	
