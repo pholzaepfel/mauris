@@ -4126,6 +4126,10 @@ gameUI.prototype.commsPing = function() {
 				}else if (game.time.now > this.nextComms) {
 								this.comms.alpha-=randomRange(0,0.05);
 				}  
+				if(gamemode=='paused'){
+								this.comms.alpha=1;
+								this.textLine=messages[0];
+				}
 				if(this.textLine.length>0 && game.time.now % 200 > 100){
 								this.comms.setText(this.textLine + '_ ');
 				}else{
