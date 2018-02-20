@@ -22,7 +22,13 @@ var bulletTypes = [
 
 ];
 
-
+var randomName = function(){
+var adjectives = ['Dusty','Barren','Lonely','Wasted','Cold','Bleak','Dangerous',
+                  'Solemn','Treacherous','Screaming','Yawning'];
+var nouns = ['Void','Collapse','Spiral','Gap','Graveyard','Scrapyard','Expanse',
+             'Warzone','Trade Zone','Column','Abyss'];
+return randomFromArray(adjectives) + ' ' + randomFromArray(nouns);
+}
 var randomMission = function(){
 	var myfactions=[
 		['alliance military',allianceGear4],
@@ -38,7 +44,7 @@ var randomMission = function(){
 									var rm = {};
 									rm.id = 666;
 									rm.next = [666];
-									rm.name = 'questname';
+									rm.name = randomName();
 									rm.complete = false;
 									rm.hazeRed = randomRange(0.2,1.2);
 									rm.hazeWhite = randomRange(1.0,1.8);
@@ -50,7 +56,7 @@ var randomMission = function(){
 									rm.distanceMax = randomRange(10000,15000);
 									rm.hazePurpleBlendMode = 2;
 									rm.hazeRedBlendMode = 0;
-									rm.intro = [];
+									rm.intro = [rm.name];
 									rm.outro = [];
 									rm.win = {
 										'condition':'frob'
@@ -80,6 +86,7 @@ var randomMission = function(){
 										console.log('minSize - ' + minSize + 'count - ' + count);
 										var maxCount = (minSize+maxSize)/2;
 										maxCount = parseInt(enemyDensity/maxCount);
+										var strength = 0;
 										if(maxCount < 1){ 
 											count = 0;
 											enemyDensity = 0;
@@ -87,7 +94,8 @@ var randomMission = function(){
 											count=maxCount;
 										}
 										if(count > 0){
-											enemyDensity-=((minSize+maxSize)/2)*count;
+										strength=((minSize+maxSize)/2)*count;	
+											enemyDensity-=strength;
 											rm.enemies.push(
 													{
 													'ships': drones,
@@ -100,7 +108,15 @@ var randomMission = function(){
 
 													}
 												       )
+										if(strength<15){
+											rm.intro.push(faction[0] + ' activity: minimal');
+										}else if(strength<30){
+											rm.intro.push(faction[0] + ' activity: moderate');
+										}else {
+											rm.intro.push(faction[0] + ' activity: dangerous');
 										}
+										}
+
 									}
 									rm.enemies.push(
 											{
