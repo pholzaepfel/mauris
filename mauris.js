@@ -63,7 +63,7 @@ var randomMission = function(){
 																																				rm.hazeWhiteSpeed = 10;
 																																				rm.hazePurpleSpeed = randomRange(60,100);
 																																				rm.distanceMin = randomRange(9000,12000);
-																																				rm.distanceMax = randomRange(10000,15000);
+																																				rm.distanceMax = randomRange(9000,14000);
 																																				rm.hazePurpleBlendMode = 2;
 																																				rm.hazeRedBlendMode = 0;
 																																				rm.intro = [rm.name];
@@ -77,6 +77,7 @@ var randomMission = function(){
 																																				var asteroidDensity = parseInt(randomRange(10,50));
 																																				if(randomRange(0,1)<asteroidPanicChance){
 																																								rm.asteroidPanic=true;
+																																								rm.hazeRedSpeed*=2;
 																																								asteroidDensity=parseInt(randomRange(70,120));
 																																				}
 																																				if(asteroidDensity < 20){
