@@ -109,7 +109,6 @@ var randomMission = function(){
 																																								var minSize = parseInt(randomRange(2,6));
 																																								var maxSize = parseInt(randomRange(0,3));
 																																								var count = parseInt(randomRange(0,20/minSize));
-																																								console.log('minSize - ' + minSize + 'count - ' + count);
 																																								var maxCount = (minSize+maxSize)/2;
 																																								maxCount = parseInt(enemyDensity/maxCount);
 																																								var strength = 0;
