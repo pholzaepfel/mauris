@@ -106,7 +106,6 @@ var randomMission = function(){
 																																				}
 																																				rm.intro.push(s);
 																																				}
-																																				enemyDensity=(enemyDensity/100)*
 																																				while(enemyDensity > 0){
 																																								var faction = randomFromArray(myfactions);
 																																								var minSize = parseInt(randomRange(2,8));
