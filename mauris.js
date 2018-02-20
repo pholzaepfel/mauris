@@ -87,20 +87,20 @@ var randomMission = function(){
 																																				var enemyDensity=parseInt(randomRange(20,40+(5*playerStats.level)));
 																																				if(asteroidDensity>50){enemyDensity=0};
 																																				if(enemyDensity>0){
-																																				var s=  myfactions[0][0] + ' in area: ';
+																																								var s=  myfactions[0][0] + ' in area: ';
+																																				if(enemyDensity>80){
+																																								s+='extreme threat.';
+																																				}else if(enemyDensity>60){
+																																								s+='high threat.';
+																																				}else if(enemyDensity>40){
+																																								s+='moderate threat.':
+																																				}else if(enemyDensity>20){
+																																								s+='low threat.';
+																																				}else if(enemyDensity>0){
+																																								s+='minimal threat.';
 																																				}
-																																				if(enemyDensity>100){
-																																					s+='extreme threat.';
-																																					}else if(enemyDensity>80){
-																																					s+='high threat.';
-																																					}else if(enemyDensity>60){
-																																					s+='moderate threat.'):
-																																					}else if(enemyDensity>40){
-																																					s+='low threat.');
-																																					}else if(enemyDensity>20){
-																																					s+='minimal threat.');
-																																					}
-																																					rm.intro.push(s);
+																																				rm.intro.push(s);
+																																				}
 																																				while(enemyDensity > 0){
 																																								var faction = randomFromArray(myfactions);
 																																								var minSize = parseInt(randomRange(2,6));
