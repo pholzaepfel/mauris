@@ -1558,7 +1558,7 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 												}
 								}
 								for (var j = 0; j < this.parts.length; j++) {
-												if(Math.random() < this.oreChance && !asteroidPanic){
+												if(Math.random() < this.oreChance && !playerStats.mission.asteroidPanic){
 																spawnLoots(Math.floor(randomRange(0,4)), this.sprite.x, this.sprite.y);
 																this.parts[j].sprite.kill();
 												}else if(Math.random() < (componentDropRate + player.dropRate) && components[this.parts[j].component].drops){ 
