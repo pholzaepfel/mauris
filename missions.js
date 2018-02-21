@@ -54,12 +54,14 @@ var missions = [
 	'enemies':
 		[{
 			'ships': asteroids,
+'symmetry': 1,
 			'respawn':true,
 			'count':10, 
 			'missionTarget':false
 		},
 	{
 		'ships': asteroids,
+'symmetry': 0,
 		'parts': asteroidParts, 
 		'sizeMin': 2,
 		'sizeMax': 3,
@@ -69,6 +71,7 @@ var missions = [
 	},
 	{
 		'ships': containers,
+'symmetry': 1,
 		'respawn':true,
 		'count':5, 
 		'missionTarget':false
@@ -76,6 +79,7 @@ var missions = [
 	,
 		{
 			'ships': questionContainers,
+'symmetry': 1,
 			'respawn':false,
 			'count':3, 
 			'missionTarget':true
@@ -107,6 +111,7 @@ var missions = [
 	},
 	'enemies': [{
 		'ships': ships,
+'symmetry': 1,
 		'parts': allLootableItems(),
 		'sizeMin': 2,
 		'sizeMax': 7,
@@ -117,18 +122,21 @@ var missions = [
 	},
 	{
 		'ships': questionContainers,
+'symmetry': 1,
 		'respawn':false,
 		'count':3, 
 		'missionTarget':false
 	},
 	{
 		'ships': asteroids,
+'symmetry': 1,
 		'respawn':true,
 		'count':10, 
 		'missionTarget':false
 	},
 	{
 		'ships': asteroids,
+'symmetry': 0,
 		'parts': asteroidParts, 
 		'sizeMin': 2,
 		'sizeMax': 3,
@@ -166,6 +174,7 @@ var missions = [
 	},
 	'enemies': [{
 		'ships': bandits,
+'symmetry': 1,
 		'parts': banditGear2,
 		'sizeMin': 2,
 		'sizeMax': 5,
@@ -176,12 +185,14 @@ var missions = [
 	},
 	{
 		'ships': questionContainers,
+'symmetry': 1,
 		'respawn':false,
 		'count':3, 
 		'missionTarget':false
 	}
 	,{
 		'ships': banditBoss1,
+'symmetry': 1,
 		'parts': banditGear2,
 		'sizeMin': 7,
 		'sizeMax': 7,
@@ -192,12 +203,14 @@ var missions = [
 	},
 		{
 			'ships': asteroids,
+'symmetry': 1,
 			'respawn':true,
 			'count':10, 
 			'missionTarget':false
 		},
 		{
 			'ships': asteroids,
+'symmetry': 0,
 			'parts': asteroidParts, 
 			'sizeMin': 2,
 			'sizeMax': 3,
@@ -209,6 +222,7 @@ var missions = [
 
 	,{
 		'ships': containers,
+'symmetry': 1,
 		'respawn':true,
 		'missionTarget':false,
 		'count':4, 
@@ -217,6 +231,7 @@ var missions = [
 	,
 		{
 			'ships': questionContainers,
+'symmetry': 1,
 			'respawn':false,
 			'count':3, 
 			'missionTarget':false
@@ -248,6 +263,7 @@ var missions = [
 	},
 	'enemies': [{
 		'ships': bandits,
+'symmetry': 1,
 		'parts': banditGear2,
 		'sizeMin': 2,
 		'sizeMax': 5,
@@ -258,6 +274,7 @@ var missions = [
 	},
 	{
 		'ships': drones,
+'symmetry': 1,
 		'parts':droneGear,
 		'sizeMin': 2,
 		'sizeMax': 5,
@@ -268,12 +285,14 @@ var missions = [
 	},
 	{
 		'ships': asteroids,
+'symmetry': 1,
 		'respawn':true,
 		'count':10, 
 		'missionTarget':false
 	},
 	{
 		'ships': asteroids,
+'symmetry': 0,
 		'parts': asteroidParts, 
 		'sizeMin': 2,
 		'sizeMax': 3,
@@ -285,6 +304,7 @@ var missions = [
 
 	,{
 		'ships': containers,
+'symmetry': 1,
 		'respawn':true,
 		'missionTarget':false,
 		'count':4, 
@@ -293,6 +313,7 @@ var missions = [
 	,
 		{
 			'ships': questionContainers,
+'symmetry': 1,
 			'respawn':false,
 			'count':3, 
 			'missionTarget':true
@@ -325,12 +346,14 @@ var missions = [
 	'enemies':[
 	{
 		'ships': asteroids,
+'symmetry': 1,
 		'respawn':true,
 		'count':10, 
 		'missionTarget':false
 	},
 	{
 		'ships': asteroids,
+'symmetry': 0,
 		'parts': asteroidParts, 
 		'sizeMin': 2,
 		'sizeMax': 3,
@@ -342,6 +365,7 @@ var missions = [
 	,
 		{
 			'ships': cops,
+'symmetry': 1,
 			'parts': allianceGear4,
 			'sizeMin': 5,
 			'sizeMax': 7,
@@ -379,12 +403,14 @@ var missions = [
 	'enemies':
 		[	{
 			'ships': asteroids,
+'symmetry': 1,
 			'respawn':true,
 			'count':10, 
 			'missionTarget':false
 		},
 	{
 		'ships': asteroids,
+'symmetry': 0,
 		'parts': asteroidParts, 
 		'sizeMin': 2,
 		'sizeMax': 3,
@@ -396,6 +422,7 @@ var missions = [
 	,
 		{
 			'ships': alliance,
+'symmetry': 1,
 			'parts': allianceGear4,
 			'sizeMin': 2,
 			'sizeMax': 6,
@@ -404,6 +431,7 @@ var missions = [
 			'missionTarget':false
 		},{
 			'ships': containers,
+'symmetry': 1,
 			'respawn':true,
 			'missionTarget':false,
 			'count':4, 
@@ -412,6 +440,7 @@ var missions = [
 	,
 		{
 			'ships': questionContainers,
+'symmetry': 1,
 			'respawn':false,
 			'count':3, 
 			'missionTarget':false
@@ -441,12 +470,14 @@ var missions = [
 	'enemies':
 		[{
 			'ships': asteroids,
+'symmetry': 1,
 			'respawn':true,
 			'count':10, 
 			'missionTarget':false
 		},
 	{
 		'ships': asteroids,
+'symmetry': 0,
 		'parts': asteroidParts, 
 		'sizeMin': 2,
 		'sizeMax': 3,
@@ -457,6 +488,7 @@ var missions = [
 	,
 		{
 			'ships': alliance,
+'symmetry': 1,
 			'parts': allianceGear4,
 			'sizeMin': 2,
 			'sizeMax': 5,
@@ -465,6 +497,7 @@ var missions = [
 			'missionTarget':false
 		},{
 			'ships': banditsMedium,
+'symmetry': 1,
 			'parts': banditGear2,
 			'sizeMin': 3,
 			'sizeMax': 7,
@@ -473,6 +506,7 @@ var missions = [
 			'missionTarget':false
 		},{
 			'ships': containers,
+'symmetry': 1,
 			'respawn':true,
 			'missionTarget':false,
 			'count':4, 
@@ -481,6 +515,7 @@ var missions = [
 	,
 		{
 			'ships': questionContainers,
+'symmetry': 1,
 			'respawn':false,
 			'count':3, 
 			'missionTarget':false
@@ -510,12 +545,14 @@ var missions = [
 	'enemies':
 		[{
 			'ships': asteroids,
+'symmetry': 1,
 			'respawn':true,
 			'count':10, 
 			'missionTarget':false
 		},
 	{
 		'ships': asteroids,
+'symmetry': 0,
 		'parts': asteroidParts, 
 		'sizeMin': 2,
 		'sizeMax': 3,
@@ -526,6 +563,7 @@ var missions = [
 	,
 		{
 			'ships': zombies,
+'symmetry': 1,
 			'parts': zombieGear,
 			'sizeMin': 3,
 			'sizeMax': 6,
@@ -534,6 +572,7 @@ var missions = [
 			'missionTarget':false
 		},{
 			'ships': containers,
+'symmetry': 1,
 			'respawn':true,
 			'missionTarget':false,
 			'count':3, 
@@ -542,6 +581,7 @@ var missions = [
 	,
 		{
 			'ships': questionContainers,
+'symmetry': 1,
 			'respawn':false,
 			'count':3, 
 			'missionTarget':false
@@ -549,6 +589,7 @@ var missions = [
 
 	,{
 		'ships': chainsaw,
+'symmetry': 1,
 		'respawn':true,
 		'missionTarget':false,
 		'count':1, 
@@ -578,12 +619,14 @@ var missions = [
 	'enemies':
 		[{
 			'ships': asteroids,
+'symmetry': 1,
 			'respawn':true,
 			'count':10, 
 			'missionTarget':false
 		},
 	{
 		'ships': asteroids,
+'symmetry': 0,
 		'parts': asteroidParts, 
 		'sizeMin': 2,
 		'sizeMax': 3,
@@ -594,6 +637,7 @@ var missions = [
 	,
 		{
 			'ships': droneBoss1,
+'symmetry': 1,
 			'parts': droneGear,
 			'sizeMin': 5,
 			'sizeMax': 7,
@@ -603,6 +647,7 @@ var missions = [
 		},
 		{
 			'ships': drones2,
+'symmetry': 1,
 			'parts': droneGear,
 			'sizeMin': 2,
 			'sizeMax': 4,
@@ -611,6 +656,7 @@ var missions = [
 			'missionTarget':false
 		},{
 			'ships': containers,
+'symmetry': 1,
 			'respawn':true,
 			'missionTarget':false,
 			'count':4, 
@@ -619,6 +665,7 @@ var missions = [
 	,
 		{
 			'ships': questionContainers,
+'symmetry': 1,
 			'respawn':false,
 			'count':3, 
 			'missionTarget':false
@@ -649,6 +696,7 @@ var missions = [
 	'enemies': [
 	{
 		'ships': drones,
+'symmetry': 1,
 		'parts': blackParts,
 		'sizeMin': 2,
 		'sizeMax': 5,
@@ -658,6 +706,7 @@ var missions = [
 		'deaths':[]
 	},{
 		'ships': drones,
+'symmetry': 1,
 		'parts': failDroneGear,
 		'sizeMin': 2,
 		'sizeMax': 4,
@@ -668,12 +717,14 @@ var missions = [
 	},
 		{
 			'ships': asteroids,
+'symmetry': 1,
 			'respawn':true,
 			'count':10, 
 			'missionTarget':false
 		},
 		{
 			'ships': asteroids,
+'symmetry': 0,
 			'parts': asteroidParts, 
 			'sizeMin': 2,
 			'sizeMax': 3,
@@ -684,6 +735,7 @@ var missions = [
 		,
 			{
 				'ships': containers,
+'symmetry': 1,
 				'respawn':true,
 				'missionTarget':false,
 				'count':3, 
@@ -692,6 +744,7 @@ var missions = [
 		,
 			{
 				'ships': questionContainers,
+'symmetry': 1,
 				'respawn':false,
 				'count':3, 
 				'missionTarget':true
@@ -725,12 +778,14 @@ var missions = [
 	'enemies':
 		[{
 			'ships': asteroids,
+'symmetry': 1,
 			'respawn':true,
 			'count':10, 
 			'missionTarget':false
 		},
 	{
 		'ships': asteroids,
+'symmetry': 0,
 		'parts': asteroidParts, 
 		'sizeMin': 2,
 		'sizeMax': 3,
@@ -741,6 +796,7 @@ var missions = [
 	,
 		{
 			'ships': mechanoids,
+'symmetry': 1,
 			'parts': mechanoidGear,
 			'sizeMin': 2,
 			'sizeMax': 6,
@@ -750,6 +806,7 @@ var missions = [
 		},
 		{
 			'ships': mechanoidMiniBoss1,
+'symmetry': 1,
 			'parts': mechanoidGear,
 			'sizeMin': 7,
 			'sizeMax': 7,
@@ -782,12 +839,14 @@ var missions = [
 	'enemies':
 		[{
 			'ships': asteroids,
+'symmetry': 1,
 			'respawn':true,
 			'count':10, 
 			'missionTarget':false
 		},
 	{
 		'ships': asteroids,
+'symmetry': 0,
 		'parts': asteroidParts, 
 		'sizeMin': 2,
 		'sizeMax': 3,
@@ -798,6 +857,7 @@ var missions = [
 	,
 		{
 			'ships': containers,
+'symmetry': 1,
 			'respawn':true,
 			'count':6, 
 			'missionTarget':false
@@ -806,6 +866,7 @@ var missions = [
 	,
 		{
 			'ships': questionContainers,
+'symmetry': 1,
 			'respawn':false,
 			'count':3, 
 			'missionTarget':false
@@ -815,6 +876,7 @@ var missions = [
 	,
 		{
 			'ships': allianceWeak,
+'symmetry': 1,
 			'parts': allianceGear4,
 			'sizeMin': 2,
 			'sizeMax': 5,
@@ -847,6 +909,7 @@ var missions = [
 	'enemies':
 		[{
 			'ships': asteroids,
+'symmetry': 0,
 			'parts': asteroidParts, 
 			'sizeMin': 2,
 			'sizeMax': 5,
@@ -891,12 +954,14 @@ var missions = [
    'enemies':
    [{
    'ships': asteroids,
+'symmetry': 1,
    'respawn':true,
    'count':17, 
    'missionTarget':false
    },
    {
    'ships': TODO,
+'symmetry': 1,
    'parts': allLootableItems(),
    'sizeMin': 2,
    'sizeMax': 9,

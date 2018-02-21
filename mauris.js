@@ -4769,7 +4769,7 @@ function initMission (missionId) {
 												if(typeof(playerStats.mission.enemies[n].parts)!='undefined'){
 																var mySize = parseInt(randomRange(playerStats.mission.enemies[n].sizeMin, playerStats.mission.enemies[n].sizeMax + 1));
 																myShip = randomShip(playerStats.mission.enemies[n].parts, mySize);
-																if(Math.random() > (1 / (Math.sqrt(myShip.length)-1))){
+																if(Math.random() > (playerStats.mission.enemies[n].symmetry / (Math.sqrt(myShip.length)-1))){
 																				myShip = symmetrizeShip(myShip);
 																}
 																myShip=[myShip];
