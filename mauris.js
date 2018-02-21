@@ -5900,7 +5900,11 @@ function update () {
 								if(planet.scaleModifier<1){planet.scaleModifier=Math.pow(planet.scaleModifier,planet.scaleModifier)};
 								planet.scale.setTo(planet.baseScale*planet.scaleModifier);
 								planet.speedModifier=.995-(Math.sqrt(Math.pow(10,planet.scaleModifier)*0.00006));
-
+								if(typeof(playerStats.mission.distantPlanet)!='undefined'){
+									if(playerStats.mission.distantPlanet){
+										planet.speedModifier=1;
+									}
+								}
 								planet.reset(cameraTarget.x * planet.speedModifier + planet.baseX, cameraTarget.y * planet.speedModifier+planet.baseY);
 
 								planetdirt.blendMode=1;
@@ -5981,8 +5985,18 @@ function update () {
 									planetlod.visible=true;
 									planetlod.alpha=0.5;
 									planetfall.visible=false;
+									planetfall.alpha=0;
 									planetdirt.visible=false;
+									planetdirt.alpha=0;
 									hazeWhite.visible=true;
+									hazeWhite.alpha=playerStats.mission.hazeWhite;
+hazeWhite.visible=true;
+									hazeWhite.alpha=playerStats.mission.hazeWhite;
+hazeWhite.visible=true;
+									hazeWhite.alpha=playerStats.mission.hazeWhite;
+
+
+
 								}
 								}
 								scroll(hazeRed,-0.66);
