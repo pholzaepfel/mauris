@@ -1496,7 +1496,7 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 								var aggroShip = ownerFromName(aggro.name);
 								var retarget = false;
 
-								if(confusionCooldown > game.time.now && Math.random() > 0.4){
+								if(confusionCooldown > game.time.now && Math.random() > 0.6){
 												retarget=true;
 								}
 
