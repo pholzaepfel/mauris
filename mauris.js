@@ -1500,17 +1500,10 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 												retarget=true;
 								}
 
-								if(aggroShip.ship == this.ship){
-												if(Math.random()<0.01){
-																retarget=true;
-												}
-								}else if(aggroShip.shiplist == this.shiplist){
-												if(Math.random()<dmg/this.health){
-																retarget=true;
-												}
-								}else{
-												retarget=true;  
+								if(Math.random()<(dmg*0.5)/this.health){
+												retarget=true;
 								}
+
 								if(retarget){
 												this.aggroList.push(aggro);
 												this.target = aggro;
