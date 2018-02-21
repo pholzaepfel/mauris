@@ -1615,8 +1615,8 @@ function addXp(xp) {
 								playerStats.level=1;
 				}
 				while(playerStats.xp >= playerStats.nextXp){
+								playerStats.nextXp += 200*playerStats.level;
 								playerStats.level += 1;
-								playerStats.nextXp += 100*playerStats.level;
 								addedLevel=true;
 				}
 				if(xp<0){
