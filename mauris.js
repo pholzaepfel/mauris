@@ -68,6 +68,9 @@ var randomMission = function(){
 				rm.hazeRedSpeed = randomRange(20,40);
 				rm.hazeWhiteSpeed = 10;
 				rm.hazePurpleSpeed = randomRange(60,100);
+				if(randomRange(0,1)<0.1){
+					rm.distantPlanet = true;
+				}
 				rm.distanceMin = randomRange(9000,12000);
 				rm.distanceMax = randomRange(9000,12000);
 				rm.hazePurpleBlendMode = 2;
@@ -5994,7 +5997,8 @@ hazeWhite.visible=true;
 									hazeWhite.alpha=playerStats.mission.hazeWhite;
 hazeWhite.visible=true;
 									hazeWhite.alpha=playerStats.mission.hazeWhite;
-
+									nebula.visible=true;
+									nebula2.visible=true;
 
 
 								}
