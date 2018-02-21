@@ -6,6 +6,20 @@ var cheatmode = 0;
 var noblood = 0;
 var touchPressed = 0;
 var initialXp = 200; //xp required for first level
+var allfactions=[
+				['alliance military',allianceGear4],
+				['mechanoid',mechanoidGear],
+				['smuggler',banditGear],
+				['infected',zombieGear],
+				['damaged mining drone',failDroneGear],
+				['mining drone',droneGear],
+				['trashhauler',dirtyParts],
+				['mercenary',blackParts],
+				['pirate',banditGear2],
+				['trader',whiteGear],
+				['xenoid',xenoidGear],
+				['junker',junkerGear]
+];
 var bulletTypes = [ 
 {'name':'pulse', 'id':0},
 {'name':'bullets', 'id':1},
@@ -32,150 +46,144 @@ var randomName = function(){
 				return randomFromArray(adjectives) + ' ' + randomFromArray(nouns);
 }
 var randomMission = function(){
-				var allfactions=[
-								['alliance military',allianceGear4],
-								['mechanoid',mechanoidGear],
-												['smuggler',banditGear],
-																['infected',zombieGear],
-																				['damaged mining drone',failDroneGear],
-																								['mining drone',droneGear],
-																												['trashhauler',dirtyParts],
-																																['mercenary',blackParts],
-																																				['pirate',banditGear2]
-				];
-																																				var myfactions=[];
-																																				myfactions.push(randomFromArray(allfactions));
-																																				myfactions.push(randomFromArray(allfactions));
-																																				if(randomRange(0,1)>0.5){
-																																								myfactions.push(randomFromArray(allfactions));
+				var myfactions=[];
+				myfactions.push(randomFromArray(allfactions));
+				myfactions.push(randomFromArray(allfactions));
+				if(randomRange(0,1)>0.5){
+								myfactions.push(randomFromArray(allfactions));
 
-																																				}
+				}
 
-																																				var rm = {};
-																																				rm.id = 666;
-																																				rm.next = [666];
-																																				rm.name = randomName();
-																																				rm.complete = false;
-																																				rm.hazeRed = randomRange(0.2,1.2);
-																																				rm.hazeWhite = randomRange(1.0,1.8);
-																																				rm.hazePurple = randomRange(0.2,1.2);
-																																				rm.hazeRedSpeed = randomRange(20,40);
-																																				rm.hazeWhiteSpeed = 10;
-																																				rm.hazePurpleSpeed = randomRange(60,100);
-																																				rm.distanceMin = randomRange(9000,12000);
-																																				rm.distanceMax = randomRange(9000,14000);
-																																				rm.hazePurpleBlendMode = 2;
-																																				rm.hazeRedBlendMode = 0;
-																																				rm.intro = [rm.name];
-																																				rm.outro = [];
-																																				rm.win = {
-																																								'condition':'frob'
-																																				};
-																																				rm.enemies = [];
-																																				rm.asteroidPanic=false;
+				var rm = {};
+				rm.id = 666;
+				rm.next = [666];
+				rm.name = randomName();
+				rm.complete = false;
+				rm.hazeRed = randomRange(0.2,1.2);
+				rm.hazeWhite = randomRange(1.0,1.8);
+				rm.hazePurple = randomRange(0.4,1.5);
+				rm.hazeRedSpeed = randomRange(20,40);
+				rm.hazeWhiteSpeed = 10;
+				rm.hazePurpleSpeed = randomRange(60,100);
+				rm.distanceMin = randomRange(9000,12000);
+				rm.distanceMax = randomRange(9000,14000);
+				rm.hazePurpleBlendMode = 2;
+				rm.hazeRedBlendMode = 0;
+				rm.intro = [rm.name];
+				rm.outro = [];
+				rm.win = {
+								'condition':'frob'
+				};
+				rm.enemies = [];
+				rm.asteroidPanic=false;
+				if(randomRange(0,1)<0.1){
+								rm.hazePurpleBlendMode = 1;
+								rm.hazePurple = randomRange(0.2,0.4);
+								rm.hazeRedBlendMode = 2;
+								rm.hazeRed = 0.3;
+				}
+				var asteroidDensity = parseInt(randomRange(20,45));
+				if(randomRange(0,1)<asteroidPanicChance){
+								rm.asteroidPanic=true;
+								rm.hazeRedSpeed*=2;
+								asteroidDensity=parseInt(randomRange(70,120));
+				}
+				if(asteroidDensity < 20){
+								rm.intro.push('asteroid density: light');
+				}else if(asteroidDensity < 35){
+								rm.intro.push('asteroid density: moderate');
+				}else if(asteroidDensity < 65){
+								rm.intro.push('asteroid density: high');
+				}else{
+								rm.intro.push('asteroid density: extreme');
+				}
+				var enemyDensity=parseInt(randomRange(7*(playerStats.level+1),(14*(playerStats.level+1))));
+				if(asteroidDensity>50){enemyDensity=0};
+				if(enemyDensity>0){
+								var s=  myfactions[0][0] + ' in area: ';
+								if(enemyDensity>140){
+												s+='extreme threat.';
+								}else if(enemyDensity>80){
+												s+='high threat.';
+								}else if(enemyDensity>40){
+												s+='moderate threat.';
+								}else if(enemyDensity>20){
+												s+='low threat.';
+								}else if(enemyDensity>0){
+												s+='minimal threat.';
+								}
+								rm.intro.push(s);
+				}
+				var totalEnemyCount = 0;
+				while(enemyDensity > 0){
+								var faction = randomFromArray(myfactions);
+								var minSize = parseInt(randomRange(2,8));
+								if(enemyDensity>100){
+												var minSize = parseInt(randomRange(5,8));
+								}
+								var maxSize = parseInt(randomRange(0,1));
+								var count = parseInt(randomRange(0,20/minSize));
 
-																																				var asteroidDensity = parseInt(randomRange(20,45));
-																																				if(randomRange(0,1)<asteroidPanicChance){
-																																								rm.asteroidPanic=true;
-																																								rm.hazeRedSpeed*=2;
-																																								asteroidDensity=parseInt(randomRange(70,120));
-																																				}
-																																				if(asteroidDensity < 20){
-																																								rm.intro.push('asteroid density: light');
-																																				}else if(asteroidDensity < 35){
-																																								rm.intro.push('asteroid density: moderate');
-																																				}else if(asteroidDensity < 65){
-																																								rm.intro.push('asteroid density: high');
-																																				}else{
-																																								rm.intro.push('asteroid density: extreme');
-																																				}
-																																				var enemyDensity=parseInt(randomRange(7*(playerStats.level+1),(14*(playerStats.level+1))));
-																																				if(asteroidDensity>50){enemyDensity=0};
-																																				if(enemyDensity>0){
-																																								var s=  myfactions[0][0] + ' in area: ';
-																																				if(enemyDensity>140){
-																																								s+='extreme threat.';
-																																				}else if(enemyDensity>80){
-																																								s+='high threat.';
-																																				}else if(enemyDensity>40){
-																																								s+='moderate threat.';
-																																				}else if(enemyDensity>20){
-																																								s+='low threat.';
-																																				}else if(enemyDensity>0){
-																																								s+='minimal threat.';
-																																				}
-																																				rm.intro.push(s);
-																																				}
-																																				var totalEnemyCount = 0;
-																																				while(enemyDensity > 0){
-																																								var faction = randomFromArray(myfactions);
-																																								var minSize = parseInt(randomRange(2,8));
-																																								if(enemyDensity>100){
-																																								var minSize = parseInt(randomRange(5,8));
-																																								}
-																																								var maxSize = parseInt(randomRange(0,1));
-																																								var count = parseInt(randomRange(0,20/minSize));
-																																								
-																																								if(count + totalEnemyCount > 30 && minSize < 7){
-																																										minSize+=2;
-																																								}
-																																								var strength = 0;
-																																								var maxCount = Math.pow((minSize+maxSize)/2,2);
-																																								maxCount = parseInt(enemyDensity/maxCount);
-																																								if(maxCount < 1){ 
-																																												count = 0;
-																																												enemyDensity = 0;
-																																								}else if(maxCount < count){
-																																												count=maxCount;
-																																								}
-																																								if(count > 0){
-																																												strength=Math.pow(((minSize+maxSize)/2),2)*count;	
-																																												enemyDensity-=strength;
-																																												rm.enemies.push(
-																																																				{
-																																																				'ships': drones,
-																																																				'parts': faction[1], 
-																																																				'sizeMin': minSize,
-																																																				'sizeMax': maxSize+minSize,
-																																																				'respawn':true,
-																																																				'count':count,
-																																																				'missionTarget':false
+								if(count + totalEnemyCount > 30 && minSize < 7){
+												minSize+=2;
+								}
+								var strength = 0;
+								var maxCount = Math.pow((minSize+maxSize)/2,2);
+								maxCount = parseInt(enemyDensity/maxCount);
+								if(maxCount < 1){ 
+												count = 0;
+												enemyDensity = 0;
+								}else if(maxCount < count){
+												count=maxCount;
+								}
+								if(count > 0){
+												strength=Math.pow(((minSize+maxSize)/2),2)*count;	
+												enemyDensity-=strength;
+												rm.enemies.push(
+																				{
+																				'ships': drones,
+																				'parts': faction[1], 
+																				'sizeMin': minSize,
+																				'sizeMax': maxSize+minSize,
+																				'respawn':true,
+																				'count':count,
+																				'missionTarget':false
 
-																																																				}
-																																																			 )
-																																												totalEnemyCount+=count;
-																																								}
+																				}
+																			 )
+																totalEnemyCount+=count;
+								}
 
-																																				}
-																																				rm.enemies.push(
-																																												{
-																																												'ships': asteroids,
-																																												'parts': asteroidParts, 
-																																												'sizeMin': 2,
-																																												'sizeMax': 4,
-																																												'respawn':true,
-																																												'count':asteroidDensity,
-																																												'missionTarget':false
-																																												}
-																																											 );
-																																				rm.enemies.push(
-																																												{
-																																												'ships': containers,
-																																												'respawn':true,
-																																												'count':parseInt(randomRange(3,8)), 
-																																												'missionTarget':false
-																																												}
-																																											 );
-																																				rm.enemies.push(
-																																												{
-																																												'ships': questionContainers,
-																																												'respawn':false,
-																																												'count':parseInt(randomRange(1,5)), 
-																																												'missionTarget':true
-																																												}
+				}
+				rm.enemies.push(
+												{
+												'ships': asteroids,
+												'parts': asteroidParts, 
+												'sizeMin': 2,
+												'sizeMax': 5,
+												'respawn':true,
+												'count':asteroidDensity,
+												'missionTarget':false
+												}
+											 );
+				rm.enemies.push(
+												{
+												'ships': containers,
+												'respawn':true,
+												'count':parseInt(randomRange(3,8)), 
+												'missionTarget':false
+												}
+											 );
+				rm.enemies.push(
+												{
+												'ships': questionContainers,
+												'respawn':false,
+												'count':parseInt(randomRange(1,5)), 
+												'missionTarget':true
+												}
 
-																																											 );
-																																				return rm;
+											 );
+				return rm;
 }
 function randomFromArray(arr){
 				var idx = parseInt(randomRange(0, arr.length));
@@ -1550,7 +1558,7 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 												}
 								}
 								for (var j = 0; j < this.parts.length; j++) {
-												if(Math.random() < this.oreChance){
+												if(Math.random() < this.oreChance && !asteroidPanic){
 																spawnLoots(Math.floor(randomRange(0,4)), this.sprite.x, this.sprite.y);
 																this.parts[j].sprite.kill();
 												}else if(Math.random() < (componentDropRate + player.dropRate) && components[this.parts[j].component].drops){ 
@@ -1754,12 +1762,12 @@ enemyShip.prototype.update = function() {
 
 												this.sprite.body.velocity = game.physics.arcade.velocityFromRotation(game.physics.arcade.angleBetween(this.sprite, player.sprite), randomRange(25,100));  
 												this.sprite.body.angularVelocity=randomRange(25,100)*randomSign();
-								if(playerStats.mission.asteroidPanic){
-								this.sprite.body.velocity.x*=randomRange(0.6,4.4);
-								this.sprite.body.velocity.y*=randomRange(0.6,4.4);
-								this.sprite.body.angularVelocity*=randomRange(1,3);
-	
-								}}
+												if(playerStats.mission.asteroidPanic){
+																this.sprite.body.velocity.x*=randomRange(0.6,4.4);
+																this.sprite.body.velocity.y*=randomRange(0.6,4.4);
+																this.sprite.body.angularVelocity*=randomRange(1,3);
+
+												}}
 				}
 				this.sprite.profile = this.sprite.profileMax; //tracking this in detail is hard and unnecessary
 
@@ -1771,17 +1779,17 @@ enemyShip.prototype.update = function() {
 								//init asteroid stuff
 								this.sprite.body.velocity = game.physics.arcade.velocityFromRotation(game.physics.arcade.angleBetween(this.sprite, player.sprite), randomRange(30,130));  
 								if(playerStats.mission.asteroidPanic){
-								this.sprite.body.velocity.x*=randomRange(0.6,4.4);
-								this.sprite.body.velocity.y*=randomRange(0.6,4.4);
-								this.sprite.body.angularVelocity*=randomRange(1,3);
-	
+												this.sprite.body.velocity.x*=randomRange(0.6,4.4);
+												this.sprite.body.velocity.y*=randomRange(0.6,4.4);
+												this.sprite.body.angularVelocity*=randomRange(1,3);
+
 								}else{
-								this.sprite.body.velocity.x*=Math.random();
-								this.sprite.body.velocity.y*=Math.random();
+												this.sprite.body.velocity.x*=Math.random();
+												this.sprite.body.velocity.y*=Math.random();
 								}
 								this.sprite.body.angularVelocity=randomRange(25,100)*randomSign();
 								if(playerStats.mission.asteroidPanic){
-								this.sprite.body.angularVelocity*=randomRange(1,3);
+												this.sprite.body.angularVelocity*=randomRange(1,3);
 								}
 								if(this.oreChance<1){
 												this.sprite.profile=0;
@@ -2272,13 +2280,16 @@ playerShip.prototype.initPlayerShip = function (ship,x,y) {
 				playerStats.health = this.healthMax;
 				playerStats.healthMax = this.healthMax;
 }
-playerShip.prototype.damage = function(dmg, aggro, bulletX, bulletY) {
+playerShip.prototype.damage = function(dmg, aggro, bulletX, bulletY, preventXPLossOnDeath) {
 
 				if(typeof(bulletX)=='undefined'){
 								bulletX = 0;
 				}
 				if(typeof(bulletY)=='undefined'){
 								bulletY = 0;
+				}
+				if(typeof(preventXPLossOnDeath)=='undefined'){
+								preventXPLossOnDeath = false;
 				}
 				var bullet = {x:bulletX, y:bulletY};
 
@@ -2355,7 +2366,9 @@ playerShip.prototype.damage = function(dmg, aggro, bulletX, bulletY) {
 								this.cullParts();  //defensive programming, in case I ever decide to do something that will kill a player sprite early :P
 								nextSpawn = game.time.now+5000;
 								playerStats.deaths+=1; //hahahahahhahahahahahahahhahahahahahaha
-								addXp(parseInt(playerStats.xp/-2));
+								if(!preventXPLossOnDeath){
+												addXp(parseInt(playerStats.xp/-2));
+								}
 								playerStats.health=99999; //reset health for next ship
 								fadeOut();
 								return true;
@@ -4096,7 +4109,7 @@ gameUI.prototype.playerStatusTextPing = function() {
 																}
 												}
 								}
-				statusText+='\n' + pauseMessage + '\n';
+								statusText+='\n' + pauseMessage + '\n';
 				}
 				this.playerStatusText.setText(statusText);
 

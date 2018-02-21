@@ -511,7 +511,7 @@ var cmp = [
 	'drops':true,
 	'name':'Filthy Cockpit',
 	'match':'4',
-	'flavor':'still reliable and fast!',
+	'flavor':'reliable and fast!',
 	'bonus':function(target){
 		target.crewMax+=1;
 		target.turnRate+=0.2;
@@ -1092,7 +1092,7 @@ function(tgt){
 				}
 			}
 			if(game.physics.arcade.distanceBetween(this.sprite,player.sprite)<500 && player.alive){
-				player.damage(player.healthMax); //won't actually kill the player unless damagecoef = 1
+				player.damage(player.healthMax, {},0,0,true); //won't actually kill the player unless damagecoef = 1
 			}
 		}
 	}
@@ -1203,7 +1203,7 @@ function(tgt){
 {
 	'id':84,
 	'drops':false,
-	'name':'Crystalline Entity',
+	'name':'Crystalline Amplifier',
 	'match':'26',
 	'flavor':'increases the size of your shots',
 	'bonus':function(target){
@@ -1217,7 +1217,7 @@ function(tgt){
 {
 	'id':85,
 	'drops':false,
-	'name':'Crystalline Entity',
+	'name':'Crystalline Amplifier',
 	'match':'42',
 	'flavor':'increases the size of your shots',
 	'bonus':function(target){
@@ -1773,50 +1773,29 @@ function(tgt){
 	'drops':true,
 	'name':'Secured Container',
 	'match':'4682',
-	'flavor':'recharge energy by rapidly pressing [Z].',
+	'flavor':'Improve energy recharge.',
 	'bonus':function(target){
-		if(target.ai==aiModes['player']){
-			target.energyRate=60000; //slow enough
-			target.alt=function(){
-				//this guy has his own cooldown timer, so the user
-				//has to repeatedly press [Z]; there should
-				//be something in update() that resets this to 0
-				//if mouse2 is up
-				if(this.cooldown114<game.time.now){
-					ui.sound_beep.play();
-					if(this.energy+this.energyAmount>this.energyMax){
-						this.energy=this.energyMax;	
-					}else{
-						this.energy+=this.energyAmount;
-					}
-					this.nextEnergy = game.time.now + this.energyRate;
-
-					this.cooldown114=game.time.now+60000;
-				}
-			};
-		}else{
-			target.energyRate*=0.6; //baddies get all the love
+			target.energyRate*=0.8; 
 		}
-	}
 },
 {
 	'id':115,
 	'drops':true,
 	'name':'Jagged Armor Plating',
 	'match':'4',
-	'flavor':'heavy armor, crash into debris to destroy it',
+	'flavor':'heavy, wicked-looking armor',
 	'bonus':function(target){
-		target.sawDamage+=12;
 		target.health+=5;
 		target.acceleration-=0.1;
 		target.turnRate-=0.3;
+		target.fireDamage+=1;
 
 	}
 },
 {
 	'id':116,
 	'drops':true,
-	'name':'Crystalline Entity',
+	'name':'Crystalline Amplifier',
 	'match':'86',
 	'flavor':'increases the size of your shots',
 	'bonus':function(target){
@@ -1831,7 +1810,7 @@ function(tgt){
 {
 	'id':117,
 	'drops':true,
-	'name':'Crystalline Entity',
+	'name':'Crystalline Amplifier',
 	'match':'84',
 	'flavor':'increases the size of your shots',
 	'bonus':function(target){
