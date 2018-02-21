@@ -59,14 +59,17 @@ var randomMission = function(){
 				rm.next = [666];
 				rm.name = randomName();
 				rm.complete = false;
-				rm.hazeRed = randomRange(0.2,1.2);
+				rm.hazeRed = randomRange(0.4,0.9);
+				if(randomRange(0,1)<0.1){
+					rm.hazeRed = randomRange(0.9,1.1);
+				}
 				rm.hazeWhite = randomRange(1.0,1.8);
 				rm.hazePurple = randomRange(0.4,1.5);
 				rm.hazeRedSpeed = randomRange(20,40);
 				rm.hazeWhiteSpeed = 10;
 				rm.hazePurpleSpeed = randomRange(60,100);
 				rm.distanceMin = randomRange(9000,12000);
-				rm.distanceMax = randomRange(9000,14000);
+				rm.distanceMax = randomRange(9000,12000);
 				rm.hazePurpleBlendMode = 2;
 				rm.hazeRedBlendMode = 0;
 				rm.intro = [rm.name];
@@ -5969,14 +5972,34 @@ function update () {
 								if(planetfall.alpha>0){
 												planetfall.visible=true;
 								}
+								if(typeof(playerStats.mission.distantPlanet)!='undefined'){
+								if(playerStats.mission.distantPlanet){
+									planetlod.scale.setTo(0.8,0.8);
+									planet.scale.setTo(0.8,0.8);
+									planet.visible=true;
+									planet.alpha=1;
+									planetlod.visible=true;
+									planetlod.alpha=0.5;
+									planetfall.visible=false;
+									planetdirt.visible=false;
+									hazeWhite.visible=true;
+								}
+								}
 								scroll(hazeRed,-0.66);
 								scroll(hazePurple,-0.466);
 								hazeRed.rotation=0.2*Math.cos(game.time.now/7750);
 								hazePurple.rotation=0.2*Math.sin(game.time.now/5240);
 								//hazePurple.bringToTop();
 								planet.hazeModifier=0;
+								
 								planet.hazeModifier=Math.max(0,(2*planet.scaleModifier)-4);
 								planet.hazeModifier=Math.min(planet.hazeModifier,0.4);
+								if(typeof(playerStats.mission.distantPlanet)!='undefined')
+								{
+								if(playerStats.mission.distantPlanet){
+									planet.hazeModifier = 0;
+									}
+								}
 								hazeRed.scale.setTo(2.5+(Math.cos(game.time.now/11000)+hazeRed.baseScale),(0.8*hazeRed.baseScale+1.5+Math.cos(game.time.now/9000)));
 								hazeRed.width=1.5*resolutionX/hazeRed.scale.x;
 								hazeRed.height=1.5*resolutionY/hazeRed.scale.y;
