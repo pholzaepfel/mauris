@@ -70,6 +70,7 @@ var randomMission = function(){
 				rm.hazePurpleSpeed = randomRange(60,100);
 				if(randomRange(0,1)<0.1){
 					rm.distantPlanet = true;
+					rm.hazeWhiteSpeed=2;
 				}
 				rm.distanceMin = randomRange(9000,12000);
 				rm.distanceMax = randomRange(9000,12000);
@@ -5892,12 +5893,6 @@ function update () {
 								nebula.reset(cameraTarget.x*0.9985,cameraTarget.y*0.9985);
 								// scrolling
 								scroll(hazeWhite,-0.0015);
-								if(typeof(playerStats.mission.distantPlanet)!='undefined'){
-									if(playerStats.mission.distantPlanet){
-										scroll(hazeWhite,0.001);
-									}
-								}
-
 
 								planet.scaleModifier=(player.sprite.x/planet.baseX)+(player.sprite.y/planet.baseY)+planet.scaleMission;
 								planet.scaleModifier/=100;
