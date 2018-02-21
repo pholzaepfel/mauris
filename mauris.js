@@ -5892,6 +5892,11 @@ function update () {
 								nebula.reset(cameraTarget.x*0.9985,cameraTarget.y*0.9985);
 								// scrolling
 								scroll(hazeWhite,-0.0015);
+								if(typeof(playerStats.mission.distantPlanet)!='undefined'){
+									if(playerStats.mission.distantPlanet){
+										scroll(hazeWhite,0.001);
+									}
+								}
 
 
 								planet.scaleModifier=(player.sprite.x/planet.baseX)+(player.sprite.y/planet.baseY)+planet.scaleMission;
@@ -5905,7 +5910,7 @@ function update () {
 								planet.speedModifier=.995-(Math.sqrt(Math.pow(10,planet.scaleModifier)*0.00006));
 								if(typeof(playerStats.mission.distantPlanet)!='undefined'){
 									if(playerStats.mission.distantPlanet){
-										planet.speedModifier=1;
+										planet.speedModifier=0.998;
 									}
 								}
 								planet.reset(cameraTarget.x * planet.speedModifier + planet.baseX, cameraTarget.y * planet.speedModifier+planet.baseY);
