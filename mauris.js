@@ -89,7 +89,7 @@ var randomMission = function(){
 																																				}else{
 																																								rm.intro.push('asteroid density: extreme');
 																																				}
-																																				var enemyDensity=parseInt(randomRange(10*(playerStats.level+1),(20*(playerStats.level+1))));
+																																				var enemyDensity=parseInt(randomRange(7*(playerStats.level+1),(14*(playerStats.level+1))));
 																																				if(asteroidDensity>50){enemyDensity=0};
 																																				if(enemyDensity>0){
 																																								var s=  myfactions[0][0] + ' in area: ';
@@ -1611,12 +1611,12 @@ function addXp(xp) {
 				var addedLevel=false;
 				//if subtracting xp on death, recalculate the player level
 				if(xp<0){
-								playerStats.nextXp=100;
+								playerStats.nextXp=initialXp;
 								playerStats.level=1;
 				}
 				while(playerStats.xp >= playerStats.nextXp){
-								playerStats.nextXp *= 2;
 								playerStats.level += 1;
+								playerStats.nextXp += 100*player.level;
 								addedLevel=true;
 				}
 				if(xp<0){
