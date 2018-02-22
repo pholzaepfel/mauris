@@ -1,4 +1,9 @@
 var gamemode;
+var mobileScaleFactor = function() {
+if (isAndroid) {
+return 1.75; } else {
+return 1;
+}
 var pauseMessage='';
 var defaultBehavior='neutral';
 var asteroidPanicChance=0.02;
@@ -1343,9 +1348,7 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 				this.sprite.r=255;
 				this.sprite.g=255;
 				this.sprite.b=255;
-				if(isAndroid){
-					this.sprite.scale.setTo(2,2);
-				}	
+					this.sprite.scale.setTo(mobileScaleFactor(),mobileScaleFactor());
 				this.TODO=0;
 				this.organicArmor=0;
 				this.questionBox=0;
@@ -1457,7 +1460,7 @@ enemyShip.prototype.spawnCorpses = function(numCorpses) {
 								bullet = this.spawnBullet(false);
 								if(bullet){
 												bullet.blendMode=0;
-												bullet.scale.setTo(randomSign()*randomRange(0.9,1.1),randomSign()*randomRange(0.9,1.1));
+												bullet.scale.setTo(mobileScaleFactor()*randomSign()*randomRange(0.9,1.1),mobileScaleFactor()*randomSign()*randomRange(0.9,1.1));
 												bullet.tracking = 0;
 												bullet.bulletSprite=13;
 												bullet.lifespan=60000;
@@ -2092,7 +2095,7 @@ mockPlayerShip.prototype.initPlayerShip = function (ship, x, y) {
 				this.sprite.g=255;
 				this.sprite.b=255;
 				if(isAndroid){
-				this.sprite.scale.setTo(2,2);
+				this.sprite.scale.setTo(mobileScaleFactor(),mobileScaleFactor());
 				}
 				this.organicArmor=0;
 				this.TODO=0;
@@ -2189,7 +2192,7 @@ playerShip.prototype.initPlayerShip = function (ship,x,y) {
 				this.sprite.g=255;
 				this.sprite.b=255;
 		if(isAndroid){
-				this.sprite.scale.setTo(2,2);
+				this.sprite.scale.setTo(mobileScaleFactor(),mobileScaleFactor());
 				}
 				this.organicArmor=0;
 				this.TODO=0;
@@ -7108,7 +7111,7 @@ function spawnLoots(_count, x, y){
 												loot.rotation = Math.random()*2*Math.PI;
 												game.add.tween(loot).to({rotation:Math.PI*30},loot.lifespan,Phaser.Easing.Exponential.Out, true, 0, false);
 												var scale = randomRange(0.8,1.1);
-												loot.scale.setTo(scale,scale);
+												loot.scale.setTo(scale * mobileScaleFactor(),scale * mobileScaleFactor());
 												loot.pullTime=0;
 												loot.alpha=2.5;
 
@@ -7129,7 +7132,7 @@ function spawnDebris(component,x,y){
 								var part = debris.getFirstDead();
 								part.loadTexture('parts', component);
 								part.lifespan = 120000;
-								part.scale.setTo(1,1);
+								part.scale.setTo(mobileScaleFactor(),mobileScaleFactor());
 								part.reset(x, y);
 								part.rotation=0;
 								part.body.angularVelocity=200;
@@ -7151,7 +7154,7 @@ function spawnComponent(component,x,y){
 								}
 								loot.loadTexture('parts', component);
 								loot.lifespan = 120000;
-								loot.scale.setTo(2,2);
+								loot.scale.setTo(2*mobileScaleFactor(),2*mobileScaleFactor());
 								loot.reset(x + randomRange(-16,16), y+randomRange(-16,16));
 								loot.rotation=0;
 								game.add.tween(loot).to({rotation:Math.PI*10},loot.lifespan,Phaser.Easing.Exponential.Out, true, 0, false);
