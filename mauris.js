@@ -107,7 +107,7 @@ var randomMission = function(){
 				var enemyDensity=parseInt(randomRange(7*(playerStats.level+1),(14*(playerStats.level+1))));
 				if(asteroidDensity>50){enemyDensity=0};
 				if(enemyDensity>0){
-								var s=  myfactions[0][0] + ' in area: ';
+								var s=  myfactions[0][0] + ' and ' + myfactions[1][0] + ' in area: \n';
 								if(enemyDensity>140){
 												s+='extreme threat.';
 								}else if(enemyDensity>80){

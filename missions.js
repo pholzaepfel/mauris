@@ -11,7 +11,8 @@ var messages =
 	'some parts give a special ability, accessed by\npressing Z or clicking/touching the special attack icon.',
 	'bugs are likely and common',
 	'aggressive behaviors are more likely to alert foes.\nif you\'re trying to make an escape, fire sparingly.',
-	'running is a viable solution.'
+	'running is a viable solution.',
+	'smaller ships attract less attention, and\ncan dart out of trouble.'
 ];
 
 var allLootableItems = function () {
