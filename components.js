@@ -746,22 +746,23 @@ target.thrustBehavior=cleanSmoke;
 },
 {
 	'id':49,
-	'drops':false,
-	'name':'Component49',
+	'drops':true,
+	'name':'Xenoid',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO+=1;
 
 	}
 },
 {
 	'id':50,
-	'drops':false,
-	'name':'Component50',
+	'drops':true,
+	'name':'Xenoid',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
-
+		target.TODO+=1;
 	}
 },
 {
