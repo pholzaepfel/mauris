@@ -1343,6 +1343,9 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 				this.sprite.r=255;
 				this.sprite.g=255;
 				this.sprite.b=255;
+				if(isAndroid){
+					this.sprite.scale.setTo(2,2);
+				}	
 				this.TODO=0;
 				this.organicArmor=0;
 				this.questionBox=0;
@@ -2088,6 +2091,9 @@ mockPlayerShip.prototype.initPlayerShip = function (ship, x, y) {
 				this.sprite.r=255;
 				this.sprite.g=255;
 				this.sprite.b=255;
+				if(isAndroid){
+				this.sprite.scale.setTo(2,2);
+				}
 				this.organicArmor=0;
 				this.TODO=0;
 				this.nextOre=0;
@@ -2182,6 +2188,9 @@ playerShip.prototype.initPlayerShip = function (ship,x,y) {
 				this.sprite.r=255;
 				this.sprite.g=255;
 				this.sprite.b=255;
+		if(isAndroid){
+				this.sprite.scale.setTo(2,2);
+				}
 				this.organicArmor=0;
 				this.TODO=0;
 				this.nextOre=0;
