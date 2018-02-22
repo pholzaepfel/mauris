@@ -146,6 +146,7 @@ var randomMission = function(){
 								if(count > 0){
 												strength=Math.pow(((minSize+maxSize)/2),2)*count;	
 												enemyDensity-=strength;
+												var symmetry=randomRange(0.5,1.5);
 												rm.enemies.push(
 																				{
 																				'ships': drones,
@@ -154,7 +155,8 @@ var randomMission = function(){
 																				'sizeMax': maxSize+minSize,
 																				'respawn':true,
 																				'count':count,
-																				'missionTarget':false
+																				'missionTarget':false,
+																				'symmetry':symmetry
 
 																				}
 																			 )
