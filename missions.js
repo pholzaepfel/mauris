@@ -32,7 +32,7 @@ var contextTutorialDeath = 'lose your ship, lose xp.';
 var missions = [
 
 {	'id':0,
-	'next':[666],
+	'next':[9],
 	'asteroidPanic':false,
 	'distantPlanet':true,
 	'name':'tutorial 0',
