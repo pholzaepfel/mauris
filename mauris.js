@@ -74,7 +74,7 @@ var randomMission = function(){
 				rm.hazeRedSpeed = randomRange(20,40);
 				rm.hazeWhiteSpeed = 10;
 				rm.hazePurpleSpeed = randomRange(60,100);
-				if(randomRange(0,1)<0.1){
+				if(randomRange(0,1)<0.1 || isAndroid){
 								rm.distantPlanet = true;
 								rm.hazeWhiteSpeed=2;
 				}
@@ -6027,6 +6027,7 @@ function update () {
 								{
 												if(playerStats.mission.distantPlanet){
 																planet.hazeModifier = 0;
+
 												}
 								}
 								hazeRed.scale.setTo(2.5+(Math.cos(game.time.now/11000)+hazeRed.baseScale),(0.8*hazeRed.baseScale+1.5+Math.cos(game.time.now/9000)));
@@ -6053,7 +6054,10 @@ function update () {
 												hazeRed.visible=true;
 								}
 
-
+if(isAndroid){
+hazePurple.visible = false;
+planetlod.visible=false;
+}
 
 								ui.update();
 
