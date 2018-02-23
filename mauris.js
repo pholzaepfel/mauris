@@ -4774,7 +4774,7 @@ function initMission (missionId) {
 				}else{
 								playerStats.mission = missions[missionId];
 								if(isAndroid){
-playerStats.missions.distantPlanet=true;
+playerStats.mission.distantPlanet=true;
 								}
 				}
 				planet.scaleMission=randomRange(50,60);
