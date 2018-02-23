@@ -1,7 +1,7 @@
 var gamemode;
 var mobileScaleFactor = function() {
 				if (isAndroid) {
-								return 1.75; } else {
+								return 1.4; } else {
 												return 1;
 								}
 }
