@@ -6057,6 +6057,8 @@ function update () {
 if(isAndroid){
 hazePurple.visible = false;
 planetlod.visible=false;
+hazeWhite.alpha=1.0;
+hazeWhite.blendMode=0;
 }
 
 								ui.update();
