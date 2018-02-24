@@ -48,7 +48,7 @@ var missions = [
 	'hazePurpleBlendMode':2,
 	'hazeRedBlendMode':0,
 	'intro':['click or touch to target. hold to move.\ntry destroying some asteroids and cargo containers.',
-	'when you get the hang of it,\nfollow the GOLD <> indicator to the next station.'],
+	'when you get the hang of it,\nfollow the GOLD <> indicator to the next portal.'],
 	'outro':[''],
 	'win':{
 		'condition':'frob'
@@ -691,7 +691,7 @@ var missions = [
 	'hazePurpleBlendMode':2,
 	'hazeRedBlendMode':0,
 	'intro':['killing opponents yields components and xp.\ncomponents will upgrade your ship.\nxp will increase your ship\'s max size.'],
-	'outro':['nice job. come on to the next station'],
+	'outro':['nice job. come on to the next portal'],
 	'win':{
 		'condition':'frob'
 	},
