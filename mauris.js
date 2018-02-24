@@ -2104,7 +2104,7 @@ mockPlayerShip.prototype.initPlayerShip = function (ship, x, y) {
 				this.fireSound=ui.sound_pew3;
 				this.firingSolution=standardFiringSolution;
 				this.ai=aiModes['player']; //natural intelligence
-				this.radarTargets=20;
+				this.radarTargets=0;
 				this.dropRate=0;
 				this.effects=function(){};
 				this.radarError=0;
@@ -2199,7 +2199,7 @@ playerShip.prototype.initPlayerShip = function (ship,x,y) {
 				this.fireSound=ui.sound_pew3;
 				this.firingSolution=standardFiringSolution;
 				this.ai=aiModes['player']; //natural intelligence
-				this.radarTargets=20;
+				this.radarTargets=0;
 				this.dropRate=0;
 				this.effects=function(){};
 				this.radarError=0;
@@ -4079,12 +4079,7 @@ gameUI.prototype.radarPing = function() {
 								this.radar[i].setText(s);
 								this.radar[i].x = player.sprite.body.x + (0.5 * player.sprite.body.width) + Math.cos(targetAngle) * range;
 								this.radar[i].y = player.sprite.body.y + (0.5 * player.sprite.body.width) + Math.sin(targetAngle) * range;  
-								otherGraphics.blendMode=1;
-								otherGraphics.lineStyle(10, 0xFF0000, 0);
-								otherGraphics.moveTo(this.radar[i].x, this.radar[i].y);
-								otherGraphics.lineTo(player.sprite.x,player.sprite.y);
 								this.toTop(this.radar[i]);
-				this.toTop(otherGraphics);
 				}
 }
 //follow this with a push!
