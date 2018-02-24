@@ -46,9 +46,9 @@ var bulletTypes = [
 
 var randomName = function(){
 				var adjectives = ['Dusty','Barren','Lonely','Wasted','Cold','Bleak','Dangerous',
-						'Solemn','Treacherous','Screaming','Yawning'];
+						'Devil\'s','Solemn','Treacherous','Screaming','Yawning'];
 				var nouns = ['Void','Collapse','Spiral','Gap','Graveyard','Scrapyard','Expanse',
-						'Warzone','Trade Zone','Column','Abyss'];
+						'Warzone','Backdoor','Column','Abyss'];
 				return randomFromArray(adjectives) + ' ' + randomFromArray(nouns);
 }
 var randomMission = function(){
