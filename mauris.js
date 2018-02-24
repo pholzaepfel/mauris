@@ -123,9 +123,9 @@ var randomMission = function(){
 								var count = parseInt(randomRange(3,7));
 								var strength = count;
 								var roll = 0;
-								var loops = randomRange(1,1+(playerStats.level/2));
+								var loops = randomRange(0,(playerStats.level/2));
 								for(var i=0;i<loops;i++){
-												roll = randomRange(0,100);
+												roll = randomRange(0,200);
 												if(roll < 10){
 																minSize = 7;
 																maxSize = 9;
