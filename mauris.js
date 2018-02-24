@@ -6930,18 +6930,18 @@ scaleFactor = 1;
 												explosion.rotation = Math.random()*Math.PI;
 												explosion.body.velocity.x=randomRange(-100,100);
 												explosion.body.velocity.y=randomRange(-100,100);
-												explosion.lifespan=250;
+												explosion.lifespan=750;
 												var r = randomRange(0.5,1.7);
 												explosion.scale.setTo(r*scaleFactor,r*scaleFactor);
-												explosion.alpha=randomRange(0.7,0.9);
-												explosion.body.angularVelocity=randomRange(800,1200)*randomSign();
+												explosion.alpha=randomRange(1.1,1.3);
+												explosion.body.angularVelocity=randomRange(900,1200)*randomSign();
 												explosion.blendMode=1;
 												for(var i=0;i<4;i++){
 																if(forceDead(explosionsGroup)){
 																				explosion = explosionsGroup.getFirstDead();
 																				killTweensFromExplosion(explosion);
 																				explosion.animations.play(bulletTypeName( btype));
-																				explosion.reset(x,y);
+																				explosion.reset(x + randomRange(-50,50),y + randomRange(-50,50));
 																				explosion.rotation = randomRange(-0.5,0.5);//bullet.rotation+Math.PI;
 																				if(Math.random()>0.5){explosion.rotation+=Math.PI};
 																				explosion.lifespan=Math.min(150);
@@ -6951,7 +6951,7 @@ scaleFactor = 1;
 																				explosion.scale.setTo(r*0.5*(4.0-i),0.5*r*r*(4.0-i));
 																				explosion.alpha=1.2;
 																				explosion.blendMode=1;
-																				explosion.body.angularVelocity=randomRange(50,200)*randomSign()/r;
+explosion.rotation=randomRange(-180,180);																				explosion.body.angularVelocity=randomRange(50,200)*randomSign()/r;
 																}
 												}
 								}
