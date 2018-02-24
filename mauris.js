@@ -4823,6 +4823,7 @@ function initMission (missionId) {
 								frob1.reset(randomSign()*randomRange(playerStats.mission.distanceMin,playerStats.mission.distanceMax),randomSign()*randomRange(playerStats.mission.distanceMin,playerStats.mission.distanceMax));
 								frob1.body.velocity.x=randomRange(-20,20);
 								frob1.body.velocity.y=randomRange(-20,20);
+								frob1.body.angularVelocity=randomRange(-10,10);
 				}
 
 				fadeIn();
@@ -4902,6 +4903,7 @@ function fadeIn () {
 				ui.tempStation.alpha=0;
 				game.add.tween(station).to({alpha:1},100, Phaser.Easing.Linear.None, true, 0, false);
 				game.add.tween(ui.tempStation).to({alpha:1},100, Phaser.Easing.Linear.None, true, 0, false);
+				station.body.angularVelocity=randomRange(-10,10);
 				var r = randomRange(3,4);
 				nebula.scale.setTo(r,r);
 				r = randomRange(3,6);
