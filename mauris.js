@@ -1952,6 +1952,8 @@ function preload () {
 
 				game.load.script('blurX', 'BlurX.js');
 				game.load.script('blurY', 'BlurY.js');
+				game.load.image('portal', 'assets/portal.png');
+				game.load.image('portal2', 'assets/portal2.png');
 				game.load.image('station', 'assets/station.png');
 				game.load.image('frob1', 'assets/frob1.png');
 				game.load.image('partswindow', 'assets/partswindow.png');
@@ -3803,7 +3805,7 @@ gameUI.prototype.initCombatUi = function() {
 				this.partsSelector = game.add.sprite(-384,158,'parts',0);
 				this.partsSelector.visible = false;
 
-				this.tempStation = game.add.sprite(0,0,'station');
+				this.tempStation = game.add.sprite(0,0,'portal');
 				this.tempStation.anchor.setTo(0.5,0.5);
 				this.tempStation.visible = false;
 				this.partswindow = game.add.sprite(-364,-132,'partswindow');
@@ -5042,10 +5044,10 @@ function create () {
 								hazePurple.alpha=1.0; //randomRange(0,0.6)-0.2;
 								hazePurple.blendMode=2;
 								hazePurple.speed=17;
-								station = game.add.sprite(0,0,'station');
+								station = game.add.sprite(0,0,'portal');
 								station.anchor.setTo(0.5,0.5)
 												asteroids.sort(lengthSort);
-								frob1 = game.add.sprite(-200,-200,'station');
+								frob1 = game.add.sprite(-200,-200,'portal2');
 								game.physics.enable(frob1, Phaser.Physics.ARCADE);
 								frob1.anchor.setTo(0.5,0.5);
 								frob1.visible=false;
