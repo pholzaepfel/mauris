@@ -140,7 +140,8 @@ var randomMission = function(){
 								if(boss > 0){
 												minSize = 6 + boss;
 												maxSize = 7 + boss;
-								}
+count = 1;								
+}
 								if(stronger > 0){
 												maxSize += stronger;
 								}
