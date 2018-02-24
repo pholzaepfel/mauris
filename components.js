@@ -899,7 +899,7 @@ target.thrustBehavior=cleanSmoke;
 	'id':64,
 	'drops':true,
 	'name':'Thermal Monitoring System',
-	'match':'84',
+	'match':'4682',
 	'flavor':'warns when in enemy sensor range',
 	'bonus':function(target){
 		target.profileShow=true;
