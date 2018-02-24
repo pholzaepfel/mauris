@@ -6958,7 +6958,7 @@ scaleFactor = 1;
 																				explosion.blendMode=1;
 
 explosion.rotation=randomRange(-180,180);															
-																game.physics.arcade.velocityFromRotation(explosion.rotation, randomRange(50,200), explosion.body.velocity);
+																game.physics.arcade.velocityFromRotation(explosion.rotation, randomRange(100,300), explosion.body.velocity);
 
 explosion.body.angularVelocity=randomRange(50,200)*randomSign()/r;
 																}
