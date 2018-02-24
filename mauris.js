@@ -4902,9 +4902,15 @@ function fadeIn () {
 				station.alpha=0;
 				ui.tempStation.alpha=0;
 				station.scale.setTo(1,1);
+				station.r=255;
+				station.g=255;
+				station.b=255;
+				station.alpha=1;
+												game.add.tween(station).to({r:0,g:0,b:0,alpha:1},30000, Phaser.Easing.Exponential.Out, true, 0, false);
 				game.add.tween(station).to({alpha:1},100, Phaser.Easing.Linear.None, true, 0, false);
 				game.add.tween(ui.tempStation).to({alpha:1},100, Phaser.Easing.Linear.None, true, 0, false);
 				station.rotation=randomRange(-180,180);
+				station.body.angularVelocity=randomRange(-10,10);
 				game.add.tween(station.scale).to({x:0,y:0}, 30000, Phaser.Easing.Linear.None,  true, 0, false);
 				var r = randomRange(3,4);
 				nebula.scale.setTo(r,r);
@@ -5050,6 +5056,7 @@ function create () {
 								hazePurple.speed=17;
 								station = game.add.sprite(0,0,'portal');
 								station.anchor.setTo(0.5,0.5)
+								game.physics.enable(station, Phaser.Physics.ARCADE);
 												asteroids.sort(lengthSort);
 								frob1 = game.add.sprite(-200,-200,'portal2');
 								game.physics.enable(frob1, Phaser.Physics.ARCADE);
