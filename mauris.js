@@ -131,6 +131,7 @@ var randomMission = function(){
 								maxSize = 9;
 								count = 1;
 								strength = 3;
+								loops = 0;
 								}else if(roll < 30){
 								minSize = 2;
 								maxSize = 3;
