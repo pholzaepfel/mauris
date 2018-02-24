@@ -4905,7 +4905,7 @@ function fadeIn () {
 				game.add.tween(station).to({alpha:1},100, Phaser.Easing.Linear.None, true, 0, false);
 				game.add.tween(ui.tempStation).to({alpha:1},100, Phaser.Easing.Linear.None, true, 0, false);
 				station.rotation=randomRange(-180,180);
-				game.add.tween(station.scale).to({x:0,y:0}, Phaser.Easing.Linear.Out, 5000, true, 0, false);
+				game.add.tween(station.scale).to({x:0,y:0}, 5000, Phaser.Easing.Linear.None,  true, 0, false);
 				var r = randomRange(3,4);
 				nebula.scale.setTo(r,r);
 				r = randomRange(3,6);
