@@ -6946,12 +6946,14 @@ scaleFactor = 1;
 																				if(Math.random()>0.5){explosion.rotation+=Math.PI};
 																				explosion.lifespan=Math.min(150);
 																				r=randomRange(0.6,0.8);
-																				explosion.body.velocity.x=randomRange(-200,200);
-																				explosion.body.velocity.y=randomRange(-200,200);
 																				explosion.scale.setTo(r*0.5*(4.0-i),0.5*r*r*(4.0-i));
 																				explosion.alpha=1.2;
 																				explosion.blendMode=1;
-explosion.rotation=randomRange(-180,180);																				explosion.body.angularVelocity=randomRange(50,200)*randomSign()/r;
+
+explosion.rotation=randomRange(-180,180);															
+																game.physics.arcade.velocityFromRotation(explosion.rotation, randomRange(50,200), explosion.body.velocity);
+
+explosion.body.angularVelocity=randomRange(50,200)*randomSign()/r;
 																}
 												}
 								}
