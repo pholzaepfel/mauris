@@ -110,8 +110,8 @@ var randomMission = function(){
 				}else{
 								rm.intro.push('asteroid density: extreme');
 				}
-				var enemyDensity=parseInt(randomRange(7*(playerStats.level+1),(14*(playerStats.level+1))));
-				if(asteroidDensity>50){enemyDensity=0};
+				var enemyDensity=parseInt(randomRange(5*(playerStats.level+1),(9*(playerStats.level+1))));
+				if(asteroidDensity>60){enemyDensity=0};
 				if(enemyDensity>0){
 								var s=  myfactions[0][0] + ' and ' + myfactions[1][0] + ' in area: \n';
 								if(enemyDensity>140){
@@ -134,14 +134,14 @@ var randomMission = function(){
 								if(enemyDensity>100){
 												var minSize = parseInt(randomRange(5,8));
 								}
-								var maxSize = parseInt(randomRange(0,1));
+								var maxSize = parseInt(randomRange(1,2));
 								var count = parseInt(randomRange(0,20/minSize));
 
 								if(count + totalEnemyCount > 30 && minSize < 7){
 												minSize+=2;
 								}
 								var strength = 0;
-								var maxCount = Math.pow((minSize+maxSize)/2,2);
+								var maxCount = Math.pow(maxSize,2);
 								maxCount = parseInt(enemyDensity/maxCount);
 								if(maxCount < 1){ 
 												count = 0;
@@ -150,7 +150,7 @@ var randomMission = function(){
 												count=maxCount;
 								}
 								if(count > 0){
-												strength=Math.pow(((minSize+maxSize)/2),2)*count;	
+												strength=Math.pow(maxSize,2)*count;	
 												enemyDensity-=strength;
 												var symmetry=randomRange(0.5,1.5);
 												rm.enemies.push(
