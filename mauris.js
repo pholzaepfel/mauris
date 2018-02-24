@@ -4902,11 +4902,11 @@ function fadeIn () {
 				station.alpha=0;
 				ui.tempStation.alpha=0;
 				station.scale.setTo(1,1);
-				station.r=255;
-				station.g=255;
-				station.b=255;
+				station.r=192;
+				station.g=192;
+				station.b=192;
 				station.alpha=1;
-												game.add.tween(station).to({r:0,g:0,b:0,alpha:1},30000, Phaser.Easing.Exponential.Out, true, 0, false);
+												game.add.tween(station).to({r:0,g:0,b:0,alpha:1},30000, Phaser.Easing.Linear.None, true, 0, false);
 				game.add.tween(station).to({alpha:1},100, Phaser.Easing.Linear.None, true, 0, false);
 				game.add.tween(ui.tempStation).to({alpha:1},100, Phaser.Easing.Linear.None, true, 0, false);
 				station.rotation=randomRange(-180,180);
