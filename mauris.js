@@ -123,25 +123,33 @@ var randomMission = function(){
 								var count = parseInt(randomRange(3,7));
 								var strength = count;
 								var roll = 0;
-								var loops = randomRange(0,(playerStats.level));
+								var loops = randomRange(playerStats.level/3,(playerStats.level));
+								var boss = 0;
+								var swarm = 0;
+								var stronger = 0;
 								for(var i=0;i<loops;i++){
 												roll = randomRange(0,100);
-												if(roll < 10){
-																minSize = 7;
-																maxSize = 9;
-																count = 1;
-																strength = 3;
-																loops = 0;
-												}else if(roll < 30){
-																minSize = 2;
-																maxSize = 3;
-																count = parseInt(randomRange(5,15));
-																strength = count / 2;
-												}else if(roll < 50){
-																minSize += 1;
-																maxSize += 1;
+												if(roll < 10) {
+																boss += 1;
+												}else if (roll < 30){
+																swarm += 1;
+												}else if (roll < 50){
+																stronger += 1;
 												}
 								}
+								if(boss > 0){
+												minSize = 6 + boss;
+												maxSize = 7 + boss;
+								}
+								if(stronger > 0){
+												maxSize += stronger;
+								}
+								if(swarm > 0){
+												count += swarm + Math.max(1,7/maxSize);
+								}
+								maxSize=Math.min(9,maxSize);
+								minSize=Math.min(maxSize,minSize);
+
 								if(count > 0){
 												enemyDensity-=strength;
 												var symmetry=randomRange(0.5,1.5);
