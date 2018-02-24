@@ -125,22 +125,25 @@ var randomMission = function(){
 								var roll = 0;
 								var loops = randomRange(1,1+playerStats.mission.level);
 								for(var i=0;i<loops;i++){
-								roll = randomRange(0,100);
-								if(roll < 10){
-								minSize = 7;
-								maxSize = 9;
-								count = 1;
-								strength = 3;
-								loops = 0;
-								}else if(roll < 30){
-								minSize = 2;
-								maxSize = 3;
-								count = parseInt(randomRange(5,15));
-								strength = count / 2;
-								}else if(roll < 50){
-									minSize += 1;
-									maxSize += 1;
-								}
+												roll = randomRange(0,100);
+												if(roll < 10){
+																minSize = 7;
+																maxSize = 9;
+																count = 1;
+																strength = 3;
+																loops = 0;
+																console.log('boss');
+												}else if(roll < 30){
+																minSize = 2;
+																maxSize = 3;
+																count = parseInt(randomRange(5,15));
+																strength = count / 2;
+																console.log('swarm');
+												}else if(roll < 50){
+																minSize += 1;
+																maxSize += 1;
+																console.log('grow');
+												}
 								}
 								if(count > 0){
 												enemyDensity-=strength;
@@ -2086,7 +2089,7 @@ mockPlayerShip.prototype.initPlayerShip = function (ship, x, y) {
 				this.sprite.r=255;
 				this.sprite.g=255;
 				this.sprite.b=255;
-								this.sprite.scale.setTo(mobileScaleFactor(),mobileScaleFactor());
+				this.sprite.scale.setTo(mobileScaleFactor(),mobileScaleFactor());
 				this.organicArmor=0;
 				this.TODO=0;
 				this.nextOre=0;
@@ -2181,7 +2184,7 @@ playerShip.prototype.initPlayerShip = function (ship,x,y) {
 				this.sprite.r=255;
 				this.sprite.g=255;
 				this.sprite.b=255;
-								this.sprite.scale.setTo(mobileScaleFactor(),mobileScaleFactor());
+				this.sprite.scale.setTo(mobileScaleFactor(),mobileScaleFactor());
 				this.organicArmor=0;
 				this.TODO=0;
 				this.nextOre=0;
@@ -4765,7 +4768,7 @@ function initMission (missionId) {
 				}else{
 								playerStats.mission = missions[missionId];
 								if(isAndroid){
-playerStats.mission.distantPlanet=true;
+												playerStats.mission.distantPlanet=true;
 								}
 				}
 				planet.scaleMission=randomRange(50,60);
@@ -6048,12 +6051,12 @@ function update () {
 												hazeRed.visible=true;
 								}
 
-if(isAndroid){
-hazePurple.visible = false;
-planetlod.visible=false;
-hazeWhite.alpha=1.0;
-hazeWhite.blendMode=0;
-}
+								if(isAndroid){
+												hazePurple.visible = false;
+												planetlod.visible=false;
+												hazeWhite.alpha=1.0;
+												hazeWhite.blendMode=0;
+								}
 
 								ui.update();
 
