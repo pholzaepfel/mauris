@@ -110,7 +110,7 @@ var randomMission = function(){
 				}else{
 								rm.intro.push('asteroid density: extreme');
 				}
-				var enemyDensity=parseInt(40,40+(5*(playerStats.level+1))));
+				var enemyDensity=parseInt(40,40+(5*(playerStats.level+1)));
 				if(asteroidDensity>60){enemyDensity=0};
 				if(enemyDensity>0){
 								var s=  '' + enemyDensity + ' - ' + myfactions[0][0] + ' and ' + myfactions[1][0] + ' in area: \n';
