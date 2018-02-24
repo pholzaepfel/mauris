@@ -5336,7 +5336,7 @@ function handleMission() {
 
 				if(onscreen(frob1.body.x, frob1.body.y)){
 					if(Math.random()<0.1){
-					rocketTrail(explosions, frob1.body.x, frob1.body.y,3,4);
+					portalGlow(explosions, frob1.body.x, frob1.body.y,3,4);
 					}
 				}
 
