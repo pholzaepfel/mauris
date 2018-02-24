@@ -110,44 +110,37 @@ var randomMission = function(){
 				}else{
 								rm.intro.push('asteroid density: extreme');
 				}
-				var enemyDensity=parseInt(randomRange(40,40+(5*(playerStats.level+1))));
+				var enemyDensity=randomRange(8,16);
 				if(asteroidDensity>60){enemyDensity=0};
 				if(enemyDensity>0){
-								var s=  '' + enemyDensity + ' - ' + myfactions[0][0] + ' and ' + myfactions[1][0] + ' in area: \n';
-								if(enemyDensity>140){
-												s+='extreme threat.';
-								}else if(enemyDensity>80){
-												s+='high threat.';
-								}else if(enemyDensity>40){
-												s+='moderate threat.';
-								}else if(enemyDensity>20){
-												s+='low threat.';
-								}else if(enemyDensity>0){
-												s+='minimal threat.';
-								}
+								var s=  '' + enemyDensity + ' - ' + myfactions[0][0] + ' and ' + myfactions[1][0] + ' in area \n';
 								rm.intro.push(s);
 				}
 				var totalEnemyCount = 0;
 				while(enemyDensity > 0){
 								var faction = randomFromArray(myfactions);
-								var minSize = parseInt(randomRange(2,5));
-								if(enemyDensity>100 && randomRange(0,1)<0.15){
-												var minSize = parseInt(randomRange(5,7));
+								var minSize = 2;
+								var maxSize = 5;
+								var count = parseInt(randomRange(3,7));
+								var strength = count;
+								var roll = 0;
+								var loops = randomRange(0,level/2);
+								for(var i=0;i<loops;i++){
+								roll = randomRange(0,50);
+								if(roll < 10){
+								minSize = 7;
+								maxSize = 9;
+								count = 1;
+								strength = 2;
+								}else if(roll < 30){
+								minSize = 2;
+								maxSize = 3;
+								count = parseInt(randomRange(5,15));
+								strength = count / 2;
+								}else if(roll < 50){
+									minSize += 1;
+									maxSize += 1;
 								}
-								var count = parseInt(randomRange(1,20/minSize));
-
-								if(count + totalEnemyCount > 30 && minSize < 5){
-												minSize+=2;
-								}
-								var maxSize = minSize;
-								var strength = 0;
-								var maxCount = Math.pow(maxSize,2);
-								maxCount = parseInt(enemyDensity/maxCount);
-								if(maxCount < 1){ 
-												count = 0;
-												enemyDensity = 0;
-								}else if(maxCount < count){
-												count=maxCount;
 								}
 								if(count > 0){
 												strength=Math.pow(maxSize,2)*count;	
