@@ -6933,7 +6933,7 @@ scaleFactor = 1;
 												explosion.lifespan=750;
 												var r = randomRange(0.5,1.7);
 												explosion.scale.setTo(r*scaleFactor,r*scaleFactor);
-												explosion.alpha=randomRange(1.1,1.3);
+												explosion.alpha=randomRange(0.7,0.9);
 												explosion.body.angularVelocity=randomRange(900,1200)*randomSign();
 												explosion.blendMode=1;
 												for(var i=0;i<4;i++){
