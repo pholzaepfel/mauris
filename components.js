@@ -5622,7 +5622,7 @@ target.thrustBehavior=cleanSmoke;
 	'id':448,
 	'drops':true,
 	'name':'Pirate CPU',
-	'match':'4',
+	'match':'482',
 	'flavor':'track an extra target, improves firerate',
 	'bonus':function(target){
 		target.fireRate*=0.8;
