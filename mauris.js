@@ -4082,7 +4082,7 @@ gameUI.prototype.radarPing = function() {
 								otherGraphics.blendMode=1;
 								otherGraphics.lineStyle(10, 0xFF0000, 0);
 								otherGraphics.moveTo(this.radar[i].x, this.radar[i].y);
-								otherGraphics.lineTo(this.radar[i].x, this.radar[i].y);
+								otherGraphics.lineTo(player.sprite.x,player.sprite.y);
 								this.toTop(this.radar[i]);
 				}
 }
