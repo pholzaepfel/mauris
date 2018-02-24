@@ -12,7 +12,9 @@ var messages =
 	'bugs are likely and common',
 	'aggressive behaviors are more likely to alert foes.\nif you\'re trying to make an escape, fire sparingly.',
 	'running is a viable solution.',
-	'smaller ships attract less attention, and\ncan dart out of trouble.'
+	'smaller ships attract less attention, and\ncan dart out of trouble.',
+	'enemy crew may escape from destroyed ships.\ncapture them for bonus xp... if you can',
+	'components give xp instead of attaching\nto your ship at max size.'
 ];
 
 var allLootableItems = function () {
