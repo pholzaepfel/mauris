@@ -116,7 +116,6 @@ var randomMission = function(){
 								var s=  '' + enemyDensity + ' - ' + myfactions[0][0] + ' and ' + myfactions[1][0] + ' in area \n';
 								rm.intro.push(s);
 				}
-				var totalEnemyCount = 0;
 				while(enemyDensity > 0){
 								var faction = randomFromArray(myfactions);
 								var minSize = 2;
@@ -143,7 +142,6 @@ var randomMission = function(){
 								}
 								}
 								if(count > 0){
-												strength=Math.pow(maxSize,2)*count;	
 												enemyDensity-=strength;
 												var symmetry=randomRange(0.5,1.5);
 												rm.enemies.push(
@@ -151,7 +149,7 @@ var randomMission = function(){
 																				'ships': drones,
 																				'parts': faction[1], 
 																				'sizeMin': minSize,
-																				'sizeMax': maxSize+minSize,
+																				'sizeMax': maxSize,
 																				'respawn':true,
 																				'count':count,
 																				'missionTarget':false,
@@ -159,7 +157,6 @@ var randomMission = function(){
 
 																				}
 																			 )
-																totalEnemyCount+=count;
 								}
 
 				}
