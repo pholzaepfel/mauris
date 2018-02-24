@@ -128,7 +128,7 @@ var randomMission = function(){
 								var swarm = 0;
 								var stronger = 0;
 								for(var i=0;i<loops;i++){
-												roll = randomRange(0,100);
+												roll = randomRange(0,150);
 												if(roll < 10) {
 																boss += 1;
 												}else if (roll < 30){
