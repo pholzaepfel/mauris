@@ -5334,6 +5334,12 @@ function handleMission() {
 								playerStats.mission.complete=true;
 				}
 
+				if(onscreen(frob1)){
+					if(Math.random()<0.1){
+					rocketTrail(explosions, frob1.sprite.body.x, frob1.sprite.body.y,3,4);
+					}
+				}
+
 				if((playerStats.mission.complete || playerStats.mission.win.condition=='frob') &&
 												game.physics.arcade.overlap(player.sprite,frob1))
 				{
@@ -6902,8 +6908,10 @@ function glow(explosionsGroup, x, y, bullet){
 								}
 				}
 }
-function rocketTrail(explosionsGroup, x, y, bullet){
-
+function rocketTrail(explosionsGroup, x, y, bullet, scaleFactor){
+if(typeof(scaleFactor)=='undefined'){
+scaleFactor = 1;
+}
 				if(onscreen(x,y)){
 
 								tinySmoke(explosionsGroup,x,y);
@@ -6925,7 +6933,7 @@ function rocketTrail(explosionsGroup, x, y, bullet){
 												explosion.lifespan=Math.min(250,bullet.lifespan);
 												var r = randomRange(0.5,1.7);
 												r*=(bullet.scale.x+bullet.scale.y)/2;
-												explosion.scale.setTo(r,r);
+												explosion.scale.setTo(r*scaleFactor,r*scaleFactor);
 												explosion.alpha=randomRange(0.7,0.9);
 												explosion.body.angularVelocity=randomRange(800,1200)*randomSign();
 												explosion.blendMode=1;
