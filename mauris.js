@@ -130,11 +130,11 @@ var randomMission = function(){
 				var totalEnemyCount = 0;
 				while(enemyDensity > 0){
 								var faction = randomFromArray(myfactions);
-								var minSize = parseInt(randomRange(2,8));
+								var minSize = parseInt(randomRange(2,5));
 								if(enemyDensity>100){
-												var minSize = parseInt(randomRange(5,8));
+												var minSize = parseInt(randomRange(3,7));
 								}
-								var maxSize = parseInt(randomRange(1,2));
+								var maxSize = parseInt(randomRange(1,2))+minSize;
 								var count = parseInt(randomRange(0,20/minSize));
 
 								if(count + totalEnemyCount > 30 && minSize < 7){
