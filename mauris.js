@@ -6892,7 +6892,7 @@ function glow(explosionsGroup, x, y, bullet){
 																explosion.body.velocity.x=bullet.body.velocity.x;
 																explosion.body.velocity.y=bullet.body.velocity.y;
 																explosion.scale.setTo(r*r*5.0*bullet.scale.y,r*r*5.0*bullet.scale.y);
-																explosion.alpha=bullet.alpha*0.7;
+																explosion.alpha=bullet.alpha*0.5;
 																explosion.blendMode=1;
 																explosion.body.angularVelocity=randomRange(50,200)*randomSign()/r;
 												}
