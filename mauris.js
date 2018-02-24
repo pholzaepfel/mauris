@@ -4079,6 +4079,10 @@ gameUI.prototype.radarPing = function() {
 								this.radar[i].setText(s);
 								this.radar[i].x = player.sprite.body.x + (0.5 * player.sprite.body.width) + Math.cos(targetAngle) * range;
 								this.radar[i].y = player.sprite.body.y + (0.5 * player.sprite.body.width) + Math.sin(targetAngle) * range;  
+								otherGraphics.blendMode=1;
+								otherGraphics.lineStyle(10, 0xFF0000, 0);
+								otherGraphics.moveTo(this.radar[i].x, this.radar[i].y);
+								otherGraphics.lineTo(this.radar[i].x, this.radar[i].y);
 								this.toTop(this.radar[i]);
 				}
 }
