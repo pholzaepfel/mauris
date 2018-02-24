@@ -1203,7 +1203,7 @@ function(tgt){
 },
 {
 	'id':84,
-	'drops':false,
+	'drops':true,
 	'name':'Crystalline Amplifier',
 	'match':'26',
 	'flavor':'increases the size of your shots',
@@ -1217,7 +1217,7 @@ function(tgt){
 },
 {
 	'id':85,
-	'drops':false,
+	'drops':true,
 	'name':'Crystalline Amplifier',
 	'match':'42',
 	'flavor':'increases the size of your shots',
@@ -1231,7 +1231,7 @@ function(tgt){
 },
 {
 	'id':86,
-	'drops':false,
+	'drops':true,
 	'name':'Collector Vine',
 	'match':'26',
 	'flavor':'--',
@@ -1242,7 +1242,7 @@ function(tgt){
 },
 {
 	'id':87,
-	'drops':false,
+	'drops':true,
 	'name':'Nutriment Tree',
 	'match':'42',
 	'flavor':'--',
@@ -1293,7 +1293,7 @@ function(tgt){
 },
 {
 	'id':90,
-	'drops':false,
+	'drops':true,
 	'name':'Green Reactor',
 	'match':'4682',
 	'flavor':'--',
@@ -1303,7 +1303,7 @@ function(tgt){
 },
 {
 	'id':91,
-	'drops':false,
+	'drops':true,
 	'name':'Extended Life Support',
 	'match':'4682',
 	'flavor':'--',
@@ -1824,7 +1824,7 @@ function(tgt){
 },
 {
 	'id':118,
-	'drops':false,
+	'drops':true,
 	'name':'Propelling Fruit',
 	'match':'86',
 	'flavor':'increase max velocity, slow acceleration',
@@ -1837,7 +1837,7 @@ function(tgt){
 },
 {
 	'id':119,
-	'drops':false,
+	'drops':true,
 	'name':'Roots',
 	'match':'84',
 	'flavor':'degrade opponent\'s acceleration',
@@ -1862,7 +1862,7 @@ function(tgt){
 },
 {
 	'id':120,
-	'drops':false,
+	'drops':true,
 	'name':'Annihilator Trebuchet',
 	'match':'6',
 	'flavor':'spiraling shots',
@@ -1915,7 +1915,7 @@ function(tgt){
 },
 {
 	'id':121,
-	'drops':false,
+	'drops':true,
 	'name':'Spear of Destiny',
 	'match':'4',
 	'flavor':'shots pierce enemies',
@@ -1947,23 +1947,15 @@ function(tgt){
 	'drops':false,
 	'name':'Orb of Damage',
 	'match':'8',
-	'flavor':'no aiming required',
+	'flavor':'aiming required',
 	'bonus':function(target){
-		target.bulletBehavior.push(
-				function(bullet){
-				bullet.body.velocity.x=0;
-				bullet.body.velocity.y=0;
-				bullet.alpha=0;
-				game.add.tween(bullet.scale).to({x:bullet.lifespan/20,y:bullet.lifespan/20},bullet.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
-
-				}
-				);
+		target.TODO+=1;
 	}	
 
 },
 {
 	'id':123,
-	'drops':false,
+	'drops':true,
 	'name':'Heisenberg Turbine',
 	'match':'46',
 	'flavor':'indeterminate position in combat',
@@ -2463,7 +2455,7 @@ target.effects=function(){
 },
 {
 	'id':156,
-	'drops':false,
+	'drops':true,
 	'name':'Worn Armor Plating',
 	'match':'26',
 	'flavor':'heavy armor, increases mass',
@@ -2475,7 +2467,7 @@ target.effects=function(){
 },
 {
 	'id':157,
-	'drops':false,
+	'drops':true,
 	'name':'Worn Armor Plating',
 	'match':'42',
 		'flavor':'heavy armor, increases mass',
@@ -2551,7 +2543,7 @@ target.effects=function(){
 },
 {
 	'id':163,
-	'drops':false,
+	'drops':true,
 	'name':'Refuse Cannon',
 	'match':'482',
 	'flavor':'Spew scattering refuse at targets',
