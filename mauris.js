@@ -123,7 +123,7 @@ var randomMission = function(){
 								var count = parseInt(randomRange(3,7));
 								var strength = count;
 								var roll = 0;
-								var loops = randomRange(1,1+playerStats.mission.level);
+								var loops = randomRange(1,1+(playerStats.level/2));
 								for(var i=0;i<loops;i++){
 												roll = randomRange(0,100);
 												if(roll < 10){
@@ -132,17 +132,14 @@ var randomMission = function(){
 																count = 1;
 																strength = 3;
 																loops = 0;
-																console.log('boss');
 												}else if(roll < 30){
 																minSize = 2;
 																maxSize = 3;
 																count = parseInt(randomRange(5,15));
 																strength = count / 2;
-																console.log('swarm');
 												}else if(roll < 50){
 																minSize += 1;
 																maxSize += 1;
-																console.log('grow');
 												}
 								}
 								if(count > 0){
