@@ -5336,7 +5336,7 @@ function handleMission() {
 
 				if(onscreen(frob1.body.x, frob1.body.y)){
 					if(Math.random()<0.2){
-					portalGlow(explosions, frob1.x, frob1.y,3,randomRange(4,8));
+					portalGlow(explosions, frob1.x, frob1.y,3,randomRange(6,8));
 					}
 				}
 
