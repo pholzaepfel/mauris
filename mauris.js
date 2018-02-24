@@ -5334,7 +5334,7 @@ function handleMission() {
 								playerStats.mission.complete=true;
 				}
 
-				if(onscreen(frob1)){
+				if(onscreen(frob1.sprite.body.x, frob1.sprite.body.y)){
 					if(Math.random()<0.1){
 					rocketTrail(explosions, frob1.sprite.body.x, frob1.sprite.body.y,3,4);
 					}
