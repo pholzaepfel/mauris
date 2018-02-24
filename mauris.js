@@ -4084,6 +4084,7 @@ gameUI.prototype.radarPing = function() {
 								otherGraphics.moveTo(this.radar[i].x, this.radar[i].y);
 								otherGraphics.lineTo(player.sprite.x,player.sprite.y);
 								this.toTop(this.radar[i]);
+				this.toTop(otherGraphics);
 				}
 }
 //follow this with a push!
