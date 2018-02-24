@@ -6908,6 +6908,52 @@ function glow(explosionsGroup, x, y, bullet){
 								}
 				}
 }
+function portalGlow(explosionsGroup, x, y, btype, scaleFactor){
+if(typeof(scaleFactor)=='undefined'){
+scaleFactor = 1;
+}
+				if(onscreen(x,y)){
+
+								var vel = randomRange(25,125)/1000;
+								var r = Math.random();
+
+								if(forceDead(explosionsGroup)){
+												var explosion = explosionsGroup.getFirstDead();
+												killTweensFromExplosion(explosion);
+												explosion.animations.play(bulletTypeName(btype));
+												var adjRotation =  randomRange(-0.2,0.2);
+												explosion.reset(x,y);
+												explosion.rotation = Math.random()*Math.PI;
+												explosion.body.velocity.x=randomRange(-100,100);
+												explosion.body.velocity.y=randomRange(-100,100);
+												explosion.lifespan=250;
+												var r = randomRange(0.5,1.7);
+												explosion.scale.setTo(r*scaleFactor,r*scaleFactor);
+												explosion.alpha=randomRange(0.7,0.9);
+												explosion.body.angularVelocity=randomRange(800,1200)*randomSign();
+												explosion.blendMode=1;
+												for(var i=0;i<4;i++){
+																if(forceDead(explosionsGroup)){
+																				explosion = explosionsGroup.getFirstDead();
+																				killTweensFromExplosion(explosion);
+																				explosion.animations.play(bulletTypeName( btype));
+																				explosion.reset(x,y);
+																				explosion.rotation = randomRange(-0.5,0.5);//bullet.rotation+Math.PI;
+																				if(Math.random()>0.5){explosion.rotation+=Math.PI};
+																				explosion.lifespan=Math.min(150);
+																				r=randomRange(0.6,0.8);
+																				explosion.body.velocity.x=randomRange(-100,100);
+																				explosion.body.velocity.y=randomRange(-100,100);
+																				explosion.scale.setTo(r*0.5*(4.0-i),0.5*r*r*(4.0-i));
+																				explosion.alpha=1*Math.pow(0.9,i);
+																				explosion.blendMode=1;
+																				explosion.body.angularVelocity=randomRange(50,200)*randomSign()/r;
+																}
+												}
+								}
+				}
+}
+
 function rocketTrail(explosionsGroup, x, y, bullet, scaleFactor){
 if(typeof(scaleFactor)=='undefined'){
 scaleFactor = 1;
