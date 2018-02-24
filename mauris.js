@@ -123,7 +123,7 @@ var randomMission = function(){
 								var count = parseInt(randomRange(3,7));
 								var strength = count;
 								var roll = 0;
-								var loops = randomRange(0,playerStats.mission.level/2);
+								var loops = randomRange(1,1+playerStats.mission.level);
 								for(var i=0;i<loops;i++){
 								roll = randomRange(0,100);
 								if(roll < 10){
