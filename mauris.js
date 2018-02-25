@@ -763,12 +763,12 @@ function headlight(){
 				lightSpot={x:player.sprite.body.x+(player.sprite.body.width*0.5)+(Math.cos(player.sprite.rotation)*((player.sprite.body.width*0.5)-lightPosition(player.ship))),y:player.sprite.body.y+(player.sprite.body.width*0.5)+(Math.sin(player.sprite.rotation)*((player.sprite.body.width*0.5)-lightPosition(player.ship)))};
 				headlightGlow(explosions,lightSpot.x,lightSpot.y);
 				otherGraphics.blendMode=1;
-				otherGraphics.lineStyle(10, 0xFFFFFF, 0);
+				otherGraphics.lineStyle(3, 0xFFFFFF, 0);
 				if(gamemode=='paused'){
 								lightSpot.x-=player.sprite.body.velocity.x * game.time.physicsElapsed;
 								lightSpot.y-=player.sprite.body.velocity.y * game.time.physicsElapsed;
 				}
-				for(var i=0.90;i>0.50;i-=0.03){
+				for(var i=0.90;i>0.50;i-=0.01){
 								otherGraphics.beginFill(0xFFFFFF,0.00625*headlightIntensity);
 								otherGraphics.moveTo(lightSpot.x,lightSpot.y);
 								otherGraphics.lineTo(lightSpot.x+Math.cos(player.sprite.rotation - i)*2*Math.max(resolutionY,resolutionX),lightSpot.y+Math.sin(player.sprite.rotation - i)*2*Math.max(resolutionY,resolutionX));
