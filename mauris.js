@@ -1251,7 +1251,8 @@ shipPart.prototype.update = function(){
 								lightness2 = lightness2+1; //(lightness + lightness2)/-2;
 								lightness2 /= 2;
 								lightness=lightness+(lightness2*lightnessAngle*headlightIntensity*1.5)+0.3;
-								lightness/=2;
+lightness=Math.pow(lightness,2);
+								lightness/=4;
 								lightness=Math.max(lightness,0.2);
 								this.sprite.alpha=this.target.alpha;
 								if(this.sprite.alpha==1 && lightness > 1){
