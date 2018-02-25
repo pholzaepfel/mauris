@@ -194,7 +194,7 @@ count = 1;
 												'ships': questionContainers,
 												'respawn':false,
 												'count':parseInt(randomRange(1,5)), 
-												'missionTarget':true
+												'missionTarget':false
 												}
 
 											 );
