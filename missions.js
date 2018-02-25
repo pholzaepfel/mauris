@@ -201,7 +201,7 @@ var missions = [
 		'sizeMin': 7,
 		'sizeMax': 7,
 		'respawn':false,
-		'missionTarget':true,
+		'missionTarget':false,
 		'count':1, 
 		'deaths':[]
 	},
@@ -320,7 +320,7 @@ var missions = [
 'symmetry': 1,
 			'respawn':false,
 			'count':3, 
-			'missionTarget':true
+			'missionTarget':false
 		}
 	]
 
@@ -751,7 +751,7 @@ var missions = [
 'symmetry': 1,
 				'respawn':false,
 				'count':3, 
-				'missionTarget':true
+				'missionTarget':false
 			}
 
 		]
