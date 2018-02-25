@@ -763,12 +763,12 @@ function headlight(){
 				lightSpot={x:player.sprite.body.x+(player.sprite.body.width*0.5)+(Math.cos(player.sprite.rotation)*((player.sprite.body.width*0.5)-lightPosition(player.ship))),y:player.sprite.body.y+(player.sprite.body.width*0.5)+(Math.sin(player.sprite.rotation)*((player.sprite.body.width*0.5)-lightPosition(player.ship)))};
 				headlightGlow(explosions,lightSpot.x,lightSpot.y);
 				otherGraphics.blendMode=1;
-				otherGraphics.lineStyle(3, 0xFFFFFF, 0);
+				otherGraphics.lineStyle(10, 0xFFFFFF, 0);
 				if(gamemode=='paused'){
 								lightSpot.x-=player.sprite.body.velocity.x * game.time.physicsElapsed;
 								lightSpot.y-=player.sprite.body.velocity.y * game.time.physicsElapsed;
 				}
-				for(var i=0.90;i>0.50;i-=0.01){
+				for(var i=0.90;i>0.50;i-=0.03){
 								otherGraphics.beginFill(0xFFFFFF,0.00625*headlightIntensity);
 								otherGraphics.moveTo(lightSpot.x,lightSpot.y);
 								otherGraphics.lineTo(lightSpot.x+Math.cos(player.sprite.rotation - i)*2*Math.max(resolutionY,resolutionX),lightSpot.y+Math.sin(player.sprite.rotation - i)*2*Math.max(resolutionY,resolutionX));
@@ -1251,8 +1251,7 @@ shipPart.prototype.update = function(){
 								lightness2 = lightness2+1; //(lightness + lightness2)/-2;
 								lightness2 /= 2;
 								lightness=lightness+(lightness2*lightnessAngle*headlightIntensity*1.5)+0.3;
-lightness=Math.pow(lightness,2);
-								lightness/=4;
+								lightness/=2;
 								lightness=Math.max(lightness,0.2);
 								this.sprite.alpha=this.target.alpha;
 								if(this.sprite.alpha==1 && lightness > 1){
