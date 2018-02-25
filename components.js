@@ -2990,7 +2990,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'id':198,
 	'drops':true,
 	'name':'Spine',
-	'match':'4682',
+	'match':'26',
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3000,7 +3000,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'id':199,
 	'drops':true,
 	'name':'Spine',
-	'match':'4682',
+	'match':'42',
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3010,7 +3010,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'id':200,
 	'drops':true,
 	'name':'Batlike Wing',
-	'match':'4682',
+	'match':'26',
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3020,7 +3020,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'id':201,
 	'drops':true,
 	'name':'Batlike Wing',
-	'match':'4682',
+	'match':'42',
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3030,7 +3030,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'id':202,
 	'drops':true,
 	'name':'Ascended Watcher',
-	'match':'4682',
+	'match':'26',
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3041,7 +3041,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'id':203,
 	'drops':true,
 	'name':'Ascended Watcher',
-	'match':'4682',
+	'match':'42',
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3052,7 +3052,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'id':204,
 	'drops':true,
 	'name':'Ascended Watcher',
-	'match':'4682',
+	'match':'26',
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3063,7 +3063,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'id':205,
 	'drops':true,
 	'name':'Ascended Watcher',
-	'match':'4682',
+	'match':'42',
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3074,7 +3074,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'id':206,
 	'drops':true,
 	'name':'Enterprising Violation',
-	'match':'4682',
+	'match':'26',
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3085,7 +3085,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'id':207,
 	'drops':true,
 	'name':'Enterprising Violation',
-	'match':'4682',
+	'match':'42',
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3095,7 +3095,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'id':208,
 	'drops':true,
 	'name':'Augmentor',
-	'match':'4682',
+	'match':'26',
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3106,7 +3106,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'id':209,
 	'drops':true,
 	'name':'Augmentor',
-	'match':'4682',
+	'match':'42',
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3117,7 +3117,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'id':210,
 	'drops':true,
 	'name':'Newguy',
-	'match':'4682',
+	'match':'26',
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3128,7 +3128,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'id':211,
 	'drops':true,
 	'name':'Newguy',
-	'match':'4682',
+	'match':'42',
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3139,7 +3139,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'id':212,
 	'drops':true,
 	'name':'Newguy',
-	'match':'4682',
+	'match':'26',
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3150,7 +3150,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'id':213,
 	'drops':true,
 	'name':'Newguy',
-	'match':'4682',
+	'match':'42',
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3161,7 +3161,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'id':214,
 	'drops':true,
 	'name':'Meeb',
-	'match':'4682',
+	'match':'26',
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3172,7 +3172,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'id':215,
 	'drops':true,
 	'name':'Meeb',
-	'match':'4682',
+	'match':'42',
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3322,7 +3322,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'id':230,
 	'drops':true,
 	'name':'Spine',
-	'match':'4682',
+	'match':'86',
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3332,7 +3332,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'id':231,
 	'drops':true,
 	'name':'Spine',
-	'match':'4682',
+	'match':'84',
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3342,7 +3342,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'id':232,
 	'drops':true,
 	'name':'Batlike Wing',
-	'match':'4682',
+	'match':'86',
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3352,7 +3352,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'id':233,
 	'drops':true,
 	'name':'Batlike Wing',
-	'match':'4682',
+	'match':'84',
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3362,7 +3362,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'id':234,
 	'drops':true,
 	'name':'Ascended Watcher',
-	'match':'4682',
+	'match':'86',
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3373,7 +3373,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'id':235,
 	'drops':true,
 	'name':'Ascended Watcher',
-	'match':'4682',
+	'match':'84',
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3384,7 +3384,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'id':236,
 	'drops':true,
 	'name':'Ascended Watcher',
-	'match':'4682',
+	'match':'86',
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3395,7 +3395,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'id':237,
 	'drops':true,
 	'name':'Ascended Watcher',
-	'match':'4682',
+	'match':'84',
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3406,7 +3406,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'id':238,
 	'drops':true,
 	'name':'Enterprising Violation',
-	'match':'4682',
+	'match':'86',
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3417,7 +3417,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'id':239,
 	'drops':true,
 	'name':'Enterprising Violation',
-	'match':'4682',
+	'match':'84',
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3427,7 +3427,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'id':240,
 	'drops':true,
 	'name':'Augmentor',
-	'match':'4682',
+	'match':'86',
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3438,7 +3438,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'id':241,
 	'drops':true,
 	'name':'Augmentor',
-	'match':'4682',
+	'match':'84',
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3449,7 +3449,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'id':242,
 	'drops':true,
 	'name':'Newguy',
-	'match':'4682',
+	'match':'86',
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3460,7 +3460,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'id':243,
 	'drops':true,
 	'name':'Newguy',
-	'match':'4682',
+	'match':'84',
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3471,7 +3471,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'id':244,
 	'drops':true,
 	'name':'Newguy',
-	'match':'4682',
+	'match':'86',
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3482,7 +3482,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'id':245,
 	'drops':true,
 	'name':'Newguy',
-	'match':'4682',
+	'match':'84',
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3493,7 +3493,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'id':246,
 	'drops':true,
 	'name':'Meeb',
-	'match':'4682',
+	'match':'86',
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3502,9 +3502,9 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 },
 {
 	'id':247,
-	'drops':false,
-	'name':'Component247',
-	'match':'4682',
+	'drops':true,
+	'name':'Meeb',
+	'match':'84',
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -3838,12 +3838,12 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	
 	{
 	'id':279,
-	'drops':false,
-	'name':'Component-279',
+	'drops':true,
+	'name':'Meeb',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
-
+		target.TODO+=1;
 	}
 },
 {
