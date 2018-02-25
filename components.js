@@ -1,704 +1,704 @@
 var cmp = [
-{	
-	'id':0, 
+	{	
+		'id':0, 
 		'drops':false,
 		'name':'Component0',
 		'match':'4682',
 		'flavor':'-',
 		'bonus':function(target){}
-},
-{
-	'id':1,
-	'drops':true,
-	'name':'Rusted Wing',
-	'match':'62',
-	'flavor':'improves maneuverability',
-	'bonus':function(target){
-		target.turnRate+=0.3;
-		target.acceleration+=0.3;
-		target.sprite.body.maxVelocity.x+=15;
-		target.sprite.body.maxVelocity.y+=15;
-	}
-},
-{
-	'id':2,
-	'drops':true,
-	'name':'Ancient Railgun',
-	'match':'46',
-	'flavor':'fires long-ranged slugs, slow rate of fire',
-	'bonus':function(target){
-		target.bulletSprite=3;
-		target.fireEnergy+=3;
-		target.fireRange+=1000;
-		target.fireDamage+=4;
-		target.fireSound=ui.sound_bullet;
-		target.bulletBehavior.push(function(bullet){
+	},
+	{
+		'id':1,
+		'drops':true,
+		'name':'Rusted Wing',
+		'match':'62',
+		'flavor':'improves maneuverability',
+		'bonus':function(target){
+			target.turnRate+=0.3;
+			target.acceleration+=0.3;
+			target.sprite.body.maxVelocity.x+=15;
+			target.sprite.body.maxVelocity.y+=15;
+		}
+	},
+	{
+		'id':2,
+		'drops':true,
+		'name':'Ancient Railgun',
+		'match':'46',
+		'flavor':'fires long-ranged slugs, slow rate of fire',
+		'bonus':function(target){
+			target.bulletSprite=3;
+			target.fireEnergy+=3;
+			target.fireRange+=1000;
+			target.fireDamage+=4;
+			target.fireSound=ui.sound_bullet;
+			target.bulletBehavior.push(function(bullet){
 				bullet.scale.setTo(2,bullet.scale.y);
-				});
-		target.sprite.profile+=25;
-	}
-},
-{
-	'id':3,
-	'drops':true,
-	'name':'Capacitor Unit',
-	'match':'4682',
-	'flavor':'basic energy storage',
-	'bonus':function(target){
-		target.energyMax+=6;
-	}
-},
-{
-	'id':4,
-	'drops':true,
-	'name':'VariJet',
-	'match':'862',
-	'flavor':'press [Z] to rocket backwards',
-	'bonus':function(target){
-		target.turnRate+=0.3;
-		target.acceleration+=0.2;
-		target.altCheck=function(){
-			var ret = false;
-			this.energyReserve=0;
-			var targetDistance = game.physics.arcade.distanceBetween(this.sprite, this.target);
-			var targetAngle = game.physics.arcade.angleBetween(this.target, this.sprite);
-
-			if(targetDistance < 800 && this.altCooldown < game.time.now + 5000){
-				this.energyReserve=6;
-			}
-			if(targetDistance < 250 && targetDistance < this.fireRange / 2)
-			{
-				ret = true;
-			}
-			return ret;
+			});
+			target.sprite.profile+=25;
 		}
+	},
+	{
+		'id':3,
+		'drops':true,
+		'name':'Capacitor Unit',
+		'match':'4682',
+		'flavor':'basic energy storage',
+		'bonus':function(target){
+			target.energyMax+=6;
+		}
+	},
+	{
+		'id':4,
+		'drops':true,
+		'name':'VariJet',
+		'match':'862',
+		'flavor':'press [Z] to rocket backwards',
+		'bonus':function(target){
+			target.turnRate+=0.3;
+			target.acceleration+=0.2;
+			target.altCheck=function(){
+				var ret = false;
+				this.energyReserve=0;
+				var targetDistance = game.physics.arcade.distanceBetween(this.sprite, this.target);
+				var targetAngle = game.physics.arcade.angleBetween(this.target, this.sprite);
 
-		target.alt=function(){
-			if(this.altCooldown<game.time.now && this.takeEnergy(6)){
-				ui.sound_plasma.play();
-				this.altCooldown=game.time.now+1000;
-				this.sprite.body.velocity.x=Math.cos(this.sprite.rotation+Math.PI)*this.sprite.body.maxVelocity.x;
-				this.sprite.body.velocity.y=Math.sin(this.sprite.rotation+Math.PI)*this.sprite.body.maxVelocity.y;
-				this.speed=0.01;
+				if(targetDistance < 800 && this.altCooldown < game.time.now + 5000){
+					this.energyReserve=6;
+				}
+				if(targetDistance < 250 && targetDistance < this.fireRange / 2)
+				{
+					ret = true;
+				}
+				return ret;
+			}
+
+			target.alt=function(){
+				if(this.altCooldown<game.time.now && this.takeEnergy(6)){
+					ui.sound_plasma.play();
+					this.altCooldown=game.time.now+1000;
+					this.sprite.body.velocity.x=Math.cos(this.sprite.rotation+Math.PI)*this.sprite.body.maxVelocity.x;
+					this.sprite.body.velocity.y=Math.sin(this.sprite.rotation+Math.PI)*this.sprite.body.maxVelocity.y;
+					this.speed=0.01;
+				}
 			}
 		}
-	}
-},
-{
-	'id':5,
-	'drops':true,
-	'name':'Overpowered Burst Laser',
-	'match':'4',
-	'flavor':'flashy and attracts attention',
-	'bonus':function(target){
-		target.fireVelocity+=200;
-		target.fireSound=ui.sound_pew1;
-		target.bulletSprite=3;
-		target.sprite.profile+=50;
-		target.fireEnergy+=2;
-		target.fireDamage+=3;
-		target.fireRate=10;
-		target.profileOnFire=false;
-		target.firingSolution=laserFiringSolution;
-		target.bulletBehavior=[(function(bullet){
-				
+	},
+	{
+		'id':5,
+		'drops':true,
+		'name':'Overpowered Burst Laser',
+		'match':'4',
+		'flavor':'flashy and attracts attention',
+		'bonus':function(target){
+			target.fireVelocity+=200;
+			target.fireSound=ui.sound_pew1;
+			target.bulletSprite=3;
+			target.sprite.profile+=50;
+			target.fireEnergy+=2;
+			target.fireDamage+=3;
+			target.fireRate=10;
+			target.profileOnFire=false;
+			target.firingSolution=laserFiringSolution;
+			target.bulletBehavior=[(function(bullet){
+
 				laserBulletBehavior(bullet,parseInt(randomRange(4,7)),randomRange(0.3,1.8),0xCB40AB,0xFF60ED,0xFFFFFF,22,function(){});
 
 
-		})];
+			})];
 
 
-	}
-},
-{
-	'id':6,
-	'drops':false,
-	'name':'Alien Pustule',
-	'match':'26',
-	'flavor':'crippling but tough',
-	'bonus':function(target){
-		target.health+=4;
-		target.turnRate-=0.1;
-		target.sprite.body.maxVelocity.x-=10;
-		target.sprite.body.maxVelocity.y-=10;
-		target.sprite.profile+=10;
-	}
-},
-{
-	'id':7,
-	'drops':false,
-	'name':'Alien Pustule',
-	'match':'42',
-	'flavor':'crippling but tough',
-	'bonus':function(target){
-		target.health+=4;
-		target.turnRate-=0.1;
-		target.sprite.body.maxVelocity.x-=10;
-		target.sprite.body.maxVelocity.y-=10;
-		target.sprite.profile+=10;
-	}
-},
-{
-	'id':8,
-	'drops':true,
-	'name':'Shield Generator',
-	'match':'2',
-	'flavor':'press [Z] for invincibility',
-	'bonus':function(target){
-		target.altCheck=function(){
-			var ret = false;
-			this.energyReserve=0;
-			var targetDistance = game.physics.arcade.distanceBetween(this.sprite, this.target);
-			var targetAngle = game.physics.arcade.angleBetween(this.target, this.sprite);
-
-			if(targetDistance < 1600 && this.altCooldown < game.time.now + 5000){
-				this.energyReserve=this.energyMax*0.3;
-			}
-			if(targetDistance < (target.fireRange * 0.001 * target.fireVelocity) && Math.abs(compareAngles(this.target.rotation, targetAngle))<0.6)
-			{
-				ret = true;
-			}
-			return ret;
 		}
-		target.alt=function(){
-			if(game.time.now > this.altCooldown && this.takeEnergy(0.8)){				
-				ui.sound_boop.play();
-				this.shieldCooldown=game.time.now+100;
-				this.altCooldown=game.time.now+100;
-				this.shield=true;
-				shieldEffect(explosions, 4, this.sprite.x, this.sprite.y, this.sprite.body.velocity.x, this.sprite.body.velocity.y, this.ship.length);
+	},
+	{
+		'id':6,
+		'drops':false,
+		'name':'Alien Pustule',
+		'match':'26',
+		'flavor':'crippling but tough',
+		'bonus':function(target){
+			target.health+=4;
+			target.turnRate-=0.1;
+			target.sprite.body.maxVelocity.x-=10;
+			target.sprite.body.maxVelocity.y-=10;
+			target.sprite.profile+=10;
+		}
+	},
+	{
+		'id':7,
+		'drops':false,
+		'name':'Alien Pustule',
+		'match':'42',
+		'flavor':'crippling but tough',
+		'bonus':function(target){
+			target.health+=4;
+			target.turnRate-=0.1;
+			target.sprite.body.maxVelocity.x-=10;
+			target.sprite.body.maxVelocity.y-=10;
+			target.sprite.profile+=10;
+		}
+	},
+	{
+		'id':8,
+		'drops':true,
+		'name':'Shield Generator',
+		'match':'2',
+		'flavor':'press [Z] for invincibility',
+		'bonus':function(target){
+			target.altCheck=function(){
+				var ret = false;
+				this.energyReserve=0;
+				var targetDistance = game.physics.arcade.distanceBetween(this.sprite, this.target);
+				var targetAngle = game.physics.arcade.angleBetween(this.target, this.sprite);
+
+				if(targetDistance < 1600 && this.altCooldown < game.time.now + 5000){
+					this.energyReserve=this.energyMax*0.3;
+				}
+				if(targetDistance < (target.fireRange * 0.001 * target.fireVelocity) && Math.abs(compareAngles(this.target.rotation, targetAngle))<0.6)
+				{
+					ret = true;
+				}
+				return ret;
+			}
+			target.alt=function(){
+				if(game.time.now > this.altCooldown && this.takeEnergy(0.8)){				
+					ui.sound_boop.play();
+					this.shieldCooldown=game.time.now+100;
+					this.altCooldown=game.time.now+100;
+					this.shield=true;
+					shieldEffect(explosions, 4, this.sprite.x, this.sprite.y, this.sprite.body.velocity.x, this.sprite.body.velocity.y, this.ship.length);
+				}
 			}
 		}
-	}
-},
-{
-	'id':9,
-	'drops':true,
-	'name':'Mineral Scanner',
-	'match':'2',
-	'flavor':'track more enemies and find more loot',
-	'bonus':function(target){
-		target.radarTargets+=2;
-		target.dropRate+=0.008;
-	}
-},
-{
-	'id':10,
-	'drops':true,
-	'name':'Fusion Core',
-	'match':'26',
-	'flavor':'improves recharge speed and maneuverability',
-	'bonus':function(target){
-		target.energyMax+=2;
-		target.energyAmount+=1;
-		target.acceleration+=0.2;
-		target.turnRate+=0.1;
-	}
-},
-{
-	'id':11,
-	'drops':true,
-	'name':'Fusion Core',
-	'match':'42',
-	'flavor':'improves recharge speed and maneuverability',
-	'bonus':function(target){
-		target.energyMax+=2;
-		target.energyAmount+=1;
-		target.acceleration+=0.2;
-		target.turnRate+=0.1;
-	}
-},
-{
-	'id':12,
-	'drops':true,
-	'name':'Xenoform Reactor',
-	'match':'6',
-	'flavor':'hums with power. very valuable',
-	'bonus':function(target){
-		target.energyAmount+=2;
-		target.sprite.profile+=100;
-	}
-},
-{
-	'id':13,
-	'drops':true,
-	'name':'Fusion Bolt Cannon',
-	'match':'4',
-	'flavor':'covered in warnings in multiple languages',
-	'bonus':function(target){
-		target.bulletSprite=5; 
-		target.fireDamage*=2;
-		target.fireEnergy*=1.75;
-		target.fireSound=ui.sound_boom2;
-		target.fireRate*=1.5;
-		target.sprite.profile+=200;
-		target.bulletBehavior.push(function(bullet){
+	},
+	{
+		'id':9,
+		'drops':true,
+		'name':'Mineral Scanner',
+		'match':'2',
+		'flavor':'track more enemies and find more loot',
+		'bonus':function(target){
+			target.radarTargets+=2;
+			target.dropRate+=0.008;
+		}
+	},
+	{
+		'id':10,
+		'drops':true,
+		'name':'Fusion Core',
+		'match':'26',
+		'flavor':'improves recharge speed and maneuverability',
+		'bonus':function(target){
+			target.energyMax+=2;
+			target.energyAmount+=1;
+			target.acceleration+=0.2;
+			target.turnRate+=0.1;
+		}
+	},
+	{
+		'id':11,
+		'drops':true,
+		'name':'Fusion Core',
+		'match':'42',
+		'flavor':'improves recharge speed and maneuverability',
+		'bonus':function(target){
+			target.energyMax+=2;
+			target.energyAmount+=1;
+			target.acceleration+=0.2;
+			target.turnRate+=0.1;
+		}
+	},
+	{
+		'id':12,
+		'drops':true,
+		'name':'Xenoform Reactor',
+		'match':'6',
+		'flavor':'hums with power. very valuable',
+		'bonus':function(target){
+			target.energyAmount+=2;
+			target.sprite.profile+=100;
+		}
+	},
+	{
+		'id':13,
+		'drops':true,
+		'name':'Fusion Bolt Cannon',
+		'match':'4',
+		'flavor':'covered in warnings in multiple languages',
+		'bonus':function(target){
+			target.bulletSprite=5; 
+			target.fireDamage*=2;
+			target.fireEnergy*=1.75;
+			target.fireSound=ui.sound_boom2;
+			target.fireRate*=1.5;
+			target.sprite.profile+=200;
+			target.bulletBehavior.push(function(bullet){
 				bullet.scale.setTo(bullet.scale.x+.1,bullet.scale.y+.1);
-				});
-	}
-},
-{
-	'id':14,
-	'drops':false,
-	'name':'Asteroid',
-	'match':'26',
-	'flavor':'-',
-	'bonus':function(target){
-		target.ai=aiModes['asteroidInit'];
-	}
-},
-{
-	'id':15,
-	'drops':false,
-	'name':'Asteroid',
-	'match':'42',
-	'flavor':'-',
-	'bonus':function(target){
-
-		target.ai=aiModes['asteroidInit'];
-	}
-},
-{
-	'id':16,
-	'drops':false,
-	'name':'Asteroid',
-	'match':'86',
-	'flavor':'-',
-	'bonus':function(target){
-		target.ai=aiModes['asteroidInit'];
-
-	}
-},
-{
-	'id':17,
-	'drops':false,
-	'name':'Asteroid',
-	'match':'84',
-	'flavor':'-',
-	'bonus':function(target){
-		target.ai=aiModes['asteroidInit'];
-
-	}
-},
-{
-	'id':18,
-	'drops':false,
-	'name':'Asteroid',
-	'match':'26',
-	'flavor':'-',
-	'bonus':function(target){
-		target.ai=aiModes['asteroidInit'];
-
-	}
-},
-{
-	'id':19,
-	'drops':false,
-	'name':'Asteroid',
-	'match':'42',
-	'flavor':'-',
-	'bonus':function(target){
-		target.ai=aiModes['asteroidInit'];
-
-	}
-},
-{
-	'id':20,
-	'drops':false,
-	'name':'Asteroid',
-	'match':'86',
-	'flavor':'-',
-	'bonus':function(target){
-		target.ai=aiModes['asteroidInit'];
-
-	}
-},
-{
-	'id':21,
-	'drops':false,
-	'name':'Asteroid',
-	'match':'84',
-	'flavor':'-',
-	'bonus':function(target){
-		target.ai=aiModes['asteroidInit'];
-
-	}
-},
-{
-	'id':22,
-	'drops':false,
-	'name':'Asteroid',
-	'match':'4682',
-	'flavor':'-',
-	'bonus':function(target){
-		target.ai=aiModes['asteroidInit'];
-
-	}
-},
-{
-	'id':23,
-	'drops':false,
-	'name':'Asteroid',
-	'match':'4682',
-	'flavor':'-',
-	'bonus':function(target){
-		target.ai=aiModes['asteroidInit'];
-
-	}
-},
-{
-	'id':24,
-	'drops':false,
-	'name':'Asteroid',
-	'match':'4682',
-	'flavor':'-',
-	'bonus':function(target){
-		target.ai=aiModes['asteroidInit'];
-
-	}
-},
-{
-	'id':25,
-	'drops':false,
-	'name':'Asteroid',
-	'match':'4682',
-	'flavor':'-',
-	'bonus':function(target){
-		target.ai=aiModes['asteroidInit'];
-	}
-},
-{
-	'id':26,
-	'drops':false,
-	'name':'Loot',
-	'match':'4682',
-	'flavor':'-',
-	'bonus':function(target){
-
-	}
-},
-{
-	'id':27,
-	'drops':false,
-	'name':'Loot',
-	'match':'4682',
-	'flavor':'-',
-	'bonus':function(target){
-
-	}
-},
-{
-	'id':28,
-	'drops':false,
-	'name':'Loot',
-	'match':'4682',
-	'flavor':'-',
-	'bonus':function(target){
-
-	}
-},
-{
-	'id':29,
-	'drops':false,
-	'name':'Loot',
-	'match':'4682',
-	'flavor':'-',
-	'bonus':function(target){
-
-	}
-},
-{
-	'id':30,
-	'drops':true,
-	'name':'Battle-worn Panel',
-	'match':'4682',
-	'flavor':'medium armor, bonus damage',
-	'bonus':function(target){
-		target.health+=6;
-		target.fireDamage+=1;
-		target.fireEnergy+=0.5;
-		target.acceleration*=0.7;
-	}
-},
-{
-	'id':31,
-	'drops':true,
-	'name':'Reeunk Afterburner',
-	'match':'6',
-	'flavor':'hold [Z] to blaze forward and burn enemies in your wake',
-	'bonus':function(target){
-		target.acceleration+=0.2;
-		target.sprite.body.maxVelocity.x+=10;
-		target.sprite.body.maxVelocity.y+=10;
-		target.altCheck=function(){
-			var ret = false;
-			this.energyReserve=0;
-			var targetDistance = game.physics.arcade.distanceBetween(this.sprite, this.target);
-			var targetAngle = game.physics.arcade.angleBetween(this.target, this.sprite);
-
-			if(targetDistance < 750){
-				this.energyReserve=2;
-			}
-
-			if(Math.abs(compareAngles(this.sprite.rotation, targetAngle))<0.5*Math.PI && targetDistance < 750)
-			{
-				ret = true;
-			}
-			return ret;
+			});
 		}
-		target.alt=function(){
-			if(game.time.now>this.altCooldown && this.takeEnergy(1)){
-				ui.sound_plasma.play();
-				this.sprite.body.velocity.x+=Math.cos(this.sprite.rotation)*150;
-				this.sprite.body.velocity.y+=Math.sin(this.sprite.rotation)*150;
-				this.speed=this.acceleration;
-				var bullet=this.spawnBullet(false);
-				bullet.animations.play(bulletTypeName(15));
-				bullet.bulletSprite=15;
-				target.bulletSparkle=simpleGlow;
-				bullet.reset(this.sprite.x - (Math.cos(this.sprite.rotation)*(this.sprite.body.width)), this.sprite.y - (Math.sin(this.sprite.rotation)*(this.sprite.body.width)));
-				midBoom(explosions,2,bullet.x,bullet.y);
-				bullet.rotation=Math.random()*Math.PI;
-				bullet.blendMode=1;
-				bullet.damage=10;
-				bullet.body.velocity.x=0;
-				bullet.body.velocity.y=0;
-				bullet.scale.setTo(2,2);
-				bullet.lifespan=1333;
-				bullet.body.angularVelocity=999;
-				bullet.tracking=-999; //doesn't play with angularvel
-				this.altCooldown=game.time.now+100;
-				game.add.tween(bullet.scale).to({x:0,y:0},bullet.lifespan, Phaser.Easing.Linear.None, true, 0, false);
-
-				game.add.tween(bullet).to({alpha:0},bullet.lifespan, Phaser.Easing.Exponential.In, true, 0, false);
-
-			}
+	},
+	{
+		'id':14,
+		'drops':false,
+		'name':'Asteroid',
+		'match':'26',
+		'flavor':'-',
+		'bonus':function(target){
+			target.ai=aiModes['asteroidInit'];
 		}
+	},
+	{
+		'id':15,
+		'drops':false,
+		'name':'Asteroid',
+		'match':'42',
+		'flavor':'-',
+		'bonus':function(target){
 
-	}
-},
-{
-	'id':32,
-	'drops':true,
-	'name':'Radioactive Thruster',
-	'match':'8',
-	'flavor':'mostly safe',
-	'bonus':function(target){
-		target.thrustBehavior=unstableSmoke;
-		target.acceleration+=1;
-		target.turnRate+=0.2;
-		target.health-=1;
-		target.sprite.body.maxVelocity.x+=15;
-		target.sprite.body.maxVelocity.y+=15;
-	}
-},
-{
-	'id':33,
-	'drops':true,
-	'name':'Derelict Crewpod',
-	'match':'4682',
-	'flavor':'extra crewhands speed energy regeneration',
-	'bonus':function(target){
-		target.health+=2;
-		target.crewMax+=1;
-		target.energyAmount+=1;
-		target.acceleration+=0.1;
-		target.sprite.profile+=10;
-	}
-},
-{
-	'id':34,
-	'drops':true,
-	'name':'Filthy Cockpit',
-	'match':'4',
-	'flavor':'reliable and fast!',
-	'bonus':function(target){
-		target.crewMax+=1;
-		target.turnRate+=0.2;
-		target.health+=4;
-	}
-},
-{
-	'id':35,
-	'drops':true,
-	'name':'Fusion Thrust',
-	'match':'6',
-	'flavor':'clean energy thruster',
-	'bonus':function(target){
-		target.acceleration+=0.7;
-target.thrustBehavior=cleanSmoke;
-		target.sprite.body.maxVelocity.x+=15;
-		target.sprite.body.maxVelocity.y+=15;
+			target.ai=aiModes['asteroidInit'];
+		}
+	},
+	{
+		'id':16,
+		'drops':false,
+		'name':'Asteroid',
+		'match':'86',
+		'flavor':'-',
+		'bonus':function(target){
+			target.ai=aiModes['asteroidInit'];
 
-		target.health+=1;
-	}
-},
-{
-	'id':36,
-	'drops':true,
-	'name':'Standard Quarters',
-	'match':'4682',
-	'flavor':'more energy and health',
-	'bonus':function(target){
-		target.crewMax+=1;
-		target.health+=3;
-		target.crewMax+=1;
-		target.energyAmount*=1.2;
-		target.energyMax+=3;
-		target.sprite.profile+=20;
-	}
-},
-{
-	'id':37,
-	'drops':true,
-	'name':'Command Center',
-	'match':'4',
-	'flavor':'superior damage control',
-	'bonus':function(target){
-		target.crewMax+=1;
-		target.health+=6;
-		target.turnRate+=0.2;
-	}
-},
+		}
+	},
+	{
+		'id':17,
+		'drops':false,
+		'name':'Asteroid',
+		'match':'84',
+		'flavor':'-',
+		'bonus':function(target){
+			target.ai=aiModes['asteroidInit'];
 
-{
-	'id':38,
-	'drops':false,
-	'name':'Alien Pustule',
-	'match':'86',
-	'flavor':'crippling but tough',
-	'bonus':function(target){
-		target.health+=4;
-		target.turnRate-=0.1;
-		target.sprite.body.maxVelocity.x-=10;
-		target.sprite.body.maxVelocity.y-=10;
-		target.sprite.profile+=10;
-	}
-},
-{
-	'id':39,
-	'drops':false,
-	'name':'Alien Pustule',
-	'match':'84',
-	'flavor':'crippling but tough',
-	'bonus':function(target){
-		target.health+=4;
-		target.turnRate-=0.1;
-		target.sprite.body.maxVelocity.x-=10;
-		target.sprite.body.maxVelocity.y-=10;
-		target.sprite.profile+=10;
-	}
-},
-{
-	'id':40,
-	'drops':true,
-	'name':'Tractor Beam Array',
-	'match':'8',
-	'flavor':'pull in loots from farther away',
-	'bonus':function(target){
-		target.lootRange+=150;
-	}
-},
-{
-	'id':41,
-	'drops':true,
-	'name':'Force Multiplier',
-	'match':'4682',
-	'flavor':'spray \'n pray',
-	'bonus':function(target){
-		target.bulletBehavior.push(function(bullet, playerFired){
+		}
+	},
+	{
+		'id':18,
+		'drops':false,
+		'name':'Asteroid',
+		'match':'26',
+		'flavor':'-',
+		'bonus':function(target){
+			target.ai=aiModes['asteroidInit'];
+
+		}
+	},
+	{
+		'id':19,
+		'drops':false,
+		'name':'Asteroid',
+		'match':'42',
+		'flavor':'-',
+		'bonus':function(target){
+			target.ai=aiModes['asteroidInit'];
+
+		}
+	},
+	{
+		'id':20,
+		'drops':false,
+		'name':'Asteroid',
+		'match':'86',
+		'flavor':'-',
+		'bonus':function(target){
+			target.ai=aiModes['asteroidInit'];
+
+		}
+	},
+	{
+		'id':21,
+		'drops':false,
+		'name':'Asteroid',
+		'match':'84',
+		'flavor':'-',
+		'bonus':function(target){
+			target.ai=aiModes['asteroidInit'];
+
+		}
+	},
+	{
+		'id':22,
+		'drops':false,
+		'name':'Asteroid',
+		'match':'4682',
+		'flavor':'-',
+		'bonus':function(target){
+			target.ai=aiModes['asteroidInit'];
+
+		}
+	},
+	{
+		'id':23,
+		'drops':false,
+		'name':'Asteroid',
+		'match':'4682',
+		'flavor':'-',
+		'bonus':function(target){
+			target.ai=aiModes['asteroidInit'];
+
+		}
+	},
+	{
+		'id':24,
+		'drops':false,
+		'name':'Asteroid',
+		'match':'4682',
+		'flavor':'-',
+		'bonus':function(target){
+			target.ai=aiModes['asteroidInit'];
+
+		}
+	},
+	{
+		'id':25,
+		'drops':false,
+		'name':'Asteroid',
+		'match':'4682',
+		'flavor':'-',
+		'bonus':function(target){
+			target.ai=aiModes['asteroidInit'];
+		}
+	},
+	{
+		'id':26,
+		'drops':false,
+		'name':'Loot',
+		'match':'4682',
+		'flavor':'-',
+		'bonus':function(target){
+
+		}
+	},
+	{
+		'id':27,
+		'drops':false,
+		'name':'Loot',
+		'match':'4682',
+		'flavor':'-',
+		'bonus':function(target){
+
+		}
+	},
+	{
+		'id':28,
+		'drops':false,
+		'name':'Loot',
+		'match':'4682',
+		'flavor':'-',
+		'bonus':function(target){
+
+		}
+	},
+	{
+		'id':29,
+		'drops':false,
+		'name':'Loot',
+		'match':'4682',
+		'flavor':'-',
+		'bonus':function(target){
+
+		}
+	},
+	{
+		'id':30,
+		'drops':true,
+		'name':'Battle-worn Panel',
+		'match':'4682',
+		'flavor':'medium armor, bonus damage',
+		'bonus':function(target){
+			target.health+=6;
+			target.fireDamage+=1;
+			target.fireEnergy+=0.5;
+			target.acceleration*=0.7;
+		}
+	},
+	{
+		'id':31,
+		'drops':true,
+		'name':'Reeunk Afterburner',
+		'match':'6',
+		'flavor':'hold [Z] to blaze forward and burn enemies in your wake',
+		'bonus':function(target){
+			target.acceleration+=0.2;
+			target.sprite.body.maxVelocity.x+=10;
+			target.sprite.body.maxVelocity.y+=10;
+			target.altCheck=function(){
+				var ret = false;
+				this.energyReserve=0;
+				var targetDistance = game.physics.arcade.distanceBetween(this.sprite, this.target);
+				var targetAngle = game.physics.arcade.angleBetween(this.target, this.sprite);
+
+				if(targetDistance < 750){
+					this.energyReserve=2;
+				}
+
+				if(Math.abs(compareAngles(this.sprite.rotation, targetAngle))<0.5*Math.PI && targetDistance < 750)
+				{
+					ret = true;
+				}
+				return ret;
+			}
+			target.alt=function(){
+				if(game.time.now>this.altCooldown && this.takeEnergy(1)){
+					ui.sound_plasma.play();
+					this.sprite.body.velocity.x+=Math.cos(this.sprite.rotation)*150;
+					this.sprite.body.velocity.y+=Math.sin(this.sprite.rotation)*150;
+					this.speed=this.acceleration;
+					var bullet=this.spawnBullet(false);
+					bullet.animations.play(bulletTypeName(15));
+					bullet.bulletSprite=15;
+					target.bulletSparkle=simpleGlow;
+					bullet.reset(this.sprite.x - (Math.cos(this.sprite.rotation)*(this.sprite.body.width)), this.sprite.y - (Math.sin(this.sprite.rotation)*(this.sprite.body.width)));
+					midBoom(explosions,2,bullet.x,bullet.y);
+					bullet.rotation=Math.random()*Math.PI;
+					bullet.blendMode=1;
+					bullet.damage=10;
+					bullet.body.velocity.x=0;
+					bullet.body.velocity.y=0;
+					bullet.scale.setTo(2,2);
+					bullet.lifespan=1333;
+					bullet.body.angularVelocity=999;
+					bullet.tracking=-999; //doesn't play with angularvel
+					this.altCooldown=game.time.now+100;
+					game.add.tween(bullet.scale).to({x:0,y:0},bullet.lifespan, Phaser.Easing.Linear.None, true, 0, false);
+
+					game.add.tween(bullet).to({alpha:0},bullet.lifespan, Phaser.Easing.Exponential.In, true, 0, false);
+
+				}
+			}
+
+		}
+	},
+	{
+		'id':32,
+		'drops':true,
+		'name':'Radioactive Thruster',
+		'match':'8',
+		'flavor':'mostly safe',
+		'bonus':function(target){
+			target.thrustBehavior=unstableSmoke;
+			target.acceleration+=1;
+			target.turnRate+=0.2;
+			target.health-=1;
+			target.sprite.body.maxVelocity.x+=15;
+			target.sprite.body.maxVelocity.y+=15;
+		}
+	},
+	{
+		'id':33,
+		'drops':true,
+		'name':'Derelict Crewpod',
+		'match':'4682',
+		'flavor':'extra crewhands speed energy regeneration',
+		'bonus':function(target){
+			target.health+=2;
+			target.crewMax+=1;
+			target.energyAmount+=1;
+			target.acceleration+=0.1;
+			target.sprite.profile+=10;
+		}
+	},
+	{
+		'id':34,
+		'drops':true,
+		'name':'Filthy Cockpit',
+		'match':'4',
+		'flavor':'reliable and fast!',
+		'bonus':function(target){
+			target.crewMax+=1;
+			target.turnRate+=0.2;
+			target.health+=4;
+		}
+	},
+	{
+		'id':35,
+		'drops':true,
+		'name':'Fusion Thrust',
+		'match':'6',
+		'flavor':'clean energy thruster',
+		'bonus':function(target){
+			target.acceleration+=0.7;
+			target.thrustBehavior=cleanSmoke;
+			target.sprite.body.maxVelocity.x+=15;
+			target.sprite.body.maxVelocity.y+=15;
+
+			target.health+=1;
+		}
+	},
+	{
+		'id':36,
+		'drops':true,
+		'name':'Standard Quarters',
+		'match':'4682',
+		'flavor':'more energy and health',
+		'bonus':function(target){
+			target.crewMax+=1;
+			target.health+=3;
+			target.crewMax+=1;
+			target.energyAmount*=1.2;
+			target.energyMax+=3;
+			target.sprite.profile+=20;
+		}
+	},
+	{
+		'id':37,
+		'drops':true,
+		'name':'Command Center',
+		'match':'4',
+		'flavor':'superior damage control',
+		'bonus':function(target){
+			target.crewMax+=1;
+			target.health+=6;
+			target.turnRate+=0.2;
+		}
+	},
+
+	{
+		'id':38,
+		'drops':false,
+		'name':'Alien Pustule',
+		'match':'86',
+		'flavor':'crippling but tough',
+		'bonus':function(target){
+			target.health+=4;
+			target.turnRate-=0.1;
+			target.sprite.body.maxVelocity.x-=10;
+			target.sprite.body.maxVelocity.y-=10;
+			target.sprite.profile+=10;
+		}
+	},
+	{
+		'id':39,
+		'drops':false,
+		'name':'Alien Pustule',
+		'match':'84',
+		'flavor':'crippling but tough',
+		'bonus':function(target){
+			target.health+=4;
+			target.turnRate-=0.1;
+			target.sprite.body.maxVelocity.x-=10;
+			target.sprite.body.maxVelocity.y-=10;
+			target.sprite.profile+=10;
+		}
+	},
+	{
+		'id':40,
+		'drops':true,
+		'name':'Tractor Beam Array',
+		'match':'8',
+		'flavor':'pull in loots from farther away',
+		'bonus':function(target){
+			target.lootRange+=150;
+		}
+	},
+	{
+		'id':41,
+		'drops':true,
+		'name':'Force Multiplier',
+		'match':'4682',
+		'flavor':'spray \'n pray',
+		'bonus':function(target){
+			target.bulletBehavior.push(function(bullet, playerFired){
 
 				if(playerFired){
-				var tgt = ownerFromName(bullet.owner.name);
-				bullet.rotation+=Math.random()*0.4-0.2;
-				game.physics.arcade.velocityFromRotation(bullet.rotation, getHypo(bullet.body.velocity.x,bullet.body.velocity.y), bullet.body.velocity);	
-				var fireEnergyCost = typeof(tgt.fireEnergy4)=='undefined'?tgt.fireEnergy/3:tgt.fireEnergy;
-				if(tgt.takeEnergy(fireEnergyCost)){
-				var bullet2 = tgt.spawnBullet(false);
+					var tgt = ownerFromName(bullet.owner.name);
+					bullet.rotation+=Math.random()*0.4-0.2;
+					game.physics.arcade.velocityFromRotation(bullet.rotation, getHypo(bullet.body.velocity.x,bullet.body.velocity.y), bullet.body.velocity);	
+					var fireEnergyCost = typeof(tgt.fireEnergy4)=='undefined'?tgt.fireEnergy/3:tgt.fireEnergy;
+					if(tgt.takeEnergy(fireEnergyCost)){
+						var bullet2 = tgt.spawnBullet(false);
 
-				if(typeof(bullet2)!='undefined'){
-				bullet2.rotation+=Math.random()*0.8-0.4;
-				game.physics.arcade.velocityFromRotation(bullet2.rotation, bullet2.fireVelocity, bullet2.body.velocity);
-				}else{
-				tgt.energy+=tgt.fireEnergy/3;
+						if(typeof(bullet2)!='undefined'){
+							bullet2.rotation+=Math.random()*0.8-0.4;
+							game.physics.arcade.velocityFromRotation(bullet2.rotation, bullet2.fireVelocity, bullet2.body.velocity);
+						}else{
+							tgt.energy+=tgt.fireEnergy/3;
+						}
+					}
 				}
-				}
-				}
-				});
-		target.sprite.profile+=40;
-	}
-},
-{
-	'id':42,
-	'drops':true,
-	'name':'Fusion Core',
-	'match':'86',
-	'flavor':'improves recharge speed and maneuverability',
-	'bonus':function(target){
-		target.energyMax+=2;
-		target.energyAmount+=1;
-		target.acceleration+=0.2;
-		target.turnRate+=0.1;
-	}
-},
-{
-	'id':43,
-	'drops':true,
-	'name':'Fusion Core',
-	'match':'84',
-	'flavor':'improves recharge speed and maneuverability',
-	'bonus':function(target){
-		target.energyMax+=2;
-		target.energyAmount+=1;
-		target.acceleration+=0.2;
-		target.turnRate+=0.1;
-	}
-},
-{
-	'id':44,
-	'drops':true,
-	'name':'Thrust Package',
-	'match':'86',
-	'flavor':'fast and flashy',
-	'bonus':function(target){
-		target.fireDamage+=1;
-		target.acceleration+=0.6;
-		target.sprite.body.maxVelocity.x+=15;
-		target.sprite.body.maxVelocity.y+=15;
-		target.sprite.profile+=20;
-	}
-},
-{
-	'id':45,
-	'drops':true,
-	'name':'Advanced Damage Control',
-	'match':'84',
-	'flavor':'improves health',
-	'bonus':function(target){
-		target.health+=12;
-		target.fireEnergy+=0.5;
-		target.fireDamage+=1;
-	}
-},
-{
-	'id':46,
-	'drops':true,
-	'name':'Flexible Grid',
-	'match':'46',
-	'flavor':'improves maneuverability and interferes with sensors',
-	'bonus':function(target){
-		target.turnRate+=0.3;
-		target.profileDecay+=20;
-	}
-},
-{
-	'id':47,
-	'drops':true,
-	'name':'Gargantuan Plasma Thrower',
-	'match':'4',
-	'flavor':'burn, baby',
-	'bonus':function(target){
-		target.bulletBehavior.push(function(bullet,playerFired){
+			});
+			target.sprite.profile+=40;
+		}
+	},
+	{
+		'id':42,
+		'drops':true,
+		'name':'Fusion Core',
+		'match':'86',
+		'flavor':'improves recharge speed and maneuverability',
+		'bonus':function(target){
+			target.energyMax+=2;
+			target.energyAmount+=1;
+			target.acceleration+=0.2;
+			target.turnRate+=0.1;
+		}
+	},
+	{
+		'id':43,
+		'drops':true,
+		'name':'Fusion Core',
+		'match':'84',
+		'flavor':'improves recharge speed and maneuverability',
+		'bonus':function(target){
+			target.energyMax+=2;
+			target.energyAmount+=1;
+			target.acceleration+=0.2;
+			target.turnRate+=0.1;
+		}
+	},
+	{
+		'id':44,
+		'drops':true,
+		'name':'Thrust Package',
+		'match':'86',
+		'flavor':'fast and flashy',
+		'bonus':function(target){
+			target.fireDamage+=1;
+			target.acceleration+=0.6;
+			target.sprite.body.maxVelocity.x+=15;
+			target.sprite.body.maxVelocity.y+=15;
+			target.sprite.profile+=20;
+		}
+	},
+	{
+		'id':45,
+		'drops':true,
+		'name':'Advanced Damage Control',
+		'match':'84',
+		'flavor':'improves health',
+		'bonus':function(target){
+			target.health+=12;
+			target.fireEnergy+=0.5;
+			target.fireDamage+=1;
+		}
+	},
+	{
+		'id':46,
+		'drops':true,
+		'name':'Flexible Grid',
+		'match':'46',
+		'flavor':'improves maneuverability and interferes with sensors',
+		'bonus':function(target){
+			target.turnRate+=0.3;
+			target.profileDecay+=20;
+		}
+	},
+	{
+		'id':47,
+		'drops':true,
+		'name':'Gargantuan Plasma Thrower',
+		'match':'4',
+		'flavor':'burn, baby',
+		'bonus':function(target){
+			target.bulletBehavior.push(function(bullet,playerFired){
 				bullet.rotation+=randomRange(-.25,.25);
 				bullet.animations.play(bulletTypeName(15));
 				bullet.body.angularVelocity=randomRange(600,900);
@@ -708,125 +708,125 @@ target.thrustBehavior=cleanSmoke;
 				game.physics.arcade.velocityFromRotation(bullet.rotation, bullet.fireVelocity, bullet.body.velocity);
 
 				var tgt = ownerFromName(bullet.owner.name);
-		bullet.body.velocity.x += 0.5 * tgt.sprite.body.velocity.x;
-		bullet.body.velocity.y += 0.5 * tgt.sprite.body.velocity.y;
+				bullet.body.velocity.x += 0.5 * tgt.sprite.body.velocity.x;
+				bullet.body.velocity.y += 0.5 * tgt.sprite.body.velocity.y;
 				bullet.scale.setTo(.25,.25);
 				game.add.tween(bullet.scale).to({x:3,y:3},bullet.lifespan, Phaser.Easing.Exponential.Out, true, 0, false);
 
 				game.add.tween(bullet).to({alpha:0},bullet.lifespan, Phaser.Easing.Linear.Out, true, 0, false);
-				});
-		target.bulletSprite=5;
-		target.attackAngleThreshold+=.25;
-		target.fireSound=ui.sound_plasma;
-		target.fireRate*=0.4;
-		target.fireEnergy*=0.5;
-		target.fireVelocity*=0.8;
-		target.fireRange*=0.8;
-		target.sprite.profile+=88;
-	}
-},
-{
-	'id':48,
-	'drops':false,
-	'name':'Container',
-	'match':'4682',
-	'flavor':'Containers show on radar, and also give buckets of ore.',
-	'bonus':function(target){
-		target.sprite.profile=500;
-		target.ai=aiModes['asteroidInit'];
-		target.health-=3;
-		target.oreChance=1;
-		target.effects=function(){
+			});
+			target.bulletSprite=5;
+			target.attackAngleThreshold+=.25;
+			target.fireSound=ui.sound_plasma;
+			target.fireRate*=0.4;
+			target.fireEnergy*=0.5;
+			target.fireVelocity*=0.8;
+			target.fireRange*=0.8;
+			target.sprite.profile+=88;
+		}
+	},
+	{
+		'id':48,
+		'drops':false,
+		'name':'Container',
+		'match':'4682',
+		'flavor':'Containers show on radar, and also give buckets of ore.',
+		'bonus':function(target){
+			target.sprite.profile=500;
+			target.ai=aiModes['asteroidInit'];
+			target.health-=3;
+			target.oreChance=1;
+			target.effects=function(){
 
-			if(Math.random() < 0.2 && onscreen(this.sprite.x,this.sprite.y)){
-				lootSparkle(this.sprite);
-			}
-		};
-	}
-},
-{
-	'id':49,
-	'drops':true,
-	'name':'Xenoid',
-	'match':'4682',
-	'flavor':'--',
-	'bonus':function(target){
-		target.TODO+=1;
+				if(Math.random() < 0.2 && onscreen(this.sprite.x,this.sprite.y)){
+					lootSparkle(this.sprite);
+				}
+			};
+		}
+	},
+	{
+		'id':49,
+		'drops':true,
+		'name':'Xenoid',
+		'match':'4682',
+		'flavor':'--',
+		'bonus':function(target){
+			target.TODO+=1;
 
-	}
-},
-{
-	'id':50,
-	'drops':true,
-	'name':'Xenoid',
-	'match':'4682',
-	'flavor':'--',
-	'bonus':function(target){
-		target.TODO+=1;
-	}
-},
-{
-	'id':51,
-	'drops':false,
-	'name':'Component51',
-	'match':'4682',
-	'flavor':'--',
-	'bonus':function(target){
+		}
+	},
+	{
+		'id':50,
+		'drops':true,
+		'name':'Xenoid',
+		'match':'4682',
+		'flavor':'--',
+		'bonus':function(target){
+			target.TODO+=1;
+		}
+	},
+	{
+		'id':51,
+		'drops':false,
+		'name':'Component51',
+		'match':'4682',
+		'flavor':'--',
+		'bonus':function(target){
 
-	}
-},
-{
-	'id':52,
-	'drops':false,
-	'name':'Component52',
-	'match':'4682',
-	'flavor':'--',
-	'bonus':function(target){
+		}
+	},
+	{
+		'id':52,
+		'drops':false,
+		'name':'Component52',
+		'match':'4682',
+		'flavor':'--',
+		'bonus':function(target){
 
-	}
-},
-{
-	'id':53,
-	'drops':false,
-	'name':'Component53',
-	'match':'4682',
-	'flavor':'--',
-	'bonus':function(target){
+		}
+	},
+	{
+		'id':53,
+		'drops':false,
+		'name':'Component53',
+		'match':'4682',
+		'flavor':'--',
+		'bonus':function(target){
 
-	}
-},
-{
-	'id':54,
-	'drops':false,
-	'name':'Component54',
-	'match':'4682',
-	'flavor':'--',
-	'bonus':function(target){
+		}
+	},
+	{
+		'id':54,
+		'drops':false,
+		'name':'Component54',
+		'match':'4682',
+		'flavor':'--',
+		'bonus':function(target){
 
-	}
-},
-{
-	'id':55,
-	'drops':false,
-	'name':'Component55',
-	'match':'4682',
-	'flavor':'--',
-	'bonus':function(target){
+		}
+	},
+	{
+		'id':55,
+		'drops':false,
+		'name':'Component55',
+		'match':'4682',
+		'flavor':'--',
+		'bonus':function(target){
 
-	}
-},
-{
-	'id':56,
-	'drops':false,
-	'name':'Component56',
-	'match':'4682',
-	'flavor':'--',
-	'bonus':function(target){
+		}
+	},
+	{
+		'id':56,
+		'drops':false,
+		'name':'Component56',
+		'match':'4682',
+		'flavor':'--',
+		'bonus':function(target){
 
-	}
-},
-{
-	'id':57,
+		}
+	},
+	{
+		'id':57,
 	'drops':false,
 	'name':'Component57',
 	'match':'4682',
@@ -2988,182 +2988,194 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 },
 {
 	'id':198,
-	'drops':false,
-	'name':'Component198',
+	'drops':true,
+	'name':'Spine',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
-
+		target.TODO+=1;
 	}
 },
 {
 	'id':199,
-	'drops':false,
-	'name':'Component199',
+	'drops':true,
+	'name':'Spine',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
-
+		target.TODO+=1;
 	}
 },
 {
 	'id':200,
-	'drops':false,
-	'name':'Component200',
+	'drops':true,
+	'name':'Batlike Wing',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
-
+		target.TODO+=1;
 	}
 },
 {
 	'id':201,
-	'drops':false,
-	'name':'Component201',
+	'drops':true,
+	'name':'Batlike Wing',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
-
+		target.TODO+=1;
 	}
 },
 {
 	'id':202,
-	'drops':false,
-	'name':'Component202',
+	'drops':true,
+	'name':'Ascended Watcher',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO+=1;
 
 	}
 },
 {
 	'id':203,
-	'drops':false,
-	'name':'Component203',
+	'drops':true,
+	'name':'Ascended Watcher',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO+=1;
 
 	}
 },
 {
 	'id':204,
-	'drops':false,
-	'name':'Component204',
+	'drops':true,
+	'name':'Ascended Watcher',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO+=1;
 
 	}
 },
 {
 	'id':205,
-	'drops':false,
-	'name':'Component205',
+	'drops':true,
+	'name':'Ascended Watcher',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO+=1;
 
 	}
 },
 {
 	'id':206,
-	'drops':false,
-	'name':'Component206',
+	'drops':true,
+	'name':'Enterprising Violation',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO+=1;
 
 	}
 },
 {
 	'id':207,
-	'drops':false,
-	'name':'Component207',
+	'drops':true,
+	'name':'Enterprising Violation',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
-
+		target.TODO+=1;
 	}
 },
 {
 	'id':208,
-	'drops':false,
-	'name':'Component208',
+	'drops':true,
+	'name':'Augmentor',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO+=1;
 
 	}
 },
 {
 	'id':209,
-	'drops':false,
-	'name':'Component209',
+	'drops':true,
+	'name':'Augmentor',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO+=1;
 
 	}
 },
 {
 	'id':210,
-	'drops':false,
-	'name':'Component210',
+	'drops':true,
+	'name':'Newguy',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO+=1;
 
 	}
 },
 {
 	'id':211,
-	'drops':false,
-	'name':'Component211',
+	'drops':true,
+	'name':'Newguy',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO+=1;
 
 	}
 },
 {
 	'id':212,
-	'drops':false,
-	'name':'Component212',
+	'drops':true,
+	'name':'Newguy',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO+=1;
 
 	}
 },
 {
 	'id':213,
-	'drops':false,
-	'name':'Component213',
+	'drops':true,
+	'name':'Newguy',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO+=1;
 
 	}
 },
 {
 	'id':214,
-	'drops':false,
-	'name':'Component214',
+	'drops':true,
+	'name':'Meeb',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO+=1;
 
 	}
 },
 {
 	'id':215,
-	'drops':false,
-	'name':'Component215',
+	'drops':true,
+	'name':'Meeb',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
-
+		target.TODO+=1;
 	}
 },
 {
@@ -3308,171 +3320,183 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 },
 {
 	'id':230,
-	'drops':false,
-	'name':'Component230',
+	'drops':true,
+	'name':'Spine',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
-
+		target.TODO+=1;
 	}
 },
 {
 	'id':231,
-	'drops':false,
-	'name':'Component231',
+	'drops':true,
+	'name':'Spine',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
-
+		target.TODO+=1;
 	}
 },
 {
 	'id':232,
-	'drops':false,
-	'name':'Component232',
+	'drops':true,
+	'name':'Batlike Wing',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
-
+		target.TODO+=1;
 	}
 },
 {
 	'id':233,
-	'drops':false,
-	'name':'Component233',
+	'drops':true,
+	'name':'Batlike Wing',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
-
+		target.TODO+=1;
 	}
 },
 {
 	'id':234,
-	'drops':false,
-	'name':'Component234',
+	'drops':true,
+	'name':'Ascended Watcher',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO+=1;
 
 	}
 },
 {
 	'id':235,
-	'drops':false,
-	'name':'Component235',
+	'drops':true,
+	'name':'Ascended Watcher',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO+=1;
 
 	}
 },
 {
 	'id':236,
-	'drops':false,
-	'name':'Component236',
+	'drops':true,
+	'name':'Ascended Watcher',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO+=1;
 
 	}
 },
 {
 	'id':237,
-	'drops':false,
-	'name':'Component237',
+	'drops':true,
+	'name':'Ascended Watcher',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO+=1;
 
 	}
 },
 {
 	'id':238,
-	'drops':false,
-	'name':'Component238',
+	'drops':true,
+	'name':'Enterprising Violation',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO+=1;
 
 	}
 },
 {
 	'id':239,
-	'drops':false,
-	'name':'Component239',
+	'drops':true,
+	'name':'Enterprising Violation',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
-
+		target.TODO+=1;
 	}
 },
 {
 	'id':240,
-	'drops':false,
-	'name':'Component240',
+	'drops':true,
+	'name':'Augmentor',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO+=1;
 
 	}
 },
 {
 	'id':241,
-	'drops':false,
-	'name':'Component241',
+	'drops':true,
+	'name':'Augmentor',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO+=1;
 
 	}
 },
 {
 	'id':242,
-	'drops':false,
-	'name':'Component242',
+	'drops':true,
+	'name':'Newguy',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO+=1;
 
 	}
 },
 {
 	'id':243,
-	'drops':false,
-	'name':'Component243',
+	'drops':true,
+	'name':'Newguy',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO+=1;
 
 	}
 },
 {
 	'id':244,
-	'drops':false,
-	'name':'Component244',
+	'drops':true,
+	'name':'Newguy',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO+=1;
 
 	}
 },
 {
 	'id':245,
-	'drops':false,
-	'name':'Component245',
+	'drops':true,
+	'name':'Newguy',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO+=1;
 
 	}
 },
 {
 	'id':246,
-	'drops':false,
-	'name':'Component246',
+	'drops':true,
+	'name':'Meeb',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO+=1;
 
 	}
 },
@@ -3626,177 +3650,193 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 
 	}
 },
+
+
 {
 	'id':262,
-	'drops':false,
-	'name':'Component-262',
+	'drops':true,
+	'name':'Spine',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
-
+		target.TODO+=1;
 	}
 },
 {
 	'id':263,
-	'drops':false,
-	'name':'Component-263',
+	'drops':true,
+	'name':'Spine',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
-
+		target.TODO+=1;
 	}
 },
 {
 	'id':264,
 	'drops':false,
-	'name':'Component-264',
+	'name':'Component264',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
-
+		target.TODO+=1;
 	}
 },
 {
 	'id':265,
 	'drops':false,
-	'name':'Component-265',
+	'name':'Component265',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
-
+		target.TODO+=1;
 	}
 },
 {
 	'id':266,
-	'drops':false,
-	'name':'Component-266',
+	'drops':true,
+	'name':'Ascended Watcher',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO+=1;
 
 	}
 },
 {
 	'id':267,
-	'drops':false,
-	'name':'Component-267',
+	'drops':true,
+	'name':'Ascended Watcher',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO+=1;
 
 	}
 },
 {
 	'id':268,
 	'drops':false,
-	'name':'Component-268',
+	'name':'Component268',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO+=1;
 
 	}
 },
 {
 	'id':269,
 	'drops':false,
-	'name':'Component-269',
+	'name':'Component269',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO+=1;
 
 	}
 },
 {
 	'id':270,
 	'drops':false,
-	'name':'Component-270',
+	'name':'Component270',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO+=1;
 
 	}
 },
 {
 	'id':271,
 	'drops':false,
-	'name':'Component-271',
+	'name':'Component271',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
-
+		target.TODO+=1;
 	}
 },
 {
 	'id':272,
 	'drops':false,
-	'name':'Component-272',
+	'name':'Component272',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO+=1;
 
 	}
 },
 {
 	'id':273,
 	'drops':false,
-	'name':'Component-273',
+	'name':'Component273',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO+=1;
 
 	}
 },
 {
 	'id':274,
-	'drops':false,
-	'name':'Component-274',
+	'drops':true,
+	'name':'Newguy',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO+=1;
 
 	}
 },
 {
 	'id':275,
-	'drops':false,
-	'name':'Component-275',
+	'drops':true,
+	'name':'Newguy',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO+=1;
 
 	}
 },
 {
 	'id':276,
-	'drops':false,
-	'name':'Component-276',
+	'drops':true,
+	'name':'Newguy',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO+=1;
 
 	}
 },
 {
 	'id':277,
-	'drops':false,
-	'name':'Component-277',
+	'drops':true,
+	'name':'Newguy',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO+=1;
 
 	}
 },
 {
 	'id':278,
-	'drops':false,
-	'name':'Component-278',
+	'drops':true,
+	'name':'Meeb',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO+=1;
 
 	}
 },
-{
+
+	
+	{
 	'id':279,
 	'drops':false,
 	'name':'Component-279',

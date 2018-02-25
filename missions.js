@@ -113,24 +113,7 @@ var missions = [
 	'win':{
 		'condition':'frob'
 	},
-	'enemies': [{
-		'ships': ships,
-'symmetry': 1,
-		'parts': allLootableItems(),
-		'sizeMin': 2,
-		'sizeMax': 7,
-		'respawn':true,
-		'missionTarget':false,
-		'count':9, 
-		'deaths':['I SMELL DELICIOUS!']
-	},
-	{
-		'ships': questionContainers,
-'symmetry': 1,
-		'respawn':false,
-		'count':3, 
-		'missionTarget':false
-	},
+	'enemies': [
 	{
 		'ships': asteroids,
 'symmetry': 1,
@@ -145,7 +128,7 @@ var missions = [
 		'sizeMin': 2,
 		'sizeMax': 3,
 		'respawn':true,
-		'count':30, 
+		'count':10, 
 		'missionTarget':false
 	}
 
