@@ -1881,7 +1881,7 @@ enemyShip.prototype.update = function() {
 																this.left(1);
 												}else if(diffAngle*60<-this.turnRate){
 																this.right(1);
-												}
+												}else{ this.sprite.angle = targetAngle; }
 
 
 
@@ -3073,7 +3073,9 @@ playerShip.prototype.update = function(){
 																this.left(1);
 												}else if(diffAngle*60<-this.turnRate && !touchPressed){
 																this.right(1);
-												}
+												}else{
+																this.sprite.angle = this.targetAngle;
+}
 												if(game.input.activePointer.isDown && !touchPressed && Math.abs(diffAngle) < 0.2){
 																this.up(1);
 												}
