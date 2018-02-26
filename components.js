@@ -1354,7 +1354,7 @@ function(tgt){
 	if(game.time.now>this.altCooldown && this.takeEnergy(2)){
 				this.altCooldown=game.time.now+30000;
 				for(var i=0;i<30;i++){
-				spawnLoots(1,this.sprite.x+randomRange(-100,100)),this.sprite.y+randomRange(-100,100)));
+				spawnLoots(1,this.sprite.x+randomRange(-100,100),this.sprite.y+randomRange(-100,100));
 			
 }
 }
