@@ -3471,7 +3471,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'id':244,
 	'drops':true,
 	'name':'Newguy',
-	'match':'86',
+	'match':'862',
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3482,7 +3482,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'id':245,
 	'drops':true,
 	'name':'Newguy',
-	'match':'84',
+	'match':'842',
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3805,7 +3805,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'id':276,
 	'drops':true,
 	'name':'Newguy',
-	'match':'4682',
+	'match':'86',
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3816,7 +3816,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'id':277,
 	'drops':true,
 	'name':'Newguy',
-	'match':'4682',
+	'match':'84',
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
