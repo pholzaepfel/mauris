@@ -1324,8 +1324,9 @@ function(tgt){
 				target.bulletBehavior=[(function(bullet){
 				var popAngle = bullet.owner.angle;
 				var tgt = ownerFromName(bullet.owner.name);
-				bullet.owner.angle = game.physics.arcade.angleBetween(tgt.sprite, tgt.target.sprite);
-
+				if(tgt.sprite != tgt.target){
+				bullet.owner.angle = game.physics.arcade.angleBetween(tgt.sprite, tgt.target);
+				}
 				laserBulletBehavior(bullet,parseInt(randomRange(4,7)),randomRange(0.3,1.8),0xFF1515,0xFF8050,0xFFFFFF,22,function(){});
 				bullet.owner.angle=popAngle;
 
