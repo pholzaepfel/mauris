@@ -180,7 +180,7 @@ count = 1;
 				rm.enemies.push(
 												{
 												'ships': asteroids,
-												'parts': asteroidParts, 
+												'parts': parts, 
 												'sizeMin': 2,
 												'sizeMax': 5,
 												'respawn':true,
