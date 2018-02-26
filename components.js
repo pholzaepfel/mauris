@@ -1249,10 +1249,10 @@ function(tgt){
 	'drops':true,
 	'name':'Collector Vine',
 	'match':'26',
-	'flavor':'--',
+	'flavor':'seeks out more loot',
 	'bonus':function(target){
-		target.TODO+=1;
-
+		target.dropRate+=0.02;
+		target.health+=4;
 	}
 },
 {
@@ -1260,11 +1260,21 @@ function(tgt){
 	'drops':true,
 	'name':'Nutriment Tree',
 	'match':'42',
-	'flavor':'--',
+	'flavor':'Press [Z] to spawn healing - 30 sec cooldown',
 	'bonus':function(target){
-		target.TODO+=1;
-
+		target.alt=function(){
+  if(game.time.now<this.altCooldown){
+	ui.texts.push('' + parseInt((this.altCooldown-game.time.now)/1000) + ' seconds remaining for Nutriment Tree');
+}
+	if(game.time.now>this.altCooldown && this.takeEnergy(2)){
+				this.altCooldown=game.time.now+30000;
+				for(var i=0;i<20;i++){
+				spawnLoots(1,this.sprite.x+randomRange(50,100)*randomSign(),this.sprite.y+randomRange(50,100)*randomSign());
+			
+}
+}
 	}
+}
 },
 {
 	'id':88,
