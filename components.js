@@ -1319,7 +1319,7 @@ function(tgt){
 		target.fireRate=10;
 		target.sprite.profile+=20;	
 		target.bulletSprite=15;
-		target.firingSolution=laserFiringSolution;
+		target.firingSolution=laserAutoFiringSolution;
 		target.profileOnFire=false;
 				target.bulletBehavior=[(function(bullet){
 				var popRotation = bullet.owner.rotation;

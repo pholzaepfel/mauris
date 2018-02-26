@@ -2645,6 +2645,13 @@ var laserBulletBehavior = function(bullet,thickness,alpha,color1,color2,color3,d
 
 }
 
+var laserAutoFiringSolution = function(attacker, target, fireRange, fireVelocity, angleModifier, turnRate) {
+				var adjFireRange = Math.max(fireRange*laserRangeModifier, laserRangeMinimum);
+				if(game.physics.arcade.distanceBetween(target, attacker) < adjFireRange){
+	return 1;
+}
+return null;
+}
 var laserFiringSolution = function(attacker, target, fireRange, fireVelocity, angleModifier, turnRate) {
 				var adjFireRange = Math.max(fireRange*laserRangeModifier, laserRangeMinimum);
 				var bulletX = attacker.x + (Math.cos(attacker.rotation)*(attacker.body.width)*0.75);
