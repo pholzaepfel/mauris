@@ -2778,7 +2778,7 @@ var randomPartsList = function(partsList,size){
 								result.push(partsList[partId]);
 								if(variantComponents(partId).length && Math.random()<0.5){
 												partId = randomVariantComponent(parseInt(randomRange(0,partsList.length)));
-												result.push(partId);
+												result.push(partsList[partId]);
 								}
 				}
 				return result;
