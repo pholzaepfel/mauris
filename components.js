@@ -4,6 +4,7 @@ var cmp = [
 		'drops':false,
 		'name':'Component0',
 		'match':'4682',
+'hasAlt':false,
 		'flavor':'-',
 		'bonus':function(target){}
 	},
@@ -12,6 +13,7 @@ var cmp = [
 		'drops':true,
 		'name':'Rusted Wing',
 		'match':'62',
+'hasAlt':false,
 		'flavor':'improves maneuverability',
 		'bonus':function(target){
 			target.turnRate+=0.3;
@@ -25,6 +27,7 @@ var cmp = [
 		'drops':true,
 		'name':'Ancient Railgun',
 		'match':'46',
+'hasAlt':false,
 		'flavor':'fires long-ranged slugs, slow rate of fire',
 		'bonus':function(target){
 			target.bulletSprite=3;
@@ -43,6 +46,7 @@ var cmp = [
 		'drops':true,
 		'name':'Capacitor Unit',
 		'match':'4682',
+'hasAlt':false,
 		'flavor':'basic energy storage',
 		'bonus':function(target){
 			target.energyMax+=6;
@@ -53,6 +57,7 @@ var cmp = [
 		'drops':true,
 		'name':'VariJet',
 		'match':'862',
+'hasAlt':true,
 		'flavor':'press [Z] to rocket backwards',
 		'bonus':function(target){
 			target.turnRate+=0.3;
@@ -89,6 +94,7 @@ var cmp = [
 		'drops':true,
 		'name':'Overpowered Burst Laser',
 		'match':'4',
+'hasAlt':false,
 		'flavor':'flashy and attracts attention',
 		'bonus':function(target){
 			target.fireVelocity+=200;
@@ -115,6 +121,7 @@ var cmp = [
 		'drops':false,
 		'name':'Alien Pustule',
 		'match':'26',
+'hasAlt':false,
 		'flavor':'crippling but tough',
 		'bonus':function(target){
 			target.health+=4;
@@ -129,6 +136,7 @@ var cmp = [
 		'drops':false,
 		'name':'Alien Pustule',
 		'match':'42',
+'hasAlt':false,
 		'flavor':'crippling but tough',
 		'bonus':function(target){
 			target.health+=4;
@@ -143,6 +151,7 @@ var cmp = [
 		'drops':true,
 		'name':'Shield Generator',
 		'match':'2',
+'hasAlt':true,
 		'flavor':'press [Z] for invincibility',
 		'bonus':function(target){
 			target.altCheck=function(){
@@ -176,6 +185,7 @@ var cmp = [
 		'drops':true,
 		'name':'Mineral Scanner',
 		'match':'2',
+'hasAlt':false,
 		'flavor':'track more enemies and find more loot',
 		'bonus':function(target){
 			target.radarTargets+=2;
@@ -187,6 +197,7 @@ var cmp = [
 		'drops':true,
 		'name':'Fusion Core',
 		'match':'26',
+'hasAlt':false,
 		'flavor':'improves recharge speed and maneuverability',
 		'bonus':function(target){
 			target.energyMax+=2;
@@ -200,6 +211,7 @@ var cmp = [
 		'drops':true,
 		'name':'Fusion Core',
 		'match':'42',
+'hasAlt':false,
 		'flavor':'improves recharge speed and maneuverability',
 		'bonus':function(target){
 			target.energyMax+=2;
@@ -213,6 +225,7 @@ var cmp = [
 		'drops':true,
 		'name':'Xenoform Reactor',
 		'match':'6',
+'hasAlt':false,
 		'flavor':'hums with power. very valuable',
 		'bonus':function(target){
 			target.energyAmount+=2;
@@ -224,6 +237,7 @@ var cmp = [
 		'drops':true,
 		'name':'Fusion Bolt Cannon',
 		'match':'4',
+'hasAlt':false,
 		'flavor':'covered in warnings in multiple languages',
 		'bonus':function(target){
 			target.bulletSprite=5; 
@@ -242,6 +256,7 @@ var cmp = [
 		'drops':false,
 		'name':'Asteroid',
 		'match':'26',
+'hasAlt':false,
 		'flavor':'-',
 		'bonus':function(target){
 			target.ai=aiModes['asteroidInit'];
@@ -252,6 +267,7 @@ var cmp = [
 		'drops':false,
 		'name':'Asteroid',
 		'match':'42',
+'hasAlt':false,
 		'flavor':'-',
 		'bonus':function(target){
 
@@ -263,6 +279,7 @@ var cmp = [
 		'drops':false,
 		'name':'Asteroid',
 		'match':'86',
+'hasAlt':false,
 		'flavor':'-',
 		'bonus':function(target){
 			target.ai=aiModes['asteroidInit'];
@@ -274,6 +291,7 @@ var cmp = [
 		'drops':false,
 		'name':'Asteroid',
 		'match':'84',
+'hasAlt':false,
 		'flavor':'-',
 		'bonus':function(target){
 			target.ai=aiModes['asteroidInit'];
@@ -285,6 +303,7 @@ var cmp = [
 		'drops':false,
 		'name':'Asteroid',
 		'match':'26',
+'hasAlt':false,
 		'flavor':'-',
 		'bonus':function(target){
 			target.ai=aiModes['asteroidInit'];
@@ -296,6 +315,7 @@ var cmp = [
 		'drops':false,
 		'name':'Asteroid',
 		'match':'42',
+'hasAlt':false,
 		'flavor':'-',
 		'bonus':function(target){
 			target.ai=aiModes['asteroidInit'];
@@ -307,6 +327,7 @@ var cmp = [
 		'drops':false,
 		'name':'Asteroid',
 		'match':'86',
+'hasAlt':false,
 		'flavor':'-',
 		'bonus':function(target){
 			target.ai=aiModes['asteroidInit'];
@@ -318,6 +339,7 @@ var cmp = [
 		'drops':false,
 		'name':'Asteroid',
 		'match':'84',
+'hasAlt':false,
 		'flavor':'-',
 		'bonus':function(target){
 			target.ai=aiModes['asteroidInit'];
@@ -329,6 +351,7 @@ var cmp = [
 		'drops':false,
 		'name':'Asteroid',
 		'match':'4682',
+'hasAlt':false,
 		'flavor':'-',
 		'bonus':function(target){
 			target.ai=aiModes['asteroidInit'];
@@ -340,6 +363,7 @@ var cmp = [
 		'drops':false,
 		'name':'Asteroid',
 		'match':'4682',
+'hasAlt':false,
 		'flavor':'-',
 		'bonus':function(target){
 			target.ai=aiModes['asteroidInit'];
@@ -351,6 +375,7 @@ var cmp = [
 		'drops':false,
 		'name':'Asteroid',
 		'match':'4682',
+'hasAlt':false,
 		'flavor':'-',
 		'bonus':function(target){
 			target.ai=aiModes['asteroidInit'];
@@ -362,6 +387,7 @@ var cmp = [
 		'drops':false,
 		'name':'Asteroid',
 		'match':'4682',
+'hasAlt':false,
 		'flavor':'-',
 		'bonus':function(target){
 			target.ai=aiModes['asteroidInit'];
@@ -372,6 +398,7 @@ var cmp = [
 		'drops':false,
 		'name':'Loot',
 		'match':'4682',
+'hasAlt':false,
 		'flavor':'-',
 		'bonus':function(target){
 
@@ -382,6 +409,7 @@ var cmp = [
 		'drops':false,
 		'name':'Loot',
 		'match':'4682',
+'hasAlt':false,
 		'flavor':'-',
 		'bonus':function(target){
 
@@ -392,6 +420,7 @@ var cmp = [
 		'drops':false,
 		'name':'Loot',
 		'match':'4682',
+'hasAlt':false,
 		'flavor':'-',
 		'bonus':function(target){
 
@@ -402,6 +431,7 @@ var cmp = [
 		'drops':false,
 		'name':'Loot',
 		'match':'4682',
+'hasAlt':false,
 		'flavor':'-',
 		'bonus':function(target){
 
@@ -412,6 +442,7 @@ var cmp = [
 		'drops':true,
 		'name':'Battle-worn Panel',
 		'match':'4682',
+'hasAlt':false,
 		'flavor':'medium armor, bonus damage',
 		'bonus':function(target){
 			target.health+=6;
@@ -425,6 +456,7 @@ var cmp = [
 		'drops':true,
 		'name':'Reeunk Afterburner',
 		'match':'6',
+'hasAlt':true,
 		'flavor':'hold [Z] to blaze forward and burn enemies in your wake',
 		'bonus':function(target){
 			target.acceleration+=0.2;
@@ -482,6 +514,7 @@ var cmp = [
 		'drops':true,
 		'name':'Radioactive Thruster',
 		'match':'8',
+'hasAlt':false,
 		'flavor':'mostly safe',
 		'bonus':function(target){
 			target.thrustBehavior=unstableSmoke;
@@ -497,6 +530,7 @@ var cmp = [
 		'drops':true,
 		'name':'Derelict Crewpod',
 		'match':'4682',
+'hasAlt':false,
 		'flavor':'extra crewhands speed energy regeneration',
 		'bonus':function(target){
 			target.health+=2;
@@ -511,6 +545,7 @@ var cmp = [
 		'drops':true,
 		'name':'Filthy Cockpit',
 		'match':'4',
+'hasAlt':false,
 		'flavor':'reliable and fast!',
 		'bonus':function(target){
 			target.crewMax+=1;
@@ -523,6 +558,7 @@ var cmp = [
 		'drops':true,
 		'name':'Fusion Thrust',
 		'match':'6',
+'hasAlt':false,
 		'flavor':'clean energy thruster',
 		'bonus':function(target){
 			target.acceleration+=0.7;
@@ -538,6 +574,7 @@ var cmp = [
 		'drops':true,
 		'name':'Standard Quarters',
 		'match':'4682',
+'hasAlt':false,
 		'flavor':'more energy and health',
 		'bonus':function(target){
 			target.crewMax+=1;
@@ -553,6 +590,7 @@ var cmp = [
 		'drops':true,
 		'name':'Command Center',
 		'match':'4',
+'hasAlt':false,
 		'flavor':'superior damage control',
 		'bonus':function(target){
 			target.crewMax+=1;
@@ -566,6 +604,7 @@ var cmp = [
 		'drops':false,
 		'name':'Alien Pustule',
 		'match':'86',
+'hasAlt':false,
 		'flavor':'crippling but tough',
 		'bonus':function(target){
 			target.health+=4;
@@ -580,6 +619,7 @@ var cmp = [
 		'drops':false,
 		'name':'Alien Pustule',
 		'match':'84',
+'hasAlt':false,
 		'flavor':'crippling but tough',
 		'bonus':function(target){
 			target.health+=4;
@@ -594,6 +634,7 @@ var cmp = [
 		'drops':true,
 		'name':'Tractor Beam Array',
 		'match':'8',
+'hasAlt':false,
 		'flavor':'pull in loots from farther away',
 		'bonus':function(target){
 			target.lootRange+=150;
@@ -604,6 +645,7 @@ var cmp = [
 		'drops':true,
 		'name':'Force Multiplier',
 		'match':'4682',
+'hasAlt':false,
 		'flavor':'spray \'n pray',
 		'bonus':function(target){
 			target.bulletBehavior.push(function(bullet, playerFired){
@@ -633,6 +675,7 @@ var cmp = [
 		'drops':true,
 		'name':'Fusion Core',
 		'match':'86',
+'hasAlt':false,
 		'flavor':'improves recharge speed and maneuverability',
 		'bonus':function(target){
 			target.energyMax+=2;
@@ -646,6 +689,7 @@ var cmp = [
 		'drops':true,
 		'name':'Fusion Core',
 		'match':'84',
+'hasAlt':false,
 		'flavor':'improves recharge speed and maneuverability',
 		'bonus':function(target){
 			target.energyMax+=2;
@@ -659,6 +703,7 @@ var cmp = [
 		'drops':true,
 		'name':'Thrust Package',
 		'match':'86',
+'hasAlt':false,
 		'flavor':'fast and flashy',
 		'bonus':function(target){
 			target.fireDamage+=1;
@@ -673,6 +718,7 @@ var cmp = [
 		'drops':true,
 		'name':'Advanced Damage Control',
 		'match':'84',
+'hasAlt':false,
 		'flavor':'improves health',
 		'bonus':function(target){
 			target.health+=12;
@@ -685,6 +731,7 @@ var cmp = [
 		'drops':true,
 		'name':'Flexible Grid',
 		'match':'46',
+'hasAlt':false,
 		'flavor':'improves maneuverability and interferes with sensors',
 		'bonus':function(target){
 			target.turnRate+=0.3;
@@ -696,6 +743,7 @@ var cmp = [
 		'drops':true,
 		'name':'Gargantuan Plasma Thrower',
 		'match':'4',
+'hasAlt':false,
 		'flavor':'burn, baby',
 		'bonus':function(target){
 			target.bulletBehavior.push(function(bullet,playerFired){
@@ -730,6 +778,7 @@ var cmp = [
 		'drops':false,
 		'name':'Container',
 		'match':'4682',
+'hasAlt':false,
 		'flavor':'Containers show on radar, and also give buckets of ore.',
 		'bonus':function(target){
 			target.sprite.profile=500;
@@ -749,6 +798,7 @@ var cmp = [
 		'drops':true,
 		'name':'Xenoid Symbiote',
 		'match':'4682',
+'hasAlt':false,
 		'flavor':'HELLO I AM FRIENDLY',
 		'bonus':function(target){
 			target.bulletSprite=14;
@@ -767,6 +817,7 @@ var cmp = [
 		'drops':true,
 		'name':'Xenoid Symbiote',
 		'match':'4682',
+'hasAlt':false,
 		'flavor':'TOGETHER WE WILL RULE THE GALAXY',
 		'bonus':function(target){
 				target.bulletSprite=14;
@@ -785,6 +836,7 @@ var cmp = [
 		'drops':false,
 		'name':'Component51',
 		'match':'4682',
+'hasAlt':false,
 		'flavor':'--',
 		'bonus':function(target){
 
@@ -795,6 +847,7 @@ var cmp = [
 		'drops':false,
 		'name':'Component52',
 		'match':'4682',
+'hasAlt':false,
 		'flavor':'--',
 		'bonus':function(target){
 
@@ -805,6 +858,7 @@ var cmp = [
 		'drops':false,
 		'name':'Component53',
 		'match':'4682',
+'hasAlt':false,
 		'flavor':'--',
 		'bonus':function(target){
 
@@ -815,6 +869,7 @@ var cmp = [
 		'drops':false,
 		'name':'Component54',
 		'match':'4682',
+'hasAlt':false,
 		'flavor':'--',
 		'bonus':function(target){
 
@@ -825,6 +880,7 @@ var cmp = [
 		'drops':false,
 		'name':'Component55',
 		'match':'4682',
+'hasAlt':false,
 		'flavor':'--',
 		'bonus':function(target){
 
@@ -835,6 +891,7 @@ var cmp = [
 		'drops':false,
 		'name':'Component56',
 		'match':'4682',
+'hasAlt':false,
 		'flavor':'--',
 		'bonus':function(target){
 
@@ -845,6 +902,7 @@ var cmp = [
 	'drops':false,
 	'name':'Component57',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -855,6 +913,7 @@ var cmp = [
 	'drops':false,
 	'name':'Component58',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -865,6 +924,7 @@ var cmp = [
 	'drops':false,
 	'name':'Component59',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -875,6 +935,7 @@ var cmp = [
 	'drops':false,
 	'name':'Component60',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -885,6 +946,7 @@ var cmp = [
 	'drops':false,
 	'name':'Component61',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -895,6 +957,7 @@ var cmp = [
 	'drops':false,
 	'name':'Component62',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -905,6 +968,7 @@ var cmp = [
 	'drops':false,
 	'name':'Component63',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -915,6 +979,7 @@ var cmp = [
 	'drops':true,
 	'name':'Thermal Monitoring System',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'warns when in enemy sensor range',
 	'bonus':function(target){
 		target.profileShow=true;
@@ -926,6 +991,7 @@ var cmp = [
 	'drops':true,
 	'name':'Worn Armor Plating',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'heavy armor, increases mass',
 	'bonus':function(target){
 		target.health+=6;
@@ -938,6 +1004,7 @@ var cmp = [
 	'drops':true,
 	'name':'Discount Attitude Jet',
 	'match':'6',
+'hasAlt':false,
 	'flavor':'improves turn rate, lowers maximum energy',
 	'bonus':function(target){
 		target.turnRate+=0.6;
@@ -953,6 +1020,7 @@ var cmp = [
 	'drops':true,
 	'name':'Long Range Sensor',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'track many more targets',
 	'bonus':function(target){
 		target.radarTargets+=5;
@@ -963,6 +1031,7 @@ var cmp = [
 	'drops':true,
 	'name':'Durasteel Plating',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'strong armor, inhibits aim',
 	'bonus':function(target){
 		target.health+=9;
@@ -976,6 +1045,7 @@ var cmp = [
 	'drops':true,
 	'name':'Angular Ion Thrust',
 	'match':'6',
+'hasAlt':false,
 	'flavor':'basic turning jet',
 	'bonus':function(target){
 		target.turnRate+=0.4;
@@ -986,6 +1056,7 @@ var cmp = [
 	'drops':true,
 	'name':'Stealth Wing',
 	'match':'2',
+'hasAlt':false,
 	'flavor':'increases acceleration, makes you harder to detect',
 	'bonus':function(target){
 		target.acceleration+=0.6;
@@ -999,6 +1070,7 @@ var cmp = [
 	'drops':true,
 	'name':'Command Deck',
 	'match':'2',
+'hasAlt':false,
 	'flavor':'enhances many systems',
 	'bonus':function(target){
 		target.health+=5;
@@ -1013,6 +1085,7 @@ var cmp = [
 	'drops':true,
 	'name':'Crew Pod',
 	'match':'462',
+'hasAlt':false,
 	'flavor':'improves health and energy recharge',
 	'bonus':function(target){
 		target.health+=6;
@@ -1026,6 +1099,7 @@ var cmp = [
 	'drops':true,
 	'name':'Mining Laser',
 	'match':'4',
+'hasAlt':false,
 	'flavor':'extracts ore from asteroids',
 	'bonus':function(target){
 		target.fireSound=ui.sound_pew2;
@@ -1058,6 +1132,7 @@ function(tgt){
 	'drops':true,
 	'name':'Habitat Module',
 	'match':'26',
+'hasAlt':false,
 	'flavor':'light and tough',
 	'bonus':function(target){
 		target.crewMax+=1;
@@ -1070,6 +1145,7 @@ function(tgt){
 	'id':75,
 	'name':'Habitat Module',
 	'match':'42',
+'hasAlt':false,
 	'flavor':'light and tough',
 	'drops':true,
 	'bonus':function(target){
@@ -1085,6 +1161,7 @@ function(tgt){
 	'drops':true,
 	'name':'AWSM',
 	'match':'62',
+'hasAlt':true,
 	'flavor':'press [Z] to self-destruct, destroying nearby ships',
 	'bonus':function(target){
 
@@ -1118,6 +1195,7 @@ function(tgt){
 	'drops':true,
 	'name':'skul-gun',
 	'match':'82',
+'hasAlt':false,
 	'flavor':'drains targets\' energy',
 	'bonus':function(target){
 		target.sprite.profile+=20;
@@ -1136,6 +1214,7 @@ function(tgt){
 	'drops':true,
 	'name':'Xenoid Navigation Unit',
 	'match':'26',
+'hasAlt':false,
 	'flavor':'mysteriously causes drag',
 	'bonus':function(target){
 		target.turnRate+=0.5;
@@ -1153,6 +1232,7 @@ function(tgt){
 	'drops':true,
 	'name':'Xenoid Pulse Laser',
 	'match':'2',
+'hasAlt':false,
 	'flavor':'cheap, strong shots',
 	'bonus':function(target){
 		target.fireRate*=1.1;
@@ -1167,6 +1247,7 @@ function(tgt){
 	'drops':true,
 	'name':'Mechanoid Husk',
 	'match':'26',
+'hasAlt':false,
 	'flavor':'armored yet maneuverable',
 	'bonus':function(target){
 		target.health+=4;
@@ -1182,6 +1263,7 @@ function(tgt){
 	'drops':true,
 	'name':'Mechanoid Turret',
 	'match':'24',
+'hasAlt':false,
 	'flavor':'strong tracking ability',
 	'bonus':function(target){
 		target.fireDamage+=1;
@@ -1195,6 +1277,7 @@ function(tgt){
 	'drops':true,
 	'name':'External Power Plant',
 	'match':'6',
+'hasAlt':false,
 	'flavor':'ore pickups also give energy',
 	'bonus':function(target){
 		target.oreEnergy+=6;
@@ -1205,6 +1288,7 @@ function(tgt){
 	'drops':true,
 	'name':'Force Cannon',
 	'match':'4',
+'hasAlt':false,
 	'flavor':'adds knockback',
 	'bonus':function(target){
 		target.bulletSprite=3;
@@ -1221,6 +1305,7 @@ function(tgt){
 	'drops':true,
 	'name':'Crystalline Amplifier',
 	'match':'26',
+'hasAlt':false,
 	'flavor':'increases the size of your shots',
 	'bonus':function(target){
 		target.bulletBehavior.push(function(bullet){
@@ -1235,6 +1320,7 @@ function(tgt){
 	'drops':true,
 	'name':'Crystalline Amplifier',
 	'match':'42',
+'hasAlt':false,
 	'flavor':'increases the size of your shots',
 	'bonus':function(target){
 		target.bulletBehavior.push(function(bullet){
@@ -1249,6 +1335,7 @@ function(tgt){
 	'drops':true,
 	'name':'Collector Vine',
 	'match':'26',
+'hasAlt':false,
 	'flavor':'seeks out more loot',
 	'bonus':function(target){
 		target.dropRate+=0.02;
@@ -1260,6 +1347,7 @@ function(tgt){
 	'drops':true,
 	'name':'Nutriment Tree',
 	'match':'42',
+'hasAlt':true,
 	'flavor':'Press [Z] to spawn healing - 30 sec cooldown',
 	'bonus':function(target){
 		target.alt=function(){
@@ -1278,6 +1366,7 @@ function(tgt){
 	'drops':true,
 	'name':'Petroleum Engine',
 	'match':'6',
+'hasAlt':false,
 	'flavor':'shields you when you hit enemies',
 	'bonus':function(target){
 
@@ -1299,6 +1388,7 @@ function(tgt){
 	'drops':true,
 	'name':'Mars Logging Ripsaw',
 	'match':'4',
+'hasAlt':false,
 	'flavor':'grapple with foes',
 	'bonus':function(target){
 		target.fireDamage+=2;
@@ -1318,6 +1408,7 @@ function(tgt){
 	'drops':true,
 	'name':'Green Reactor',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 	target.TODO+=1;
@@ -1328,6 +1419,7 @@ function(tgt){
 	'drops':true,
 	'name':'Extended Life Support',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -1338,6 +1430,7 @@ function(tgt){
 	'drops':true,
 	'name':'Organic Armor',
 	'match':'26',
+'hasAlt':false,
 	'flavor':'damage heals over time',
 	'bonus':function(target){
 		target.turnRate+=0.1;
@@ -1360,6 +1453,7 @@ function(tgt){
 	'drops':true,
 	'name':'Organic Armor',
 	'match':'42',
+'hasAlt':false,
 	'flavor':'damage heals over time',
 	'bonus':function(target){
 		target.turnRate+=0.1;
@@ -1383,6 +1477,7 @@ function(tgt){
 	'drops':false,
 	'name':'Component94',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -1393,6 +1488,7 @@ function(tgt){
 	'drops':false,
 	'name':'Component95',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -1403,6 +1499,7 @@ function(tgt){
 	'drops':true,
 	'name':'Pirate CPU',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'track an extra target, improves firerate',
 	'bonus':function(target){
 		target.fireRate*=0.8;
@@ -1415,6 +1512,7 @@ function(tgt){
 	'drops':true,
 	'name':'Thermal Resonator',
 	'match':'4682',
+'hasAlt':true,
 	'flavor':'press [Z] to cause utter chaos',
 	'bonus':function(target){
 		target.altCheck=function(){
@@ -1449,6 +1547,7 @@ function(tgt){
 	'drops':true,
 	'name':'Destroyed Airlock',
 	'match':'2',
+'hasAlt':true,
 	'flavor':'press [Z] to unleash a damaging halo of contagion',
 	'bonus':function(target){
 
@@ -1504,6 +1603,7 @@ function(tgt){
 	'drops':true,
 	'name':'Advanced Processor',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'improves firing, maneuverability, and damage control',
 	'bonus':function(target){
 		target.fireRate*=0.8;
@@ -1517,6 +1617,7 @@ function(tgt){
 	'drops':true,
 	'name':'Cloaking Device',
 	'match':'4682',
+'hasAlt':true,
 	'flavor':'hold [Z] to throw off attackers',
 	'bonus':function(target){
 		target.altCheck=function(){
@@ -1568,6 +1669,7 @@ function(tgt){
 	'drops':true,
 	'name':'Weapon Rotator',
 	'match':'4',
+'hasAlt':false,
 	'flavor':'greatly improves fire rate, but generates heat',
 	'bonus':function(target){
 		target.fireRate*=0.5;
@@ -1581,6 +1683,7 @@ function(tgt){
 	'drops':true,
 	'name':'Stealth Wing',
 	'match':'8',
+'hasAlt':false,
 	'flavor':'increases turn rate, makes you harder to detect',
 	'bonus':function(target){
 		target.turnRate+=0.5;
@@ -1592,6 +1695,7 @@ function(tgt){
 	'drops':true,
 	'name':'Command Deck',
 	'match':'8',
+'hasAlt':false,
 	'flavor':'improves weapons and other critical systems',
 	'bonus':function(target){
 		target.fireDamage+=1;
@@ -1607,6 +1711,7 @@ function(tgt){
 	'drops':true,
 	'name':'Inline Warp Thrust',
 	'match':'46',
+'hasAlt':false,
 	'flavor':'high speed, decreases energy',
 	'bonus':function(target){
 		target.acceleration+=0.8;
@@ -1621,6 +1726,7 @@ function(tgt){
 	'drops':true,
 	'name':'Observation Unit',
 	'match':'48',
+'hasAlt':false,
 	'flavor':'extra range and track an additional target',
 	'bonus':function(target){
 		target.radarTargets+=1;
@@ -1633,6 +1739,7 @@ function(tgt){
 	'drops':true,
 	'name':'Habitat Module',
 	'match':'86',
+'hasAlt':false,
 	'flavor':'light and tough',
 	'bonus':function(target){
 		target.crewMax+=1;
@@ -1647,6 +1754,7 @@ function(tgt){
 	'drops':true,
 	'name':'Habitat Module',
 	'match':'84',
+'hasAlt':false,
 	'flavor':'light and tough',
 	'bonus':function(target){
 		target.crewMax+=1;
@@ -1661,6 +1769,7 @@ function(tgt){
 	'drops':true,
 	'name':'Vidscreen Ad <BurgerJoint>',
 	'match':'8',
+'hasAlt':false,
 	'flavor':'more drops, high profile',
 	'bonus':function(target){
 		target.sprite.profile+=60;
@@ -1673,6 +1782,7 @@ function(tgt){
 	'drops':true,
 	'name':'Vidscreen Ad <Cola>',
 	'match':'8',
+'hasAlt':false,
 	'flavor':'more drops, high profile',
 	'bonus':function(target){
 		target.sprite.profile+=60;
@@ -1684,6 +1794,7 @@ function(tgt){
 	'drops':true,
 	'name':'Antimatter Furnace',
 	'match':'862',
+'hasAlt':false,
 	'flavor':'faster energy return, very unsafe',
 	'bonus':function(target){
 		target.energyAmount+=4;
@@ -1702,6 +1813,7 @@ function(tgt){
 	'drops':true,
 	'name':'Transporter',
 	'match':'4',
+'hasAlt':true,
 	'flavor':'press [Z] to steal a nearby enemy vessel',
 	'bonus':function(target){
 		if(target.ai==aiModes['player']){ //no baddie should EVER have this
@@ -1741,6 +1853,7 @@ function(tgt){
 	'drops':true,
 	'name':'Mechanoid Husk',
 	'match':'86',
+'hasAlt':false,
 	'flavor':'armored yet maneuverable',
 	'bonus':function(target){
 		target.health+=4;
@@ -1757,6 +1870,7 @@ function(tgt){
 	'drops':true,
 	'name':'Mechanoid Jumpdrive',
 	'match':'4',
+'hasAlt':true,
 	'flavor':'press [Z] to teleport',
 	'bonus':function(target){
 
@@ -1796,6 +1910,7 @@ function(tgt){
 	'drops':true,
 	'name':'Secured Container',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'Improve energy recharge.',
 	'bonus':function(target){
 			target.energyRate*=0.8; 
@@ -1806,6 +1921,7 @@ function(tgt){
 	'drops':true,
 	'name':'Jagged Armor Plating',
 	'match':'4',
+'hasAlt':false,
 	'flavor':'heavy, wicked-looking armor',
 	'bonus':function(target){
 		target.health+=5;
@@ -1820,6 +1936,7 @@ function(tgt){
 	'drops':true,
 	'name':'Crystalline Amplifier',
 	'match':'86',
+'hasAlt':false,
 	'flavor':'increases the size of your shots',
 	'bonus':function(target){
 		target.bulletBehavior.push(function(bullet){
@@ -1835,6 +1952,7 @@ function(tgt){
 	'drops':true,
 	'name':'Crystalline Amplifier',
 	'match':'84',
+'hasAlt':false,
 	'flavor':'increases the size of your shots',
 	'bonus':function(target){
 		target.bulletBehavior.push(function(bullet){
@@ -1849,6 +1967,7 @@ function(tgt){
 	'drops':true,
 	'name':'Propelling Fruit',
 	'match':'86',
+'hasAlt':false,
 	'flavor':'increase max velocity, slow acceleration',
 	'bonus':function(target){
 		target.acceleration*=0.8;
@@ -1862,6 +1981,7 @@ function(tgt){
 	'drops':true,
 	'name':'Roots',
 	'match':'84',
+'hasAlt':false,
 	'flavor':'degrade opponent\'s acceleration',
 	'bonus':function(target){
 		target.bulletHitBehavior.push(function(sprite,bullet){
@@ -1887,6 +2007,7 @@ function(tgt){
 	'drops':true,
 	'name':'Annihilator Trebuchet',
 	'match':'6',
+'hasAlt':false,
 	'flavor':'spiraling shots',
 	'bonus':function(target){
 		target.fireVelocity*=0.8;
@@ -1940,6 +2061,7 @@ function(tgt){
 	'drops':true,
 	'name':'Spear of Destiny',
 	'match':'4',
+'hasAlt':false,
 	'flavor':'shots pierce enemies',
 	'bonus':function(target){
 		target.bulletHitBehavior.push(function(sprite,bullet){
@@ -1969,6 +2091,7 @@ function(tgt){
 	'drops':false,
 	'name':'Orb of Damage',
 	'match':'8',
+'hasAlt':false,
 	'flavor':'aiming required',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -1980,6 +2103,7 @@ function(tgt){
 	'drops':true,
 	'name':'Heisenberg Turbine',
 	'match':'46',
+'hasAlt':false,
 	'flavor':'indeterminate position in combat',
 	'bonus':function(target){
 		target.acceleration+=0.3;
@@ -2004,6 +2128,7 @@ function(tgt){
 	'drops':true,
 	'name':'Organic Armor',
 	'match':'864',
+'hasAlt':false,
 	'flavor':'damage heals over time',
 	'bonus':function(target){
 		target.turnRate+=0.1;
@@ -2027,6 +2152,7 @@ function(tgt){
 	'drops':true,
 	'name':'Organic Armor',
 	'match':'84',
+'hasAlt':false,
 	'flavor':'damage heals over time',
 	'bonus':function(target){
 		target.turnRate+=0.1;
@@ -2050,6 +2176,7 @@ function(tgt){
 	'drops':false,
 	'name':'Component126',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -2060,6 +2187,7 @@ function(tgt){
 	'drops':false,
 	'name':'Component127',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -2070,6 +2198,7 @@ function(tgt){
 	'drops':true,
 	'name':'Contraband Missiles',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'high damage, unreliable speed',
 	'bonus':function(target){
 		target.bulletSprite=2;
@@ -2087,6 +2216,7 @@ function(tgt){
 	'drops':true,
 	'name':'Scavenged Exoskeleton',
 	'match':'82',
+'hasAlt':false,
 	'flavor':'light frame fitted with thrusters',
 	'bonus':function(target){
 		target.thrustBehavior=twistSmoke;
@@ -2103,6 +2233,7 @@ function(tgt){
 	'drops':true,
 	'name':'Aftermarket Gatling',
 	'match':'8',
+'hasAlt':false,
 	'flavor':'erratic fire rate',
 	'bonus':function(target){
 		target.bulletSprite=1;
@@ -2126,6 +2257,7 @@ function(tgt){
 	'drops':true,
 	'name':'Freedom Missiles',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'guided, long-range',
 	'bonus':function(target){
 		target.bulletSprite=2;
@@ -2144,6 +2276,7 @@ function(tgt){
 	'drops':true,
 	'name':'Ultralight Wing',
 	'match':'82',
+'hasAlt':false,
 	'flavor':'lightly armored, improves acceleration',
 	'bonus':function(target){
 		target.health+=2;
@@ -2158,6 +2291,7 @@ function(tgt){
 	'drops':true,
 	'name':'Gleaming Autocannon',
 	'match':'8',
+'hasAlt':false,
 	'flavor':'BRRRRRRAAAAAAPPPPPP',
 	'bonus':function(target){
 		target.bulletSprite=1;
@@ -2174,6 +2308,7 @@ function(tgt){
 	'drops':true,
 	'name':'Elite Wing',
 	'match':'26',
+'hasAlt':false,
 	'flavor':'finest technology',
 	'bonus':function(target){
 		target.acceleration+=1;
@@ -2188,6 +2323,7 @@ function(tgt){
 	'drops':true,
 	'name':'Elite Laser',
 	'match':'42',
+'hasAlt':false,
 	'flavor':'superior accuracy',
 	'bonus':function(target){
 		target.fireVelocity+=800;
@@ -2206,6 +2342,7 @@ function(tgt){
 	'drops':true,
 	'name':'Ancient Armor',
 	'match':'26',
+'hasAlt':false,
 	'flavor':'brimming with random technology',
 	'bonus':function(target){
 		target.health+=8;
@@ -2219,6 +2356,7 @@ function(tgt){
 	'drops':true,
 	'name':'Ancient Armor',
 	'match':'42',
+'hasAlt':false,
 	'flavor':'brimming with random technology',
 	'bonus':function(target){
 		target.fireDamage+=2;
@@ -2234,6 +2372,7 @@ function(tgt){
 	'drops':true,
 	'name':'Tank',
 	'match':'26',
+'hasAlt':false,
 	'flavor':'Extra combat energy',
 	'bonus':function(target){
 		target.health+=2;
@@ -2246,6 +2385,7 @@ function(tgt){
 	'drops':true,
 	'name':'Tank',
 	'match':'42',
+'hasAlt':false,
 	'flavor':'Extra combat energy',
 	'bonus':function(target){
 		target.health+=2;
@@ -2259,6 +2399,7 @@ function(tgt){
 	'drops':true,
 	'name':'Generic Armor',
 	'match':'26',
+'hasAlt':false,
 	'flavor':'Lightweight and poor quality',
 	'bonus':function(target){
 		target.health+=4;
@@ -2271,6 +2412,7 @@ function(tgt){
 	'drops':true,
 	'name':'Generic Armor',
 	'match':'42',
+'hasAlt':false,
 	'flavor':'Lightweight and poor quality',
 	'bonus':function(target){
 		target.health+=4;
@@ -2284,6 +2426,7 @@ function(tgt){
 	'drops':true,
 	'name':'Hauler Obsolete Thruster',
 	'match':'426',
+'hasAlt':false,
 	'flavor':'slow, poor control',
 	'bonus':function(target){
 		target.thrustBehavior=foulThrust;
@@ -2296,6 +2439,7 @@ function(tgt){
 	'drops':true,
 	'name':'Hauler Modified Cannon',
 	'match':'4',
+'hasAlt':false,
 	'flavor':'still works?',
 	'bonus':function(target){
 		target.fireDamage+=1;
@@ -2311,6 +2455,7 @@ function(tgt){
 	'drops':true,
 	'name':'Luxury Quarters',
 	'match':'26',
+'hasAlt':false,
 	'flavor':'mostly useless in combat',
 	'bonus':function(target){
 		target.crewMax+=1;
@@ -2326,6 +2471,7 @@ function(tgt){
 	'drops':true,
 	'name':'Luxury Quarters',
 	'match':'42',
+'hasAlt':false,
 	'flavor':'mostly useless in combat',
 	'bonus':function(target){
 		target.crewMax+=1;
@@ -2342,6 +2488,7 @@ function(tgt){
 	'drops':false,
 	'name':'Question Box',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.sprite.profile=500;
@@ -2378,6 +2525,7 @@ target.effects=function(){
 	'drops':false,
 	'name':'Question Box',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -2388,6 +2536,7 @@ target.effects=function(){
 	'drops':true,
 	'name':'Junker',
 	'match':'426',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -2399,6 +2548,7 @@ target.effects=function(){
 	'drops':true,
 	'name':'Junker',
 	'match':'42',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -2410,6 +2560,7 @@ target.effects=function(){
 	'drops':true,
 	'name':'Xenoid Symbiote',
 	'match':'26',
+'hasAlt':false,
 	'flavor':'RELEASE YOUR CONSCIOUSNESS',
 	'bonus':function(target){
 				target.bulletSprite=14;
@@ -2429,6 +2580,7 @@ target.effects=function(){
 	'drops':true,
 	'name':'Xenoid Symbiote',
 	'match':'42',
+'hasAlt':false,
 	'flavor':'THE VOID SCREAMS FOR YOU',
 	'bonus':function(target){
 				target.bulletSprite=14;
@@ -2448,6 +2600,7 @@ target.effects=function(){
 	'drops':true,
 	'name':'Augmented Xenoid Symbiote',
 	'match':'26',
+'hasAlt':false,
 	'flavor':'I AM ONE WITH THE MACHINE',
 	'bonus':function(target){
 				target.bulletSprite=14;
@@ -2467,6 +2620,7 @@ target.effects=function(){
 	'drops':true,
 	'name':'Augmented Xenoid Symbiote',
 	'match':'42',
+'hasAlt':false,
 	'flavor':'OUR MINDS WILL MERGE',
 	'bonus':function(target){
 				target.bulletSprite=14;
@@ -2487,6 +2641,7 @@ target.effects=function(){
 	'drops':true,
 	'name':'Durasteel Plating',
 	'match':'26',
+'hasAlt':false,
 	'flavor':'strong armor, inhibits aim',
 	'bonus':function(target){
 		target.health+=9;
@@ -2500,6 +2655,7 @@ target.effects=function(){
 	'drops':true,
 	'name':'Durasteel Plating',
 	'match':'42',
+'hasAlt':false,
 	'flavor':'strong armor, inhibits aim',
 	'bonus':function(target){
 		target.health+=9;
@@ -2513,6 +2669,7 @@ target.effects=function(){
 	'drops':true,
 	'name':'Worn Armor Plating',
 	'match':'26',
+'hasAlt':false,
 	'flavor':'heavy armor, increases mass',
 	'bonus':function(target){
 		target.health+=6;
@@ -2525,6 +2682,7 @@ target.effects=function(){
 	'drops':true,
 	'name':'Worn Armor Plating',
 	'match':'42',
+'hasAlt':false,
 		'flavor':'heavy armor, increases mass',
 	'bonus':function(target){
 		target.health+=6;
@@ -2537,6 +2695,7 @@ target.effects=function(){
 	'drops':true,
 	'name':'Battle-worn Panel',
 	'match':'62',
+'hasAlt':false,
 	'flavor':'medium armor, bonus damage',
 	'bonus':function(target){
 		target.health+=6;
@@ -2550,6 +2709,7 @@ target.effects=function(){
 	'drops':true,
 	'name':'Battle-worn Panel',
 	'match':'42',
+'hasAlt':false,
 	'flavor':'medium armor, bonus damage',
 	'bonus':function(target){
 		target.health+=6;
@@ -2563,6 +2723,7 @@ target.effects=function(){
 	'drops':true,
 	'name':'Illegal Cargo',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'increases energy, attracts attention',
 	'bonus':function(target){
 		target.energyMax+=6;
@@ -2575,6 +2736,7 @@ target.effects=function(){
 	'drops':true,
 	'name':'Generic Armor',
 	'match':'486',
+'hasAlt':false,
 	'flavor':'Lightweight and poor quality',
 	'bonus':function(target){
 		target.health+=4;
@@ -2588,6 +2750,7 @@ target.effects=function(){
 	'drops':true,
 	'name':'Generic Armor',
 	'match':'426',
+'hasAlt':false,
 	'flavor':'Lightweight and poor quality',
 	'bonus':function(target){
 		target.health+=4;
@@ -2601,6 +2764,7 @@ target.effects=function(){
 	'drops':true,
 	'name':'Refuse Cannon',
 	'match':'482',
+'hasAlt':false,
 	'flavor':'Spew scattering refuse at targets',
 	'bonus':function(target){
 		target.bulletSprite=8;
@@ -2643,6 +2807,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component164',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -2653,6 +2818,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component165',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -2663,6 +2829,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Elite Wing',
 	'match':'86',
+'hasAlt':false,
 	'flavor':'finest technology',
 	'bonus':function(target){
 		target.acceleration+=1;
@@ -2678,6 +2845,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Elite Command',
 	'match':'84',
+'hasAlt':false,
 	'flavor':'energy, health, firerate',
 	'bonus':function(target){
 		target.health+=4;
@@ -2691,6 +2859,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Ancient Armor',
 	'match':'86',
+'hasAlt':false,
 	'flavor':'brimming with random technology',
 	'bonus':function(target){
 		target.health+=8;
@@ -2705,6 +2874,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Ancient Armor',
 	'match':'84',
+'hasAlt':false,
 	'flavor':'brimming with random technology',
 	'bonus':function(target){
 		target.health+=16;
@@ -2718,6 +2888,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Tank',
 	'match':'86',
+'hasAlt':false,
 	'flavor':'Extra combat energy',
 	'bonus':function(target){
 		target.health+=2;
@@ -2730,6 +2901,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Tank',
 	'match':'84',
+'hasAlt':false,
 	'flavor':'Extra combat energy',
 	'bonus':function(target){
 		target.health+=2;
@@ -2742,6 +2914,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Generic Armor',
 	'match':'86',
+'hasAlt':false,
 	'flavor':'Lightweight and poor quality',
 	'bonus':function(target){
 		target.health+=4;
@@ -2755,6 +2928,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Generic Armor',
 	'match':'84',
+'hasAlt':false,
 	'flavor':'Lightweight and poor quality',
 	'bonus':function(target){
 		target.health+=4;
@@ -2768,6 +2942,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Hauler Living Quarters',
 	'match':'86',
+'hasAlt':false,
 	'flavor':'unsanitary',
 	'bonus':function(target){
 		target.crewMax+=1;
@@ -2780,6 +2955,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Hauler Scanner Unit',
 	'match':'4',
+'hasAlt':false,
 	'flavor':'heavy, more targets and faster turns',
 	'bonus':function(target){
 		target.radarTargets+=3;
@@ -2792,6 +2968,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Luxury Quarters',
 	'match':'86',
+'hasAlt':false,
 	'flavor':'mostly useless in combat',
 	'bonus':function(target){
 		target.crewMax+=1;
@@ -2808,6 +2985,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Luxury Quarters',
 	'match':'84',
+'hasAlt':false,
 	'flavor':'mostly useless in combat',
 	'bonus':function(target){
 		target.crewMax+=1;
@@ -2824,6 +3002,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Question Box',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -2834,6 +3013,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Question Box',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -2844,6 +3024,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Junker',
 	'match':'86',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -2855,6 +3036,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Junker',
 	'match':'84',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -2866,6 +3048,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Xenoid Symbiote',
 	'match':'86',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -2877,6 +3060,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Xenoid Symbiote',
 	'match':'84',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -2888,6 +3072,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Augmented Xenoid Symbiote',
 	'match':'86',
+'hasAlt':false,
 	'flavor':'OUR SONG, TOGETHER',
 	'bonus':function(target){
 				target.bulletSprite=14;
@@ -2908,6 +3093,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Augmented Xenoid Symbiote',
 	'match':'84',
+'hasAlt':false,
 	'flavor':'SUFFERING',
 	'bonus':function(target){
 				target.bulletSprite=14;
@@ -2928,6 +3114,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Durasteel Plating',
 	'match':'86',
+'hasAlt':false,
 	'flavor':'strong armor, inhibits aim',
 	'bonus':function(target){
 		target.health+=9;
@@ -2941,6 +3128,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Durasteel Plating',
 	'match':'84',
+'hasAlt':false,
 	'flavor':'strong armor, inhibits aim',
 	'bonus':function(target){
 		target.health+=9;
@@ -2954,6 +3142,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Worn Armor Plating',
 	'match':'86',
+'hasAlt':false,
 		'flavor':'heavy armor, increases mass',
 	'bonus':function(target){
 		target.health+=6;
@@ -2966,6 +3155,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Worn Armor Plating',
 	'match':'84',
+'hasAlt':false,
 	'flavor':'heavy armor, increases mass',
 	'bonus':function(target){
 		target.health+=6;
@@ -2978,6 +3168,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Battle-worn Panel',
 	'match':'68',
+'hasAlt':false,
 	'flavor':'medium armor, bonus damage',
 	'bonus':function(target){
 		target.health+=6;
@@ -2991,6 +3182,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Battle-worn Panel',
 	'match':'48',
+'hasAlt':false,
 	'flavor':'medium armor, bonus damage',
 	'bonus':function(target){
 		target.health+=6;
@@ -3004,6 +3196,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Black',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3014,6 +3207,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Black',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3024,6 +3218,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Black',
 	'match':'4',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3034,6 +3229,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component195',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -3044,6 +3240,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component196',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -3054,6 +3251,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component197',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -3064,6 +3262,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Spine',
 	'match':'26',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3074,6 +3273,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Spine',
 	'match':'42',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3084,6 +3284,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Batlike Wing',
 	'match':'26',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3094,6 +3295,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Batlike Wing',
 	'match':'42',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3104,6 +3306,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Ascended Watcher',
 	'match':'26',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3115,6 +3318,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Ascended Watcher',
 	'match':'42',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3126,6 +3330,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Ascended Watcher',
 	'match':'26',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3137,6 +3342,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Ascended Watcher',
 	'match':'42',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3148,6 +3354,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Stolen Nacelles',
 	'match':'26',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 			target.thrustBehavior=cleanSmoke;
@@ -3163,6 +3370,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Enterprising Violation',
 	'match':'42',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.fireSound=ui.sound_pew2;
@@ -3191,6 +3399,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Augmentor',
 	'match':'26',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3202,6 +3411,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Augmentor',
 	'match':'42',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3213,6 +3423,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Newguy',
 	'match':'26',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3224,6 +3435,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Newguy',
 	'match':'42',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3235,6 +3447,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Newguy',
 	'match':'26',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3246,6 +3459,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Newguy',
 	'match':'42',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3257,6 +3471,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Meeb',
 	'match':'26',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 			target.ai=aiModes['asteroidInit'];
@@ -3268,6 +3483,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Meeb',
 	'match':'42',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 			target.ai=aiModes['asteroidInit'];
@@ -3278,6 +3494,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component216',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -3288,6 +3505,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component217',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -3298,6 +3516,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component218',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -3308,6 +3527,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component219',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -3318,6 +3538,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component220',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -3328,6 +3549,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component221',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -3338,6 +3560,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component222',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -3348,6 +3571,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component223',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -3358,6 +3582,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Black',
 	'match':'6',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3368,6 +3593,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Black',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3378,6 +3604,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Black',
 	'match':'4',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3388,6 +3615,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component227',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -3398,6 +3626,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component228',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -3408,6 +3637,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component229',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -3418,6 +3648,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Spine',
 	'match':'86',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3428,6 +3659,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Spine',
 	'match':'84',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3438,6 +3670,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Batlike Wing',
 	'match':'86',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3448,6 +3681,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Batlike Wing',
 	'match':'84',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3458,6 +3692,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Ascended Watcher',
 	'match':'86',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3469,6 +3704,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Ascended Watcher',
 	'match':'84',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3480,6 +3716,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Ascended Watcher',
 	'match':'86',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3491,6 +3728,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Ascended Watcher',
 	'match':'84',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3502,6 +3740,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Stolen Nacelles',
 	'match':'86',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 			target.thrustBehavior=cleanSmoke;
@@ -3519,6 +3758,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Enterprising Violation',
 	'match':'84',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.fireSound=ui.sound_pew2;
@@ -3547,6 +3787,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Augmentor',
 	'match':'86',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3558,6 +3799,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Augmentor',
 	'match':'84',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3569,6 +3811,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Newguy',
 	'match':'86',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3580,6 +3823,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Newguy',
 	'match':'84',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3591,6 +3835,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Newguy',
 	'match':'862',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3602,6 +3847,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Newguy',
 	'match':'842',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3613,6 +3859,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Meeb',
 	'match':'86',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 			target.ai=aiModes['asteroidInit'];
@@ -3624,6 +3871,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Meeb',
 	'match':'84',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 			target.ai=aiModes['asteroidInit'];
@@ -3635,6 +3883,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component248',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -3645,6 +3894,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component249',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -3655,6 +3905,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component250',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -3665,6 +3916,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component251',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -3675,6 +3927,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component252',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -3685,6 +3938,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component253',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -3695,6 +3949,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component254',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -3705,6 +3960,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component255',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -3715,6 +3971,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Black',
 	'match':'486',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3725,6 +3982,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Black-257',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3735,6 +3993,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Black-258',
 	'match':'6',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3745,6 +4004,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-259',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -3755,6 +4015,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-260',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -3765,6 +4026,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-261',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -3777,6 +4039,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Spine',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3787,6 +4050,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Spine',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3797,6 +4061,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component264',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3807,6 +4072,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component265',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3817,6 +4083,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Ascended Watcher',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3828,6 +4095,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Ascended Watcher',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3839,6 +4107,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component268',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3850,6 +4119,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component269',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3861,6 +4131,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component270',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3872,6 +4143,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component271',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3882,6 +4154,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component272',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3893,6 +4166,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component273',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3904,6 +4178,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Newguy',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3915,6 +4190,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Newguy',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3926,6 +4202,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Newguy',
 	'match':'86',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3937,6 +4214,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Newguy',
 	'match':'84',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -3948,6 +4226,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Meeb',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 			target.ai=aiModes['asteroidInit'];
@@ -3961,6 +4240,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Meeb',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 			target.ai=aiModes['asteroidInit'];
@@ -3971,6 +4251,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-280',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -3981,6 +4262,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-281',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -3991,6 +4273,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-282',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4001,6 +4284,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-283',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4011,6 +4295,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-284',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4021,6 +4306,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-285',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4031,6 +4317,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-286',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4041,6 +4328,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-287',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4051,6 +4339,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Black-288',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -4061,6 +4350,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Black-289',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -4071,6 +4361,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Black-290',
 	'match':'42',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -4081,6 +4372,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-291',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4091,6 +4383,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-292',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4101,6 +4394,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-293',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4111,6 +4405,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-294',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4121,6 +4416,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-295',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4131,6 +4427,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-296',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4141,6 +4438,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-297',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4151,6 +4449,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-298',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4161,6 +4460,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-299',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4171,6 +4471,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-300',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4181,6 +4482,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-301',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4191,6 +4493,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-302',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4201,6 +4504,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-303',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4211,6 +4515,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-304',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4221,6 +4526,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-305',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4231,6 +4537,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-306',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4241,6 +4548,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-307',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4251,6 +4559,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-308',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4261,6 +4570,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-309',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4271,6 +4581,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-310',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4281,6 +4592,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-311',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4291,6 +4603,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-312',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4301,6 +4614,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-313',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4311,6 +4625,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-314',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4321,6 +4636,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-315',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4331,6 +4647,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-316',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4341,6 +4658,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-317',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4351,6 +4669,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-318',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4361,6 +4680,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-319',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4371,6 +4691,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Black-320',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -4381,6 +4702,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Black-321',
 	'match':'82',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -4391,6 +4713,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Black-322',
 	'match':'8',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 		target.TODO+=1;
@@ -4401,6 +4724,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-323',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4411,6 +4735,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-324',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4421,6 +4746,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-325',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4431,6 +4757,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-326',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4441,6 +4768,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-327',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4451,6 +4779,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-328',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4461,6 +4790,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-329',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4471,6 +4801,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-330',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4481,6 +4812,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-331',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4491,6 +4823,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-332',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4501,6 +4834,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-333',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4511,6 +4845,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-334',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4521,6 +4856,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-335',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4531,6 +4867,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-336',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4541,6 +4878,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-337',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4551,6 +4889,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-338',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4561,6 +4900,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-339',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4571,6 +4911,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-340',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4581,6 +4922,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-341',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4591,6 +4933,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-342',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4601,6 +4944,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-343',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4611,6 +4955,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-344',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4621,6 +4966,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-345',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4631,6 +4977,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-346',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4641,6 +4988,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-347',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4651,6 +4999,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-348',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4661,6 +5010,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-349',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4671,6 +5021,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-350',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4681,6 +5032,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-351',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4691,6 +5043,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Radioactive Thruster',
 	'match':'4628',
+'hasAlt':false,
 	'flavor':'mostly safe',
 	'bonus':function(target){
 		target.thrustBehavior=unstableSmoke;
@@ -4707,6 +5060,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Rusted Wing',
 	'match':'84',
+'hasAlt':false,
 	'flavor':'improves maneuverability',
 	'bonus':function(target){
 		target.turnRate+=0.3;
@@ -4721,6 +5075,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Capacitor Unit',
 	'match':'682',
+'hasAlt':false,
 	'flavor':'basic energy storage',
 	'bonus':function(target){
 		target.energyMax+=6;
@@ -4732,6 +5087,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Capacitor Unit',
 	'match':'482',
+'hasAlt':false,
 	'flavor':'basic energy storage',
 	'bonus':function(target){
 		target.energyMax+=6;
@@ -4742,6 +5098,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-356',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4752,6 +5109,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-357',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4762,6 +5120,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Worn Armor Plating',
 	'match':'2',
+'hasAlt':false,
 	'flavor':'heavy armor, increases mass',
 	'bonus':function(target){
 		target.health+=6;
@@ -4774,6 +5133,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Worn Armor Plating',
 	'match':'6',
+'hasAlt':false,
 	'flavor':'heavy armor, increases mass',
 	'bonus':function(target){
 		target.health+=6;
@@ -4786,6 +5146,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Shield Generator',
 	'match':'842',
+'hasAlt':true,
 	'flavor':'press [Z] for invincibility',
 	'bonus':function(target){
 		target.altCheck=function(){
@@ -4819,6 +5180,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Mineral Scanner',
 	'match':'6',
+'hasAlt':false,
 	'flavor':'track more enemies and find more loot',
 	'bonus':function(target){
 		target.radarTargets+=2;
@@ -4830,6 +5192,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Fusion Core',
 	'match':'4826',
+'hasAlt':false,
 	'flavor':'improves recharge speed and maneuverability',
 	'bonus':function(target){
 		target.energyMax+=2;
@@ -4843,6 +5206,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Habitat Module',
 	'match':'26',
+'hasAlt':false,
 	'flavor':'light and tough',
 	'bonus':function(target){
 		target.crewMax+=1;
@@ -4856,6 +5220,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-364',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4866,6 +5231,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-365',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -4876,6 +5242,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Asteroid',
 	'match':'2',
+'hasAlt':false,
 	'flavor':'-',
 	'bonus':function(target){
 		target.ai=aiModes['asteroidInit'];
@@ -4886,6 +5253,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Asteroid',
 	'match':'4',
+'hasAlt':false,
 	'flavor':'-',
 	'bonus':function(target){
 		target.ai=aiModes['asteroidInit'];
@@ -4896,6 +5264,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Asteroid',
 	'match':'6',
+'hasAlt':false,
 	'flavor':'-',
 	'bonus':function(target){
 		target.ai=aiModes['asteroidInit'];
@@ -4906,6 +5275,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Asteroid',
 	'match':'8',
+'hasAlt':false,
 	'flavor':'-',
 	'bonus':function(target){
 		target.ai=aiModes['asteroidInit'];
@@ -4916,6 +5286,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Worn Armor Plating',
 	'match':'46',
+'hasAlt':false,
 	'flavor':'heavy armor, increases mass',
 	'bonus':function(target){
 		target.health+=6;
@@ -4928,6 +5299,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Worn Armor Plating',
 	'match':'82',
+'hasAlt':false,
 	'flavor':'heavy armor, increases mass',
 	'bonus':function(target){
 		target.health+=6;
@@ -4940,6 +5312,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Durasteel Plating',
 	'match':'46',
+'hasAlt':false,
 	'flavor':'strong armor, inhibits aim',
 	'bonus':function(target){
 		target.health+=9;
@@ -4955,6 +5328,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Durasteel Plating',
 	'match':'82',
+'hasAlt':false,
 	'flavor':'strong armor, inhibits aim',
 	'bonus':function(target){
 		target.health+=9;
@@ -4969,6 +5343,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Durasteel Plating',
 	'match':'2',
+'hasAlt':false,
 	'flavor':'strong armor, inhibits aim',
 	'bonus':function(target){
 		target.health+=9;
@@ -4983,6 +5358,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Durasteel Plating',
 	'match':'6',
+'hasAlt':false,
 	'flavor':'strong armor, inhibits aim',
 	'bonus':function(target){
 		target.health+=9;
@@ -4997,6 +5373,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Durasteel Plating',
 	'match':'4',
+'hasAlt':false,
 	'flavor':'strong armor, inhibits aim',
 	'bonus':function(target){
 		target.health+=9;
@@ -5011,6 +5388,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Durasteel Plating',
 	'match':'8',
+'hasAlt':false,
 	'flavor':'strong armor, inhibits aim',
 	'bonus':function(target){
 		target.health+=9;
@@ -5025,6 +5403,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-378',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5035,6 +5414,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-379',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5045,6 +5425,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-380',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5055,6 +5436,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-381',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5065,6 +5447,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-382',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5075,6 +5458,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-383',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5085,6 +5469,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Radioactive Thruster',
 	'match':'26',
+'hasAlt':false,
 	'flavor':'mostly safe',
 	'bonus':function(target){
 		target.thrustBehavior=unstableSmoke;
@@ -5102,6 +5487,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Derelict Crewpod',
 	'match':'86',
+'hasAlt':false,
 	'flavor':'extra crewhands speed energy regeneration',
 	'bonus':function(target){
 		target.health+=2;
@@ -5116,6 +5502,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':false,
 	'name':'Component-386',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5126,6 +5513,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'drops':true,
 	'name':'Fusion Thrust',
 	'match':'2468',
+'hasAlt':false,
 	'flavor':'clean energy thruster',
 	'bonus':function(target){
 		target.acceleration+=0.7;
@@ -5142,6 +5530,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':true,
 	'name':'Standard Quarters',
 	'match':'4',
+'hasAlt':false,
 	'flavor':'more energy and health',
 	'bonus':function(target){
 		target.crewMax+=1;
@@ -5157,6 +5546,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-389',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5167,6 +5557,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':true,
 	'name':'Worn Armor Plating',
 	'match':'4',
+'hasAlt':false,
 	'flavor':'heavy armor, increases mass',
 	'bonus':function(target){
 		target.health+=6;
@@ -5179,6 +5570,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':true,
 	'name':'Worn Armor Plating',
 	'match':'8',
+'hasAlt':false,
 	'flavor':'heavy armor, increases mass',
 	'bonus':function(target){
 		target.health+=6;
@@ -5191,6 +5583,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-392',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5201,6 +5594,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-393',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5211,6 +5605,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-394',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5221,6 +5616,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-395',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5231,6 +5627,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-396',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5241,6 +5638,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-397',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5251,6 +5649,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-398',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5261,6 +5660,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-399',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5271,6 +5671,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Container',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'Containers show on radar, and also give buckets of ore.',
 	'bonus':function(target){
 		target.sprite.profile=500;
@@ -5297,6 +5698,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-401',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5307,6 +5709,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-402',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5317,6 +5720,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-403',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5327,6 +5731,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-404',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5337,6 +5742,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-405',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5347,6 +5753,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-406',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5357,6 +5764,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-407',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5367,6 +5775,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-408',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5377,6 +5786,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-409',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5387,6 +5797,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-410',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5397,6 +5808,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-411',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5407,6 +5819,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-412',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5417,6 +5830,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-413',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5427,6 +5841,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-414',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5437,6 +5852,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-415',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5447,6 +5863,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':true,
 	'name':'Radioactive Thruster',
 	'match':'86',
+'hasAlt':false,
 	'flavor':'mostly safe',
 	'bonus':function(target){
 		target.thrustBehavior=unstableSmoke;
@@ -5462,6 +5879,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':true,
 	'name':'Scavenged Exoskeleton',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'light frame fitted with thrusters',
 	'bonus':function(target){
 		target.thrustBehavior=twistSmoke;
@@ -5478,6 +5896,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':true,
 	'name':'Discount Attitude Jet',
 	'match':'4862',
+'hasAlt':false,
 	'flavor':'improves turn rate, lowers maximum energy',
 	'bonus':function(target){
 		target.turnRate+=0.6;
@@ -5493,6 +5912,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-419',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5503,6 +5923,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-420',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5513,6 +5934,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-421',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5523,6 +5945,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-422',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5533,6 +5956,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-423',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5543,6 +5967,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-424',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5553,6 +5978,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-425',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5563,6 +5989,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-426',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5573,6 +6000,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-427',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5583,6 +6011,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-428',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5593,6 +6022,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-429',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5603,6 +6033,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-430',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5613,6 +6044,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-431',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5623,6 +6055,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-432',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5633,6 +6066,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-433',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5643,6 +6077,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-434',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5653,6 +6088,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-435',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5663,6 +6099,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-436',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5673,6 +6110,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-437',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5683,6 +6121,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-438',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5693,6 +6132,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-439',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5703,6 +6143,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-440',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5713,6 +6154,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-441',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5723,6 +6165,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-442',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5733,6 +6176,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-443',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5743,6 +6187,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-444',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5753,6 +6198,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-445',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5763,6 +6209,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-446',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5773,6 +6220,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-447',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5783,6 +6231,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':true,
 	'name':'Pirate CPU',
 	'match':'482',
+'hasAlt':false,
 	'flavor':'track an extra target, improves firerate',
 	'bonus':function(target){
 		target.fireRate*=0.8;
@@ -5795,6 +6244,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':true,
 	'name':'Scavenged Exoskeleton',
 	'match':'8',
+'hasAlt':false,
 	'flavor':'light frame fitted with thrusters',
 	'bonus':function(target){
 		target.thrustBehavior=twistSmoke;
@@ -5811,6 +6261,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':true,
 	'name':'Destroyed Airlock',
 	'match':'4',
+'hasAlt':true,
 	'flavor':'press [Z] to unleash a damaging halo of contagion',
 	'bonus':function(target){
 
@@ -5866,6 +6317,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-451',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5876,6 +6328,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-452',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5886,6 +6339,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-453',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5896,6 +6350,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-454',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5906,6 +6361,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-455',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5916,6 +6372,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-456',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5926,6 +6383,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-457',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5936,6 +6394,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-458',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5946,6 +6405,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-459',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5956,6 +6416,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-460',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5966,6 +6427,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-461',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5976,6 +6438,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-462',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5986,6 +6449,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-463',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -5996,6 +6460,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-464',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6006,6 +6471,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-465',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6016,6 +6482,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-466',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6026,6 +6493,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-467',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6036,6 +6504,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-468',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6046,6 +6515,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-469',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6056,6 +6526,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-470',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6066,6 +6537,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-471',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6076,6 +6548,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-472',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6086,6 +6559,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-473',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6096,6 +6570,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-474',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6106,6 +6581,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-475',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6116,6 +6592,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-476',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6126,6 +6603,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-477',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6136,6 +6614,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-478',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6146,6 +6625,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-479',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6156,6 +6636,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':true,
 	'name':'Contraband Missiles',
 	'match':'86',
+'hasAlt':false,
 	'flavor':'high damage, unreliable speed',
 	'bonus':function(target){
 		target.bulletSprite=2;
@@ -6175,6 +6656,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':true,
 	'name':'Scavenged Exoskeleton',
 	'match':'2',
+'hasAlt':false,
 	'flavor':'light frame fitted with thrusters',
 	'bonus':function(target){
 		target.thrustBehavior=twistSmoke;
@@ -6192,6 +6674,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':true,
 	'name':'Aftermarket Gatling',
 	'match':'2',
+'hasAlt':false,
 	'flavor':'erratic fire rate',
 	'bonus':function(target){
 		target.bulletSprite=1;
@@ -6215,6 +6698,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-483',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6225,6 +6709,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-484',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6235,6 +6720,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-485',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6245,6 +6731,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-486',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6255,6 +6742,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-487',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6265,6 +6753,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-488',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6275,6 +6764,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-489',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6285,6 +6775,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-490',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6295,6 +6786,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-491',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6305,6 +6797,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-492',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6315,6 +6808,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-493',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6325,6 +6819,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-494',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6335,6 +6830,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-495',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6345,6 +6841,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-496',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6355,6 +6852,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-497',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6365,6 +6863,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-498',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6375,6 +6874,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-499',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6385,6 +6885,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-500',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6395,6 +6896,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-501',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6405,6 +6907,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-502',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6415,6 +6918,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-503',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6425,6 +6929,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-504',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6435,6 +6940,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-505',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6445,6 +6951,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-506',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6455,6 +6962,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-507',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6465,6 +6973,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-508',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6475,6 +6984,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-509',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6485,6 +6995,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-510',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6495,6 +7006,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-511',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6505,6 +7017,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-512',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6515,6 +7028,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':true,
 	'name':'Discount Attitude Jet',
 	'match':'26',
+'hasAlt':false,
 	'flavor':'improves turn rate, lowers maximum energy',
 	'bonus':function(target){
 		target.turnRate+=0.6;
@@ -6530,6 +7044,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':true,
 	'name':'Discount Attitude Jet',
 	'match':'86',
+'hasAlt':false,
 	'flavor':'improves turn rate, lowers maximum energy',
 	'bonus':function(target){
 		target.turnRate+=0.6;
@@ -6545,6 +7060,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-515',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6555,6 +7071,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-516',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6565,6 +7082,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-517',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6575,6 +7093,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-518',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6585,6 +7104,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-519',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6595,6 +7115,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-520',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6605,6 +7126,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-521',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6615,6 +7137,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-522',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6625,6 +7148,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-523',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6635,6 +7159,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-524',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6645,6 +7170,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-525',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6655,6 +7181,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-526',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6665,6 +7192,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-527',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6675,6 +7203,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-528',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6685,6 +7214,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-529',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6695,6 +7225,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-530',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6705,6 +7236,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-531',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6715,6 +7247,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-532',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6725,6 +7258,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-533',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6735,6 +7269,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-534',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6745,6 +7280,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-535',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6755,6 +7291,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-536',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6765,6 +7302,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-537',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6775,6 +7313,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-538',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6785,6 +7324,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-539',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6795,6 +7335,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-540',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6805,6 +7346,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-541',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6815,6 +7357,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-542',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6825,6 +7368,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-543',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6835,6 +7379,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-544',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6845,6 +7390,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-545',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6855,6 +7401,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-546',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6865,6 +7412,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-547',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6875,6 +7423,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-548',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6885,6 +7434,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-549',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6895,6 +7445,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-550',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6905,6 +7456,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-551',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6915,6 +7467,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-552',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6925,6 +7478,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-553',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6935,6 +7489,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-554',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6945,6 +7500,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-555',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6955,6 +7511,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-556',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6965,6 +7522,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-557',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6975,6 +7533,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-558',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6985,6 +7544,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-559',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -6995,6 +7555,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-560',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7005,6 +7566,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-561',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7015,6 +7577,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-562',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7025,6 +7588,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-563',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7035,6 +7599,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-564',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7045,6 +7610,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-565',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7055,6 +7621,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-566',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7065,6 +7632,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-567',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7075,6 +7643,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-568',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7085,6 +7654,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-569',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7095,6 +7665,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-570',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7105,6 +7676,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-571',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7115,6 +7687,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-572',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7125,6 +7698,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-573',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7135,6 +7709,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-574',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7145,6 +7720,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-575',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7155,6 +7731,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-576',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7165,6 +7742,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-577',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7175,6 +7753,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-578',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7185,6 +7764,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-579',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7195,6 +7775,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-580',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7205,6 +7786,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-581',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7215,6 +7797,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-582',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7225,6 +7808,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-583',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7235,6 +7819,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-584',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7245,6 +7830,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-585',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7255,6 +7841,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-586',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7265,6 +7852,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-587',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7275,6 +7863,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-588',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7285,6 +7874,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-589',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7295,6 +7885,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-590',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7305,6 +7896,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-591',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7315,6 +7907,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-592',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7325,6 +7918,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-593',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7335,6 +7929,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-594',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7345,6 +7940,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-595',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7355,6 +7951,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-596',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7365,6 +7962,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-597',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7375,6 +7973,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-598',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7385,6 +7984,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-599',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7395,6 +7995,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-600',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7405,6 +8006,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-601',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7415,6 +8017,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-602',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7425,6 +8028,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-603',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7435,6 +8039,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-604',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7445,6 +8050,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-605',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7455,6 +8061,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-606',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7465,6 +8072,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-607',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7475,6 +8083,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-608',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7485,6 +8094,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-609',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7495,6 +8105,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-610',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7505,6 +8116,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-611',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7515,6 +8127,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-612',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7525,6 +8138,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-613',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7535,6 +8149,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-614',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7545,6 +8160,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-615',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7555,6 +8171,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-616',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7565,6 +8182,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-617',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7575,6 +8193,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-618',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7585,6 +8204,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-619',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7595,6 +8215,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-620',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7605,6 +8226,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-621',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7615,6 +8237,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-622',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7625,6 +8248,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-623',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7635,6 +8259,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-624',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7645,6 +8270,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-625',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7655,6 +8281,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-626',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7665,6 +8292,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-627',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7675,6 +8303,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-628',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7685,6 +8314,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-629',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7695,6 +8325,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-630',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7705,6 +8336,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-631',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7715,6 +8347,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-632',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7725,6 +8358,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-633',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7735,6 +8369,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-634',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7745,6 +8380,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-635',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7755,6 +8391,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-636',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7765,6 +8402,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-637',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7775,6 +8413,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-638',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7785,6 +8424,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-639',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7795,6 +8435,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-640',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7805,6 +8446,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-641',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7815,6 +8457,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-642',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7825,6 +8468,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-643',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7835,6 +8479,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-644',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7845,6 +8490,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-645',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7855,6 +8501,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-646',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7865,6 +8512,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-647',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7875,6 +8523,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-648',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7885,6 +8534,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-649',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7895,6 +8545,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-650',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7905,6 +8556,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-651',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7915,6 +8567,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-652',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7925,6 +8578,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-653',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7935,6 +8589,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-654',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7945,6 +8600,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-655',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7955,6 +8611,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-656',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7965,6 +8622,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-657',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7975,6 +8633,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-658',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7985,6 +8644,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-659',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -7995,6 +8655,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-660',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8005,6 +8666,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-661',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8015,6 +8677,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-662',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8025,6 +8688,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-663',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8035,6 +8699,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-664',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8045,6 +8710,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-665',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8055,6 +8721,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-666',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8065,6 +8732,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-667',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8075,6 +8743,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-668',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8085,6 +8754,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-669',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8095,6 +8765,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-670',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8105,6 +8776,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-671',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8115,6 +8787,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-672',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8125,6 +8798,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-673',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8135,6 +8809,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-674',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8145,6 +8820,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-675',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8155,6 +8831,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-676',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8165,6 +8842,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-677',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8175,6 +8853,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-678',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8185,6 +8864,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-679',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8195,6 +8875,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-680',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8205,6 +8886,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-681',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8215,6 +8897,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-682',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8225,6 +8908,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-683',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8235,6 +8919,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-684',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8245,6 +8930,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-685',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8255,6 +8941,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-686',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8265,6 +8952,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-687',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8275,6 +8963,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-688',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8285,6 +8974,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-689',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8295,6 +8985,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-690',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8305,6 +8996,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-691',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8315,6 +9007,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-692',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8325,6 +9018,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-693',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8335,6 +9029,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-694',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8345,6 +9040,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-695',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8355,6 +9051,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-696',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8365,6 +9062,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-697',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8375,6 +9073,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-698',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8385,6 +9084,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-699',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8395,6 +9095,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-700',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8405,6 +9106,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-701',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8415,6 +9117,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-702',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8425,6 +9128,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-703',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8435,6 +9139,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-704',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8445,6 +9150,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-705',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8455,6 +9161,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-706',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8465,6 +9172,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-707',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8475,6 +9183,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-708',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8485,6 +9194,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-709',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8495,6 +9205,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-710',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8505,6 +9216,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-711',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8515,6 +9227,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-712',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8525,6 +9238,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-713',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8535,6 +9249,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-714',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8545,6 +9260,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-715',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8555,6 +9271,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-716',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8565,6 +9282,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-717',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8575,6 +9293,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-718',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8585,6 +9304,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-719',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8595,6 +9315,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-720',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8605,6 +9326,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-721',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8615,6 +9337,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-722',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8625,6 +9348,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-723',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8635,6 +9359,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-724',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8645,6 +9370,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-725',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8655,6 +9381,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-726',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8665,6 +9392,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-727',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8675,6 +9403,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-728',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8685,6 +9414,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-729',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8695,6 +9425,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-730',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8705,6 +9436,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-731',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8715,6 +9447,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-732',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8725,6 +9458,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-733',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8735,6 +9469,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-734',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8745,6 +9480,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-735',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8755,6 +9491,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-736',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8765,6 +9502,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-737',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8775,6 +9513,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-738',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8785,6 +9524,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-739',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8795,6 +9535,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-740',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8805,6 +9546,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-741',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8815,6 +9557,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-742',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8825,6 +9568,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-743',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8835,6 +9579,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-744',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8845,6 +9590,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-745',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8855,6 +9601,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-746',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8865,6 +9612,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-747',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8875,6 +9623,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-748',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8885,6 +9634,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-749',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8895,6 +9645,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-750',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8905,6 +9656,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-751',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8915,6 +9667,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-752',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8925,6 +9678,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-753',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8935,6 +9689,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-754',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8945,6 +9700,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-755',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8955,6 +9711,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-756',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8965,6 +9722,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-757',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8975,6 +9733,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-758',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8985,6 +9744,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-759',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -8995,6 +9755,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-760',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9005,6 +9766,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-761',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9015,6 +9777,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-762',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9025,6 +9788,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-763',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9035,6 +9799,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-764',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9045,6 +9810,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-765',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9055,6 +9821,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-766',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9065,6 +9832,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-767',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9075,6 +9843,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-768',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9085,6 +9854,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-769',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9095,6 +9865,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-770',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9105,6 +9876,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-771',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9115,6 +9887,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-772',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9125,6 +9898,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-773',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9135,6 +9909,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-774',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9145,6 +9920,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-775',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9155,6 +9931,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-776',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9165,6 +9942,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-777',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9175,6 +9953,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-778',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9185,6 +9964,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-779',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9195,6 +9975,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-780',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9205,6 +9986,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-781',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9215,6 +9997,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-782',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9225,6 +10008,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-783',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9235,6 +10019,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-784',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9245,6 +10030,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-785',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9255,6 +10041,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-786',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9265,6 +10052,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-787',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9275,6 +10063,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-788',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9285,6 +10074,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-789',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9295,6 +10085,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-790',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9305,6 +10096,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-791',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9315,6 +10107,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-792',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9325,6 +10118,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-793',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9335,6 +10129,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-794',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9345,6 +10140,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-795',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9355,6 +10151,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-796',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9365,6 +10162,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-797',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9375,6 +10173,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-798',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9385,6 +10184,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-799',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9395,6 +10195,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-800',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9405,6 +10206,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-801',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9415,6 +10217,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-802',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9425,6 +10228,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-803',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9435,6 +10239,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-804',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9445,6 +10250,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-805',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9455,6 +10261,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-806',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9465,6 +10272,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-807',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9475,6 +10283,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-808',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9485,6 +10294,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-809',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9495,6 +10305,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-810',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9505,6 +10316,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-811',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9515,6 +10327,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-812',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9525,6 +10338,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-813',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9535,6 +10349,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-814',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9545,6 +10360,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-815',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9555,6 +10371,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-816',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9565,6 +10382,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-817',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9575,6 +10393,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-818',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9585,6 +10404,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-819',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9595,6 +10415,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-820',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9605,6 +10426,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-821',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9615,6 +10437,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-822',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9625,6 +10448,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-823',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9635,6 +10459,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-824',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9645,6 +10470,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-825',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9655,6 +10481,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-826',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9665,6 +10492,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-827',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9675,6 +10503,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-828',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9685,6 +10514,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-829',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9695,6 +10525,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-830',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9705,6 +10536,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-831',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9715,6 +10547,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-832',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9725,6 +10558,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-833',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9735,6 +10569,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-834',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9745,6 +10580,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-835',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9755,6 +10591,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-836',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9765,6 +10602,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-837',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9775,6 +10613,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-838',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9785,6 +10624,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-839',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9795,6 +10635,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-840',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9805,6 +10646,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-841',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9815,6 +10657,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-842',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9825,6 +10668,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-843',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9835,6 +10679,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-844',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9845,6 +10690,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-845',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9855,6 +10701,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-846',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9865,6 +10712,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-847',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9875,6 +10723,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-848',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9885,6 +10734,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-849',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9895,6 +10745,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-850',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9905,6 +10756,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-851',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9915,6 +10767,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-852',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9925,6 +10778,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-853',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9935,6 +10789,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-854',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9945,6 +10800,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-855',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9955,6 +10811,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-856',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9965,6 +10822,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-857',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9975,6 +10833,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-858',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9985,6 +10844,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-859',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -9995,6 +10855,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-860',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10005,6 +10866,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-861',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10015,6 +10877,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-862',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10025,6 +10888,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-863',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10035,6 +10899,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-864',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10045,6 +10910,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-865',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10055,6 +10921,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-866',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10065,6 +10932,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-867',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10075,6 +10943,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-868',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10085,6 +10954,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-869',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10095,6 +10965,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-870',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10105,6 +10976,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-871',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10115,6 +10987,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-872',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10125,6 +10998,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-873',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10135,6 +11009,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-874',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10145,6 +11020,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-875',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10155,6 +11031,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-876',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10165,6 +11042,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-877',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10175,6 +11053,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-878',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10185,6 +11064,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-879',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10195,6 +11075,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-880',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10205,6 +11086,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-881',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10215,6 +11097,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-882',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10225,6 +11108,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-883',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10235,6 +11119,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-884',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10245,6 +11130,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-885',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10255,6 +11141,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-886',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10265,6 +11152,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-887',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10275,6 +11163,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-888',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10285,6 +11174,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-889',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10295,6 +11185,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-890',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10305,6 +11196,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-891',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10315,6 +11207,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-892',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10325,6 +11218,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-893',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10335,6 +11229,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-894',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10345,6 +11240,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-895',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10355,6 +11251,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-896',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10365,6 +11262,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-897',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10375,6 +11273,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-898',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10385,6 +11284,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-899',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10395,6 +11295,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-900',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10405,6 +11306,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-901',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10415,6 +11317,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-902',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10425,6 +11328,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-903',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10435,6 +11339,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-904',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10445,6 +11350,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-905',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10455,6 +11361,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-906',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10465,6 +11372,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-907',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10475,6 +11383,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-908',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10485,6 +11394,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-909',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10495,6 +11405,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-910',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10505,6 +11416,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-911',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10515,6 +11427,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-912',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10525,6 +11438,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-913',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10535,6 +11449,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-914',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10545,6 +11460,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-915',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10555,6 +11471,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-916',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10565,6 +11482,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-917',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10575,6 +11493,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-918',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10585,6 +11504,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-919',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10595,6 +11515,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-920',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10605,6 +11526,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-921',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10615,6 +11537,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-922',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10625,6 +11548,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-923',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10635,6 +11559,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-924',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10645,6 +11570,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-925',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10655,6 +11581,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-926',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10665,6 +11592,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-927',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10675,6 +11603,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-928',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10685,6 +11614,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-929',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10695,6 +11625,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-930',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10705,6 +11636,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-931',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10715,6 +11647,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-932',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10725,6 +11658,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-933',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10735,6 +11669,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-934',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10745,6 +11680,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-935',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10755,6 +11691,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-936',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10765,6 +11702,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-937',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10775,6 +11713,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-938',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10785,6 +11724,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-939',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10795,6 +11735,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-940',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10805,6 +11746,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-941',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10815,6 +11757,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-942',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10825,6 +11768,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-943',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10835,6 +11779,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-944',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10845,6 +11790,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-945',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10855,6 +11801,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-946',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10865,6 +11812,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-947',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10875,6 +11823,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-948',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10885,6 +11834,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-949',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10895,6 +11845,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-950',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10905,6 +11856,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-951',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10915,6 +11867,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-952',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10925,6 +11878,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-953',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10935,6 +11889,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-954',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10945,6 +11900,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-955',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10955,6 +11911,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-956',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10965,6 +11922,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-957',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10975,6 +11933,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-958',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10985,6 +11944,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-959',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -10995,6 +11955,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-960',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11005,6 +11966,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-961',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11015,6 +11977,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-962',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11025,6 +11988,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-963',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11035,6 +11999,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-964',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11045,6 +12010,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-965',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11055,6 +12021,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-966',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11065,6 +12032,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-967',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11075,6 +12043,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-968',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11085,6 +12054,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-969',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11095,6 +12065,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-970',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11105,6 +12076,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-971',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11115,6 +12087,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-972',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11125,6 +12098,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-973',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11135,6 +12109,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-974',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11145,6 +12120,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-975',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11155,6 +12131,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-976',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11165,6 +12142,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-977',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11175,6 +12153,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-978',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11185,6 +12164,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-979',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11195,6 +12175,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-980',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11205,6 +12186,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-981',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11215,6 +12197,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-982',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11225,6 +12208,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-983',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11235,6 +12219,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-984',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11245,6 +12230,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-985',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11255,6 +12241,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-986',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11265,6 +12252,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-987',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11275,6 +12263,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-988',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11285,6 +12274,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-989',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11295,6 +12285,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-990',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11305,6 +12296,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-991',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11315,6 +12307,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-992',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11325,6 +12318,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-993',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11335,6 +12329,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-994',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11345,6 +12340,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-995',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11355,6 +12351,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-996',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11365,6 +12362,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-997',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11375,6 +12373,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-998',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11385,6 +12384,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-999',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11395,6 +12395,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-1000',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11405,6 +12406,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-1001',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11415,6 +12417,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-1002',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11425,6 +12428,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-1003',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11435,6 +12439,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-1004',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11445,6 +12450,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-1005',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11455,6 +12461,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-1006',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11465,6 +12472,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-1007',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11475,6 +12483,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-1008',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11485,6 +12494,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-1009',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11495,6 +12505,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-1010',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11505,6 +12516,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-1011',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11515,6 +12527,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-1012',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11525,6 +12538,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-1013',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11535,6 +12549,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-1014',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11545,6 +12560,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-1015',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11555,6 +12571,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-1016',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11565,6 +12582,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-1017',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11575,6 +12593,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-1018',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11585,6 +12604,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-1019',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11595,6 +12615,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-1020',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11605,6 +12626,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-1021',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11615,6 +12637,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component-1022',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
@@ -11624,6 +12647,7 @@ target.thrustBehavior=cleanSmoke;
 	'drops':false,
 	'name':'Component1023',
 	'match':'4682',
+'hasAlt':false,
 	'flavor':'void',
 	'bonus':function(target){
 	}

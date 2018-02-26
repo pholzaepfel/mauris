@@ -867,6 +867,9 @@ function applyBonuses(target){
 												target.health+=2;
 												components[target.ship[i]].bonus(target);
 												n++;
+												if(components[target.ship[i]].hasAlt){
+													target.altText=components[target.ship[i]].flavor;
+												}
 								}
 				}
 				//apply some generic bonuses for NYI items
@@ -1340,7 +1343,7 @@ enemyShip.prototype.takeEnergy = function (amt, forgive){
 enemyShip.prototype.initEnemyShip = function(ship) {
 
 				this.sprite.rotation=Math.random()*2*Math.PI;
-
+				this.altText='';
 				this.thrustBehavior=tinySmoke;
 
 				this.crew=1;
@@ -2100,6 +2103,7 @@ mockPlayerShip.prototype.initPlayerShip = function (ship, x, y) {
 				if(typeof(x)=='undefined'){x=0};
 				if(typeof(y)=='undefined'){y=0};
 				this.thrustBehavior=tinySmoke;
+				this.altText='';
 				this.profileOnFire=false;
 				this.sprite.r=255;
 				this.sprite.g=255;
@@ -2193,6 +2197,7 @@ playerShip.prototype.initPlayerShip = function (ship,x,y) {
 				if(typeof(x)=='undefined'){x=0};
 				if(typeof(y)=='undefined'){y=0};
 				this.profileOnFire=true;
+				this.altText='';
 				this.crew=1;
 				this.crewMax=2;
 				this.thrustBehavior=tinySmoke;
@@ -4140,6 +4145,9 @@ gameUI.prototype.playerStatusTextPing = function() {
 												}
 								}
 								statusText+='\n' + pauseMessage + '\n';
+								if(player.altText != ''){
+								statusText+='\ncurrent special item:\n' + player.altText + '\n';
+								}
 				}
 				this.playerStatusText.setText(statusText);
 
