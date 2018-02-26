@@ -1318,17 +1318,17 @@ function(tgt){
 		target.fireEnergy+=2;
 		target.fireRate=10;
 		target.sprite.profile+=20;	
-		target.bulletSprite=4;
+		target.bulletSprite=15;
 		target.firingSolution=laserFiringSolution;
 		target.profileOnFire=false;
 				target.bulletBehavior=[(function(bullet){
-				var popAngle = bullet.owner.angle;
+				var popRotation = bullet.owner.rotation;
 				var tgt = ownerFromName(bullet.owner.name);
 				if(tgt.sprite != tgt.target){
-				bullet.owner.angle = game.physics.arcade.angleBetween(tgt.target, tgt.sprite);
+				bullet.owner.rotation = game.physics.arcade.angleBetween(tgt.target, tgt.sprite);
 				}
 				laserBulletBehavior(bullet,parseInt(randomRange(4,7)),randomRange(0.3,1.8),0xFF1515,0xFF8050,0xFFFFFF,22,function(){});
-				bullet.owner.angle=popAngle;
+				bullet.owner.rotation=popRotation;
 
 			})];
 
