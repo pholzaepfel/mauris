@@ -3148,7 +3148,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 			target.turnRate+=0.2;
 			target.sprite.body.maxVelocity.x+=25;
 			target.sprite.body.maxVelocity.y+=25;
-
+			target.energyMax+=5;
 	}
 },
 {
@@ -3502,6 +3502,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 			target.turnRate+=0.2;
 			target.sprite.body.maxVelocity.x+=25;
 			target.sprite.body.maxVelocity.y+=25;
+			target.energyMax+=5;
 
 
 	}
