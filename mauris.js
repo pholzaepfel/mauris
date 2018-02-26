@@ -14,20 +14,20 @@ var noblood = 0;
 var touchPressed = 0;
 var initialXp = 200; //xp required for first level
 var allfactions=[
-				['alliance military',allianceGear4],
-				['mechanoid',mechanoidGear],
-				['smuggler',banditGear],
-				['infected',zombieGear],
-				['damaged mining drone',failDroneGear],
-				['mining drone',droneGear],
-				['trashhauler',dirtyParts],
-				['mercenary',blackParts],
-				['pirate',banditGear2],
-				['trader',whiteGear],
-				['xenoid',xenoidGear],
-				['junker',junkerGear],
-				['ascended',ascendedGear],
-				['decimator',decimatorGear]
+				['alliance military',allianceGear4,1],
+				['mechanoid',mechanoidGear,1],
+				['smuggler',banditGear,1],
+				['infected',zombieGear,0.6],
+				['damaged mining drone',failDroneGear,0.3],
+				['mining drone',droneGear,0.5],
+				['trashhauler',dirtyParts,0.6],
+				['mercenary',blackParts,1],
+				['pirate',banditGear2,1],
+				['trader',whiteGear,1],
+				['xenoid',xenoidGear,1],
+				['junker',junkerGear,0.5],
+				['ascended',ascendedGear,0],
+				['decimator',decimatorGear,0]
 ];
 var bulletTypes = [ 
 {'name':'pulse', 'id':0},
@@ -156,7 +156,7 @@ count = 1;
 
 								if(count > 0){
 												enemyDensity-=strength;
-												var symmetry=randomRange(0.5,1.5);
+												var symmetry=faction[2];
 												rm.enemies.push(
 																				{
 																				'ships': drones,
