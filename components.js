@@ -3143,7 +3143,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'match':'26',
 	'flavor':'--',
 	'bonus':function(target){
-			target.thrustBehavior=glow;
+			target.thrustBehavior=cleanSmoke;
 			target.acceleration+=1;
 			target.turnRate+=0.2;
 			target.sprite.body.maxVelocity.x+=25;
@@ -3497,7 +3497,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'match':'86',
 	'flavor':'--',
 	'bonus':function(target){
-			target.thrustBehavior=glow;
+			target.thrustBehavior=cleanSmoke;
 			target.acceleration+=1;
 			target.turnRate+=0.2;
 			target.sprite.body.maxVelocity.x+=25;
