@@ -6019,7 +6019,7 @@ function update () {
 								}
 								if(typeof(playerStats.mission.distantPlanet)!='undefined'){
 												if(playerStats.mission.distantPlanet){
-																var r=randomRange(0.5,0.8);
+																var r=0.8;
 																planetlod.scale.setTo(r,r);
 																planet.scale.setTo(r,r);
 																planet.visible=true;
@@ -6030,10 +6030,6 @@ function update () {
 																planetfall.alpha=0;
 																planetdirt.visible=false;
 																planetdirt.alpha=0;
-																hazeWhite.visible=true;
-																hazeWhite.alpha=playerStats.mission.hazeWhite;
-																hazeWhite.visible=true;
-																hazeWhite.alpha=playerStats.mission.hazeWhite;
 																hazeWhite.visible=true;
 																hazeWhite.alpha=playerStats.mission.hazeWhite;
 																nebula.visible=true;
