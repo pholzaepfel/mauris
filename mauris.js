@@ -2721,6 +2721,9 @@ var variantComponents = function(partId){
 				return result;
 }
 var randomVariantComponent = function(partId){
+				if (typeof(partId)=='undefined'){
+								return -1;
+				}
 				if (partId == -1){
 								return -1;
 				}
@@ -2769,8 +2772,8 @@ var randomPartsList = function(partsList,size){
 								}
 								result.push(partsList[partId]);
 								if(variantComponents(partId).length && Math.random()<0.5){
-												partId = randomVariantComponent(parseInt(randomRange(0,partsList.length)));
-												result.push(partsList[partId]);
+												partId = randomVariantComponent(partsList[parseInt(randomRange(0,partsList.length))]);
+												result.push(partId);
 								}
 				}
 				return result;
