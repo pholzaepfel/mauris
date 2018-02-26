@@ -25,7 +25,8 @@ var allfactions=[
 				['trader',whiteGear],
 				['xenoid',xenoidGear],
 				['junker',junkerGear],
-				['ascended',ascendedGear]
+				['ascended',ascendedGear],
+				['decimator',decimatorGear]
 ];
 var bulletTypes = [ 
 {'name':'pulse', 'id':0},
