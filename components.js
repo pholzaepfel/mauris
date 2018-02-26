@@ -747,22 +747,37 @@ var cmp = [
 	{
 		'id':49,
 		'drops':true,
-		'name':'Xenoid',
+		'name':'Xenoid Symbiote',
 		'match':'4682',
-		'flavor':'--',
+		'flavor':'HELLO I AM FRIENDLY',
 		'bonus':function(target){
-			target.TODO+=1;
+			target.bulletSprite=14;
+			target.attackAngleThreshold+=.25;
+			target.fireSound=ui.sound_plasma;
+			target.fireRate*=0.9;
+			target.fireEnergy*=0.8;
+			target.fireVelocity*=0.8;
+			target.fireRange*=0.9;
+			target.sprite.profile+=20;
 
 		}
 	},
 	{
 		'id':50,
 		'drops':true,
-		'name':'Xenoid',
+		'name':'Xenoid Symbiote',
 		'match':'4682',
-		'flavor':'--',
+		'flavor':'TOGETHER WE WILL RULE THE GALAXY',
 		'bonus':function(target){
-			target.TODO+=1;
+				target.bulletSprite=14;
+			target.attackAngleThreshold+=.25;
+			target.fireSound=ui.sound_plasma;
+			target.fireRate*=0.9;
+			target.fireEnergy*=0.8;
+			target.fireVelocity*=0.8;
+			target.fireRange*=0.9;
+			target.sprite.profile+=20;
+
 		}
 	},
 	{
@@ -1298,8 +1313,25 @@ function(tgt){
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
-		target.TODO+=1;
-	}
+		target.fireSound=ui.sound_pew2;
+		target.fireDamage+=1;
+		target.fireEnergy+=2;
+		target.fireRate=10;
+		target.sprite.profile+=20;	
+		target.bulletSprite=4;
+		target.firingSolution=laserFiringSolution;
+		target.profileOnFire=false;
+				target.bulletBehavior=[(function(bullet){
+				var popAngle = bullet.owner.angle;
+				var tgt = ownerFromName(bullet.owner.name);
+				bullet.owner.angle = game.physics.arcade.angleBetween(tgt.sprite, tgt.target.sprite);
+
+				laserBulletBehavior(bullet,parseInt(randomRange(4,7)),randomRange(0.3,1.8),0xFF1515,0xFF8050,0xFFFFFF,22,function(){});
+				bullet.owner.angle=popAngle;
+
+			})];
+
+}
 },
 {
 	'id':91,
@@ -2386,44 +2418,77 @@ target.effects=function(){
 {
 	'id':150,
 	'drops':true,
-	'name':'Xenoid',
+	'name':'Xenoid Symbiote',
 	'match':'26',
-	'flavor':'--',
+	'flavor':'RELEASE YOUR CONSCIOUSNESS',
 	'bonus':function(target){
-		target.TODO+=1;
+				target.bulletSprite=14;
+			target.attackAngleThreshold+=.25;
+			target.fireSound=ui.sound_plasma;
+			target.fireRate*=0.9;
+			target.fireEnergy*=0.8;
+			target.fireVelocity*=0.8;
+			target.fireRange*=0.9;
+			target.sprite.profile+=20;
+
 
 	}
 },
 {
 	'id':151,
 	'drops':true,
-	'name':'Xenoid',
+	'name':'Xenoid Symbiote',
 	'match':'42',
-	'flavor':'--',
+	'flavor':'THE VOID SCREAMS FOR YOU',
 	'bonus':function(target){
-		target.TODO+=1;
+				target.bulletSprite=14;
+			target.attackAngleThreshold+=.25;
+			target.fireSound=ui.sound_plasma;
+			target.fireRate*=0.9;
+			target.fireEnergy*=0.8;
+			target.fireVelocity*=0.8;
+			target.fireRange*=0.9;
+			target.sprite.profile+=20;
+
 
 	}
 },
 {
 	'id':152,
 	'drops':true,
-	'name':'Augmented Xenoid',
+	'name':'Augmented Xenoid Symbiote',
 	'match':'26',
-	'flavor':'--',
+	'flavor':'I AM ONE WITH THE MACHINE',
 	'bonus':function(target){
-		target.TODO+=1;
+				target.bulletSprite=14;
+			target.attackAngleThreshold+=.25;
+			target.fireSound=ui.sound_plasma;
+			target.fireRate*=0.9;
+			target.fireEnergy*=0.8;
+			target.fireVelocity*=0.8;
+			target.fireRange*=1.1;
+			target.sprite.profile+=20;
+			target.health+=2;
 
 	}
 },
 {
 	'id':153,
 	'drops':true,
-	'name':'Augmented Xenoid',
+	'name':'Augmented Xenoid Symbiote',
 	'match':'42',
-	'flavor':'--',
+	'flavor':'OUR MINDS WILL MERGE',
 	'bonus':function(target){
-		target.TODO+=1;
+				target.bulletSprite=14;
+			target.attackAngleThreshold+=.25;
+			target.fireSound=ui.sound_plasma;
+			target.fireRate*=0.9;
+			target.fireEnergy*=0.8;
+			target.fireVelocity*=0.8;
+			target.fireRange*=1.1;
+			target.sprite.profile+=20;
+			target.health+=2;
+
 
 	}
 },
@@ -2809,7 +2874,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 {
 	'id':182,
 	'drops':true,
-	'name':'Xenoid',
+	'name':'Xenoid Symbiote',
 	'match':'86',
 	'flavor':'--',
 	'bonus':function(target){
@@ -2820,7 +2885,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 {
 	'id':183,
 	'drops':true,
-	'name':'Xenoid',
+	'name':'Xenoid Symbiote',
 	'match':'84',
 	'flavor':'--',
 	'bonus':function(target){
@@ -2831,22 +2896,40 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 {
 	'id':184,
 	'drops':true,
-	'name':'Augmented Xenoid',
+	'name':'Augmented Xenoid Symbiote',
 	'match':'86',
-	'flavor':'--',
+	'flavor':'OUR SONG, TOGETHER',
 	'bonus':function(target){
-		target.TODO+=1;
+				target.bulletSprite=14;
+			target.attackAngleThreshold+=.25;
+			target.fireSound=ui.sound_plasma;
+			target.fireRate*=0.9;
+			target.fireEnergy*=0.8;
+			target.fireVelocity*=0.8;
+			target.fireRange*=1.1;
+			target.sprite.profile+=20;
+			target.health+=2;
+
 
 	}
 },
 {
 	'id':185,
 	'drops':true,
-	'name':'Augmented Xenoid',
+	'name':'Augmented Xenoid Symbiote',
 	'match':'84',
-	'flavor':'--',
+	'flavor':'SUFFERING',
 	'bonus':function(target){
-		target.TODO+=1;
+				target.bulletSprite=14;
+			target.attackAngleThreshold+=.25;
+			target.fireSound=ui.sound_plasma;
+			target.fireRate*=0.9;
+			target.fireEnergy*=0.8;
+			target.fireVelocity*=0.8;
+			target.fireRange*=1.1;
+			target.sprite.profile+=20;
+			target.health+=2;
+
 
 	}
 },
