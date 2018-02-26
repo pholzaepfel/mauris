@@ -1313,25 +1313,7 @@ function(tgt){
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
-		target.fireSound=ui.sound_pew2;
-		target.fireDamage+=1;
-		target.fireEnergy+=2;
-		target.fireRate=10;
-		target.sprite.profile+=20;	
-		target.bulletSprite=15;
-		target.firingSolution=laserAutoFiringSolution;
-		target.profileOnFire=false;
-				target.bulletBehavior=[(function(bullet){
-				var popRotation = bullet.owner.rotation;
-				var tgt = ownerFromName(bullet.owner.name);
-				if(tgt.sprite != tgt.target){
-				bullet.owner.rotation = game.physics.arcade.angleBetween(tgt.sprite, tgt.target);
-				}
-				laserBulletBehavior(bullet,parseInt(randomRange(4,7)),randomRange(0.3,1.8),0xFF1515,0xFF8050,0xFFFFFF,22,function(){});
-				bullet.owner.rotation=popRotation;
-
-			})];
-
+	target.TODO+=1;
 }
 },
 {
@@ -3157,11 +3139,15 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 {
 	'id':206,
 	'drops':true,
-	'name':'Enterprising Violation',
+	'name':'Stolen Nacelles',
 	'match':'26',
 	'flavor':'--',
 	'bonus':function(target){
-		target.TODO+=1;
+			target.thrustBehavior=glow;
+			target.acceleration+=1;
+			target.turnRate+=0.2;
+			target.sprite.body.maxVelocity.x+=25;
+			target.sprite.body.maxVelocity.y+=25;
 
 	}
 },
@@ -3172,7 +3158,25 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'match':'42',
 	'flavor':'--',
 	'bonus':function(target){
-		target.TODO+=1;
+		target.fireSound=ui.sound_pew2;
+		target.fireDamage+=1;
+		target.fireEnergy+=2;
+		target.fireRate=10;
+		target.sprite.profile+=20;	
+		target.bulletSprite=15;
+		target.firingSolution=laserAutoFiringSolution;
+		target.profileOnFire=false;
+				target.bulletBehavior=[(function(bullet){
+				var popRotation = bullet.owner.rotation;
+				var tgt = ownerFromName(bullet.owner.name);
+				if(tgt.sprite != tgt.target){
+				bullet.owner.rotation = game.physics.arcade.angleBetween(tgt.sprite, tgt.target);
+				}
+				laserBulletBehavior(bullet,parseInt(randomRange(4,7)),randomRange(0.3,1.8),0xFF1515,0xFF8050,0xFFFFFF,22,function(){});
+				bullet.owner.rotation=popRotation;
+
+			})];
+
 	}
 },
 {
@@ -3489,11 +3493,16 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 {
 	'id':238,
 	'drops':true,
-	'name':'Enterprising Violation',
+	'name':'Stolen Nacelles',
 	'match':'86',
 	'flavor':'--',
 	'bonus':function(target){
-		target.TODO+=1;
+			target.thrustBehavior=glow;
+			target.acceleration+=1;
+			target.turnRate+=0.2;
+			target.sprite.body.maxVelocity.x+=25;
+			target.sprite.body.maxVelocity.y+=25;
+
 
 	}
 },
@@ -3504,7 +3513,25 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'match':'84',
 	'flavor':'--',
 	'bonus':function(target){
-		target.TODO+=1;
+		target.fireSound=ui.sound_pew2;
+		target.fireDamage+=1;
+		target.fireEnergy+=2;
+		target.fireRate=10;
+		target.sprite.profile+=20;	
+		target.bulletSprite=15;
+		target.firingSolution=laserAutoFiringSolution;
+		target.profileOnFire=false;
+				target.bulletBehavior=[(function(bullet){
+				var popRotation = bullet.owner.rotation;
+				var tgt = ownerFromName(bullet.owner.name);
+				if(tgt.sprite != tgt.target){
+				bullet.owner.rotation = game.physics.arcade.angleBetween(tgt.sprite, tgt.target);
+				}
+				laserBulletBehavior(bullet,parseInt(randomRange(4,7)),randomRange(0.3,1.8),0xFF1515,0xFF8050,0xFFFFFF,22,function(){});
+				bullet.owner.rotation=popRotation;
+
+			})];
+
 	}
 },
 {
