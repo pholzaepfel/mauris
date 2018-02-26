@@ -5,6 +5,7 @@ var mobileScaleFactor = function() {
 												return 1;
 								}
 }
+var meebChance=0.05;
 var pauseMessage='';
 var defaultBehavior='neutral';
 var asteroidPanicChance=0.02;
@@ -171,6 +172,10 @@ count = 1;
 																			 )
 								}
 
+				}
+				var parts = asteroidParts;
+				if(randomRange(0,1)<meebChance){
+					parts=meebParts;
 				}
 				rm.enemies.push(
 												{

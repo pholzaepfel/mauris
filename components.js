@@ -3159,23 +3159,23 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 },
 {
 	'id':214,
-	'drops':true,
+	'drops':false,
 	'name':'Meeb',
 	'match':'26',
 	'flavor':'--',
 	'bonus':function(target){
-		target.TODO+=1;
+			target.ai=aiModes['asteroidInit'];
 
 	}
 },
 {
 	'id':215,
-	'drops':true,
+	'drops':false,
 	'name':'Meeb',
 	'match':'42',
 	'flavor':'--',
 	'bonus':function(target){
-		target.TODO+=1;
+			target.ai=aiModes['asteroidInit'];
 	}
 },
 {
@@ -3491,22 +3491,23 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 },
 {
 	'id':246,
-	'drops':true,
+	'drops':false,
 	'name':'Meeb',
 	'match':'86',
 	'flavor':'--',
 	'bonus':function(target){
-		target.TODO+=1;
+			target.ai=aiModes['asteroidInit'];
 
 	}
 },
 {
 	'id':247,
-	'drops':true,
+	'drops':false,
 	'name':'Meeb',
 	'match':'84',
 	'flavor':'--',
 	'bonus':function(target){
+			target.ai=aiModes['asteroidInit'];
 
 	}
 },
@@ -3825,12 +3826,12 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 },
 {
 	'id':278,
-	'drops':true,
+	'drops':false,
 	'name':'Meeb',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
-		target.TODO+=1;
+			target.ai=aiModes['asteroidInit'];
 
 	}
 },
@@ -3838,12 +3839,12 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	
 	{
 	'id':279,
-	'drops':true,
+	'drops':false,
 	'name':'Meeb',
 	'match':'4682',
 	'flavor':'--',
 	'bonus':function(target){
-		target.TODO+=1;
+			target.ai=aiModes['asteroidInit'];
 	}
 },
 {
