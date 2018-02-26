@@ -6019,11 +6019,12 @@ function update () {
 								}
 								if(typeof(playerStats.mission.distantPlanet)!='undefined'){
 												if(playerStats.mission.distantPlanet){
-																planetlod.scale.setTo(0.8,0.8);
-																planet.scale.setTo(0.8,0.8);
+																var r=randomRange(0.5,0.8);
+																planetlod.scale.setTo(r,r);
+																planet.scale.setTo(r,r);
 																planet.visible=true;
 																planet.alpha=1;
-																planetlod.visible=true;
+																planetlod.visible=false;
 																planetlod.alpha=0.5;
 																planetfall.visible=false;
 																planetfall.alpha=0;
