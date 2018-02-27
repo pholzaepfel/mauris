@@ -1881,10 +1881,10 @@ enemyShip.prototype.update = function() {
 												if(diffAngle*60>this.turnRate && game.time.now > this.leftCooldown)
 												{
 																this.left(1);
-																this.rightCooldown = game.time.now + 100;
+																this.rightCooldown = game.time.now + 200;
 												}else if(diffAngle*60<-this.turnRate && game.time.now > this.rightCooldown){
 																this.right(1);
-																this.leftCooldown = game.time.now + 100;
+																this.leftCooldown = game.time.now + 200;
 												}
 
 
@@ -3132,13 +3132,13 @@ x: this.target.x + this.target.body.velocity.x * timeToImpact ,
 																}
 
 																var diffAngle = compareAngles(this.sprite.rotation,targetAngle);
-																if(diffAngle*60>this.turnRate && game.time.now > this.leftCooldown)
+																if(diffAngle*60>this.turnRate && game.time.now)
 																{
 																				this.left(1);
-																				this.rightCooldown = game.time.now + 1000;
-																}else if(diffAngle*60<-this.turnRate && game.time.now > this.rightCooldown){
+																				this.rightCooldown = game.time.now + 10000;
+																}else if(diffAngle*60<-this.turnRate && game.time.now){
 																				this.right(1);
-this.leftCooldown = game.time.now + 1000;
+																				this.leftCooldown = game.time.now + 10000;
 																}
 																if(Math.abs(diffAngle) < 0.05){
 																				this.up(1);
