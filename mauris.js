@@ -3080,11 +3080,11 @@ var diffAngle2;
 												if(diffAngle*60>this.turnRate && !touchPressed)
 												{
 																this.left(1);
-																diffAngle2 = compareAngles(this.sprite.rotation+Math.PI,this.targetAngle);
+																diffAngle2 = compareAngles(this.sprite.rotation,this.targetAngle);
 if(Math.abs(diffAngle)<Math.abs(diffAngle2)){this.right(1);}
 												}else if(diffAngle*60<-this.turnRate && !touchPressed){
 																this.right(1);
-																diffAngle2 = compareAngles(this.sprite.rotation+Math.PI,this.targetAngle);
+																diffAngle2 = compareAngles(this.sprite.rotation,this.targetAngle);
 if(Math.abs(diffAngle)<Math.abs(diffAngle2)){this.left(1);}
 												}
 												if(game.input.activePointer.isDown && !touchPressed && Math.abs(diffAngle) < 0.2){
