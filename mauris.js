@@ -1863,7 +1863,6 @@ enemyShip.prototype.update = function() {
 												}
 
 												var diffAngle = compareAngles(this.sprite.rotation,targetAngle);
-var diffAngle2;
 												for(var i=0; i< enemies.length;i++){
 
 																var enDistance = this.game.physics.arcade.distanceBetween(this.sprite, enemies[i].sprite);
@@ -1880,15 +1879,8 @@ var diffAngle2;
 												if(diffAngle*60>this.turnRate)
 												{
 																this.left(1);
-
-
-																diffAngle2 = compareAngles(this.sprite.rotation+Math.PI,targetAngle);
-if(Math.abs(diffAngle)<Math.abs(diffAngle2)){this.right(1);}
-
 												}else if(diffAngle*60<-this.turnRate){
 																this.right(1);
-																diffAngle2 = compareAngles(this.sprite.rotation+Math.PI,targetAngle);
-if(Math.abs(diffAngle)<Math.abs(diffAngle2)){this.left(1);}
 												}
 
 
@@ -3076,16 +3068,11 @@ playerShip.prototype.update = function(){
 												}
 
 												var diffAngle = compareAngles(this.sprite.rotation,this.targetAngle);
-var diffAngle2;
 												if(diffAngle*60>this.turnRate && !touchPressed)
 												{
 																this.left(1);
-																diffAngle2 = compareAngles(this.sprite.rotation+Math.PI,this.targetAngle);
-if(Math.abs(diffAngle)<Math.abs(diffAngle2)){this.right(1);}
 												}else if(diffAngle*60<-this.turnRate && !touchPressed){
 																this.right(1);
-																diffAngle2 = compareAngles(this.sprite.rotation+Math.PI,this.targetAngle);
-if(Math.abs(diffAngle)<Math.abs(diffAngle2)){this.left(1);}
 												}
 												if(game.input.activePointer.isDown && !touchPressed && Math.abs(diffAngle) < 0.2){
 																this.up(1);
