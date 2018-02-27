@@ -3,7 +3,7 @@ var nextPortalGlow=0;
 var mobileScaleFactor = function() {
 				if (isAndroid) {
 								return 1.4; } else {
-												return 1.2;
+												return 1;
 								}
 }
 var meebChance=0.05;
