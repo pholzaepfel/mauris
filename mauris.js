@@ -3400,25 +3400,25 @@ gameUI.prototype.buttonsPing = function(){
 }
 
 gameUI.prototype.initSound = function(){
-				this.sound_pew1 = new Audio('/assets/pew1.wav');
-				this.sound_pew2 = new Audio('/assets/pew2.wav');
-				this.sound_dock = new Audio('/assets/dock.wav');
-				this.sound_powerup = new Audio('/assets/powerup.wav');
-				this.sound_ominous = new Audio('/assets/ominous.wav');
-				this.sound_pew3 = new Audio('/assets/pew3.wav');
-				this.sound_blur = new Audio('/assets/blur.wav');
-				this.sound_missile = new Audio('/assets/missile.wav');
+				this.sound_pew1 = game.add.audio('pew1');
+				this.sound_pew2 = game.add.audio('pew2');
+				this.sound_dock = game.add.audio('dock');
+				this.sound_powerup = game.add.audio('powerup');
+				this.sound_ominous = game.add.audio('ominous');
+				this.sound_pew3 = game.add.audio('pew3');
+				this.sound_blur = game.add.audio('blur');
+				this.sound_missile = game.add.audio('missile');
 
-				this.sound_hit1 = new Audio('/assets/hit1.wav');
-				this.sound_redalert = new Audio('/assets/redalert.wav');
-				this.sound_beep = new Audio('/assets/beep.wav');
-				this.sound_boom1 = new Audio('/assets/boom1.wav');
-				this.sound_boom2 = new Audio('/assets/boom2.wav');
-				this.sound_plasma = new Audio('/assets/plasma.wav');
-				this.sound_boop = new Audio('/assets/boop.wav');
-				this.sound_complete = new Audio('/assets/complete.wav');
-				this.sound_comms = new Audio('/assets/comms.wav');
-				this.sound_bullet = new Audio('/assets/bullet.wav');
+				this.sound_hit1 = game.add.audio('hit1');
+				this.sound_redalert = game.add.audio('redalert');
+				this.sound_beep = game.add.audio('beep');
+				this.sound_boom1 = game.add.audio('boom1');
+				this.sound_boom2 = game.add.audio('boom2');
+				this.sound_plasma = game.add.audio('plasma');
+				this.sound_boop = game.add.audio('boop');
+				this.sound_complete = game.add.audio('complete');
+				this.sound_comms = game.add.audio('comms');
+				this.sound_bullet = game.add.audio('bullet');
 				this.currentMusic=undefined;
 				this.music=[];
 }
