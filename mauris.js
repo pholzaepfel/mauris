@@ -3816,19 +3816,27 @@ gameUI.prototype.matchLocation = function(x,y,index){
 }
 gameUI.prototype.matchShip = function(part,index,ship){
 				var matches = 0;
-
-				if(index>0){  
-								matches += this.matchComponents(part,ship[index-1],'W');
+				var wmatch =-1;
+				var ematch =-1;
+				var nmatch =-1;
+				var smatch =-1;
+				var size = Math.sqrt(ship.length);
+				if(index % size>0){  
+								wmatch = ship[index-1];
 				}
-				if(index<ship.length-1){
-								matches += this.matchComponents(part,ship[index+1],'E');
+				if(index % size<size -1){
+								ematch = ship[index+1];
 				}
-				if(index>=Math.sqrt(ship.length)){
-								matches += this.matchComponents(part,ship[index-Math.sqrt(ship.length)],'N');
+				if(index>=size){
+				nmatch = ship[index-size];
 				}
-				if(index<ship.length-Math.sqrt(ship.length)){
-								matches += this.matchComponents(part,ship[index+Math.sqrt(ship.length)],'S');
+				if(index<ship.length-size){
+smatch = ship[index+size];
 				}
+								matches += this.matchComponents(part,wmatch,'W');
+								matches += this.matchComponents(part,ematch,'E');
+								matches += this.matchComponents(part,smatch,'S');
+								matches += this.matchComponents(part,nmatch,'N');
 				return matches;
 }
 gameUI.prototype.clearButtons = function() {
@@ -4530,6 +4538,7 @@ gameUI.prototype.newestPart = function() {
 				this.currentPart=playerStats.inventory.length>0?playerStats.inventory.length-1:0;
 				this.updatePart();
 }
+
 gameUI.prototype.partsUI = function (ship) {
 				this.sound_dock.play();
 				this.initInventory();
