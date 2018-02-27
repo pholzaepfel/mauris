@@ -1876,13 +1876,18 @@ enemyShip.prototype.update = function() {
 												if(this.energy<this.energyReserve){
 																diffAngle = compareAngles(this.sprite.rotation+Math.PI,targetAngle);
 												}
-												if(diffAngle*60>this.turnRate )
-												{
-																this.left(1);
-												}else if(diffAngle*60<-this.turnRate ){
-																this.right(1);
-												}
-
+																if(diffAngle>game.math.degToRad(this.turnRate)*shipSpeed*game.time.physicsElapsed)
+																{
+																				this.left(1);
+																}else if(diffAngle<game.math.degToRad(this.turnRate)*shipSpeed*game.time.physicsElapsed * -1){
+																				this.right(1);
+																}else if(diffAngle>0)
+																{
+																				this.left(diffAngle/(game.math.degToRad(this.turnRate)*shipSpeed*game.time.physicsElapsed      ));  
+																}else if(diffAngle<0
+																				){
+																				this.right(diffAngle/(game.math.degToRad(this.turnRate)*shipSpeed*game.time.physicsElapsed * -1));
+																}
 
 
 
@@ -3124,12 +3129,19 @@ x: this.target.x + this.target.body.velocity.x * timeToImpact ,
 																}
 
 																var diffAngle = compareAngles(this.sprite.rotation,targetAngle);
-																if(diffAngle*60>this.turnRate && game.time.now)
+																																if(diffAngle>game.math.degToRad(this.turnRate)*shipSpeed*game.time.physicsElapsed)
 																{
 																				this.left(1);
-																}else if(diffAngle*60<-this.turnRate && game.time.now){
+																}else if(diffAngle<game.math.degToRad(this.turnRate)*shipSpeed*game.time.physicsElapsed * -1){
 																				this.right(1);
+																}else if(diffAngle>0)
+																{
+																				this.left(diffAngle/(game.math.degToRad(this.turnRate)*shipSpeed*game.time.physicsElapsed      ));  
+																}else if(diffAngle<0
+																				){
+																				this.right(diffAngle/(game.math.degToRad(this.turnRate)*shipSpeed*game.time.physicsElapsed * -1));
 																}
+
 																if(Math.abs(diffAngle) < 0.05){
 																				this.up(1);
 																}
