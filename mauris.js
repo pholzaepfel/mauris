@@ -3056,6 +3056,10 @@ playerShip.prototype.update = function(){
 																}
 												}
 								}
+								if(touchPressed){
+									this.leftCooldown = 0;
+									this.rightCooldown = 0;
+								}
 								if(this.behavior=='move'){
 												if(!this.target.alive){
 																this.target = this.sprite;
