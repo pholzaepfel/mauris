@@ -3879,9 +3879,13 @@ gameUI.prototype.initCombatUi = function() {
 				this.comms = game.add.text(0,0,'',{font:'32px mozart', fill: 'rgb(40,190,240)', align: 'left'});
 
 				this.comms.anchor.setTo(0.5,0.5);
+				destroyIfExists(this.playerStatusTextShadow);
+				this.playerStatusTextShadow = game.add.text(-295,-195,'',{font:'32px acknowledge', fill: 'rgb(0, 0, 0)', align: 'left' });
+				this.playerStatusTextShadow.anchor.setTo(0.0,0.0);
+
 
 				destroyIfExists(this.playerStatusText);
-				this.playerStatusText = game.add.text(-300,-200,'',{font:'32px acknowledge', fill: 'rgb(96, 96, 240)', align: 'left' });
+				this.playerStatusText = game.add.text(-300,-200,'',{font:'32px acknowledge', fill: 'rgb(160, 160, 240)', align: 'left' });
 				this.playerStatusText.anchor.setTo(0.0,0.0);
 
 				destroyIfExists(this.partText);
@@ -4051,7 +4055,7 @@ gameUI.prototype.radarPing = function() {
 								var bracketLeft = '[';
 								var bracketRight = ']';
 
-								var missionTarget = this.enemies[i].ai == aiModes['asteroid'] ? 128 : 0;
+								var missionTarget = 0;
 
 								if(player.profileShow && !missionTarget){
 												var adjustedProfile = 200 + Math.pow(player.sprite.profile,profileExponent);
@@ -4167,6 +4171,7 @@ gameUI.prototype.playerStatusTextPing = function() {
 								statusText+='\ncurrent special item:\n' + player.altText + '\n';
 								}
 				}
+				this.playerStatusTextShadow.setText(statusText);
 				this.playerStatusText.setText(statusText);
 
 
@@ -4175,6 +4180,10 @@ gameUI.prototype.playerStatusTextPing = function() {
 
 				this.playerStatusText.x = upperLeftCornerX + 30;
 				this.playerStatusText.y = upperLeftCornerY + 50;
+				this.playerStatusTextShadow.x = upperLeftCornerX + 35;
+				this.playerStatusTextShadow.y = upperLeftCornerY + 55;
+
+				this.toTop(this.playerStatusTextShadow);
 				this.toTop(this.playerStatusText);
 
 }
