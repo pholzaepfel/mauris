@@ -2024,6 +2024,10 @@ var blurbStats = function(target){
 				var radarTargets = target.radarTargets;
 
 				var ret = '';
+				ret += '\n';
+				ret += '\n';
+				ret += '\n';
+				ret += '\n';
 				ret += ' burstDps: ' + parseFloat(burstDps).toFixed(2);
 				ret += ' sustainedDps: ' + parseFloat(sustainedDps).toFixed(2);
 				ret += '\n';
