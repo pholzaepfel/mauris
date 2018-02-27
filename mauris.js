@@ -5357,14 +5357,19 @@ function sparkleBullets(s) {
 				}
 }
 function targetLoot (s){
-				if(Math.abs(game.input.activePointer.worldX - s.x) < 80 &&
+				if(
+game.input.activePointer.isDown &&
+Math.abs(game.input.activePointer.worldX - s.x) < 80 &&
 												Math.abs(game.input.activePointer.worldY - s.y) < 80) {
 								player.behavior='target';
 								player.target=s;
 				}
 }
 function targetBulletIfCorpse (s){
-				if(s.bulletSprite == 13 &&Math.abs(game.input.activePointer.worldX - s.x) < 80 &&
+				if(
+
+game.input.activePointer.isDown &&
+s.bulletSprite == 13 &&Math.abs(game.input.activePointer.worldX - s.x) < 80 &&
 												Math.abs(game.input.activePointer.worldY - s.y) < 80) {
 								player.behavior='target';
 								player.target=s;
