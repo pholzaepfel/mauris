@@ -1348,8 +1348,6 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 
 				this.crew=1;
 				this.crewMax=2;
-				this.leftCooldown=0;
-				this.rightCooldown=0;
 
 				this.profileOnFire=false;
 				var x = this.target.x + (Math.cos(-1 * this.sprite.rotation) * (randomRange(960,1500) + player.sprite.body.velocity.x));
@@ -1878,13 +1876,11 @@ enemyShip.prototype.update = function() {
 												if(this.energy<this.energyReserve){
 																diffAngle = compareAngles(this.sprite.rotation+Math.PI,targetAngle);
 												}
-												if(diffAngle*60>this.turnRate && game.time.now > this.leftCooldown)
+												if(diffAngle*60>this.turnRate )
 												{
 																this.left(1);
-																this.rightCooldown = game.time.now + 200;
-												}else if(diffAngle*60<-this.turnRate && game.time.now > this.rightCooldown){
+												}else if(diffAngle*60<-this.turnRate ){
 																this.right(1);
-																this.leftCooldown = game.time.now + 200;
 												}
 
 
@@ -2108,8 +2104,6 @@ mockPlayerShip.prototype.initPlayerShip = function (ship, x, y) {
 				if(typeof(y)=='undefined'){y=0};
 				this.thrustBehavior=tinySmoke;
 				this.altText='';
-				this.leftCooldown=0;
-				this.rightCooldown=0;
 				this.profileOnFire=false;
 				this.sprite.r=255;
 				this.sprite.g=255;
@@ -2203,8 +2197,6 @@ playerShip.prototype.initPlayerShip = function (ship,x,y) {
 				if(typeof(x)=='undefined'){x=0};
 				if(typeof(y)=='undefined'){y=0};
 				this.profileOnFire=true;
-				this.leftCooldown=0;
-				this.rightCooldown=0;
 				this.altText='';
 				this.crew=1;
 				this.crewMax=2;
@@ -3056,10 +3048,6 @@ playerShip.prototype.update = function(){
 																}
 												}
 								}
-								if(game.input.activePointer.isDown){
-									this.leftCooldown = 0;
-									this.rightCooldown = 0;
-								}
 								if(this.behavior=='move'){
 												if(!this.target.alive){
 																this.target = this.sprite;
@@ -3078,16 +3066,20 @@ playerShip.prototype.update = function(){
 
 																}
 												}
-this.sprite.rotation=this.targetAngle;
 												var diffAngle = compareAngles(this.sprite.rotation,this.targetAngle);
-												if(diffAngle*60>this.turnRate && !touchPressed && game.time.now > this.leftCooldown)
-												{
-																this.left(1);
-																this.rightCooldown = game.time.now + 100000;
-												}else if(diffAngle*60<-this.turnRate && !touchPressed && game.time.now > this.rightCooldown){
-																this.right(1);
-																this.leftCooldown = game.time.now + 100000;
-												}
+
+																if(diffAngle>game.math.degToRad(this.turnRate)*shipSpeed*game.time.physicsElapsed)
+																{
+																				this.left(1);
+																}else if(diffAngle<game.math.degToRad(this.turnRate)*shipSpeed*game.time.physicsElapsed * -1){
+																				this.right(1);
+																}else if(diffAngle>0)
+																{
+																				this.left(diffAngle/(game.math.degToRad(this.turnRate)*shipSpeed*game.time.physicsElapsed      ));  
+																}else if(diffAngle<0
+																				){
+																				this.right(diffAngle/(game.math.degToRad(this.turnRate)*shipSpeed*game.time.physicsElapsed * -1));
+																}
 												if(game.input.activePointer.isDown && !touchPressed && Math.abs(diffAngle) < 0.2){
 																this.up(1);
 												}
@@ -3135,10 +3127,8 @@ x: this.target.x + this.target.body.velocity.x * timeToImpact ,
 																if(diffAngle*60>this.turnRate && game.time.now)
 																{
 																				this.left(1);
-																				this.rightCooldown = game.time.now + 10000;
 																}else if(diffAngle*60<-this.turnRate && game.time.now){
 																				this.right(1);
-																				this.leftCooldown = game.time.now + 10000;
 																}
 																if(Math.abs(diffAngle) < 0.05){
 																				this.up(1);
