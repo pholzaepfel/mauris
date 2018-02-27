@@ -1877,12 +1877,15 @@ var diffAngle2;
 												if(this.energy<this.energyReserve){
 																diffAngle = compareAngles(this.sprite.rotation+Math.PI,targetAngle);
 												}
-												if(diffAngle>0)
+												if(diffAngle*60>this.turnRate)
 												{
 																this.left(1);
+
+
 																diffAngle2 = compareAngles(this.sprite.rotation+Math.PI,targetAngle);
 if(Math.abs(diffAngle)<Math.abs(diffAngle2)){this.right(1);}
-												}else {
+
+												}else if(diffAngle*60<-this.turnRate){
 																this.right(1);
 																diffAngle2 = compareAngles(this.sprite.rotation+Math.PI,targetAngle);
 if(Math.abs(diffAngle)<Math.abs(diffAngle2)){this.left(1);}
@@ -3074,12 +3077,12 @@ playerShip.prototype.update = function(){
 
 												var diffAngle = compareAngles(this.sprite.rotation,this.targetAngle);
 var diffAngle2;
-												if(diffAngle > 0 && !touchPressed)
+												if(diffAngle*60>this.turnRate && !touchPressed)
 												{
 																this.left(1);
 																diffAngle2 = compareAngles(this.sprite.rotation+Math.PI,this.targetAngle);
 if(Math.abs(diffAngle)<Math.abs(diffAngle2)){this.right(1);}
-												}else if(diffAngle < 0 && !touchPressed){
+												}else if(diffAngle*60<-this.turnRate && !touchPressed){
 																this.right(1);
 																diffAngle2 = compareAngles(this.sprite.rotation+Math.PI,this.targetAngle);
 if(Math.abs(diffAngle)<Math.abs(diffAngle2)){this.left(1);}
