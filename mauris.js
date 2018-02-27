@@ -3056,7 +3056,7 @@ playerShip.prototype.update = function(){
 																}
 												}
 								}
-								if(touchPressed){
+								if(game.input.activePointer.isDown){
 									this.leftCooldown = 0;
 									this.rightCooldown = 0;
 								}
