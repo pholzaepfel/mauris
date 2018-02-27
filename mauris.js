@@ -1,5 +1,5 @@
 var gamemode;
-var nextPortalGlow=0b
+var nextPortalGlow=0;
 var mobileScaleFactor = function() {
 				if (isAndroid) {
 								return 1.4; } else {
@@ -5459,7 +5459,7 @@ function handleMission() {
 				}
 
 				if(onscreen(frob1.body.x, frob1.body.y)){
-								if(game.time.now>nextPortalGlow)<0.2){
+								if(game.time.now>nextPortalGlow)){
 												portalGlow(explosions, frob1.x, frob1.y,3,randomRange(6,8));
 nextPortalGlow=game.time.now+randomRange(100,300);
 								}
