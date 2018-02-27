@@ -3083,10 +3083,10 @@ playerShip.prototype.update = function(){
 												if(diffAngle*60>this.turnRate && !touchPressed && game.time.now > this.leftCooldown)
 												{
 																this.left(1);
-																this.rightCooldown = game.time.now + 1000;
+																this.rightCooldown = game.time.now + 100000;
 												}else if(diffAngle*60<-this.turnRate && !touchPressed && game.time.now > this.rightCooldown){
 																this.right(1);
-																this.leftCooldown = game.time.now + 1000;
+																this.leftCooldown = game.time.now + 100000;
 												}
 												if(game.input.activePointer.isDown && !touchPressed && Math.abs(diffAngle) < 0.2){
 																this.up(1);
@@ -3170,15 +3170,19 @@ this.leftCooldown = game.time.now + 1000;
 																				}
 																}
 
-																var diffAngle = compareAngles(this.sprite.rotation,adjTargetAngle);
+						var diffAngle = compareAngles(this.sprite.rotation,adjTargetAngle);
 
-																if(diffAngle>game.math.degToRad(this.turnRate)*shipSpeed*game.time.physicsElapsed && game.time.now > this.leftCooldown)
+																if(diffAngle>game.math.degToRad(this.turnRate)*shipSpeed*game.time.physicsElapsed)
 																{
 																				this.left(1);
-this.rightCooldown = game.time.now + 100;
-																}else if(diffAngle<game.math.degToRad(this.turnRate)*shipSpeed*game.time.physicsElapsed * -1 && game.time.now > this.rightCooldown){
+																}else if(diffAngle<game.math.degToRad(this.turnRate)*shipSpeed*game.time.physicsElapsed * -1){
 																				this.right(1);
-this.leftCooldown = game.time.now + 100;
+																}else if(diffAngle>0)
+																{
+																				this.left(diffAngle/(game.math.degToRad(this.turnRate)*shipSpeed*game.time.physicsElapsed      ));  
+																}else if(diffAngle<0
+																				){
+																				this.right(diffAngle/(game.math.degToRad(this.turnRate)*shipSpeed*game.time.physicsElapsed * -1));
 																}
 
 
