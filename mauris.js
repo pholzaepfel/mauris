@@ -3079,10 +3079,10 @@ playerShip.prototype.update = function(){
 												if(diffAngle*60>this.turnRate && !touchPressed && game.time.now > this.leftCooldown)
 												{
 																this.left(1);
-	this.rightCooldown = game.time.now + 100;
+																this.rightCooldown = game.time.now + 100;
 												}else if(diffAngle*60<-this.turnRate && !touchPressed && game.time.now > this.rightCooldown){
 																this.right(1);
-this.leftCooldown = game.time.now + 100;
+																this.leftCooldown = game.time.now + 100;
 												}
 												if(game.input.activePointer.isDown && !touchPressed && Math.abs(diffAngle) < 0.2){
 																this.up(1);
@@ -3128,11 +3128,13 @@ x: this.target.x + this.target.body.velocity.x * timeToImpact ,
 																}
 
 																var diffAngle = compareAngles(this.sprite.rotation,targetAngle);
-																if(diffAngle*60>this.turnRate)
+																if(diffAngle*60>this.turnRate && game.time.now > this.leftCooldown)
 																{
 																				this.left(1);
-																}else if(diffAngle*60<-this.turnRate){
+																				this.rightCooldown = game.time.now + 100;
+																}else if(diffAngle*60<-this.turnRate && game.time.now > this.rightCooldown){
 																				this.right(1);
+this.leftCooldown = game.time.now + 100;
 																}
 																if(Math.abs(diffAngle) < 0.05){
 																				this.up(1);
@@ -3166,17 +3168,13 @@ x: this.target.x + this.target.body.velocity.x * timeToImpact ,
 
 																var diffAngle = compareAngles(this.sprite.rotation,adjTargetAngle);
 
-																if(diffAngle>game.math.degToRad(this.turnRate)*shipSpeed*game.time.physicsElapsed)
+																if(diffAngle>game.math.degToRad(this.turnRate)*shipSpeed*game.time.physicsElapsed && game.time.now > this.leftCooldown)
 																{
 																				this.left(1);
-																}else if(diffAngle<game.math.degToRad(this.turnRate)*shipSpeed*game.time.physicsElapsed * -1){
+this.rightCooldown = game.time.now + 100;
+																}else if(diffAngle<game.math.degToRad(this.turnRate)*shipSpeed*game.time.physicsElapsed * -1 && game.time.now > this.rightCooldown){
 																				this.right(1);
-																}else if(diffAngle>0)
-																{
-																				this.left(diffAngle/(game.math.degToRad(this.turnRate)*shipSpeed*game.time.physicsElapsed      ));  
-																}else if(diffAngle<0
-																				){
-																				this.right(diffAngle/(game.math.degToRad(this.turnRate)*shipSpeed*game.time.physicsElapsed * -1));
+this.leftCooldown = game.time.now + 100;
 																}
 
 
