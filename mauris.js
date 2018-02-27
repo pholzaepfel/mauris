@@ -2026,6 +2026,7 @@ var blurbStats = function(target){
 				var ret = '';
 				ret += ' burstDps: ' + parseFloat(burstDps).toFixed(2);
 				ret += ' sustainedDps: ' + parseFloat(sustainedDps).toFixed(2);
+				ret += '\n';
 				ret += ' maxBurst: ' + parseFloat(maxBurst).toFixed(2);
 				ret += ' chargeTime: ' + parseFloat(chargeTime).toFixed(2) +'s';
 				//ret += ' fireDamage: ' + parseFloat(fireDamage).toFixed(2);
@@ -2034,9 +2035,11 @@ var blurbStats = function(target){
 				ret += '\n';
 				ret += ' acceleration: ' + parseFloat(acceleration).toFixed(2);
 				ret += ' maxVelocity: ' + parseFloat(maxVelocity).toFixed(2);
+				ret += '\n';
 				ret += ' turnRate: ' + parseFloat(turnRate).toFixed(2);
 				ret += ' health: ' + parseFloat(health).toFixed(2);
 				//ret += ' radarTargets: ' + parseFloat(radarTargets).toFixed(2);
+				ret += '\n';
 
 				return ret;    
 }
@@ -4170,6 +4173,7 @@ gameUI.prototype.playerStatusTextPing = function() {
 								if(player.altText != ''){
 								statusText+='\ncurrent special item:\n' + player.altText + '\n';
 								}
+statusText+=blurbStats(player);
 				}
 				this.playerStatusTextShadow.setText(statusText);
 				this.playerStatusText.setText(statusText);
