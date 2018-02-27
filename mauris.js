@@ -6,6 +6,7 @@ var mobileScaleFactor = function() {
 												return 1;
 								}
 }
+var distantPlanetScale=0.8;
 var meebChance=0.05;
 var pauseMessage='';
 var defaultBehavior='neutral';
@@ -4952,13 +4953,14 @@ function randomInt (a,b){
 }
 function fadeIn () {
 				playerStats.fadeAmount=1;
-				game.add.tween(playerStats).to({fadeAmount:0},2500, Phaser.Easing.Exponential.Out, true, 0, false);
+				game.add.tween(playerStats).to({fadeAmount:0},5000, Phaser.Easing.Exponential.Out, true, 0, false);
 				station.scale.setTo(1,1);
 				station.r=192;
 				station.g=192;
 				station.b=192;
 				station.rotation=randomRange(-180,180);
 				station.body.angularVelocity=randomRange(-10,10);
+				distantPlanetScale=randomRange(0.5,0.85);
 				game.add.tween(station.scale).to({x:0,y:0}, 30000, Phaser.Easing.Linear.None,  true, 0, false);
 				var r = randomRange(3,4);
 				nebula.scale.setTo(r,r);
@@ -6064,7 +6066,7 @@ function update () {
 								}
 								if(typeof(playerStats.mission.distantPlanet)!='undefined'){
 												if(playerStats.mission.distantPlanet){
-																var r=0.8;
+																var r=distantPlanetScale;
 																planetlod.scale.setTo(r,r);
 																planet.scale.setTo(r,r);
 																planet.visible=true;
