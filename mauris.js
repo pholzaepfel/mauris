@@ -1,8 +1,8 @@
 var gamemode;
 var mobileScaleFactor = function() {
 				if (isAndroid) {
-								return 1.5; } else {
-												return 1.3;
+								return 1.4; } else {
+												return 1.2;
 								}
 }
 var meebChance=0.05;
