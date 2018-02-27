@@ -1962,7 +1962,7 @@ var resolutionY=Math.max(document.documentElement.clientHeight, window.innerHeig
 var game = new Phaser.Game(resolutionX, resolutionY, Phaser.WEBGL, 'phaser-example', { preload: preload, create: create, update: update, render: render });
 
 function preload () {
-				hello =  game.add.text(resolutionX*0.5,resolutionY*0.4, 'MAURIS\n\nLOADING: ',{ font:'48pz acknowledge', fill: 'rgb(196,150,255)', align: 'left' })
+				hello =  game.add.text(resolutionX*0.5,resolutionY*0.4, 'MAURIS\n\nLOADING: ',{ font:'48px acknowledge', fill: 'rgb(196,150,255)', align: 'left' })
 								game.load.spritesheet('parts', 'assets/parts.png', 16, 16);
 
 				game.load.script('blurX', 'BlurX.js');
