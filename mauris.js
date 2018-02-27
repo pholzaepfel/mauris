@@ -3080,11 +3080,11 @@ playerShip.prototype.update = function(){
 												}
 
 												var diffAngle = compareAngles(this.sprite.rotation,this.targetAngle);
-												if(diffAngle*60>this.turnRate && !touchPressed && game.time.now > this.leftCooldown)
+												if(diffAngle*55>this.turnRate && !touchPressed && game.time.now > this.leftCooldown)
 												{
 																this.left(1);
 																this.rightCooldown = game.time.now + 100000;
-												}else if(diffAngle*60<-this.turnRate && !touchPressed && game.time.now > this.rightCooldown){
+												}else if(diffAngle*55<-this.turnRate && !touchPressed && game.time.now > this.rightCooldown){
 																this.right(1);
 																this.leftCooldown = game.time.now + 100000;
 												}
