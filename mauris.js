@@ -4902,6 +4902,12 @@ function fadeOut () {
 				game.add.tween(hazeRed).to({alpha:0},5000, Phaser.Easing.Linear.Out, true, 0, false);
 				game.add.tween(hazeWhite).to({alpha:0},5000, Phaser.Easing.Exponential.Out, true, 0, false);
 				game.add.tween(hazePurple).to({alpha:0},5000, Phaser.Easing.Exponential.Out, true, 0, false);
+				game.add.tween(planet).to({alpha:0},5000, Phaser.Easing.Exponential.Out, true, 0, false);
+				game.add.tween(planetlod).to({alpha:0},5000, Phaser.Easing.Exponential.Out, true, 0, false);
+				game.add.tween(planetdirt).to({alpha:0},5000, Phaser.Easing.Exponential.Out, true, 0, false);
+				game.add.tween(planetfall).to({alpha:0},5000, Phaser.Easing.Exponential.Out, true, 0, false);
+				game.add.tween(nebula).to({alpha:0},5000, Phaser.Easing.Exponential.Out, true, 0, false);
+				game.add.tween(nebula2).to({alpha:0},5000, Phaser.Easing.Exponential.Out, true, 0, false);
 
 				hazeRed.tint=randomMutedColor(40,200,40,200,40,200);
 				hazeWhite.tint=randomMutedColor(140,255,140,255,140,255);
