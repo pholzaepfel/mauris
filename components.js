@@ -12,7 +12,7 @@ var cmp = [
 		'id':1,
 		'drops':true,
 		'name':'Rusted Wing',
-		'match':'62',
+		'match':'2486',
 'hasAlt':false,
 		'flavor':'improves maneuverability',
 		'bonus':function(target){
