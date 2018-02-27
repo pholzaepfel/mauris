@@ -1,4 +1,5 @@
 var gamemode;
+var fadeAmount = 0;
 var nextPortalGlow=0;
 var mobileScaleFactor = function() {
 				if (isAndroid) {
@@ -766,6 +767,14 @@ function headlightFlicker(){
 								headlightIntensity=Math.sin(game.time.now/333);
 				}
 }
+function darkener(fade){
+				if(fade > 0){
+				otherGraphics.blendMode=0;
+				otherGraphics.lineStyle(10,0x000000,fade);
+					otherGraphics.beginFill(0x000000,fade);
+			otherGraphics.drawRect(player.sprite.x-(0.5*resolutionX), player.sprite.y-(0.5 * resolutionY), resolutionX, resolutionY);
+				}
+}
 function headlight(){
 				var lightSpot=undefined;
 				lightSpot={x:player.sprite.body.x+(player.sprite.body.width*0.5)+(Math.cos(player.sprite.rotation)*((player.sprite.body.width*0.5)-lightPosition(player.ship))),y:player.sprite.body.y+(player.sprite.body.width*0.5)+(Math.sin(player.sprite.rotation)*((player.sprite.body.width*0.5)-lightPosition(player.ship)))};
@@ -785,6 +794,7 @@ function headlight(){
 								otherGraphics.endFill();
 				}
 				otherGraphics.blendMode=0;
+
 }
 
 function queryComponent(id){
@@ -1346,7 +1356,7 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 				this.sprite.rotation=Math.random()*2*Math.PI;
 				this.altText='';
 				this.thrustBehavior=tinySmoke;
-
+				this.sprite.alpha=1;
 				this.crew=1;
 				this.crewMax=2;
 
@@ -2117,6 +2127,7 @@ mockPlayerShip.prototype.initPlayerShip = function (ship, x, y) {
 				if(typeof(y)=='undefined'){y=0};
 				this.thrustBehavior=tinySmoke;
 				this.altText='';
+				this.sprite.alpha=1;
 				this.profileOnFire=false;
 				this.sprite.r=255;
 				this.sprite.g=255;
@@ -2213,6 +2224,7 @@ playerShip.prototype.initPlayerShip = function (ship,x,y) {
 				this.altText='';
 				this.crew=1;
 				this.crewMax=2;
+				this.sprite.alpha=1;
 				this.thrustBehavior=tinySmoke;
 				this.sprite.r=255;
 				this.sprite.g=255;
@@ -5524,6 +5536,7 @@ function update () {
 								if(player.alive){
 												headlight();
 								}
+								darkener(fadeAmount);
 
 								var left = 0;
 								var right = 0;
