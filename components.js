@@ -3304,7 +3304,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 {
 	'id':202,
 	'drops':true,
-	'name':'Ascended Watcher',
+	'name':'Ascended Watcher202',
 	'match':'26',
 'hasAlt':false,
 	'flavor':'--',
@@ -3316,7 +3316,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 {
 	'id':203,
 	'drops':true,
-	'name':'Ascended Watcher',
+	'name':'Ascended Watcher203',
 	'match':'42',
 'hasAlt':false,
 	'flavor':'--',
@@ -3328,7 +3328,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 {
 	'id':204,
 	'drops':true,
-	'name':'Ascended Watcher',
+	'name':'Ascended Watcher204',
 	'match':'26',
 'hasAlt':false,
 	'flavor':'--',
@@ -3340,7 +3340,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 {
 	'id':205,
 	'drops':true,
-	'name':'Ascended Watcher',
+	'name':'Ascended Watcher205',
 	'match':'42',
 'hasAlt':false,
 	'flavor':'--',
@@ -3421,7 +3421,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 {
 	'id':210,
 	'drops':true,
-	'name':'Newguy',
+	'name':'Decimator210',
 	'match':'26',
 'hasAlt':false,
 	'flavor':'--',
@@ -3433,7 +3433,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 {
 	'id':211,
 	'drops':true,
-	'name':'Newguy',
+	'name':'Decimator211',
 	'match':'42',
 'hasAlt':false,
 	'flavor':'--',
@@ -3445,7 +3445,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 {
 	'id':212,
 	'drops':true,
-	'name':'Newguy',
+	'name':'Decimator212',
 	'match':'26',
 'hasAlt':false,
 	'flavor':'--',
@@ -3457,7 +3457,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 {
 	'id':213,
 	'drops':true,
-	'name':'Newguy',
+	'name':'Decimator213',
 	'match':'42',
 'hasAlt':false,
 	'flavor':'--',
@@ -3690,7 +3690,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 {
 	'id':234,
 	'drops':true,
-	'name':'Ascended Watcher',
+	'name':'Ascended Watcher234',
 	'match':'86',
 'hasAlt':false,
 	'flavor':'--',
@@ -3702,7 +3702,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 {
 	'id':235,
 	'drops':true,
-	'name':'Ascended Watcher',
+	'name':'Ascended Watcher235',
 	'match':'84',
 'hasAlt':false,
 	'flavor':'--',
@@ -3714,7 +3714,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 {
 	'id':236,
 	'drops':true,
-	'name':'Ascended Watcher',
+	'name':'Ascended Watcher236',
 	'match':'86',
 'hasAlt':false,
 	'flavor':'--',
@@ -3726,7 +3726,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 {
 	'id':237,
 	'drops':true,
-	'name':'Ascended Watcher',
+	'name':'Ascended Watcher237',
 	'match':'84',
 'hasAlt':false,
 	'flavor':'--',
@@ -3809,7 +3809,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 {
 	'id':242,
 	'drops':true,
-	'name':'Newguy',
+	'name':'Decimator242',
 	'match':'86',
 'hasAlt':false,
 	'flavor':'--',
@@ -3821,7 +3821,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 {
 	'id':243,
 	'drops':true,
-	'name':'Newguy',
+	'name':'Decimator243',
 	'match':'84',
 'hasAlt':false,
 	'flavor':'--',
@@ -3833,7 +3833,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 {
 	'id':244,
 	'drops':true,
-	'name':'Newguy',
+	'name':'Decimator244',
 	'match':'862',
 'hasAlt':false,
 	'flavor':'--',
@@ -3845,7 +3845,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 {
 	'id':245,
 	'drops':true,
-	'name':'Newguy',
+	'name':'Decimator245',
 	'match':'842',
 'hasAlt':false,
 	'flavor':'--',
@@ -4081,7 +4081,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 {
 	'id':266,
 	'drops':true,
-	'name':'Ascended Watcher',
+	'name':'Ascended Watcher266',
 	'match':'4682',
 'hasAlt':false,
 	'flavor':'--',
@@ -4093,7 +4093,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 {
 	'id':267,
 	'drops':true,
-	'name':'Ascended Watcher',
+	'name':'Ascended Watcher267',
 	'match':'4682',
 'hasAlt':false,
 	'flavor':'--',
@@ -4176,7 +4176,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 {
 	'id':274,
 	'drops':true,
-	'name':'Newguy',
+	'name':'Decimator274',
 	'match':'4682',
 'hasAlt':false,
 	'flavor':'--',
@@ -4188,7 +4188,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 {
 	'id':275,
 	'drops':true,
-	'name':'Newguy',
+	'name':'Decimator275',
 	'match':'4682',
 'hasAlt':false,
 	'flavor':'--',
@@ -4200,7 +4200,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 {
 	'id':276,
 	'drops':true,
-	'name':'Newguy',
+	'name':'Decimator276',
 	'match':'86',
 'hasAlt':false,
 	'flavor':'--',
@@ -4212,7 +4212,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 {
 	'id':277,
 	'drops':true,
-	'name':'Newguy',
+	'name':'Decimator277',
 	'match':'84',
 'hasAlt':false,
 	'flavor':'--',
