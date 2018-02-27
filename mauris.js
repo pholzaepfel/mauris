@@ -1962,50 +1962,91 @@ var resolutionY=Math.max(document.documentElement.clientHeight, window.innerHeig
 var game = new Phaser.Game(resolutionX, resolutionY, Phaser.WEBGL, 'phaser-example', { preload: preload, create: create, update: update, render: render });
 
 function preload () {
-				hello =  game.add.text(resolutionX*0.5,resolutionY*0.4, 'LOADING',{ font:'12px acknowledge', fill: 'rgb(196,150,255)', align: 'center' })
+				hello =  game.add.text(resolutionX*0.5,resolutionY*0.4, 'MAURIS\n\nLOADING: ',{ font:'48pz acknowledge', fill: 'rgb(196,150,255)', align: 'left' })
 								game.load.spritesheet('parts', 'assets/parts.png', 16, 16);
 
 				game.load.script('blurX', 'BlurX.js');
+				hello.setText(hello.text + '.');
 				game.load.script('blurY', 'BlurY.js');
+				hello.setText(hello.text + '.');
 				game.load.image('portal', 'assets/portal.png');
+				hello.setText(hello.text + '.');
 				game.load.image('portal2', 'assets/portal2.png');
+				hello.setText(hello.text + '.');
 				game.load.image('station', 'assets/station.png');
+				hello.setText(hello.text + '.');
 				game.load.image('frob1', 'assets/frob1.png');
+				hello.setText(hello.text + '.');
 				game.load.image('partswindow', 'assets/partswindow.png');
+				hello.setText(hello.text + '.');
 				game.load.spritesheet('bullet', 'assets/bullets.png',16,16);
+				hello.setText(hello.text + '.');
 				game.load.image('planets', 'assets/planets.png');
+				hello.setText(hello.text + '.');
 				game.load.image('nebula', 'assets/nebula.png');
+				hello.setText(hello.text + '.');
 				game.load.image('planetslod', 'assets/planetslod.png');
+				hello.setText(hello.text + '.');
 				game.load.image('planetfall', 'assets/planetfall.png');
+				hello.setText(hello.text + '.');
 				game.load.image('planetdirt', 'assets/planetdirt.png');
+				hello.setText(hello.text + '.');
 				game.load.image('starfield2', 'assets/starfield2.png');
+				hello.setText(hello.text + '.');
 				game.load.image('starfield6', 'assets/starfield6.png');
+				hello.setText(hello.text + '.');
 				game.load.image('starfield4', 'assets/starfield4.png');
+				hello.setText(hello.text + '.');
 				game.load.image('haze', 'assets/haze.png');
+				hello.setText(hello.text + '.');
 				game.load.image('haze2', 'assets/haze2.png');
+				hello.setText(hello.text + '.');
 				game.load.spritesheet('sparkles', 'assets/sparklescyan.png',8,8);
+				hello.setText(hello.text + '.');
 				game.load.spritesheet('sparklescyan', 'assets/sparklescyan.png',8,8);
+				hello.setText(hello.text + '.');
 				game.load.spritesheet('thrust', 'assets/thrust.png',8,8);
+				hello.setText(hello.text + '.');
 				game.load.spritesheet('sparks', 'assets/sparks.png',8,8);
+				hello.setText(hello.text + '.');
 				game.load.spritesheet('explosions', 'assets/explosions.png',16,16);
+				hello.setText(hello.text + '.');
 				game.load.audio('pew1','assets/pew1.wav');
+				hello.setText(hello.text + '.');
 				game.load.audio('redalert','assets/redalert.wav');
+				hello.setText(hello.text + '.');
 				game.load.audio('beep','assets/beep.wav');
+				hello.setText(hello.text + '.');
 				game.load.audio('hit1','assets/hit1.wav');
+				hello.setText(hello.text + '.');
 				game.load.audio('boom1','assets/boom1.wav');
+				hello.setText(hello.text + '.');
 				game.load.audio('boom2','assets/boom2.wav');
+				hello.setText(hello.text + '.');
 				game.load.audio('plasma','assets/plasma.wav');
+				hello.setText(hello.text + '.');
 				game.load.audio('boop','assets/boop.wav');
+				hello.setText(hello.text + '.');
 				game.load.audio('complete','assets/complete.wav');
+				hello.setText(hello.text + '.');
 				game.load.audio('comms','assets/comms.wav');
+				hello.setText(hello.text + '.');
 				game.load.audio('pew2','assets/pew2.wav');
+				hello.setText(hello.text + '.');
 				game.load.audio('pew3','assets/pew3.wav');
+				hello.setText(hello.text + '.');
 				game.load.audio('blur','assets/blur.wav');
+				hello.setText(hello.text + '.');
 				game.load.audio('dock','assets/dock.wav');
+				hello.setText(hello.text + '.');
 				game.load.audio('ominous','assets/ominous.wav');
+				hello.setText(hello.text + '.');
 				game.load.audio('powerup','assets/powerup.wav');
+				hello.setText(hello.text + '.');
 				game.load.audio('missile','assets/missile.wav');
+				hello.setText(hello.text + '.');
 				game.load.audio('bullet','assets/bullet.wav');
+				hello.setText(hello.text + '.');
 }
 
 
