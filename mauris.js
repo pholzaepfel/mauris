@@ -58,7 +58,7 @@ var randomMission = function(){
 				var myfactions=[];
 				myfactions.push(randomFromArray(allfactions));
 				myfactions.push(randomFromArray(allfactions));
-				if(randomRange(0,1)>0.5){
+				if(randomRange(0,1)>0.3){
 								myfactions.push(randomFromArray(allfactions));
 
 				}
@@ -102,7 +102,7 @@ var randomMission = function(){
 				if(randomRange(0,1)<asteroidPanicChance){
 								rm.asteroidPanic=true;
 								rm.hazeRedSpeed*=2;
-								asteroidDensity=parseInt(randomRange(70,120));
+								asteroidDensity=65;
 				}
 				if(asteroidDensity < 20){
 								rm.intro.push('asteroid density: light');
@@ -131,12 +131,12 @@ var randomMission = function(){
 								var swarm = 0;
 								var stronger = 0;
 								for(var i=0;i<loops;i++){
-												roll = randomRange(0,150);
+												roll = randomRange(0,200);
 												if(roll < 10) {
 																boss += 1;
-												}else if (roll < 40){
-																swarm += 1;
 												}else if (roll < 60){
+																swarm += 1;
+												}else if (roll < 80){
 																stronger += 1;
 												}
 								}
