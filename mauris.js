@@ -1,5 +1,4 @@
 var gamemode;
-var fadeAmount = 0;
 var nextPortalGlow=0;
 var mobileScaleFactor = function() {
 				if (isAndroid) {
@@ -718,6 +717,7 @@ var hiddenButtons = [
 								this.xp=0;
 								this.nextXp=initialXp;
 								this.deaths=0;
+								this.fadeAmount=0;
 				};
 function spacesAtStartOfRow(ship,rowNum){
 				var size = Math.sqrt(ship.length);
@@ -4903,35 +4903,8 @@ function initMission (missionId) {
 }
 
 function fadeOut () {
-				station.alpha=1;
-				ui.tempStation.alpha=1;
-				game.add.tween(station).to({alpha:1},5000, Phaser.Easing.Exponential.Out, true, 0, false);
-				game.add.tween(ui.tempStation).to({alpha:1},5000, Phaser.Easing.Exponential.Out, true, 0, false);
-
-
-				hazeRed.alpha=playerStats.mission.hazeRed;
-				hazeWhite.alpha=playerStats.mission.hazeWhite;
-				hazePurple.alpha=playerStats.mission.hazePurple;
-				game.add.tween(hazeRed).to({alpha:0},5000, Phaser.Easing.Linear.Out, true, 0, false);
-				game.add.tween(hazeWhite).to({alpha:0},5000, Phaser.Easing.Exponential.Out, true, 0, false);
-				game.add.tween(hazePurple).to({alpha:0},5000, Phaser.Easing.Exponential.Out, true, 0, false);
-				game.add.tween(planet).to({alpha:0},5000, Phaser.Easing.Exponential.Out, true, 0, false);
-				game.add.tween(planetlod).to({alpha:0},5000, Phaser.Easing.Exponential.Out, true, 0, false);
-				game.add.tween(planetdirt).to({alpha:0},5000, Phaser.Easing.Exponential.Out, true, 0, false);
-				game.add.tween(planetfall).to({alpha:0},5000, Phaser.Easing.Exponential.Out, true, 0, false);
-				game.add.tween(nebula).to({alpha:0},5000, Phaser.Easing.Exponential.Out, true, 0, false);
-				game.add.tween(nebula2).to({alpha:0},5000, Phaser.Easing.Exponential.Out, true, 0, false);
-
-				hazeRed.tint=randomMutedColor(40,200,40,200,40,200);
-				hazeWhite.tint=randomMutedColor(140,255,140,255,140,255);
-				hazePurple.tint=randomMutedColor(140,255,140,255,140,255);
-
-				hazeRed.speed=playerStats.mission.hazeRedSpeed;
-				hazeWhite.speed=playerStats.mission.hazeWhiteSpeed;
-				hazePurple.speed=playerStats.mission.hazePurpleSpeed;
-				hazeRed.blendMode=playerStats.mission.hazeRedBlendMode;
-				hazePurple.blendMode=playerStats.mission.hazePurpleBlendMode;
-
+				playerStats.fadeAmount=0;
+				game.add.tween(playerStats).to({fadeAmount:1},5000, Phaser.Easing.Exponential.Out, true, 0, false);
 }
 
 function randomVividColor(minr,maxr,ming,maxg,minb,maxb) {
@@ -4978,16 +4951,12 @@ function randomInt (a,b){
 				return parseInt(randomRange(a,b+1));
 }
 function fadeIn () {
-				station.alpha=0;
-				ui.tempStation.alpha=0;
+				playerStats.fadeAmount=1;
+				game.add.tween(playerStats).to({fadeAmount:0},2500, Phaser.Easing.Exponential.Out, true, 0, false);
 				station.scale.setTo(1,1);
 				station.r=192;
 				station.g=192;
 				station.b=192;
-				station.alpha=1;
-				game.add.tween(station).to({r:0,g:0,b:0,alpha:1},30000, Phaser.Easing.Linear.None, true, 0, false);
-				game.add.tween(station).to({alpha:1},100, Phaser.Easing.Linear.None, true, 0, false);
-				game.add.tween(ui.tempStation).to({alpha:1},100, Phaser.Easing.Linear.None, true, 0, false);
 				station.rotation=randomRange(-180,180);
 				station.body.angularVelocity=randomRange(-10,10);
 				game.add.tween(station.scale).to({x:0,y:0}, 30000, Phaser.Easing.Linear.None,  true, 0, false);
@@ -5536,7 +5505,7 @@ function update () {
 								if(player.alive){
 												headlight();
 								}
-								darkener(fadeAmount);
+								darkener(playerStats.fadeAmount);
 
 								var left = 0;
 								var right = 0;
