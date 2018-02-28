@@ -773,10 +773,10 @@ function headlightFlicker(){
 }
 function darkener(fade){
 				if(fade > 0){
-				otherGraphics.blendMode=0;
-				otherGraphics.lineStyle(10,0x000000,fade);
-					otherGraphics.beginFill(0x000000,fade);
-			otherGraphics.drawRect(player.sprite.x-(0.5*resolutionX), player.sprite.y-(0.5 * resolutionY), resolutionX, resolutionY);
+								otherGraphics.blendMode=0;
+								otherGraphics.lineStyle(10,0x000000,fade);
+								otherGraphics.beginFill(0x000000,fade);
+								otherGraphics.drawRect(player.sprite.x-(0.5*resolutionX), player.sprite.y-(0.5 * resolutionY), resolutionX, resolutionY);
 				}
 }
 function headlight(){
@@ -3831,15 +3831,15 @@ gameUI.prototype.matchShip = function(part,index,ship){
 								ematch = ship[index+1];
 				}
 				if(index>=size){
-				nmatch = ship[index-size];
+								nmatch = ship[index-size];
 				}
 				if(index<ship.length-size){
-smatch = ship[index+size];
+								smatch = ship[index+size];
 				}
-								matches += this.matchComponents(part,wmatch,'W');
-								matches += this.matchComponents(part,ematch,'E');
-								matches += this.matchComponents(part,smatch,'S');
-								matches += this.matchComponents(part,nmatch,'N');
+				matches += this.matchComponents(part,wmatch,'W');
+				matches += this.matchComponents(part,ematch,'E');
+				matches += this.matchComponents(part,smatch,'S');
+				matches += this.matchComponents(part,nmatch,'N');
 				return matches;
 }
 gameUI.prototype.clearButtons = function() {
@@ -5362,8 +5362,8 @@ function sparkleBullets(s) {
 }
 function targetLoot (s){
 				if(
-game.input.activePointer.isDown &&
-Math.abs(game.input.activePointer.worldX - s.x) < 80 &&
+												game.input.activePointer.isDown &&
+												Math.abs(game.input.activePointer.worldX - s.x) < 80 &&
 												Math.abs(game.input.activePointer.worldY - s.y) < 80) {
 								player.behavior='target';
 								player.target=s;
@@ -5372,8 +5372,8 @@ Math.abs(game.input.activePointer.worldX - s.x) < 80 &&
 function targetBulletIfCorpse (s){
 				if(
 
-game.input.activePointer.isDown &&
-s.bulletSprite == 13 &&Math.abs(game.input.activePointer.worldX - s.x) < 80 &&
+												game.input.activePointer.isDown &&
+												s.bulletSprite == 13 &&Math.abs(game.input.activePointer.worldX - s.x) < 80 &&
 												Math.abs(game.input.activePointer.worldY - s.y) < 80) {
 								player.behavior='target';
 								player.target=s;
@@ -5417,7 +5417,7 @@ function handleMission() {
 				if(onscreen(frob1.body.x, frob1.body.y)){
 								if(game.time.now>nextPortalGlow){
 												portalGlow(explosions, frob1.x, frob1.y,3,randomRange(6,8));
-nextPortalGlow=game.time.now+randomRange(100,300);
+												nextPortalGlow=game.time.now+randomRange(100,300);
 								}
 				}
 
@@ -6158,15 +6158,16 @@ function update () {
 																}
 												}
 								}
-				
-				if(altCooldown>game.time.now){
-				if(altDone=0){
-					altDone=altCooldown-game.time.now;
-					altStart=game.time.now;
-				}
-				if(altDone>0){
-					altTime=game.time.now-altStart;
-				}
+
+								if(altCooldown>game.time.now){
+												if(altDone=0){
+																altDone=altCooldown-game.time.now;
+																altStart=game.time.now;
+												}
+												if(altDone>0){
+																altTime=game.time.now-altStart;
+												}
+								}
 				}
 				filterIfVisible(hazeRed);
 				filterIfVisible(hazeWhite,true);
