@@ -6168,6 +6168,10 @@ function update () {
 																altTime=game.time.now-altStart;
 												}
 								}
+								if(player.altText==''){
+												altDone=0;
+												altTime=0;
+								}
 				}
 				filterIfVisible(hazeRed);
 				filterIfVisible(hazeWhite,true);
