@@ -3106,9 +3106,17 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'name':'Xenoid Symbiote',
 	'match':'86',
 'hasAlt':false,
-	'flavor':'--',
+	'flavor':'BEST FRIENDS FOREVER',
 	'bonus':function(target){
-		target.TODO+=1;
+				target.bulletSprite=14;
+			target.attackAngleThreshold+=.25;
+			target.fireSound=ui.sound_plasma;
+			target.fireRate*=0.9;
+			target.fireEnergy*=0.8;
+			target.fireVelocity*=0.8;
+			target.fireRange*=0.9;
+			target.sprite.profile+=20;
+
 
 	}
 },
@@ -3118,9 +3126,17 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'name':'Xenoid Symbiote',
 	'match':'84',
 'hasAlt':false,
-	'flavor':'--',
+	'flavor':'I HEAR YOUR THOUGHTS',
 	'bonus':function(target){
-		target.TODO+=1;
+				target.bulletSprite=14;
+			target.attackAngleThreshold+=.25;
+			target.fireSound=ui.sound_plasma;
+			target.fireRate*=0.9;
+			target.fireEnergy*=0.8;
+			target.fireVelocity*=0.8;
+			target.fireRange*=0.9;
+			target.sprite.profile+=20;
+
 
 	}
 },
@@ -3262,24 +3278,37 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 {
 	'id':193,
 	'drops':true,
-	'name':'Black',
+	'name':'Targeting System',
 	'match':'4682',
 'hasAlt':false,
-	'flavor':'--',
+	'flavor':'hit more often',
 	'bonus':function(target){
-		target.TODO+=1;
+		target.fireTracking+=1;
+		target.turnRate+=0.3;
 	}
 },
 {
 	'id':194,
 	'drops':true,
-	'name':'Black',
+	'name':'Oversized Railgun',
 	'match':'4',
 'hasAlt':false,
-	'flavor':'--',
+	'flavor':'fire big, fast slugs',
 	'bonus':function(target){
-		target.TODO+=1;
-	}
+			target.bulletSprite=3;
+			target.fireEnergy+=1;
+			target.fireRange+=300;
+			target.fireVelocity+=300;
+			target.fireDamage+=2;
+			target.fireSound=ui.sound_bullet;
+			target.bulletBehavior.push(function(bullet){
+				bullet.scale.setTo(2,bullet.scale.y);
+			});
+			target.sprite.profile+=25;
+			target.bulletBehavior.push(function(bullet){
+				bullet.scale.setTo(bullet.scale.x+2,bullet.scale.y);
+				});
+}
 },
 {
 	'id':195,
@@ -6363,7 +6392,7 @@ target.thrustBehavior=cleanSmoke;
 
 					game.add.tween(bullet).to({alpha:0},bullet.lifespan, Phaser.Easing.Exponential.In, true, 0, false);
 				}
-				this.altCooldown=game.time.now+2000;
+				this.altCooldown=game.time.now+10000;
 
 			}
 		}
