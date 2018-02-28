@@ -3894,7 +3894,7 @@ gameUI.prototype.initCombatUi = function() {
 				this.profileLine.alpha = 0.75;
 				destroyIfExists(this.altLine);
 				this.altLine = game.add.text(200,100, '',{ font:'18px acknowledge', fill: 'rgb(192,192,192)', align: 'left' });
-				this.altLine.alpha = 0.9;
+				this.altLine.alpha = 0.0;
 				this.altLine.blendMode = 1;
 				this.altLine.anchor.setTo(0.5,0.5);
 
@@ -4004,12 +4004,11 @@ gameUI.prototype.altLinePing = function (targetText, offset) {
 								targetText.tint*=Math.random();
 				}  
 				this.toTop(targetText);
-				var s = '';
+				var s = 'READY';
 				if(player.altCooldown > game.time.now){
 						targetText.alpha=0.9;
 						s = parseInt((player.altCooldown - game.time.now)/1000);						
 				} else if(targetText.alpha==0.9){
-						s = 'READY';
 						ui.sound_beep.play();
 								targetText.alpha=2;
 								game.add.tween(targetText).to({alpha: 0.0},5000, Phaser.Easing.Linear.None, true, 0, false);

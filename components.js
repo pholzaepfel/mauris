@@ -3076,7 +3076,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'flavor':'--',
 	'bonus':function(target){
 			target.bulletBehavior.push(function(bullet,playerFired){
-				bullet.rotation+=randomRange(-.30,.30);
+				bullet.rotation+=randomRange(-.35,.35);
 				bullet.animations.play(bulletTypeName(1));
 				bullet.alpha=1;
 				game.physics.arcade.velocityFromRotation(bullet.rotation, bullet.fireVelocity, bullet.body.velocity);
@@ -3090,12 +3090,11 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 			target.bulletSparkle=function(){};	
 			target.attackAngleThreshold+=.25;
 			target.fireSound=ui.sound_bullet;
-		var fireRateDiff=100/target.fireRate;
-		target.fireRate=100;
+		var fireRateDiff=75/target.fireRate;
+		target.fireRate=75;
 		target.fireSound=ui.sound_bullet;
-		target.fireDamage*=fireRateDiff*1.4;
-		target.fireEnergy*=fireRateDiff*1.05;
-			target.fireRange*=0.8;
+		target.fireDamage*=fireRateDiff*0.5;
+		target.fireEnergy*=fireRateDiff*0.3;
 			target.sprite.profile+=88;
 
 	}
