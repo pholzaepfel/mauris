@@ -6,7 +6,7 @@ var mobileScaleFactor = function() {
 												return 1;
 								}
 }
-var altDoneDone =0;
+var altDoneMilliseconds =0;
 var altTime =0;
 var altDone =0;
 var altStart =0;
@@ -6161,15 +6161,19 @@ function update () {
 								}
 
 								if(player.altCooldown>game.time.now){
-												if(player.altCooldown > altDoneDone){
-																altDoneDone=player.altCooldown-game.time.now;
-																altDone=altDoneDone/1000;
+												if(player.altCooldown > altStart + altDoneMilliseconds){
+																altDoneMilliseconds=player.altCooldown-game.time.now;
+																altDone=altDoneMilliseconds/1000;
 																altStart=parseInt(game.time.now);
 												}
 												if(altDone>0){
 																altTime=game.time.now-altStart;
 																altTime/=1000;
 												}
+								}else if(player.altText=''){
+											altDoneMilliseconds=0;
+											altDone=0;
+											altTime=0;
 								}
 				}
 				filterIfVisible(hazeRed);
