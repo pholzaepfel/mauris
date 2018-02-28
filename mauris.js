@@ -4007,12 +4007,12 @@ gameUI.prototype.altLinePing = function (targetText, offset) {
 				var s = '';
 				if(player.altCooldown > game.time.now){
 						targetText.alpha=0.9;
-						s = parseInt((player.altCooldown - game.time.now)/1000) + 's';						
+						s = parseInt((player.altCooldown - game.time.now)/1000);						
 				} else if(targetText.alpha==0.9){
 						s = 'READY';
 						ui.sound_beep.play();
 								targetText.alpha=2;
-								game.add.tween(targetText).to({alpha: 0.0},500, Phaser.Easing.Exponential.Out, true, 0, false);
+								game.add.tween(targetText).to({alpha: 0.0},5000, Phaser.Easing.Exponential.Out, true, 0, false);
 					}
 				
 				targetText.setText(s);
