@@ -1423,7 +1423,7 @@ function(tgt){
 			return ret;
 		}
 		target.alt=function(){
-			if(game.time.now>this.altCooldown && this.takeEnergy(6)){
+			if(game.time.now>this.altCooldown){
 				ui.sound_blur.play();
 				this.altCooldown=game.time.now+2000;
 				bigBoom(explosions,this.sprite.x,this.sprite.y);
