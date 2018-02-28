@@ -6,6 +6,9 @@ var mobileScaleFactor = function() {
 												return 1;
 								}
 }
+var altTime =0;
+var altDone =0;
+var altStart =0;
 var distantPlanetScale=0.8;
 var meebChance=0.05;
 var pauseMessage='';
@@ -4318,7 +4321,7 @@ gameUI.prototype.update = function() {
 								this.missionLinePing();
 								this.profileLinePing();
 								this.bar(this.healthLine, 0, player.health, player.healthMax);
-								this.bar(this.altLine, 20, 0, 0);
+								this.bar(this.altLine, 20, altTime, altDone);
 								this.bar(this.energyLine, 10, player.energy, player.energyMax);
 								this.enemies=enemies.slice(0);
 								this.enemies.sort(threatSort);
@@ -6155,6 +6158,15 @@ function update () {
 																}
 												}
 								}
+				
+				if(altCooldown>game.time.now){
+				if(altDone=0){
+					altDone=altCooldown-game.time.now;
+					altStart=game.time.now;
+				}
+				if(altDone>0){
+					altTime=game.time.now-altStart;
+				}
 				}
 				filterIfVisible(hazeRed);
 				filterIfVisible(hazeWhite,true);
