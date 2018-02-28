@@ -1406,12 +1406,32 @@ function(tgt){
 {
 	'id':90,
 	'drops':true,
-	'name':'Green Reactor',
+	'name':'Unstable Reactor',
 	'match':'4682',
-'hasAlt':false,
-	'flavor':'--',
+'hasAlt':true,
+	'flavor':'Press [Z] to trade hp for energy',
 	'bonus':function(target){
-	target.TODO+=1;
+		target.altCheck=function(){
+			
+			var ret = false;
+			this.energyReserve=0;
+
+			if(this.energy < this.fireEnergy && this.health > this.healthMax / 2)
+			{
+				ret = true;
+			}
+			return ret;
+		}
+		target.alt=function(){
+			if(game.time.now>this.altCooldown && this.takeEnergy(6)){
+				ui.sound_blur.play();
+				this.altCooldown=game.time.now+2000;
+				bigBoom(explosions,this.sprite.x,this.sprite.y);
+				this.damage(8);
+				this.energy=this.energyMax;
+			}
+
+		}
 }
 },
 {
