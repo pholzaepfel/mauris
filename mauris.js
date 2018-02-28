@@ -6160,7 +6160,7 @@ function update () {
 								}
 
 								if(player.altCooldown>game.time.now){
-												if(altDone=0){
+												if(altDone==0){
 																altDone=player.altCooldown-game.time.now;
 																altDone/=1000;
 																altStart=game.time.now;
@@ -6169,10 +6169,6 @@ function update () {
 																altTime=game.time.now-altStart;
 																altTime/=1000;
 												}
-								}
-								if(player.altText==''){
-												altDone=0;
-												altTime=0;
 								}
 				}
 				filterIfVisible(hazeRed);
