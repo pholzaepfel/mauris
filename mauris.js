@@ -6160,7 +6160,7 @@ function update () {
 								}
 
 								if(player.altCooldown>game.time.now){
-												if(altDone==0){
+												if(altDone==0 || game.time.now > altDone){
 																altDone=player.altCooldown-game.time.now;
 																altDone/=1000;
 																altStart=game.time.now;
