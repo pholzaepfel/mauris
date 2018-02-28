@@ -1423,7 +1423,7 @@ function(tgt){
 			return ret;
 		}
 		target.alt=function(){
-			if(game.time.now>this.altCooldown){
+			if(game.time.now>this.altCooldown && this.energy<this.energyMax){
 				ui.sound_blur.play();
 				this.altCooldown=game.time.now+2000;
 				bigBoom(explosions,this.sprite.x,this.sprite.y);
@@ -1437,12 +1437,15 @@ function(tgt){
 {
 	'id':91,
 	'drops':true,
-	'name':'Extended Life Support',
+	'name':'Cryostasis Pods',
 	'match':'4682',
 'hasAlt':false,
-	'flavor':'--',
+	'flavor':'Launch legions to fight for you',
 	'bonus':function(target){
-		target.TODO+=1;
+		target.bulletSprite=13;
+		target.fireTracking=5;
+		target.fireVelocity=200;
+		target.fireRange=10000;
 	}
 },
 {
