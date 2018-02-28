@@ -1444,8 +1444,9 @@ function(tgt){
 	'bonus':function(target){
 		target.bulletSprite=13;
 		target.fireTracking=5;
-		target.fireVelocity=200;
+		target.fireVelocity=250;
 		target.fireRange=10000;
+		target.bulletSparkle=function(){};
 	}
 },
 {
