@@ -234,6 +234,7 @@ function pausedRevertSprites(){
 								enemies[i].sprite.body.x-=enemies[i].sprite.body.velocity.x*game.time.physicsElapsed;  
 								enemies[i].sprite.body.y-=enemies[i].sprite.body.velocity.y*game.time.physicsElapsed;  
 								enemies[i].sprite.angle-=enemies[i].sprite.body.angularVelocity*game.time.physicsElapsed;
+								enemies[i].altCooldown+=game.time.physicsElapsed*1000;
 								if(enemies[i].alive && enemies[i].parts.length){
 												for(var j=0;j<enemies[i].parts.length;j++){
 																enemies[i].parts[j].update();
@@ -246,7 +247,8 @@ function pausedRevertSprites(){
 				revertGroup(bullets);
 				revertGroup(explosions);
 
-
+				player.altCooldown+=game.time.physicsElapsed * 1000;
+				
 }
 function pause(resumeDelay,x,y) {
 				if(game.time.now<nextUIDelay){
@@ -3985,6 +3987,37 @@ gameUI.prototype.addDamageNumber = function(x,y,dmg,dmgDisplay,dmgGood){
 				dn.dieTime=game.time.now+1000;
 				game.add.tween(dn).to({alpha: 0},1000, Phaser.Easing.Sinusoidal.Out, true, 0, false);
 }
+gameUI.prototype.altLinePing = function (targetText, offset) {
+				targetText.x = player.sprite.body.x+(player.sprite.body.width/2);
+				targetText.y = player.sprite.body.y+(player.sprite.body.height/2);//+30+offset;
+				targetText.x -= Math.cos(player.sprite.rotation)*(player.sprite.body.width+offset);
+				targetText.y -= Math.sin(player.sprite.rotation)*(player.sprite.body.width+offset);
+				targetText.rotation = player.sprite.rotation + 0.5 * Math.PI;
+				targetText.tint=16777215;
+				if(targetText.shudder){
+								targetText.x+=((targetText.shudder)*Math.random())*randomSign();
+								targetText.y+=((targetText.shudder)*Math.random())*randomSign();
+								targetText.shudder-=game.time.physicsElapsed*15;
+								if(targetText.shudder<0){
+												targetText.shudder = 0;
+								}
+								targetText.tint*=Math.random();
+				}  
+				this.toTop(targetText);
+				var s = '';
+				if(player.altCooldown > game.time.now){
+						targetText.alpha=0.9;
+						s = parseInt((player.altCooldown - game.time.now/30)) + 's';						
+				} else if(targetText.alpha==0.9){
+						s = 'READY';
+						ui.sound_beep.play();
+								targetText.alpha=2;
+								game.add.tween(targetText).to({alpha: 0.0},500, Phaser.Easing.Exponential.Out, true, 0, false);
+					}
+				
+				targetText.setText(s);
+}
+
 gameUI.prototype.bar = function (targetText, offset, numerator, denominator) {
 				if(typeof(targetText.lastValue)=='undefined'){
 								targetText.lastValue=numerator;
@@ -4322,7 +4355,7 @@ gameUI.prototype.update = function() {
 								this.missionLinePing();
 								this.profileLinePing();
 								this.bar(this.healthLine, 0, player.health, player.healthMax);
-								this.bar(this.altLine, 20, altTime, altDone);
+								this.altLinePing(this.altLine, 20);
 								this.bar(this.energyLine, 10, player.energy, player.energyMax);
 								this.enemies=enemies.slice(0);
 								this.enemies.sort(threatSort);
@@ -6160,21 +6193,6 @@ function update () {
 												}
 								}
 
-								if(player.altCooldown>game.time.now){
-												if(player.altCooldown > altStart + altDoneMilliseconds){
-																altDoneMilliseconds=player.altCooldown-game.time.now;
-																altDone=altDoneMilliseconds/1000;
-																altStart=parseInt(game.time.now);
-												}
-												if(altDone>0){
-																altTime=game.time.now-altStart;
-																altTime/=1000;
-												}
-								}else if(player.altText=''){
-											altDoneMilliseconds=0;
-											altDone=0;
-											altTime=0;
-								}
 				}
 				filterIfVisible(hazeRed);
 				filterIfVisible(hazeWhite,true);
