@@ -2582,12 +2582,13 @@ target.effects=function(){
 {
 	'id':149,
 	'drops':true,
-	'name':'Junker',
+	'name':'Subpar Sublight Nav Unit',
 	'match':'42',
 'hasAlt':false,
-	'flavor':'--',
+	'flavor':'unremarkable',
 	'bonus':function(target){
-		target.TODO+=1;
+		target.turnRate+=0.3;
+		target.radarTargets+=3;
 
 	}
 },
@@ -3058,13 +3059,13 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 {
 	'id':180,
 	'drops':true,
-	'name':'Junker',
+	'name':'Duct-taped Power Plant',
 	'match':'86',
 'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
-		target.TODO+=1;
-
+		target.energyRate*=3;
+		target.energyAmount*=4;
 	}
 },
 {
