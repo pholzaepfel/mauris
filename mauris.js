@@ -6163,7 +6163,7 @@ function update () {
 												if(altDone==0 || game.time.now > altDone){
 																altDone=player.altCooldown-game.time.now;
 																altDone/=1000;
-																altStart=game.time.now;
+																altStart=parseInt(game.time.now);
 												}
 												if(altDone>0){
 																altTime=game.time.now-altStart;
