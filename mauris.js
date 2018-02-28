@@ -3688,7 +3688,7 @@ gameUI.prototype.partAt = function(x,y){
 				return 0;
 }
 function getOptimisticMatch(ship,position){
-				return matchableVariantComponent(ship[position]);
+				return matchableVariantComponent(ship[position]).match;
 }
 function getBestMatch(ship,position){
 				var size=Math.sqrt(ship.length);
