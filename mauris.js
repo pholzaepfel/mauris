@@ -2777,18 +2777,6 @@ var randomVariantComponent = function(partId){
 				}
 				return partsList[parseInt(randomRange(0,partsList.length))];
 }
-var matchableVariantComponent = function(partId){
-				if (partId == -1){
-								return -1;
-				}
-				if(components[partId].match.length >= 4){
-								return partId;
-				}
-				var partsList = variantComponents(partId);
-				partsList.sort(matchabilityComponentSort);
-				return partsList[0];
-}
-
 var centralVariantComponent = function(partId){
 				if (partId == -1){
 								return -1;
@@ -3688,11 +3676,7 @@ gameUI.prototype.partAt = function(x,y){
 				return 0;
 }
 function getOptimisticMatch(ship,position){
-				var cmp = matchableVariantComponent(ship[position]);
-				if(cmp > 0){
-						return cmp.match;
-}
-return '2468';
+				return '2468';
 }
 function getBestMatch(ship,position){
 				var size=Math.sqrt(ship.length);
