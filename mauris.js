@@ -3688,7 +3688,11 @@ gameUI.prototype.partAt = function(x,y){
 				return 0;
 }
 function getOptimisticMatch(ship,position){
-				return matchableVariantComponent(ship[position]).match;
+				var cmp = matchableVariantComponent(ship[position]);
+				if(cmp > 0){
+						return cmp.match;
+}
+return '2468';
 }
 function getBestMatch(ship,position){
 				var size=Math.sqrt(ship.length);
