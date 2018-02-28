@@ -4007,7 +4007,7 @@ gameUI.prototype.altLinePing = function (targetText, offset) {
 				var s = '';
 				if(player.altCooldown > game.time.now){
 						targetText.alpha=0.9;
-						s = parseInt((player.altCooldown - game.time.now/30)) + 's';						
+						s = parseInt((player.altCooldown - game.time.now)/1000) + 's';						
 				} else if(targetText.alpha==0.9){
 						s = 'READY';
 						ui.sound_beep.play();
