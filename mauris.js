@@ -4012,7 +4012,7 @@ gameUI.prototype.altLinePing = function (targetText, offset) {
 						s = 'READY';
 						ui.sound_beep.play();
 								targetText.alpha=2;
-								game.add.tween(targetText).to({alpha: 0.0},5000, Phaser.Easing.Exponential.Out, true, 0, false);
+								game.add.tween(targetText).to({alpha: 0.0},5000, Phaser.Easing.Linear.None, true, 0, false);
 					}
 				
 				targetText.setText(s);
@@ -4368,7 +4368,7 @@ gameUI.prototype.update = function() {
 								this.missionLinePing();
 								this.profileLinePing();
 								this.bar(this.healthLine, 0, player.health, player.healthMax);
-								this.bar(this.altLine, 20, playerStats.crew, player.crewMax);
+								this.altLinePing(this.altLine, 20);
 								this.bar(this.energyLine, 10, player.energy, player.energyMax);
 								this.enemies=enemies.slice(0);
 								this.enemies.sort(threatSort);

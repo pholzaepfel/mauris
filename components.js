@@ -3078,7 +3078,6 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 			target.bulletBehavior.push(function(bullet,playerFired){
 				bullet.rotation+=randomRange(-.30,.30);
 				bullet.animations.play(bulletTypeName(1));
-				bullet.body.angularVelocity=randomRange(600,900);
 				bullet.alpha=1;
 				game.physics.arcade.velocityFromRotation(bullet.rotation, bullet.fireVelocity, bullet.body.velocity);
 
