@@ -6,6 +6,7 @@ var mobileScaleFactor = function() {
 												return 1;
 								}
 }
+var altDoneDone =0;
 var altTime =0;
 var altDone =0;
 var altStart =0;
@@ -6160,9 +6161,9 @@ function update () {
 								}
 
 								if(player.altCooldown>game.time.now){
-												if(altDone==0 || player.altCooldown / 1000 > altDone){
-																altDone=player.altCooldown-game.time.now;
-																altDone/=1000;
+												if(player.altCooldown > altDoneDone){
+																altDoneDone=player.altCooldown-game.time.now;
+																altDone=altDoneDone/1000;
 																altStart=parseInt(game.time.now);
 												}
 												if(altDone>0){
