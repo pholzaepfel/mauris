@@ -3886,11 +3886,11 @@ gameUI.prototype.initCombatUi = function() {
 				destroyIfExists(this.profileLine);
 				this.profileLine = game.add.text(200,100, '',{ font:'24px acknowledge', fill: 'rgb(255,64,16)', align: 'right' });
 				this.profileLine.alpha = 0.75;
-				destroyIfExists(this.crewLine);
-				this.crewLine = game.add.text(200,100, '',{ font:'18px acknowledge', fill: 'rgb(192,192,192)', align: 'left' });
-				this.crewLine.alpha = 0.9;
-				this.crewLine.blendMode = 1;
-				this.crewLine.anchor.setTo(0.5,0.5);
+				destroyIfExists(this.altLine);
+				this.altLine = game.add.text(200,100, '',{ font:'18px acknowledge', fill: 'rgb(192,192,192)', align: 'left' });
+				this.altLine.alpha = 0.9;
+				this.altLine.blendMode = 1;
+				this.altLine.anchor.setTo(0.5,0.5);
 
 				destroyIfExists(this.healthLine);
 				this.healthLine = game.add.text(200,100, '',{ font:'18px acknowledge', fill: 'rgb(96,96,240)', align: 'left' });
@@ -4318,7 +4318,7 @@ gameUI.prototype.update = function() {
 								this.missionLinePing();
 								this.profileLinePing();
 								this.bar(this.healthLine, 0, player.health, player.healthMax);
-								this.bar(this.crewLine, 20, playerStats.crew, player.crewMax);
+								this.bar(this.altLine, 20, 0, 0);
 								this.bar(this.energyLine, 10, player.energy, player.energyMax);
 								this.enemies=enemies.slice(0);
 								this.enemies.sort(threatSort);
@@ -4331,7 +4331,7 @@ gameUI.prototype.update = function() {
 								this.missionLinePing();
 								this.profileLinePing();
 								this.bar(this.healthLine, 0, player.health, player.healthMax);
-								this.bar(this.crewLine, 20, playerStats.crew, player.crewMax);
+								this.bar(this.altLine, 20, playerStats.crew, player.crewMax);
 								this.bar(this.energyLine, 10, player.energy, player.energyMax);
 								this.enemies=enemies.slice(0);
 								this.enemies.sort(threatSort);
@@ -4560,7 +4560,7 @@ gameUI.prototype.partsUI = function (ship) {
 								player.lastVelocityY=0;
 				}
 				this.healthLine.setText('');
-				this.crewLine.setText('');
+				this.altLine.setText('');
 				this.energyLine.setText('');
 				this.missionLine.setText('');
 				this.profileLine.setText('');
