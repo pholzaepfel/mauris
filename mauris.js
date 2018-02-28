@@ -6159,9 +6159,9 @@ function update () {
 												}
 								}
 
-								if(altCooldown>game.time.now){
+								if(player.altCooldown>game.time.now){
 												if(altDone=0){
-																altDone=altCooldown-game.time.now;
+																altDone=player.altCooldown-game.time.now;
 																altStart=game.time.now;
 												}
 												if(altDone>0){
