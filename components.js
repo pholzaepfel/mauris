@@ -1446,7 +1446,7 @@ function(tgt){
 		target.fireTracking=5;
 		target.fireVelocity=250;
 		target.fireRange=10000;
-		target.bulletSparkle=function(){};
+		target.bulletSparkle=rocketTrail;
 	}
 },
 {
