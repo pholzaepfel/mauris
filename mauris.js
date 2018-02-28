@@ -4788,6 +4788,7 @@ function addPlayerPartInFlight(componentId) {
 				var oldHealth = player.health;
 				var oldHealthMax = player.healthMax;
 				var oldProfile = player.sprite.profile;
+				var oldAltCooldown = player.altCooldown;
 				ui.parts = createBuildParts(player.ship,0,0);
 				createPart(componentId);
 				player.initPlayerShip(optimizeComponents(ui.partsArray()),oldX,oldY);
@@ -4803,6 +4804,7 @@ function addPlayerPartInFlight(componentId) {
 				player.targetAngle=  oldTargetAngle;
 				player.sprite.profile=oldProfile;
 				player.health += player.healthMax - oldHealthMax;
+				player.altCooldown = oldAltCooldown;
 }
 
 function createPart(n){
@@ -7078,6 +7080,19 @@ function rocketTrail(explosionsGroup, x, y, bullet, scaleFactor){
 								}
 				}
 }
+function crewmanTrail(explosionsGroup, x, y, bullet, scaleFactor){
+				if(typeof(scaleFactor)=='undefined'){
+								scaleFactor = 1;
+				}
+				if(onscreen(x,y)){
+
+								tinySmoke(explosionsGroup,x,y);
+								var vel = randomRange(25,125)/1000;
+								tinySmoke(explosionsGroup,x-(bullet.body.velocity.x*vel),y-(bullet.body.velocity.y*vel));
+
+				}
+}
+
 
 function trail(explosionsGroup, x, y, bullet){
 

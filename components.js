@@ -1445,8 +1445,10 @@ function(tgt){
 		target.bulletSprite=13;
 		target.fireTracking=5;
 		target.fireVelocity=250;
-		target.fireRange=10000;
-		target.bulletSparkle=rocketTrail;
+		target.bulletBehavior.push(function(bullet){
+bullet.lifespan=10000;
+});
+		target.bulletSparkle=crewmanTrail;
 	}
 },
 {
@@ -2116,9 +2118,11 @@ function(tgt){
 	'name':'Orb of Damage',
 	'match':'8',
 'hasAlt':false,
-	'flavor':'aiming required',
+	'flavor':'moar damage',
 	'bonus':function(target){
-		target.TODO+=1;
+		target.fireDamage*=1.5;
+		target.fireEnergy*=1.2;
+		target.fireVelocity*=1.2;
 	}	
 
 },
@@ -2558,12 +2562,20 @@ target.effects=function(){
 {
 	'id':148,
 	'drops':true,
-	'name':'Junker',
+	'name':'Junker Storage Compartment',
 	'match':'426',
-'hasAlt':false,
-	'flavor':'--',
+'hasAlt':true,
+	'flavor':'Press [Z] to spawn a random component (30 sec cooldown)',
 	'bonus':function(target){
-		target.TODO+=1;
+		target.alt=function(){
+					if(game.time.now > this.altCooldown && this.takeEnergy(16,true)){
+				ui.sound_blur.play();
+		var adjX = randomRange(0,100);
+		var adjY = 100-adjX;
+		this.altCooldown = game.time.now + 30000;
+		spawnComponent(cmp, this.sprite.x+adjX*randomSign(),this.sprite.y+adjY*randomSign());
+		}
+		}
 
 	}
 },
