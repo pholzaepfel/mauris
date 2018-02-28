@@ -2761,7 +2761,7 @@ var variantComponents = function(partId){
 												result.push(i);
 								}
 				}
-				return result;
+				return result.sort(randomSort);
 }
 var randomVariantComponent = function(partId){
 				if (typeof(partId)=='undefined'){
