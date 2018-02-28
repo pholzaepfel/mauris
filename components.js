@@ -3070,12 +3070,34 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 {
 	'id':181,
 	'drops':true,
-	'name':'Junker',
+	'name':'Erratic Machinegun',
 	'match':'84',
 'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
-		target.TODO+=1;
+			target.bulletBehavior.push(function(bullet,playerFired){
+				bullet.rotation+=randomRange(-.30,.30);
+				bullet.animations.play(bulletTypeName(1));
+				bullet.body.angularVelocity=randomRange(600,900);
+				bullet.alpha=1;
+				game.physics.arcade.velocityFromRotation(bullet.rotation, bullet.fireVelocity, bullet.body.velocity);
+
+				var tgt = ownerFromName(bullet.owner.name);
+				bullet.body.velocity.x += 0.5 * tgt.sprite.body.velocity.x;
+				bullet.body.velocity.y += 0.5 * tgt.sprite.body.velocity.y;
+			});
+			target.bulletSprite=1;
+			target.bulletBlendMode=0;
+			target.bulletSparkle=function(){};	
+			target.attackAngleThreshold+=.25;
+			target.fireSound=ui.sound_bullet;
+		var fireRateDiff=100/target.fireRate;
+		target.fireRate=100;
+		target.fireSound=ui.sound_bullet;
+		target.fireDamage*=fireRateDiff*1.4;
+		target.fireEnergy*=fireRateDiff*1.05;
+			target.fireRange*=0.8;
+			target.sprite.profile+=88;
 
 	}
 },
@@ -6721,8 +6743,8 @@ target.thrustBehavior=cleanSmoke;
 				var tgt = ownerFromName(bullet.owner.name);
 				tgt.nextFire = game.time.now + (randomRange(0.7,1.2) * tgt.fireRate);
 				});
-		var fireRateDiff=200/target.fireRate;
-		target.fireRate=200;
+		var fireRateDiff=100/target.fireRate;
+		target.fireRate=100;
 		target.fireSound=ui.sound_bullet;
 		target.fireDamage*=fireRateDiff*1.2;
 		target.fireEnergy*=fireRateDiff*1.05;
