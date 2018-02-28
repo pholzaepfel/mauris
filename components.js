@@ -2573,7 +2573,7 @@ target.effects=function(){
 		var adjX = randomRange(0,100);
 		var adjY = 100-adjX;
 		this.altCooldown = game.time.now + 30000;
-		spawnComponent(cmp, this.sprite.x+adjX*randomSign(),this.sprite.y+adjY*randomSign());
+		spawnComponent(randomFromArray(allLootableItems), this.sprite.x+adjX*randomSign(),this.sprite.y+adjY*randomSign());
 		}
 		}
 
