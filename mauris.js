@@ -3490,7 +3490,7 @@ function checkForNewMusic(){
 				}
 }
 gameUI.prototype.music_random = function(){
-				var rnd = randomInt(1,5);
+				var rnd = randomInt(1,6);
 				if(typeof(this.music[rnd])=='undefined'){
 								this.music[rnd]=new Audio('assets/' + rnd + '.ogg');
 				}
