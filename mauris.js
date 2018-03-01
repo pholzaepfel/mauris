@@ -782,7 +782,28 @@ function darkener(fade){
 								otherGraphics.drawRect(player.sprite.x-(0.5*resolutionX), player.sprite.y-(0.5 * resolutionY), resolutionX, resolutionY);
 				}
 }
-function headlight(){
+function headlightShadow(sprite){
+				var lightSpot=undefined;
+
+				lightSpot={x:sprite.body.x,y:player.sprite.body.y};
+				headlightGlow(explosions,lightSpot.x,lightSpot.y);
+				otherGraphics.blendMode=1;
+				otherGraphics.lineStyle(3, 0xFFFFFF, 0);
+				if(gamemode=='paused'){
+								lightSpot.x-=sprite.body.velocity.x * game.time.physicsElapsed;
+								lightSpot.y-=sprite.body.velocity.y * game.time.physicsElapsed;
+				}
+				for(var i=0.10;i>0.08;i-=0.01){
+								otherGraphics.beginFill(0x000000,0.625*headlightIntensity);
+								otherGraphics.moveTo(lightSpot.x,lightSpot.y);
+								otherGraphics.lineTo(lightSpot.x+Math.cos(player.sprite.rotation - i)*2*Math.max(resolutionY,resolutionX),lightSpot.y+Math.sin(player.sprite.rotation - i)*2*Math.max(resolutionY,resolutionX));
+								otherGraphics.lineTo(lightSpot.x+Math.cos(player.sprite.rotation + i)*2*Math.max(resolutionY,resolutionX),lightSpot.y+Math.sin(player.sprite.rotation + i)*2*Math.max(resolutionY,resolutionX));
+								otherGraphics.lineTo(lightSpot.x,lightSpot.y);
+								otherGraphics.endFill();
+				}
+				otherGraphics.blendMode=0;
+
+}function headlight(){
 				var lightSpot=undefined;
 				lightSpot={x:player.sprite.body.x+(player.sprite.body.width*0.5)+(Math.cos(player.sprite.rotation)*((player.sprite.body.width*0.5)-lightPosition(player.ship))),y:player.sprite.body.y+(player.sprite.body.width*0.5)+(Math.sin(player.sprite.rotation)*((player.sprite.body.width*0.5)-lightPosition(player.ship)))};
 				headlightGlow(explosions,lightSpot.x,lightSpot.y);
@@ -1283,6 +1304,9 @@ shipPart.prototype.update = function(){
 								lightness=Math.max(lightness,0.2);
 								lightness=Math.pow(lightness*2,1.6)/3;
 								this.sprite.alpha=this.target.alpha;
+								if(this.lightness > 0.5){
+headlightShadow(this.sprite);
+}
 								if(this.sprite.alpha==1 && lightness > 1){
 												this.sprite.alpha=lightness;
 								}
