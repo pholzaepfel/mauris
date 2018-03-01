@@ -787,6 +787,7 @@ function headlightShadow(sprite,lightness){
 				lightSpot={x:player.sprite.body.x+(player.sprite.body.width*0.5)+(Math.cos(player.sprite.rotation)*((player.sprite.body.width*0.5)-lightPosition(player.ship))),y:player.sprite.body.y+(player.sprite.body.width*0.5)+(Math.sin(player.sprite.rotation)*((player.sprite.body.width*0.5)-lightPosition(player.ship)))};
 				var shadowSpot=undefined;
 				shadowSpot={x:sprite.x,y:sprite.y};
+				baseShadowSpot={x.sprite.x,y.sprite.y};
 				otherGraphics.blendMode=0;
 				otherGraphics.lineStyle(3, 0x000000, 0);
 				if(gamemode=='paused'){
@@ -794,13 +795,14 @@ function headlightShadow(sprite,lightness){
 								lightSpot.y-=sprite.body.velocity.y * game.time.physicsElapsed;
 				}
 				var rot = game.physics.arcade.angleBetween(lightSpot,shadowSpot);
-				for(var i=0;i<0.21;i+=0.02){
+				for(var i=0;i<0.21;i+=0.03){
 								var width = sprite.width * 0.85;
-								otherGraphics.beginFill(0x000000,0.05*headlightIntensity*lightness);
+								otherGraphics.beginFill(0x000000,0.02*headlightIntensity*lightness);
 								otherGraphics.moveTo(shadowSpot.x+(Math.sin(rot)*width),shadowSpot.y-(Math.cos(rot)*width));
 								otherGraphics.lineTo(shadowSpot.x+Math.cos(rot - i)*2*Math.max(resolutionY,resolutionX),shadowSpot.y+Math.sin(rot - i)*2*Math.max(resolutionY,resolutionX));
 								otherGraphics.lineTo(shadowSpot.x+Math.cos(rot + i)*2*Math.max(resolutionY,resolutionX),shadowSpot.y+Math.sin(rot + i)*2*Math.max(resolutionY,resolutionX));
 								otherGraphics.lineTo(shadowSpot.x-(Math.sin(rot)*width),shadowSpot.y+(Math.cos(rot)*width));
+								otherGraphics.lineTo(baseShadowSpot.x,baseShadowSpot.y);
 								otherGraphics.lineTo(shadowSpot.x+(Math.sin(rot)*width),shadowSpot.y-(Math.cos(rot)*width));
 								otherGraphics.endFill();
 								shadowSpot.x+=Math.cos(rot)*width*0.5;
