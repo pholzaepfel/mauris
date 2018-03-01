@@ -3584,6 +3584,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
+			target.ai=aiModes['asteroidInit'];
 
 	}
 },
@@ -3595,73 +3596,76 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
+			target.ai=aiModes['asteroidInit'];
 
 	}
 },
 {
 	'id':218,
-	'drops':false,
-	'name':'Component218',
-	'match':'4682',
+	'drops':true,
+	'name':'Decimator',
+	'match':'62',
 'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
-
+		target.TODO+=1;
 	}
 },
 {
 	'id':219,
-	'drops':false,
-	'name':'Component219',
-	'match':'4682',
+	'drops':true,
+	'name':'Decimator',
+	'match':'24',
 'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
-
+		target.TODO+=1;
 	}
 },
 {
 	'id':220,
-	'drops':false,
-	'name':'Component220',
-	'match':'4682',
+	'drops':true,
+	'name':'Ascended Subjugator',
+	'match':'26',
 'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
-
+		target.TODO+=1;
 	}
 },
 {
 	'id':221,
-	'drops':false,
-	'name':'Component221',
+	'drops':true,
+	'name':'Ascended Subjugator',
 	'match':'4682',
 'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
+		target.TODO+=1;
 	}
 },
 {
 	'id':222,
-	'drops':false,
-	'name':'Component222',
+	'drops':true,
+	'name':'Brain Orb',
 	'match':'4682',
 'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
-
+	
+		target.TODO+=1;
 	}
 },
 {
 	'id':223,
-	'drops':false,
-	'name':'Component223',
+	'drops':true,
+	'name':'Sustenance Tank',
 	'match':'4682',
 'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
-
+		target.TODO+=1;
 	}
 },
 {
@@ -3973,6 +3977,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
+			target.ai=aiModes['asteroidInit'];
 
 	}
 },
@@ -3984,73 +3989,80 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
+			target.ai=aiModes['asteroidInit'];
 
 	}
 },
 {
 	'id':250,
-	'drops':false,
-	'name':'Component250',
-	'match':'4682',
+	'drops':true,
+	'name':'Decimator',
+	'match':'86',
 'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
+		target.TODO+=1;
 	}
 },
 {
 	'id':251,
-	'drops':false,
-	'name':'Component251',
-	'match':'4682',
+	'drops':true,
+	'name':'Decimator',
+	'match':'84',
 'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
+		target.TODO+=1;
 	}
 },
 {
 	'id':252,
-	'drops':false,
-	'name':'Component252',
-	'match':'4682',
+	'drops':true,
+	'name':'Ascended Subjugator',
+	'match':'86',
 'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
+		target.TODO+=1;
 	}
 },
 {
 	'id':253,
-	'drops':false,
-	'name':'Component253',
-	'match':'4682',
+	'drops':true,
+	'name':'Ascended Watcher 253',
+	'match':'862',
 'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
+		target.TODO+=1;
 	}
 },
 {
 	'id':254,
-	'drops':false,
-	'name':'Component254',
+	'drops':true,
+	'name':'Ascended Exoskeleton',
 	'match':'4682',
 'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
+		target.TODO+=1;
 	}
 },
 {
 	'id':255,
-	'drops':false,
-	'name':'Component255',
+	'drops':true,
+	'name':'Mysterious Object',
 	'match':'4682',
 'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
 
+		target.TODO+=1;
 	}
 },
 {
@@ -4341,6 +4353,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
+			target.ai=aiModes['asteroidInit'];
 
 	}
 },
@@ -4352,6 +4365,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
+			target.ai=aiModes['asteroidInit'];
 
 	}
 },

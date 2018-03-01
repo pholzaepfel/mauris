@@ -782,6 +782,7 @@ function darkener(fade){
 								otherGraphics.drawRect(player.sprite.x-(0.5*resolutionX), player.sprite.y-(0.5 * resolutionY), resolutionX, resolutionY);
 				}
 }
+//NYI
 function headlightShadow(sprite,lightness){
 				var lightSpot=undefined;
 				lightSpot={x:player.sprite.body.x+(player.sprite.body.width*0.5)+(Math.cos(player.sprite.rotation)*((player.sprite.body.width*0.5)-lightPosition(player.ship))),y:player.sprite.body.y+(player.sprite.body.width*0.5)+(Math.sin(player.sprite.rotation)*((player.sprite.body.width*0.5)-lightPosition(player.ship)))};
@@ -1312,7 +1313,7 @@ shipPart.prototype.update = function(){
 								lightness=Math.pow(lightness*2,1.6)/3;
 								this.sprite.alpha=this.target.alpha;
 								if(lightness > 0.5 && this.target.name!='player'){
-headlightShadow(this.sprite,lightness);
+//headlightShadow(this.sprite,lightness); saving this for later
 }
 								if(this.sprite.alpha==1 && lightness > 1){
 												this.sprite.alpha=lightness;
