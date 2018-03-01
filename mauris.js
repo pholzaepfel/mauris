@@ -6072,7 +6072,7 @@ function update () {
 								planetlod.reset(planet.x,planet.y);
 								planetdirt.alpha=Math.min(0.77,2.5*(planet.scale.x-3.15));
 								planetdirt.alpha=Math.max(0,planetdirt.alpha);
-								planetfall.alpha=Math.min(0.5,0.75*(planet.scale.x-3.15));
+								planetfall.alpha=Math.min(1.0,0.75*(planet.scale.x-3.15));
 								planetfall.alpha=Math.max(0,planetfall.alpha);
 								planetlod.blendMode=0;
 								planet.alpha=1;
