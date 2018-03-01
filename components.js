@@ -3579,7 +3579,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 {
 	'id':216,
 	'drops':false,
-	'name':'Component216',
+	'name':'Meeb',
 	'match':'4682',
 'hasAlt':false,
 	'flavor':'--',
@@ -3590,7 +3590,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 {
 	'id':217,
 	'drops':false,
-	'name':'Component217',
+	'name':'Meeb',
 	'match':'4682',
 'hasAlt':false,
 	'flavor':'--',
@@ -3968,8 +3968,8 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 {
 	'id':248,
 	'drops':false,
-	'name':'Component248',
-	'match':'4682',
+	'name':'Meeb',
+	'match':'6',
 'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
@@ -3979,8 +3979,8 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 {
 	'id':249,
 	'drops':false,
-	'name':'Component249',
-	'match':'4682',
+	'name':'Meeb',
+	'match':'4',
 'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
@@ -4336,8 +4336,8 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 {
 	'id':280,
 	'drops':false,
-	'name':'Component-280',
-	'match':'4682',
+	'name':'Meeb',
+	'match':'2',
 'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
@@ -4347,8 +4347,8 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 {
 	'id':281,
 	'drops':false,
-	'name':'Component-281',
-	'match':'4682',
+	'name':'Meeb',
+	'match':'8',
 'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){

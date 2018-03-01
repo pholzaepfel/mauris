@@ -1,5 +1,5 @@
 //prefabricated ships and asteroids to populate the playfield
-var meebParts=[214, 215, 246, 247, 278, 279];
+var meebParts=[214, 215, 216, 217, 246, 247, 248, 249, 278, 279, 280, 281];
 var meebAndPustuleParts=[6, 7, 38, 39,214, 215, 246, 247, 278, 279];
 var ascendedGear=[202, 203, 204, 205, 234, 235, 236, 237, 266, 267];
 var decimatorGear=[210, 211, 212, 213, 242, 243, 244, 245, 274, 275, 276, 277];
