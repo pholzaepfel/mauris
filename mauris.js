@@ -799,7 +799,7 @@ function headlightShadow(sprite){
 								otherGraphics.moveTo(shadowSpot.x-(Math.sin(rot)*sprite.width),shadowSpot.y-(Math.cos(rot)*sprite.width));
 								otherGraphics.lineTo(shadowSpot.x+Math.cos(rot - i)*2*Math.max(resolutionY,resolutionX),shadowSpot.y+Math.sin(rot - i)*2*Math.max(resolutionY,resolutionX));
 								otherGraphics.lineTo(shadowSpot.x+Math.cos(rot + i)*2*Math.max(resolutionY,resolutionX),shadowSpot.y+Math.sin(rot + i)*2*Math.max(resolutionY,resolutionX));
-								otherGraphics.moveTo(shadowSpot.x+Math.sin(rot)*sprite.width),shadowSpot.y+Math.cos(rot)*sprite.width));
+								otherGraphics.moveTo(shadowSpot.x+(Math.sin(rot)*sprite.width),shadowSpot.y+(Math.cos(rot)*sprite.width));
 								otherGraphics.lineTo(shadowSpot.x,shadowSpot.y);
 								otherGraphics.endFill();
 				}
