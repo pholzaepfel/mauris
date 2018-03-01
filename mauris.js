@@ -795,7 +795,7 @@ function headlightShadow(sprite,lightness){
 				}
 				var rot = game.physics.arcade.angleBetween(lightSpot,shadowSpot);
 				for(var i=0;i<0.13;i+=0.03){
-								var width = sprite.width * 0.75;
+								var width = sprite.width * 0.85;
 								otherGraphics.beginFill(0x000000,0.05*headlightIntensity*lightness);
 								otherGraphics.moveTo(shadowSpot.x+(Math.sin(rot)*width),shadowSpot.y-(Math.cos(rot)*width));
 								otherGraphics.lineTo(shadowSpot.x+Math.cos(rot - i)*2*Math.max(resolutionY,resolutionX),shadowSpot.y+Math.sin(rot - i)*2*Math.max(resolutionY,resolutionX));
