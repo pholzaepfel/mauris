@@ -787,13 +787,13 @@ function headlightShadow(sprite){
 
 				lightSpot={x:sprite.body.x,y:sprite.body.y};
 				otherGraphics.blendMode=0;
-				otherGraphics.lineStyle(3, 0xFFFFFF, 0);
+				otherGraphics.lineStyle(3, 0x000000, 0);
 				if(gamemode=='paused'){
 								lightSpot.x-=sprite.body.velocity.x * game.time.physicsElapsed;
 								lightSpot.y-=sprite.body.velocity.y * game.time.physicsElapsed;
 				}
 				for(var i=0.10;i>0.08;i-=0.01){
-								otherGraphics.beginFill(0x000000,0.625*headlightIntensity);
+								otherGraphics.beginFill(0x000000,1.0);
 								otherGraphics.moveTo(lightSpot.x,lightSpot.y);
 								otherGraphics.lineTo(lightSpot.x+Math.cos(player.sprite.rotation - i)*2*Math.max(resolutionY,resolutionX),lightSpot.y+Math.sin(player.sprite.rotation - i)*2*Math.max(resolutionY,resolutionX));
 								otherGraphics.lineTo(lightSpot.x+Math.cos(player.sprite.rotation + i)*2*Math.max(resolutionY,resolutionX),lightSpot.y+Math.sin(player.sprite.rotation + i)*2*Math.max(resolutionY,resolutionX));
