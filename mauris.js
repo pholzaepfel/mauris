@@ -783,6 +783,7 @@ function darkener(fade){
 				}
 }
 function headlightShadow(sprite){
+				if
 				var lightSpot=undefined;
 				lightSpot={x:player.sprite.body.x+(player.sprite.body.width*0.5)+(Math.cos(player.sprite.rotation)*((player.sprite.body.width*0.5)-lightPosition(player.ship))),y:player.sprite.body.y+(player.sprite.body.width*0.5)+(Math.sin(player.sprite.rotation)*((player.sprite.body.width*0.5)-lightPosition(player.ship)))};
 				var shadowSpot=undefined;
@@ -796,9 +797,10 @@ function headlightShadow(sprite){
 				var rot = game.physics.arcade.angleBetween(lightSpot,shadowSpot);
 				for(var i=0.10;i>0.08;i-=0.01){
 								otherGraphics.beginFill(0x000000,0.1);
-								otherGraphics.moveTo(shadowSpot.x,shadowSpot.y);
+								otherGraphics.moveTo(shadowSpot.x-(Math.sin(rot)*sprite.width),shadowSpot.y-(Math.cos(rot)*sprite.width));
 								otherGraphics.lineTo(shadowSpot.x+Math.cos(rot - i)*2*Math.max(resolutionY,resolutionX),shadowSpot.y+Math.sin(rot - i)*2*Math.max(resolutionY,resolutionX));
 								otherGraphics.lineTo(shadowSpot.x+Math.cos(rot + i)*2*Math.max(resolutionY,resolutionX),shadowSpot.y+Math.sin(rot + i)*2*Math.max(resolutionY,resolutionX));
+								otherGraphics.moveTo(shadowSpot.x+Math.sin(rot)*sprite.width),shadowSpot.y+Math.cos(rot)*sprite.width));
 								otherGraphics.lineTo(shadowSpot.x,shadowSpot.y);
 								otherGraphics.endFill();
 				}
