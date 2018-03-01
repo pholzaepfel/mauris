@@ -934,6 +934,7 @@ function applyBonuses(target){
 
 
 				//apply some minimums
+				if(target.sprite.body.maxVelocity.x<0){target.sprite.body.maxVelocity.setTo(30,30);}
 				if(target.health < 6){target.health=6;}
 				if(target.acceleration < 0.5){target.acceleration=0.5}
 				if(target.turnRate < 1){target.turnRate=1}
