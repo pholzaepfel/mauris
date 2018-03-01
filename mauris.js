@@ -6061,7 +6061,7 @@ function update () {
 
 
 								planetfall.blendMode=0;
-								planetfall.scale.setTo(planet.scale.x/4,planet.scale.y/4);
+								planetfall.scale.setTo(planet.scale.x/5,planet.scale.y/5);
 								planetfall.x=cameraTarget.x-resolutionX/2;
 								planetfall.y=cameraTarget.y-resolutionY/2;
 								planetfall.width=resolutionX/planetfall.scale.x;
