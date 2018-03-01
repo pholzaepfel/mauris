@@ -1447,7 +1447,7 @@ function(tgt){
 		target.fireVelocity=250;
 		target.firingSolution=crewFiringSolution;
 		target.bulletBehavior.push(function(bullet){
-bullet.lifespan=10000;
+bullet.lifespan=100000;
 });
 		target.bulletSparkle=crewmanTrail;
 	}
