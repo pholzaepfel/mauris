@@ -785,9 +785,8 @@ function darkener(fade){
 function headlightShadow(sprite){
 				var lightSpot=undefined;
 
-				lightSpot={x:sprite.body.x,y:player.sprite.body.y};
-				headlightGlow(explosions,lightSpot.x,lightSpot.y);
-				otherGraphics.blendMode=1;
+				lightSpot={x:sprite.body.x,y:sprite.body.y};
+				otherGraphics.blendMode=0;
 				otherGraphics.lineStyle(3, 0xFFFFFF, 0);
 				if(gamemode=='paused'){
 								lightSpot.x-=sprite.body.velocity.x * game.time.physicsElapsed;
