@@ -794,7 +794,7 @@ function headlightShadow(sprite,lightness){
 								lightSpot.y-=sprite.body.velocity.y * game.time.physicsElapsed;
 				}
 				var rot = game.physics.arcade.angleBetween(lightSpot,shadowSpot);
-				for(var i=0;i<0.21;i+=0.05){
+				for(var i=0;i<0.21;i+=0.02){
 								var width = sprite.width * 0.85;
 								otherGraphics.beginFill(0x000000,0.05*headlightIntensity*lightness);
 								otherGraphics.moveTo(shadowSpot.x+(Math.sin(rot)*width),shadowSpot.y-(Math.cos(rot)*width));
@@ -806,7 +806,7 @@ function headlightShadow(sprite,lightness){
 								shadowSpot.x+=Math.cos(rot)*width*0.5;
 								shadowSpot.y+=Math.sin(rot)*width*0.5;
 				}
-				otherGraphics.blendMode=0;
+				otherGraphics.blendMode=2;
 
 }function headlight(){
 				var lightSpot=undefined;
