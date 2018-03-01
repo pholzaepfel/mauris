@@ -783,7 +783,6 @@ function darkener(fade){
 				}
 }
 function headlightShadow(sprite){
-				if
 				var lightSpot=undefined;
 				lightSpot={x:player.sprite.body.x+(player.sprite.body.width*0.5)+(Math.cos(player.sprite.rotation)*((player.sprite.body.width*0.5)-lightPosition(player.ship))),y:player.sprite.body.y+(player.sprite.body.width*0.5)+(Math.sin(player.sprite.rotation)*((player.sprite.body.width*0.5)-lightPosition(player.ship)))};
 				var shadowSpot=undefined;
