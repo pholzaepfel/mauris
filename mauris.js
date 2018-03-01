@@ -795,9 +795,9 @@ function headlightShadow(sprite,lightness){
 								lightSpot.y-=sprite.body.velocity.y * game.time.physicsElapsed;
 				}
 				var rot = game.physics.arcade.angleBetween(lightSpot,shadowSpot);
-				for(var i=0;i<0.40;i+=0.06){
+				for(var i=0;i<0.40;i+=0.10){
 								var width = (sprite.width * 0.5) + (i*5);
-								otherGraphics.beginFill(0x000000,0.02*headlightIntensity*lightness);
+								otherGraphics.beginFill(0x000000,0.03*headlightIntensity*lightness);
 								otherGraphics.moveTo(shadowSpot.x-(Math.sin(rot)*width),shadowSpot.y-(Math.cos(rot)*width));
 								otherGraphics.lineTo(shadowSpot.x+Math.cos(rot - i)*2*Math.max(resolutionY,resolutionX),shadowSpot.y+Math.sin(rot - i)*2*Math.max(resolutionY,resolutionX));
 								otherGraphics.lineTo(shadowSpot.x+Math.cos(rot + i)*2*Math.max(resolutionY,resolutionX),shadowSpot.y+Math.sin(rot + i)*2*Math.max(resolutionY,resolutionX));
@@ -1311,7 +1311,7 @@ shipPart.prototype.update = function(){
 								lightness=Math.max(lightness,0.2);
 								lightness=Math.pow(lightness*2,1.6)/3;
 								this.sprite.alpha=this.target.alpha;
-								if(lightness > 0.2 && this.target.name!='player'){
+								if(lightness > 0.5 && this.target.name!='player'){
 headlightShadow(this.sprite,lightness);
 }
 								if(this.sprite.alpha==1 && lightness > 1){
