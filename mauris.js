@@ -793,11 +793,12 @@ function headlightShadow(sprite){
 								lightSpot.x-=sprite.body.velocity.x * game.time.physicsElapsed;
 								lightSpot.y-=sprite.body.velocity.y * game.time.physicsElapsed;
 				}
+				var rot = game.physics.arcade.angleBetween(lightSpot,shadowSpot);
 				for(var i=0.10;i>0.08;i-=0.01){
-								otherGraphics.beginFill(0x000000,0.3);
+								otherGraphics.beginFill(0x000000,0.1);
 								otherGraphics.moveTo(shadowSpot.x,shadowSpot.y);
-								otherGraphics.lineTo(lightSpot.x+Math.cos(player.sprite.rotation - i)*2*Math.max(resolutionY,resolutionX),lightSpot.y+Math.sin(player.sprite.rotation - i)*2*Math.max(resolutionY,resolutionX));
-								otherGraphics.lineTo(lightSpot.x+Math.cos(player.sprite.rotation + i)*2*Math.max(resolutionY,resolutionX),lightSpot.y+Math.sin(player.sprite.rotation + i)*2*Math.max(resolutionY,resolutionX));
+								otherGraphics.lineTo(shadowSpot.x+Math.cos(rot - i)*2*Math.max(resolutionY,resolutionX),shadowSpot.y+Math.sin(rot - i)*2*Math.max(resolutionY,resolutionX));
+								otherGraphics.lineTo(shadowSpot.x+Math.cos(rot + i)*2*Math.max(resolutionY,resolutionX),shadowSpot.y+Math.sin(rot + i)*2*Math.max(resolutionY,resolutionX));
 								otherGraphics.lineTo(shadowSpot.x,shadowSpot.y);
 								otherGraphics.endFill();
 				}
