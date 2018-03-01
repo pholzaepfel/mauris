@@ -796,11 +796,11 @@ function headlightShadow(sprite){
 				var rot = game.physics.arcade.angleBetween(lightSpot,shadowSpot);
 				for(var i=0.10;i>0.08;i-=0.01){
 								otherGraphics.beginFill(0x000000,0.1);
-								otherGraphics.moveTo(shadowSpot.x-(Math.sin(rot)*sprite.width),shadowSpot.y-(Math.cos(rot)*sprite.width));
+								otherGraphics.moveTo(shadowSpot.x+(Math.sin(rot)*sprite.width),shadowSpot.y-(Math.cos(rot)*sprite.width));
 								otherGraphics.lineTo(shadowSpot.x+Math.cos(rot - i)*2*Math.max(resolutionY,resolutionX),shadowSpot.y+Math.sin(rot - i)*2*Math.max(resolutionY,resolutionX));
 								otherGraphics.lineTo(shadowSpot.x+Math.cos(rot + i)*2*Math.max(resolutionY,resolutionX),shadowSpot.y+Math.sin(rot + i)*2*Math.max(resolutionY,resolutionX));
-								otherGraphics.lineTo(shadowSpot.x+(Math.sin(rot)*sprite.width),shadowSpot.y+(Math.cos(rot)*sprite.width));
-								otherGraphics.lineTo(shadowSpot.x-(Math.sin(rot)*sprite.width),shadowSpot.y-(Math.cos(rot)*sprite.width));
+								otherGraphics.lineTo(shadowSpot.x-(Math.sin(rot)*sprite.width),shadowSpot.y+(Math.cos(rot)*sprite.width));
+								otherGraphics.lineTo(shadowSpot.x+(Math.sin(rot)*sprite.width),shadowSpot.y-(Math.cos(rot)*sprite.width));
 								otherGraphics.endFill();
 				}
 				otherGraphics.blendMode=0;
@@ -1306,7 +1306,7 @@ shipPart.prototype.update = function(){
 								lightness=Math.max(lightness,0.2);
 								lightness=Math.pow(lightness*2,1.6)/3;
 								this.sprite.alpha=this.target.alpha;
-								if(lightness > 0.5){
+								if(lightness > 0.5 && this.target.name!='player'){
 headlightShadow(this.sprite);
 }
 								if(this.sprite.alpha==1 && lightness > 1){
