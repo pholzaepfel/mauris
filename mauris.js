@@ -784,8 +784,9 @@ function darkener(fade){
 }
 function headlightShadow(sprite){
 				var lightSpot=undefined;
-
-				lightSpot={x:sprite.body.x,y:sprite.body.y};
+				lightSpot={x:player.sprite.body.x+(player.sprite.body.width*0.5)+(Math.cos(player.sprite.rotation)*((player.sprite.body.width*0.5)-lightPosition(player.ship))),y:player.sprite.body.y+(player.sprite.body.width*0.5)+(Math.sin(player.sprite.rotation)*((player.sprite.body.width*0.5)-lightPosition(player.ship)))};
+				var shadowSpot=undefined;
+				shadowSpot={x:sprite.body.x,y:sprite.body.y};
 				otherGraphics.blendMode=0;
 				otherGraphics.lineStyle(3, 0x000000, 0);
 				if(gamemode=='paused'){
@@ -793,11 +794,11 @@ function headlightShadow(sprite){
 								lightSpot.y-=sprite.body.velocity.y * game.time.physicsElapsed;
 				}
 				for(var i=0.10;i>0.08;i-=0.01){
-								otherGraphics.beginFill(0x000000,1.0);
-								otherGraphics.moveTo(lightSpot.x,lightSpot.y);
+								otherGraphics.beginFill(0x000000,0.3);
+								otherGraphics.moveTo(shadowSpot.x,shadowSpot.y);
 								otherGraphics.lineTo(lightSpot.x+Math.cos(player.sprite.rotation - i)*2*Math.max(resolutionY,resolutionX),lightSpot.y+Math.sin(player.sprite.rotation - i)*2*Math.max(resolutionY,resolutionX));
 								otherGraphics.lineTo(lightSpot.x+Math.cos(player.sprite.rotation + i)*2*Math.max(resolutionY,resolutionX),lightSpot.y+Math.sin(player.sprite.rotation + i)*2*Math.max(resolutionY,resolutionX));
-								otherGraphics.lineTo(lightSpot.x,lightSpot.y);
+								otherGraphics.lineTo(shadowSpot.x,shadowSpot.y);
 								otherGraphics.endFill();
 				}
 				otherGraphics.blendMode=0;
