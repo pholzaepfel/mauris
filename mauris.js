@@ -779,7 +779,7 @@ function darkener(fade){
 								otherGraphics.blendMode=0;
 								otherGraphics.lineStyle(10,0x000000,fade);
 								otherGraphics.beginFill(0x000000,fade);
-								otherGraphics.drawRect(player.sprite.x-(0.5*resolutionX), player.sprite.y-(0.5 * resolutionY), resolutionX, resolutionY);
+								otherGraphics.drawRect(player.sprite.body.x-(0.5*resolutionX), player.sprite.body.y-(0.5 * resolutionY), resolutionX, resolutionY);
 				}
 }
 //NYI
@@ -860,13 +860,13 @@ function compareAngles(x,y){
 				return Math.atan2(Math.sin(x-y),Math.cos(x-y));
 }
 function onscreenStrict(x,y) {
-				return  (player.sprite.x - (0.5*resolutionX) < x && x < player.sprite.x + (0.5*resolutionX) &&
-												player.sprite.y - (0.5*resolutionY) < y && y < player.sprite.y + (0.5*resolutionY))
+				return  (player.sprite.body.x - (0.5*resolutionX) < x && x < player.sprite.body.x + (0.5*resolutionX) &&
+												player.sprite.body.y - (0.5*resolutionY) < y && y < player.sprite.body.y + (0.5*resolutionY))
 }
 
 function onscreen(x,y) {
-				return  (player.sprite.x - resolutionX < x && x < player.sprite.x + resolutionX &&
-												player.sprite.y - resolutionY < y && y < player.sprite.y + resolutionY)
+				return  (player.sprite.body.x - resolutionX < x && x < player.sprite.body.x + resolutionX &&
+												player.sprite.body.y - resolutionY < y && y < player.sprite.body.y + resolutionY)
 }
 
 function partsToTop(tgt){
@@ -4296,8 +4296,8 @@ gameUI.prototype.playerStatusTextPing = function() {
 gameUI.prototype.commsPing = function() {
 
 
-				this.comms.x = player.sprite.x;
-				this.comms.y = player.sprite.y - 200;
+				this.comms.x = player.sprite.body.x;
+				this.comms.y = player.sprite.body.y - 200;
 				if (game.time.now > this.nextComms && this.textIndex < this.texts.length){
 								if(this.textLineIndex==0||this.nextCommsPing){
 												ui.sound_comms.play();
@@ -6067,7 +6067,7 @@ function update () {
 								// scrolling
 								scroll(hazeWhite,-0.0015);
 
-								planet.scaleModifier=(player.sprite.x/planet.baseX)+(player.sprite.y/planet.baseY)+planet.scaleMission;
+								planet.scaleModifier=(player.sprite.body.x/planet.baseX)+(player.sprite.body.y/planet.baseY)+planet.scaleMission;
 								planet.scaleModifier/=100;
 								planet.scaleModifier+=0.6;
 								planet.scaleModifier=Math.pow(planet.scaleModifier,2);
