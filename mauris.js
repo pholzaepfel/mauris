@@ -5548,7 +5548,6 @@ function handleMission() {
 												game.physics.arcade.overlap(player.sprite,frob1))
 				{
 								playerStats.mission.complete=true; //just for frob-only missions
-								fadeOut();
 								winMission(); 
 								ui.partsUI(player.ship);
 								//temporarily disable
