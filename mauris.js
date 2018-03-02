@@ -3542,11 +3542,7 @@ gameUI.prototype.music_random = function(){
 				this.currentMusic.play();
 }
 gameUI.prototype.sound_randomCrush = function(){
-				if(Math.random()>0.5){
-								this.sound_crush.play();
-				}else{
-								this.sound_crush2.play();
-				}
+								this.sound_hit1.play();
 
 }
 gameUI.prototype.sound_randomBoom = function(){
@@ -7513,7 +7509,6 @@ function enemyTouchEnemy (a, b) {
 				if(enemies[enemySprite1.name].ai==aiModes['asteroid'])
 				{
 
-								ui.sound_hit1.play();
 								var destroyed = enemies[enemySprite1.name].damage(9999);
 								if(destroyed){
 									ui.sound_randomCrush();					
