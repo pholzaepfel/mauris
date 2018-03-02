@@ -779,7 +779,7 @@ function darkener(fade){
 								otherGraphics.blendMode=0;
 								otherGraphics.lineStyle(10,0x000000,fade);
 								otherGraphics.beginFill(0x000000,fade);
-								otherGraphics.drawRect(player.sprite.body.x-(0.7*resolutionX), player.sprite.body.y-(0.7 * resolutionY), resolutionX, resolutionY);
+								otherGraphics.drawRect(player.sprite.body.x-(0.7*resolutionX), player.sprite.body.y-(0.7 * resolutionY), resolutionX * 1.4, resolutionY * 1.4);
 				}
 }
 //NYI
