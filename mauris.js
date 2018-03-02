@@ -84,7 +84,7 @@ var randomMission = function(){
 				rm.hazeRedSpeed = randomRange(20,40);
 				rm.hazeWhiteSpeed = 10;
 				rm.hazePurpleSpeed = randomRange(60,100);
-				if(randomRange(0,1)<0.6){
+				if(randomRange(0,1)<0.6 || isAndroid){
 								rm.distantPlanet = true;
 								rm.hazeWhiteSpeed=0.8;
 				}
