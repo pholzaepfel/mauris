@@ -122,7 +122,7 @@ var randomMission = function(){
 				var enemyDensity=parseInt(randomRange(11,16));
 				if(asteroidDensity>60){enemyDensity=0};
 				if(enemyDensity>0){
-								var s=  '' + enemyDensity + ' - ' + myfactions[0][0] + ' and ' + myfactions[1][0] + ' in area \n';
+								var s=  '' + myfactions[0][0] + ' and ' + myfactions[1][0] + ' in area \n';
 								rm.intro.push(s);
 				}
 				while(enemyDensity > 0){
@@ -743,7 +743,26 @@ function spacesAtEndOfRow(ship,rowNum){
 								if(ship[i]==-1){spaces++}
 								else{return spaces;}
 				}
-
+				var j=0;
+				while(spaces==size){
+					j++;
+				rowNum+=j;
+				spaces=0;
+				if(rowNum < size){
+				for(var i = size + (rowNum*size) - 1;i>=(rowNum*size);i--){
+								if(ship[i]==-1){spaces++}
+								else{return spaces;}
+				}
+				}
+				rowNum-=j*2;
+				spaces=0;
+				if(rowNum>=0){
+				for(var i = size + (rowNum*size) - 1;i>=(rowNum*size);i--){
+								if(ship[i]==-1){spaces++}
+								else{return spaces;}
+				}
+				}
+				}
 				return spaces;
 }
 function thrustPosition(ship){
