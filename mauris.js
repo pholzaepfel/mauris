@@ -2079,8 +2079,6 @@ function preload () {
 				game.load.spritesheet('thrust', 'assets/thrust.png',8,8);
 				game.load.spritesheet('sparks', 'assets/sparks.png',8,8);
 				game.load.spritesheet('explosions', 'assets/explosions.png',16,16);
-				game.load.audio('crush2','assets/crush2.wav');
-				game.load.audio('crush','assets/crush.wav');
 				game.load.audio('pew1','assets/pew1.wav');
 				game.load.audio('redalert','assets/redalert.wav');
 				game.load.audio('beep','assets/beep.wav');
@@ -3512,8 +3510,6 @@ gameUI.prototype.initSound = function(){
 				this.sound_hit1 = game.add.audio('hit1');
 				this.sound_redalert = game.add.audio('redalert');
 				this.sound_beep = game.add.audio('beep');
-				this.sound_crush = game.add.audio('crush');
-				this.sound_crush2 = game.add.audio('crush2');
 				this.sound_boom1 = game.add.audio('boom1');
 				this.sound_boom2 = game.add.audio('boom2');
 				this.sound_plasma = game.add.audio('plasma');
@@ -3540,14 +3536,6 @@ gameUI.prototype.music_random = function(){
 				}
 				this.currentMusic=this.music[rnd];
 				this.currentMusic.play();
-}
-gameUI.prototype.sound_randomCrush = function(){
-				if(Math.random()>0.5){
-								this.sound_crush.play();
-				}else{
-								this.sound_crush2.play();
-				}
-
 }
 gameUI.prototype.sound_randomBoom = function(){
 				if(Math.random()>0.5){
@@ -7516,9 +7504,10 @@ function enemyTouchEnemy (a, b) {
 								ui.sound_hit1.play();
 								var destroyed = enemies[enemySprite1.name].damage(9999);
 								if(destroyed){
-									ui.sound_randomCrush();					
+												ui.sound_hit1.play();
+												//ui.sound_randomBoom();
 								}
-											var angle=game.physics.arcade.angleBetween(enemySprite2,enemySprite1);
+								var angle=game.physics.arcade.angleBetween(enemySprite2,enemySprite1);
 								enemySprite1.body.velocity.x+=Math.cos(angle)*200;
 								enemySprite1.body.velocity.y+=Math.sin(angle)*200;
 								var e2 = enemies[enemySprite2.name];
@@ -7538,7 +7527,8 @@ function enemyTouchPlayer (enemySprite, playerSprite) {
 								ui.sound_hit1.play();
 								var destroyed = enemies[enemySprite.name].damage(player.sawDamage);
 								if(destroyed){
-									ui.sound_randomCrush();					
+												ui.sound_hit1.play();
+												//ui.sound_randomBoom();
 								}
 								var angle=game.physics.arcade.angleBetween(playerSprite,enemySprite);
 								enemySprite.body.velocity.x+=Math.cos(angle)*200;
