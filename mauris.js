@@ -5086,7 +5086,7 @@ function randomInt (a,b){
 function fadeIn () {
 				playerStats.fadeAmount=1;
 				if(firstFadeIn){
-				game.add.tween(playerStats).to({fadeAmount:0},20000, Phaser.Easing.Linear.None, true, 0, false);
+				game.add.tween(playerStats).to({fadeAmount:0},10000, Phaser.Easing.Linear.None, true, 0, false);
 
 				}else{
 				game.add.tween(playerStats).to({fadeAmount:0},5000, Phaser.Easing.Exponential.Out, true, 0, false);
