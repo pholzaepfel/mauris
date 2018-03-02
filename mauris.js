@@ -734,6 +734,26 @@ function spacesAtStartOfRow(ship,rowNum){
 								else{return spaces;}
 				}
 
+				var j=0;
+				while(spaces==size){
+					j++;
+				rowNum+=j;
+				spaces=0;
+				if(rowNum < size){
+				for(var i = size*rowNum ;i<(rowNum*size)+size;i++){
+								if(ship[i]==-1){spaces++}
+								else{return spaces;}
+				}
+				}
+				rowNum-=j*2;
+				spaces=0;
+				if(rowNum>=0){
+				for(var i = size*rowNum ;i<(rowNum*size)+size;i++){
+								if(ship[i]==-1){spaces++}
+								else{return spaces;}
+				}
+				}
+				}
 				return spaces;
 }
 function spacesAtEndOfRow(ship,rowNum){
