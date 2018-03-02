@@ -2065,9 +2065,9 @@ function preload () {
 				game.load.image('frob1', 'assets/frob1.png');
 				game.load.image('partswindow', 'assets/partswindow.png');
 				game.load.spritesheet('bullet', 'assets/bullets.png',16,16);
-				game.load.image('planets', 'assets/planets.png');
 				game.load.image('nebula', 'assets/nebula.png');
-				game.load.image('planetslod', 'assets/planetslod.png');
+				game.load.image('planets', 'assets/planetslod.png');
+				game.load.image('planetslod', 'assets/planetslod-HSL.png');
 				game.load.image('planetfall', 'assets/planetfall.png');
 				game.load.image('planetdirt', 'assets/planetdirt.png');
 				game.load.image('starfield2', 'assets/starfield2.png');
@@ -5201,7 +5201,7 @@ function create () {
 
 								blurX = game.add.filter('BlurX');
 								blurY = game.add.filter('BlurY');
-								planet = game.add.sprite(resolutionX/0.8, resolutionY/0.8, 'planetslod');
+								planet = game.add.sprite(resolutionX/0.8, resolutionY/0.8, 'planets');
 								planet.baseX=randomRange(-300,400) * randomSign();
 								planet.baseY=randomRange(-300,400) * randomSign();
 								planetlod = game.add.sprite(resolutionX/0.8, resolutionY/0.8, 'planetslod');
