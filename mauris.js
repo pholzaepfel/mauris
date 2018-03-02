@@ -5089,7 +5089,7 @@ function fadeIn () {
 				game.add.tween(playerStats).to({fadeAmount:0},10000, Phaser.Easing.Linear.None, true, 0, false);
 				firstFadeIn=false;
 				}else{
-				game.add.tween(playerStats).to({fadeAmount:0},5000, Phaser.Easing.Linear.None, true, 0, false);
+				game.add.tween(playerStats).to({fadeAmount:0},3000, Phaser.Easing.Linear.None, true, 0, false);
 				}
 				station.scale.setTo(1,1);
 				station.r=192;
