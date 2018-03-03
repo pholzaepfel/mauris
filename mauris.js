@@ -1440,6 +1440,7 @@ enemyShip.prototype.initEnemyShip = function(ship) {
 
 				this.sprite.rotation=Math.random()*2*Math.PI;
 				this.altText='';
+				this.nextRespawn=0;
 				this.thrustBehavior=tinySmoke;
 				this.sprite.alpha=1;
 				this.crew=1;
@@ -1861,6 +1862,7 @@ y:this.sprite.y + this.sprite.body.velocity.y};
 				var playerAdj={x:player.sprite.x + player.sprite.body.velocity.x,
 y:player.sprite.y + player.sprite.body.velocity.y};
 
+if(game.time.now > this.nextRespawn){
 				if (this.game.physics.arcade.distanceBetween(spriteAdj, playerAdj) > 3500 ||
 												this.game.physics.arcade.distanceBetween(spriteAdj, playerAdj) > Math.sqrt(Math.pow(0.7*resolutionX,2) + Math.pow(0.7*resolutionY,2)) && this.ai == aiModes['asteroid'] && !this.questionBox){
 
@@ -1874,6 +1876,7 @@ y:player.sprite.y + player.sprite.body.velocity.y};
 												y+=randomRange(2000,4000)*randomSign();
 								}
 								this.sprite.reset(x,y);  
+								this.nextRespawn=game.time.now+randomInt(500,5000);
 								if(player.target==this.sprite){
 												player.target=player.sprite;
 								}
@@ -1891,6 +1894,7 @@ y:player.sprite.y + player.sprite.body.velocity.y};
 
 												}}
 				}
+}
 				this.sprite.profile = this.sprite.profileMax; //tracking this in detail is hard and unnecessary
 
 				if(game.time.now>this.shieldCooldown){
