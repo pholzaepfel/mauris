@@ -1876,7 +1876,7 @@ if(game.time.now > this.nextRespawn){
 												y+=randomRange(2000,4000)*randomSign();
 								}
 								this.sprite.reset(x,y);  
-								this.nextRespawn=game.time.now+randomInt(500,1500);
+								this.nextRespawn=game.time.now+randomInt(0,1500);
 								if(player.target==this.sprite){
 												player.target=player.sprite;
 								}
