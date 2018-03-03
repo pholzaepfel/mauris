@@ -1856,8 +1856,13 @@ enemyShip.prototype.update = function() {
 				}
 
 				//rubberbanding
-				if (this.game.physics.arcade.distanceBetween(this.sprite, player.sprite) > 4000 ||
-												this.game.physics.arcade.distanceBetween(this.sprite, player.sprite) > Math.max(resolutionX,resolutionY)*0.75 && this.ai == aiModes['asteroid'] && !this.questionBox){
+				var spriteAdj={x:this.sprite.x + this.sprite.body.velocity.x,
+y:this.sprite.y + this.sprite.body.velocity.y};
+				var playerAdj={x:player.sprite.x + player.sprite.body.velocity.x,
+y:player.sprite.y + player.sprite.body.velocity.y};
+
+				if (this.game.physics.arcade.distanceBetween(spriteAdj, playerAdj) > 3500 ||
+												this.game.physics.arcade.distanceBetween(spriteAdj, playerAdj) > 2000 && this.ai == aiModes['asteroid'] && !this.questionBox){
 
 								if(Math.random()>0.5){
 												this.target=player.sprite;
