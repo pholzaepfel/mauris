@@ -4390,10 +4390,12 @@ gameUI.prototype.commsPing = function() {
 				}else if (game.time.now > this.nextComms) {
 								this.comms.alpha-=randomRange(0,0.05);
 				}  
+				if(this.comms.alpha > 0 && this.comms.visible){
 				if(this.textLine.length>0 && game.time.now % 200 > 100){
 								this.comms.setText(this.textLine + '_ ');
 				}else{
 								this.comms.setText(this.textLine + '  ');
+				}
 				}
 				this.graphics.beginFill(0x000000, ui.comms.alpha/3);
 				this.graphics.drawRect(this.comms.x - 15 - (0.5 * this.comms.width), this.comms.y - 6 - (0.5 * this.comms.height), this.comms.width + 30, this.comms.height + 12);
