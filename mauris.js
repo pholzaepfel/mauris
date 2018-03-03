@@ -21,7 +21,7 @@ var noblood = 0;
 var touchPressed = 0;
 var initialXp = 200; //xp required for first level
 var setTextIfDifferent = function(object, value){
-	if(value!=object.text){object.setText(value);}
+	if(false && value!=object.text){object.setText(value);}
 }
 var allfactions=[
 ['alliance military',allianceGear4,1],
