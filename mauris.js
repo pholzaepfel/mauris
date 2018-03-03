@@ -1272,7 +1272,7 @@ dragPartsPool.prototype.get = function (x,y,sheet, index){
 }
 partsPool = function(){
 				this.parts=[];
-				for(var i=0;i<150;i++){
+				for(var i=0;i<250;i++){
 								this.parts.push(new shipPart(0,0,'parts',0,dummy));
 								this.parts[i].sprite.kill();
 
