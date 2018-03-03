@@ -2686,7 +2686,7 @@ var laserBulletBehavior = function(bullet,thickness,alpha,color1,color2,color3,d
 																}
 																if(game.time.now > enemies[i].nextLaserBoom){
 																				boom(explosions,tgt.bulletSprite,intersection.x,intersection.y);
-																				enemies[i].nextLaserBoom=game.time.now+50;
+																				enemies[i].nextLaserBoom=game.time.now+200;
 																}
 												}  
 
