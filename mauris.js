@@ -1869,8 +1869,8 @@ if(game.time.now > this.nextRespawn){
 								if(Math.random()>0.5){
 												this.target=player.sprite;
 								}
-								var x = this.target.x + (randomSign() * randomRange(1080,1500) + player.sprite.body.velocity.x);
-								var y = this.target.y + (randomSign() * randomRange(620,1500) + player.sprite.body.velocity.y);
+								var x = player.sprite.x + (randomSign() * randomRange(1080,1500) + player.sprite.body.velocity.x);
+								var y = player.sprite.y + (randomSign() * randomRange(620,1500) + player.sprite.body.velocity.y);
 								if(this.questionBox){
 												x+=randomRange(2000,4000)*randomSign();
 												y+=randomRange(2000,4000)*randomSign();
