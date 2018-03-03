@@ -4044,6 +4044,7 @@ gameUI.prototype.initCombatUi = function() {
 
 				this.damageNumbers = [];
 
+				destroyIfExists(this.frobRadar);
 				this.frobRadar = game.add.text(200,100,'*',{font:'28px acknowledge', fill: 'rgb(255,255,130)', align: 'center'});
 				this.frobRadar.anchor.setTo(0.5,0.5);
 				this.frobRadar.blendMode=1;
