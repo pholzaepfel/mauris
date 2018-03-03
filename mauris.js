@@ -1862,13 +1862,13 @@ y:this.sprite.y + this.sprite.body.velocity.y};
 y:player.sprite.y + player.sprite.body.velocity.y};
 
 				if (this.game.physics.arcade.distanceBetween(spriteAdj, playerAdj) > 3500 ||
-												this.game.physics.arcade.distanceBetween(spriteAdj, playerAdj) > Math.sqrt(Math.pow(0.6*resolutionX,2) + Math.pow(0.6*resolutionY,2)) && this.ai == aiModes['asteroid'] && !this.questionBox){
+												this.game.physics.arcade.distanceBetween(spriteAdj, playerAdj) > Math.sqrt(Math.pow(0.7*resolutionX,2) + Math.pow(0.7*resolutionY,2)) && this.ai == aiModes['asteroid'] && !this.questionBox){
 
 								if(Math.random()>0.5){
 												this.target=player.sprite;
 								}
-								var x = this.target.x + (randomSign() * randomRange(960,1500) + player.sprite.body.velocity.x);
-								var y = this.target.y + (randomSign() * randomRange(540,1500) + player.sprite.body.velocity.y);
+								var x = this.target.x + (randomSign() * randomRange(1080,1500) + player.sprite.body.velocity.x);
+								var y = this.target.y + (randomSign() * randomRange(620,1500) + player.sprite.body.velocity.y);
 								if(this.questionBox){
 												x+=randomRange(2000,4000)*randomSign();
 												y+=randomRange(2000,4000)*randomSign();
@@ -1877,7 +1877,9 @@ y:player.sprite.y + player.sprite.body.velocity.y};
 								if(player.target==this.sprite){
 												player.target=player.sprite;
 								}
+								if(onscreenStrict(x,y){
 								midBoom(explosions,4,x,y);
+								}
 								if(this.ai==aiModes['asteroid']){
 
 												this.sprite.body.velocity = game.physics.arcade.velocityFromRotation(game.physics.arcade.angleBetween(this.sprite, player.sprite), randomRange(25,100));  
