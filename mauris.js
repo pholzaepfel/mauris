@@ -20,6 +20,9 @@ var cheatmode = 0;
 var noblood = 0;
 var touchPressed = 0;
 var initialXp = 200; //xp required for first level
+var setTextIfDifferent = function(object, value){
+	if(value!=object.text){object.setText(value);}
+}
 var allfactions=[
 ['alliance military',allianceGear4,1],
 				['mechanoid',mechanoidGear,1],
@@ -4080,7 +4083,7 @@ gameUI.prototype.addDamageNumber = function(x,y,dmg,dmgDisplay,dmgGood){
 				dn.x=x;
 				dn.y=y;
 				dn.visible=2;
-				dn.setText(dmgDisplay);
+				setTextIfDifferent(dn,dmgDisplay);
 				if(dmgGood){
 								dn.fill='rgb(30,240,30)';
 				}else{
@@ -4117,7 +4120,7 @@ gameUI.prototype.altLinePing = function (targetText, offset) {
 								game.add.tween(targetText).to({alpha: 0.0},5000, Phaser.Easing.Linear.None, true, 0, false);
 					}
 				
-				targetText.setText(s);
+				setTextIfDifferent(targetText,s);
 }
 
 gameUI.prototype.bar = function (targetText, offset, numerator, denominator) {
@@ -4150,7 +4153,7 @@ gameUI.prototype.bar = function (targetText, offset, numerator, denominator) {
 				if(n<0){n=0;}
 				s+=repeat('\u2026',n);
 				s+=repeat('\u201A',barSize-n);
-				targetText.setText(s);
+				setTextIfDifferent(targetText,s);
 				if(numerator>targetText.lastValue){
 								targetText.alpha=2;
 								game.add.tween(targetText).to({alpha: 0.9},500, Phaser.Easing.Exponential.Out, true, 0, false);
@@ -4163,7 +4166,7 @@ gameUI.prototype.bar = function (targetText, offset, numerator, denominator) {
 
 gameUI.prototype.frobRadarPing = function() {
 				if(false && (playerStats.mission.win.condition!='frob' || playerStats.mission.complete)){
-								this.frobRadar.setText('');
+								setTextIfDifferent(this.frobRadar,'');
 								this.toTop(this.frobRadar);
 				}else{
 								var s='';
@@ -4194,7 +4197,7 @@ gameUI.prototype.frobRadarPing = function() {
 								}
 								if(targetDistance>180){targetDistance=180+Math.pow(targetDistance-180,0.6)};
 								if(targetDistance>0.5*Math.min(resolutionX,resolutionY)-50){targetDistance=0.5*Math.min(resolutionX,resolutionY)-50};  
-								this.frobRadar.setText(s);
+								setTextIfDifferent(this.frobRadar,s);
 								this.frobRadar.x = player.sprite.body.x + Math.cos(targetAngle) * targetDistance - 0.5 * this.frobRadar.width;
 								this.frobRadar.y = player.sprite.body.y + Math.sin(targetAngle) * targetDistance;  
 				}
@@ -4290,7 +4293,7 @@ gameUI.prototype.radarPing = function() {
 												if(range>180){range=180+Math.pow(targetDistance-180,0.6)};  
 												if(range>0.5*Math.min(resolutionX,resolutionY)-50){range=0.5*Math.min(resolutionX,resolutionY)-50};  
 								}
-								this.radar[i].setText(s);
+								setTextIfDifferent(this.radar[i],s);
 								this.radar[i].x = player.sprite.body.x + (0.5 * player.sprite.body.width) + Math.cos(targetAngle) * range;
 								this.radar[i].y = player.sprite.body.y + (0.5 * player.sprite.body.width) + Math.sin(targetAngle) * range;  
 									this.radar[i].visible = (this.enemies[i].sprite==player.target || this.enemies[i].ai!=aiModes['asteroid']);
@@ -4341,8 +4344,8 @@ gameUI.prototype.playerStatusTextPing = function() {
 								}
 								statusText+=blurbStats(player);
 				}
-				this.playerStatusTextShadow.setText(statusText);
-				this.playerStatusText.setText(statusText);
+				setTextIfDifferent(this.playerStatusTextShadow,statusText);
+				setTextIfDifferent(this.playerStatusText,statusText);
 
 
 				var upperLeftCornerX = cameraTarget.x - (resolutionX / 2);
@@ -4373,7 +4376,7 @@ gameUI.prototype.commsPing = function() {
 								if(!this.textLineIndex){
 												this.textLineIndex=this.textLine.length+1;
 								}
-								this.comms.setText(this.textLine);
+								setTextIfDifferent(this.comms,this.textLine);
 								if(this.textLineIndex>this.texts[this.textIndex].length){
 												this.nextComms=game.time.now+2000+this.textLineIndex*50;
 												this.textIndex+=1;
@@ -4388,9 +4391,9 @@ gameUI.prototype.commsPing = function() {
 								this.comms.alpha-=randomRange(0,0.05);
 				}  
 				if(this.textLine.length>0 && game.time.now % 200 > 100){
-								this.comms.setText(this.textLine + '_ ');
+								setTextIfDifferent(this.comms,this.textLine + '_ ');
 				}else{
-								this.comms.setText(this.textLine + '  ');
+								setTextIfDifferent(this.comms,this.textLine + '  ');
 				}
 				this.graphics.beginFill(0x000000, ui.comms.alpha/3);
 				this.graphics.drawRect(this.comms.x - 15 - (0.5 * this.comms.width), this.comms.y - 6 - (0.5 * this.comms.height), this.comms.width + 30, this.comms.height + 12);
@@ -4410,24 +4413,24 @@ gameUI.prototype.commsPing = function() {
 gameUI.prototype.missionLinePing = function() {
 
 				if(playerStats.mission.win.condition=='kill' && playerStats.mission.win.killCount > playerStats.kills){
-								this.missionLine.setText(playerStats.kills + '/' + playerStats.mission.win.killCount);
+								setTextIfDifferent(this.missionLine,playerStats.kills + '/' + playerStats.mission.win.killCount);
 								this.missionLine.x = player.sprite.body.x+(player.sprite.body.width/2);
 								this.missionLine.y = player.sprite.body.height+player.sprite.body.y+55;
 								this.toTop(this.missionLine);
 				} else {
-								this.missionLine.setText('');
+								setTextIfDifferent(this.missionLine,'');
 				}
 }
 gameUI.prototype.profileLinePing = function() {
 
 				if(player.profileShow){
 								this.profileLine.style.fill="rgb(192,"+Math.floor((player.sprite.profile/5/player.sprite.profileMax)*255)+",16)";
-								this.profileLine.setText(player.sprite.profile);
+								setTextIfDifferent(this.profileLine,player.sprite.profile);
 								this.profileLine.x = player.sprite.body.x-this.profileLine.width;
 								this.profileLine.y = player.sprite.body.height+player.sprite.body.y+55;
 								this.toTop(this.profileLine);
 				}else{
-								this.profileLine.setText('');
+								setTextIfDifferent(this.profileLine,'');
 				}
 }
 gameUI.prototype.partPing = function () {
@@ -4488,16 +4491,16 @@ gameUI.prototype.update = function() {
 gameUI.prototype.updatePart = function () {
 				this.partsSelector.visible=true;
 				mockPlayer.initPlayerShip(this.partsArray());
-				this.statsText.setText(blurbStats(mockPlayer));
+				setTextIfDifferent(this.statsText,blurbStats(mockPlayer));
 				if(ui.buildMode == 'select'){
 								if(playerStats.inventory.length){
 												this.partsSelector.loadTexture('parts',playerStats.inventory[this.currentPart]);
-												this.partText.setText(components[playerStats.inventory[this.currentPart]].name);
-												this.partFlavorText.setText(components[playerStats.inventory[this.currentPart]].flavor);
+												setTextIfDifferent(this.partText,components[playerStats.inventory[this.currentPart]].name);
+												setTextIfDifferent(this.partFlavorText,components[playerStats.inventory[this.currentPart]].flavor);
 								}else{
 												this.partsSelector.loadTexture('parts',0)
-																this.partText.setText('Your inventory is empty.')
-																this.partFlavorText.setText('');
+																setTextIfDifferent(this.partText,'Your inventory is empty.')
+																setTextIfDifferent(this.partFlavorText,'');
 								}
 				}else{
 								//workaround
@@ -4506,8 +4509,8 @@ gameUI.prototype.updatePart = function () {
 												this.currentPlayerPart = 0;
 								}
 								this.partsSelector.loadTexture('parts',this.parts[this.currentPlayerPart].index);
-								this.partText.setText(components[this.parts[this.currentPlayerPart].index].name);
-								this.partFlavorText.setText(components[this.parts[this.currentPlayerPart].index].flavor);
+								setTextIfDifferent(this.partText,components[this.parts[this.currentPlayerPart].index].name);
+								setTextIfDifferent(this.partFlavorText,components[this.parts[this.currentPlayerPart].index].flavor);
 
 				}
 
@@ -4699,11 +4702,11 @@ gameUI.prototype.partsUI = function (ship) {
 								player.sprite.body.velocity.y=0;
 								player.lastVelocityY=0;
 				}
-				this.healthLine.setText('');
-				this.altLine.setText('');
-				this.energyLine.setText('');
-				this.missionLine.setText('');
-				this.profileLine.setText('');
+				setTextIfDifferent(this.healthLine,'');
+				setTextIfDifferent(this.altLine,'');
+				setTextIfDifferent(this.energyLine,'');
+				setTextIfDifferent(this.missionLine,'');
+				setTextIfDifferent(this.profileLine,'');
 				this.clearRadar();
 				this.tempStation.visible=true;
 				this.tempStation.bringToTop();
@@ -4723,23 +4726,23 @@ gameUI.prototype.setMode = function(mode){
 				if(joystickUsed)
 				{
 								if(mode=='select'){
-												this.explainerText.setText('[SELECT] X: select part   B: unequip parts   START: launch');
+												setTextIfDifferent(this.explainerText,'[SELECT] X: select part   B: unequip parts   START: launch');
 								}else if(mode=='move'){
-												this.explainerText.setText('[CONFIG] X: place part    B: cancel         D-PAD: move part');
+												setTextIfDifferent(this.explainerText,'[CONFIG] X: place part    B: cancel         D-PAD: move part');
 
 								}else if(mode=='delete'){
-												this.explainerText.setText('[REMOVE] X: unequip part   B: done');
+												setTextIfDifferent(this.explainerText,'[REMOVE] X: unequip part   B: done');
 
 								}
 
 				}else{
 								if(mode=='select'){
-												this.explainerText.setText('[SELECT] X: select part   Z: unequip parts   ENTER: launch');
+												setTextIfDifferent(this.explainerText,'[SELECT] X: select part   Z: unequip parts   ENTER: launch');
 								}else if(mode=='move'){
-												this.explainerText.setText('[CONFIG] X: place part    Z: cancel         ARROWS: move part');
+												setTextIfDifferent(this.explainerText,'[CONFIG] X: place part    Z: cancel         ARROWS: move part');
 
 								}else if(mode=='delete'){
-												this.explainerText.setText('[REMOVE] X: unequip part   Z: done');
+												setTextIfDifferent(this.explainerText,'[REMOVE] X: unequip part   Z: done');
 								}
 				}
 				if(mode=='select'){
@@ -4792,10 +4795,10 @@ gameUI.prototype.endPartsUI = function () {
 				this.destroyInventory();
 				var ship = this.partsArray();
 				this.destroyParts();
-				this.partText.setText('');
-				this.statsText.setText('');
-				this.partFlavorText.setText('');
-				this.explainerText.setText('');
+				setTextIfDifferent(this.partText,'');
+				setTextIfDifferent(this.statsText,'');
+				setTextIfDifferent(this.partFlavorText,'');
+				setTextIfDifferent(this.explainerText,'');
 				player.initPlayerShip(ship);
 				this.initButtons(warButtons);
 				gamemode = 'war';
