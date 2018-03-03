@@ -4289,7 +4289,7 @@ gameUI.prototype.radarPing = function() {
 								this.radar[i].setText(s);
 								this.radar[i].x = player.sprite.body.x + (0.5 * player.sprite.body.width) + Math.cos(targetAngle) * range;
 								this.radar[i].y = player.sprite.body.y + (0.5 * player.sprite.body.width) + Math.sin(targetAngle) * range;  
-									this.radar[i].visible = (this.enemies[i].ai!=aiModes['asteroid']);
+									this.radar[i].visible = (this.enemies[i].sprite==player.target || this.enemies[i].ai!=aiModes['asteroid']);
 								this.toTop(this.radar[i]);
 				}
 }
