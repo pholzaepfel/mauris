@@ -3506,7 +3506,7 @@ gameUI.prototype.buttonsPing = function(){
 								var padY =upperLeftCornerY + (this.buttons[i].y * this.chunkY) + (this.chunkY/8);
 								var fill = this.buttons[i].flash ? '0x326464' : '0x1278AC';
 								var textColor = this.buttons[i].flash ? 'rgb(240,255,255)' : 'rgb(220,240,240)';
-								this.buttons[i].button.fill = textColor;
+								this.buttons[i].button.style.fill = textColor;
 								this.buttons[i].flash=false;
 								this.graphics.beginFill(fill, 0.6);
 								this.graphics.drawRect(padX, padY, this.chunkX * 0.75, this.chunkY * 0.75);
@@ -4086,9 +4086,9 @@ gameUI.prototype.addDamageNumber = function(x,y,dmg,dmgDisplay,dmgGood){
 				dn.visible=2;
 				dn.setText(dmgDisplay);
 				if(dmgGood){
-								dn.fill='rgb(30,240,30)';
+								dn.style.fill='rgb(30,240,30)';
 				}else{
-								dn.fill='rgb(240,30,30)';
+								dn.style.fill='rgb(240,30,30)';
 				}
 				dn.alpha=2;
 				dn.dieTime=game.time.now+1000;
@@ -4403,13 +4403,13 @@ gameUI.prototype.commsPing = function() {
 
 				//color coding!
 				if(this.comms.text.match(/^got/)){
-								this.comms.fill="rgb(255,240,32)"
+								this.comms.style.fill="rgb(255,240,32)"
 				}else if (this.comms.text.match(/^\$/)){
-								this.comms.fill="rgb(200,255,230)"
+								this.comms.style.fill="rgb(200,255,230)"
 				}else if (this.comms.text.match(/^>/)){
-								this.comms.fill="rgb(255,96,64)"  
+								this.comms.style.fill="rgb(255,96,64)"  
 				}else{
-								this.comms.fill='rgb(40,190,240)';
+								this.comms.style.fill='rgb(40,190,240)';
 				}  
 				this.toTop(this.comms);
 }
