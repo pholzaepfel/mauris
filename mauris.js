@@ -1857,7 +1857,7 @@ enemyShip.prototype.update = function() {
 
 				//rubberbanding
 				if (this.game.physics.arcade.distanceBetween(this.sprite, player.sprite) > 4000 ||
-												this.game.physics.arcade.distanceBetween(this.sprite, player.sprite) > Math.max(resolutionX,resolutionY)*1.3 && this.ai == aiModes['asteroid'] && !this.questionBox){
+												this.game.physics.arcade.distanceBetween(this.sprite, player.sprite) > Math.max(resolutionX,resolutionY)*0.75 && this.ai == aiModes['asteroid'] && !this.questionBox){
 
 								if(Math.random()>0.5){
 												this.target=player.sprite;
