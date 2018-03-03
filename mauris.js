@@ -1279,7 +1279,7 @@ partsPool = function(){
 				}
 };
 partsPool.prototype.get = function (x,y,index,targetSprite){
-				this.parts.sort(randomSort);
+				//this.parts.sort(randomSort);
 
 				for (var i=0;i<this.parts.length;i++){
 								if(!this.parts[i].sprite.alive){
@@ -1794,6 +1794,7 @@ enemyShip.prototype.fire = function () {
 enemyShip.prototype.spawnBullet = function (playerFired) {
 				if(forceDead(this.bullets)){
 								var bullet = this.bullets.getFirstDead();
+								killTweensFromSprite(bullet);
 								bullet.rotation=this.sprite.rotation;
 								bullet.damage=this.fireDamage;
 								bullet.reset(this.sprite.x + (Math.cos(this.sprite.rotation)*(this.sprite.body.width)), this.sprite.y + (Math.sin(this.sprite.rotation)*(this.sprite.body.width)));
@@ -2560,6 +2561,7 @@ playerShip.prototype.spawnBullet = function(playerFired){
 				if(forceDead(bullets)){
 
 								var bullet = bullets.getFirstDead();
+								killTweensFromSprite(bullet);
 								bullet.animations.play(bulletTypeName(this.bulletSprite));
 								bullet.bulletSprite = this.bulletSprite;
 								bullet.damage = this.fireDamage * targetDamageCoef;
@@ -7408,6 +7410,7 @@ function spawnLoots(_count, x, y){
 												if(typeof(loot.pulseTween)!='undefined'){
 																loot.pulseTween.stop();
 												}
+												killTweensFromSprite(loot);
 												loot.loadTexture('parts', Math.floor(randomRange(0,4))+378); // magic number part id
 												loot.lifespan = 60000;
 												loot.reset(x + randomRange(-16,16), y+randomRange(-16,16));
@@ -7433,6 +7436,7 @@ function spawnLoots(_count, x, y){
 function spawnDebris(component,x,y){ 
 				if(forceDead(debris)){
 								var part = debris.getFirstDead();
+								killTweensFromSprite(part);
 								part.loadTexture('parts', component);
 								part.lifespan = 120000;
 								part.scale.setTo(mobileScaleFactor(),mobileScaleFactor());
@@ -7455,6 +7459,7 @@ function spawnComponent(component,x,y){
 								if(typeof(loot.pulseTween)!='undefined'){
 												loot.pulseTween.stop();
 								}
+								killTweensFromSprite(loot);
 								loot.loadTexture('parts', component);
 								loot.lifespan = 120000;
 								loot.scale.setTo(2*mobileScaleFactor(),2*mobileScaleFactor());
