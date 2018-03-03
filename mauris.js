@@ -1877,7 +1877,7 @@ y:player.sprite.y + player.sprite.body.velocity.y};
 								if(player.target==this.sprite){
 												player.target=player.sprite;
 								}
-								if(onscreenStrict(x,y){
+								if(onscreenStrict(x,y)){
 								midBoom(explosions,4,x,y);
 								}
 								if(this.ai==aiModes['asteroid']){
