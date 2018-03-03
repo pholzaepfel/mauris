@@ -5037,7 +5037,9 @@ function initMission (missionId) {
 
 function fadeOut () {
 				playerStats.fadeAmount=0;
+if(!isAndroid){
 				game.add.tween(playerStats).to({fadeAmount:1},5000, Phaser.Easing.Exponential.Out, true, 0, false);
+}
 }
 
 function randomVividColor(minr,maxr,ming,maxg,minb,maxb) {
@@ -5084,13 +5086,17 @@ function randomInt (a,b){
 				return parseInt(randomRange(a,b+1));
 }
 function fadeIn () {
+if(isAndroid){
+playerStats.fadeAmount=0;
+}else{
 				playerStats.fadeAmount=1;
 				if(firstFadeIn){
 				game.add.tween(playerStats).to({fadeAmount:0},10000, Phaser.Easing.Linear.None, true, 0, false);
 				firstFadeIn=false;
 				}else{
-playerStats.fadeAmount = 0; 				
+				game.add.tween(playerStats).to({fadeAmount:0},3000, Phaser.Easing.Linear.None, true, 0, false);
 				}
+}
 				station.scale.setTo(1,1);
 				station.r=192;
 				station.g=192;
