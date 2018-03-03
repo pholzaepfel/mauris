@@ -64,8 +64,7 @@ var randomName = function(){
 var randomMission = function(){
 				var myfactions=[];
 				myfactions.push(randomFromArray(allfactions));
-				myfactions.push(randomFromArray(allfactions));
-				if(randomRange(0,1)>0.3){
+				if(randomRange(0,1)>0.4){
 								myfactions.push(randomFromArray(allfactions));
 
 				}
@@ -123,7 +122,12 @@ var randomMission = function(){
 				var enemyDensity=parseInt(randomRange(11,16));
 				if(asteroidDensity>60){enemyDensity=0};
 				if(enemyDensity>0){
-								var s=  '' + myfactions[0][0] + ' and ' + myfactions[1][0] + ' in area \n';
+			
+								var s=  '' + myfactions[0][0];
+								if(myfactions.length>1){
+								s+= ' and ' + myfactions[1][0];
+								}
+								s+= ' in area \n';
 								rm.intro.push(s);
 				}
 				while(enemyDensity > 0){
@@ -133,7 +137,7 @@ var randomMission = function(){
 								var count = parseInt(randomRange(3,7));
 								var strength = count;
 								var roll = 0;
-								var loops = randomRange(playerStats.level/3,(playerStats.level/1.5));
+								var loops = randomRange(playerStats.level/3,(playerStats.level/2.3));
 								var boss = 0;
 								var swarm = 0;
 								var stronger = 0;
