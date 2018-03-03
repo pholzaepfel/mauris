@@ -2002,7 +2002,7 @@ enemyShip.prototype.update = function() {
 												if (this.altCheck()){
 																this.alt();
 												}
-												if (this.energy - this.fireEnergy > this.energyReserve && targetDistance < this.fireRange * (this.fireVelocity/1000) && 
+												if ((this.energy >= this.energyMax || this.energy - this.fireEnergy > this.energyReserve ) && targetDistance < this.fireRange * (this.fireVelocity/1000) && 
 																				targetDistance < adjustedProfile * 1.5){
 																if(Math.abs(diffAngle) < 0.5){
 																				this.fire(); 
