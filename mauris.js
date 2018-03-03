@@ -1862,7 +1862,7 @@ y:this.sprite.y + this.sprite.body.velocity.y};
 y:player.sprite.y + player.sprite.body.velocity.y};
 
 				if (this.game.physics.arcade.distanceBetween(spriteAdj, playerAdj) > 3500 ||
-												this.game.physics.arcade.distanceBetween(spriteAdj, playerAdj) > 2000 && this.ai == aiModes['asteroid'] && !this.questionBox){
+												this.game.physics.arcade.distanceBetween(spriteAdj, playerAdj) > Math.sqrt(Math.pow(0.6*resolutionX,2) + Math.pow(0.6*resolutionY,2)) && this.ai == aiModes['asteroid'] && !this.questionBox){
 
 								if(Math.random()>0.5){
 												this.target=player.sprite;
