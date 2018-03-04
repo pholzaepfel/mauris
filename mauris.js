@@ -7523,6 +7523,7 @@ function playerGotLoot (sprite, loot) {
 								}else{
 												var bonusXp = 50 * playerStats.level;
 												addXp(bonusXp);
+												player.health+=2;
 												ui.texts.push('maxed size for level.');
 												ui.addDamageNumber(player.sprite.body.x,player.sprite.body.y,1,'+' + bonusXp + ' xp',true);
 								}
