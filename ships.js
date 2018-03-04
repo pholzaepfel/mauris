@@ -1,4 +1,5 @@
 //prefabricated ships and asteroids to populate the playfield
+var goldGear=[12, 13, 544, 545, 546, 547, 576, 577, 578, 579, 608, 609, 610, 611, 44, 45];
 var meebParts=[214, 215, 216, 217, 246, 247, 248, 249, 278, 279, 280, 281];
 var meebAndPustuleParts=[6, 7, 38, 39,214, 215, 246, 247, 278, 279];
 var ascendedGear=[202, 203, 204, 205, 234, 235, 236, 237, 266, 267,220,221,222,223,252,253,254];

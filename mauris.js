@@ -33,11 +33,12 @@ var allfactions=[
 				['trashhauler',dirtyParts,0.6],
 				['mercenary',blackParts,1],
 				['pirate',banditGear2,1],
-				['trader',whiteGear,1],
+				['alliance noble',whiteGear,1],
 				['xenoid',xenoidGear,1],
 				['junker',junkerGear,0.5],
 				['ascended',ascendedGear,0],
-				['decimator',decimatorGear,0]
+				['decimator',decimatorGear,0],
+				['exotic trader',goldGear,0.5]
 				];
 				var bulletTypes = [ 
 {'name':'pulse', 'id':0},
