@@ -60,7 +60,7 @@ var missions = [
 			'ships': asteroids,
 'symmetry': 1,
 			'respawn':true,
-			'count':6, 
+			'count':3, 
 			'missionTarget':false
 		},
 	{
@@ -68,9 +68,9 @@ var missions = [
 'symmetry': 0,
 		'parts': asteroidParts, 
 		'sizeMin': 2,
-		'sizeMax': 3,
+		'sizeMax': 4,
 		'respawn':true,
-		'count':20, 
+		'count':10, 
 		'missionTarget':false
 	},
 	{
@@ -95,7 +95,7 @@ var missions = [
 
 },
 {	'id':1,
-	'next':[5,6,7,8],
+	'next':[1],
 	'name':'random warzone',
 	'complete':false,
 	'hazeRed':0.7,
@@ -118,7 +118,7 @@ var missions = [
 		'ships': asteroids,
 'symmetry': 1,
 		'respawn':true,
-		'count':10, 
+		'count':3, 
 		'missionTarget':false
 	},
 	{
@@ -133,96 +133,6 @@ var missions = [
 	}
 
 
-	]
-
-
-
-},
-{	'id':2,
-	'next':[5,6,7,8],
-	'name':'obligatory kill quest',
-	'complete':false,
-	'hazeRed':0.7,
-	'hazeWhite':1.2,
-	'hazePurple':0.2,
-	'hazeRedSpeed':30,
-	'hazeWhiteSpeed':10,
-	'hazePurpleSpeed':85,
-	'distanceMin':10000,
-	'distanceMax':12000,
-	'hazePurpleBlendMode':2,
-	'hazeRedBlendMode':0,
-	'intro':['!! BOSSFIGHT !!'],
-	'outro':['BOOoooom!'],
-	'win':{
-		'condition':'kill',
-		'killCount':1,
-		'killType': banditBoss1
-	},
-	'enemies': [{
-		'ships': bandits,
-'symmetry': 1,
-		'parts': banditGear2,
-		'sizeMin': 2,
-		'sizeMax': 5,
-		'respawn':true,
-		'missionTarget':false,
-		'count':12, 
-		'deaths':['I SMELL DELICIOUS!']
-	},
-	{
-		'ships': questionContainers,
-'symmetry': 1,
-		'respawn':false,
-		'count':3, 
-		'missionTarget':false
-	}
-	,{
-		'ships': banditBoss1,
-'symmetry': 1,
-		'parts': banditGear2,
-		'sizeMin': 7,
-		'sizeMax': 7,
-		'respawn':false,
-		'missionTarget':false,
-		'count':1, 
-		'deaths':[]
-	},
-		{
-			'ships': asteroids,
-'symmetry': 1,
-			'respawn':true,
-			'count':6, 
-			'missionTarget':false
-		},
-		{
-			'ships': asteroids,
-'symmetry': 0,
-			'parts': asteroidParts, 
-			'sizeMin': 2,
-			'sizeMax': 3,
-			'respawn':true,
-			'count':20, 
-			'missionTarget':false
-		}
-
-
-	,{
-		'ships': containers,
-'symmetry': 1,
-		'respawn':true,
-		'missionTarget':false,
-		'count':4, 
-		'deaths':[]
-	}	
-	,
-		{
-			'ships': questionContainers,
-'symmetry': 1,
-			'respawn':false,
-			'count':3, 
-			'missionTarget':false
-		}
 	]
 
 
@@ -275,7 +185,7 @@ var missions = [
 		'ships': asteroids,
 'symmetry': 1,
 		'respawn':true,
-		'count':6, 
+		'count':3, 
 		'missionTarget':false
 	},
 	{
@@ -283,9 +193,9 @@ var missions = [
 'symmetry': 0,
 		'parts': asteroidParts, 
 		'sizeMin': 2,
-		'sizeMax': 3,
+		'sizeMax': 4,
 		'respawn':true,
-		'count':21, 
+		'count':11, 
 		'missionTarget':false
 	}
 
@@ -310,356 +220,6 @@ var missions = [
 
 
 
-},
-{
-	'id':4,
-	'next':[11],
-	'name':'smuggling',
-	'complete':false,
-	'hazeRed':0.6,
-	'hazeWhite':1.4,
-	'hazePurple':0.5,
-	'hazeRedSpeed':30,
-	'hazeWhiteSpeed':10,
-	'hazePurpleSpeed':85,
-	'distanceMin':6000,
-	'distanceMax':9000,
-	'hazePurpleBlendMode':2,
-	'hazeRedBlendMode':0,
-	'intro':['!! DO NOT ENGAGE !!'],
-	'outro':[''],
-	'win':{
-		'condition':'frob',
-	},
-	'enemies':[
-	{
-		'ships': asteroids,
-'symmetry': 1,
-		'respawn':true,
-		'count':10, 
-		'missionTarget':false
-	},
-	{
-		'ships': asteroids,
-'symmetry': 0,
-		'parts': asteroidParts, 
-		'sizeMin': 2,
-		'sizeMax': 3,
-		'respawn':true,
-		'count':30, 
-		'missionTarget':false
-	}
-
-	,
-		{
-			'ships': cops,
-'symmetry': 1,
-			'parts': allianceGear4,
-			'sizeMin': 5,
-			'sizeMax': 7,
-			'respawn':true,
-			'count':13, 
-			'missionTarget':false
-		}]
-
-
-
-
-
-
-},
-{
-	'id':5,
-	'next':[6,7,8,10],
-	'name':'5',
-	'complete':false,
-	'hazeRed':0.6,
-	'hazeWhite':1.1,
-	'hazePurple':0.3,
-	'hazeRedSpeed':30,
-	'hazeWhiteSpeed':10,
-	'hazePurpleSpeed':85,
-	'distanceMin':12000,
-	'distanceMax':12000,
-	'hazePurpleBlendMode':2,
-	'hazeRedBlendMode':0,
-	'intro':[''],
-	'outro':[''],
-	'win':{
-		'condition':'frob'
-	},
-	'enemies':
-		[	{
-			'ships': asteroids,
-'symmetry': 1,
-			'respawn':true,
-			'count':10, 
-			'missionTarget':false
-		},
-	{
-		'ships': asteroids,
-'symmetry': 0,
-		'parts': asteroidParts, 
-		'sizeMin': 2,
-		'sizeMax': 3,
-		'respawn':true,
-		'count':30, 
-		'missionTarget':false
-	}
-
-	,
-		{
-			'ships': alliance,
-'symmetry': 1,
-			'parts': allianceGear4,
-			'sizeMin': 2,
-			'sizeMax': 6,
-			'respawn':true,
-			'count':14, 
-			'missionTarget':false
-		},{
-			'ships': containers,
-'symmetry': 1,
-			'respawn':true,
-			'missionTarget':false,
-			'count':4, 
-			'deaths':[]
-		}
-	,
-		{
-			'ships': questionContainers,
-'symmetry': 1,
-			'respawn':false,
-			'count':3, 
-			'missionTarget':false
-		}
-	]
-},
-{
-	'id':6,
-	'next':[5,7,8,10],
-	'name':'bandits',
-	'complete':false,
-	'hazeRed':0.6,
-	'hazeWhite':1.4,
-	'hazePurple':0.6,
-	'hazeRedSpeed':30,
-	'hazeWhiteSpeed':10,
-	'hazePurpleSpeed':85,
-	'distanceMin':12000,
-	'distanceMax':12000,
-	'hazePurpleBlendMode':2,
-	'hazeRedBlendMode':0,
-	'intro':[''],
-	'outro':[''],
-	'win':{
-		'condition':'frob'
-	},
-	'enemies':
-		[{
-			'ships': asteroids,
-'symmetry': 1,
-			'respawn':true,
-			'count':10, 
-			'missionTarget':false
-		},
-	{
-		'ships': asteroids,
-'symmetry': 0,
-		'parts': asteroidParts, 
-		'sizeMin': 2,
-		'sizeMax': 3,
-		'respawn':true,
-		'count':30, 
-		'missionTarget':false
-	}
-	,
-		{
-			'ships': alliance,
-'symmetry': 1,
-			'parts': allianceGear4,
-			'sizeMin': 2,
-			'sizeMax': 5,
-			'respawn':true,
-			'count':13, 
-			'missionTarget':false
-		},{
-			'ships': banditsMedium,
-'symmetry': 1,
-			'parts': banditGear2,
-			'sizeMin': 3,
-			'sizeMax': 7,
-			'respawn':true,
-			'count':3, 
-			'missionTarget':false
-		},{
-			'ships': containers,
-'symmetry': 1,
-			'respawn':true,
-			'missionTarget':false,
-			'count':4, 
-			'deaths':[]
-		}
-	,
-		{
-			'ships': questionContainers,
-'symmetry': 1,
-			'respawn':false,
-			'count':3, 
-			'missionTarget':false
-		}
-	]
-},
-{
-	'id':7,
-	'next':[6,5,8,10],
-	'name':'zombies',
-	'complete':false,
-	'hazeRed':0.6,
-	'hazeWhite':1.4,
-	'hazePurple':0.5,
-	'hazeRedSpeed':30,
-	'hazeWhiteSpeed':10,
-	'hazePurpleSpeed':85,
-	'distanceMin':13000,
-	'distanceMax':14000,
-	'hazePurpleBlendMode':2,
-	'hazeRedBlendMode':0,
-	'intro':[''],
-	'outro':[''],
-	'win':{
-		'condition':'frob'
-	},
-	'enemies':
-		[{
-			'ships': asteroids,
-'symmetry': 1,
-			'respawn':true,
-			'count':10, 
-			'missionTarget':false
-		},
-	{
-		'ships': asteroids,
-'symmetry': 0,
-		'parts': asteroidParts, 
-		'sizeMin': 2,
-		'sizeMax': 3,
-		'respawn':true,
-		'count':30, 
-		'missionTarget':false
-	}
-	,
-		{
-			'ships': zombies,
-'symmetry': 1,
-			'parts': zombieGear,
-			'sizeMin': 3,
-			'sizeMax': 6,
-			'respawn':true,
-			'count':15, 
-			'missionTarget':false
-		},{
-			'ships': containers,
-'symmetry': 1,
-			'respawn':true,
-			'missionTarget':false,
-			'count':3, 
-		}
-
-	,
-		{
-			'ships': questionContainers,
-'symmetry': 1,
-			'respawn':false,
-			'count':3, 
-			'missionTarget':false
-		}
-
-	,{
-		'ships': chainsaw,
-'symmetry': 1,
-		'respawn':true,
-		'missionTarget':false,
-		'count':1, 
-
-	}]
-},
-{
-	'id':8,
-	'next':[5,6,7,10],
-	'name':'dron2',
-	'complete':false,
-	'hazeRed':0.6,
-	'hazeWhite':1.6,
-	'hazePurple':0.5,
-	'hazeRedSpeed':30,
-	'hazeWhiteSpeed':10,
-	'hazePurpleSpeed':85,
-	'distanceMin':12000,
-	'distanceMax':13000,
-	'hazePurpleBlendMode':2,
-	'hazeRedBlendMode':0,
-	'intro':[''],
-	'outro':[''],
-	'win':{
-		'condition':'frob'
-	},
-	'enemies':
-		[{
-			'ships': asteroids,
-'symmetry': 1,
-			'respawn':true,
-			'count':10, 
-			'missionTarget':false
-		},
-	{
-		'ships': asteroids,
-'symmetry': 0,
-		'parts': asteroidParts, 
-		'sizeMin': 2,
-		'sizeMax': 3,
-		'respawn':true,
-		'count':30, 
-		'missionTarget':false
-	}
-	,
-		{
-			'ships': droneBoss1,
-'symmetry': 1,
-			'parts': droneGear,
-			'sizeMin': 5,
-			'sizeMax': 7,
-			'respawn':false,
-			'count':3, 
-			'missionTarget':false
-		},
-		{
-			'ships': drones2,
-'symmetry': 1,
-			'parts': droneGear,
-			'sizeMin': 2,
-			'sizeMax': 4,
-			'respawn':true,
-			'count':13, 
-			'missionTarget':false
-		},{
-			'ships': containers,
-'symmetry': 1,
-			'respawn':true,
-			'missionTarget':false,
-			'count':4, 
-			'deaths':[]
-		}
-	,
-		{
-			'ships': questionContainers,
-'symmetry': 1,
-			'respawn':false,
-			'count':3, 
-			'missionTarget':false
-		}
-
-	]
 },
 {	'id':9,
 	'next':[3],
@@ -708,7 +268,7 @@ var missions = [
 			'ships': asteroids,
 'symmetry': 1,
 			'respawn':true,
-			'count':10, 
+			'count':3, 
 			'missionTarget':false
 		},
 		{
@@ -716,9 +276,9 @@ var missions = [
 'symmetry': 0,
 			'parts': asteroidParts, 
 			'sizeMin': 2,
-			'sizeMax': 3,
+			'sizeMax': 4,
 			'respawn':true,
-			'count':30, 
+			'count':12, 
 			'missionTarget':false
 		}
 		,
@@ -743,170 +303,6 @@ var missions = [
 
 
 
-},
-{
-	'id':10,
-	'next':[5,6,7,8],
-	'name':'mechanoids',
-	'complete':false,
-	'hazeRed':0.7,
-	'hazeWhite':1.7,
-	'hazePurple':0.4,
-	'hazeRedSpeed':30,
-	'hazeWhiteSpeed':10,
-	'hazePurpleSpeed':85,
-	'distanceMin':12000,
-	'distanceMax':12000,
-	'hazePurpleBlendMode':2,
-	'hazeRedBlendMode':0,
-	'intro':[''],
-	'outro':[''],
-	'win':{
-		'condition':'frob'
-	},
-	'enemies':
-		[{
-			'ships': asteroids,
-'symmetry': 1,
-			'respawn':true,
-			'count':10, 
-			'missionTarget':false
-		},
-	{
-		'ships': asteroids,
-'symmetry': 0,
-		'parts': asteroidParts, 
-		'sizeMin': 2,
-		'sizeMax': 3,
-		'respawn':true,
-		'count':30, 
-		'missionTarget':false
-	}
-	,
-		{
-			'ships': mechanoids,
-'symmetry': 1,
-			'parts': mechanoidGear,
-			'sizeMin': 2,
-			'sizeMax': 6,
-			'respawn':true,
-			'count':13, 
-			'missionTarget':false
-		},
-		{
-			'ships': mechanoidMiniBoss1,
-'symmetry': 1,
-			'parts': mechanoidGear,
-			'sizeMin': 7,
-			'sizeMax': 7,
-			'respawn':true,
-			'count':1, 
-			'missionTarget':false
-		}]
-}
-,
-{
-	'id':11,
-	'next':[5,6,7,8],
-	'name':'weakalliance',
-	'complete':false,
-	'hazeRed':0.5,
-	'hazeWhite':1.2,
-	'hazePurple':0.4,
-	'hazeRedSpeed':30,
-	'hazeWhiteSpeed':10,
-	'hazePurpleSpeed':85,
-	'distanceMin':12000,
-	'distanceMax':12000,
-	'hazePurpleBlendMode':2,
-	'hazeRedBlendMode':0,
-	'intro':[''],
-	'outro':[''],
-	'win':{
-		'condition':'frob'
-	},
-	'enemies':
-		[{
-			'ships': asteroids,
-'symmetry': 1,
-			'respawn':true,
-			'count':10, 
-			'missionTarget':false
-		},
-	{
-		'ships': asteroids,
-'symmetry': 0,
-		'parts': asteroidParts, 
-		'sizeMin': 2,
-		'sizeMax': 3,
-		'respawn':true,
-		'count':30, 
-		'missionTarget':false
-	}
-	,
-		{
-			'ships': containers,
-'symmetry': 1,
-			'respawn':true,
-			'count':6, 
-			'missionTarget':false
-		}
-
-	,
-		{
-			'ships': questionContainers,
-'symmetry': 1,
-			'respawn':false,
-			'count':3, 
-			'missionTarget':false
-		}
-
-
-	,
-		{
-			'ships': allianceWeak,
-'symmetry': 1,
-			'parts': allianceGear4,
-			'sizeMin': 2,
-			'sizeMax': 5,
-			'respawn':true,
-			'count':13, 
-			'missionTarget':false
-		}]
-}
-,
-{
-	'id':12,
-	'next':[5,6,7,8],
-	'name':'asteroids',
-	'complete':false,
-	'hazeRed':0.7,
-	'hazeWhite':1.4,
-	'hazePurple':0.4,
-	'hazeRedSpeed':30,
-	'hazeWhiteSpeed':10,
-	'hazePurpleSpeed':85,
-	'distanceMin':5000,
-	'distanceMax':8000,
-	'hazePurpleBlendMode':2,
-	'hazeRedBlendMode':0,
-	'intro':[''],
-	'outro':[''],
-	'win':{
-		'condition':'frob'
-	},
-	'enemies':
-		[{
-			'ships': asteroids,
-'symmetry': 0,
-			'parts': asteroidParts, 
-			'sizeMin': 2,
-			'sizeMax': 5,
-			'respawn':true,
-			'count':70, 
-			'missionTarget':false
-		}
-		]
 }
 
 
