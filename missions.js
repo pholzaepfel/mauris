@@ -278,7 +278,7 @@ var missions = [
 			'sizeMin': 2,
 			'sizeMax': 4,
 			'respawn':true,
-			'count':12, 
+			'count':6, 
 			'missionTarget':false
 		}
 		,
