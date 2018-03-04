@@ -3340,7 +3340,7 @@ x: this.target.x + this.target.body.velocity.x * timeToImpact ,
 				}
 };
 var touchPressed = 0;
-var noMusic = /(android)/i.test(navigator.userAgent);
+var noMusic = false;// /(android)/i.test(navigator.userAgent);
 if (!window.location.href.match('voxxse')){
 				noMusic = true;
 }
