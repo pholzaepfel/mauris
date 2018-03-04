@@ -1863,8 +1863,8 @@ enemyShip.prototype.update = function() {
 				//rubberbanding
 				var spriteAdj={x:this.sprite.x + this.sprite.body.velocity.x,
 y:this.sprite.y + this.sprite.body.velocity.y};
-				var playerAdj={x:player.sprite.x + player.sprite.body.velocity.x*2,
-y:player.sprite.y + player.sprite.body.velocity.y*2};
+				var playerAdj={x:player.sprite.x + player.sprite.body.velocity.x,
+y:player.sprite.y + player.sprite.body.velocity.y};
 
 if(game.time.now > this.nextRespawn){
 				if (this.game.physics.arcade.distanceBetween(spriteAdj, playerAdj) > 3500 ||
