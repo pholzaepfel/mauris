@@ -1886,7 +1886,7 @@ if(game.time.now > this.nextRespawn){
 									if(player.sprite.body.velocity.x > 0){
 										x=player.sprite.x+player.sprite.body.velocity.x+(resolutionX/1.7);
 y=player.sprite.y+player.sprite.body.velocity.y+randomRange(-0.5*resolutionY,0.5*resolutionY);
-									}else if(player.sprite.body.velocity.x < 0{
+									}else if(player.sprite.body.velocity.x < 0){
 										x=player.sprite.x+player.sprite.body.velocity.x-(resolutionX/1.7);
 y=player.sprite.y+player.sprite.body.velocity.y+randomRange(-0.5*resolutionY,0.5*resolutionY);
 
@@ -1895,7 +1895,7 @@ y=player.sprite.y+player.sprite.body.velocity.y+randomRange(-0.5*resolutionY,0.5
 									if(player.sprite.body.velocity.y > 0){
 										y=player.sprite.y+player.sprite.body.velocity.y+(resolutionY/1.7);
 x=player.sprite.x+player.sprite.body.velocity.x+randomRange(-0.5*resolutionX,0.5*resolutionX);
-									}else if(player.sprite.body.velocity.y < 0{
+									}else if(player.sprite.body.velocity.y < 0){
 										y=player.sprite.y+player.sprite.body.velocity.y-(resolutionY/1.7);
 x=player.sprite.x+player.sprite.body.velocity.x+randomRange(-0.5*resolutionX,0.5*resolutionX);
 
