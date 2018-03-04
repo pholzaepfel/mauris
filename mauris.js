@@ -1868,7 +1868,7 @@ y:player.sprite.y + player.sprite.body.velocity.y};
 
 if(game.time.now > this.nextRespawn){
 				if (this.game.physics.arcade.distanceBetween(spriteAdj, playerAdj) > 3500 ||
-												this.game.physics.arcade.distanceBetween(spriteAdj, playerAdj) > Math.sqrt(Math.pow(0.7*resolutionX,2) + Math.pow(0.7*resolutionY,2)) && this.ai == aiModes['asteroid'] && !this.questionBox){
+												this.game.physics.arcade.distanceBetween(spriteAdj, playerAdj) > Math.sqrt(Math.pow(0.8*resolutionX,2) + Math.pow(0.8*resolutionY,2)) && this.ai == aiModes['asteroid'] && !this.questionBox){
 
 								if(Math.random()>0.5){
 												this.target=player.sprite;
