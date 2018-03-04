@@ -7477,45 +7477,49 @@ target.thrustBehavior=cleanSmoke;
 },
 {
 	'id':544,
-	'drops':false,
-	'name':'Component-544',
-	'match':'4682',
+	'drops':true,
+	'name':'TODO',
+	'match':'468',
 'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO+=1;
 
 	}
 },
 {
 	'id':545,
-	'drops':false,
-	'name':'Component-545',
-	'match':'4682',
+	'drops':true,
+	'name':'TODO',
+	'match':'426',
 'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO+=1;
 
 	}
 },
 {
 	'id':546,
-	'drops':false,
-	'name':'Component-546',
-	'match':'4682',
+	'drops':true,
+	'name':'TODO',
+	'match':'426',
 'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO+=1;
 
 	}
 },
 {
 	'id':547,
-	'drops':false,
-	'name':'Component-547',
-	'match':'4682',
+	'drops':true,
+	'name':'TODO',
+	'match':'24',
 'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO+=1;
 
 	}
 },
@@ -7829,45 +7833,49 @@ target.thrustBehavior=cleanSmoke;
 },
 {
 	'id':576,
-	'drops':false,
-	'name':'Component-576',
-	'match':'4682',
+	'drops':true,
+	'name':'TODO',
+	'match':'62',
 'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO+=1;
 
 	}
 },
 {
 	'id':577,
-	'drops':false,
-	'name':'Component-577',
-	'match':'4682',
+	'drops':true,
+	'name':'TODO',
+	'match':'4826',
 'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO+=1;
 
 	}
 },
 {
 	'id':578,
-	'drops':false,
-	'name':'Component-578',
+	'drops':true,
+	'name':'TODO',
 	'match':'4682',
 'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO+=1;
 
 	}
 },
 {
 	'id':579,
-	'drops':false,
-	'name':'Component-579',
-	'match':'4682',
+	'drops':true,
+	'name':'TODO',
+	'match':'842',
 'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO+=1;
 
 	}
 },
@@ -8181,45 +8189,48 @@ target.thrustBehavior=cleanSmoke;
 },
 {
 	'id':608,
-	'drops':false,
-	'name':'Component-608',
-	'match':'4682',
+	'drops':true,
+	'name':'TODO',
+	'match':'68',
 'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
-
+		target.TODO+=1;
 	}
 },
 {
 	'id':609,
-	'drops':false,
-	'name':'Component-609',
-	'match':'4682',
+	'drops':true,
+	'name':'TODO',
+	'match':'486',
 'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO+=1;
 
 	}
 },
 {
 	'id':610,
-	'drops':false,
-	'name':'Component-610',
-	'match':'4682',
+	'drops':true,
+	'name':'TODO',
+	'match':'486',
 'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO+=1;
 
 	}
 },
 {
 	'id':611,
-	'drops':false,
-	'name':'Component-611',
-	'match':'4682',
+	'drops':true,
+	'name':'TODO',
+	'match':'84',
 'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
+		target.TODO+=1;
 
 	}
 },
