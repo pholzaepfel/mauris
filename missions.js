@@ -60,7 +60,7 @@ var missions = [
 			'ships': asteroids,
 'symmetry': 1,
 			'respawn':true,
-			'count':10, 
+			'count':6, 
 			'missionTarget':false
 		},
 	{
@@ -70,7 +70,7 @@ var missions = [
 		'sizeMin': 2,
 		'sizeMax': 3,
 		'respawn':true,
-		'count':30, 
+		'count':20, 
 		'missionTarget':false
 	},
 	{
@@ -192,7 +192,7 @@ var missions = [
 			'ships': asteroids,
 'symmetry': 1,
 			'respawn':true,
-			'count':10, 
+			'count':6, 
 			'missionTarget':false
 		},
 		{
@@ -202,7 +202,7 @@ var missions = [
 			'sizeMin': 2,
 			'sizeMax': 3,
 			'respawn':true,
-			'count':30, 
+			'count':20, 
 			'missionTarget':false
 		}
 
@@ -275,7 +275,7 @@ var missions = [
 		'ships': asteroids,
 'symmetry': 1,
 		'respawn':true,
-		'count':10, 
+		'count':6, 
 		'missionTarget':false
 	},
 	{
@@ -285,7 +285,7 @@ var missions = [
 		'sizeMin': 2,
 		'sizeMax': 3,
 		'respawn':true,
-		'count':30, 
+		'count':21, 
 		'missionTarget':false
 	}
 

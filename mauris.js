@@ -108,7 +108,7 @@ var randomMission = function(){
 								rm.hazeRedBlendMode = 2;
 								rm.hazeRed = 0.3;
 				}
-				var asteroidDensity = parseInt(randomRange(20,45));
+				var asteroidDensity = parseInt(randomRange(10,45));
 				if(randomRange(0,1)<asteroidPanicChance){
 								rm.asteroidPanic=true;
 								rm.hazeRedSpeed*=2;
