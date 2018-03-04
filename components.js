@@ -3268,12 +3268,13 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 {
 	'id':192,
 	'drops':true,
-	'name':'Black',
+	'name':'Powered Defense Unit',
 	'match':'4682',
 'hasAlt':false,
-	'flavor':'--',
+	'flavor':'sucks up energy for health',
 	'bonus':function(target){
-		target.TODO+=1;
+		target.energyRate*=1.1;
+		target.health+=18;
 	}
 },
 {
@@ -3350,9 +3351,11 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'name':'Spine',
 	'match':'26',
 'hasAlt':false,
-	'flavor':'--',
+	'flavor':'Strong, flexible support',
 	'bonus':function(target){
-		target.TODO+=1;
+		target.fireDamage+=1;
+		target.turnRate+=0.3;
+		target.health+=2;
 	}
 },
 {
@@ -3361,9 +3364,11 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'name':'Spine',
 	'match':'42',
 'hasAlt':false,
-	'flavor':'--',
+	'flavor':'Strong, flexible support',
 	'bonus':function(target){
-		target.TODO+=1;
+		target.fireDamage+=1;
+		target.turnRate+=0.3;
+		target.health+=2;
 	}
 },
 {
@@ -3372,9 +3377,13 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'name':'Batlike Wing',
 	'match':'26',
 'hasAlt':false,
-	'flavor':'--',
+	'flavor':'Contains excess sodium',
 	'bonus':function(target){
-		target.TODO+=1;
+		target.fireDamage+=2;
+		target.fireEnergy+=1;
+		target.profile-=10;
+		target.acceleration+=0.3;
+		target.turnRate+=0.3;
 	}
 },
 {
@@ -3383,9 +3392,13 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'name':'Batlike Wing',
 	'match':'42',
 'hasAlt':false,
-	'flavor':'--',
+	'flavor':'Contains excess sodium',
 	'bonus':function(target){
-		target.TODO+=1;
+		target.fireDamage+=2;
+		target.fireEnergy+=1;
+		target.profile-=10;
+		target.acceleration+=0.3;
+		target.turnRate+=0.3;
 	}
 },
 {
@@ -3396,7 +3409,8 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
-		target.TODO+=1;
+		target.fireDamage+=7;
+		target.fireEnergy+=3;
 
 	}
 },
@@ -3408,8 +3422,9 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
-		target.TODO+=1;
-
+		target.energyAmount+=1;
+		target.energyRate*=0.9;
+		target.fireVelocity*=1.1;
 	}
 },
 {
@@ -3420,7 +3435,8 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
-		target.TODO+=1;
+		target.health+=10;
+		target.energyRate*=0.9;
 
 	}
 },
@@ -3432,7 +3448,8 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
-		target.TODO+=1;
+		target.energyAmount+=2;
+		target.health+=10;
 
 	}
 },
@@ -3740,9 +3757,11 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'name':'Spine',
 	'match':'86',
 'hasAlt':false,
-	'flavor':'--',
+	'flavor':'Strong, flexible support',
 	'bonus':function(target){
-		target.TODO+=1;
+	target.fireDamage+=1;
+		target.turnRate+=0.3;
+		target.health+=2;
 	}
 },
 {
@@ -3751,10 +3770,12 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'name':'Spine',
 	'match':'84',
 'hasAlt':false,
-	'flavor':'--',
+	'flavor':'Strong, flexible support',
 	'bonus':function(target){
-		target.TODO+=1;
-	}
+		target.fireDamage+=1;
+		target.turnRate+=0.3;
+		target.health+=2;
+}
 },
 {
 	'id':232,
@@ -3762,9 +3783,13 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'name':'Batlike Wing',
 	'match':'86',
 'hasAlt':false,
-	'flavor':'--',
+	'flavor':'Contains excess sodium',
 	'bonus':function(target){
-		target.TODO+=1;
+	target.fireDamage+=2;
+		target.fireEnergy+=1;
+		target.profile-=10;
+		target.acceleration+=0.3;
+		target.turnRate+=0.3;
 	}
 },
 {
@@ -3773,9 +3798,13 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'name':'Batlike Wing',
 	'match':'84',
 'hasAlt':false,
-	'flavor':'--',
+	'flavor':'Contains excess sodium',
 	'bonus':function(target){
-		target.TODO+=1;
+	target.fireDamage+=2;
+		target.fireEnergy+=1;
+		target.profile-=10;
+		target.acceleration+=0.3;
+		target.turnRate+=0.3;
 	}
 },
 {
@@ -4139,21 +4168,25 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'name':'Spine',
 	'match':'4682',
 'hasAlt':false,
-	'flavor':'--',
+	'flavor':'Strong, flexible support',
 	'bonus':function(target){
-		target.TODO+=1;
-	}
+		target.fireDamage+=1;
+		target.turnRate+=0.3;
+		target.health+=2;
+}
 },
 {
 	'id':263,
 	'drops':true,
 	'name':'Spine',
-	'match':'4682',
+	'match':'82',
 'hasAlt':false,
-	'flavor':'--',
+	'flavor':'Strong, flexible support',
 	'bonus':function(target){
-		target.TODO+=1;
-	}
+		target.fireDamage+=1;
+		target.turnRate+=0.3;
+		target.health+=2;
+}
 },
 {
 	'id':264,
