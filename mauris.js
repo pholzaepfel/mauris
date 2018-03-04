@@ -1879,8 +1879,7 @@ if(game.time.now > this.nextRespawn){
 								if(this.questionBox){
 												x+=randomRange(2000,4000)*randomSign();
 												y+=randomRange(2000,4000)*randomSign();
-								}
-								if(this.ai==aiModes['asteroid'])
+								}else if(this.ai==aiModes['asteroid'])
 								{
 									if(randomRange(0,1)<0.5){
 									if(player.sprite.body.velocity.x > 0){
