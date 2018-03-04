@@ -1889,7 +1889,7 @@ if(game.time.now > this.nextRespawn){
 								}
 								if(this.ai==aiModes['asteroid']){
 
-												this.sprite.body.velocity = game.physics.arcade.velocityFromRotation(game.physics.arcade.angleBetween(this.sprite, player.sprite), randomRange(25,100));  
+												this.sprite.body.velocity = game.physics.arcade.velocityFromRotation(game.physics.arcade.angleBetween(this.sprite, playerAdj), randomRange(25,100));  
 												this.sprite.body.angularVelocity=randomRange(25,100)*randomSign();
 												if(playerStats.mission.asteroidPanic){
 																this.sprite.body.velocity.x*=randomRange(0.6,4.4);
