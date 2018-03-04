@@ -1902,6 +1902,7 @@ x=player.sprite.x+player.sprite.body.velocity.x+randomRange(-0.5*resolutionX,0.5
 
 									}
 								}
+								}
 								this.sprite.reset(x,y);  
 								this.nextRespawn=game.time.now+randomInt(0,500);
 								if(player.target==this.sprite){
