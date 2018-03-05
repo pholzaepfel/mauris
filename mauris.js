@@ -1911,8 +1911,8 @@ x=player.sprite.x+player.sprite.body.velocity.x+randomRange(-0.5*resolutionX,0.5
 								midBoom(explosions,4,x,y);
 								}
 								if(this.ai==aiModes['asteroid']){
-									var playerRnd = {x:playerAdj.x + randomRange(-200,200),
-									y:playerAdj.y + randomRange(-200,200)}
+									var playerRnd = {x:playerAdj.x + randomRange(-100,100),
+									y:playerAdj.y + randomRange(-100,100)}
 												this.sprite.body.velocity = game.physics.arcade.velocityFromRotation(game.physics.arcade.angleBetween(this.sprite, playerRnd), randomRange(25,100));  
 												this.sprite.body.angularVelocity=randomRange(25,100)*randomSign();
 												if(playerStats.mission.asteroidPanic){
