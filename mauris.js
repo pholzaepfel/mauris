@@ -108,15 +108,15 @@ var randomMission = function(){
 								rm.hazeRedBlendMode = 2;
 								rm.hazeRed = 0.3;
 				}
-				var asteroidDensity = parseInt(randomRange(1,20));
+				var asteroidDensity = parseInt(randomRange(5,25));
 				if(randomRange(0,1)<asteroidPanicChance){
 								rm.asteroidPanic=true;
 								rm.hazeRedSpeed*=2;
 								asteroidDensity=30;
 				}
-				if(asteroidDensity < 7){
+				if(asteroidDensity < 10){
 								rm.intro.push('asteroid density: light');
-				}else if(asteroidDensity < 15){
+				}else if(asteroidDensity < 16){
 								rm.intro.push('asteroid density: moderate');
 				}else if(asteroidDensity < 30){
 								rm.intro.push('asteroid density: high');

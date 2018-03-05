@@ -128,7 +128,7 @@ var missions = [
 		'sizeMin': 2,
 		'sizeMax': 3,
 		'respawn':true,
-		'count':6, 
+		'count':11, 
 		'missionTarget':false
 	}
 
@@ -195,7 +195,7 @@ var missions = [
 		'sizeMin': 2,
 		'sizeMax': 4,
 		'respawn':true,
-		'count':4, 
+		'count':11, 
 		'missionTarget':false
 	}
 
@@ -278,7 +278,7 @@ var missions = [
 			'sizeMin': 2,
 			'sizeMax': 4,
 			'respawn':true,
-			'count':6, 
+			'count':11, 
 			'missionTarget':false
 		}
 		,
