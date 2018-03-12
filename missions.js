@@ -1,3 +1,10 @@
+var tutorials =
+[
+'killing opponents yields components and xp.\ncomponents will upgrade your ship.\nxp will increase your ship\'s max size.',
+	'your ship will lose systems in heavy combat.\nyou will be forced to improvise to survive.','more tips on the pause screen [ENTER]',
+
+]
+;
 var messages =
 ['as you level, your ship can grow much larger.',
 	'different parts have wildly different effects.',
@@ -34,7 +41,7 @@ var contextTutorialDeath = 'lose your ship, lose xp.';
 var missions = [
 
 {	'id':0,
-	'next':[3],
+	'next':[666],
 	'asteroidPanic':false,
 	'distantPlanet':true,
 	'name':'tutorial 0',

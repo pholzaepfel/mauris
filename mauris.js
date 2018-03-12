@@ -83,10 +83,10 @@ var randomMission = function(){
 								rm.hazeRed = randomRange(0.9,1.1);
 				}
 				rm.hazeWhite = randomRange(1.0,1.8);
-				rm.hazePurple = randomRange(0.5,0.8);
+				rm.hazePurple = rm.hazeRed-randomRange(0.0,0.3);
 				rm.hazeRedSpeed = randomRange(20,40);
 				rm.hazeWhiteSpeed = 10;
-				rm.hazePurpleSpeed = randomRange(60,140);
+				rm.hazePurpleSpeed = randomRange(60,180);
 				if(randomRange(0,1)<0.6 || isAndroid){
 								rm.distantPlanet = true;
 								rm.hazeWhiteSpeed=0.8;
@@ -96,6 +96,13 @@ var randomMission = function(){
 				rm.hazePurpleBlendMode = 1;
 				rm.hazeRedBlendMode = 0;
 				rm.intro = [rm.name];
+				if(playerStats.tutorialProgress<tutorials.length-1){		
+rm.intro.push(tutorials[playerStats.tutorialProgress]);
+playerStats.tutorialProgress++;
+} else {
+				rm.intro.push(randomFromArray(messages));
+
+}
 				rm.outro = [];
 				rm.win = {
 								'condition':'frob'
@@ -717,6 +724,7 @@ var hiddenButtons = [
 								this.inventory=[];
 								this.health=-1;
 								this.healthMax=-1;
+this.tutorialProgress=0;
 								this.crew=2;
 								if(cheatmode){
 												for(var i=0; i<components.length; i++){
