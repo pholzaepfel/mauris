@@ -6253,8 +6253,8 @@ function update () {
 												nebula.alpha=Math.min(nebula.alpha,1-(blurX.blur/50));
 												nebula2.alpha=Math.min(nebula2.alpha,1-(blurX.blur/50));
 								}else{
-												nebula.alpha=1;
-												nebula2.alpha=1;
+												nebula.alpha=1+hazeRed.alpha;
+												nebula2.alpha=1+hazeRed.alpha;
 
 								}
 
