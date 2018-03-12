@@ -6289,8 +6289,8 @@ function update () {
 												}
 								}
 								scroll(hazeRed,-0.66);
-								scroll(hazePurple,-0.466);
-								hazeRed.rotation=0.3*Math.cos(game.time.now/7750);
+								scroll(hazePurple,-0.59);
+								hazeRed.rotation=0.3*Math.cos(game.time.now/6240);
 								hazePurple.rotation=0.3*Math.sin(game.time.now/5240);
 								//hazePurple.bringToTop();
 								planet.hazeModifier=0;
