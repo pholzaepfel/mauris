@@ -3778,6 +3778,7 @@ gameUI.prototype.calculatePartPosition2 = function (x,y,index) {
 												outy = this.parts[i].sprite.y;
 												if(!ui.partAt(outx-16,outy)){
 																locations[this.matchLocation(outx-16,outy,index)]={x:outx-16,y:outy};
+																outx-=16;
 												}
 												if(!ui.partAt(outx+16,outy)){  
 																locations[this.matchLocation(outx+16,outy,index)]={x:outx+16,y:outy};
