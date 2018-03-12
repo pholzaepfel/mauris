@@ -41,7 +41,7 @@ var missions = [
 	'complete':false,
 	'hazeRed':0.6,
 	'hazeWhite':1.5,
-	'hazePurple':0.2,
+	'hazePurple':0.4,
 	'hazeRedSpeed':30,
 	'hazeWhiteSpeed':10,
 	'hazePurpleSpeed':85,
