@@ -83,17 +83,17 @@ var randomMission = function(){
 								rm.hazeRed = randomRange(0.9,1.1);
 				}
 				rm.hazeWhite = randomRange(1.0,1.8);
-				rm.hazePurple = randomRange(0.4,1.5);
+				rm.hazePurple = randomRange(0.1,0.6);
 				rm.hazeRedSpeed = randomRange(20,40);
 				rm.hazeWhiteSpeed = 10;
-				rm.hazePurpleSpeed = randomRange(60,100);
+				rm.hazePurpleSpeed = randomRange(60,140);
 				if(randomRange(0,1)<0.6 || isAndroid){
 								rm.distantPlanet = true;
 								rm.hazeWhiteSpeed=0.8;
 				}
 				rm.distanceMin = randomRange(9000,12000);
 				rm.distanceMax = randomRange(9000,12000);
-				rm.hazePurpleBlendMode = 2;
+				rm.hazePurpleBlendMode = 1;
 				rm.hazeRedBlendMode = 0;
 				rm.intro = [rm.name];
 				rm.outro = [];
@@ -5293,7 +5293,7 @@ function create () {
 								hazePurple.scale.x=2;
 								hazePurple.scale.y=2;
 								hazePurple.alpha=1.0; //randomRange(0,0.6)-0.2;
-								hazePurple.blendMode=2;
+								hazePurple.blendMode=1;
 								hazePurple.speed=17;
 								station = game.add.sprite(0,0,'portal');
 								station.anchor.setTo(0.5,0.5)
