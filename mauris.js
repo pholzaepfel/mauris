@@ -83,7 +83,7 @@ var randomMission = function(){
 								rm.hazeRed = randomRange(0.9,1.1);
 				}
 				rm.hazeWhite = randomRange(1.0,1.8);
-				rm.hazePurple = randomRange(0.1,0.6);
+				rm.hazePurple = randomRange(0.5,0.8);
 				rm.hazeRedSpeed = randomRange(20,40);
 				rm.hazeWhiteSpeed = 10;
 				rm.hazePurpleSpeed = randomRange(60,140);
