@@ -725,7 +725,7 @@ var hiddenButtons = [
 								this.health=-1;
 								this.healthMax=-1;
 this.tutorialProgress=0;
-								this.crew=2);
+								this.crew=2;
 								if(cheatmode){
 												for(var i=0; i<components.length; i++){
 																if(typeof(components[i].name)=='undefined'){
