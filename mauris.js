@@ -5189,8 +5189,12 @@ playerStats.fadeAmount=0;
 				game.add.tween(hazeRed).to({alpha:playerStats.mission.hazeRed},100, Phaser.Easing.Linear.None, true, 0, false);
 				game.add.tween(hazeWhite).to({alpha:playerStats.mission.hazeWhite},100, Phaser.Easing.Linear.None, true, 0, false);
 				game.add.tween(hazePurple).to({alpha:playerStats.mission.hazePurple},100, Phaser.Easing.Linear.None, true, 0, false);
+if(isAndroid){
+				hazeRed.tint=randomMutedColor(40,200,40,200,40,200); 
+}else{
+				hazeRed.tint=randomMutedColor(0,160,0,160,0,160); 
 
-				hazeRed.tint=randomMutedColor(40,200,40,200,40,200);
+}
 				hazeWhite.tint=randomMutedColor(140,255,140,255,140,255);
 				hazePurple.tint=randomMutedColor(140,255,140,255,140,255);
 
