@@ -83,10 +83,10 @@ var randomMission = function(){
 								rm.hazeRed = randomRange(0.9,1.1);
 				}
 				rm.hazeWhite = randomRange(1.0,1.8);
-				rm.hazePurple = rm.hazeRed-randomRange(0.0,0.3);
+				rm.hazePurple = rm.hazeRed+randomRange(-0.2,0.2);
 				rm.hazeRedSpeed = randomRange(20,40);
 				rm.hazeWhiteSpeed = 10;
-				rm.hazePurpleSpeed = randomRange(60,180);
+				rm.hazePurpleSpeed = randomRange(80,200);
 				if(randomRange(0,1)<0.6 || isAndroid){
 								rm.distantPlanet = true;
 								rm.hazeWhiteSpeed=0.8;
@@ -6290,8 +6290,8 @@ function update () {
 								}
 								scroll(hazeRed,-0.66);
 								scroll(hazePurple,-0.466);
-								hazeRed.rotation=0.2*Math.cos(game.time.now/7750);
-								hazePurple.rotation=0.2*Math.sin(game.time.now/5240);
+								hazeRed.rotation=0.3*Math.cos(game.time.now/7750);
+								hazePurple.rotation=0.3*Math.sin(game.time.now/5240);
 								//hazePurple.bringToTop();
 								planet.hazeModifier=0;
 
