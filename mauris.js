@@ -6304,10 +6304,10 @@ function update () {
 
 												}
 								}
-								hazeRed.scale.setTo(2.5+(Math.cos(game.time.now/11000)+hazeRed.baseScale),(0.8*hazeRed.baseScale+1.5+Math.cos(game.time.now/9000)));
+								hazeRed.scale.setTo(2.2+(Math.cos(game.time.now/11000)+hazeRed.baseScale),(0.8*hazeRed.baseScale+1.5+Math.cos(game.time.now/9000)));
 								hazeRed.width=1.5*resolutionX/hazeRed.scale.x;
 								hazeRed.height=1.5*resolutionY/hazeRed.scale.y;
-								hazePurple.scale.setTo(2.4+(Math.cos((game.time.now-750)/11000)+hazePurple.baseScale),(0.8*hazePurple.baseScale+1.5+Math.cos((game.time.now-750)/9000)));
+								hazePurple.scale.setTo(2.0+(Math.cos((game.time.now-750)/11000)+hazePurple.baseScale),(0.8*hazePurple.baseScale+1.5+Math.cos((game.time.now-750)/9000)));
 								//hazePurple.scale.setTo(1+Math.sin(game.time.now/10000)+hazePurple.baseScale+planet.hazeModifier,0.7575*(hazePurple.baseScale+Math.cos(game.time.now/8000)+1+(0.4*planet.hazeModifier)));
 								hazePurple.width=1.5*resolutionX/hazePurple.scale.x;
 								hazePurple.height=1.5*resolutionY/hazePurple.scale.y;
