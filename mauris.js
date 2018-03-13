@@ -1372,7 +1372,7 @@ shipPart.prototype.update = function(){
 								lightness=Math.pow(lightness*2,1.6)/3;
 								this.sprite.alpha=this.target.alpha;
 								if(lightness > 0.5 && this.target.name!='player'){
-headlightShadow(this.sprite,lightness); saving this for later
+headlightShadow(this.sprite,lightness); 
 }
 								if(this.sprite.alpha==1 && lightness > 1){
 												this.sprite.alpha=lightness;
