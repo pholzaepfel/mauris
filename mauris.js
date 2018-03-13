@@ -207,7 +207,8 @@ playerStats.tutorialProgress++;
 												'sizeMax': 5,
 												'respawn':true,
 												'count':asteroidDensity,
-												'missionTarget':false
+												'missionTarget':false,
+												'symmetry':0
 												}
 											 );
 				rm.enemies.push(
