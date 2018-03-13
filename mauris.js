@@ -5908,7 +5908,7 @@ function update () {
 										if(player.energy<player.energyMax){
 										player.energy+=1;
 										}
-										player.sprite.profile+=100;
+										player.sprite.profile+=10;
 										wasUp=false;
 									}
 								}else{
