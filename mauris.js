@@ -856,7 +856,7 @@ function headlightShadow(sprite,lightness){
 				var rot = game.physics.arcade.angleBetween(lightSpot,shadowSpot);
 				for(var i=0;i<0.40;i+=0.10){
 								var width = (sprite.width * 0.5) + (i*5);
-								otherGraphics.beginFill(0x000000,0.3*headlightIntensity*lightness);
+								otherGraphics.beginFill(0x000000,0.03*headlightIntensity*lightness);
 								otherGraphics.moveTo(shadowSpot.x-(Math.sin(rot)*width),shadowSpot.y-(Math.cos(rot)*width));
 								otherGraphics.lineTo(shadowSpot.x+Math.cos(rot - i)*2*Math.max(resolutionY,resolutionX),shadowSpot.y+Math.sin(rot - i)*2*Math.max(resolutionY,resolutionX));
 								otherGraphics.lineTo(shadowSpot.x+Math.cos(rot + i)*2*Math.max(resolutionY,resolutionX),shadowSpot.y+Math.sin(rot + i)*2*Math.max(resolutionY,resolutionX));
@@ -1372,7 +1372,7 @@ shipPart.prototype.update = function(){
 								lightness=Math.pow(lightness*2,1.6)/3;
 								this.sprite.alpha=this.target.alpha;
 								if(lightness > 0.5 && this.target.name!='player'){
-//headlightShadow(this.sprite,lightness); 
+//headlightShadow(this.sprite,lightness); saving this for later
 }
 								if(this.sprite.alpha==1 && lightness > 1){
 												this.sprite.alpha=lightness;
@@ -5714,6 +5714,10 @@ function update () {
 								//
 
 								otherGraphics.clear();
+
+								if(player.alive){
+												headlight();
+								}
 								darkener(playerStats.fadeAmount);
 
 								var left = 0;
@@ -6363,10 +6367,6 @@ function update () {
 																if(typeof(explosions[i].scale)!='undefined'){
 																}
 												}
-								}
-
-								if(player.alive){
-												headlight();
 								}
 
 				}
