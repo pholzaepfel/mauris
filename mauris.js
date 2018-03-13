@@ -5899,8 +5899,10 @@ function update () {
 								}
 								if(game.input.activePointer.isDown || fire){
 									if(wasUp){
-										player.nextFire-=1000;
-										player.energy+=4;
+										player.nextFire-=300;
+										if(player.energy<player.energyMax){
+										player.energy+=2;
+										}
 										player.sprite.profile+=100;
 										wasUp=false;
 									}
