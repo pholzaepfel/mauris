@@ -3589,11 +3589,15 @@ function checkForNewMusic(){
 				}
 }
 gameUI.prototype.music_random = function(){
+				if(typeof(this.currentMusic)!='undefined'){
+					this.currentMusic.pause();
+				}
 				var rnd = randomInt(1,6);
 				if(typeof(this.music[rnd])=='undefined'){
 								this.music[rnd]=new Audio('assets/' + rnd + '.ogg');
 				}
 				this.currentMusic=this.music[rnd];
+				this.currentMusic.loop=true;
 				this.currentMusic.play();
 }
 gameUI.prototype.sound_randomCrush = function(){
