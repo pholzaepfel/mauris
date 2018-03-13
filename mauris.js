@@ -1,5 +1,6 @@
 var gamemode;
 var firstFadeIn=true;
+var wasUp=true;
 var nextPortalGlow=0;
 var mobileScaleFactor = function() {
 				if (isAndroid) {
@@ -1959,9 +1960,6 @@ x=player.sprite.x+player.sprite.body.velocity.x+randomRange(-0.5*resolutionX,0.5
 												this.sprite.profileMax=0;
 								}
 								this.ai=aiModes['asteroid'];
-								if(randomRange(0,1)>0.5){
-								this.sprite.scale.setTo(0.5*mobileScaleFactor(),0.5*mobileScaleFactor());
-}
 				}
 				if(this.ai!=aiModes['asteroid']){
 								var adjustedProfile = 200 + Math.pow(this.target.profile,profileExponent);
@@ -5868,6 +5866,16 @@ function update () {
 												if (buttonAlt) {alt=1};
 												if (buttonEnter) {enter=1};
 												if (buttonLight) {light=1};
+								if(game.input.activePointer.isDown || fire == 1){
+									if(wasUp){
+										player.nextFire-=200;
+										player.energy+=3;
+										player.sprite.profile+=100;
+										wasUp=false;
+									}
+								}else{
+									wasUp=true;
+								}
 												var manualPressed = buttonLeft || buttonRight || buttonUp || buttonDown;
 												if (manualPressed) {
 																player.behavior='manual';
