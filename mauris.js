@@ -1959,6 +1959,9 @@ x=player.sprite.x+player.sprite.body.velocity.x+randomRange(-0.5*resolutionX,0.5
 												this.sprite.profileMax=0;
 								}
 								this.ai=aiModes['asteroid'];
+								if(randomRange(0,1)>0.5){
+								this.sprite.scale.setTo(0.5*mobileScaleFactor,0.5*mobileScaleFactor);
+}
 				}
 				if(this.ai!=aiModes['asteroid']){
 								var adjustedProfile = 200 + Math.pow(this.target.profile,profileExponent);
