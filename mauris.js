@@ -5866,16 +5866,7 @@ function update () {
 												if (buttonAlt) {alt=1};
 												if (buttonEnter) {enter=1};
 												if (buttonLight) {light=1};
-								if(game.input.activePointer.isDown || fire == 1){
-									if(wasUp){
-										player.nextFire-=1000;
-										player.energy+=4;
-										player.sprite.profile+=100;
-										wasUp=false;
-									}
-								}else{
-									wasUp=true;
-								}
+
 												var manualPressed = buttonLeft || buttonRight || buttonUp || buttonDown;
 												if (manualPressed) {
 																player.behavior='manual';
@@ -5906,7 +5897,17 @@ function update () {
 								}else{
 												touchPressed=0;
 								}
-								////
+								if(game.input.activePointer.isDown || fire){
+									if(wasUp){
+										player.nextFire-=1000;
+										player.energy+=4;
+										player.sprite.profile+=100;
+										wasUp=false;
+									}
+								}else{
+									wasUp=true;
+								}
+////
 								if(gamemode=='?build'){
 
 												for (var i = 0; i < ui.parts.length; i++){
