@@ -5650,6 +5650,7 @@ function winMission(){
 												playerStats.crew-=1;
 								}
 
+												ui.music_random();
 								playerStats.mission.complete=true; //maybe one day we'll implement missions again
 								playerStats.kills=0;
 				}
