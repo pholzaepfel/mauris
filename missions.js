@@ -66,7 +66,7 @@ var missions = [
 		[{
 			'ships': asteroids,
 'symmetry': 1,
-			'respawn':true,
+			'respawn':3,
 			'count':3, 
 			'missionTarget':false
 		},
@@ -76,14 +76,14 @@ var missions = [
 		'parts': asteroidParts, 
 		'sizeMin': 2,
 		'sizeMax': 4,
-		'respawn':true,
+		'respawn':7,
 		'count':7, 
 		'missionTarget':false
 	},
 	{
 		'ships': containers,
 'symmetry': 1,
-		'respawn':true,
+		'respawn':5,
 		'count':5, 
 		'missionTarget':false
 	}
@@ -91,7 +91,7 @@ var missions = [
 		{
 			'ships': questionContainers,
 'symmetry': 1,
-			'respawn':false,
+			'respawn':0,
 			'count':3, 
 			'missionTarget':true
 		}

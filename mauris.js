@@ -180,13 +180,14 @@ playerStats.tutorialProgress++;
 								if(count > 0){
 												enemyDensity-=strength;
 												var symmetry=faction[2];
+												var respawn=randomInt(0,count*2);
 												rm.enemies.push(
 																				{
 																				'ships': drones,
 																				'parts': faction[1], 
 																				'sizeMin': minSize,
 																				'sizeMax': maxSize,
-																				'respawn':true,
+																				'respawn':respawn,
 																				'count':count,
 																				'missionTarget':false,
 																				'symmetry':symmetry
@@ -200,22 +201,24 @@ playerStats.tutorialProgress++;
 				if(randomRange(0,1)<meebChance){
 								parts=meebParts;
 				}
+				var respawn=randomInt(0,asteroidDensity*2);
 				rm.enemies.push(
 												{
 												'ships': asteroids,
 												'parts': parts, 
 												'sizeMin': 2,
 												'sizeMax': 5,
-												'respawn':true,
+												'respawn':respawn,
 												'count':asteroidDensity,
 												'missionTarget':false,
 												'symmetry':0
 												}
 											 );
+				respawn=randomInt(3,8);
 				rm.enemies.push(
 												{
 												'ships': containers,
-												'respawn':true,
+												'respawn':respawn,
 												'count':parseInt(randomRange(3,8)), 
 												'missionTarget':false
 												}
@@ -223,7 +226,7 @@ playerStats.tutorialProgress++;
 				rm.enemies.push(
 												{
 												'ships': questionContainers,
-												'respawn':false,
+												'respawn':0,
 												'count':parseInt(randomRange(1,5)), 
 												'missionTarget':false
 												}
@@ -5082,7 +5085,7 @@ function initMission (missionId) {
 								}
 				}
 				while(index<enemies.length){  //cleanup if we haven't use the entired pool
-								enemies[index].respawn=false;
+								enemies[index].respawn=0;
 								enemies[index].health=0;
 								enemies[index].damage(9999);
 								index++;
@@ -6112,7 +6115,8 @@ function update () {
 																				nextUIDelay=game.time.now+1000;
 																}
 																for(var c = 0; c < enemies.length ; c++) {
-																				if (enemies[c].alive==false && enemies[c].respawn && game.time.now > enemies[c].died){
+																				if (enemies[c].alive==false && enemies[c].respawn > 0 && game.time.now > enemies[c].died){
+enemies[c].respawn-=1;
 																								enemies[c].initEnemyShip();
 																								break;
 																				};
