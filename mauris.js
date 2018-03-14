@@ -1215,7 +1215,6 @@ dragPart = function(x,y,sheet,index){
 				this.sprite.alive = false;
 };
 dragPart.prototype.initDragPart=function(x,y,sheet,index){
-if(cheatmode){
 				this.sprite.loadTexture(sheet,index);
 				this.sprite.reset(x-x%16,y-y%16);
 				this.sprite.bringToTop();
@@ -1227,7 +1226,6 @@ if(cheatmode){
 				this.sprite.input.snapOnRelease=true;
 				this.sprite.input.snapX=16;
 				this.sprite.input.snapY=16;
-}
 };
 dragPart.prototype.dispose=function(x,y,sheet,index){
 				this.sprite.inputEnabled=false;
@@ -1235,7 +1233,6 @@ dragPart.prototype.dispose=function(x,y,sheet,index){
 				this.sprite.kill();
 }
 dragPart.prototype.update = function(){
-				if(cheatmode){
 				if(this.sprite.alive){
 								if(!game.input.activePointer.isDown){
 												if(this.sprite.x >= ui.partswindow.x &&
@@ -1264,7 +1261,6 @@ dragPart.prototype.update = function(){
 												}
 								}
 				}
-}
 }
 dragPartsPool = function(){
 				this.parts=[];
