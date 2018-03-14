@@ -4944,10 +4944,7 @@ function removePlayerPartInFlight(n, dmg) {
 								}
 				}
 				player.ship[n + nAdj]=-1;
-				ui.parts = createBuildParts(player.ship,0,0);
 				player.initPlayerShip(optimizeComponents(ui.partsArray()),oldX,oldY);
-				ui.destroyInventory();
-				ui.destroyParts();
 				player.sprite.body.velocity.x=oldVelocityX;  
 				player.sprite.body.velocity.y=oldVelocityY;  
 				player.sprite.rotation=oldRotation;
