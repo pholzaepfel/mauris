@@ -1215,6 +1215,7 @@ dragPart = function(x,y,sheet,index){
 				this.sprite.alive = false;
 };
 dragPart.prototype.initDragPart=function(x,y,sheet,index){
+if(cheatmode){
 				this.sprite.loadTexture(sheet,index);
 				this.sprite.reset(x-x%16,y-y%16);
 				this.sprite.bringToTop();
@@ -1226,6 +1227,7 @@ dragPart.prototype.initDragPart=function(x,y,sheet,index){
 				this.sprite.input.snapOnRelease=true;
 				this.sprite.input.snapX=16;
 				this.sprite.input.snapY=16;
+}
 };
 dragPart.prototype.dispose=function(x,y,sheet,index){
 				this.sprite.inputEnabled=false;
@@ -1233,6 +1235,7 @@ dragPart.prototype.dispose=function(x,y,sheet,index){
 				this.sprite.kill();
 }
 dragPart.prototype.update = function(){
+				if(cheatmode){
 				if(this.sprite.alive){
 								if(!game.input.activePointer.isDown){
 												if(this.sprite.x >= ui.partswindow.x &&
@@ -1261,6 +1264,7 @@ dragPart.prototype.update = function(){
 												}
 								}
 				}
+}
 }
 dragPartsPool = function(){
 				this.parts=[];
@@ -4944,7 +4948,10 @@ function removePlayerPartInFlight(n, dmg) {
 								}
 				}
 				player.ship[n + nAdj]=-1;
+				ui.parts = createBuildParts(player.ship,0,0);
 				player.initPlayerShip(optimizeComponents(ui.partsArray()),oldX,oldY);
+				ui.destroyInventory();
+				ui.destroyParts();
 				player.sprite.body.velocity.x=oldVelocityX;  
 				player.sprite.body.velocity.y=oldVelocityY;  
 				player.sprite.rotation=oldRotation;
