@@ -3504,10 +3504,10 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'name':'Augmentor',
 	'match':'26',
 'hasAlt':false,
-	'flavor':'--',
+	'flavor':'improve damage control and accel',
 	'bonus':function(target){
-		target.TODO+=1;
-
+		target.health+=4;
+		target.acceleration+=0.5;
 	}
 },
 {
@@ -3516,57 +3516,69 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'name':'Augmentor',
 	'match':'42',
 'hasAlt':false,
-	'flavor':'--',
+	'flavor':'improve damage control and accel',
 	'bonus':function(target){
-		target.TODO+=1;
-
+		target.health+=4;
+		target.acceleration+=0.5;
 	}
 },
 {
 	'id':210,
 	'drops':true,
-	'name':'Decimator',
+	'name':'Pain Reservoir',
 	'match':'26',
 'hasAlt':false,
-	'flavor':'--',
+	'flavor':'+dmg +health',
 	'bonus':function(target){
-		target.TODO+=1;
+		target.fireDamage+=2;
+		target.fireEnergy+=1;
+		target.health+=10;
 
 	}
 },
 {
 	'id':211,
 	'drops':true,
-	'name':'Decimator',
+	'name':'Heavy Bolter',
 	'match':'42',
 'hasAlt':false,
-	'flavor':'--',
+	'flavor':'punishing shots',
 	'bonus':function(target){
-		target.TODO+=1;
+			target.bulletSprite=5; 
+			target.fireDamage*=1.5;
+			target.fireEnergy*=1.25;
+			target.fireSound=ui.sound_boom2;
+			target.fireRate*=1.25;
+			target.sprite.profile+=200;
+			target.bulletBehavior.push(function(bullet){
+				bullet.scale.setTo(bullet.scale.x+.1,bullet.scale.y+.4);
+			});
 
 	}
 },
 {
 	'id':212,
 	'drops':true,
-	'name':'Decimator',
+	'name':'Reflector',
 	'match':'26',
 'hasAlt':false,
-	'flavor':'--',
+	'flavor': 'keeps the fusion bolts away... sometimes',
 	'bonus':function(target){
-		target.TODO+=1;
+		target.health+=10;
+		target.energyMax+=2;
 
 	}
 },
 {
 	'id':213,
 	'drops':true,
-	'name':'Decimator',
+	'name':'Reflector',
 	'match':'42',
 'hasAlt':false,
-	'flavor':'--',
+	'flavor': 'keeps the fusion bolts away... sometimes',
 	'bonus':function(target){
-		target.TODO+=1;
+		target.health+=10;
+		target.energyMax+=2;
 
 	}
 },
@@ -3908,10 +3920,10 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'name':'Augmentor',
 	'match':'86',
 'hasAlt':false,
-	'flavor':'--',
+	'flavor':'improve damage control and accel',
 	'bonus':function(target){
-		target.TODO+=1;
-
+		target.health+=4;
+		target.acceleration+=0.5;
 	}
 },
 {
@@ -3920,10 +3932,10 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'name':'Augmentor',
 	'match':'84',
 'hasAlt':false,
-	'flavor':'--',
+	'flavor':'improve damage control and accel',
 	'bonus':function(target){
-		target.TODO+=1;
-
+		target.health+=4;
+		target.acceleration+=0.5;
 	}
 },
 {
@@ -4332,24 +4344,26 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 {
 	'id':276,
 	'drops':true,
-	'name':'Decimator',
+	'name':'Reflector',
 	'match':'86',
 'hasAlt':false,
-	'flavor':'--',
+	'flavor': 'keeps the fusion bolts away... sometimes',
 	'bonus':function(target){
-		target.TODO+=1;
+		target.health+=10;
+		target.energyMax+=2;
 
 	}
 },
 {
 	'id':277,
 	'drops':true,
-	'name':'Decimator',
+	'name':'Reflector',
 	'match':'84',
 'hasAlt':false,
-	'flavor':'--',
+	'flavor': 'keeps the fusion bolts away... sometimes',
 	'bonus':function(target){
-		target.TODO+=1;
+		target.health+=10;
+		target.energyMax+=2;
 
 	}
 },
