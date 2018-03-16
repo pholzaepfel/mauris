@@ -3404,10 +3404,10 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 {
 	'id':202,
 	'drops':true,
-	'name':'Ascended Watcher',
+	'name':'Ascended Claw',
 	'match':'26',
 'hasAlt':false,
-	'flavor':'--',
+	'flavor':'fearsome and painful',
 	'bonus':function(target){
 		target.fireDamage+=7;
 		target.fireEnergy+=3;
@@ -3420,7 +3420,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'name':'Ascended Watcher',
 	'match':'42',
 'hasAlt':false,
-	'flavor':'--',
+	'flavor':'focus',
 	'bonus':function(target){
 		target.energyAmount+=1;
 		target.energyRate*=0.9;
@@ -3430,10 +3430,10 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 {
 	'id':204,
 	'drops':true,
-	'name':'Ascended Watcher',
+	'name':'Corrupted Delivery',
 	'match':'26',
 'hasAlt':false,
-	'flavor':'--',
+	'flavor':'recharge faster',
 	'bonus':function(target){
 		target.health+=10;
 		target.energyRate*=0.9;
@@ -3443,10 +3443,10 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 {
 	'id':205,
 	'drops':true,
-	'name':'Ascended Watcher',
+	'name':'Cobalt Charger',
 	'match':'42',
 'hasAlt':false,
-	'flavor':'--',
+	'flavor':'recharge more',
 	'bonus':function(target){
 		target.energyAmount+=2;
 		target.health+=10;
@@ -3459,7 +3459,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'name':'Stolen Nacelles',
 	'match':'26',
 'hasAlt':false,
-	'flavor':'--',
+	'flavor':'full speed ahead',
 	'bonus':function(target){
 			target.thrustBehavior=cleanSmoke;
 			target.acceleration+=1;
@@ -3475,7 +3475,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'name':'Enterprising Violation',
 	'match':'42',
 'hasAlt':false,
-	'flavor':'--',
+	'flavor':'automatic targeting laser',
 	'bonus':function(target){
 		target.fireSound=ui.sound_pew2;
 		target.fireDamage+=1;
@@ -3881,7 +3881,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'name':'Stolen Nacelles',
 	'match':'86',
 'hasAlt':false,
-	'flavor':'--',
+	'flavor':'full speed ahead',
 	'bonus':function(target){
 			target.thrustBehavior=cleanSmoke;
 			target.acceleration+=1;
@@ -3899,7 +3899,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'name':'Enterprising Violation',
 	'match':'84',
 'hasAlt':false,
-	'flavor':'--',
+	'flavor':'automatic targeting laser',
 	'bonus':function(target){
 		target.fireSound=ui.sound_pew2;
 		target.fireDamage+=1;
@@ -4056,7 +4056,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'bonus':function(target){
 		target.bulletHitBehavior.push(function(sprite,bullet){
 				var tgt = ownerFromName(sprite.name);
-				if(tgt.health<tgt.healthMax*0.5){				
+				if(tgt.health<tgt.healthMax*0.3){				
 						bullet.damage*=2;
 				};
 
@@ -4066,13 +4066,16 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 {
 	'id':251,
 	'drops':true,
-	'name':'Decimator',
+	'name':'Dangerous Projection',
 	'match':'84',
 'hasAlt':false,
-	'flavor':'--',
+	'flavor':'damage',
 	'bonus':function(target){
-
-		target.TODO+=1;
+		target.fireDamage+=3;
+				target.bulletSprite=5; 
+			target.fireSound=ui.sound_boom2;
+			target.sprite.profile+=100;
+			target.health+=2;
 	}
 },
 {
@@ -4105,10 +4108,12 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 	'name':'Ascended Exoskeleton',
 	'match':'4682',
 'hasAlt':false,
-	'flavor':'--',
+	'flavor':'strong bones',
 	'bonus':function(target){
-
-		target.TODO+=1;
+		target.health+=4;
+		target.acceleration+=0.5;
+		target.sprite.body.maxVelocity.x+=15;
+		target.sprite.body.maxVelocity.y+=15;
 	}
 },
 {
