@@ -3632,23 +3632,31 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 {
 	'id':218,
 	'drops':true,
-	'name':'Decimator',
+	'name':'Dangerous Projection',
 	'match':'62',
 'hasAlt':false,
-	'flavor':'--',
+	'flavor':'damage',
 	'bonus':function(target){
-		target.TODO+=1;
+		target.fireDamage+=3;
+				target.bulletSprite=5; 
+			target.fireSound=ui.sound_boom2;
+			target.sprite.profile+=100;
+			target.health+=2;
 	}
 },
 {
 	'id':219,
 	'drops':true,
-	'name':'Decimator',
+	'name':'Dangerous Projection',
 	'match':'24',
 'hasAlt':false,
-	'flavor':'--',
+	'flavor':'damage',
 	'bonus':function(target){
-		target.TODO+=1;
+		target.fireDamage+=3;
+				target.bulletSprite=5; 
+			target.fireSound=ui.sound_boom2;
+			target.sprite.profile+=100;
+			target.health+=2;
 	}
 },
 {
@@ -3965,24 +3973,28 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 {
 	'id':244,
 	'drops':true,
-	'name':'Decimator',
+	'name':'Ludicrous Maneuver',
 	'match':'862',
 'hasAlt':false,
-	'flavor':'--',
+	'flavor':'it should not move that way',
 	'bonus':function(target){
-		target.TODO+=1;
+		target.health+=8;
+		target.turnRate+=0.7;
 
 	}
 },
 {
 	'id':245,
 	'drops':true,
-	'name':'Decimator',
+	'name':'Control Unit',
 	'match':'842',
 'hasAlt':false,
-	'flavor':'--',
+	'flavor':'superior targeting system',
 	'bonus':function(target){
-		target.TODO+=1;
+		target.health+=2;
+		target.fireEnergy*=1.2;
+		target.fireDamage*=1.4;
+		target.fireTracking+=1;
 
 	}
 },
@@ -4037,13 +4049,18 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 {
 	'id':250,
 	'drops':true,
-	'name':'Decimator',
+	'name':'Weakness Locator',
 	'match':'86',
 'hasAlt':false,
-	'flavor':'--',
+	'flavor':'deal extra damage to weaker targets',
 	'bonus':function(target){
+		target.bulletHitBehavior.push(function(sprite,bullet){
+				var tgt = ownerFromName(sprite.name);
+				if(tgt.health<tgt.healthMax*0.5){				
+						bullet.damage*=2;
+				};
 
-		target.TODO+=1;
+				});
 	}
 },
 {
