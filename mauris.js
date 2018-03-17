@@ -295,6 +295,7 @@ function pause(resumeDelay,x,y) {
 
 				if(typeof(resumeDelay)!='undefined'){
 								nextUIDelay=game.time.now+5000;
+								nextPanDelay=game.time.now+randomInt(15000,30000);
 								if(resumeDelay<1000){resumeDelay=1000};
 								pauseResumeTime = game.time.now + resumeDelay;
 								if(isAndroid){
@@ -1735,7 +1736,7 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 																playerStats.kills+=1;
 												}
 								}
-								if(pan){  
+								if(pan && game.time.now > nextPanDelay){  
 												pause(2000, this.sprite.x, this.sprite.y);
 								}
 								return true;
@@ -1753,7 +1754,7 @@ function addXp(xp) {
 								playerStats.level=1;
 				}
 				while(playerStats.xp >= playerStats.nextXp){
-								playerStats.nextXp += 200*playerStats.level;
+								playerStats.nextXp += 400*playerStats.level;
 								playerStats.level += 1;
 								addedLevel=true;
 				}
@@ -3460,6 +3461,7 @@ var spawnShips=[
 				var sparkleExplosions;
 				var logo;
 				var nextUIDelay=0;
+				var nextPanDelay=0;
 				var nextSpawn=0;
 				var nextCamera=0; //attract
 				var damageCoef=0.2; //global damage tuner
