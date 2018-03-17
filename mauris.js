@@ -2498,7 +2498,7 @@ playerShip.prototype.damage = function(dmg, aggro, bulletX, bulletY, preventXPLo
 
 												game.add.tween(this.sprite).to({r:255,g:255,b:255,alpha:1},400, Phaser.Easing.Exponential.Out, true, 0, false);
 												//handle part loss
-												if(shipWithoutVoid(this.ship.length) > 2 && Math.random() > Math.sqrt((((player.health * 1.33) / player.healthMax )- (Math.pow(dmg,0.33)/32)))){
+												if(shipWithoutVoid(this.ship.length) > 2 && Math.random() > 1.1 * Math.sqrt((((player.health * 1.33) / player.healthMax )- (Math.pow(dmg,0.33)/32)))){
 																for(var i=0;i<this.parts.length;i++){
 																				var dist = game.physics.arcade.distanceBetween(this.parts[i].sprite,bullet);
 																				if(dist < closestPartDistance){
