@@ -3462,9 +3462,9 @@ var spawnShips=[
 				var nextUIDelay=0;
 				var nextSpawn=0;
 				var nextCamera=0; //attract
-				var damageCoef=0.3; //global damage tuner
+				var damageCoef=0.2; //global damage tuner
 				var baseCorpseRate = 0.08; 
-				var targetDamageCoef=5; //not so global damage tuner
+				var targetDamageCoef=7.5; //not so global damage tuner
 				var enemyHealthCoef=1; 
 				var cursors;
 				var pew;
