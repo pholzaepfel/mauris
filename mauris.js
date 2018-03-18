@@ -132,7 +132,7 @@ playerStats.tutorialProgress++;
 								rm.intro.push('asteroid density: extreme');
 				}
 				var enemyDensity=parseInt(randomRange(11,16));
-				if(asteroidDensity>60){enemyDensity=0};
+				if(asteroidDensity>50){enemyDensity=0};
 				if(enemyDensity>0){
 			
 								var s=  '' + myfactions[0][0];
@@ -149,7 +149,7 @@ playerStats.tutorialProgress++;
 								var count = parseInt(randomRange(3,7));
 								var strength = count;
 								var roll = 0;
-								var loops = randomRange(playerStats.level/3,(playerStats.level/2.3));
+								var loops = randomRange(0,(playerStats.level/3));
 								var boss = 0;
 								var swarm = 0;
 								var stronger = 0;
