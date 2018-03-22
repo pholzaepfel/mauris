@@ -4573,7 +4573,7 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 {
 	'id':294,
 	'drops':true,
-	'name':'Junker',
+	'name':'Junker294',
 	'match':'62',
 'hasAlt':false,
 	'flavor':'--',
@@ -4585,7 +4585,7 @@ target.TODO+=1;
 {
 	'id':295,
 	'drops':true,
-	'name':'Junker',
+	'name':'Junker295',
 	'match':'42',
 'hasAlt':false,
 	'flavor':'--',
@@ -4597,7 +4597,7 @@ target.TODO+=1;
 {
 	'id':296,
 	'drops':true,
-	'name':'Junker',
+	'name':'Junker296',
 	'match':'26',
 'hasAlt':false,
 	'flavor':'--',
@@ -4609,7 +4609,7 @@ target.TODO+=1;
 {
 	'id':297,
 	'drops':true,
-	'name':'Junker',
+	'name':'Junker297',
 	'match':'42',
 'hasAlt':false,
 	'flavor':'--',
@@ -4929,7 +4929,7 @@ target.TODO+=1;
 {
 	'id':326,
 	'drops':true,
-	'name':'Junker',
+	'name':'Junker326',
 	'match':'86',
 'hasAlt':false,
 	'flavor':'--',
@@ -4941,7 +4941,7 @@ target.TODO+=1;
 {
 	'id':327,
 	'drops':true,
-	'name':'Junker',
+	'name':'Junker327',
 	'match':'84',
 'hasAlt':false,
 	'flavor':'--',
@@ -4953,7 +4953,7 @@ target.TODO+=1;
 {
 	'id':328,
 	'drops':true,
-	'name':'Junker',
+	'name':'Junker328',
 	'match':'86',
 'hasAlt':false,
 	'flavor':'--',
@@ -4965,7 +4965,7 @@ target.TODO+=1;
 {
 	'id':329,
 	'drops':true,
-	'name':'Junker',
+	'name':'Junker329',
 	'match':'84',
 'hasAlt':false,
 	'flavor':'--',
