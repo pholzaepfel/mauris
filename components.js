@@ -4572,45 +4572,49 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 },
 {
 	'id':294,
-	'drops':false,
-	'name':'Component-294',
-	'match':'4682',
+	'drops':true,
+	'name':'Junker',
+	'match':'62',
 'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
+target.TODO+=1;
 
 	}
 },
 {
 	'id':295,
-	'drops':false,
-	'name':'Component-295',
-	'match':'4682',
+	'drops':true,
+	'name':'Junker',
+	'match':'42',
 'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
+target.TODO+=1;
 
 	}
 },
 {
 	'id':296,
-	'drops':false,
-	'name':'Component-296',
-	'match':'4682',
+	'drops':true,
+	'name':'Junker',
+	'match':'26',
 'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
+target.TODO+=1;
 
 	}
 },
 {
 	'id':297,
-	'drops':false,
-	'name':'Component-297',
-	'match':'4682',
+	'drops':true,
+	'name':'Junker',
+	'match':'42',
 'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
+target.TODO+=1;
 
 	}
 },
@@ -4924,45 +4928,49 @@ target.bulletHitBehavior.push(function(sprite,bullet){
 },
 {
 	'id':326,
-	'drops':false,
-	'name':'Component-326',
-	'match':'4682',
+	'drops':true,
+	'name':'Junker',
+	'match':'86',
 'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
+target.TODO+=1;
 
 	}
 },
 {
 	'id':327,
-	'drops':false,
-	'name':'Component-327',
-	'match':'4682',
+	'drops':true,
+	'name':'Junker',
+	'match':'84',
 'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
+target.TODO+=1;
 
 	}
 },
 {
 	'id':328,
-	'drops':false,
-	'name':'Component-328',
-	'match':'4682',
+	'drops':true,
+	'name':'Junker',
+	'match':'86',
 'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
+target.TODO+=1;
 
 	}
 },
 {
 	'id':329,
-	'drops':false,
-	'name':'Component-329',
-	'match':'4682',
+	'drops':true,
+	'name':'Junker',
+	'match':'84',
 'hasAlt':false,
 	'flavor':'--',
 	'bonus':function(target){
+target.TODO+=1;
 
 	}
 },
