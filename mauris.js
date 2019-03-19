@@ -5457,6 +5457,7 @@ up: game.input.keyboard.addKey(Phaser.Keyboard.UP),
 		left2: game.input.keyboard.addKey(Phaser.Keyboard.A),
 		right2: game.input.keyboard.addKey(Phaser.Keyboard.D),
 		fire: game.input.keyboard.addKey(Phaser.Keyboard.X),
+		fire2: game.input.keyboard.addKey(Phaser.Keyboard.E),
 		alt: game.input.keyboard.addKey(Phaser.Keyboard.Z),
 		pgup: game.input.keyboard.addKey(Phaser.Keyboard.PAGE_UP),
 		pgdn: game.input.keyboard.addKey(Phaser.Keyboard.PAGE_DOWN),
@@ -5830,7 +5831,7 @@ function update () {
 								if (cursors.down.isDown || cursors.down2.isDown){
 												down = 1;
 								}
-								if (cursors.fire.isDown){
+								if (cursors.fire.isDown || cursors.fire2.isDown){
 												fire = 1;
 								}
 								if (cursors.lights.isDown){
