@@ -22,24 +22,59 @@ var noblood = 0;
 var touchPressed = 0;
 var initialXp = 200; //xp required for first level
 var setTextIfDifferent = function(object, value){
-	if(value!=object.text){object.setText(value);}
+				if(value!=object.text){object.setText(value+'\n');}
 }
 var allfactions=[
-['alliance military',allianceGear4,1],
-				['mechanoid',mechanoidGear,1],
-				['smuggler',banditGear,1],
-				['infected',zombieGear,0.6],
-				['damaged mining drone',failDroneGear,0.3],
-				['mining drone',droneGear,0.5],
-				['trashhauler',dirtyParts,0.6],
-				['mercenary',blackParts,1],
-				['pirate',banditGear2,1],
-				['alliance noble',whiteGear,1],
-				['xenoid',xenoidGear,1],
-				['junker',junkerGear,0.5],
-				['ascended',ascendedGear,0],
-				['decimator',decimatorGear,0],
-				['exotic trader',goldGear,0.5]
+				['goatfaction',goatFaction,1],
+				['cloaker',cloaker,1],
+				['trader',trader,1],
+				['turtle',turtle,1],
+				['weakAllianceBoss',weakAllianceBoss,1],
+				//['xenoidMiniBoss',xenoidMiniBoss,1],
+				//['megaHauler',megaHauler,1],
+				['avenger',avenger,1],
+				['redStation',redStation,1],
+				['ships',ships,1],
+				['sweet',sweet,1],
+				['chainsawDrone',chainsawDrone,1],
+				['chainsaw',chainsaw,1],
+				['mechanoids',mechanoids,1],
+				['mechanoidMiniBoss1',mechanoidMiniBoss1,1],
+				['droneBoss1',droneBoss1,1],
+				['rebelFaction1 ',rebelFaction1 ,1],
+				['plants',plants,1],
+				['ancients',ancients,1],
+				['crystalsArmor',crystalsArmor,1],
+				['crystals',crystals,1],
+				['alliance2',alliance2,1],
+				['smugglerBoss1',smugglerBoss1,1],
+				['smugglers',smugglers,1],
+				['bandits',bandits ,1],
+				['banditBoss1',banditBoss1 ,1],
+				['drones',drones,1],
+				['zombies',zombies,1],
+				['banditsMedium ',banditsMedium ,1],
+				['godawfulBoss',godawfulBoss,1],
+				['cops',cops,1],
+				['alliance',alliance,1],
+				['allianceWeak',allianceWeak,1]
+				/* all factions - using parts
+					 ['alliance military',allianceGear4,1],
+					 ['mechanoid',mechanoidGear,1],
+					 ['smuggler',banditGear,1],
+					 ['infected',zombieGear,0.6],
+					 ['damaged mining drone',failDroneGear,0.3],
+					 ['mining drone',droneGear,0.5],
+					 ['trashhauler',dirtyParts,0.6],
+					 ['mercenary',blackParts,1],
+					 ['pirate',banditGear2,1],
+					 ['alliance noble',whiteGear,1],
+					 ['xenoid',xenoidGear,1],
+					 ['junker',junkerGear,0.5],
+					 ['ascended',ascendedGear,0],
+					 ['decimator',decimatorGear,0],
+					 ['exotic trader',goldGear,0.5]
+				 */
 				];
 				var bulletTypes = [ 
 {'name':'pulse', 'id':0},
@@ -57,15 +92,15 @@ var allfactions=[
 {'name':'gascloud', 'id':14},
 {'name':'fire', 'id':15}
 
-];
+				];
 
-var randomName = function(){
-				var adjectives = ['Dusty','Barren','Lonely','Wasted','Cold','Bleak','Dangerous',
-						'Devils','Solemn','Treacherous','Screaming','Yawning'];
-				var nouns = ['Void','Collapse','Spiral','Gap','Graveyard','Scrapyard','Expanse',
-						'Warzone','Backdoor','Column','Abyss'];
-				return randomFromArray(adjectives) + ' ' + randomFromArray(nouns);
-}
+				var randomName = function(){
+								var adjectives = ['Dusty','Barren','Lonely','Wasted','Cold','Bleak','Dangerous',
+										'Devils','Solemn','Treacherous','Screaming','Yawning'];
+								var nouns = ['Void','Collapse','Spiral','Gap','Graveyard','Scrapyard','Expanse',
+										'Warzone','Backdoor','Column','Abyss'];
+								return randomFromArray(adjectives) + ' ' + randomFromArray(nouns);
+				}
 var randomMission = function(){
 				var myfactions=[];
 				myfactions.push(randomFromArray(allfactions));
@@ -98,12 +133,12 @@ var randomMission = function(){
 				rm.hazeRedBlendMode = 0;
 				rm.intro = [rm.name];
 				if(playerStats.tutorialProgress<tutorials.length-1){		
-rm.intro.push(tutorials[playerStats.tutorialProgress]);
-playerStats.tutorialProgress++;
-} else {
-				rm.intro.push(randomFromArray(messages));
+								rm.intro.push(tutorials[playerStats.tutorialProgress]);
+								playerStats.tutorialProgress++;
+				} else {
+								rm.intro.push(randomFromArray(messages));
 
-}
+				}
 				rm.outro = [];
 				rm.win = {
 								'condition':'frob'
@@ -134,10 +169,10 @@ playerStats.tutorialProgress++;
 				var enemyDensity=parseInt(randomRange(11,16));
 				if(asteroidDensity>50){enemyDensity=0};
 				if(enemyDensity>0){
-			
+
 								var s=  '' + myfactions[0][0];
 								if(myfactions.length>1){
-								s+= ' and ' + myfactions[1][0];
+												s+= ' and ' + myfactions[1][0];
 								}
 								s+= ' in area \n';
 								rm.intro.push(s);
@@ -182,8 +217,8 @@ playerStats.tutorialProgress++;
 												var symmetry=faction[2];
 												rm.enemies.push(
 																				{
-																				'ships': drones,
-																				'parts': faction[1], 
+																				'ships': faction[1],
+																				//																				'parts': faction[1], 
 																				'sizeMin': minSize,
 																				'sizeMax': maxSize,
 																				'respawn':true,
@@ -224,7 +259,7 @@ playerStats.tutorialProgress++;
 												{
 												'ships': questionContainers,
 												'respawn':false,
-												'count':parseInt(randomRange(1,5)), 
+												'count':parseInt(randomRange(3,12)), 
 												'missionTarget':false
 												}
 
@@ -266,7 +301,7 @@ function pausedRevertSprites(){
 				revertGroup(explosions);
 
 				player.altCooldown+=game.time.physicsElapsed * 1000;
-				
+
 }
 function pause(resumeDelay,x,y) {
 				if(game.time.now<nextUIDelay){
@@ -294,6 +329,7 @@ function pause(resumeDelay,x,y) {
 				var blurAmount = isAndroid ? 30 : 30;
 
 				if(typeof(resumeDelay)!='undefined'){
+				ui.sound_dock.play();
 								nextUIDelay=game.time.now+5000;
 								nextPanDelay=game.time.now+randomInt(15000,30000);
 								if(resumeDelay<1000){resumeDelay=1000};
@@ -662,9 +698,9 @@ var hiddenButtons = [
 				'y':7,
 				'rotation':0,
 				'label':'+'}
-				]
+]
 
-				var warButtons = [
+var warButtons = [
 				/*{'name':'lofi',
 					'downCallback':function(){
 					hazeWhite.blendMode = 1;
@@ -691,7 +727,7 @@ var hiddenButtons = [
 				'y':7,
 				'rotation':0,
 				'label':'-'},
-
+			
 {'name':'lights',
 				'downCallback':function(){buttonLight=1;},
 				'upCallback':function(){buttonLight=0;},
@@ -711,8 +747,8 @@ var hiddenButtons = [
 				'upCallback':function(){buttonAlt=0;},
 				'x':7,
 				'y':6,
-				'rotation':0.5*Math.PI,
-				'label':'*'},
+				'rotation':0,
+				'label':'z'},
 {'name':'enter',
 				'downCallback':function(){buttonEnter=1;},
 				'upCallback':function(){buttonEnter=0;},
@@ -727,7 +763,7 @@ var hiddenButtons = [
 								this.inventory=[];
 								this.health=-1;
 								this.healthMax=-1;
-this.tutorialProgress=0;
+								this.tutorialProgress=0;
 								this.crew=2;
 								if(cheatmode){
 												for(var i=0; i<components.length; i++){
@@ -756,23 +792,23 @@ function spacesAtStartOfRow(ship,rowNum){
 
 				var j=0;
 				while(spaces==size){
-					j++;
-				rowNum+=j;
-				spaces=0;
-				if(rowNum < size){
-				for(var i = size*rowNum ;i<(rowNum*size)+size;i++){
-								if(ship[i]==-1){spaces++}
-								else{return spaces;}
-				}
-				}
-				rowNum-=j*2;
-				spaces=0;
-				if(rowNum>=0){
-				for(var i = size*rowNum ;i<(rowNum*size)+size;i++){
-								if(ship[i]==-1){spaces++}
-								else{return spaces;}
-				}
-				}
+								j++;
+								rowNum+=j;
+								spaces=0;
+								if(rowNum < size){
+												for(var i = size*rowNum ;i<(rowNum*size)+size;i++){
+																if(ship[i]==-1){spaces++}
+																else{return spaces;}
+												}
+								}
+								rowNum-=j*2;
+								spaces=0;
+								if(rowNum>=0){
+												for(var i = size*rowNum ;i<(rowNum*size)+size;i++){
+																if(ship[i]==-1){spaces++}
+																else{return spaces;}
+												}
+								}
 				}
 				return spaces;
 }
@@ -785,23 +821,23 @@ function spacesAtEndOfRow(ship,rowNum){
 				}
 				var j=0;
 				while(spaces==size){
-					j++;
-				rowNum+=j;
-				spaces=0;
-				if(rowNum < size){
-				for(var i = size + (rowNum*size) - 1;i>=(rowNum*size);i--){
-								if(ship[i]==-1){spaces++}
-								else{return spaces;}
-				}
-				}
-				rowNum-=j*2;
-				spaces=0;
-				if(rowNum>=0){
-				for(var i = size + (rowNum*size) - 1;i>=(rowNum*size);i--){
-								if(ship[i]==-1){spaces++}
-								else{return spaces;}
-				}
-				}
+								j++;
+								rowNum+=j;
+								spaces=0;
+								if(rowNum < size){
+												for(var i = size + (rowNum*size) - 1;i>=(rowNum*size);i--){
+																if(ship[i]==-1){spaces++}
+																else{return spaces;}
+												}
+								}
+								rowNum-=j*2;
+								spaces=0;
+								if(rowNum>=0){
+												for(var i = size + (rowNum*size) - 1;i>=(rowNum*size);i--){
+																if(ship[i]==-1){spaces++}
+																else{return spaces;}
+												}
+								}
 				}
 				return spaces;
 }
@@ -1373,8 +1409,8 @@ shipPart.prototype.update = function(){
 								lightness=Math.pow(lightness*2,1.6)/3;
 								this.sprite.alpha=this.target.alpha;
 								if(lightness > 0.5 && this.target.name!='player'){
-//headlightShadow(this.sprite,lightness); saving this for later
-}
+												//headlightShadow(this.sprite,lightness); saving this for later
+								}
 								if(this.sprite.alpha==1 && lightness > 1){
 												this.sprite.alpha=lightness;
 								}
@@ -1874,66 +1910,66 @@ enemyShip.prototype.update = function() {
 
 				//rubberbanding
 				var spriteAdj={x:this.sprite.x + this.sprite.body.velocity.x,
-y:this.sprite.y + this.sprite.body.velocity.y};
+								y:this.sprite.y + this.sprite.body.velocity.y};
 				var playerAdj={x:player.sprite.x + player.sprite.body.velocity.x,
-y:player.sprite.y + player.sprite.body.velocity.y};
+								y:player.sprite.y + player.sprite.body.velocity.y};
 
-if(game.time.now > this.nextRespawn){
-				if (this.game.physics.arcade.distanceBetween(spriteAdj, playerAdj) > 3500 ||
-												this.game.physics.arcade.distanceBetween(spriteAdj, playerAdj) > Math.sqrt(Math.pow(0.8*resolutionX,2) + Math.pow(0.8*resolutionY,2)) && this.ai == aiModes['asteroid'] && !this.questionBox){
+				if(game.time.now > this.nextRespawn){
+								if (this.game.physics.arcade.distanceBetween(spriteAdj, playerAdj) > 3500 ||
+																this.game.physics.arcade.distanceBetween(spriteAdj, playerAdj) > Math.sqrt(Math.pow(0.8*resolutionX,2) + Math.pow(0.8*resolutionY,2)) && this.ai == aiModes['asteroid'] && !this.questionBox){
 
-								if(Math.random()>0.5){
-												this.target=player.sprite;
+												if(Math.random()>0.5){
+																this.target=player.sprite;
+												}
+												var x = player.sprite.x + (randomSign() * randomRange(1080,1500) + player.sprite.body.velocity.x);
+												var y = player.sprite.y + (randomSign() * randomRange(620,1500) + player.sprite.body.velocity.y);
+												if(this.questionBox){
+																x+=randomRange(2000,4000)*randomSign();
+																y+=randomRange(2000,4000)*randomSign();
+												}else if(this.ai==aiModes['asteroid'])
+												{
+																if(randomRange(0,1)<0.5){
+																				if(player.sprite.body.velocity.x > 0){
+																								x=player.sprite.x+player.sprite.body.velocity.x+(resolutionX/1.7);
+																								y=player.sprite.y+player.sprite.body.velocity.y+randomRange(-0.5*resolutionY,0.5*resolutionY);
+																				}else if(player.sprite.body.velocity.x < 0){
+																								x=player.sprite.x+player.sprite.body.velocity.x-(resolutionX/1.7);
+																								y=player.sprite.y+player.sprite.body.velocity.y+randomRange(-0.5*resolutionY,0.5*resolutionY);
+
+																				}
+																}else{
+																				if(player.sprite.body.velocity.y > 0){
+																								y=player.sprite.y+player.sprite.body.velocity.y+(resolutionY/1.7);
+																								x=player.sprite.x+player.sprite.body.velocity.x+randomRange(-0.5*resolutionX,0.5*resolutionX);
+																				}else if(player.sprite.body.velocity.y < 0){
+																								y=player.sprite.y+player.sprite.body.velocity.y-(resolutionY/1.7);
+																								x=player.sprite.x+player.sprite.body.velocity.x+randomRange(-0.5*resolutionX,0.5*resolutionX);
+
+
+																				}
+																}
+												}
+												this.sprite.reset(x,y);  
+												this.nextRespawn=game.time.now+randomInt(0,500);
+												if(player.target==this.sprite){
+																player.target=player.sprite;
+												}
+												if(onscreenStrict(x,y)){
+																midBoom(explosions,4,x,y);
+												}
+												if(this.ai==aiModes['asteroid']){
+																var playerRnd = {x:playerAdj.x + randomRange(-100,100),
+																				y:playerAdj.y + randomRange(-100,100)}
+																this.sprite.body.velocity = game.physics.arcade.velocityFromRotation(game.physics.arcade.angleBetween(this.sprite, playerRnd), randomRange(25,100));  
+																this.sprite.body.angularVelocity=randomRange(25,100)*randomSign();
+																if(playerStats.mission.asteroidPanic){
+																				this.sprite.body.velocity.x*=randomRange(0.6,4.4);
+																				this.sprite.body.velocity.y*=randomRange(0.6,4.4);
+																				this.sprite.body.angularVelocity*=randomRange(1,3);
+
+																}}
 								}
-								var x = player.sprite.x + (randomSign() * randomRange(1080,1500) + player.sprite.body.velocity.x);
-								var y = player.sprite.y + (randomSign() * randomRange(620,1500) + player.sprite.body.velocity.y);
-								if(this.questionBox){
-												x+=randomRange(2000,4000)*randomSign();
-												y+=randomRange(2000,4000)*randomSign();
-								}else if(this.ai==aiModes['asteroid'])
-								{
-									if(randomRange(0,1)<0.5){
-									if(player.sprite.body.velocity.x > 0){
-										x=player.sprite.x+player.sprite.body.velocity.x+(resolutionX/1.7);
-y=player.sprite.y+player.sprite.body.velocity.y+randomRange(-0.5*resolutionY,0.5*resolutionY);
-									}else if(player.sprite.body.velocity.x < 0){
-										x=player.sprite.x+player.sprite.body.velocity.x-(resolutionX/1.7);
-y=player.sprite.y+player.sprite.body.velocity.y+randomRange(-0.5*resolutionY,0.5*resolutionY);
-
-									}
-									}else{
-									if(player.sprite.body.velocity.y > 0){
-										y=player.sprite.y+player.sprite.body.velocity.y+(resolutionY/1.7);
-x=player.sprite.x+player.sprite.body.velocity.x+randomRange(-0.5*resolutionX,0.5*resolutionX);
-									}else if(player.sprite.body.velocity.y < 0){
-										y=player.sprite.y+player.sprite.body.velocity.y-(resolutionY/1.7);
-x=player.sprite.x+player.sprite.body.velocity.x+randomRange(-0.5*resolutionX,0.5*resolutionX);
-
-
-									}
-								}
-								}
-								this.sprite.reset(x,y);  
-								this.nextRespawn=game.time.now+randomInt(0,500);
-								if(player.target==this.sprite){
-												player.target=player.sprite;
-								}
-								if(onscreenStrict(x,y)){
-								midBoom(explosions,4,x,y);
-								}
-								if(this.ai==aiModes['asteroid']){
-									var playerRnd = {x:playerAdj.x + randomRange(-100,100),
-									y:playerAdj.y + randomRange(-100,100)}
-												this.sprite.body.velocity = game.physics.arcade.velocityFromRotation(game.physics.arcade.angleBetween(this.sprite, playerRnd), randomRange(25,100));  
-												this.sprite.body.angularVelocity=randomRange(25,100)*randomSign();
-												if(playerStats.mission.asteroidPanic){
-																this.sprite.body.velocity.x*=randomRange(0.6,4.4);
-																this.sprite.body.velocity.y*=randomRange(0.6,4.4);
-																this.sprite.body.angularVelocity*=randomRange(1,3);
-
-												}}
 				}
-}
 				this.sprite.profile = this.sprite.profileMax; //tracking this in detail is hard and unnecessary
 
 				if(game.time.now>this.shieldCooldown){
@@ -2121,7 +2157,7 @@ function preload () {
 				game.load.spritesheet('bullet', 'assets/bullets.png',16,16);
 				game.load.image('nebula', 'assets/nebula.png');
 				game.load.image('planets', 'assets/planetslod.png');
-//				game.load.image('planetslod', 'assets/planetslod-HSL.png');
+				//				game.load.image('planetslod', 'assets/planetslod-HSL.png');
 				game.load.image('planetfall', 'assets/planetfall.png');
 				game.load.image('planetdirt', 'assets/planetdirt.png');
 				game.load.image('starfield2', 'assets/starfield2.png');
@@ -2920,6 +2956,30 @@ var randomVariantComponent = function(partId){
 				}
 				return partsList[parseInt(randomRange(0,partsList.length))];
 }
+var matchiestVariantComponent = function(partId){
+				if (partId == -1){
+								return -1;
+				}
+				if(components[partId].match.length >= 4){
+								return partId;
+				}
+				var partsList = variantComponents(partId);
+				z=-1;
+				maxMatchLength=0;
+				for(var i=0;i<partsList.length;i++){
+								if(components[partsList[i]].match.length >= maxMatchLength){
+												z=i;
+												maxMatchLength=components[partsList[i]].match.length;
+								}
+				}
+				if(z>-1){
+								return partsList[z];
+				}
+				else 
+				{
+								return partId;
+				}
+}
 var centralVariantComponent = function(partId){
 				if (partId == -1){
 								return -1;
@@ -3427,7 +3487,7 @@ var dragPool;
 var dummy;
 var defaultPlayerShip = [66, 34, -1, -1];
 var spawnShips=[
-[35,36,-1,-1],
+				[35,36,-1,-1],
 				[71,-1,102,-1],
 				[100,101,-1,-1],
 				[80,85,-1,-1],
@@ -3436,67 +3496,67 @@ var spawnShips=[
 				[69,111,-1,-1],
 				[128,-1,129,-1],
 				[66,34,-1,-1]
-				];
-				var station; //we're going to keep this pretty much as a non-interactive sprite for now... it doesn't actually need to do anything
-				var frob1;
+];
+var station; //we're going to keep this pretty much as a non-interactive sprite for now... it doesn't actually need to do anything
+var frob1;
 
-				var profileExponent=0.9;
-				var componentDropRate = 0.12;
-				var hazeWhite,hazeRed,hazePurple;
-				var nebula2;
-				var nebula;
-				var planets = [];
-				var planet;
-				var planetlod;
-				var planetdirt;
-				var numBaddies = 9;
-				var numAsteroids = 19;
-				var enemies;
-				var loots;
-				var debris;
-				var sparkles;
-				var enemyBullets;
-				var enemyThrust;
-				var explosions;
-				var sparkleExplosions;
-				var logo;
-				var nextUIDelay=0;
-				var nextPanDelay=0;
-				var nextSpawn=0;
-				var nextCamera=0; //attract
-				var damageCoef=0.2; //global damage tuner
-				var baseCorpseRate = 0.08; 
-				var targetDamageCoef=7.5; //not so global damage tuner
-				var enemyHealthCoef=1; 
-				var cursors;
-				var pew;
-				var bullets;
-				var nextFire = 0;
+var profileExponent=0.9;
+var componentDropRate = 0.12;
+var hazeWhite,hazeRed,hazePurple;
+var nebula2;
+var nebula;
+var planets = [];
+var planet;
+var planetlod;
+var planetdirt;
+var numBaddies = 9;
+var numAsteroids = 19;
+var enemies;
+var loots;
+var debris;
+var sparkles;
+var enemyBullets;
+var enemyThrust;
+var explosions;
+var sparkleExplosions;
+var logo;
+var nextUIDelay=0;
+var nextPanDelay=0;
+var nextSpawn=0;
+var nextCamera=0; //attract
+var damageCoef=0.2; //global damage tuner
+var baseCorpseRate = 0.08; 
+var targetDamageCoef=7.5; //not so global damage tuner
+var enemyHealthCoef=1; 
+var cursors;
+var pew;
+var bullets;
+var nextFire = 0;
 
-				var partShip;
+var partShip;
 
 
-				var ui;
-				var gameUI = function () {
-								this.parts = [];
-								this.inventory = [];
-								this.partsIndex = [];  //maps ship-array positions to dragPart objects
-								this.partCost=20;
-								this.currentPart = 0;
-								this.currentPlayerPart = 0;
-								this.texts = [];
-								this.graphics = game.add.graphics(0,0);
-								this.nextComms=0;
-								this.nextCommsPing=false;
-								this.nextRadarSound=0; 
-								this.textLine = '';
-								this.textIndex = 0;
-								this.textLineIndex = 0;
-								this.nextError=0;
-								this.buildMode = 'select';
-								this.nextFrobRadarPulse=0;
-								this.buttons = [];
-				}
+var ui;
+var gameUI = function () {
+				this.parts = [];
+				this.inventory = [];
+				this.partsIndex = [];  //maps ship-array positions to dragPart objects
+				this.partCost=20;
+				this.currentPart = 0;
+				this.currentPlayerPart = 0;
+				this.texts = [];
+				this.graphics = game.add.graphics(0,0);
+				this.nextComms=0;
+				this.nextCommsPing=false;
+				this.nextRadarSound=0; 
+				this.textLine = '';
+				this.textIndex = 0;
+				this.textLineIndex = 0;
+				this.nextError=0;
+				this.buildMode = 'select';
+				this.nextFrobRadarPulse=0;
+				this.buttons = [];
+}
 gameUI.prototype.toTop = function(c){  
 				var p = c.parent;
 				p.remove(c);
@@ -3504,7 +3564,7 @@ gameUI.prototype.toTop = function(c){
 }
 gameUI.prototype.initInventory = function () {
 
-				for(var i=0;i<16;i++){
+				for(var i=0;i<64;i++){
 								this.inventory.push(game.add.sprite(-300+((i%4)*16),-100+(Math.floor(i/4)*16),'parts',0));
 				}
 
@@ -3592,7 +3652,7 @@ function checkForNewMusic(){
 }
 gameUI.prototype.music_random = function(){
 				if(typeof(this.currentMusic)!='undefined'){
-					this.currentMusic.pause();
+								this.currentMusic.pause();
 				}
 				var rnd = randomInt(1,6);
 				if(typeof(this.music[rnd])=='undefined'){
@@ -3603,7 +3663,7 @@ gameUI.prototype.music_random = function(){
 				this.currentMusic.play();
 }
 gameUI.prototype.sound_randomCrush = function(){
-								this.sound_hit1.play();
+				this.sound_hit1.play();
 
 }
 gameUI.prototype.sound_randomBoom = function(){
@@ -4156,14 +4216,14 @@ gameUI.prototype.altLinePing = function (targetText, offset) {
 				this.toTop(targetText);
 				var s = 'READY';
 				if(player.altCooldown > game.time.now){
-						targetText.alpha=0.9;
-						s = parseInt((player.altCooldown - game.time.now)/1000);						
+								targetText.alpha=0.9;
+								s = parseInt((player.altCooldown - game.time.now)/1000);						
 				} else if(targetText.alpha==0.9){
-						ui.sound_beep.play();
+								ui.sound_beep.play();
 								targetText.alpha=2;
 								game.add.tween(targetText).to({alpha: 0.0},5000, Phaser.Easing.Linear.None, true, 0, false);
-					}
-				
+				}
+
 				setTextIfDifferent(targetText,s);
 }
 
@@ -4323,24 +4383,25 @@ gameUI.prototype.radarPing = function() {
 												if(player.behavior!='target'){
 																this.radar[i].style.fill="rgb(192,212,32)";
 												}
-												if(Math.random()<0.955 ){
+												if(Math.random()<0.955){
 																s='[  ';
 												}else{
 																s=String.fromCharCode(Math.floor(Math.random()*255))+'  ';
 												}
-												if(Math.random()<0.955 ){
+												if(Math.random()<0.955){
 																s+=']';
 												}else{
 																s+=String.fromCharCode(Math.floor(Math.random()*255));
 												}
+												s+='\n'
 								} else {
 												if(range>180){range=180+Math.pow(targetDistance-180,0.6)};  
 												if(range>0.5*Math.min(resolutionX,resolutionY)-50){range=0.5*Math.min(resolutionX,resolutionY)-50};  
 								}
 								setTextIfDifferent(this.radar[i],s);
 								this.radar[i].x = player.sprite.body.x + (0.5 * player.sprite.body.width) + Math.cos(targetAngle) * range;
-								this.radar[i].y = player.sprite.body.y + (0.5 * player.sprite.body.width) + Math.sin(targetAngle) * range;  
-									this.radar[i].visible = (this.enemies[i].sprite==player.target || this.enemies[i].ai!=aiModes['asteroid']);
+								this.radar[i].y = player.sprite.body.y + (player.sprite.body.height) + Math.sin(targetAngle) * range;  
+								this.radar[i].visible = (this.enemies[i].sprite==player.target || this.enemies[i].ai!=aiModes['asteroid']);
 								this.toTop(this.radar[i]);
 				}
 }
@@ -4350,7 +4411,7 @@ gameUI.prototype.skipText = function() {
 				this.textLineIndex=0;
 }
 var playerSizeMax = function(){
-				return (playerStats.level) + 5;
+				return parseInt((playerStats.level * 1.2) + 8);
 }
 gameUI.prototype.playerStatusTextPing = function() {
 
@@ -4435,11 +4496,11 @@ gameUI.prototype.commsPing = function() {
 								this.comms.alpha-=randomRange(0,0.05);
 				}  
 				if(this.comms.alpha > 0 && this.comms.visible){
-				if(this.textLine.length>0 && game.time.now % 200 > 100){
-								setTextIfDifferent(this.comms,this.textLine + '_ ');
-				}else{
-								setTextIfDifferent(this.comms,this.textLine + '  ');
-				}
+								if(this.textLine.length>0 && game.time.now % 200 > 100){
+												setTextIfDifferent(this.comms,this.textLine + '_ ');
+								}else{
+												setTextIfDifferent(this.comms,this.textLine + '  ');
+								}
 				}
 				this.graphics.beginFill(0x000000, ui.comms.alpha/3);
 				this.graphics.drawRect(this.comms.x - 15 - (0.5 * this.comms.width), this.comms.y - 6 - (0.5 * this.comms.height), this.comms.width + 30, this.comms.height + 12);
@@ -4845,6 +4906,7 @@ gameUI.prototype.endPartsUI = function () {
 				setTextIfDifferent(this.statsText,'');
 				setTextIfDifferent(this.partFlavorText,'');
 				setTextIfDifferent(this.explainerText,'');
+				console.log(ship);
 				player.initPlayerShip(ship);
 				this.initButtons(warButtons);
 				gamemode = 'war';
@@ -4998,7 +5060,7 @@ function addPlayerPartInFlight(componentId) {
 
 function createPart(n){
 
-				var partPosition = ui.calculatePartPosition2(0, 0, n); 
+				var partPosition = ui.calculatePartPosition(0, 0, n); 
 				ui.parts.push(dragPool.get(partPosition.x,partPosition.y,'parts',n));  
 
 }
@@ -5102,9 +5164,9 @@ function initMission (missionId) {
 
 function fadeOut () {
 				playerStats.fadeAmount=0;
-if(!isAndroid){
-				game.add.tween(playerStats).to({fadeAmount:1},5000, Phaser.Easing.Exponential.Out, true, 0, false);
-}
+				if(!isAndroid){
+								game.add.tween(playerStats).to({fadeAmount:1},5000, Phaser.Easing.Exponential.Out, true, 0, false);
+				}
 }
 
 function randomVividColor(minr,maxr,ming,maxg,minb,maxb) {
@@ -5151,17 +5213,17 @@ function randomInt (a,b){
 				return parseInt(randomRange(a,b+1));
 }
 function fadeIn () {
-if(isAndroid){
-playerStats.fadeAmount=0;
-}else{
-				playerStats.fadeAmount=1;
-				if(firstFadeIn){
-				game.add.tween(playerStats).to({fadeAmount:0},10000, Phaser.Easing.Linear.None, true, 0, false);
-				firstFadeIn=false;
+				if(isAndroid){
+								playerStats.fadeAmount=0;
 				}else{
-				game.add.tween(playerStats).to({fadeAmount:0},3000, Phaser.Easing.Linear.None, true, 0, false);
+								playerStats.fadeAmount=1;
+								if(firstFadeIn){
+												game.add.tween(playerStats).to({fadeAmount:0},10000, Phaser.Easing.Linear.None, true, 0, false);
+												firstFadeIn=false;
+								}else{
+												game.add.tween(playerStats).to({fadeAmount:0},3000, Phaser.Easing.Linear.None, true, 0, false);
+								}
 				}
-}
 				station.scale.setTo(1,1);
 				station.r=192;
 				station.g=192;
@@ -5206,12 +5268,12 @@ playerStats.fadeAmount=0;
 				game.add.tween(hazeRed).to({alpha:playerStats.mission.hazeRed},100, Phaser.Easing.Linear.None, true, 0, false);
 				game.add.tween(hazeWhite).to({alpha:playerStats.mission.hazeWhite},100, Phaser.Easing.Linear.None, true, 0, false);
 				game.add.tween(hazePurple).to({alpha:playerStats.mission.hazePurple},100, Phaser.Easing.Linear.None, true, 0, false);
-if(isAndroid){
-				hazeRed.tint=randomMutedColor(40,200,40,200,40,200); 
-}else{
-				hazeRed.tint=randomMutedColor(0,160,0,160,0,160); 
+				if(isAndroid){
+								hazeRed.tint=randomMutedColor(40,200,40,200,40,200); 
+				}else{
+								hazeRed.tint=randomMutedColor(0,160,0,160,0,160); 
 
-}
+				}
 				hazeWhite.tint=randomMutedColor(140,255,140,255,140,255);
 				hazePurple.tint=randomMutedColor(140,255,140,255,140,255);
 
@@ -5223,12 +5285,51 @@ if(isAndroid){
 
 }
 function newStartShip(){
+				player.initPlayerShip(ships[0]);
+}
+function newRandomPlayerShip(){
 				a=randomPartsList(basicGear,6);
 				a.sort(matchabilityComponentSort);
 				player.initPlayerShip(a[0]);
 				for(i=1;i<6;i++){
 								addPlayerPartInFlight(a[i]);
 				}
+}
+function reconfigurePlayerShip(){
+				var prevX = player.sprite.x;
+				var prevY = player.sprite.y;
+				var prevRotation = player.sprite.rotation;
+				var prevVelocityX = player.sprite.body.velocity.x;
+				var prevVelocityY = player.sprite.body.velocity.y;
+				var prevBehavior = player.behavior;
+				var prevTarget = player.target;
+				var prevTargetAngle = player.targetAngle;
+				var prevEnergy = player.energy;
+				var prevHealth = player.health;
+				var prevHealthMax = player.healthMax;
+				var prevProfile = player.sprite.profile;
+				var prevAltCooldown = player.altCooldown;
+				a=shipWithoutVoid(player.ship);
+				for(i=0;i<a.length;i++){
+								a[i]=matchiestVariantComponent(a[i]) 
+				}
+				a.sort(randomSort);
+				player.initPlayerShip([a[0]]);
+				for(i=1;i<a.length;i++){
+								addPlayerPartInFlight(a[i]);
+				}
+				player.sprite.body.velocity.x=prevVelocityX;  
+				player.sprite.body.velocity.y=prevVelocityY;  
+				player.sprite.rotation=prevRotation;
+				player.behavior = prevBehavior;
+				player.target = prevTarget;
+				player.energy = prevEnergy;
+				player.health = prevHealth;
+				player.targetAngle=  prevTargetAngle;
+				player.sprite.profile=prevProfile;
+				player.health += player.healthMax - prevHealthMax;
+				player.altCooldown = prevAltCooldown;
+
 }
 function create () {
 
@@ -5657,7 +5758,7 @@ function winMission(){
 												playerStats.crew-=1;
 								}
 
-												ui.music_random();
+								ui.music_random();
 								playerStats.mission.complete=true; //maybe one day we'll implement missions again
 								playerStats.kills=0;
 				}
@@ -5879,6 +5980,9 @@ function update () {
 												if (manualPressed) {
 																player.behavior='manual';
 												}
+												if (buttonLight && cheatmode ==1) {
+																ui.partsUI(player.ship)
+												}
 												touchPressed = buttonLeft || buttonRight || buttonUp || buttonDown || buttonFire || buttonAlt || buttonEnter || buttonOther ||buttonLight;
 												buttonLeft =0; buttonRight =0; buttonUp =0; buttonDown =0; buttonFire =0; buttonAlt =0; buttonEnter =0; buttonLight=0; buttonOther = 0;
 												if(!touchPressed){
@@ -5906,18 +6010,18 @@ function update () {
 												touchPressed=0;
 								}
 								if(game.input.activePointer.isDown || fire){
-									if(wasUp){
-										if(player.energy<player.energyMax){
-										player.energy+=1;
-										player.nextFire-=300;
-										player.sprite.profile+=30;
-										}
-										wasUp=false;
-									}
+												if(wasUp){
+																if(player.energy<player.energyMax){
+																				player.energy+=1;
+																				player.nextFire-=300;
+																				player.sprite.profile+=30;
+																}
+																wasUp=false;
+												}
 								}else{
-									wasUp=true;
+												wasUp=true;
 								}
-////
+								////
 								if(gamemode=='?build'){
 
 												for (var i = 0; i < ui.parts.length; i++){
@@ -7611,9 +7715,9 @@ function enemyTouchEnemy (a, b) {
 
 								var destroyed = enemies[enemySprite1.name].damage(9999);
 								if(destroyed){
-									ui.sound_randomCrush();					
+												ui.sound_randomCrush();					
 								}
-											var angle=game.physics.arcade.angleBetween(enemySprite2,enemySprite1);
+								var angle=game.physics.arcade.angleBetween(enemySprite2,enemySprite1);
 								enemySprite1.body.velocity.x+=Math.cos(angle)*200;
 								enemySprite1.body.velocity.y+=Math.sin(angle)*200;
 								var e2 = enemies[enemySprite2.name];
@@ -7633,7 +7737,7 @@ function enemyTouchPlayer (enemySprite, playerSprite) {
 								ui.sound_hit1.play();
 								var destroyed = enemies[enemySprite.name].damage(player.sawDamage);
 								if(destroyed){
-									ui.sound_randomCrush();					
+												ui.sound_randomCrush();					
 								}
 								var angle=game.physics.arcade.angleBetween(playerSprite,enemySprite);
 								enemySprite.body.velocity.x+=Math.cos(angle)*200;
