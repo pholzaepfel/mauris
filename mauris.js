@@ -1,6 +1,7 @@
 var gamemode;
 var firstFadeIn=true;
 var wasUp=true;
+var missionId=0;
 var nextPortalGlow=0;
 var mobileScaleFactor = function() {
 				if (isAndroid) {
@@ -25,39 +26,37 @@ var setTextIfDifferent = function(object, value){
 				if(value!=object.text){object.setText(value+'\n');}
 }
 var allfactions=[
-				['goatfaction',goatFaction,1],
-				['cloaker',cloaker,1],
-				['trader',trader,1],
-				['turtle',turtle,1],
-				['weakAllianceBoss',weakAllianceBoss,1],
-				//['xenoidMiniBoss',xenoidMiniBoss,1],
-				//['megaHauler',megaHauler,1],
-				['avenger',avenger,1],
-				['redStation',redStation,1],
-				['ships',ships,1],
-				['sweet',sweet,1],
+				['allianceWeak',allianceWeak,1],
+				['bandits',bandits ,1],
 				['chainsawDrone',chainsawDrone,1],
-				['chainsaw',chainsaw,1],
-				['mechanoids',mechanoids,1],
-				['mechanoidMiniBoss1',mechanoidMiniBoss1,1],
-				['droneBoss1',droneBoss1,1],
-				['rebelFaction1 ',rebelFaction1 ,1],
-				['plants',plants,1],
-				['ancients',ancients,1],
-				['crystalsArmor',crystalsArmor,1],
+				['smugglers',smugglers,1],
+				['banditsMedium ',banditsMedium ,1],
+				['cloaker',cloaker,1],
+				['banditBoss1',banditBoss1 ,1],
+				['alliance',alliance,1],
+				['smugglerBoss1',smugglerBoss1,1],
+				['drones',drones,1],
 				['crystals',crystals,1],
 				['alliance2',alliance2,1],
-				['smugglerBoss1',smugglerBoss1,1],
-				['smugglers',smugglers,1],
-				['bandits',bandits ,1],
-				['banditBoss1',banditBoss1 ,1],
-				['drones',drones,1],
+				['goatfaction',goatFaction,1],
+				['weakAllianceBoss',weakAllianceBoss,1],
+				['chainsaw',chainsaw,1],
+				['mechanoids',mechanoids,1],
+				['trader',trader,1],
+				['ships',ships,1],
+				['mechanoidMiniBoss1',mechanoidMiniBoss1,1],
+				['sweet',sweet,1],
+				['turtle',turtle,1],
+				//['xenoidMiniBoss',xenoidMiniBoss,1],
+				['crystalsArmor',crystalsArmor,1],
+				//['megaHauler',megaHauler,1],
+				['avenger',avenger,1],
+				['droneBoss1',droneBoss1,1],
+				['rebelFaction1 ',rebelFaction1 ,1],
+				['ancients',ancients,1],
 				['zombies',zombies,1],
-				['banditsMedium ',banditsMedium ,1],
 				['godawfulBoss',godawfulBoss,1],
 				['cops',cops,1],
-				['alliance',alliance,1],
-				['allianceWeak',allianceWeak,1]
 				/* all factions - using parts
 					 ['alliance military',allianceGear4,1],
 					 ['mechanoid',mechanoidGear,1],
@@ -103,11 +102,12 @@ var allfactions=[
 				}
 var randomMission = function(){
 				var myfactions=[];
-				myfactions.push(randomFromArray(allfactions));
-				if(randomRange(0,1)>0.4){
-								myfactions.push(randomFromArray(allfactions));
+				
+				myfactions.push(allfactions[missionId++]);
+/*				if(randomRange(0,1)>0.4){
+					myfactions.push(allfactions[missionId++]);
 
-				}
+				}*/
 
 				var rm = {};
 				rm.id = 666;
@@ -329,7 +329,7 @@ function pause(resumeDelay,x,y) {
 				var blurAmount = isAndroid ? 30 : 30;
 
 				if(typeof(resumeDelay)!='undefined'){
-				ui.sound_dock.play();
+				ui.sound_woob.play();
 								nextUIDelay=game.time.now+5000;
 								nextPanDelay=game.time.now+randomInt(15000,30000);
 								if(resumeDelay<1000){resumeDelay=1000};
@@ -1727,6 +1727,10 @@ enemyShip.prototype.damage = function(dmg, aggro, bulletVelocity) {
 								for (var j = 0; j < this.parts.length; j++) {
 												if(Math.random() < this.oreChance && !playerStats.mission.asteroidPanic){
 																spawnLoots(Math.floor(randomRange(0,4)), this.sprite.x, this.sprite.y);
+if(this.oreChance==1){
+																spawnLoots(Math.floor(randomRange(3,8)), this.sprite.x, this.sprite.y);
+
+}
 																this.parts[j].sprite.kill();
 												}else if(Math.random() < (componentDropRate + player.dropRate) && components[this.parts[j].component].drops){ 
 																spawnComponent(this.parts[j].component, this.sprite.x, this.sprite.y);
@@ -2175,6 +2179,7 @@ function preload () {
 				game.load.audio('pew1','assets/pew1.wav');
 				game.load.audio('redalert','assets/redalert.wav');
 				game.load.audio('beep','assets/beep.wav');
+				game.load.audio('hitHurt','assets/hitHurt.wav');
 				game.load.audio('hit1','assets/hit1.wav');
 				game.load.audio('boom1','assets/boom1.wav');
 				game.load.audio('boom2','assets/boom2.wav');
@@ -2185,11 +2190,13 @@ function preload () {
 				game.load.audio('pew2','assets/pew2.wav');
 				game.load.audio('pew3','assets/pew3.wav');
 				game.load.audio('blur','assets/blur.wav');
+				game.load.audio('asteroidexplode','assets/asteroidexplode.wav');
 				game.load.audio('dock','assets/dock.wav');
 				game.load.audio('ominous','assets/ominous.wav');
 				game.load.audio('powerup','assets/powerup.wav');
 				game.load.audio('missile','assets/missile.wav');
 				game.load.audio('bullet','assets/bullet.wav');
+				game.load.audio('woob','assets/woob.wav');
 }
 
 
@@ -2588,6 +2595,7 @@ playerShip.prototype.damage = function(dmg, aggro, bulletX, bulletY, preventXPLo
 								this.sprite.kill();
 								this.cullParts();  //defensive programming, in case I ever decide to do something that will kill a player sprite early :P
 								nextSpawn = game.time.now+5000;
+								missionId-=1;
 								playerStats.deaths+=1; //hahahahahhahahahahahahahhahahahahahaha
 								if(!preventXPLossOnDeath){
 												addXp(parseInt(playerStats.xp/-2));
@@ -3435,11 +3443,6 @@ x: this.target.x + this.target.body.velocity.x * timeToImpact ,
 				}
 };
 var touchPressed = 0;
-var noMusic = /(android)/i.test(navigator.userAgent);
-if (!window.location.href.match('voxxse')){
-				noMusic = true;
-}
-noMusic = false;
 var headlightIntensity=1;
 var headlightGlowSprite;
 var pauseResumeTime = 0;
@@ -3619,6 +3622,8 @@ gameUI.prototype.buttonsPing = function(){
 gameUI.prototype.initSound = function(){
 				this.sound_pew1 = game.add.audio('pew1');
 				this.sound_pew2 = game.add.audio('pew2');
+				this.sound_woob = game.add.audio('woob');
+				this.sound_asteroidexplode = game.add.audio('asteroidexplode');
 				this.sound_dock = game.add.audio('dock');
 				this.sound_powerup = game.add.audio('powerup');
 				this.sound_ominous = game.add.audio('ominous');
@@ -3627,6 +3632,7 @@ gameUI.prototype.initSound = function(){
 				this.sound_missile = game.add.audio('missile');
 
 				this.sound_hit1 = game.add.audio('hit1');
+				this.sound_hitHurt = game.add.audio('hitHurt');
 				this.sound_redalert = game.add.audio('redalert');
 				this.sound_beep = game.add.audio('beep');
 				this.sound_crush = game.add.audio('crush');
@@ -3642,19 +3648,17 @@ gameUI.prototype.initSound = function(){
 				this.music=[];
 }
 function checkForNewMusic(){
-				if(!noMusic){
 								if(typeof(ui.currentMusic)=='undefined'){
 												ui.music_random()
 								}else if(ui.currentMusic.ended){
 												ui.music_random();
 								}
-				}
 }
-gameUI.prototype.music_random = function(){
+gameUI.prototype.music_random = function(){ 
 				if(typeof(this.currentMusic)!='undefined'){
 								this.currentMusic.pause();
 				}
-				var rnd = randomInt(1,6);
+				var rnd = randomInt(1,18) // new ones start at 8 randomInt(1,6); // song #s
 				if(typeof(this.music[rnd])=='undefined'){
 								this.music[rnd]=new Audio('assets/' + rnd + '.ogg');
 				}
@@ -3848,10 +3852,6 @@ gameUI.prototype.calculatePartPosition2 = function (x,y,index) {
 																locations[this.matchLocation(outx-16,outy,index)]={x:outx-16,y:outy};
 																outx-=16;
 												}
-												if(!ui.partAt(outx+16,outy)){  
-																locations[this.matchLocation(outx+16,outy,index)]={x:outx+16,y:outy};
-																outx+=16;
-												}
 												if(!ui.partAt(outx,outy-16)){  
 																locations[this.matchLocation(outx,outy-16,index)]={x:outx,y:outy-16};
 																outy-=16;
@@ -3859,6 +3859,10 @@ gameUI.prototype.calculatePartPosition2 = function (x,y,index) {
 												if(!ui.partAt(outx,outy+16)){  
 																locations[this.matchLocation(outx,outy+16,index)]={x:outx,y:outy+16};
 																outy+=16;
+												}
+												if(!ui.partAt(outx+16,outy)){  
+																locations[this.matchLocation(outx+16,outy,index)]={x:outx+16,y:outy};
+																outx+=16;
 												}
 								}
 				}
@@ -5060,7 +5064,7 @@ function addPlayerPartInFlight(componentId) {
 
 function createPart(n){
 
-				var partPosition = ui.calculatePartPosition(0, 0, n); 
+				var partPosition = ui.calculatePartPosition2(0, 0, n); 
 				ui.parts.push(dragPool.get(partPosition.x,partPosition.y,'parts',n));  
 
 }
@@ -5285,9 +5289,19 @@ function fadeIn () {
 
 }
 function newStartShip(){
-				player.initPlayerShip(ships[0]);
+				player.initPlayerShip(smallships[parseInt(randomRange(0,smallships.length))]); //ships[0]);
 }
-function newRandomPlayerShip(){
+function shuffleShip(){
+				a=shipWithoutVoid(player.ship);
+				l=a.length;
+				for(i=0;i<l;i++){
+				a[i]=randomVariantComponent(a[i]);
+}	
+				player.initPlayerShip(a[0]);
+				for(i=1;i<l;i++){
+								addPlayerPartInFlight(a[i]);
+				}
+}function newRandomPlayerShip(){
 				a=randomPartsList(basicGear,6);
 				a.sort(matchabilityComponentSort);
 				player.initPlayerShip(a[0]);
@@ -6204,7 +6218,7 @@ function update () {
 
 												if(nextSpawn<game.time.now||nextSpawn==0){
 																if(!player.alive){
-																				player.initPlayerShip(randomShip(basicGear,3));
+																				newStartShip();
 																				if(cheatmode){player.initPlayerShip(randomShip(allLootableItems(),parseInt(randomRange(3,8))))}
 																				if(contextTutorialDeath){
 																								ui.skipText();
@@ -7679,7 +7693,7 @@ function playerGotLoot (sprite, loot) {
 function bulletHitPlayer (sprite, bullet) {
 
 				boom(explosions, bullet.bulletSprite, bullet.x, bullet.y, bullet.damage / damageCoef);
-				ui.sound_hit1.play();
+				ui.sound_hitHurt.play();
 				for (var i = 0; i < bullet.bulletHitBehavior.length; i++) {
 								bullet.bulletHitBehavior[i](sprite, bullet);
 				}
@@ -7754,7 +7768,7 @@ function enemyTouchPlayer (enemySprite, playerSprite) {
 function bulletHitEnemy (sprite, bullet) {
 
 				if(bullet.owner!=sprite){
-								ui.sound_hit1.play();
+								ui.sound_hitHurt.play();
 								boom(explosions, bullet.bulletSprite, bullet.x, bullet.y, bullet.damage / targetDamageCoef);
 
 								for (var i = 0; i < bullet.bulletHitBehavior.length; i++) {
